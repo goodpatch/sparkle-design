@@ -1,0 +1,5 @@
+{
+  "codeConnect": {
+    "include": ["src/components/**/*.{tsx,jsx}"]
+  }
+}
