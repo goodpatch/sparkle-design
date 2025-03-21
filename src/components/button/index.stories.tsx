@@ -83,4 +83,4 @@ export const すべてのテーマ: Story = {
       <Button theme="negative">ネガティブ</Button>
     </div>
   ),
-}; 
+};

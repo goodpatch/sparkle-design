@@ -12,7 +12,7 @@ import figma from "@figma/code-connect";
 
 figma.connect(
   Button,
-  "https://www.figma.com/design/7alBZXZf65YgcII41TWT0r/Sparkle-UI?node-id=233%3A5071",
+  "https://www.figma.com/design/7alBZXZf65YgcII41TWT0r/Sparkle-UI?node-id=233-5071",
   {
     props: {
       prefixIcon1164197: figma.instance("prefixIcon"),
