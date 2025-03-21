@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { Icon } from "@/components/icon";
 import { Spinner } from "@/components/spinner";
 
-const buttonVariants = cva(
+const iconButtonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative",
   {
     variants: {
@@ -16,9 +16,9 @@ const buttonVariants = cva(
         ghost: "",
       },
       size: {
-        sm: "h-8 px-2.5 py-1 character-2-bold-pro",
-        md: "h-10 px-3 py-2 character-3-bold-pro",
-        lg: "h-12 px-3.5 py-2.5 character-4-bold-pro",
+        sm: "w-8 h-8 p-1 character-2-bold-pro",
+        md: "w-10 h-10 p-2 character-3-bold-pro",
+        lg: "w-12 h-12 p-2.5 character-4-bold-pro",
       },
       theme: {
         primary: "",
@@ -241,17 +241,16 @@ const buttonVariants = cva(
   }
 );
 
-export interface ButtonProps
+export interface IconButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+    VariantProps<typeof iconButtonVariants> {
   asChild?: boolean;
-  prefixIcon?: string;
-  suffixIcon?: string;
+  icon?: string;
   isLoading?: boolean;
   isDisabled?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   (
     {
       className,
@@ -262,15 +261,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       isDisabled = false,
       asChild = false,
       disabled,
-      prefixIcon,
-      suffixIcon,
+      icon,
       children,
       ...props
     },
     ref
   ) => {
     // disabled状態の管理（isDisabled、disabled、またはisLoadingがtrueの場合）
-    const isButtonDisabled = isLoading || isDisabled;
+    const isIconButtonDisabled = isLoading || isDisabled;
 
     const Comp = asChild ? Slot : "button";
 
@@ -289,7 +287,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Comp
         className={cn(
-          buttonVariants({
+          iconButtonVariants({
             variant,
             size,
             theme,
@@ -299,40 +297,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           })
         )}
         ref={ref}
-        disabled={isButtonDisabled}
+        disabled={isIconButtonDisabled}
         {...props}
       >
-        {prefixIcon && (
-          <Icon
-            name={prefixIcon}
-            className={cn({ "opacity-0": isLoading }, getIconSize())}
-          />
-        )}
-
         {isLoading ? (
           <>
-            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-flex">
-              <Spinner className={getIconSize()} />
-            </span>
-            <span className="opacity-0" aria-hidden="true">
-              {children}
-            </span>
+            <Spinner className={getIconSize()} />
           </>
         ) : (
-          children
-        )}
-
-        {suffixIcon && (
-          <Icon
-            name={suffixIcon}
-            className={cn({ "opacity-0": isLoading }, getIconSize())}
-          />
+          <Icon name={icon || ""} className={getIconSize()} />
         )}
       </Comp>
     );
   }
 );
 
-Button.displayName = "Button";
+IconButton.displayName = "IconButton";
 
-export { Button, buttonVariants };
+export { IconButton, iconButtonVariants };
