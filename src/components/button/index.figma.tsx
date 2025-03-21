@@ -1,5 +1,5 @@
-import React from "react";
-import { Button } from "@/components/button";
+import * as React from "react";
+import { Button } from "./index";
 import figma from "@figma/code-connect";
 
 /**
@@ -12,41 +12,141 @@ import figma from "@figma/code-connect";
 
 figma.connect(
   Button,
-  "https://www.figma.com/design/7alBZXZf65YgcII41TWT0r/Sparkle-UI?node-id=233-5071",
+  "https://www.figma.com/design/nJ7LHYsXvqN6PwhOwknc8R/Sparkle-UI-for-MCP?node-id=233-5071",
   {
     props: {
-      prefixIcon1164197: figma.instance("prefixIcon"),
-      label4128108: figma.string("label"),
-      isPrefixIcon36859: figma.boolean("isPrefixIcon"),
-      isSuffixIcon36858: figma.boolean("isSuffixIcon"),
-      suffixIcon11641278: figma.instance("suffixIcon"),
-      isFocused22950: figma.boolean("isFocused"),
-      state: figma.enum("state", {
-        enable: "enable",
-        hover: "hover",
-        active: "active",
-        loading: "loading",
-        disabled: "disabled",
+      variant: figma.enum("variant", {
+        solid: "solid",
+        outline: "outline",
+        ghost: "ghost",
       }),
       size: figma.enum("size", {
         sm: "sm",
         md: "md",
         lg: "lg",
       }),
-      variant: figma.enum("variant", {
-        solid: "solid",
-        outline: "outline",
-        ghost: "ghost",
-      }),
       theme: figma.enum("theme", {
         primary: "primary",
         secondary: "secondary",
         negative: "negative",
       }),
-      label: figma.string("button"),
+      children: figma.string("label"),
+      prefixIcon: figma.string("prefixIcon"),
+      suffixIcon: figma.string("suffixIcon"),
+      isDisabled: figma.boolean("isDisabled"),
+      isLoading: figma.boolean("isLoading"),
+      className: figma.string("className"),
     },
     example: (props) => (
-      <Button variant={props.variant} size={props.size} theme={props.theme} />
+      <Button
+        variant={props.variant}
+        size={props.size}
+        theme={props.theme}
+        isLoading={props.isLoading}
+        isDisabled={props.isDisabled}
+        prefixIcon={props.prefixIcon}
+        suffixIcon={props.suffixIcon}
+        className={props.className}
+      >
+        {props.children || "ボタン"}
+      </Button>
     ),
   }
 );
+
+export function examples() {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap gap-2">
+        <Button variant="solid" size="md" theme="primary">
+          ソリッド プライマリー
+        </Button>
+        <Button variant="outline" size="md" theme="primary">
+          アウトライン プライマリー
+        </Button>
+        <Button variant="ghost" size="md" theme="primary">
+          ゴースト プライマリー
+        </Button>
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        <Button variant="solid" size="md" theme="secondary">
+          ソリッド セカンダリー
+        </Button>
+        <Button variant="outline" size="md" theme="secondary">
+          アウトライン セカンダリー
+        </Button>
+        <Button variant="ghost" size="md" theme="secondary">
+          ゴースト セカンダリー
+        </Button>
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        <Button variant="solid" size="md" theme="negative">
+          ソリッド ネガティブ
+        </Button>
+        <Button variant="outline" size="md" theme="negative">
+          アウトライン ネガティブ
+        </Button>
+        <Button variant="ghost" size="md" theme="negative">
+          ゴースト ネガティブ
+        </Button>
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        <Button variant="solid" size="sm" theme="primary">
+          小
+        </Button>
+        <Button variant="solid" size="md" theme="primary">
+          中
+        </Button>
+        <Button variant="solid" size="lg" theme="primary">
+          大
+        </Button>
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        <Button variant="solid" size="md" theme="primary">
+          有効
+        </Button>
+        <Button variant="solid" size="md" theme="primary" isLoading>
+          ローディング
+        </Button>
+        <Button variant="solid" size="md" theme="primary" isDisabled>
+          無効
+        </Button>
+        <Button variant="solid" size="md" theme="primary" disabled>
+          無効 (disabled属性)
+        </Button>
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        <Button
+          variant="solid"
+          size="md"
+          theme="primary"
+          prefixIcon="icon-add-16"
+        >
+          プレフィックスアイコン
+        </Button>
+        <Button
+          variant="solid"
+          size="md"
+          theme="primary"
+          suffixIcon="icon-arrow-right-16"
+        >
+          サフィックスアイコン
+        </Button>
+        <Button
+          variant="solid"
+          size="md"
+          theme="primary"
+          prefixIcon="icon-add-16"
+          suffixIcon="icon-arrow-right-16"
+        >
+          両方のアイコン
+        </Button>
+      </div>
+    </div>
+  );
+}

@@ -3,33 +3,231 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+import { Icon } from "@/components/icon";
+import { Spinner } from "@/components/spinner";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative",
   {
     variants: {
       variant: {
-        solid: "shadow-sm",
-        outline: "",
+        solid: "border shadow-sm",
+        outline: "border shadow-sm",
         ghost: "",
       },
       size: {
-        sm: "h-8 px-2.5 py-1 rounded-md",
-        md: "h-10 px-3 py-2",
-        lg: "h-12 px-3.5 py-2.5 rounded-md",
+        sm: "h-8 px-2.5 py-1 character-2-bold-pro",
+        md: "h-10 px-3 py-2 character-3-bold-pro",
+        lg: "h-12 px-3.5 py-2.5 character-4-bold-pro",
       },
       theme: {
-        primary: "bg-primary text-primary-foreground hover:bg-primary/90",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        negative:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        primary: "",
+        secondary: "",
+        negative: "",
+      },
+      isLoading: {
+        true: "cursor-not-allowed",
+        false: "gap-2",
+      },
+      isDisabled: {
+        true: "cursor-not-allowed",
+        false: "",
       },
     },
+    compoundVariants: [
+      // Solid Primary バリアント
+      {
+        variant: "solid",
+        theme: "primary",
+        isLoading: false,
+        className:
+          "bg-primary-500 text-white border-primary-600 hover:bg-primary-600 hover:border-primary-700 active:bg-primary-700 active:border-primary-800 active:shadow-sm",
+      },
+      {
+        variant: "solid",
+        theme: "primary",
+        isLoading: true,
+        className: "bg-primary-500 text-white border-primary-600",
+      },
+
+      // Solid Secondary バリアント
+      {
+        variant: "solid",
+        theme: "secondary",
+        isLoading: false,
+        className:
+          "bg-secondary-500 text-white border-secondary-600 hover:bg-secondary-600 hover:border-secondary-700 active:bg-secondary-700 active:border-secondary-800 active:shadow-sm",
+      },
+      {
+        variant: "solid",
+        theme: "secondary",
+        isLoading: true,
+        className: "bg-secondary-500 text-white border-secondary-600",
+      },
+
+      // Solid Negative バリアント
+      {
+        variant: "solid",
+        theme: "negative",
+        isLoading: false,
+        className:
+          "bg-negative-500 text-white border-negative-600 hover:bg-negative-600 hover:border-negative-700 active:bg-negative-700 active:border-negative-800 active:shadow-sm",
+      },
+      {
+        variant: "solid",
+        theme: "negative",
+        isLoading: true,
+        className: "bg-negative-500 text-white border-negative-600",
+      },
+
+      // Outline Primary バリアント
+      {
+        variant: "outline",
+        theme: "primary",
+        isLoading: false,
+        className:
+          "bg-white text-primary-500 border-primary-500 shadow-sm hover:bg-primary-50 active:bg-primary-100",
+      },
+      {
+        variant: "outline",
+        theme: "primary",
+        isLoading: true,
+        className: "bg-white text-primary-500 border-primary-500 shadow-sm",
+      },
+
+      // Outline Secondary バリアント
+      {
+        variant: "outline",
+        theme: "secondary",
+        isLoading: false,
+        className:
+          "bg-white text-secondary-700 border-secondary-500 shadow-sm hover:bg-secondary-50 active:bg-secondary-100",
+      },
+      {
+        variant: "outline",
+        theme: "secondary",
+        isLoading: true,
+        className: "bg-white text-secondary-700 border-secondary-500 shadow-sm",
+      },
+
+      // Outline Negative バリアント
+      {
+        variant: "outline",
+        theme: "negative",
+        isLoading: false,
+        className:
+          "bg-white text-negative-500 border-negative-500 shadow-sm hover:bg-negative-50 active:bg-negative-100",
+      },
+      {
+        variant: "outline",
+        theme: "negative",
+        isLoading: true,
+        className: "bg-white text-negative-500 border-negative-500 shadow-sm",
+      },
+
+      // Ghost Primary バリアント
+      {
+        variant: "ghost",
+        theme: "primary",
+        isLoading: false,
+        className: "text-primary-500 hover:bg-primary-50 active:bg-primary-100",
+      },
+      {
+        variant: "ghost",
+        theme: "primary",
+        isLoading: true,
+        className: "text-primary-500",
+      },
+
+      // Ghost Secondary バリアント
+      {
+        variant: "ghost",
+        theme: "secondary",
+        isLoading: false,
+        className:
+          "text-secondary-700 hover:bg-secondary-50 active:bg-secondary-100",
+      },
+      {
+        variant: "ghost",
+        theme: "secondary",
+        isLoading: true,
+        className: "text-secondary-700",
+      },
+
+      // Ghost Negative バリアント
+      {
+        variant: "ghost",
+        theme: "negative",
+        isLoading: false,
+        className:
+          "text-negative-500 hover:bg-negative-100 active:bg-negative-100",
+      },
+      {
+        variant: "ghost",
+        theme: "negative",
+        isLoading: true,
+        className: "text-negative-500",
+      },
+
+      // Disabled styles for all variants
+      {
+        variant: "solid",
+        theme: "primary",
+        className:
+          "disabled:bg-primary-200 disabled:text-white disabled:border-none",
+      },
+      {
+        variant: "solid",
+        theme: "secondary",
+        className:
+          "disabled:bg-secondary-200 disabled:text-white disabled:border-none",
+      },
+      {
+        variant: "solid",
+        theme: "negative",
+        className:
+          "disabled:bg-negative-200 disabled:text-white disabled:border-none",
+      },
+      {
+        variant: "outline",
+        theme: "primary",
+        className:
+          "disabled:bg-white disabled:text-primary-200 disabled:border-primary-100",
+      },
+      {
+        variant: "outline",
+        theme: "secondary",
+        className:
+          "disabled:bg-white disabled:text-secondary-200 disabled:border-secondary-100",
+      },
+      {
+        variant: "outline",
+        theme: "negative",
+        className:
+          "disabled:bg-white disabled:text-negative-200 disabled:border-negative-100",
+      },
+      {
+        variant: "ghost",
+        theme: "primary",
+        className: "disabled:text-primary-200",
+      },
+      {
+        variant: "ghost",
+        theme: "secondary",
+        className: "disabled:text-secondary-200",
+      },
+      {
+        variant: "ghost",
+        theme: "negative",
+        className: "disabled:text-negative-200",
+      },
+    ],
     defaultVariants: {
       variant: "solid",
       size: "md",
       theme: "primary",
+      isLoading: false,
+      isDisabled: false,
     },
   }
 );
@@ -38,20 +236,94 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  prefixIcon?: string;
+  suffixIcon?: string;
+  isLoading?: boolean;
+  isDisabled?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, theme, asChild = false, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      theme,
+      isLoading = false,
+      isDisabled = false,
+      asChild = false,
+      disabled,
+      prefixIcon,
+      suffixIcon,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    // disabled状態の管理（isDisabled、disabled、またはisLoadingがtrueの場合）
+    const isButtonDisabled = isLoading || isDisabled;
+
     const Comp = asChild ? Slot : "button";
+
+    // アイコンのサイズをボタンサイズに合わせて設定
+    const getIconSize = () => {
+      switch (size) {
+        case "sm":
+          return "icon-5-fill-0";
+        case "lg":
+          return "icon-7-fill-0";
+        default:
+          return "icon-6-fill-0";
+      }
+    };
+
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, theme, className }))}
+        className={cn(
+          buttonVariants({
+            variant,
+            size,
+            theme,
+            isLoading,
+            isDisabled,
+            className,
+          })
+        )}
         ref={ref}
+        disabled={isButtonDisabled}
         {...props}
-      />
+      >
+        {prefixIcon && (
+          <Icon
+            name={prefixIcon}
+            className={cn({ "opacity-0": isLoading }, getIconSize())}
+          />
+        )}
+
+        {isLoading ? (
+          <>
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-flex">
+              <Spinner className={getIconSize()} />
+            </span>
+            <span className="opacity-0" aria-hidden="true">
+              {children}
+            </span>
+          </>
+        ) : (
+          children
+        )}
+
+        {suffixIcon && (
+          <Icon
+            name={suffixIcon}
+            className={cn({ "opacity-0": isLoading }, getIconSize())}
+          />
+        )}
+      </Comp>
     );
   }
 );
+
 Button.displayName = "Button";
 
 export { Button, buttonVariants };

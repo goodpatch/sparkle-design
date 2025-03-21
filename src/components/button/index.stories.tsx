@@ -1,8 +1,9 @@
-import * as React from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import React from "react";
+import type { Meta, StoryObj } from "@storybook/react";
+
 import { Button } from "./index";
 
-const meta: Meta<typeof Button> = {
+const meta = {
   title: "Components/Button",
   component: Button,
   parameters: {
@@ -13,74 +14,102 @@ const meta: Meta<typeof Button> = {
     variant: {
       control: "select",
       options: ["solid", "outline", "ghost"],
-      description: "ボタンの外観バリアント",
     },
     size: {
       control: "select",
       options: ["sm", "md", "lg"],
-      description: "ボタンのサイズ",
     },
     theme: {
       control: "select",
       options: ["primary", "secondary", "negative"],
-      description: "ボタンのテーマカラー",
     },
-    asChild: {
+    isLoading: {
       control: "boolean",
-      description: "子要素としてレンダリングするかどうか",
     },
-    disabled: {
+    isDisabled: {
       control: "boolean",
-      description: "ボタンを無効化するかどうか",
+    },
+    prefixIcon: {
+      control: "text",
+    },
+    suffixIcon: {
+      control: "text",
     },
   },
-};
+} satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-// デフォルトのボタン
-export const デフォルト: Story = {
+export const Default: Story = {
   args: {
-    children: "ボタン",
+    children: "Button",
   },
 };
 
-// その他のバリエーション
-export const 無効: Story = {
+export const Loading: Story = {
   args: {
-    children: "無効ボタン",
-    disabled: true,
+    children: "Loading",
+    isLoading: true,
   },
 };
 
-// 複数のバリエーションを表示するストーリー
-export const すべてのバリアント: Story = {
-  render: () => (
-    <div className="flex gap-4">
-      <Button variant="solid">ソリッド</Button>
-      <Button variant="outline">アウトライン</Button>
-      <Button variant="ghost">ゴースト</Button>
-    </div>
-  ),
+export const Disabled: Story = {
+  args: {
+    children: "Disabled",
+    variant: "solid",
+    isDisabled: true,
+  },
 };
 
-export const すべてのサイズ: Story = {
-  render: () => (
-    <div className="flex items-center gap-4">
-      <Button size="sm">小</Button>
-      <Button size="md">中</Button>
-      <Button size="lg">大</Button>
-    </div>
-  ),
+export const WithPrefixIcon: Story = {
+  args: {
+    children: "with Prefix Icon",
+    prefixIcon: "add",
+  },
 };
 
-export const すべてのテーマ: Story = {
-  render: () => (
-    <div className="flex gap-4">
-      <Button theme="primary">プライマリー</Button>
-      <Button theme="secondary">セカンダリー</Button>
-      <Button theme="negative">ネガティブ</Button>
+export const WithSuffixIcon: Story = {
+  args: {
+    children: "with Suffix Icon",
+    suffixIcon: "open_in_new",
+  },
+};
+
+export const WithBothIcons: Story = {
+  args: {
+    children: "with Both Icons",
+    prefixIcon: "favorite",
+    suffixIcon: "expand_more",
+  },
+};
+
+export const Variant = () => {
+  return (
+    <div className="flex flex-row gap-2">
+      <Button variant="solid">solid</Button>
+      <Button variant="outline">outline</Button>
+      <Button variant="ghost">ghost</Button>
     </div>
-  ),
+  );
+};
+
+export const Size = () => {
+  return (
+    <div className="flex flex-row gap-2">
+      <Button size="sm">small</Button>
+      <Button size="md">medium</Button>
+      <Button size="lg">large</Button>
+    </div>
+  );
+};
+
+export const Theme = () => {
+  return (
+    <div className="flex flex-row gap-2">
+      <Button theme="primary">primary</Button>
+      <Button theme="secondary">secondary</Button>
+      <Button theme="negative">negative</Button>
+    </div>
+  );
 };
