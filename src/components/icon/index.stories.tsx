@@ -3,7 +3,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { Icon } from "./index";
 
 const meta: Meta<typeof Icon> = {
-  title: "コンポーネント/Icon",
+  title: "Components/Icon",
   component: Icon,
   parameters: {
     layout: "centered",
@@ -27,7 +27,7 @@ type Story = StoryObj<typeof Icon>;
 // Default
 export const Default: Story = {
   args: {
-    name: "home",
+    name: "favorite",
   },
 };
 
@@ -35,14 +35,18 @@ export const Default: Story = {
 export const Size: Story = {
   render: () => (
     <div className="flex items-center gap-4">
-      <Icon name="star" className="icon-1-fill-0" />
-      <Icon name="star" className="icon-2-fill-0" />
-      <Icon name="star" className="icon-3-fill-0" />
-      <Icon name="star" className="icon-4-fill-0" />
-      <Icon name="star" className="icon-5-fill-0" />
-      <Icon name="star" className="icon-6-fill-0" />
-      <Icon name="star" className="icon-7-fill-0" />
-      <Icon name="star" className="icon-8-fill-0" />
+      <Icon name="favorite" className="icon-1-fill-0" />
+      <Icon name="favorite" className="icon-2-fill-0" />
+      <Icon name="favorite" className="icon-3-fill-0" />
+      <Icon name="favorite" className="icon-4-fill-0" />
+      <Icon name="favorite" className="icon-5-fill-0" />
+      <Icon name="favorite" className="icon-6-fill-0" />
+      <Icon name="favorite" className="icon-7-fill-0" />
+      <Icon name="favorite" className="icon-8-fill-0" />
+      <Icon name="favorite" className="icon-9-fill-0" />
+      <Icon name="favorite" className="icon-10-fill-0" />
+      <Icon name="favorite" className="icon-11-fill-0" />
+      <Icon name="favorite" className="icon-12-fill-0" />
     </div>
   ),
 };
@@ -86,7 +90,7 @@ export const IconExamples: Story = {
         <span className="mt-2 text-sm">favorite</span>
       </div>
       <div className="flex flex-col items-center">
-        <Icon name="star" className="icon-6-fill-1" />
+        <Icon name="favorite" className="icon-6-fill-1" />
         <span className="mt-2 text-sm">star</span>
       </div>
       <div className="flex flex-col items-center">
