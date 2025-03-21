@@ -15,6 +15,13 @@ figma.connect(
   "https://www.figma.com/design/nJ7LHYsXvqN6PwhOwknc8R/Sparkle-UI-for-MCP?node-id=233-5071",
   {
     props: {
+      state: figma.enum("state", {
+        default: "default",
+        hover: "hover",
+        active: "active",
+        disabled: "disabled",
+        loading: "loading",
+      }),
       variant: figma.enum("variant", {
         solid: "solid",
         outline: "outline",
@@ -33,22 +40,18 @@ figma.connect(
       children: figma.string("label"),
       prefixIcon: figma.string("prefixIcon"),
       suffixIcon: figma.string("suffixIcon"),
-      isDisabled: figma.boolean("isDisabled"),
-      isLoading: figma.boolean("isLoading"),
-      className: figma.string("className"),
     },
     example: (props) => (
       <Button
         variant={props.variant}
         size={props.size}
         theme={props.theme}
-        isLoading={props.isLoading}
-        isDisabled={props.isDisabled}
+        isLoading={props.state === "loading"}
+        isDisabled={props.state === "disabled"}
         prefixIcon={props.prefixIcon}
         suffixIcon={props.suffixIcon}
-        className={props.className}
       >
-        {props.children || "ボタン"}
+        {props.children || "Button"}
       </Button>
     ),
   }
@@ -58,93 +61,34 @@ export function examples() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap gap-2">
-        <Button variant="solid" size="md" theme="primary">
-          ソリッド プライマリー
-        </Button>
-        <Button variant="outline" size="md" theme="primary">
-          アウトライン プライマリー
-        </Button>
-        <Button variant="ghost" size="md" theme="primary">
-          ゴースト プライマリー
-        </Button>
+        <Button theme="primary">Primary</Button>
+        <Button theme="secondary">Secondary</Button>
+        <Button theme="negative">Negative</Button>
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Button variant="solid" size="md" theme="secondary">
-          ソリッド セカンダリー
-        </Button>
-        <Button variant="outline" size="md" theme="secondary">
-          アウトライン セカンダリー
-        </Button>
-        <Button variant="ghost" size="md" theme="secondary">
-          ゴースト セカンダリー
-        </Button>
+        <Button theme="negative">Solid</Button>
+        <Button theme="negative">Outline</Button>
+        <Button theme="negative">Ghost</Button>
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Button variant="solid" size="md" theme="negative">
-          ソリッド ネガティブ
-        </Button>
-        <Button variant="outline" size="md" theme="negative">
-          アウトライン ネガティブ
-        </Button>
-        <Button variant="ghost" size="md" theme="negative">
-          ゴースト ネガティブ
-        </Button>
+        <Button size="sm">Small</Button>
+        <Button size="md">Medium</Button>
+        <Button size="lg">Large</Button>
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Button variant="solid" size="sm" theme="primary">
-          小
-        </Button>
-        <Button variant="solid" size="md" theme="primary">
-          中
-        </Button>
-        <Button variant="solid" size="lg" theme="primary">
-          大
-        </Button>
+        <Button>有効</Button>
+        <Button isLoading>Loading</Button>
+        <Button isDisabled>Disabled</Button>
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Button variant="solid" size="md" theme="primary">
-          有効
-        </Button>
-        <Button variant="solid" size="md" theme="primary" isLoading>
-          ローディング
-        </Button>
-        <Button variant="solid" size="md" theme="primary" isDisabled>
-          無効
-        </Button>
-        <Button variant="solid" size="md" theme="primary" disabled>
-          無効 (disabled属性)
-        </Button>
-      </div>
-
-      <div className="flex flex-wrap gap-2">
-        <Button
-          variant="solid"
-          size="md"
-          theme="primary"
-          prefixIcon="icon-add-16"
-        >
-          プレフィックスアイコン
-        </Button>
-        <Button
-          variant="solid"
-          size="md"
-          theme="primary"
-          suffixIcon="icon-arrow-right-16"
-        >
-          サフィックスアイコン
-        </Button>
-        <Button
-          variant="solid"
-          size="md"
-          theme="primary"
-          prefixIcon="icon-add-16"
-          suffixIcon="icon-arrow-right-16"
-        >
-          両方のアイコン
+        <Button prefixIcon="add">with Prefix Icon</Button>
+        <Button suffixIcon="open_in_new">with Suffix Icon</Button>
+        <Button prefixIcon="favorite" suffixIcon="open_in_new">
+          with Both Icon
         </Button>
       </div>
     </div>
