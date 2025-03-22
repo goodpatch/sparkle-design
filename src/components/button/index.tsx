@@ -40,6 +40,7 @@ const buttonVariants = cva(
         variant: "solid",
         theme: "primary",
         isLoading: false,
+        isDisabled: false,
         className:
           "bg-primary-500 text-white border-primary-600 hover:bg-primary-600 hover:border-primary-700 active:bg-primary-700 active:border-primary-800 active:shadow-sm",
       },
@@ -47,6 +48,7 @@ const buttonVariants = cva(
         variant: "solid",
         theme: "primary",
         isLoading: true,
+        isDisabled: false,
         className: "bg-primary-500 text-white border-primary-600",
       },
 
@@ -55,6 +57,7 @@ const buttonVariants = cva(
         variant: "solid",
         theme: "secondary",
         isLoading: false,
+        isDisabled: false,
         className:
           "bg-secondary-500 text-white border-secondary-600 hover:bg-secondary-600 hover:border-secondary-700 active:bg-secondary-700 active:border-secondary-800 active:shadow-sm",
       },
@@ -62,6 +65,7 @@ const buttonVariants = cva(
         variant: "solid",
         theme: "secondary",
         isLoading: true,
+        isDisabled: false,
         className: "bg-secondary-500 text-white border-secondary-600",
       },
 
@@ -70,6 +74,7 @@ const buttonVariants = cva(
         variant: "solid",
         theme: "negative",
         isLoading: false,
+        isDisabled: false,
         className:
           "bg-negative-500 text-white border-negative-600 hover:bg-negative-600 hover:border-negative-700 active:bg-negative-700 active:border-negative-800 active:shadow-sm",
       },
@@ -77,6 +82,7 @@ const buttonVariants = cva(
         variant: "solid",
         theme: "negative",
         isLoading: true,
+        isDisabled: false,
         className: "bg-negative-500 text-white border-negative-600",
       },
 
@@ -85,6 +91,7 @@ const buttonVariants = cva(
         variant: "outline",
         theme: "primary",
         isLoading: false,
+        isDisabled: false,
         className:
           "bg-white text-primary-500 border-primary-500 shadow-sm hover:bg-primary-50 active:bg-primary-100",
       },
@@ -92,6 +99,7 @@ const buttonVariants = cva(
         variant: "outline",
         theme: "primary",
         isLoading: true,
+        isDisabled: false,
         className: "bg-white text-primary-500 border-primary-500 shadow-sm",
       },
 
@@ -100,6 +108,7 @@ const buttonVariants = cva(
         variant: "outline",
         theme: "secondary",
         isLoading: false,
+        isDisabled: false,
         className:
           "bg-white text-secondary-700 border-secondary-500 shadow-sm hover:bg-secondary-50 active:bg-secondary-100",
       },
@@ -107,6 +116,7 @@ const buttonVariants = cva(
         variant: "outline",
         theme: "secondary",
         isLoading: true,
+        isDisabled: false,
         className: "bg-white text-secondary-700 border-secondary-500 shadow-sm",
       },
 
@@ -115,6 +125,7 @@ const buttonVariants = cva(
         variant: "outline",
         theme: "negative",
         isLoading: false,
+        isDisabled: false,
         className:
           "bg-white text-negative-500 border-negative-500 shadow-sm hover:bg-negative-50 active:bg-negative-100",
       },
@@ -122,6 +133,7 @@ const buttonVariants = cva(
         variant: "outline",
         theme: "negative",
         isLoading: true,
+        isDisabled: false,
         className: "bg-white text-negative-500 border-negative-500 shadow-sm",
       },
 
@@ -130,12 +142,14 @@ const buttonVariants = cva(
         variant: "ghost",
         theme: "primary",
         isLoading: false,
+        isDisabled: false,
         className: "text-primary-500 hover:bg-primary-50 active:bg-primary-100",
       },
       {
         variant: "ghost",
         theme: "primary",
         isLoading: true,
+        isDisabled: false,
         className: "text-primary-500",
       },
 
@@ -144,6 +158,7 @@ const buttonVariants = cva(
         variant: "ghost",
         theme: "secondary",
         isLoading: false,
+        isDisabled: false,
         className:
           "text-secondary-700 hover:bg-secondary-50 active:bg-secondary-100",
       },
@@ -151,6 +166,7 @@ const buttonVariants = cva(
         variant: "ghost",
         theme: "secondary",
         isLoading: true,
+        isDisabled: false,
         className: "text-secondary-700",
       },
 
@@ -159,6 +175,7 @@ const buttonVariants = cva(
         variant: "ghost",
         theme: "negative",
         isLoading: false,
+        isDisabled: false,
         className:
           "text-negative-500 hover:bg-negative-100 active:bg-negative-100",
       },
@@ -166,6 +183,7 @@ const buttonVariants = cva(
         variant: "ghost",
         theme: "negative",
         isLoading: true,
+        isDisabled: false,
         className: "text-negative-500",
       },
 
