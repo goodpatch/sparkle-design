@@ -151,7 +151,7 @@
     font-size: var(--font-size-14);
     font-weight: var(--font-weight-char-normal);
     letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-20);
+    line-height: var(--line-height-24);
   }
 
   .character-2-regular-mono {
@@ -159,7 +159,7 @@
     font-size: var(--font-size-14);
     font-weight: var(--font-weight-char-normal);
     letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-20);
+    line-height: var(--line-height-24);
   }
 
   .character-2-bold-pro {
@@ -167,7 +167,7 @@
     font-size: var(--font-size-14);
     font-weight: var(--font-weight-char-bold);
     letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-20);
+    line-height: var(--line-height-24);
   }
 
   .character-2-bold-mono {
@@ -175,7 +175,7 @@
     font-size: var(--font-size-14);
     font-weight: var(--font-weight-char-bold);
     letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-20);
+    line-height: var(--line-height-24);
   }
 
   .character-3-regular-pro {
