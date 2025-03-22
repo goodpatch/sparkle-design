@@ -12,10 +12,10 @@ import figma from "@figma/code-connect";
 
 figma.connect(Icon, "", {
   props: {
-    name: figma.string("name"),
+    icon: figma.string("icon"),
     className: figma.string("className"),
   },
   example: (props) => (
-    <Icon name={props.name || "home"} className={props.className} />
+    <Icon icon={props.icon || "home"} className={props.className} />
   ),
 });

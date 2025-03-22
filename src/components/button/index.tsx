@@ -322,7 +322,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {prefixIcon && (
           <Icon
-            name={prefixIcon}
+            icon={prefixIcon}
             className={cn({ "opacity-0": isLoading }, getIconSize())}
           />
         )}
@@ -342,7 +342,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
         {suffixIcon && (
           <Icon
-            name={suffixIcon}
+            icon={suffixIcon}
             className={cn({ "opacity-0": isLoading }, getIconSize())}
           />
         )}

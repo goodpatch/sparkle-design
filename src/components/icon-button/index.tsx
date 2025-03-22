@@ -262,7 +262,7 @@ export interface IconButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof iconButtonVariants> {
   asChild?: boolean;
-  icon?: string;
+  icon: string;
   isLoading?: boolean;
   isDisabled?: boolean;
 }
@@ -324,7 +324,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
             <Spinner className={getIconSize()} />
           </>
         ) : (
-          <Icon name={icon || ""} className={getIconSize()} />
+          <Icon icon={icon} className={getIconSize()} />
         )}
       </Comp>
     );
