@@ -4,6 +4,9 @@ import { Icon } from "@/components/icon";
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {}
 
+/**
+ * スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。
+ */
 export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
   ({ className, ...props }, ref) => {
     return (

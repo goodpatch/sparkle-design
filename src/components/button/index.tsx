@@ -269,6 +269,9 @@ export interface ButtonProps
   isDisabled?: boolean;
 }
 
+/**
+ * ボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。
+ */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {

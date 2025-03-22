@@ -138,8 +138,7 @@ export interface TagProps
 }
 
 /**
- * Tagコンポーネント
- * ステータスやカテゴリを表示するために使用します
+ * タグは特定の要素にラベリングをすることで情報を分類・整理したり、情報にステータスを付与するために使用するコンポーネントです。
  */
 const Tag = React.forwardRef<HTMLDivElement, TagProps>(
   ({ className, variant, size, status, children, ...props }, ref) => {

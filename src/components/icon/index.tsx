@@ -5,6 +5,9 @@ export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
   icon: string;
 }
 
+/**
+ * アイコンは情報を象形表現でユーザーに提示するために使用するコンポーネントです。
+ */
 export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
   ({ className, icon, ...props }, ref) => {
     return (

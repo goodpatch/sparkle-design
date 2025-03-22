@@ -267,6 +267,9 @@ export interface IconButtonProps
   isDisabled?: boolean;
 }
 
+/**
+ * アイコンボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。
+ */
 const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   (
     {

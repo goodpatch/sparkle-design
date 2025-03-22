@@ -94,8 +94,7 @@ export interface InputProps
 }
 
 /**
- * Inputコンポーネント
- * テキスト入力フィールドを提供し、オプションでアイコンボタンを追加できます
+ * インプットテキストはテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。
  */
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (

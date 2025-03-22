@@ -45,8 +45,7 @@ export interface DividerProps
     VariantProps<typeof dividerVariants> {}
 
 /**
- * Dividerコンポーネント
- * コンテンツの視覚的な区切りを提供します
+ * ディバイダーはグループ内のコンテンツを視覚的に区切ってユーザーに提示する際に使用します。
  */
 const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
   ({ className, emphasis, lineStyle, direction, ...props }, ref) => {
