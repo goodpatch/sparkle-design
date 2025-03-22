@@ -17,7 +17,7 @@ const meta = {
     },
     size: {
       control: "select",
-      options: ["sm", "md", "lg"],
+      options: ["xs", "sm", "md", "lg"],
     },
     theme: {
       control: "select",
@@ -78,6 +78,9 @@ export const Variant = () => {
 export const Size = () => {
   return (
     <div className="flex flex-row gap-2">
+      <IconButton size="xs" icon="edit">
+        extra small
+      </IconButton>
       <IconButton size="sm" icon="edit">
         small
       </IconButton>

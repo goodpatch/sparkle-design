@@ -16,6 +16,7 @@ const iconButtonVariants = cva(
         ghost: "",
       },
       size: {
+        xs: "w-6 h-6 p-0.5 character-1-bold-pro",
         sm: "w-8 h-8 p-1 character-2-bold-pro",
         md: "w-10 h-10 p-2 character-3-bold-pro",
         lg: "w-12 h-12 p-2.5 character-4-bold-pro",
@@ -40,6 +41,7 @@ const iconButtonVariants = cva(
         variant: "solid",
         theme: "primary",
         isLoading: false,
+        isDisabled: false,
         className:
           "bg-primary-500 text-white border-primary-600 hover:bg-primary-600 hover:border-primary-700 active:bg-primary-700 active:border-primary-800 active:shadow-sm",
       },
@@ -47,6 +49,7 @@ const iconButtonVariants = cva(
         variant: "solid",
         theme: "primary",
         isLoading: true,
+        isDisabled: false,
         className: "bg-primary-500 text-white border-primary-600",
       },
 
@@ -55,6 +58,7 @@ const iconButtonVariants = cva(
         variant: "solid",
         theme: "secondary",
         isLoading: false,
+        isDisabled: false,
         className:
           "bg-secondary-500 text-white border-secondary-600 hover:bg-secondary-600 hover:border-secondary-700 active:bg-secondary-700 active:border-secondary-800 active:shadow-sm",
       },
@@ -62,6 +66,7 @@ const iconButtonVariants = cva(
         variant: "solid",
         theme: "secondary",
         isLoading: true,
+        isDisabled: false,
         className: "bg-secondary-500 text-white border-secondary-600",
       },
 
@@ -70,6 +75,7 @@ const iconButtonVariants = cva(
         variant: "solid",
         theme: "negative",
         isLoading: false,
+        isDisabled: false,
         className:
           "bg-negative-500 text-white border-negative-600 hover:bg-negative-600 hover:border-negative-700 active:bg-negative-700 active:border-negative-800 active:shadow-sm",
       },
@@ -77,6 +83,7 @@ const iconButtonVariants = cva(
         variant: "solid",
         theme: "negative",
         isLoading: true,
+        isDisabled: false,
         className: "bg-negative-500 text-white border-negative-600",
       },
 
@@ -92,6 +99,7 @@ const iconButtonVariants = cva(
         variant: "outline",
         theme: "primary",
         isLoading: true,
+        isDisabled: false,
         className: "bg-white text-primary-500 border-primary-500 shadow-sm",
       },
 
@@ -107,6 +115,7 @@ const iconButtonVariants = cva(
         variant: "outline",
         theme: "secondary",
         isLoading: true,
+        isDisabled: false,
         className: "bg-white text-secondary-700 border-secondary-500 shadow-sm",
       },
 
@@ -115,6 +124,7 @@ const iconButtonVariants = cva(
         variant: "outline",
         theme: "negative",
         isLoading: false,
+        isDisabled: false,
         className:
           "bg-white text-negative-500 border-negative-500 shadow-sm hover:bg-negative-50 active:bg-negative-100",
       },
@@ -122,6 +132,7 @@ const iconButtonVariants = cva(
         variant: "outline",
         theme: "negative",
         isLoading: true,
+        isDisabled: false,
         className: "bg-white text-negative-500 border-negative-500 shadow-sm",
       },
 
@@ -130,12 +141,14 @@ const iconButtonVariants = cva(
         variant: "ghost",
         theme: "primary",
         isLoading: false,
+        isDisabled: false,
         className: "text-primary-500 hover:bg-primary-50 active:bg-primary-100",
       },
       {
         variant: "ghost",
         theme: "primary",
         isLoading: true,
+        isDisabled: false,
         className: "text-primary-500",
       },
 
@@ -144,6 +157,7 @@ const iconButtonVariants = cva(
         variant: "ghost",
         theme: "secondary",
         isLoading: false,
+        isDisabled: false,
         className:
           "text-secondary-700 hover:bg-secondary-50 active:bg-secondary-100",
       },
@@ -151,6 +165,7 @@ const iconButtonVariants = cva(
         variant: "ghost",
         theme: "secondary",
         isLoading: true,
+        isDisabled: false,
         className: "text-secondary-700",
       },
 
@@ -159,6 +174,7 @@ const iconButtonVariants = cva(
         variant: "ghost",
         theme: "negative",
         isLoading: false,
+        isDisabled: false,
         className:
           "text-negative-500 hover:bg-negative-100 active:bg-negative-100",
       },
@@ -166,6 +182,7 @@ const iconButtonVariants = cva(
         variant: "ghost",
         theme: "negative",
         isLoading: true,
+        isDisabled: false,
         className: "text-negative-500",
       },
 
@@ -275,6 +292,8 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
     // アイコンのサイズをボタンサイズに合わせて設定
     const getIconSize = () => {
       switch (size) {
+        case "xs":
+          return "icon-3-fill-0";
         case "sm":
           return "icon-5-fill-0";
         case "lg":
