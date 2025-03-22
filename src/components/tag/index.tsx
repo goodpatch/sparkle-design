@@ -8,14 +8,14 @@ const tagVariants = cva(
   {
     variants: {
       variant: {
-        solid: "border-none",
+        solid: "",
         outline: "border",
-        subtle: "border-none",
+        subtle: "",
       },
       size: {
-        sm: "text-xs py-0 px-1 h-5",
-        md: "text-sm py-0.5 px-2 h-6",
-        lg: "text-base py-1 px-2 h-8",
+        sm: "py-0 px-1 h-5 character-1-regular-pro",
+        md: "py-0 px-2 h-6 character-1-regular-pro",
+        lg: "py-1 px-2 h-8 character-2-regular-pro",
       },
       status: {
         neutral: "",
