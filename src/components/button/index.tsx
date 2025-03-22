@@ -299,11 +299,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const getIconSize = () => {
       switch (size) {
         case "sm":
-          return "icon-5-fill-0";
+          return 5;
         case "lg":
-          return "icon-7-fill-0";
+          return 7;
         default:
-          return "icon-6-fill-0";
+          return 6;
       }
     };
 
@@ -326,14 +326,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {prefixIcon && (
           <Icon
             icon={prefixIcon}
-            className={cn({ "opacity-0": isLoading }, getIconSize())}
+            size={getIconSize()}
+            className={cn({ "opacity-0": isLoading })}
           />
         )}
 
         {isLoading ? (
           <>
             <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-flex">
-              <Spinner className={getIconSize()} />
+              <Spinner size={getIconSize()} />
             </span>
             <span className="opacity-0" aria-hidden="true">
               {children}
@@ -346,7 +347,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {suffixIcon && (
           <Icon
             icon={suffixIcon}
-            className={cn({ "opacity-0": isLoading }, getIconSize())}
+            size={getIconSize()}
+            className={cn({ "opacity-0": isLoading })}
           />
         )}
       </Comp>

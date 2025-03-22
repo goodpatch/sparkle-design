@@ -27,18 +27,18 @@ export const Default: Story = {
 export const Size: Story = {
   render: () => (
     <div className="flex items-center gap-4">
-      <Spinner className="icon-1-fill-0" />
-      <Spinner className="icon-2-fill-0" />
-      <Spinner className="icon-3-fill-0" />
-      <Spinner className="icon-4-fill-0" />
-      <Spinner className="icon-5-fill-0" />
-      <Spinner className="icon-6-fill-0" />
-      <Spinner className="icon-7-fill-0" />
-      <Spinner className="icon-8-fill-0" />
-      <Spinner className="icon-9-fill-0" />
-      <Spinner className="icon-10-fill-0" />
-      <Spinner className="icon-11-fill-0" />
-      <Spinner className="icon-12-fill-0" />
+      <Spinner size={1} />
+      <Spinner size={2} />
+      <Spinner size={3} />
+      <Spinner size={4} />
+      <Spinner size={5} />
+      <Spinner size={6} />
+      <Spinner size={7} />
+      <Spinner size={8} />
+      <Spinner size={9} />
+      <Spinner size={10} />
+      <Spinner size={11} />
+      <Spinner size={12} />
     </div>
   ),
 };

@@ -2,13 +2,15 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/icon";
 
-export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {}
+export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
+  size?: number;
+}
 
 /**
  * スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。
  */
 export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
-  ({ className, ...props }, ref) => {
+  ({ className, size, ...props }, ref) => {
     return (
       <span
         ref={ref}
@@ -19,6 +21,7 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
       >
         <Icon
           icon="progress_activity"
+          size={size}
           className={cn("animate-spin", className)}
         />
       </span>

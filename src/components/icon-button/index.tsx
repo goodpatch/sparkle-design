@@ -296,13 +296,13 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
     const getIconSize = () => {
       switch (size) {
         case "xs":
-          return "icon-3-fill-0";
+          return 3;
         case "sm":
-          return "icon-5-fill-0";
+          return 5;
         case "lg":
-          return "icon-7-fill-0";
+          return 7;
         default:
-          return "icon-6-fill-0";
+          return 6;
       }
     };
 
@@ -324,10 +324,10 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
       >
         {isLoading ? (
           <>
-            <Spinner className={getIconSize()} />
+            <Spinner size={getIconSize()} />
           </>
         ) : (
-          <Icon icon={icon} className={getIconSize()} />
+          <Icon icon={icon} size={getIconSize()} />
         )}
       </Comp>
     );

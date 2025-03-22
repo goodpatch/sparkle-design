@@ -31,6 +31,14 @@ const statusIcons = {
   success: "check_circle",
 };
 
+// ステータスごとの色クラス
+const statusColorClasses = {
+  info: "text-info-600",
+  warning: "text-warning-600",
+  negative: "text-negative-600",
+  success: "text-success-600",
+};
+
 export interface InlineMessageProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof inlineMessageVariants> {
@@ -64,8 +72,10 @@ const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
     // ステータスに対応するアイコン情報の取得
     const statusIcon = status ? statusIcons[status] : statusIcons.info;
 
-    // 子要素があるかどうかを確認
-    const hasChildren = React.Children.count(children) > 0;
+    // ステータスに対応する色クラスの取得
+    const colorClass = status
+      ? statusColorClasses[status]
+      : statusColorClasses.info;
 
     return (
       <div
@@ -77,7 +87,9 @@ const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
         {/* ステータスアイコン */}
         <Icon
           icon={statusIcon}
-          className={cn("icon-6-fill-1", `text-${status}-600`)}
+          size={6}
+          fill={true}
+          className={cn(colorClass)}
         />
 
         {/* メッセージ本文 */}
