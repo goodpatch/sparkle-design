@@ -51,7 +51,7 @@ const meta: Meta<typeof Input> = {
         defaultValue: { summary: "false" },
       },
     },
-    buttonIcon: {
+    iconButtonIcon: {
       control: {
         type: "text",
       },
@@ -59,6 +59,12 @@ const meta: Meta<typeof Input> = {
       table: {
         defaultValue: { summary: "search" },
       },
+    },
+    iconButtonAriaLabel: {
+      control: {
+        type: "text",
+      },
+      description: "アイコンボタンのアクセシビリティラベルを指定します",
     },
     onIconButtonClick: {
       action: "buttonClicked",
@@ -101,19 +107,22 @@ export const Size: Story = {
         size="sm"
         placeholder="Small input (sm)"
         isIconButtonEnable
-        buttonIcon="delete"
+        iconButtonIcon="cancel"
+        iconButtonAriaLabel="入力内容を消去する"
       />
       <Input
         size="md"
         placeholder="Medium input (md)"
         isIconButtonEnable
-        buttonIcon="delete"
+        iconButtonIcon="cancel"
+        iconButtonAriaLabel="入力内容を消去する"
       />
       <Input
         size="lg"
         placeholder="Large input (lg)"
         isIconButtonEnable
-        buttonIcon="delete"
+        iconButtonIcon="cancel"
+        iconButtonAriaLabel="入力内容を消去する"
       />
     </div>
   ),
@@ -135,9 +144,10 @@ export const Disabled: Story = {
   ),
 };
 
-export const WitIconButton: Story = {
+export const WithIconButton: Story = {
   args: {
     isIconButtonEnable: true,
-    buttonIcon: "delete",
+    iconButtonIcon: "cancel",
+    iconButtonAriaLabel: "入力内容を消去する",
   },
 };

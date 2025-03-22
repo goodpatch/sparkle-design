@@ -88,7 +88,9 @@ export interface InputProps
   /** アイコンボタンを有効にするフラグ */
   isIconButtonEnable?: boolean;
   /** ボタンに表示するアイコン名 */
-  buttonIcon?: string;
+  iconButtonIcon?: string;
+  /** アイコンボタンのアクセシビリティラベル */
+  iconButtonAriaLabel?: string;
   /** アイコンボタンクリック時のコールバック */
   onIconButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
@@ -104,7 +106,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       isInvalid = false,
       isDisabled = false,
       isIconButtonEnable = false,
-      buttonIcon = "search",
+      iconButtonIcon = "edit",
+      iconButtonAriaLabel,
       onIconButtonClick,
       disabled,
       defaultValue,
@@ -274,21 +277,20 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         />
 
         {isIconButtonEnable && (
-          <div className="flex-shrink-0">
-            <IconButton
-              ref={buttonRef}
-              icon={buttonIcon}
-              variant="ghost"
-              size={iconButtonSize}
-              onClick={onIconButtonClick}
-              isDisabled={isInputDisabled}
-              disabled={isInputDisabled}
-              type="button" // フォーム内でデフォルトのsubmit動作を防ぐ
-              aria-label={`${buttonIcon} button`}
-              onFocus={handleIconButtonFocus}
-              onBlur={handleIconButtonBlur}
-            />
-          </div>
+          <IconButton
+            ref={buttonRef}
+            icon={iconButtonIcon}
+            theme="secondary"
+            variant="ghost"
+            size={iconButtonSize}
+            onClick={onIconButtonClick}
+            isDisabled={isInputDisabled}
+            disabled={isInputDisabled}
+            type="button" // フォーム内でデフォルトのsubmit動作を防ぐ
+            aria-label={iconButtonAriaLabel}
+            onFocus={handleIconButtonFocus}
+            onBlur={handleIconButtonBlur}
+          />
         )}
       </div>
     );
