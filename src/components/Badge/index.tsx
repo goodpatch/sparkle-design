@@ -67,7 +67,7 @@ const badgeVariants = cva(
         size: "md",
         class: "outline-white outline-4",
       },
-      // 数字がなくボーダーがない場合はheightを指定
+      // 数字がない場合はheightを指定
       {
         isNumberVisible: false,
         size: "x2s",
