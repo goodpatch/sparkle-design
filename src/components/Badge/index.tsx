@@ -67,6 +67,31 @@ const badgeVariants = cva(
         size: "md",
         class: "border-white border-4",
       },
+      // 数字がなくボーダーがない場合はheightを指定
+      {
+        isGapped: false,
+        isNumberVisible: false,
+        size: "x2s",
+        class: "h-5",
+      },
+      {
+        isGapped: false,
+        isNumberVisible: false,
+        size: "xs",
+        class: "h-6",
+      },
+      {
+        isGapped: false,
+        isNumberVisible: false,
+        size: "sm",
+        class: "h-7",
+      },
+      {
+        isGapped: false,
+        isNumberVisible: false,
+        size: "md",
+        class: "h-8",
+      },
     ],
     defaultVariants: {
       isNumberVisible: true,
