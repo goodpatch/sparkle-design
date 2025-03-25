@@ -16,7 +16,14 @@ import { $CAMEL_NAME } from './index';
 const meta: Meta<typeof $CAMEL_NAME> = {
   title: 'Components/$CAMEL_NAME',
   component: $CAMEL_NAME,
-};
+  parameters: {
+    layout: 'centered',
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    // 引数の設定
+  },
+} satisfies Meta<typeof $CAMEL_NAME>;
 
 export default meta;
 type Story = StoryObj<typeof $CAMEL_NAME>;
