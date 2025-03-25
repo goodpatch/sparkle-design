@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center text-white rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center text-white text-center justify-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
   {
     variants: {
       isNumberVisible: {
@@ -35,59 +35,55 @@ const badgeVariants = cva(
       {
         isGapped: true,
         size: "x5s",
-        class: "border-white border-2",
+        class: "outline-white outline-2",
       },
       {
         isGapped: true,
         size: "x4s",
-        class: "border-white border-2",
+        class: "outline-white outline-2",
       },
       {
         isGapped: true,
         size: "x3s",
-        class: "border-white border-4",
+        class: "outline-white outline-4",
       },
       {
         isGapped: true,
         size: "x2s",
-        class: "border-white border-4",
+        class: "outline-white outline-4",
       },
       {
         isGapped: true,
         size: "xs",
-        class: "border-white border-4",
+        class: "outline-white outline-4",
       },
       {
         isGapped: true,
         size: "sm",
-        class: "border-white border-4",
+        class: "outline-white outline-4",
       },
       {
         isGapped: true,
         size: "md",
-        class: "border-white border-4",
+        class: "outline-white outline-4",
       },
       // 数字がなくボーダーがない場合はheightを指定
       {
-        isGapped: false,
         isNumberVisible: false,
         size: "x2s",
         class: "h-5",
       },
       {
-        isGapped: false,
         isNumberVisible: false,
         size: "xs",
         class: "h-6",
       },
       {
-        isGapped: false,
         isNumberVisible: false,
         size: "sm",
         class: "h-7",
       },
       {
-        isGapped: false,
         isNumberVisible: false,
         size: "md",
         class: "h-8",
@@ -123,6 +119,11 @@ function Badge({
 }: BadgeProps) {
   // 3xs以下のサイズの場合は、文字を非表示にする
   if (size === "x5s" || size === "x4s" || size === "x3s") {
+    isNumberVisible = false;
+  }
+
+  // childrenがない場合はisNumberVisibleがfalseの扱いにする
+  if (!children) {
     isNumberVisible = false;
   }
 
