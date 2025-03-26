@@ -67,8 +67,9 @@ export interface TextareaProps
 }
 
 /**
- * テキストエリアコンポーネント
- * サイズ、エラー状態、無効状態のバリアントをサポート
+ * /**
+ * テキストエリアは複数行のテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ *
  */
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, isInvalid, size, isDisabled, disabled, ...props }, ref) => {
