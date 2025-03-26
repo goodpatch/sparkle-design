@@ -1,0 +1,70 @@
+"use client";
+
+import * as React from "react";
+import * as SwitchPrimitives from "@radix-ui/react-switch";
+import { cva, type VariantProps } from "class-variance-authority";
+
+import { cn } from "@/lib/utils";
+
+// Figmaから取得したスタイルに基づいたバリアント
+const switchVariants = cva(
+  "peer inline-flex shrink-0 cursor-pointer items-center rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+  {
+    variants: {
+      size: {
+        // Figmaでの小サイズは幅28px
+        sm: "h-4 w-7 p-px",
+        // Figmaでの中サイズは幅44px
+        md: "h-6 w-11 p-px",
+        // Figmaでの大サイズは幅60px
+        lg: "h-8 w-[60px] p-px",
+      },
+    },
+    defaultVariants: {
+      size: "md",
+    },
+  }
+);
+
+const thumbVariants = cva(
+  "pointer-events-none block rounded-full bg-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] ring-0 transition-transform",
+  {
+    variants: {
+      size: {
+        // Figmaでのthumbサイズと移動距離
+        sm: "h-3 w-3 data-[state=checked]:translate-x-3 data-[state=unchecked]:translate-x-0",
+        md: "h-5 w-5 data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0",
+        lg: "h-7 w-7 data-[state=checked]:translate-x-7 data-[state=unchecked]:translate-x-0",
+      },
+    },
+    defaultVariants: {
+      size: "md",
+    },
+  }
+);
+
+const Switch = React.forwardRef<
+  React.ElementRef<typeof SwitchPrimitives.Root>,
+  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> &
+    VariantProps<typeof switchVariants>
+>(({ className, size, ...props }, ref) => (
+  <SwitchPrimitives.Root
+    className={cn(
+      switchVariants({ size }),
+      // Unchecked状態のスタイル
+      "data-[state=unchecked]:bg-gray-500 data-[state=unchecked]:border-gray-600 data-[state=unchecked]:hover:bg-gray-600 data-[state=unchecked]:hover:border-gray-700",
+      // Checked状態のスタイル
+      "data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-600 data-[state=checked]:hover:bg-blue-600 data-[state=checked]:hover:border-blue-700",
+      // 無効状態のスタイル
+      "disabled:cursor-not-allowed disabled:data-[state=unchecked]:bg-gray-200 disabled:data-[state=unchecked]:border-transparent disabled:data-[state=checked]:bg-blue-200 disabled:data-[state=checked]:border-transparent",
+      className
+    )}
+    {...props}
+    ref={ref}
+  >
+    <SwitchPrimitives.Thumb className={cn(thumbVariants({ size }))} />
+  </SwitchPrimitives.Root>
+));
+Switch.displayName = SwitchPrimitives.Root.displayName;
+
+export { Switch, switchVariants, thumbVariants };
