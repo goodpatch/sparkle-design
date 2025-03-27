@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "build:sd": "node sd.config.js && cp style-dictionary/build/_variables.css src/app/variables.css"
   },
   "dependencies": {
     "@figma/code-connect": "^1.0.6",
@@ -44,6 +45,8 @@
     "eslint-plugin-storybook": "^0.11.6",
     "playwright": "^1.51.1",
     "postcss": "^8",
+    "sd-tailwindcss-transformer": "^2.1.0",
+    "style-dictionary": "^4.3.3",
     "tailwindcss": "^3.4.1",
     "typescript": "^5",
     "vitest": "^3.0.9"

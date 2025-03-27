@@ -703,6 +703,10 @@
   }
 }
 
+@theme {
+  @import 'variables.css';
+}
+
 @layer base {
   * {
     @apply border-border;
