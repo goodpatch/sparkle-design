@@ -34,9 +34,13 @@ const config = {
         foreground: "hsl(var(--foreground))",
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        divide: "var(--radius-none)",
+        minimum: "var(--radius-xs)",
+        notice: "var(--radius-sm)",
+        action: "var(--radius-md)",
+        halfModal: "var(--radius-lg)",
+        modal: "var(--radius-xl)",
+        round: "var(--radius-full)",
       },
       keyframes: {
         "accordion-down": {
