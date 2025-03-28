@@ -4,7 +4,7 @@ const sparkleColors = require("./style-dictionary/build/color.tailwind");
 /// Semantics colors
 const semanticsColors = {
   neutral: sparkleColors.gray,
-  primary: sparkleColors.blue,
+  primary: sparkleColors['blue'],
   secondary: sparkleColors.gray,
   info: sparkleColors.blue,
   success: sparkleColors.green,
