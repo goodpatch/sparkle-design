@@ -1,7 +1,19 @@
 import StyleDictionary from 'style-dictionary';
 import { formats, transformGroups } from 'style-dictionary/enums';
+import { makeSdTailwindConfig } from 'sd-tailwindcss-transformer';
 
-const sd = new StyleDictionary({
+const sdConfig = makeSdTailwindConfig({
+  type: 'color',
+  source: ['style-dictionary/tokens/**/*.json'],
+  buildPath: 'style-dictionary/build/',
+  tailwind: {
+    content: [
+      './src/**/*.{js,jsx,ts,tsx}',
+    ]
+  }
+});
+
+const sd = await (new StyleDictionary({
   source: ['style-dictionary/tokens/**/*.json'],
   platforms: {
     scss: {
@@ -16,6 +28,6 @@ const sd = new StyleDictionary({
     },
     // ...
   },
-});
+})).extend(sdConfig);
 
 await sd.buildAllPlatforms();

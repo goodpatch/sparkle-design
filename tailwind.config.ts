@@ -1,5 +1,35 @@
 import type { Config } from "tailwindcss";
-const colors = require("tailwindcss/colors");
+const sparkleColors = require("./style-dictionary/build/color.tailwind");
+
+/// Semantics colors
+const semanticsColors = {
+  neutral: sparkleColors.gray,
+  primary: sparkleColors.blue,
+  secondary: sparkleColors.gray,
+  info: sparkleColors.blue,
+  success: sparkleColors.green,
+  warning: sparkleColors.yellow,
+  negative: sparkleColors.red,
+};
+
+/// Components colors
+const componentsColors = {
+  divider: {
+    low: semanticsColors.neutral[100],
+    middle: semanticsColors.neutral[200],
+    high: semanticsColors.neutral[300],
+  },
+  text: {
+    disabled: semanticsColors.neutral[200],
+    placeholder: semanticsColors.neutral[300],
+    low: semanticsColors.neutral[500],
+    middle: semanticsColors.neutral[700],
+    high: semanticsColors.neutral[900],
+  },
+  skeleton: {
+    fill: semanticsColors.neutral[200],
+  }
+}
 
 const config = {
   darkMode: ["class"],
@@ -20,13 +50,11 @@ const config = {
     },
     extend: {
       colors: {
-        primary: colors.blue,
-        secondary: colors.gray,
-        base: colors.gray,
-        info: colors.blue,
-        success: colors.green,
-        warning: colors.yellow,
-        negative: colors.red,
+        ...sparkleColors,
+        ...semanticsColors,
+        ...componentsColors,
+        // NOTE: 以下はSpakrleにないトークン定義
+        base: sparkleColors.gray,
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
