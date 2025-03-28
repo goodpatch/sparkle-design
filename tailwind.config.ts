@@ -53,7 +53,7 @@ const config = {
         ...sparkleColors,
         ...semanticsColors,
         ...componentsColors,
-        // NOTE: 以下はSpakrleにないトークン定義
+        // NOTE: 以下はSparkleにないトークン定義
         base: sparkleColors.gray,
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
