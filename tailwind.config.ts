@@ -84,6 +84,14 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      boxShadow: {
+        base: "var(--shadow-base)",
+        flat: "var(--shadow-flat)",
+        raise: "var(--shadow-raise)",
+        stick: "var(--shadow-stick)",
+        float: "var(--shadow-float)",
+        popout: "var(--shadow-popout)",
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],
