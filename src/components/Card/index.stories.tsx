@@ -16,29 +16,32 @@ const meta: Meta<typeof Card> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  argTypes: {
-    // 引数の設定
-  },
+  argTypes: {},
 } satisfies Meta<typeof Card>;
 
 export default meta;
 type Story = StoryObj<typeof Card>;
 
+/**
+ * 基本的なカードの例
+ */
 export const Default: Story = {
-  args: {
-    children: (
-      <>
-        <CardHeader>
-          <CardTitle>Card Title</CardTitle>
-          <CardDescription>Card Description</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
-        </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
-      </>
-    ),
-  },
+  render: () => (
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          タイトル<div className="border border-info text-text-low">SLOT</div>
+        </CardTitle>
+        <CardDescription>
+          <div className="border border-info text-text-low">SLOT</div>
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="border border-info text-text-low w-[272px]">SLOT</div>
+      </CardContent>
+      <CardFooter>
+        <div className="border border-info text-text-low">SLOT</div>
+      </CardFooter>
+    </Card>
+  ),
 };
