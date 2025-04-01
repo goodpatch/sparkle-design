@@ -8,7 +8,7 @@ import {
   CardTitle,
   ClickableCard,
 } from "./index";
-import { ReactNode } from "react";
+import { action } from "@storybook/addon-actions";
 
 const meta: Meta<typeof Card> = {
   title: "Components/Card",
@@ -31,17 +31,26 @@ export const Default: Story = {
     <Card>
       <CardHeader>
         <CardTitle>
-          タイトル<div className="border border-info text-text-low">SLOT</div>
+          タイトル
+          <div className="border border-dashed border-purple-300 text-purple-300">
+            SLOT
+          </div>
         </CardTitle>
         <CardDescription>
-          <div className="border border-info text-text-low">SLOT</div>
+          <div className="border border-dashed border-purple-300 text-purple-300">
+            SLOT
+          </div>
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="border border-info text-text-low w-[272px]">SLOT</div>
+        <div className="border border-dashed border-purple-300 text-purple-300 w-[272px]">
+          SLOT
+        </div>
       </CardContent>
       <CardFooter>
-        <div className="border border-info text-text-low">SLOT</div>
+        <div className="border border-dashed border-purple-300 text-purple-300">
+          SLOT
+        </div>
       </CardFooter>
     </Card>
   ),
@@ -52,21 +61,24 @@ export const Default: Story = {
  */
 export const Clickable: Story = {
   render: () => (
-    <ClickableCard
-      onClick={() => {
-        alert("clicked");
-      }}
-    >
+    <ClickableCard onClick={action("clicked")}>
       <CardHeader>
         <CardTitle>
-          タイトル<div className="border border-info text-text-low">SLOT</div>
+          タイトル
+          <div className="border border-dashed border-purple-300 text-purple-300">
+            SLOT
+          </div>
         </CardTitle>
         <CardDescription>
-          <div className="border border-info text-text-low">SLOT</div>
+          <div className="border border-dashed border-purple-300 text-purple-300">
+            SLOT
+          </div>
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="border border-info text-text-low w-[272px]">SLOT</div>
+        <div className="border border-dashed border-purple-300 text-purple-300 w-[272px]">
+          SLOT
+        </div>
       </CardContent>
     </ClickableCard>
   ),
@@ -77,22 +89,24 @@ export const Clickable: Story = {
  */
 export const ClickableDisabled: Story = {
   render: () => (
-    <ClickableCard
-      onClick={() => {
-        alert("clicked");
-      }}
-      isDisabled
-    >
+    <ClickableCard onClick={action("clicked")} isDisabled>
       <CardHeader>
         <CardTitle>
-          タイトル<div className="border border-info text-text-low">SLOT</div>
+          タイトル
+          <div className="border border-dashed border-purple-300 text-purple-300">
+            SLOT
+          </div>
         </CardTitle>
         <CardDescription>
-          <div className="border border-info text-text-low">SLOT</div>
+          <div className="border border-dashed border-purple-300 text-purple-300">
+            SLOT
+          </div>
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="border border-info text-text-low w-[272px]">SLOT</div>
+        <div className="border border-dashed border-purple-300 text-purple-300 w-[272px]">
+          SLOT
+        </div>
       </CardContent>
     </ClickableCard>
   ),
