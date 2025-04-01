@@ -2,6 +2,39 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+export interface ClickableCardProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    onClick?: React.MouseEventHandler<HTMLButtonElement>
+    isDisabled?: boolean
+  }
+
+/**
+ * 遷移トリガーやドラッグ&ドロップなど、インタラクションを想定する場合は、Clickable Cardコンポーネントを使用します。
+ */
+const ClickableCard = React.forwardRef<
+  HTMLButtonElement,
+  ClickableCardProps
+>(({ className, isDisabled, onClick, ...props }, ref) => (
+  <button
+    ref={ref}
+    className={cn(
+      "rounded-action border border-divider-low bg-white shadow-raise text-text-middle py-4 cursor-pointer hover:bg-neutral-50",
+      "transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      "active:bg-neutral-50 active:shadow-float active:border-primary-400",
+      "disabled:cursor-not-allowed disabled:bg-white disabled:border-secondary-100 disabled:text-secondary-200 disabled:shadow-flat",
+      className
+    )}
+    onClick={onClick}
+    disabled={isDisabled}
+    type="button"
+    {...props}
+  />
+))
+ClickableCard.displayName = "ClickableCard"
+
+/**
+ * カードはコンテンツをグルーピングして表示するために使用するコンポーネントです。
+ */
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -82,4 +115,4 @@ const CardFooter = React.forwardRef<
 ))
 CardFooter.displayName = "CardFooter"
 
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+export { ClickableCard, Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
