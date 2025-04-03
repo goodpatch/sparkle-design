@@ -21,13 +21,13 @@ const sliderRootVariants = cva(
 );
 
 const sliderTrackVariants = cva(
-  "relative w-full grow overflow-hidden rounded-sm bg-gray-200 h-1"
+  "relative w-full grow overflow-hidden rounded-sm bg-neutral-200 h-1"
 );
 
-const sliderRangeVariants = cva("absolute h-full bg-blue-500", {
+const sliderRangeVariants = cva("absolute h-full bg-primary-500", {
   variants: {
     isDisabled: {
-      true: "bg-blue-200",
+      true: "bg-primary-200",
     },
   },
   defaultVariants: {
@@ -36,11 +36,11 @@ const sliderRangeVariants = cva("absolute h-full bg-blue-500", {
 });
 
 const sliderThumbVariants = cva(
-  "block rounded-full border border-gray-200 bg-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] ring-offset-background transition-colors hover:bg-gray-50 focus:outline-none focus:bg-blue-50 focus:border-blue-300 focus:ring-2 focus:ring-ring focus:ring-offset-2 h-4 w-4",
+  "block rounded-full border border-neutral-200 bg-white shadow-raise ring-offset-background transition-colors hover:bg-neutral-50 focus:outline-none focus:bg-primary-50 focus:border-primary-300 focus:ring-2 focus:ring-ring focus:ring-offset-2 h-4 w-4",
   {
     variants: {
       isDisabled: {
-        true: "pointer-events-none bg-gray-100 hover:bg-gray-100 focus:bg-gray-300 focus:border-gray-300",
+        true: "pointer-events-none bg-neutral-100 hover:bg-neutral-100 focus:bg-neutral-300 focus:border-neutral-300",
       },
     },
     defaultVariants: {
