@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import {
   Card,
   CardContent,
+  CardControl,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -32,15 +33,17 @@ export const Default: Story = {
       <CardHeader>
         <CardTitle>
           タイトル
-          <div className="border border-dashed border-purple-300 text-purple-300">
-            SLOT
-          </div>
+          <CardDescription>
+            <div className="border border-dashed border-purple-300 text-purple-300">
+              SLOT
+            </div>
+          </CardDescription>
         </CardTitle>
-        <CardDescription>
+        <CardControl>
           <div className="border border-dashed border-purple-300 text-purple-300">
             SLOT
           </div>
-        </CardDescription>
+        </CardControl>
       </CardHeader>
       <CardContent>
         <div className="border border-dashed border-purple-300 text-purple-300 w-[272px]">
@@ -65,15 +68,17 @@ export const Clickable: Story = {
       <CardHeader>
         <CardTitle>
           タイトル
-          <div className="border border-dashed border-purple-300 text-purple-300">
-            SLOT
-          </div>
+          <CardDescription>
+            <div className="border border-dashed border-purple-300 text-purple-300">
+              SLOT
+            </div>
+          </CardDescription>
         </CardTitle>
-        <CardDescription>
+        <CardControl>
           <div className="border border-dashed border-purple-300 text-purple-300">
             SLOT
           </div>
-        </CardDescription>
+        </CardControl>
       </CardHeader>
       <CardContent>
         <div className="border border-dashed border-purple-300 text-purple-300 w-[272px]">
@@ -93,15 +98,17 @@ export const ClickableDisabled: Story = {
       <CardHeader>
         <CardTitle>
           タイトル
-          <div className="border border-dashed border-purple-300 text-purple-300">
-            SLOT
-          </div>
+          <CardDescription>
+            <div className="border border-dashed border-purple-300 text-purple-300">
+              SLOT
+            </div>
+          </CardDescription>
         </CardTitle>
-        <CardDescription>
+        <CardControl>
           <div className="border border-dashed border-purple-300 text-purple-300">
             SLOT
           </div>
-        </CardDescription>
+        </CardControl>
       </CardHeader>
       <CardContent>
         <div className="border border-dashed border-purple-300 text-purple-300 w-[272px]">

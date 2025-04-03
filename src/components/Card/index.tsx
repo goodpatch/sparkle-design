@@ -84,6 +84,14 @@ const CardDescription = React.forwardRef<
 ));
 CardDescription.displayName = "CardDescription";
 
+const CardControl = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("", className)} {...props} />
+));
+CardControl.displayName = "CardControl";
+
 export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {
   /// スペースを入れるかどうか
   isSpace?: boolean;
@@ -118,6 +126,7 @@ export {
   CardHeader,
   CardFooter,
   CardTitle,
+  CardControl,
   CardDescription,
   CardContent,
 };
