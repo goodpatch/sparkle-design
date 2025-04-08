@@ -13,8 +13,7 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "build:sd": "node sd.config.js && cp style-dictionary/build/_variables.css src/app/variables.css",
-    "build:registry": "tsx scripts/build.ts"
+    "build:sd": "node sd.config.js && cp style-dictionary/build/_variables.css src/app/variables.css"
   },
   "dependencies": {
     "@figma/code-connect": "^1.0.6",
@@ -25,7 +24,6 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.436.0",
     "next": "14.2.7",
-    "parse-github-url": "^1.0.3",
     "react": "^18",
     "react-dom": "^18",
     "storybook": "^8.6.7",
@@ -43,7 +41,6 @@
     "@storybook/react": "^8.6.7",
     "@storybook/test": "^8.6.7",
     "@types/node": "^20",
-    "@types/parse-github-url": "^1.0.3",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@vitest/browser": "^3.0.9",
@@ -56,7 +53,6 @@
     "sd-tailwindcss-transformer": "^2.1.0",
     "style-dictionary": "^4.3.3",
     "tailwindcss": "^3.4.1",
-    "tsx": "^4.19.3",
     "typescript": "^5",
     "vitest": "^3.0.9"
   }
