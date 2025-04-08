@@ -2,26 +2,16 @@ import { RegistryEntry } from "./scripts/schema";
 
 const registry: RegistryEntry[] = [
   {
-    name: "sparkle-ui",
-    type: "registry:ui",
-
-    // shadcn-ui components that this component depends on
-    registryDependencies: ["button"],
-
-    // npm dependencies that this component depends on
+    name: "sparkle_button",
+    type: "registry:component",
+    registryDependencies: [],
     dependencies: [],
     devDependencies: [],
-
-    // Tailwind CSS config
     tailwind: {
       config: {},
     },
-
-    // CSS variables
     cssVars: {},
-
-    // Files that make up this component in your src/components/ui folder
-    files: ["cool-text.tsx"],
+    files: ["button"],
   },
 ];
 export default registry;
