@@ -36,7 +36,7 @@ const sliderRangeVariants = cva("absolute h-full bg-primary-500", {
 });
 
 const sliderThumbVariants = cva(
-  "block rounded-full border border-neutral-200 bg-white shadow-raise ring-offset-background transition-colors hover:bg-neutral-50 focus:outline-none focus:bg-primary-50 focus:border-primary-300 focus:ring-2 focus:ring-ring focus:ring-offset-2 h-4 w-4",
+  "block rounded-full border border-neutral-200 bg-white shadow-raise ring-offset-background transition-colors hover:bg-neutral-100 focus:outline-none focus:bg-primary-100 focus:border-primary-200 focus:ring-2 focus:ring-ring focus:ring-offset-2 h-4 w-4",
   {
     variants: {
       isDisabled: {
