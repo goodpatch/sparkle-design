@@ -4,24 +4,31 @@ struct ShadcnRegistry: Codable {
     let schema: String
     let name: String
     let homepage: String
-    let items: [ShadcnRegistryItem]
+    let items: [ShadcnRegistryItem]?
+    
+    enum CodingKeys: String, CodingKey {
+        case schema = "$schema"
+        case name
+        case homepage
+        case items
+    }
 }
 
 struct ShadcnRegistryItem: Codable {
-    let schema: String
+    let schema: String?
     let name: String
     let title: String
     let description: String
     let type: ShadcnRegistryType
     let author: String?
-    let dependencies: [String]
-    let registryDependencies: [String]
-    let files: [ShadcnFile]
-    let cssVars: CssObject
-    let css: CssObject
+    let dependencies: [String]?
+    let registryDependencies: [String]?
+    let files: [ShadcnFile]?
+    let cssVars: CssObject?
+    let css: CssObject?
     let docs: String?
-    let categories: [String]
-    let meta: [String: String]
+    let categories: [String]?
+    let meta: [String: String]?
     
     struct ShadcnFile: Codable {
         let path: String
@@ -41,6 +48,23 @@ struct ShadcnRegistryItem: Codable {
             var container = encoder.container(keyedBy: AnyCodingKeys.self)
             try container.encode(items)
         }
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case schema = "$schema"
+        case name
+        case title
+        case description
+        case type
+        case author
+        case dependencies
+        case registryDependencies
+        case files
+        case cssVars
+        case css
+        case docs
+        case categories
+        case meta
     }
 }
 
