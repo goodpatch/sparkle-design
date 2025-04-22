@@ -38,7 +38,7 @@ struct MergeRegistry {
         encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
         let data = try encoder.encode(registry)
         let text = String(data: data, encoding: .utf8)
-        print(text ?? "Failed to parse")
+//        print(text ?? "Failed to parse")
         try data.write(to: URL(fileURLWithPath: "../../registry.json"))
     }
     

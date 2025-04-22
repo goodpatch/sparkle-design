@@ -1,35 +1,37 @@
 {
+  "name" : "sparkle-ui",
+  "homepage" : "https://goodpatch.com",
   "items" : [
     {
+      "description" : "スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。",
       "type" : "registry:component",
-      "files" : [
-        {
-          "path" : "src/components/spinner/index.tsx",
-          "type" : "registry:component"
-        }
-      ],
-      "name" : "spinner",
-      "title" : "Spinner",
       "registryDependencies" : [
         "https://sparkle-ui.vercel.app/r/icon.json"
       ],
-      "description" : "スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。"
+      "name" : "spinner",
+      "files" : [
+        {
+          "type" : "registry:component",
+          "path" : "src/components/spinner/index.tsx"
+        }
+      ],
+      "title" : "Spinner"
     },
     {
+      "description" : "ボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。",
+      "type" : "registry:component",
+      "title" : "Button",
+      "name" : "button",
       "registryDependencies" : [
         "https://sparkle-ui.vercel.app/r/icon.json",
         "https://sparkle-ui.vercel.app/r/spinner.json"
       ],
       "files" : [
         {
-          "path" : "src/components/button/index.tsx",
-          "type" : "registry:component"
+          "type" : "registry:component",
+          "path" : "src/components/button/index.tsx"
         }
-      ],
-      "description" : "ボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。",
-      "type" : "registry:component",
-      "title" : "Button",
-      "name" : "button"
+      ]
     },
     {
       "name" : "icon",
@@ -39,12 +41,10 @@
           "path" : "src/components/icon/index.tsx"
         }
       ],
-      "description" : "アイコンは情報を象形表現でユーザーに提示するために使用するコンポーネントです。",
       "title" : "Icon",
+      "description" : "アイコンは情報を象形表現でユーザーに提示するために使用するコンポーネントです。",
       "type" : "registry:component"
     }
   ],
-  "name" : "sparkle-ui",
-  "$schema" : "https://ui.shadcn.com/schema/registry.json",
-  "homepage" : "https://goodpatch.com"
+  "$schema" : "https://ui.shadcn.com/schema/registry.json"
 }
