@@ -14,6 +14,34 @@ struct ShadcnRegistry: Codable {
     }
 }
 
+extension ShadcnRegistry {
+    func copyWithNewItems(_ newItems: [ShadcnRegistryItem]?) -> ShadcnRegistry {
+        return ShadcnRegistry(
+            schema: schema,
+            name: name,
+            homepage: homepage,
+            items: newItems?.compactMap { item in
+                return ShadcnRegistryItem(
+                    schema: nil,
+                    name: item.name,
+                    title: item.title,
+                    description: item.description,
+                    type: item.type,
+                    author: item.author,
+                    dependencies: item.dependencies,
+                    registryDependencies: item.registryDependencies,
+                    files: item.files,
+                    cssVars: item.cssVars,
+                    css: item.css,
+                    docs: item.docs,
+                    categories: item.categories,
+                    meta: item.meta
+                )
+            },
+        )
+    }
+}
+
 struct ShadcnRegistryItem: Codable {
     let schema: String?
     let name: String
