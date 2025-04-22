@@ -8,6 +8,17 @@ registry: ## Build the registry.
 	npm run build:registry
 	@echo "🤖 Registry built successfully."
 
+.PHONY: new-component
+new-component: ## Create a new component.
+	@echo "🤖 Creating a new component..."
+	@read -p "Enter the name of the new component: " name; \
+	if [ -z "$$name" ]; then \
+		echo "🤖 No name provided. Exiting."; \
+		exit 1; \
+	fi; \
+	./scripts/setup.sh "$$name";
+	@echo "🤖 Component created successfully."
+
 .PHONY: help
 .DEFAULT_GOAL := help
 help: ## Display this help.
