@@ -1,0 +1,13 @@
+{
+  "": "https://ui.shadcn.com/schema/registry-item.json",
+  "title": "Select",
+  "name": "select",
+  "description": "",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "src/components/Select/index.tsx",
+      "type": "registry:component"
+    }
+  ]
+}
