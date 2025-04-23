@@ -1,72 +1,192 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as SelectPrimitive from "@radix-ui/react-select"
-import { Check, ChevronDown, ChevronUp } from "lucide-react"
+import * as React from "react";
+import * as SelectPrimitive from "@radix-ui/react-select";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
 
-import { cn } from "@/lib/utils"
+import { Icon } from "@/components/icon";
 
-const Select = SelectPrimitive.Root
+const selectTriggerVariants = cva(
+  "flex items-center justify-between w-full rounded-md border bg-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 overflow-hidden whitespace-pre",
+  {
+    variants: {
+      size: {
+        sm: "h-8 py-1 pl-2 pr-1 gap-2 character-2-regular-pro",
+        md: "h-10 py-1 pl-3 pr-1.5 gap-2 character-3-regular-pro",
+        lg: "h-12 py-1 pl-4 pr-2 gap-2 character-4-regular-pro",
+      },
+      isInvalid: {
+        true: "border-negative-500 hover:border-negative-600 data-[state=open]:border-negative-800",
+        false:
+          "border-base-200 hover:border-base-300 data-[state=open]:border-base-500",
+      },
+      isDisabled: {
+        true: "cursor-not-allowed border-base-100 hover:border-base-100 text-base-200",
+        false: "cursor-pointer",
+      },
+    },
+    compoundVariants: [
+      {
+        isInvalid: true,
+        isDisabled: true,
+        class: "border-negative-100 text-base-200 hover:border-negative-100",
+      },
+    ],
+    defaultVariants: {
+      size: "md",
+      isInvalid: false,
+      isDisabled: false,
+    },
+  }
+);
 
-const SelectGroup = SelectPrimitive.Group
+const selectIconVariants = cva("", {
+  variants: {
+    size: {
+      sm: "icon-5-fill-0",
+      md: "icon-6-fill-0",
+      lg: "icon-7-fill-0",
+    },
+    isDisabled: {
+      true: "text-base-200",
+      false: "text-base-700",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+    isDisabled: false,
+  },
+});
 
-const SelectValue = SelectPrimitive.Value
+const selectScrollButtonVariants = cva(
+  "flex cursor-default items-center justify-center py-1"
+);
 
+const selectContentVariants = cva(
+  "relative z-50 min-w-[8rem] overflow-hidden rounded-md border border-base-200 bg-white text-base-900 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+  {
+    variants: {
+      position: {
+        popper:
+          "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+        item: "",
+        "item-aligned": "",
+      },
+    },
+    defaultVariants: {
+      position: "popper",
+    },
+  }
+);
+
+const selectViewportVariants = cva("p-1", {
+  variants: {
+    position: {
+      popper:
+        "max-h-[var(--radix-select-content-available-height)] w-full min-w-[var(--radix-select-trigger-width)]",
+      item: "",
+      "item-aligned": "",
+    },
+  },
+  defaultVariants: {
+    position: "popper",
+  },
+});
+
+const selectLabelVariants = cva("px-2 py-1.5 text-sm font-semibold");
+
+const selectItemVariants = cva(
+  "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 character-2-regular-pro outline-none transition-colors focus:bg-primary-50 focus:text-primary-800 data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[state=checked]:bg-primary-50 data-[state=checked]:text-primary-800"
+);
+
+const selectItemIndicatorVariants = cva(
+  "absolute left-2 flex h-3.5 w-3.5 items-center justify-center text-primary-500"
+);
+
+const selectSeparatorVariants = cva("-mx-1 my-1 h-px bg-base-100");
+
+const Select = SelectPrimitive.Root;
+const SelectGroup = SelectPrimitive.Group;
+const SelectValue = SelectPrimitive.Value;
+
+/**
+ * セレクトのトリガー部分。
+ * クリックで選択肢リストを開閉するボタンとして機能します。
+ */
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> &
+    VariantProps<typeof selectTriggerVariants> & {
+      isInvalid?: boolean;
+    }
+>(({ className, size, isInvalid, disabled, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-      className
+      selectTriggerVariants({
+        size,
+        isInvalid,
+        isDisabled: disabled,
+        className,
+      })
     )}
+    disabled={disabled}
     {...props}
   >
-    {children}
+    <span className="overflow-hidden">{children}</span>
+
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50" />
+      <Icon
+        icon="arrow_drop_down"
+        className={cn(selectIconVariants({ size, isDisabled: disabled }))}
+      />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
-))
-SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
+));
+SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
+/**
+ * セレクトの上スクロールボタン。
+ * 選択肢が多い場合にリストを上方向にスクロールします。
+ */
 const SelectScrollUpButton = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.ScrollUpButton
     ref={ref}
-    className={cn(
-      "flex cursor-default items-center justify-center py-1",
-      className
-    )}
+    className={cn(selectScrollButtonVariants(), className)}
     {...props}
   >
-    <ChevronUp className="h-4 w-4" />
+    <Icon icon="expand_less" size={4} />
   </SelectPrimitive.ScrollUpButton>
-))
-SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName
+));
+SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
 
+/**
+ * セレクトの下スクロールボタン。
+ * 選択肢が多い場合にリストを下方向にスクロールします。
+ */
 const SelectScrollDownButton = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.ScrollDownButton
     ref={ref}
-    className={cn(
-      "flex cursor-default items-center justify-center py-1",
-      className
-    )}
+    className={cn(selectScrollButtonVariants(), className)}
     {...props}
   >
-    <ChevronDown className="h-4 w-4" />
+    <Icon icon="expand_more" size={4} />
   </SelectPrimitive.ScrollDownButton>
-))
+));
 SelectScrollDownButton.displayName =
-  SelectPrimitive.ScrollDownButton.displayName
+  SelectPrimitive.ScrollDownButton.displayName;
 
+/**
+ * セレクトのドロップダウンリスト本体。
+ * 選択肢リストの表示・スクロール制御を行います。
+ */
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
@@ -74,77 +194,77 @@ const SelectContent = React.forwardRef<
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
       ref={ref}
-      className={cn(
-        "relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-select-content-transform-origin]",
-        position === "popper" &&
-          "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-        className
-      )}
+      className={cn(selectContentVariants({ position }), className)}
       position={position}
       {...props}
     >
       <SelectScrollUpButton />
       <SelectPrimitive.Viewport
-        className={cn(
-          "p-1",
-          position === "popper" &&
-            "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
-        )}
+        className={cn(selectViewportVariants({ position }))}
       >
         {children}
       </SelectPrimitive.Viewport>
       <SelectScrollDownButton />
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
-))
-SelectContent.displayName = SelectPrimitive.Content.displayName
+));
+SelectContent.displayName = SelectPrimitive.Content.displayName;
 
+/**
+ * セレクトのラベル部分。
+ * グループ化された選択肢のラベル表示に使います。
+ */
 const SelectLabel = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Label>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Label
     ref={ref}
-    className={cn("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
+    className={cn(selectLabelVariants(), className)}
     {...props}
   />
-))
-SelectLabel.displayName = SelectPrimitive.Label.displayName
+));
+SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
+/**
+ * セレクトの各選択肢アイテム。
+ * 選択可能なリスト項目として機能します。
+ */
 const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
 >(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Item
     ref={ref}
-    className={cn(
-      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className
-    )}
+    className={cn(selectItemVariants(), className)}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className={selectItemIndicatorVariants()}>
       <SelectPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
+        <Icon icon="check" size={4} />
       </SelectPrimitive.ItemIndicator>
     </span>
 
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
-))
-SelectItem.displayName = SelectPrimitive.Item.displayName
+));
+SelectItem.displayName = SelectPrimitive.Item.displayName;
 
+/**
+ * セレクトの区切り線。
+ * 選択肢リスト内の区切り表示に使います。
+ */
 const SelectSeparator = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Separator
     ref={ref}
-    className={cn("-mx-1 my-1 h-px bg-muted", className)}
+    className={cn(selectSeparatorVariants(), className)}
     {...props}
   />
-))
-SelectSeparator.displayName = SelectPrimitive.Separator.displayName
+));
+SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {
   Select,
@@ -157,4 +277,6 @@ export {
   SelectSeparator,
   SelectScrollUpButton,
   SelectScrollDownButton,
-}
+};
+
+export type { VariantProps };
