@@ -33,3 +33,17 @@ export const Default: Story = {
     // デフォルトの引数をここに設定
   },
 };" > src/components/$CAMEL_NAME/index.stories.tsx
+touch src/components/$CAMEL_NAME/item.json
+echo "{
+  \"$schema\": \"https://ui.shadcn.com/schema/registry-item.json\",
+  \"title\": \"$CAMEL_NAME\",
+  \"name\": \"$1\",
+  \"description\": \"\",
+  \"type\": \"registry:component\",
+  \"files\": [
+    {
+      \"path\": \"src/components/$CAMEL_NAME/index.tsx\",
+      \"type\": \"registry:component\"
+    }
+  ]
+}" > src/components/$CAMEL_NAME/item.json
