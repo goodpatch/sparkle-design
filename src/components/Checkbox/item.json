@@ -1,0 +1,13 @@
+{
+  "": "https://ui.shadcn.com/schema/registry-item.json",
+  "title": "Checkbox",
+  "name": "checkbox",
+  "description": "",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "src/components/Checkbox/index.tsx",
+      "type": "registry:component"
+    }
+  ]
+}
