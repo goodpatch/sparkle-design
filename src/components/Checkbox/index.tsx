@@ -40,7 +40,7 @@ const checkboxItemVariants = cva(
         false: "",
       },
       isDisabled: {
-        true: "cursor-not-allowed",
+        true: "",
         false: "",
       },
     },
@@ -118,6 +118,11 @@ interface CheckboxItemProps
    */
   isInvalid?: boolean;
   /**
+   * 無効状態かどうか
+   * @default false
+   */
+  isDisabled?: boolean;
+  /**
    * ラベルのテキスト
    */
   label?: string;
@@ -132,13 +137,17 @@ const Checkbox = React.forwardRef<
       className,
       size = "md",
       isInvalid = false,
-      disabled = false,
+      isDisabled = false,
+      disabled,
       label,
       id,
       ...props
     },
     ref
   ) => {
+    // isDisabledとdisabledの組み合わせで無効状態を管理
+    const isCheckboxDisabled = isDisabled || disabled;
+
     return (
       <div className="flex items-center">
         <div className={cn(checkboxItemVariants({ size }))}>
@@ -149,10 +158,10 @@ const Checkbox = React.forwardRef<
               checkboxIndicatorVariants({
                 size,
                 isInvalid,
-                isDisabled: disabled,
+                isDisabled: isCheckboxDisabled,
               })
             )}
-            disabled={disabled}
+            disabled={isCheckboxDisabled}
             {...props}
           >
             <CheckboxPrimitive.Indicator className="flex items-center justify-center text-white">
@@ -177,7 +186,9 @@ const Checkbox = React.forwardRef<
         {label && (
           <label
             htmlFor={id}
-            className={cn(labelVariants({ size, isDisabled: disabled }))}
+            className={cn(
+              labelVariants({ size, isDisabled: isCheckboxDisabled })
+            )}
           >
             {label}
           </label>
