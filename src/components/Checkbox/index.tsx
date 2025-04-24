@@ -6,23 +6,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/icon";
 
-const checkboxGroupVariants = cva("grid gap-2");
-
-const labelVariants = cva("", {
+const checkboxGroupVariants = cva("flex items-center", {
   variants: {
-    size: {
-      sm: "character-2-regular-pro",
-      md: "character-3-regular-pro",
-      lg: "character-4-regular-pro",
-    },
     isDisabled: {
-      true: "text-base-200",
-      false: "text-base-900",
+      true: "",
+      false: "",
     },
-  },
-  defaultVariants: {
-    size: "md",
-    isDisabled: false,
   },
 });
 
@@ -40,7 +29,7 @@ const checkboxItemVariants = cva(
         false: "",
       },
       isDisabled: {
-        true: "",
+        true: "cursor-not-allowed",
         false: "",
       },
     },
@@ -52,7 +41,7 @@ const checkboxItemVariants = cva(
   }
 );
 
-const checkboxIndicatorVariants = cva(
+const checkboxRootVariants = cva(
   "rounded-sm border-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-colors",
   {
     variants: {
@@ -67,7 +56,7 @@ const checkboxIndicatorVariants = cva(
           "border-base-500 data-[state=checked]:bg-primary-500 data-[state=checked]:border-none",
       },
       isDisabled: {
-        true: "",
+        true: "cursor-not-allowed",
         false: "",
       },
     },
@@ -104,6 +93,24 @@ const checkboxIndicatorVariants = cva(
     },
   }
 );
+
+const checkboxLabelVariants = cva("", {
+  variants: {
+    size: {
+      sm: "character-2-regular-pro",
+      md: "character-3-regular-pro",
+      lg: "character-4-regular-pro",
+    },
+    isDisabled: {
+      true: "text-base-200 cursor-not-allowed",
+      false: "text-base-900",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+    isDisabled: false,
+  },
+});
 
 interface CheckboxItemProps
   extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
@@ -149,13 +156,21 @@ const Checkbox = React.forwardRef<
     const isCheckboxDisabled = isDisabled || disabled;
 
     return (
-      <div className="flex items-center">
-        <div className={cn(checkboxItemVariants({ size }))}>
+      <div
+        className={cn(
+          checkboxGroupVariants({ isDisabled: isCheckboxDisabled })
+        )}
+      >
+        <div
+          className={cn(
+            checkboxItemVariants({ size, isDisabled: isCheckboxDisabled })
+          )}
+        >
           <CheckboxPrimitive.Root
             ref={ref}
             id={id}
             className={cn(
-              checkboxIndicatorVariants({
+              checkboxRootVariants({
                 size,
                 isInvalid,
                 isDisabled: isCheckboxDisabled,
@@ -187,7 +202,7 @@ const Checkbox = React.forwardRef<
           <label
             htmlFor={id}
             className={cn(
-              labelVariants({ size, isDisabled: isCheckboxDisabled })
+              checkboxLabelVariants({ size, isDisabled: isCheckboxDisabled })
             )}
           >
             {label}
