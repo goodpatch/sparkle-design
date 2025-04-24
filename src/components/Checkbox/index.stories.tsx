@@ -42,45 +42,6 @@ export const Default: Story = {
   render: () => <Checkbox id="default" label="チェックボックス" />,
 };
 
-export const WithControls: StoryObj<WithControlsProps> = {
-  args: {
-    checked: false,
-    size: "md",
-    isInvalid: false,
-    disabled: false,
-    label: "チェックボックス",
-  },
-  argTypes: {
-    size: {
-      control: "radio",
-      options: ["sm", "md", "lg"],
-      description: "チェックボックスのサイズを指定します",
-      table: {
-        defaultValue: { summary: "md" },
-      },
-    },
-    isInvalid: {
-      control: "boolean",
-      description: "エラー状態を指定します",
-      table: {
-        defaultValue: { summary: "false" },
-      },
-    },
-    disabled: {
-      control: "boolean",
-      description: "無効状態を指定します",
-      table: {
-        defaultValue: { summary: "false" },
-      },
-    },
-    label: {
-      control: "text",
-      description: "ラベルテキストを指定します",
-    },
-  },
-  render: (args) => <Checkbox id="withControls" {...args} />,
-};
-
 export const Sizes: Story = {
   render: () => (
     <div className="space-y-8">
