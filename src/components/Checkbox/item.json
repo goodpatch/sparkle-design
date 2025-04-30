@@ -10,5 +10,7 @@
       "type": "registry:component"
     }
   ],
-  "registryDependencies": ["https://sparkle-ui.vercel.app/r/icon.json"]
+  "registryDependencies": [
+    "https://sparkle-ui.vercel.app/r/icon.json"
+  ]
 }

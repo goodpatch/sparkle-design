@@ -7,9 +7,14 @@ struct MergeRegistry {
         let itemPaths = fetchRegistryItemsPath()
         do {
             let registry = try fetchRegistry()
-            
+
             let items = itemPaths.compactMap { itemPath in
-                try? fetchRegistryItem(path: itemPath)
+                do {
+                    return try fetchRegistryItem(path: itemPath)
+                } catch {
+                    print("Failed to parse \(itemPath)")
+                    return nil
+                }
             }
             let newRegistry = registry.copyWithNewItems(items)
             try writeRegistry(newRegistry)
@@ -17,7 +22,7 @@ struct MergeRegistry {
             print(error)
         }
     }
-    
+
     /// 現在のレジストリを取得する
     private static func fetchRegistry() throws -> ShadcnRegistry {
         let pipe = Pipe()
@@ -27,21 +32,21 @@ struct MergeRegistry {
         process.standardOutput = pipe
         process.launch()
         process.waitUntilExit()
-        
+
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         return try JSONDecoder().decode(ShadcnRegistry.self, from: data)
     }
-    
+
     /// レジストリを更新する
     private static func writeRegistry(_ registry: ShadcnRegistry) throws {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
         let data = try encoder.encode(registry)
         let text = String(data: data, encoding: .utf8)
-//        print(text ?? "Failed to parse")
+        //        print(text ?? "Failed to parse")
         try data.write(to: URL(fileURLWithPath: "../../registry.json"))
     }
-    
+
     /// レジストリアイテムを取得する
     private static func fetchRegistryItem(path: String) throws -> ShadcnRegistryItem {
         let pipe = Pipe()
@@ -51,13 +56,13 @@ struct MergeRegistry {
         process.standardOutput = pipe
         process.launch()
         process.waitUntilExit()
-        
+
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         return try JSONDecoder().decode(ShadcnRegistryItem.self, from: data)
     }
-    
+
     /// アイテムのJSONを取得してくる
-    private static func fetchRegistryItemsPath() -> Array<String> {
+    private static func fetchRegistryItemsPath() -> [String] {
         let pipe = Pipe()
         let process = Process()
         process.launchPath = "/usr/bin/find"
@@ -65,9 +70,12 @@ struct MergeRegistry {
         process.standardOutput = pipe
         process.launch()
         process.waitUntilExit()
-        
+
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        guard let output = String(data: data, encoding: .utf8) else { return [] }
+        guard let output = String(data: data, encoding: .utf8) else {
+            print("Failed to parse output")
+            return []
+        }
         return output.split(separator: "\n").map { String($0) }
     }
 }
