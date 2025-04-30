@@ -1,5 +1,8 @@
+"use client";
+
 import { Button } from "@/components/button";
 import { Radio, RadioItem } from "@/components/radio";
+import { client } from "@figma/code-connect";
 import { useState } from "react";
 
 const hostname = process.env.NEXT_PUBLIC_V0_HOSTNAME || "localhost";
@@ -15,14 +18,14 @@ const registries = [
 
 export default function Home() {
   const [target, setTarget] = useState<string>(
-    `${hostname}/r/sparkle-style.json`
+    `https://${hostname}/r/sparkle-style.json`
   );
 
   const handleOpen = () => {
     open(`https://v0.dev/chat/api/open?url=${target}`, "_blank");
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTarget(`${hostname}/r/${e.target.value}.json`);
+    setTarget(`https://${hostname}/r/${e.target.value}.json`);
   };
 
   return (
