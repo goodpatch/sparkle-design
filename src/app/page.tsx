@@ -5,7 +5,7 @@ import { Radio, RadioItem } from "@/components/radio";
 import { client } from "@figma/code-connect";
 import { useState } from "react";
 
-const hostname = process.env.NEXT_PUBLIC_VERCEL_URL || "localhost:3000";
+const hostname = "sparkle-ui.vercel.app";
 const registries = [
   "sparkle-style",
   "sparkle-color",
