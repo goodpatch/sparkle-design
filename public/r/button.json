@@ -5,8 +5,8 @@
   "title": "Button",
   "description": "ボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。",
   "registryDependencies": [
-    "https://sparkle-ui-git-feat-style-registry-sparkle-967aa315.vercel.app/r/icon.json",
-    "https://sparkle-ui-git-feat-style-registry-sparkle-967aa315.vercel.app/r/spinner.json"
+    "https://sparkle-ui.vercel.app/r/icon.json",
+    "https://sparkle-ui.vercel.app/r/spinner.json"
   ],
   "files": [
     {

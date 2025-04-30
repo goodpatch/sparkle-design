@@ -5,7 +5,7 @@
   "title": "Spinner",
   "description": "スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。",
   "registryDependencies": [
-    "https://sparkle-ui-git-feat-style-registry-sparkle-967aa315.vercel.app/r/icon.json"
+    "https://sparkle-ui.vercel.app/r/icon.json"
   ],
   "files": [
     {
