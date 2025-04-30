@@ -5,7 +5,7 @@
   "title": "Checkbox",
   "description": "チェックボックスは複数のオプショングループから複数の項目を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。",
   "registryDependencies": [
-    "https://sparkle-ui.vercel.app/r/icon.json"
+    "https://sparkle-ui-git-feat-style-registry-sparkle-967aa315.vercel.app/r/icon.json"
   ],
   "files": [
     {
