@@ -41,9 +41,21 @@ export default function Home() {
           />
         ))}
       </Radio>
-      <Button variant="solid" theme="primary" size="lg" onClick={handleOpen}>
-        Open in v0
-      </Button>
+      <div className="flex gap-4">
+        <Button variant="solid" theme="primary" size="lg" onClick={handleOpen}>
+          Open in v0
+        </Button>
+        <Button
+          variant="solid"
+          theme="secondary"
+          size="lg"
+          onClick={() => {
+            open(target, "_blank");
+          }}
+        >
+          Preview JSON
+        </Button>
+      </div>
     </main>
   );
 }
