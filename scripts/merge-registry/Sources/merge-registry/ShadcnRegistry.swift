@@ -5,7 +5,7 @@ struct ShadcnRegistry: Codable {
     let name: String
     let homepage: String
     let items: [ShadcnRegistryItem]?
-    
+
     enum CodingKeys: String, CodingKey {
         case schema = "$schema"
         case name
@@ -45,8 +45,8 @@ extension ShadcnRegistry {
 struct ShadcnRegistryItem: Codable {
     let schema: String?
     let name: String
-    let title: String
-    let description: String
+    let title: String?
+    let description: String?
     let type: ShadcnRegistryType
     let author: String?
     let dependencies: [String]?
@@ -57,27 +57,27 @@ struct ShadcnRegistryItem: Codable {
     let docs: String?
     let categories: [String]?
     let meta: [String: String]?
-    
+
     struct ShadcnFile: Codable {
         let path: String
         let type: ShadcnRegistryType
         let target: String?
     }
-    
+
     struct CssObject: Codable {
         let items: [String: Any]
-        
+
         public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: AnyCodingKeys.self)
             items = try container.decode([String: Any].self)
         }
-        
+
         public func encode(to encoder: any Encoder) throws {
             var container = encoder.container(keyedBy: AnyCodingKeys.self)
             try container.encode(items)
         }
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case schema = "$schema"
         case name
@@ -106,17 +106,18 @@ enum ShadcnRegistryType: String, Codable {
     case file
     case style
     case theme
-    
+
     func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode("registry:\(rawValue)")
     }
-    
+
     init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let value = try container.decode(String.self)
         guard
-            let type = ShadcnRegistryType(rawValue: value.replacingOccurrences(of: "registry:", with: ""))
+            let type = ShadcnRegistryType(
+                rawValue: value.replacingOccurrences(of: "registry:", with: ""))
         else {
             throw DecodingError.dataCorruptedError(
                 in: container, debugDescription: "Invalid registry type")
