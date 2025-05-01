@@ -7,6 +7,7 @@ import { useState } from "react";
 
 const hostname = "sparkle-ui.vercel.app";
 const registries = [
+  "registry",
   "sparkle-style",
   "sparkle-color",
   "sparkle-font",
@@ -18,7 +19,7 @@ const registries = [
 
 export default function Home() {
   const [target, setTarget] = useState<string>(
-    `https://${hostname}/r/sparkle-style.json`
+    `https://${hostname}/r/registry.json`
   );
 
   const handleOpen = () => {
@@ -64,7 +65,7 @@ export default function Home() {
       "command": "npx",
       "args": ["-y", "shadcn@canary", "registry:mcp"],
       "env": {
-        "REGISTRY_URL": "https://${hostname}/r/sparkle-style.json"
+        "REGISTRY_URL": "https://${hostname}/r/registry.json"
       }
     }
   }
