@@ -59,7 +59,7 @@ export default function Home() {
       <pre className="w-full max-w-2xl overflow-x-auto rounded-lg bg-gray-100 p-4">
         <code className="text-sm text-gray-800">{`
 {
-  "mcpServer": {
+  "mcpServers": {
     "shadcn": {
       "command": "npx",
       "args": ["-y", "shadcn@canary", "registry:mcp"],
