@@ -64,7 +64,7 @@ export default function Home() {
       "command": "npx",
       "args": ["-y", "shadcn@canary", "registry:mcp"],
       "env": {
-        "REGISTRY_URL": "https://${hostname}/r/sparkle-style.json",
+        "REGISTRY_URL": "https://${hostname}/r/sparkle-style.json"
       }
     }
   }
