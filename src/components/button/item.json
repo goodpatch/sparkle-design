@@ -10,6 +10,9 @@
       "type": "registry:component"
     }
   ],
+  "dependencies": [
+    "@radix-ui/react-slot"
+  ],
   "registryDependencies": [
     "https://sparkle-ui.vercel.app/r/icon.json",
     "https://sparkle-ui.vercel.app/r/spinner.json"

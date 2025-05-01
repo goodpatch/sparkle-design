@@ -4,12 +4,12 @@
   "type": "registry:component",
   "title": "Button",
   "description": "ボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。",
+  "dependencies": [
+    "@radix-ui/react-slot"
+  ],
   "registryDependencies": [
     "https://sparkle-ui.vercel.app/r/icon.json",
-    "https://sparkle-ui.vercel.app/r/spinner.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+    "https://sparkle-ui.vercel.app/r/spinner.json"
   ],
   "files": [
     {
