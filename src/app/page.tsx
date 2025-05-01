@@ -56,6 +56,20 @@ export default function Home() {
           Preview JSON
         </Button>
       </div>
+      <pre className="w-full max-w-2xl overflow-x-auto rounded-lg bg-gray-100 p-4">
+        <code className="text-sm text-gray-800">{`
+{
+  "mcpServer": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["-y", "shadcn@canary", "registry:mcp"],
+      "env": {
+        "REGISTRY_URL": "https://${hostname}/r/sparkle-style.json",
+      }
+    }
+  }
+}`}</code>
+      </pre>
     </main>
   );
 }
