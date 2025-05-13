@@ -17,5 +17,91 @@
       "content": "import * as React from \"react\";\nimport { Slot } from \"@radix-ui/react-slot\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\n\nimport { cn } from \"@/lib/utils\";\nimport { Icon } from \"@/components/icon\";\nimport { Spinner } from \"@/components/spinner\";\n\nconst buttonVariants = cva(\n  \"inline-flex items-center justify-center whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative\",\n  {\n    variants: {\n      variant: {\n        solid: \"border shadow-raise\",\n        outline: \"border shadow-raise\",\n        ghost: \"\",\n      },\n      size: {\n        sm: \"h-8 px-2.5 py-1 character-2-bold-pro\",\n        md: \"h-10 px-3 py-2 character-3-bold-pro\",\n        lg: \"h-12 px-3.5 py-2.5 character-4-bold-pro\",\n      },\n      theme: {\n        primary: \"\",\n        secondary: \"\",\n        negative: \"\",\n      },\n      isLoading: {\n        true: \"cursor-not-allowed\",\n        false: \"gap-2\",\n      },\n      isDisabled: {\n        true: \"cursor-not-allowed\",\n        false: \"\",\n      },\n    },\n    compoundVariants: [\n      // Solid Primary バリアント\n      {\n        variant: \"solid\",\n        theme: \"primary\",\n        isLoading: false,\n        isDisabled: false,\n        className:\n          \"bg-primary-500 text-white border-primary-600 hover:bg-primary-600 hover:border-primary-700 active:bg-primary-700 active:border-primary-800 active:shadow-raise\",\n      },\n      {\n        variant: \"solid\",\n        theme: \"primary\",\n        isLoading: true,\n        isDisabled: false,\n        className: \"bg-primary-500 text-white border-primary-600\",\n      },\n\n      // Solid Secondary バリアント\n      {\n        variant: \"solid\",\n        theme: \"secondary\",\n        isLoading: false,\n        isDisabled: false,\n        className:\n          \"bg-secondary-500 text-white border-secondary-600 hover:bg-secondary-600 hover:border-secondary-700 active:bg-secondary-700 active:border-secondary-800 active:shadow-raise\",\n      },\n      {\n        variant: \"solid\",\n        theme: \"secondary\",\n        isLoading: true,\n        isDisabled: false,\n        className: \"bg-secondary-500 text-white border-secondary-600\",\n      },\n\n      // Solid Negative バリアント\n      {\n        variant: \"solid\",\n        theme: \"negative\",\n        isLoading: false,\n        isDisabled: false,\n        className:\n          \"bg-negative-500 text-white border-negative-600 hover:bg-negative-600 hover:border-negative-700 active:bg-negative-700 active:border-negative-800 active:shadow-raise\",\n      },\n      {\n        variant: \"solid\",\n        theme: \"negative\",\n        isLoading: true,\n        isDisabled: false,\n        className: \"bg-negative-500 text-white border-negative-600\",\n      },\n\n      // Outline Primary バリアント\n      {\n        variant: \"outline\",\n        theme: \"primary\",\n        isLoading: false,\n        isDisabled: false,\n        className:\n          \"bg-white text-primary-500 border-primary-500 hover:bg-primary-50 active:bg-primary-100\",\n      },\n      {\n        variant: \"outline\",\n        theme: \"primary\",\n        isLoading: true,\n        isDisabled: false,\n        className: \"bg-white text-primary-500 border-primary-500\",\n      },\n\n      // Outline Secondary バリアント\n      {\n        variant: \"outline\",\n        theme: \"secondary\",\n        isLoading: false,\n        isDisabled: false,\n        className:\n          \"bg-white text-secondary-700 border-secondary-500 hover:bg-secondary-50 active:bg-secondary-100\",\n      },\n      {\n        variant: \"outline\",\n        theme: \"secondary\",\n        isLoading: true,\n        isDisabled: false,\n        className: \"bg-white text-secondary-700 border-secondary-500\",\n      },\n\n      // Outline Negative バリアント\n      {\n        variant: \"outline\",\n        theme: \"negative\",\n        isLoading: false,\n        isDisabled: false,\n        className:\n          \"bg-white text-negative-500 border-negative-500 hover:bg-negative-50 active:bg-negative-100\",\n      },\n      {\n        variant: \"outline\",\n        theme: \"negative\",\n        isLoading: true,\n        isDisabled: false,\n        className: \"bg-white text-negative-500 border-negative-500\",\n      },\n\n      // Ghost Primary バリアント\n      {\n        variant: \"ghost\",\n        theme: \"primary\",\n        isLoading: false,\n        isDisabled: false,\n        className: \"text-primary-500 hover:bg-primary-50 active:bg-primary-100\",\n      },\n      {\n        variant: \"ghost\",\n        theme: \"primary\",\n        isLoading: true,\n        isDisabled: false,\n        className: \"text-primary-500\",\n      },\n\n      // Ghost Secondary バリアント\n      {\n        variant: \"ghost\",\n        theme: \"secondary\",\n        isLoading: false,\n        isDisabled: false,\n        className:\n          \"text-secondary-700 hover:bg-secondary-50 active:bg-secondary-100\",\n      },\n      {\n        variant: \"ghost\",\n        theme: \"secondary\",\n        isLoading: true,\n        isDisabled: false,\n        className: \"text-secondary-700\",\n      },\n\n      // Ghost Negative バリアント\n      {\n        variant: \"ghost\",\n        theme: \"negative\",\n        isLoading: false,\n        isDisabled: false,\n        className:\n          \"text-negative-500 hover:bg-negative-100 active:bg-negative-100\",\n      },\n      {\n        variant: \"ghost\",\n        theme: \"negative\",\n        isLoading: true,\n        isDisabled: false,\n        className: \"text-negative-500\",\n      },\n\n      // Disabled styles for all variants\n      {\n        variant: \"solid\",\n        theme: \"primary\",\n        isDisabled: true,\n        className:\n          \"disabled:bg-primary-200 disabled:text-white disabled:border-none\",\n      },\n      {\n        variant: \"solid\",\n        theme: \"secondary\",\n        isDisabled: true,\n        className:\n          \"disabled:bg-secondary-200 disabled:text-white disabled:border-none\",\n      },\n      {\n        variant: \"solid\",\n        theme: \"negative\",\n        isDisabled: true,\n        className:\n          \"disabled:bg-negative-200 disabled:text-white disabled:border-none\",\n      },\n      {\n        variant: \"outline\",\n        theme: \"primary\",\n        isDisabled: true,\n        className:\n          \"disabled:bg-white disabled:text-primary-200 disabled:border-primary-100\",\n      },\n      {\n        variant: \"outline\",\n        theme: \"secondary\",\n        isDisabled: true,\n        className:\n          \"disabled:bg-white disabled:text-secondary-200 disabled:border-secondary-100\",\n      },\n      {\n        variant: \"outline\",\n        theme: \"negative\",\n        isDisabled: true,\n        className:\n          \"disabled:bg-white disabled:text-negative-200 disabled:border-negative-100\",\n      },\n      {\n        variant: \"ghost\",\n        theme: \"primary\",\n        isDisabled: true,\n        className: \"disabled:text-primary-200\",\n      },\n      {\n        variant: \"ghost\",\n        theme: \"secondary\",\n        isDisabled: true,\n        className: \"disabled:text-secondary-200\",\n      },\n      {\n        variant: \"ghost\",\n        theme: \"negative\",\n        isDisabled: true,\n        className: \"disabled:text-negative-200\",\n      },\n    ],\n    defaultVariants: {\n      variant: \"solid\",\n      size: \"md\",\n      theme: \"primary\",\n      isLoading: false,\n      isDisabled: false,\n    },\n  }\n);\n\nexport interface ButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement>,\n    VariantProps<typeof buttonVariants> {\n  asChild?: boolean;\n  prefixIcon?: string;\n  suffixIcon?: string;\n  isLoading?: boolean;\n  isDisabled?: boolean;\n}\n\n/**\n * ボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。\n */\nconst Button = React.forwardRef<HTMLButtonElement, ButtonProps>(\n  (\n    {\n      className,\n      variant,\n      size,\n      theme,\n      isLoading = false,\n      isDisabled = false,\n      asChild = false,\n      disabled,\n      prefixIcon,\n      suffixIcon,\n      children,\n      ...props\n    },\n    ref\n  ) => {\n    // disabled状態の管理（isDisabled、disabled、またはisLoadingがtrueの場合）\n    const isButtonDisabled = isLoading || isDisabled;\n\n    const Comp = asChild ? Slot : \"button\";\n\n    // アイコンのサイズをボタンサイズに合わせて設定\n    const getIconSize = () => {\n      switch (size) {\n        case \"sm\":\n          return 5;\n        case \"lg\":\n          return 7;\n        default:\n          return 6;\n      }\n    };\n\n    return (\n      <Comp\n        className={cn(\n          buttonVariants({\n            variant,\n            size,\n            theme,\n            isLoading,\n            isDisabled,\n            className,\n          })\n        )}\n        ref={ref}\n        disabled={isButtonDisabled}\n        {...props}\n      >\n        {prefixIcon && (\n          <Icon\n            icon={prefixIcon}\n            size={getIconSize()}\n            className={cn({ \"opacity-0\": isLoading })}\n          />\n        )}\n\n        {isLoading ? (\n          <>\n            <span className=\"absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-flex\">\n              <Spinner size={getIconSize()} />\n            </span>\n            <span className=\"opacity-0\" aria-hidden=\"true\">\n              {children}\n            </span>\n          </>\n        ) : (\n          children\n        )}\n\n        {suffixIcon && (\n          <Icon\n            icon={suffixIcon}\n            size={getIconSize()}\n            className={cn({ \"opacity-0\": isLoading })}\n          />\n        )}\n      </Comp>\n    );\n  }\n);\n\nButton.displayName = \"Button\";\n\nexport { Button, buttonVariants };\n",
       "type": "registry:component"
     }
-  ]
+  ],
+  "cssVars": {
+    "theme": {
+      "color-red-500": "rgba(207,34,46,1)",
+      "color-red-200": "rgba(255,187,185,1)",
+      "color-blue-700": "rgba(3,61,139,1)",
+      "primary-700": "var(--color-blue-700)",
+      "color-gray-200": "rgba(208,215,222,1)",
+      "primary-500": "var(--color-blue-500)",
+      "color-gray-700": "rgba(66,74,83,1)",
+      "secondary-100": "var(--color-gray-100)",
+      "color-blue-200": "rgba(151,211,255,1)",
+      "primary-200": "var(--color-blue-200)",
+      "color-red-100": "rgba(255,229,228,1)",
+      "negative-200": "var(--color-red-200)",
+      "font-size-14": "0.875rem",
+      "color-gray-600": "rgba(87,96,106,1)",
+      "color-blue-600": "rgba(5,80,174,1)",
+      "shadow-lg": "0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 0, 0.10)",
+      "negative-100": "var(--color-red-100)",
+      "secondary-700": "var(--color-gray-700)",
+      "shadow-none": "0px 0px 0px 0px #000",
+      "font-family-pro": "'BIZ UDPGothic', sans-serif",
+      "shadow-raise": "var(--shadow-xs)",
+      "secondary-800": "var(--color-gray-800)",
+      "negative-800": "var(--color-red-800)",
+      "line-height-28": "1.75rem",
+      "primary-800": "var(--color-blue-800)",
+      "primary-100": "var(--color-blue-100)",
+      "color-blue-50": "rgba(229,246,255,1)",
+      "font-weight-char-bold": "700",
+      "letter-spacing-wider": "0.05em",
+      "color-blue-100": "rgba(206,237,255,1)",
+      "color-gray-50": "rgba(246,248,250,1)",
+      "secondary-200": "var(--color-gray-200)",
+      "color-gray-800": "rgba(50,56,63,1)",
+      "negative-50": "var(--color-red-50)",
+      "shadow-md": "0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -2px rgba(0, 0, 0, 0.10)",
+      "shadow-sm": "0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10)",
+      "primary-600": "var(--color-blue-600)",
+      "shadow-xs": "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+      "secondary-500": "var(--color-gray-500)",
+      "color-gray-100": "rgba(234,238,242,1)",
+      "shadow-2xs": "0px 1px 0px 0px rgba(0, 0, 0, 0.05)",
+      "line-height-24": "1.5rem",
+      "color-red-600": "rgba(164,14,38,1)",
+      "color-blue-800": "rgba(10,48,105,1)",
+      "secondary-50": "var(--color-gray-50)",
+      "color-blue-500": "rgba(9,105,218,1)",
+      "negative-700": "var(--color-red-700)",
+      "font-size-16": "1rem",
+      "color-red-800": "rgba(102,0,24,1)",
+      "color-red-50": "rgba(255,246,245,1)",
+      "font-size-18": "1.125rem",
+      "negative-500": "var(--color-red-500)",
+      "secondary-600": "var(--color-gray-600)",
+      "primary-50": "var(--color-blue-50)",
+      "color-red-700": "rgba(130,7,30,1)",
+      "color-gray-500": "rgba(110,119,129,1)",
+      "negative-600": "var(--color-red-600)"
+    }
+  },
+  "css": {
+    "@layer utilities": {
+      "character-3-bold-pro": {
+        "font-size": "var(--font-size-16)",
+        "font-weight": "var(--font-weight-char-bold)",
+        "line-height": "var(--line-height-24)",
+        "letter-spacing": "var(--letter-spacing-wider)",
+        "font-family": "var(--font-family-pro)"
+      },
+      "character-2-bold-pro": {
+        "font-size": "var(--font-size-14)",
+        "font-family": "var(--font-family-pro)",
+        "letter-spacing": "var(--letter-spacing-wider)",
+        "line-height": "var(--line-height-24)",
+        "font-weight": "var(--font-weight-char-bold)"
+      },
+      "character-4-bold-pro": {
+        "font-weight": "var(--font-weight-char-bold)",
+        "line-height": "var(--line-height-28)",
+        "font-size": "var(--font-size-18)",
+        "font-family": "var(--font-family-pro)",
+        "letter-spacing": "var(--letter-spacing-wider)"
+      }
+    }
+  }
 }

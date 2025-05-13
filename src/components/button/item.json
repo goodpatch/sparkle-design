@@ -16,5 +16,91 @@
   "registryDependencies": [
     "https://sparkle-ui.vercel.app/r/icon.json",
     "https://sparkle-ui.vercel.app/r/spinner.json"
-  ]
+  ],
+  "css": {
+    "@layer utilities": {
+      "character-2-bold-pro": {
+        "font-family": "var(--font-family-pro)",
+        "font-size": "var(--font-size-14)",
+        "font-weight": "var(--font-weight-char-bold)",
+        "letter-spacing": "var(--letter-spacing-wider)",
+        "line-height": "var(--line-height-24)"
+      },
+      "character-3-bold-pro": {
+        "font-family": "var(--font-family-pro)",
+        "font-size": "var(--font-size-16)",
+        "font-weight": "var(--font-weight-char-bold)",
+        "letter-spacing": "var(--letter-spacing-wider)",
+        "line-height": "var(--line-height-24)"
+      },
+      "character-4-bold-pro": {
+        "font-family": "var(--font-family-pro)",
+        "font-size": "var(--font-size-18)",
+        "font-weight": "var(--font-weight-char-bold)",
+        "letter-spacing": "var(--letter-spacing-wider)",
+        "line-height": "var(--line-height-28)"
+      }
+    }
+  },
+  "cssVars": {
+    "theme": {
+      "primary-50": "var(--color-blue-50)",
+      "primary-100": "var(--color-blue-100)",
+      "primary-200": "var(--color-blue-200)",
+      "primary-500": "var(--color-blue-500)",
+      "primary-600": "var(--color-blue-600)",
+      "primary-700": "var(--color-blue-700)",
+      "primary-800": "var(--color-blue-800)",
+      "secondary-50": "var(--color-gray-50)",
+      "secondary-100": "var(--color-gray-100)",
+      "secondary-200": "var(--color-gray-200)",
+      "secondary-500": "var(--color-gray-500)",
+      "secondary-600": "var(--color-gray-600)",
+      "secondary-700": "var(--color-gray-700)",
+      "secondary-800": "var(--color-gray-800)",
+      "negative-50": "var(--color-red-50)",
+      "negative-100": "var(--color-red-100)",
+      "negative-200": "var(--color-red-200)",
+      "negative-500": "var(--color-red-500)",
+      "negative-600": "var(--color-red-600)",
+      "negative-700": "var(--color-red-700)",
+      "negative-800": "var(--color-red-800)",
+      "shadow-raise": "var(--shadow-xs)",
+      "color-blue-50": "rgba(229,246,255,1)",
+      "color-blue-100": "rgba(206,237,255,1)",
+      "color-blue-200": "rgba(151,211,255,1)",
+      "color-blue-500": "rgba(9,105,218,1)",
+      "color-blue-600": "rgba(5,80,174,1)",
+      "color-blue-700": "rgba(3,61,139,1)",
+      "color-blue-800": "rgba(10,48,105,1)",
+      "color-gray-50": "rgba(246,248,250,1)",
+      "color-gray-100": "rgba(234,238,242,1)",
+      "color-gray-200": "rgba(208,215,222,1)",
+      "color-gray-500": "rgba(110,119,129,1)",
+      "color-gray-600": "rgba(87,96,106,1)",
+      "color-gray-700": "rgba(66,74,83,1)",
+      "color-gray-800": "rgba(50,56,63,1)",
+      "color-red-50": "rgba(255,246,245,1)",
+      "color-red-100": "rgba(255,229,228,1)",
+      "color-red-200": "rgba(255,187,185,1)",
+      "color-red-500": "rgba(207,34,46,1)",
+      "color-red-600": "rgba(164,14,38,1)",
+      "color-red-700": "rgba(130,7,30,1)",
+      "color-red-800": "rgba(102,0,24,1)",
+      "shadow-none": "0px 0px 0px 0px #000",
+      "shadow-2xs": "0px 1px 0px 0px rgba(0, 0, 0, 0.05)",
+      "shadow-xs": "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+      "shadow-sm": "0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10)",
+      "shadow-md": "0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -2px rgba(0, 0, 0, 0.10)",
+      "shadow-lg": "0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 0, 0.10)",
+      "font-family-pro": "'BIZ UDPGothic', sans-serif",
+      "font-size-14": "0.875rem",
+      "font-size-16": "1rem",
+      "font-size-18": "1.125rem",
+      "font-weight-char-bold": "700",
+      "letter-spacing-wider": "0.05em",
+      "line-height-24": "1.5rem",
+      "line-height-28": "1.75rem"
+    }
+  }
 }
