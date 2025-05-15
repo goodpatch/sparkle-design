@@ -64,7 +64,7 @@ const selectScrollButtonVariants = cva(
 );
 
 const selectContentVariants = cva(
-  "relative z-50 min-w-[8rem] overflow-hidden rounded-md border border-base-200 bg-white text-base-900 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+  "relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border bg-white text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-select-content-transform-origin]",
   {
     variants: {
       position: {
@@ -84,7 +84,7 @@ const selectViewportVariants = cva("p-1", {
   variants: {
     position: {
       popper:
-        "max-h-[var(--radix-select-content-available-height)] w-full min-w-[var(--radix-select-trigger-width)]",
+        "h-[var(--radix-select-content-available-height)] w-full min-w-[var(--radix-select-trigger-width)]",
       item: "",
       "item-aligned": "",
     },
@@ -94,15 +94,19 @@ const selectViewportVariants = cva("p-1", {
   },
 });
 
-const selectLabelVariants = cva("px-2 py-1.5 text-sm font-semibold");
+const selectLabelVariants = cva(
+  "px-2 py-1.5 character-1-bold-pro text-base-900"
+);
 
 const selectItemVariants = cva(
-  "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 character-2-regular-pro outline-none transition-colors focus:bg-primary-50 focus:text-primary-800 data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[state=checked]:bg-primary-50 data-[state=checked]:text-primary-800"
+  "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-base-100 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
 );
 
 const selectItemIndicatorVariants = cva(
-  "absolute left-2 flex h-3.5 w-3.5 items-center justify-center text-primary-500"
+  "absolute right-2 flex h-3.5 w-3.5 items-center justify-center"
 );
+
+const selectItemTextVariants = cva("character-1-regular-pro text-base-700");
 
 const selectSeparatorVariants = cva("-mx-1 my-1 h-px bg-base-100");
 
@@ -245,7 +249,11 @@ const SelectItem = React.forwardRef<
       </SelectPrimitive.ItemIndicator>
     </span>
 
-    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+    <SelectPrimitive.ItemText>
+      <span className={cn(selectItemTextVariants(), className)}>
+        {children}
+      </span>
+    </SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
 ));
 SelectItem.displayName = SelectPrimitive.Item.displayName;
