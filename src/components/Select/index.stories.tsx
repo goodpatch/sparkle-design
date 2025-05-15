@@ -7,6 +7,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
+  SelectSeparator,
 } from "./index";
 
 const meta = {
@@ -94,7 +95,10 @@ export const Default: Story = {
         <SelectGroup>
           <SelectLabel>South America</SelectLabel>
           <SelectItem value="art">Argentina Time (ART)</SelectItem>
-          <SelectItem value="bot">Bolivia Time (BOT)</SelectItem>
+          <SelectItem value="bot" disabled>
+            Bolivia Time (BOT)
+          </SelectItem>
+          <SelectSeparator />
           <SelectItem value="brt">Brasilia Time (BRT)</SelectItem>
           <SelectItem value="clt">Chile Standard Time (CLT)</SelectItem>
         </SelectGroup>
