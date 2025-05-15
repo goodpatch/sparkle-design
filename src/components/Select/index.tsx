@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { Icon } from "@/components/icon";
 
 const selectTriggerVariants = cva(
-  "flex items-center justify-between w-full rounded-md border bg-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 overflow-hidden whitespace-pre",
+  "flex items-center justify-between w-full rounded-action border bg-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 overflow-hidden whitespace-pre",
   {
     variants: {
       size: {
@@ -64,7 +64,7 @@ const selectScrollButtonVariants = cva(
 );
 
 const selectContentVariants = cva(
-  "relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border bg-white text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-select-content-transform-origin]",
+  "relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-action border bg-white text-popover-foreground shadow-float data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-select-content-transform-origin]",
   {
     variants: {
       position: {
@@ -99,7 +99,7 @@ const selectLabelVariants = cva(
 );
 
 const selectItemVariants = cva(
-  "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-base-100 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+  "relative flex w-full cursor-default select-none items-center rounded-notice py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-base-100 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
 );
 
 const selectItemIndicatorVariants = cva(
