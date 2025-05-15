@@ -7,6 +7,10 @@ registry: ## Build the registry.
 	@echo "🤖 Registry ran successfully."
 	npm run build:registry
 	@echo "🤖 Registry built successfully."
+	cp registry.json ./public/r/registry.json
+	cp components/sparkle-color.json ./public/r/
+	cp components/sparkle-font.json ./public/r/
+	cp components/sparkle-style.json ./public/r/
 
 .PHONY: new-component
 new-component: ## Create a new component.
