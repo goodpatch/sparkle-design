@@ -42,7 +42,7 @@ const checkboxItemVariants = cva(
 );
 
 const checkboxRootVariants = cva(
-  "rounded-sm border-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-colors",
+  "rounded-sm border-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-colors",
   {
     variants: {
       size: {

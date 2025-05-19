@@ -52,7 +52,7 @@ const radioItemVariants = cva(
 );
 
 const radioIndicatorVariants = cva(
-  "relative rounded-full border border-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors",
+  "relative rounded-full border border-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors",
   {
     variants: {
       size: {

@@ -23,7 +23,7 @@ const inputVariants = cva(
         false: "",
       },
       isFocused: {
-        true: "ring-2 ring-primary-500 ring-offset-2 outline-none",
+        true: "ring-2 ring-primary-500 ring-offset-2 outline-hidden",
         false: "",
       },
     },
@@ -261,7 +261,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           ref={mergedInputRef}
           disabled={isInputDisabled}
           className={cn(
-            "w-full h-full bg-transparent border-none outline-none focus:outline-none",
+            "w-full h-full bg-transparent border-none outline-hidden focus:outline-hidden",
             "text-base-900 placeholder:text-base-400",
             isInputDisabled &&
               "cursor-not-allowed text-base-300 placeholder:text-base-300",
