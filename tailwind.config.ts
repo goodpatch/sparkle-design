@@ -4,7 +4,7 @@ const sparkleColors = require("./style-dictionary/build/color.tailwind");
 /// Semantics colors
 const semanticsColors = {
   neutral: sparkleColors.gray,
-  primary: sparkleColors['blue'],
+  primary: sparkleColors["blue"],
   secondary: sparkleColors.gray,
   info: sparkleColors.blue,
   success: sparkleColors.green,
@@ -28,8 +28,8 @@ const componentsColors = {
   },
   skeleton: {
     fill: semanticsColors.neutral[200],
-  }
-}
+  },
+};
 
 const config = {
   darkMode: ["class"],
@@ -55,11 +55,11 @@ const config = {
         ...componentsColors,
         // NOTE: 以下はSparkleにないトークン定義
         base: sparkleColors.gray,
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
       },
       borderRadius: {
         divide: "var(--radius-none)",
@@ -91,7 +91,7 @@ const config = {
         stick: "var(--shadow-stick)",
         float: "var(--shadow-float)",
         popout: "var(--shadow-popout)",
-      }
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
@@ -103,7 +103,7 @@ const config = {
     // NOTE: characterのクラスをPurgeCSSの対象外にする
     {
       pattern: /character-\d+-(?:regular|bold)-(?:pro|mono)/,
-    }
+    },
   ],
 } satisfies Config;
 
