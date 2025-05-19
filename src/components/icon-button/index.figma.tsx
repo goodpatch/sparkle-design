@@ -21,7 +21,7 @@ figma.connect(IconButton, "", {
     }),
     variant: figma.enum("variant", {
       solid: "solid",
-      outline: "outline-solid",
+      outline: "outline",
       ghost: "ghost",
     }),
     size: figma.enum("size", {
