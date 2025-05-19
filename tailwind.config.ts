@@ -32,7 +32,7 @@ const componentsColors = {
 };
 
 const config = {
-  darkMode: ["class"],
+  // darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -95,16 +95,16 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-  safelist: [
-    // NOTE: iconのクラスをPurgeCSSの対象外にする
-    {
-      pattern: /icon-\d+-fill-[01]/,
-    },
-    // NOTE: characterのクラスをPurgeCSSの対象外にする
-    {
-      pattern: /character-\d+-(?:regular|bold)-(?:pro|mono)/,
-    },
-  ],
+  // safelist: [
+  //   // NOTE: iconのクラスをPurgeCSSの対象外にする
+  //   {
+  //     pattern: /icon-\d+-fill-[01]/,
+  //   },
+  //   // NOTE: characterのクラスをPurgeCSSの対象外にする
+  //   {
+  //     pattern: /character-\d+-(?:regular|bold)-(?:pro|mono)/,
+  //   },
+  // ],
 } satisfies Config;
 
 export default config;
