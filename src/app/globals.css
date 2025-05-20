@@ -8,6 +8,7 @@ layer(base);
 
 /* Tailwindのインポート */
 @import "tailwindcss";
+@import "./variables.css";
 
 @config '../../tailwind.config.ts';
 
