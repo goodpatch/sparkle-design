@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
  */
 const textareaVariants = cva(
   // ベーススタイル
-  "flex w-full rounded-md border bg-white ring-offset-background placeholder:text-base-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize",
+  "flex w-full rounded-md border bg-white ring-offset-background placeholder:text-base-400 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize",
   {
     variants: {
       // サイズバリアント（sm, md, lg）

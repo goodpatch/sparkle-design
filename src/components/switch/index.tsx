@@ -7,7 +7,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const switchVariants = cva(
-  "peer inline-flex shrink-0 cursor-pointer items-center rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[state=unchecked]:bg-gray-500 data-[state=unchecked]:border-gray-600 data-[state=unchecked]:hover:bg-gray-600 data-[state=unchecked]:hover:border-gray-700 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-600 data-[state=checked]:hover:bg-blue-600 data-[state=checked]:hover:border-blue-700 disabled:cursor-not-allowed disabled:data-[state=unchecked]:bg-gray-200 disabled:data-[state=unchecked]:border-transparent disabled:data-[state=checked]:bg-blue-200 disabled:data-[state=checked]:border-transparent",
+  "peer inline-flex shrink-0 cursor-pointer items-center rounded-full border transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[state=unchecked]:bg-gray-500 data-[state=unchecked]:border-gray-600 data-[state=unchecked]:hover:bg-gray-600 data-[state=unchecked]:hover:border-gray-700 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-600 data-[state=checked]:hover:bg-blue-600 data-[state=checked]:hover:border-blue-700 disabled:cursor-not-allowed disabled:data-[state=unchecked]:bg-gray-200 disabled:data-[state=unchecked]:border-transparent disabled:data-[state=checked]:bg-blue-200 disabled:data-[state=checked]:border-transparent",
   {
     variants: {
       size: {

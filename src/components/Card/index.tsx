@@ -17,7 +17,7 @@ const ClickableCard = React.forwardRef<HTMLButtonElement, ClickableCardProps>(
       ref={ref}
       className={cn(
         "rounded-action border border-divider-low bg-white shadow-raise text-text-middle py-4 cursor-pointer hover:bg-neutral-50",
-        "transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        "transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         "active:bg-neutral-50 active:shadow-float active:border-primary-400",
         "disabled:cursor-not-allowed disabled:bg-white disabled:border-secondary-100 disabled:text-secondary-200 disabled:shadow-flat",
         className
