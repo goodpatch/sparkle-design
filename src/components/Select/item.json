@@ -10,6 +10,6 @@
       "type": "registry:component"
     }
   ],
-  "dependencies": ["@radix-ui/react-checkbox"],
+  "dependencies": ["@radix-ui/react-select"],
   "registryDependencies": ["https://sparkle-ui.vercel.app/r/icon.json"]
 }
