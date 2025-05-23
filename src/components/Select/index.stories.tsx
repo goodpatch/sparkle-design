@@ -108,9 +108,12 @@ export const Default: Story = {
 };
 
 export const Small: Story = {
+  args: {
+    size: "sm",
+  },
   render: (args) => (
     <Select>
-      <SelectTrigger className="w-[240px]" size="sm" {...args}>
+      <SelectTrigger className="w-[240px]" {...args}>
         <SelectValue placeholder="選択してください" />
       </SelectTrigger>
       <SelectContent>
@@ -123,9 +126,12 @@ export const Small: Story = {
 };
 
 export const Medium: Story = {
+  args: {
+    size: "md",
+  },
   render: (args) => (
     <Select>
-      <SelectTrigger className="w-[240px]" size="md" {...args}>
+      <SelectTrigger className="w-[240px]" {...args}>
         <SelectValue placeholder="選択してください" />
       </SelectTrigger>
       <SelectContent>
@@ -138,9 +144,12 @@ export const Medium: Story = {
 };
 
 export const Large: Story = {
+  args: {
+    size: "lg",
+  },
   render: (args) => (
     <Select>
-      <SelectTrigger className="w-[240px]" size="lg" {...args}>
+      <SelectTrigger className="w-[240px]" {...args}>
         <SelectValue placeholder="選択してください" />
       </SelectTrigger>
       <SelectContent>

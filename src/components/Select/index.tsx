@@ -147,16 +147,22 @@ function SelectTrigger({
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       data-size={size}
-      className={selectTriggerVariants()}
+      className={cn(
+        selectTriggerVariants({
+          size,
+          isInvalid,
+          isDisabled: disabled,
+        }),
+        className
+      )}
+      disabled={disabled}
       {...props}
     >
       {children}
       <SelectPrimitive.Icon asChild>
         <Icon
           icon="expand_more"
-          className={cn(
-            selectIconVariants({ size: "md", isDisabled: disabled })
-          )}
+          className={cn(selectIconVariants({ size, isDisabled: disabled }))}
         />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
