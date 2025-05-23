@@ -4,5 +4,6 @@
       "file": ".github/copilot-commit-message-instructions.md"
     }
   ],
-  "chat.promptFiles": true
+  "chat.promptFiles": true,
+  "chat.mcp.discovery.enabled": true
 }
