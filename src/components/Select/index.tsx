@@ -2,10 +2,10 @@
 
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
-
 import { Icon } from "@/components/icon";
+import { cva, type VariantProps } from "class-variance-authority";
+
+import { cn } from "@/lib/utils";
 
 const selectTriggerVariants = cva(
   "flex items-center justify-between w-full rounded-action border bg-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 overflow-hidden whitespace-pre",
@@ -64,12 +64,12 @@ const selectScrollButtonVariants = cva(
 );
 
 const selectContentVariants = cva(
-  "relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-action border bg-white text-popover-foreground shadow-float data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-select-content-transform-origin]",
+  "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-action border shadow-float",
   {
     variants: {
       position: {
         popper:
-          "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+          "bg-white data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
         item: "",
         "item-aligned": "",
       },
@@ -110,169 +110,189 @@ const selectItemTextVariants = cva("character-1-regular-pro text-base-700");
 
 const selectSeparatorVariants = cva("-mx-1 my-1 h-px bg-base-100");
 
-const Select = SelectPrimitive.Root;
-const SelectGroup = SelectPrimitive.Group;
-const SelectValue = SelectPrimitive.Value;
+function Select({
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Root>) {
+  return <SelectPrimitive.Root data-slot="select" {...props} />;
+}
+
+function SelectGroup({
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Group>) {
+  return <SelectPrimitive.Group data-slot="select-group" {...props} />;
+}
+
+function SelectValue({
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Value>) {
+  return <SelectPrimitive.Value data-slot="select-value" {...props} />;
+}
 
 /**
  * セレクトのトリガー部分。
  * クリックで選択肢リストを開閉するボタンとして機能します。
  */
-const SelectTrigger = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> &
-    VariantProps<typeof selectTriggerVariants> & {
-      isInvalid?: boolean;
-    }
->(({ className, size, isInvalid, disabled, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      selectTriggerVariants({
-        size,
-        isInvalid,
-        isDisabled: disabled,
-        className,
-      })
-    )}
-    disabled={disabled}
-    {...props}
-  >
-    <span className="overflow-hidden">{children}</span>
-
-    <SelectPrimitive.Icon asChild>
-      <Icon
-        icon="arrow_drop_down"
-        className={cn(selectIconVariants({ size, isDisabled: disabled }))}
-      />
-    </SelectPrimitive.Icon>
-  </SelectPrimitive.Trigger>
-));
-SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
-
-/**
- * セレクトの上スクロールボタン。
- * 選択肢が多い場合にリストを上方向にスクロールします。
- */
-const SelectScrollUpButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.ScrollUpButton
-    ref={ref}
-    className={cn(selectScrollButtonVariants(), className)}
-    {...props}
-  >
-    <Icon icon="expand_less" size={4} />
-  </SelectPrimitive.ScrollUpButton>
-));
-SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
-
-/**
- * セレクトの下スクロールボタン。
- * 選択肢が多い場合にリストを下方向にスクロールします。
- */
-const SelectScrollDownButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.ScrollDownButton
-    ref={ref}
-    className={cn(selectScrollButtonVariants(), className)}
-    {...props}
-  >
-    <Icon icon="expand_more" size={4} />
-  </SelectPrimitive.ScrollDownButton>
-));
-SelectScrollDownButton.displayName =
-  SelectPrimitive.ScrollDownButton.displayName;
+function SelectTrigger({
+  className,
+  size,
+  children,
+  isInvalid,
+  disabled,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
+  size: "sm" | "md" | "lg";
+  isInvalid?: boolean;
+}) {
+  return (
+    <SelectPrimitive.Trigger
+      data-slot="select-trigger"
+      data-size={size}
+      className={selectTriggerVariants()}
+      {...props}
+    >
+      {children}
+      <SelectPrimitive.Icon asChild>
+        <Icon
+          icon="expand_more"
+          className={cn(
+            selectIconVariants({ size: "md", isDisabled: disabled })
+          )}
+        />
+      </SelectPrimitive.Icon>
+    </SelectPrimitive.Trigger>
+  );
+}
 
 /**
  * セレクトのドロップダウンリスト本体。
  * 選択肢リストの表示・スクロール制御を行います。
  */
-const SelectContent = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = "popper", ...props }, ref) => (
-  <SelectPrimitive.Portal>
-    <SelectPrimitive.Content
-      ref={ref}
-      className={cn(selectContentVariants({ position }), className)}
-      position={position}
-      {...props}
-    >
-      <SelectScrollUpButton />
-      <SelectPrimitive.Viewport
-        className={cn(selectViewportVariants({ position }))}
+function SelectContent({
+  className,
+  children,
+  position = "popper",
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Content>) {
+  return (
+    <SelectPrimitive.Portal>
+      <SelectPrimitive.Content
+        data-slot="select-content"
+        className={cn(selectContentVariants({ position }), className)}
+        position={position}
+        {...props}
       >
-        {children}
-      </SelectPrimitive.Viewport>
-      <SelectScrollDownButton />
-    </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
-));
-SelectContent.displayName = SelectPrimitive.Content.displayName;
+        <SelectScrollUpButton />
+        <SelectPrimitive.Viewport
+          className={cn(selectViewportVariants({ position }))}
+        >
+          {children}
+        </SelectPrimitive.Viewport>
+        <SelectScrollDownButton />
+      </SelectPrimitive.Content>
+    </SelectPrimitive.Portal>
+  );
+}
 
 /**
  * セレクトのラベル部分。
  * グループ化された選択肢のラベル表示に使います。
  */
-const SelectLabel = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.Label
-    ref={ref}
-    className={cn(selectLabelVariants(), className)}
-    {...props}
-  />
-));
-SelectLabel.displayName = SelectPrimitive.Label.displayName;
+function SelectLabel({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Label>) {
+  return (
+    <SelectPrimitive.Label
+      data-slot="select-label"
+      className={cn(selectLabelVariants(), className)}
+      {...props}
+    />
+  );
+}
 
 /**
  * セレクトの各選択肢アイテム。
  * 選択可能なリスト項目として機能します。
  */
-const SelectItem = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Item
-    ref={ref}
-    className={cn(selectItemVariants(), className)}
-    {...props}
-  >
-    <span className={selectItemIndicatorVariants()}>
-      <SelectPrimitive.ItemIndicator>
-        <Icon icon="check" size={4} />
-      </SelectPrimitive.ItemIndicator>
-    </span>
-
-    <SelectPrimitive.ItemText>
-      <span className={cn(selectItemTextVariants(), className)}>
-        {children}
+function SelectItem({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Item>) {
+  return (
+    <SelectPrimitive.Item
+      data-slot="select-item"
+      className={cn(selectItemVariants(), className)}
+      {...props}
+    >
+      <span className={selectItemIndicatorVariants()}>
+        <SelectPrimitive.ItemIndicator>
+          <Icon icon="check" size={4} />
+        </SelectPrimitive.ItemIndicator>
       </span>
-    </SelectPrimitive.ItemText>
-  </SelectPrimitive.Item>
-));
-SelectItem.displayName = SelectPrimitive.Item.displayName;
+      <SelectPrimitive.ItemText>
+        <span className={cn(selectItemTextVariants(), className)}>
+          {children}
+        </span>
+      </SelectPrimitive.ItemText>
+    </SelectPrimitive.Item>
+  );
+}
 
 /**
  * セレクトの区切り線。
  * 選択肢リスト内の区切り表示に使います。
  */
-const SelectSeparator = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.Separator
-    ref={ref}
-    className={cn(selectSeparatorVariants(), className)}
-    {...props}
-  />
-));
-SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
+function SelectSeparator({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Separator>) {
+  return (
+    <SelectPrimitive.Separator
+      data-slot="select-separator"
+      className={cn(selectSeparatorVariants(), className)}
+      {...props}
+    />
+  );
+}
+
+/**
+ * セレクトの上スクロールボタン。
+ * 選択肢が多い場合にリストを上方向にスクロールします。
+ */
+function SelectScrollUpButton({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.ScrollUpButton>) {
+  return (
+    <SelectPrimitive.ScrollUpButton
+      data-slot="select-scroll-up-button"
+      className={cn(selectScrollButtonVariants(), className)}
+      {...props}
+    >
+      <Icon icon="expand_less" size={4} />
+    </SelectPrimitive.ScrollUpButton>
+  );
+}
+
+/**
+ * セレクトの下スクロールボタン。
+ * 選択肢が多い場合にリストを下方向にスクロールします。
+ */
+function SelectScrollDownButton({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.ScrollDownButton>) {
+  return (
+    <SelectPrimitive.ScrollDownButton
+      data-slot="select-scroll-down-button"
+      className={cn(selectScrollButtonVariants(), className)}
+      {...props}
+    >
+      <Icon icon="expand_more" size={4} />
+    </SelectPrimitive.ScrollDownButton>
+  );
+}
 
 export {
   Select,
@@ -286,5 +306,3 @@ export {
   SelectScrollUpButton,
   SelectScrollDownButton,
 };
-
-export type { VariantProps };
