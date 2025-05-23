@@ -5,6 +5,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { IconButton } from "../icon-button";
 
 function Modal({
   ...props
@@ -25,9 +26,10 @@ function ModalPortal({
 }
 
 function ModalClose({
+  icon,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Close>) {
-  return <DialogPrimitive.Close data-slot="modal-close" {...props} />;
+}: React.ComponentProps<typeof IconButton>) {
+  return <IconButton icon="close" data-slot="modal-close" {...props} />;
 }
 
 function ModalOverlay({
@@ -63,15 +65,15 @@ function ModalContent({
   // Figmaのsizeバリアントに合わせたサイズごとのスタイル定義
   const sizeClass =
     size === "sm"
-      ? "max-w-xs p-4 rounded-[6px]"
+      ? "max-w-xs"
       : size === "md"
-      ? "max-w-md p-6 rounded-[8px]"
+      ? "max-w-md"
       : size === "lg"
-      ? "max-w-lg p-8 rounded-[12px]"
+      ? "max-w-lg"
       : size === "xl"
-      ? "max-w-2xl p-12 rounded-[12px]"
+      ? "max-w-2xl"
       : size === "full"
-      ? "max-w-full w-full p-0 rounded-none"
+      ? "max-w-full w-full h-full"
       : "";
   return (
     <ModalPortal data-slot="modal-portal">
@@ -80,7 +82,7 @@ function ModalContent({
         data-slot="modal-content"
         className={cn(
           sizeClass,
-          "z-50 bg-background border rounded-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 shadow-lg duration-200",
+          "z-50 bg-background border px-8 py-4 rounded-modal data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] grid translate-x-[-50%] translate-y-[-50%] gap-4 shadow-lg duration-200",
           className
         )}
         {...props}
