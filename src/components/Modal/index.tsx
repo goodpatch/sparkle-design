@@ -6,7 +6,9 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { cn } from "@/lib/utils";
 import { IconButton } from "../icon-button";
 
-/// モーダルのルート要素
+/**
+ * モーダルはコンテンツに重ねられたウィンドウを介して、ユーザーの注意を特定の情報に集中させるために使用するコンポーネントです。
+ */
 function Modal({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Root>) {
@@ -112,7 +114,7 @@ function ModalContent({
       : size === "xl"
       ? "max-w-[960px]"
       : size === "full"
-      ? "max-w-screen h-screen overflow-hidden"
+      ? "max-w-[calc(100vw-80px)] h-[calc(100vh-80px)] overflow-hidden"
       : "";
   return (
     <ModalPortal data-slot="modal-portal">
@@ -121,7 +123,7 @@ function ModalContent({
         data-slot="modal-content"
         className={cn(
           sizeClass,
-          "z-50 flex flex-col gap-0 w-full bg-background border py-4 rounded-modal data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] gap-4 shadow-lg duration-200",
+          "z-50 flex flex-col gap-0 w-full max-h-[calc(100vh-80px)] bg-background border py-4 rounded-modal data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] gap-4 shadow-lg duration-200",
           className
         )}
         {...props}

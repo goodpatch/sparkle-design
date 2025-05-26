@@ -41,6 +41,19 @@ export const Default: Story = {
           <ModalBody>
             <p>これはデフォルトのモーダルです。</p>
           </ModalBody>
+          <ModalFooter>
+            <Button
+              size="sm"
+              theme="secondary"
+              variant="ghost"
+              onClick={() => setOpen(false)}
+            >
+              キャンセル
+            </Button>
+            <Button size="sm" onClick={() => setOpen(false)}>
+              保存
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     );
@@ -86,6 +99,94 @@ export const SizeVariants: Story = {
           </div>
         ))}
       </div>
+    );
+  },
+};
+
+export const HeaderHidden: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <Modal open={open} onOpenChange={setOpen}>
+        <ModalTrigger asChild>
+          <Button>ヘッダー非表示</Button>
+        </ModalTrigger>
+        <ModalContent>
+          <ModalBody>
+            <p>ヘッダーが非表示のモーダルです。</p>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              size="sm"
+              theme="secondary"
+              variant="ghost"
+              onClick={() => setOpen(false)}
+            >
+              キャンセル
+            </Button>
+            <Button size="sm" onClick={() => setOpen(false)}>
+              保存
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    );
+  },
+};
+
+export const CloseButtonHidden: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <Modal open={open} onOpenChange={setOpen}>
+        <ModalTrigger asChild>
+          <Button>クローズボタン非表示</Button>
+        </ModalTrigger>
+        <ModalContent>
+          <ModalHeader>
+            <ModalTitle>タイトル</ModalTitle>
+            {/* クローズボタンを非表示にするため省略 */}
+          </ModalHeader>
+          <ModalBody>
+            <p>クローズボタンが非表示のモーダルです。</p>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              size="sm"
+              theme="secondary"
+              variant="ghost"
+              onClick={() => setOpen(false)}
+            >
+              キャンセル
+            </Button>
+            <Button size="sm" onClick={() => setOpen(false)}>
+              保存
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    );
+  },
+};
+
+export const FooterHidden: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <Modal open={open} onOpenChange={setOpen}>
+        <ModalTrigger asChild>
+          <Button>フッター非表示</Button>
+        </ModalTrigger>
+        <ModalContent>
+          <ModalHeader>
+            <ModalTitle>タイトル</ModalTitle>
+            <ModalClose />
+          </ModalHeader>
+          <ModalBody>
+            <p>フッターが非表示のモーダルです。</p>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     );
   },
 };
