@@ -14,7 +14,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build:sd": "node sd.config.js && cp style-dictionary/build/_variables.css src/app/variables.css",
-    "build:registry": "shadcn build"
+    "build:registry": "shadcn build",
+    "postinstall": "npx lightningcss --version || true"
   },
   "dependencies": {
     "@figma/code-connect": "^1.0.6",
