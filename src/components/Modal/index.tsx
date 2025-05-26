@@ -49,7 +49,17 @@ function ModalOverlay({
 }
 
 // Figmaのsizeバリアントに合わせた型定義
-export type ModalSize = "sm" | "md" | "lg" | "xl" | "full";
+export type ModalSize =
+  // 320px
+  | "sm"
+  // 480px
+  | "md"
+  // 640px
+  | "lg"
+  // 960px
+  | "xl"
+  // 100vw
+  | "full";
 
 interface ModalContentProps
   extends React.ComponentProps<typeof DialogPrimitive.Content> {
@@ -67,11 +77,11 @@ function ModalContent({
     size === "sm"
       ? "max-w-xs"
       : size === "md"
-      ? "max-w-md"
+      ? "max-w-[480px]"
       : size === "lg"
-      ? "max-w-lg"
+      ? "max-w-[640px]"
       : size === "xl"
-      ? "max-w-2xl"
+      ? "max-w-[960px]"
       : size === "full"
       ? "max-w-full w-full h-full"
       : "";
@@ -82,7 +92,7 @@ function ModalContent({
         data-slot="modal-content"
         className={cn(
           sizeClass,
-          "z-50 bg-background border px-8 py-4 rounded-modal data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] grid translate-x-[-50%] translate-y-[-50%] gap-4 shadow-lg duration-200",
+          "z-50 bg-background border px-8 py-4 w-full rounded-modal data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] grid translate-x-[-50%] translate-y-[-50%] gap-4 shadow-lg duration-200",
           className
         )}
         {...props}
