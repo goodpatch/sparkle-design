@@ -57,7 +57,7 @@
     "eslint-config-next": "14.2.7",
     "eslint-plugin-storybook": "^0.11.6",
     "playwright": "^1.51.1",
-    "postcss": "^8",
+    "postcss": "^8.5.3",
     "sd-tailwindcss-transformer": "^2.1.0",
     "shadcn": "^2.4.0-canary.20",
     "style-dictionary": "^4.3.3",
