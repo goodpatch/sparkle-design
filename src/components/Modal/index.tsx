@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { XIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { IconButton } from "../icon-button";
@@ -26,10 +25,20 @@ function ModalPortal({
 }
 
 function ModalClose({
-  icon,
   ...props
-}: React.ComponentProps<typeof IconButton>) {
-  return <IconButton icon="close" data-slot="modal-close" {...props} />;
+}: Omit<React.ComponentProps<typeof IconButton>, "icon">) {
+  return (
+    <DialogPrimitive.Close asChild>
+      <IconButton
+        icon="close"
+        data-slot="modal-close"
+        size="xs"
+        variant="ghost"
+        theme="secondary"
+        {...props}
+      />
+    </DialogPrimitive.Close>
+  );
 }
 
 function ModalOverlay({
@@ -92,16 +101,12 @@ function ModalContent({
         data-slot="modal-content"
         className={cn(
           sizeClass,
-          "z-50 bg-background border px-8 py-4 w-full rounded-modal data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] grid translate-x-[-50%] translate-y-[-50%] gap-4 shadow-lg duration-200",
+          "z-50 flex flex-col bg-background border py-4 w-full rounded-modal data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] grid translate-x-[-50%] translate-y-[-50%] gap-4 shadow-lg duration-200",
           className
         )}
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:size-4">
-          <XIcon />
-          <span className="sr-only">Close</span>
-        </DialogPrimitive.Close>
       </DialogPrimitive.Content>
     </ModalPortal>
   );
@@ -111,7 +116,7 @@ function ModalHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="modal-header"
-      className={cn("flex flex-col gap-2 text-center sm:text-left", className)}
+      className={cn("flex gap-2 px-6 py-2 items-center w-full", className)}
       {...props}
     />
   );
@@ -121,10 +126,7 @@ function ModalFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="modal-footer"
-      className={cn(
-        "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
-        className
-      )}
+      className={cn("flex flex-row justify-end gap-2 px-6 py-2", className)}
       {...props}
     />
   );
@@ -137,20 +139,23 @@ function ModalTitle({
   return (
     <DialogPrimitive.Title
       data-slot="modal-title"
-      className={cn("text-lg leading-none font-semibold", className)}
+      className={cn("character-4-bold-pro flex-1", className)}
       {...props}
     />
   );
 }
 
-function ModalDescription({
+function ModalBody({
   className,
+  isSpace = true,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Description>) {
+}: React.ComponentProps<"div"> & {
+  isSpace?: boolean;
+}) {
   return (
-    <DialogPrimitive.Description
-      data-slot="modal-description"
-      className={cn("text-muted-foreground text-sm", className)}
+    <div
+      data-slot="modal-body"
+      className={cn("h-full flex-1", isSpace ? "px-6 py-2" : "", className)}
       {...props}
     />
   );
@@ -160,7 +165,7 @@ export {
   Modal,
   ModalClose,
   ModalContent,
-  ModalDescription,
+  ModalBody,
   ModalFooter,
   ModalHeader,
   ModalOverlay,

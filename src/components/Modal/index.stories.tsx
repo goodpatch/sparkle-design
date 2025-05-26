@@ -4,7 +4,10 @@ import {
   ModalContent,
   ModalTrigger,
   ModalTitle,
-  ModalDescription,
+  ModalBody,
+  ModalHeader,
+  ModalClose,
+  ModalFooter,
 } from "./index";
 import { useState } from "react";
 import { Button } from "../button";
@@ -31,8 +34,13 @@ export const Default: Story = {
           <Button>モーダルを開く</Button>
         </ModalTrigger>
         <ModalContent>
-          <ModalTitle>タイトル</ModalTitle>
-          <ModalDescription>これはデフォルトのモーダルです。</ModalDescription>
+          <ModalHeader>
+            <ModalTitle>タイトル</ModalTitle>
+            <ModalClose />
+          </ModalHeader>
+          <ModalBody>
+            <p>これはデフォルトのモーダルです。</p>
+          </ModalBody>
         </ModalContent>
       </Modal>
     );
@@ -53,10 +61,26 @@ export const SizeVariants: Story = {
               onOpenChange={(v) => (v ? setOpen(size) : setOpen(null))}
             >
               <ModalContent size={size}>
-                <ModalTitle>サイズ: {size}</ModalTitle>
-                <ModalDescription>
-                  {size}サイズのモーダルです。
-                </ModalDescription>
+                <ModalHeader>
+                  <ModalTitle>モーダルサイズ: {size}</ModalTitle>
+                  <ModalClose />
+                </ModalHeader>
+                <ModalBody>
+                  <p>{size}サイズのモーダルです。</p>
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    size="sm"
+                    theme="secondary"
+                    variant="ghost"
+                    onClick={() => setOpen(null)}
+                  >
+                    キャンセル
+                  </Button>
+                  <Button size="sm" onClick={() => setOpen(null)}>
+                    保存
+                  </Button>
+                </ModalFooter>
               </ModalContent>
             </Modal>
           </div>
