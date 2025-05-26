@@ -2,10 +2,6 @@
 const config = {
   plugins: {
     '@tailwindcss/postcss': {
-      // https://github.com/tailwindlabs/tailwindcss/discussions/16370
-      optimize: {
-        minify: false
-      }
     },
   },
 };
