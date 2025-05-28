@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/button";
+import { Link } from "@/components/link";
 import { Radio, RadioItem } from "@/components/radio";
 import { client } from "@figma/code-connect";
 import { useState } from "react";
@@ -30,7 +31,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between gap-4 p-24 overflow-auto">
       <h1 className="text-3xl font-bold">Open in v0</h1>
       <Radio onValueChange={handleChange}>
         {registries.map((registry) => (
@@ -71,6 +72,7 @@ export default function Home() {
   }
 }`}</code>
       </pre>
+      <Link href="/storybook-static/index.html">View Storybook</Link>
     </main>
   );
 }
