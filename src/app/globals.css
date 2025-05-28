@@ -9,6 +9,9 @@
 @import "./variables.css";
 
 @theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
   --color-neutral-50: var(--color-gray-50);
   --color-neutral-100: var(--color-gray-100);
   --color-neutral-200: var(--color-gray-200);
@@ -102,6 +105,53 @@
   --color-base-700: var(--color-gray-700);
   --color-base-800: var(--color-gray-800);
   --color-base-900: var(--color-gray-900);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* 角丸 */
+  --radius-divide: var(--radius-none);
+  --radius-minimum: var(--radius-xs);
+  --radius-notice: var(--radius-sm);
+  --radius-action: var(--radius-md);
+  --radius-halfModal: var(--radius-lg);
+  --radius-modal: var(--radius-xl);
+  --radius-round: var(--radius-full);
+
+  /* シャドウ */
+  --shadow-base: var(--shadow-none);
+  --shadow-flat: var(--shadow-2xs);
+  --shadow-raise: var(--shadow-xs);
+  --shadow-stick: var(--shadow-sm);
+  --shadow-float: var(--shadow-md);
+  --shadow-popout: var(--shadow-lg);
 }
 
 :root {
@@ -141,14 +191,6 @@
   --radius-2xl: 1.5rem;
   --radius-3xl: 2rem;
   --radius-full: 9999px;
-  /* セマンティック */
-  --radius-divide: var(--radius-none);
-  --radius-minimum: var(--radius-xs);
-  --radius-notice: var(--radius-sm);
-  --radius-action: var(--radius-md);
-  --radius-halfModal: var(--radius-lg);
-  --radius-modal: var(--radius-xl);
-  --radius-round: var(--radius-full);
 
   /* タイポグラフィ変数 */
   /* フォントファミリー */
@@ -207,13 +249,6 @@
     0px 2px 4px -2px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
     0px 4px 6px -4px rgba(0, 0, 0, 0.1);
-  /* Semantics */
-  --shadow-base: var(--shadow-none);
-  --shadow-flat: var(--shadow-2xs);
-  --shadow-raise: var(--shadow-xs);
-  --shadow-stick: var(--shadow-sm);
-  --shadow-float: var(--shadow-md);
-  --shadow-popout: var(--shadow-lg);
 }
 
 .dark {
