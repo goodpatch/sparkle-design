@@ -1,0 +1,20 @@
+{
+  "": "https://ui.shadcn.com/schema/registry-item.json",
+  "title": "Modal",
+  "name": "modal",
+  "description": "モーダルダイアログコンポーネント。Radix UIのDialogをベースにしています。",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "src/components/Modal/index.tsx",
+      "type": "registry:component"
+    },
+    {
+      "path": "src/components/icon-button/index.tsx",
+      "type": "registry:component"
+    }
+  ],
+  "dependencies": [
+    "@radix-ui/react-dialog"
+  ]
+}
