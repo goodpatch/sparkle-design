@@ -5,6 +5,7 @@
 
 /* Tailwindのインポート */
 @import "tailwindcss";
+@import "tw-animate-css";
 @import "./variables.css";
 
 @theme inline {
