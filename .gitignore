@@ -42,3 +42,6 @@ next-env.d.ts
 
 # vscode
 # .vscode
+
+# Storybook
+storybook-static
