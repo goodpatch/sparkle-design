@@ -1,18 +1,16 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "modal",
+  "name": "tag",
   "type": "registry:component",
-  "title": "Modal",
-  "description": "モーダルはメインコンテンツの上に表示され、ユーザーの注意を特定のタスクや情報に集中させるためのコンポーネントです。",
+  "title": "Tag",
+  "description": "タグはカテゴリやラベルを表示し、削除可能なアクションを提供するコンポーネントです。",
   "files": [
     {
-      "path": "src/components/Modal/index.tsx",
+      "path": "src/components/tag/index.tsx",
       "type": "registry:component"
     }
   ],
-  "dependencies": [
-    "@radix-ui/react-dialog"
-  ],
+  "dependencies": [],
   "registryDependencies": [
     "https://sparkle-ui.vercel.app/r/icon.json",
     "https://sparkle-ui.vercel.app/r/sparkle-font.json",

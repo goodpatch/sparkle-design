@@ -1,20 +1,19 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "modal",
+  "name": "radio",
   "type": "registry:component",
-  "title": "Modal",
-  "description": "モーダルはメインコンテンツの上に表示され、ユーザーの注意を特定のタスクや情報に集中させるためのコンポーネントです。",
+  "title": "Radio",
+  "description": "ラジオボタンは複数の選択肢から一つを選択するためのフォーム入力コンポーネントです。",
   "files": [
     {
-      "path": "src/components/Modal/index.tsx",
+      "path": "src/components/radio/index.tsx",
       "type": "registry:component"
     }
   ],
   "dependencies": [
-    "@radix-ui/react-dialog"
+    "@radix-ui/react-radio-group"
   ],
   "registryDependencies": [
-    "https://sparkle-ui.vercel.app/r/icon.json",
     "https://sparkle-ui.vercel.app/r/sparkle-font.json",
     "https://sparkle-ui.vercel.app/r/sparkle-color.json",
     "https://sparkle-ui.vercel.app/r/sparkle-style.json"

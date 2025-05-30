@@ -14,6 +14,9 @@
     "@radix-ui/react-checkbox"
   ],
   "registryDependencies": [
+    "https://sparkle-ui.vercel.app/r/sparkle-font.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-color.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-style.json",
     "https://sparkle-ui.vercel.app/r/icon.json"
   ]
 }

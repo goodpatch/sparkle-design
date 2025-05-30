@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea",
+  "type": "registry:component",
+  "title": "Textarea",
+  "description": "テキストエリアは複数行のテキスト入力を可能にするフォーム要素です。",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://sparkle-ui.vercel.app/r/sparkle-font.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-color.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/textarea/index.tsx",
+      "content": "import * as React from \"react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\n\nimport { cn } from \"@/lib/utils\";\n\n/**\n * テキストエリアは複数行のテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。\n */\nconst textareaVariants = cva(\n  // ベーススタイル\n  \"flex w-full rounded-md border bg-white ring-offset-background placeholder:text-base-400 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize\",\n  {\n    variants: {\n      // サイズバリアント（sm, md, lg）\n      size: {\n        sm: \"px-2 py-1 min-h-[56px] character-2-regular-pro\",\n        md: \"px-3 py-1 min-h-[56px] character-3-regular-pro\",\n        lg: \"px-4 py-1 min-h-[64px] character-4-regular-pro\",\n      },\n      // エラー状態のバリアント\n      isInvalid: {\n        true: \"border-negative-500 hover:border-negative-600 focus-visible:border-negative-600\",\n        false:\n          \"border-base-200 hover:border-base-400 focus-visible:border-base-500\",\n      },\n      // 無効状態のバリアント\n      isDisabled: {\n        false: \"\",\n        true: \"cursor-not-allowed text-base-300 placeholder:text-base-300 focus-visible:ring-0\",\n      },\n    },\n    // 複合バリアント（複数の状態の組み合わせ）\n    compoundVariants: [\n      // 無効状態かつエラー状態の場合\n      {\n        isInvalid: true,\n        isDisabled: true,\n        className: \"border-negative-100 hover:border-negative-100\",\n      },\n      // 無効状態かつ通常状態の場合\n      {\n        isInvalid: false,\n        isDisabled: true,\n        className: \"border-base-100 hover:border-base-100\",\n      },\n    ],\n    // デフォルト値\n    defaultVariants: {\n      size: \"md\",\n      isInvalid: false,\n      isDisabled: false,\n    },\n  }\n);\n\n/**\n * テキストエリアコンポーネントのプロパティ定義\n * 標準のTextarea属性に加えてバリアントプロパティを拡張\n */\nexport interface TextareaProps\n  extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,\n    VariantProps<typeof textareaVariants> {\n  /** エラー状態かどうか */\n  isInvalid?: boolean;\n  /** 無効状態かどうか */\n  isDisabled?: boolean;\n}\n\n/**\n * /**\n * テキストエリアは複数行のテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。\n *\n */\nconst Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(\n  ({ className, isInvalid, size, isDisabled, disabled, ...props }, ref) => {\n    // 後方互換性のため、isDisabledが優先、次にdisabledを使用\n    const isTextareaDisabled = isDisabled ?? disabled;\n\n    return (\n      <textarea\n        className={cn(\n          textareaVariants({\n            size,\n            isInvalid,\n            isDisabled: isTextareaDisabled,\n          }),\n          className\n        )}\n        disabled={isTextareaDisabled}\n        ref={ref}\n        {...props}\n      />\n    );\n  }\n);\n\nTextarea.displayName = \"Textarea\";\n\nexport { Textarea, textareaVariants };\n",
+      "type": "registry:component"
+    }
+  ]
+}

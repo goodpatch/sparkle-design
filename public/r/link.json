@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "link",
+  "type": "registry:component",
+  "title": "Link",
+  "description": "リンクは他のページやセクションへナビゲーションするためのコンポーネントです。",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://sparkle-ui.vercel.app/r/icon.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-font.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-color.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/link/index.tsx",
+      "content": "import React from \"react\";\nimport { VariantProps, cva } from \"class-variance-authority\";\nimport { cn } from \"@/lib/utils\";\nimport { Icon } from \"@/components/icon\";\n\nconst linkVariants = cva(\n  \"transition-colors text-primary-600 group-hover:text-primary-700\",\n  {\n    variants: {\n      isUnderline: {\n        true: \"underline decoration-current underline-offset-2\",\n        false:\n          \"underline decoration-transparent underline-offset-2 group-hover:decoration-current\",\n      },\n    },\n    defaultVariants: {\n      isUnderline: false,\n    },\n  }\n);\n\nexport interface LinkProps\n  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,\n    VariantProps<typeof linkVariants> {\n  isExternalLink?: boolean;\n  children: React.ReactNode;\n  className?: string;\n}\n\n/**\n * リンクはコンテンツがナビゲーションできることをユーザーに提示するために使用するコンポーネントです。\n */\nexport const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(\n  (\n    { isUnderline, isExternalLink = false, children, className = \"\", ...props },\n    ref\n  ) => {\n    // character-*-*-* クラスがあるかチェック\n    const hasCharacterClass = className?.includes(\"character-\");\n\n    // character-X-*-* のXの部分（サイズ）を取得\n    const characterSizeMatch = className?.match(/character-(\\d+)-/);\n\n    const characterSize = characterSizeMatch\n      ? parseInt(characterSizeMatch[1], 10)\n      : 3; // デフォルトは3\n\n    // character クラスの生成\n    const characterSizeClass = hasCharacterClass\n      ? \"\" // 外部で指定されている場合は付与しない\n      : `character-${characterSize}-regular-pro`;\n\n    return (\n      <a\n        ref={ref}\n        className={cn(\"inline group\", characterSizeClass, className)}\n        {...props}\n      >\n        <span\n          className={linkVariants({\n            isUnderline,\n          })}\n        >\n          {children}\n        </span>\n        {isExternalLink && (\n          <Icon\n            icon=\"open_in_new\"\n            size={characterSize}\n            className=\"ml-1 align-middle inline-block text-primary-600 group-hover:text-primary-700\"\n          />\n        )}\n      </a>\n    );\n  }\n);\n\nLink.displayName = \"Link\";\n",
+      "type": "registry:component"
+    }
+  ]
+}

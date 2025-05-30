@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch",
+  "type": "registry:component",
+  "title": "Switch",
+  "description": "スイッチはオン/オフの状態を切り替えるためのトグルコンポーネントです。",
+  "files": [
+    {
+      "path": "src/components/switch/index.tsx",
+      "type": "registry:component"
+    }
+  ],
+  "dependencies": [
+    "@radix-ui/react-switch"
+  ],
+  "registryDependencies": [
+    "https://sparkle-ui.vercel.app/r/sparkle-color.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+  ]
+}
