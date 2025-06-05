@@ -33,3 +33,19 @@ npm run lint
 
 There is no test script yet.
 
+## Branch naming
+- Use only English letters, digits, dots, hyphens and underscores in branch names.
+- A sample `pre-push` hook can reject non-English names:
+
+```bash
+#!/bin/sh
+branch_name=$(git symbolic-ref --short HEAD)
+if echo "$branch_name" | grep -q '[^A-Za-z0-9._-]'; then
+  echo "ブランチ名には英数字・ドット・ハイフン・アンダースコアのみ使用してください。" >&2
+  exit 1
+fi
+```
+
+## Codex
+- Codex must follow all instructions in this file when preparing commits or PRs.
+
