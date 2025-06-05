@@ -291,7 +291,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     // disabled状態の管理（isDisabled、disabled、またはisLoadingがtrueの場合）
-    const isButtonDisabled = isLoading || isDisabled;
+    const computedIsDisabled = isDisabled || disabled;
+    const isButtonDisabled = isLoading || computedIsDisabled;
 
     const Comp = asChild ? Slot : "button";
 
@@ -315,7 +316,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             size,
             theme,
             isLoading,
-            isDisabled,
+            isDisabled: computedIsDisabled,
             className,
           })
         )}
