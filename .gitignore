@@ -46,6 +46,9 @@ next-env.d.ts
 # Storybook
 storybook-static
 
+# local build artifacts
+dist
+
 # build cache
 node-compile-cache/
 

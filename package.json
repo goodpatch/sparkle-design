@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "sparkle-design",
   "version": "0.1.0",
   "private": true,
   "repository": {
@@ -15,7 +15,8 @@
     "build-storybook": "storybook build",
     "build:sd": "node sd.config.js && cp style-dictionary/build/_variables.css src/app/variables.css",
     "build:registry": "shadcn build",
-    "postinstall": "npx lightningcss --version || true"
+    "postinstall": "npx lightningcss --version || true",
+    "build:package": "npm run build:sd && rm -rf dist && cp -r src dist && cp src/app/globals.css dist/globals.css && cp src/app/variables.css dist/variables.css"
   },
   "dependencies": {
     "@figma/code-connect": "^1.0.6",
@@ -63,5 +64,11 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^3.0.9"
-  }
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "style": "./src/app/globals.css",
+  "files": [
+    "dist"
+  ]
 }

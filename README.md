@@ -25,6 +25,12 @@ npm run dev
 
 Next.js の開発サーバーを起動します。
 
+## Package のビルド
+
+```bash
+npm run build:package
+```
+
 ### Storybook の起動
 
 ```bash
@@ -61,7 +67,7 @@ make new-component
 
 Makefile では次のターゲットが定義されています。
 
-- `registry`  – レジストリの生成と公開ファイルへのコピー
+- `registry` – レジストリの生成と公開ファイルへのコピー
 - `new-component` – 対話形式で新規コンポーネントを作成
 - `help` – 利用可能なターゲット一覧を表示
 
@@ -71,4 +77,3 @@ Makefile では次のターゲットが定義されています。
 
 - React コンポーネントのコメント記法は `.github/comment-rule.md` を参照してください。
 - コミットメッセージの形式は `.github/copilot-commit-message-instructions.md` のルールに従います。
-
