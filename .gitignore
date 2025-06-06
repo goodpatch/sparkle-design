@@ -46,6 +46,8 @@ next-env.d.ts
 # Storybook
 storybook-static
 
-# package manager caches
+# build cache
 node-compile-cache/
+
+# package manager lock files
 pnpm-lock.yaml

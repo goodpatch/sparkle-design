@@ -87,7 +87,7 @@ const radioIndicatorVariants = cva(
         isDisabled: true,
         isInvalid: false,
         className:
-          "border-base-200 data-[state=checked]:bg-primary-200　data-[state=checked]:border-primary-200",
+          "border-base-200 data-[state=checked]:bg-primary-200 data-[state=checked]:border-primary-200",
       },
       {
         isDisabled: true,
