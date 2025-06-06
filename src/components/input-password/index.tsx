@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Input, type InputProps } from "@/components/Input";
+import { Input, type InputProps } from "@/components/input";
 
 export interface InputPasswordProps
   extends Omit<

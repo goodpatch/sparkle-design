@@ -1,12 +1,12 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "badge",
+  "name": "card",
   "type": "registry:component",
-  "title": "Badge",
-  "description": "バッジは状態、カテゴリ、またはその他の重要な情報を示すための小さなラベルコンポーネントです。",
+  "title": "Card",
+  "description": "カードは関連する情報をグループ化して表示するためのコンテナコンポーネントです。",
   "files": [
     {
-      "path": "src/components/Badge/index.tsx",
+      "path": "src/components/card/index.tsx",
       "type": "registry:component"
     }
   ],

@@ -1,12 +1,12 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "card",
+  "name": "input",
   "type": "registry:component",
-  "title": "Card",
-  "description": "カードは関連する情報をグループ化して表示するためのコンテナコンポーネントです。",
+  "title": "Input",
+  "description": "インプットはユーザーがテキストデータを入力するためのフォーム要素です。",
   "files": [
     {
-      "path": "src/components/Card/index.tsx",
+      "path": "src/components/input/index.tsx",
       "type": "registry:component"
     }
   ],
@@ -14,6 +14,7 @@
   "registryDependencies": [
     "https://sparkle-ui.vercel.app/r/sparkle-font.json",
     "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+    "https://sparkle-ui.vercel.app/r/sparkle-style.json",
+    "https://sparkle-ui.vercel.app/r/icon-button.json"
   ]
 }

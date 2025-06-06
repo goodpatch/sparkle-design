@@ -6,7 +6,7 @@
   "description": "セレクトはオプショングループの中から値を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。",
   "files": [
     {
-      "path": "src/components/Select/index.tsx",
+      "path": "src/components/select/index.tsx",
       "type": "registry:component"
     }
   ],
