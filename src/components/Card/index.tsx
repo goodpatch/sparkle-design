@@ -93,7 +93,7 @@ const CardControl = React.forwardRef<
 CardControl.displayName = "CardControl";
 
 export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {
-  /// スペースを入れるかどうか
+  /** スペースを入れるかどうか */
   isSpace?: boolean;
 }
 
