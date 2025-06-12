@@ -6,10 +6,9 @@ CAMEL_NAME=$(echo "$1" | awk -F '-' '{ for(i=1; i<=NF; i++) {printf toupper(subs
 
 # Install by shadcn
 npx shadcn@latest add $1
-mkdir src/components/$1
-mv src/components/ui/$1.tsx src/components/$1/index.tsx
-rm -r src/components/ui
-touch src/components/$1/index.stories.tsx
+mkdir src/components/ui/$1
+mv src/components/ui/$1.tsx src/components/ui/$1/index.tsx
+touch src/components/ui/$1/index.stories.tsx
 echo "import type { Meta, StoryObj } from '@storybook/react';
 import { $CAMEL_NAME } from './index';
 
@@ -32,8 +31,8 @@ export const Default: Story = {
   args: {
     // デフォルトの引数をここに設定
   },
-};" > src/components/$1/index.stories.tsx
-touch src/components/$1/item.json
+};" > src/components/ui/$1/index.stories.tsx
+touch src/components/ui/$1/item.json
 echo "{
   \"$schema\": \"https://ui.shadcn.com/schema/registry-item.json\",
   \"title\": \"$CAMEL_NAME\",
@@ -42,8 +41,8 @@ echo "{
   \"type\": \"registry:component\",
   \"files\": [
     {
-      \"path\": \"src/components/$1/index.tsx\",
+      \"path\": \"src/components/ui/$1/index.tsx\",
       \"type\": \"registry:component\"
     }
   ]
-}" > src/components/$1/item.json
+}" > src/components/ui/$1/item.json
