@@ -6,7 +6,7 @@
   "description": "スケルトンはコンテンツの読み込み中に表示するプレースホルダーコンポーネントです。",
   "files": [
     {
-      "path": "src/components/skeleton/index.tsx",
+      "path": "src/components/ui/skeleton/index.tsx",
       "type": "registry:component"
     }
   ],

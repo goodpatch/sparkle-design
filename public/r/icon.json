@@ -6,7 +6,7 @@
   "description": "アイコンは情報を象形表現でユーザーに提示するために使用するコンポーネントです。",
   "files": [
     {
-      "path": "src/components/icon/index.tsx",
+      "path": "src/components/ui/icon/index.tsx",
       "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {\n  icon: string;\n  size?: number;\n  fill?: boolean;\n}\n\n/**\n * アイコンは情報を象形表現でユーザーに提示するために使用するコンポーネントです。\n */\nexport const Icon = React.forwardRef<HTMLSpanElement, IconProps>(\n  ({ className, icon, size = 3, fill = false, ...props }, ref) => {\n    // 既存のclassNameにicon-X-fill-0の形式が含まれているかチェック\n    const hasIconTypographyClass = className?.match(/icon-\\d+-fill-\\d+/);\n\n    // サイズクラスの生成（既存のサイズクラスがない場合のみ）\n    const fillValue = fill ? 1 : 0;\n    const iconTypographyClass = hasIconTypographyClass\n      ? \"\"\n      : `icon-${size}-fill-${fillValue}`;\n\n    return (\n      <span\n        ref={ref}\n        className={cn(iconTypographyClass, \"select-none\", className)}\n        aria-hidden=\"true\"\n        {...props}\n      >\n        {icon}\n      </span>\n    );\n  }\n);\nIcon.displayName = \"Icon\";\n",
       "type": "registry:component"
     }

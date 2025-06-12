@@ -6,12 +6,12 @@
   "description": "スライダーは範囲内の値を選択するためのインタラクティブなコンポーネントです。",
   "files": [
     {
-      "path": "src/components/slider/index.tsx",
+      "path": "src/components/ui/slider/index.tsx",
       "type": "registry:component"
     }
   ],
   "dependencies": [
-    "@radix-ui/react-slider"
+    "radix-ui"
   ],
   "registryDependencies": [
     "https://sparkle-ui.vercel.app/r/sparkle-color.json",

@@ -6,7 +6,7 @@
   "description": "ディバイダーはコンテンツを視覚的に分離するための区切り線コンポーネントです。",
   "files": [
     {
-      "path": "src/components/divider/index.tsx",
+      "path": "src/components/ui/divider/index.tsx",
       "type": "registry:component"
     }
   ],

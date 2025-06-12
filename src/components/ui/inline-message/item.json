@@ -6,7 +6,7 @@
   "description": "インラインメッセージは情報、警告、エラーなどの状態を表示するためのコンポーネントです。",
   "files": [
     {
-      "path": "src/components/inline-message/index.tsx",
+      "path": "src/components/ui/inline-message/index.tsx",
       "type": "registry:component"
     }
   ],

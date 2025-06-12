@@ -6,7 +6,7 @@
   "description": "カードは関連する情報をグループ化して表示するためのコンテナコンポーネントです。",
   "files": [
     {
-      "path": "src/components/card/index.tsx",
+      "path": "src/components/ui/card/index.tsx",
       "type": "registry:component"
     }
   ],

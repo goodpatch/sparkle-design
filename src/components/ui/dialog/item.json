@@ -6,12 +6,12 @@
   "description": "ダイアログはユーザーの操作を一時中断し、重要な情報を表示したり、ユーザーからの入力を求めるためのコンポーネントです。",
   "files": [
     {
-      "path": "src/components/dialog/index.tsx",
+      "path": "src/components/ui/dialog/index.tsx",
       "type": "registry:component"
     }
   ],
   "dependencies": [
-    "@radix-ui/react-dialog"
+    "radix-ui"
   ],
   "registryDependencies": [
     "https://sparkle-ui.vercel.app/r/button.json",

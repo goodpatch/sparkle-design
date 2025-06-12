@@ -6,12 +6,12 @@
   "description": "アイコンボタンはアイコンのみを表示するコンパクトなボタンコンポーネントです。",
   "files": [
     {
-      "path": "src/components/icon-button/index.tsx",
+      "path": "src/components/ui/icon-button/index.tsx",
       "type": "registry:component"
     }
   ],
   "dependencies": [
-    "@radix-ui/react-slot"
+    "radix-ui"
   ],
   "registryDependencies": [
     "https://sparkle-ui.vercel.app/r/icon.json",

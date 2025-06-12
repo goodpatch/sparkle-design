@@ -6,7 +6,7 @@
   "description": "バッジは状態、カテゴリ、またはその他の重要な情報を示すための小さなラベルコンポーネントです。",
   "files": [
     {
-      "path": "src/components/badge/index.tsx",
+      "path": "src/components/ui/badge/index.tsx",
       "type": "registry:component"
     }
   ],

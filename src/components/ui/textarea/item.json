@@ -6,7 +6,7 @@
   "description": "テキストエリアは複数行のテキスト入力を可能にするフォーム要素です。",
   "files": [
     {
-      "path": "src/components/textarea/index.tsx",
+      "path": "src/components/ui/textarea/index.tsx",
       "type": "registry:component"
     }
   ],

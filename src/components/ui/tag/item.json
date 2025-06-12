@@ -6,7 +6,7 @@
   "description": "タグはカテゴリやラベルを表示し、削除可能なアクションを提供するコンポーネントです。",
   "files": [
     {
-      "path": "src/components/tag/index.tsx",
+      "path": "src/components/ui/tag/index.tsx",
       "type": "registry:component"
     }
   ],

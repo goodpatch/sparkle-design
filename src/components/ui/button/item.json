@@ -6,12 +6,12 @@
   "description": "ボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。",
   "files": [
     {
-      "path": "src/components/button/index.tsx",
+      "path": "src/components/ui/button/index.tsx",
       "type": "registry:component"
     }
   ],
   "dependencies": [
-    "@radix-ui/react-slot"
+    "radix-ui"
   ],
   "registryDependencies": [
     "https://sparkle-ui.vercel.app/r/icon.json",

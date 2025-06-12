@@ -6,12 +6,12 @@
   "description": "スイッチはオン/オフの状態を切り替えるためのトグルコンポーネントです。",
   "files": [
     {
-      "path": "src/components/switch/index.tsx",
+      "path": "src/components/ui/switch/index.tsx",
       "type": "registry:component"
     }
   ],
   "dependencies": [
-    "@radix-ui/react-switch"
+    "radix-ui"
   ],
   "registryDependencies": [
     "https://sparkle-ui.vercel.app/r/sparkle-color.json",

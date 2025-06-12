@@ -6,12 +6,12 @@
   "description": "チェックボックスは複数のオプショングループから複数の項目を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。",
   "files": [
     {
-      "path": "src/components/checkbox/index.tsx",
+      "path": "src/components/ui/checkbox/index.tsx",
       "type": "registry:component"
     }
   ],
   "dependencies": [
-    "@radix-ui/react-checkbox"
+    "radix-ui"
   ],
   "registryDependencies": [
     "https://sparkle-ui.vercel.app/r/sparkle-font.json",

@@ -6,7 +6,7 @@
   "description": "インプットはユーザーがテキストデータを入力するためのフォーム要素です。",
   "files": [
     {
-      "path": "src/components/input/index.tsx",
+      "path": "src/components/ui/input/index.tsx",
       "type": "registry:component"
     }
   ],

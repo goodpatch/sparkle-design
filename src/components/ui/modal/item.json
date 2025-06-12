@@ -6,12 +6,12 @@
   "description": "モーダルはメインコンテンツの上に表示され、ユーザーの注意を特定のタスクや情報に集中させるためのコンポーネントです。",
   "files": [
     {
-      "path": "src/components/modal/index.tsx",
+      "path": "src/components/ui/modal/index.tsx",
       "type": "registry:component"
     }
   ],
   "dependencies": [
-    "@radix-ui/react-dialog"
+    "radix-ui"
   ],
   "registryDependencies": [
     "https://sparkle-ui.vercel.app/r/icon.json",

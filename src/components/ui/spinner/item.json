@@ -6,7 +6,7 @@
   "description": "スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。",
   "files": [
     {
-      "path": "src/components/spinner/index.tsx",
+      "path": "src/components/ui/spinner/index.tsx",
       "type": "registry:component"
     }
   ],

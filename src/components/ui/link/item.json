@@ -6,7 +6,7 @@
   "description": "リンクは他のページやセクションへナビゲーションするためのコンポーネントです。",
   "files": [
     {
-      "path": "src/components/link/index.tsx",
+      "path": "src/components/ui/link/index.tsx",
       "type": "registry:component"
     }
   ],

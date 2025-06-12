@@ -6,7 +6,7 @@
   "description": "パスワード入力専用のインプットコンポーネントで、表示/非表示の切り替え機能を提供します。",
   "files": [
     {
-      "path": "src/components/input-password/index.tsx",
+      "path": "src/components/ui/input-password/index.tsx",
       "type": "registry:component"
     }
   ],
