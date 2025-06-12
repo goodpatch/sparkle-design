@@ -2,7 +2,7 @@ import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
-import { IconButton } from "@/components/icon-button";
+import { IconButton } from "@/components/ui/icon-button";
 
 // 入力フィールドのスタイル定義
 const inputVariants = cva(

@@ -4,7 +4,7 @@ import * as React from "react";
 import { AlertDialog as DialogPrimitive } from "radix-ui";
 
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/button";
+import { buttonVariants } from "@/components/ui/button";
 
 /**
  * ダイアログはユーザーにアクションの実行や中断を確認するために使用するコンポーネントです。

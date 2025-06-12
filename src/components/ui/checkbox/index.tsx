@@ -4,7 +4,7 @@ import * as React from "react";
 import { Checkbox as CheckboxPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import { Icon } from "@/components/icon";
+import { Icon } from "@/components/ui/icon";
 
 const checkboxGroupVariants = cva("flex items-center", {
   variants: {

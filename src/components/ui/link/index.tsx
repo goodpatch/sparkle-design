@@ -1,7 +1,7 @@
 import React from "react";
 import { VariantProps, cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import { Icon } from "@/components/icon";
+import { Icon } from "@/components/ui/icon";
 
 const linkVariants = cva(
   "transition-colors text-primary-600 group-hover:text-primary-700",

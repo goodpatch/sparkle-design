@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { Icon } from "@/components/icon";
+import { Icon } from "@/components/ui/icon";
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
   size?: number;
