@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import * as RadioPrimitive from "@radix-ui/react-radio-group";
+import { RadioGroup as RadioPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
