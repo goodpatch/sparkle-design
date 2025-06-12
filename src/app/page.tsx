@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/components/button";
-import { Link } from "@/components/link";
-import { Radio, RadioItem } from "@/components/radio";
+import { Button } from "@/components/ui/button";
+import { Link } from "@/components/ui/link";
+import { Radio, RadioItem } from "@/components/ui/radio";
 import { client } from "@figma/code-connect";
 import { useState } from "react";
 
