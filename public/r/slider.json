@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider",
+  "type": "registry:component",
+  "title": "Slider",
+  "description": "スライダーは範囲内の値を選択するためのインタラクティブなコンポーネントです。",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://sparkle-ui.vercel.app/r/sparkle-color.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/slider/index.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { Slider as SliderPrimitive } from \"radix-ui\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\n\nimport { cn } from \"@/lib/utils\";\n\nconst sliderRootVariants = cva(\n  \"relative flex w-full touch-none select-none items-center py-1.5\",\n  {\n    variants: {\n      isDisabled: {\n        true: \"cursor-not-allowed\",\n      },\n    },\n    defaultVariants: {\n      isDisabled: false,\n    },\n  }\n);\n\nconst sliderTrackVariants = cva(\n  \"relative w-full grow overflow-hidden rounded-sm bg-neutral-200 h-1\"\n);\n\nconst sliderRangeVariants = cva(\"absolute h-full bg-primary-500\", {\n  variants: {\n    isDisabled: {\n      true: \"bg-primary-200\",\n    },\n  },\n  defaultVariants: {\n    isDisabled: false,\n  },\n});\n\nconst sliderThumbVariants = cva(\n  \"block rounded-full border border-neutral-200 bg-white shadow-raise ring-offset-background transition-colors hover:bg-neutral-100 focus:outline-hidden focus:bg-primary-100 focus:border-primary-200 focus:ring-2 focus:ring-ring focus:ring-offset-2 h-4 w-4\",\n  {\n    variants: {\n      isDisabled: {\n        true: \"pointer-events-none bg-neutral-100 hover:bg-neutral-100 focus:bg-neutral-300 focus:border-neutral-300\",\n      },\n    },\n    defaultVariants: {\n      isDisabled: false,\n    },\n  }\n);\n\nexport interface SliderProps\n  extends React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>,\n    VariantProps<typeof sliderRootVariants> {\n  isDisabled?: boolean;\n}\n\nconst Slider = React.forwardRef<\n  React.ElementRef<typeof SliderPrimitive.Root>,\n  SliderProps\n>(({ className, isDisabled, disabled, ...props }, ref) => {\n  const isDisabledState = Boolean(isDisabled || disabled);\n\n  return (\n    <SliderPrimitive.Root\n      ref={ref}\n      disabled={isDisabledState}\n      aria-disabled={isDisabledState}\n      className={cn(\n        sliderRootVariants({ isDisabled: isDisabledState }),\n        className\n      )}\n      {...props}\n    >\n      <SliderPrimitive.Track className={cn(sliderTrackVariants())}>\n        <SliderPrimitive.Range\n          className={cn(sliderRangeVariants({ isDisabled: isDisabledState }))}\n        />\n      </SliderPrimitive.Track>\n      <SliderPrimitive.Thumb\n        className={cn(sliderThumbVariants({ isDisabled: isDisabledState }))}\n      />\n    </SliderPrimitive.Root>\n  );\n});\n\nSlider.displayName = SliderPrimitive.Root.displayName;\n\nexport { Slider };\n",
+      "type": "registry:component"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "inline-message",
+  "type": "registry:component",
+  "title": "InlineMessage",
+  "description": "インラインメッセージは情報、警告、エラーなどの状態を表示するためのコンポーネントです。",
+  "files": [
+    {
+      "path": "src/components/ui/inline-message/index.tsx",
+      "type": "registry:component"
+    }
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://sparkle-ui.vercel.app/r/icon.json",
+    "https://sparkle-ui.vercel.app/r/icon-button.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-font.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-color.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+  ]
+}

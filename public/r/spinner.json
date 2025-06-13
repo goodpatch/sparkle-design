@@ -5,12 +5,15 @@
   "title": "Spinner",
   "description": "スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。",
   "registryDependencies": [
+    "https://sparkle-ui.vercel.app/r/sparkle-font.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-color.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-style.json",
     "https://sparkle-ui.vercel.app/r/icon.json"
   ],
   "files": [
     {
-      "path": "src/components/spinner/index.tsx",
-      "content": "import React from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { Icon } from \"@/components/icon\";\n\nexport interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {\n  size?: number;\n}\n\n/**\n * スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。\n */\nexport const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(\n  ({ className, size, ...props }, ref) => {\n    return (\n      <span\n        ref={ref}\n        className={cn(\"inline-flex items-center justify-center\")}\n        role=\"status\"\n        aria-label=\"読み込み中\"\n        {...props}\n      >\n        <Icon\n          icon=\"progress_activity\"\n          size={size}\n          className={cn(\"animate-spin\", className)}\n        />\n      </span>\n    );\n  }\n);\n\nSpinner.displayName = \"Spinner\";\n",
+      "path": "src/components/ui/spinner/index.tsx",
+      "content": "import React from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { Icon } from \"@/components/ui/icon\";\n\nexport interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {\n  size?: number;\n}\n\n/**\n * スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。\n */\nexport const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(\n  ({ className, size, ...props }, ref) => {\n    return (\n      <span\n        ref={ref}\n        className={cn(\"inline-flex items-center justify-center\")}\n        role=\"status\"\n        aria-label=\"読み込み中\"\n        {...props}\n      >\n        <Icon\n          icon=\"progress_activity\"\n          size={size}\n          className={cn(\"animate-spin\", className)}\n        />\n      </span>\n    );\n  }\n);\n\nSpinner.displayName = \"Spinner\";\n",
       "type": "registry:component"
     }
   ]
