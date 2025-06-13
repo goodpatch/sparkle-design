@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toast",
+  "type": "registry:component",
+  "title": "Toast",
+  "description": "トーストはユーザーに操作結果や通知を一時的に表示するコンポーネントです。",
+  "files": [
+    {
+      "path": "src/components/ui/toast/index.tsx",
+      "type": "registry:component"
+    }
+  ],
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://sparkle-ui.vercel.app/r/icon-button.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-font.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-color.json",
+    "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+  ]
+}
