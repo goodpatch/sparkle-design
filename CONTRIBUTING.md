@@ -4,7 +4,7 @@
 
 ## セットアップ
 
-- Node.js のバージョンは `.node-version` に合わせてください。
+- Node.js のバージョンは `.node-version`もしくは`.tool-versions` に合わせてください。
 - 依存関係のインストールは `pnpm install` で行います。
 
 ## ブランチ運用
