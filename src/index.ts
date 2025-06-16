@@ -20,3 +20,4 @@ export * from "./components/ui/switch";
 export * from "./components/ui/tag";
 export * from "./components/ui/textarea";
 export * from "./components/ui/divider";
+export * from "./components/ui/toast";
