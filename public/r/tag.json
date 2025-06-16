@@ -6,10 +6,10 @@
   "description": "タグはカテゴリやラベルを表示し、削除可能なアクションを提供するコンポーネントです。",
   "dependencies": [],
   "registryDependencies": [
-    "https://sparkle-ui.vercel.app/r/icon.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+    "https://sparkle-design.vercel.app/r/icon.json",
+    "https://sparkle-design.vercel.app/r/sparkle-font.json",
+    "https://sparkle-design.vercel.app/r/sparkle-color.json",
+    "https://sparkle-design.vercel.app/r/sparkle-style.json"
   ],
   "files": [
     {

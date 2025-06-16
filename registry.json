@@ -5,9 +5,9 @@
       "name" : "radio",
       "title" : "Radio",
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
       "dependencies" : [
         "radix-ui"
@@ -34,9 +34,9 @@
         }
       ],
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
       "description" : "カードは関連する情報をグループ化して表示するためのコンテナコンポーネントです。",
       "title" : "Card"
@@ -56,10 +56,10 @@
       "title" : "Input",
       "type" : "registry:component",
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json",
-        "https://sparkle-ui.vercel.app/r/icon-button.json"
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json",
+        "https://sparkle-design.vercel.app/r/icon-button.json"
       ]
     },
     {
@@ -74,8 +74,8 @@
 
       ],
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
       "name" : "skeleton",
       "title" : "Skeleton",
@@ -83,10 +83,10 @@
     },
     {
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json",
-        "https://sparkle-ui.vercel.app/r/icon.json"
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json",
+        "https://sparkle-design.vercel.app/r/icon.json"
       ],
       "description" : "チェックボックスは複数のオプショングループから複数の項目を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。",
       "name" : "checkbox",
@@ -105,8 +105,8 @@
     {
       "description" : "スライダーは範囲内の値を選択するためのインタラクティブなコンポーネントです。",
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
       "name" : "slider",
       "dependencies" : [
@@ -131,10 +131,10 @@
       ],
       "title" : "Spinner",
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json",
-        "https://sparkle-ui.vercel.app/r/icon.json"
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json",
+        "https://sparkle-design.vercel.app/r/icon.json"
       ],
       "description" : "スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。",
       "name" : "spinner"
@@ -152,11 +152,11 @@
         }
       ],
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/icon.json",
-        "https://sparkle-ui.vercel.app/r/icon-button.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/icon.json",
+        "https://sparkle-design.vercel.app/r/icon-button.json",
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
       "type" : "registry:component",
       "title" : "InlineMessage"
@@ -175,18 +175,18 @@
       ],
       "type" : "registry:component",
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/button.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/button.json",
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
       "name" : "dialog"
     },
     {
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
       "type" : "registry:component",
       "name" : "textarea",
@@ -212,11 +212,11 @@
       ],
       "type" : "registry:component",
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/icon.json",
-        "https://sparkle-ui.vercel.app/r/spinner.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/icon.json",
+        "https://sparkle-design.vercel.app/r/spinner.json",
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
       "description" : "ボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。",
       "dependencies" : [
@@ -239,10 +239,10 @@
       "type" : "registry:component",
       "title" : "Link",
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/icon.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/icon.json",
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ]
     },
     {
@@ -260,8 +260,8 @@
         }
       ],
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ]
     },
     {
@@ -278,17 +278,17 @@
       ],
       "type" : "registry:component",
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/input.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/input.json",
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
       "name" : "input-password"
     },
     {
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
       "description" : "スイッチはオン/オフの状態を切り替えるためのトグルコンポーネントです。",
       "type" : "registry:component",
@@ -315,10 +315,10 @@
         }
       ],
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json",
-        "https://sparkle-ui.vercel.app/r/icon.json"
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json",
+        "https://sparkle-design.vercel.app/r/icon.json"
       ],
       "dependencies" : [
         "radix-ui"
@@ -342,10 +342,10 @@
       "name" : "modal",
       "type" : "registry:component",
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/icon.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/icon.json",
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
       "dependencies" : [
         "radix-ui"
@@ -361,11 +361,11 @@
     {
       "type" : "registry:component",
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/icon.json",
-        "https://sparkle-ui.vercel.app/r/spinner.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/icon.json",
+        "https://sparkle-design.vercel.app/r/spinner.json",
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
       "title" : "IconButton",
       "name" : "icon-button",
@@ -395,10 +395,10 @@
 
       ],
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/icon.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/icon.json",
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ]
     },
     {
@@ -416,9 +416,9 @@
         }
       ],
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ]
     },
     {
@@ -1002,12 +1002,12 @@
         }
       },
       "registryDependencies" : [
-        "https://sparkle-ui.vercel.app/r/button.json",
-        "https://sparkle-ui.vercel.app/r/checkbox.json",
-        "https://sparkle-ui.vercel.app/r/icon.json",
-        "https://sparkle-ui.vercel.app/r/spinner.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-        "https://sparkle-ui.vercel.app/r/sparkle-font.json"
+        "https://sparkle-design.vercel.app/r/button.json",
+        "https://sparkle-design.vercel.app/r/checkbox.json",
+        "https://sparkle-design.vercel.app/r/icon.json",
+        "https://sparkle-design.vercel.app/r/spinner.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-font.json"
       ]
     },
     {
