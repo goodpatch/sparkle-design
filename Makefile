@@ -5,7 +5,7 @@ registry: ## Build the registry.
 	./merge-registry && \
 	cd ../..
 	@echo "🤖 Registry ran successfully."
-	npm run build:registry
+	pnpm build:registry
 	@echo "🤖 Registry built successfully."
 	cp registry.json ./public/r/registry.json
 	cp src/components/sparkle-color.json ./public/r/
