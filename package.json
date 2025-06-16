@@ -15,6 +15,7 @@
     "build-storybook": "storybook build",
     "build:sd": "node sd.config.js && cp style-dictionary/build/_variables.css src/app/variables.css",
     "build:registry": "shadcn build",
+    "preinstall": "npx only-allow pnpm",
     "postinstall": "npx lightningcss --version || true",
     "build:package": "npm run build:sd && rm -rf dist && cp -r src dist && cp src/app/globals.css dist/globals.css && cp src/app/variables.css dist/variables.css"
   },
