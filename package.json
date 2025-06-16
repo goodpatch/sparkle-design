@@ -11,6 +11,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "vitest run unit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build:sd": "node sd.config.js && cp style-dictionary/build/_variables.css src/app/variables.css",

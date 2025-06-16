@@ -1,4 +1,4 @@
-# Sparkle Design for React [![Sparkle Design](https://img.shields.io/badge/made%20by-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/sparkle-design)
+# Sparkle Design for React [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
 
 Next.js + TypeScript を用いたコンポーネントライブラリです。Tailwind CSS や Storybook、style-dictionary、shadcn/ui を利用しています。
 
@@ -72,6 +72,14 @@ Makefile では次のターゲットが定義されています。
 - `help` – 利用可能なターゲット一覧を表示
 
 `make help` で詳細を確認できます。
+
+## Sparkle Design バッジ
+
+Sparkle Design のバッジは、コンポーネントが Sparkle Design を使用していることを示します。README に次のように追加してください。
+
+```markdown
+[![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
+```
 
 ## その他
 

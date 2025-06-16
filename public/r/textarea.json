@@ -6,9 +6,9 @@
   "description": "テキストエリアは複数行のテキスト入力を可能にするフォーム要素です。",
   "dependencies": [],
   "registryDependencies": [
-    "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+    "https://sparkle-design.vercel.app/r/sparkle-font.json",
+    "https://sparkle-design.vercel.app/r/sparkle-color.json",
+    "https://sparkle-design.vercel.app/r/sparkle-style.json"
   ],
   "files": [
     {

@@ -3,12 +3,12 @@
   "name": "sparkle-style",
   "type": "registry:style",
   "registryDependencies": [
-    "https://sparkle-ui.vercel.app/r/button.json",
-    "https://sparkle-ui.vercel.app/r/checkbox.json",
-    "https://sparkle-ui.vercel.app/r/icon.json",
-    "https://sparkle-ui.vercel.app/r/spinner.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-font.json"
+    "https://sparkle-design.vercel.app/r/button.json",
+    "https://sparkle-design.vercel.app/r/checkbox.json",
+    "https://sparkle-design.vercel.app/r/icon.json",
+    "https://sparkle-design.vercel.app/r/spinner.json",
+    "https://sparkle-design.vercel.app/r/sparkle-color.json",
+    "https://sparkle-design.vercel.app/r/sparkle-font.json"
   ],
   "cssVars": {
     "theme": {
