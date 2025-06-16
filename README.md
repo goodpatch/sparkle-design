@@ -20,7 +20,7 @@ Next.js + TypeScript を用いたコンポーネントライブラリです。Ta
 ### 開発サーバーの起動
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 Next.js の開発サーバーを起動します。
@@ -28,13 +28,13 @@ Next.js の開発サーバーを起動します。
 ## Package のビルド
 
 ```bash
-npm run build:package
+pnpm run build:package
 ```
 
 ### Storybook の起動
 
 ```bash
-npm run storybook
+pnpm run storybook
 ```
 
 コンポーネント一覧を確認できます。
@@ -42,7 +42,7 @@ npm run storybook
 ### デザイントークンのビルド
 
 ```bash
-npm run build:sd
+pnpm run build:sd
 ```
 
 `style-dictionary` 配下のトークンから CSS 変数を生成します。
