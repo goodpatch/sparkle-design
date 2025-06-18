@@ -75,7 +75,7 @@ export interface ToastProps
   extends React.ComponentProps<typeof SonnerToaster> {}
 
 /**
- * [Copilot Comment] トーストはアクションの発生時にユーザーへフィードバックを行うために使用するコンポーネントです。
+ * トーストはアクションの発生時にユーザーへフィードバックを行うために使用するコンポーネントです。
  */
 export const Toast = ({ ...props }: ToastProps) => {
   return (
