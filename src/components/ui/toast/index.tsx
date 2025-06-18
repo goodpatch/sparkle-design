@@ -6,7 +6,6 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 import { IconButton } from "@/components/ui/icon-button";
-import { Icon } from "@/components/ui/icon";
 
 const toastVariants = cva(
   "flex items-start gap-3 border rounded-md bg-background shadow-raise px-4 py-3",
@@ -46,9 +45,13 @@ export function showToast({
     (id) => (
       <div className={cn(toastVariants({ status, isCloseButtonVisible }))}>
         <div className="flex-1">
-          {title && <p className="character-3-bold-pro text-base-900">{title}</p>}
+          {title && (
+            <p className="character-3-bold-pro text-base-900">{title}</p>
+          )}
           {description && (
-            <p className="character-3-regular-pro text-base-700">{description}</p>
+            <p className="character-3-regular-pro text-base-700">
+              {description}
+            </p>
           )}
         </div>
         {isCloseButtonVisible && (
@@ -68,15 +71,19 @@ export function showToast({
   );
 }
 
-export interface ToastProps extends React.ComponentProps<typeof SonnerToaster> {}
+export interface ToastProps
+  extends React.ComponentProps<typeof SonnerToaster> {}
 
 /**
  * [Copilot Comment] トーストはアクションの発生時にユーザーへフィードバックを行うために使用するコンポーネントです。
  */
 export const Toast = ({ ...props }: ToastProps) => {
   return (
-    <SonnerToaster position="top-center" toastOptions={{ duration: 3000 }} {...props} />
+    <SonnerToaster
+      position="top-center"
+      toastOptions={{ duration: 3000 }}
+      {...props}
+    />
   );
 };
 Toast.displayName = "Toast";
-

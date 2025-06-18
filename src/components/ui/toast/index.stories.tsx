@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Toast, showToast } from "./index";
+import { Toast, showToast, ShowToastOptions } from "./index";
 import { Button } from "../button";
 
-const meta: Meta<typeof Toast> = {
+const meta: Meta<ShowToastOptions> = {
   title: "Components/Toast",
   component: Toast,
   parameters: {
@@ -18,10 +18,10 @@ const meta: Meta<typeof Toast> = {
     description: { control: "text" },
     isCloseButtonVisible: { control: "boolean" },
   },
-} satisfies Meta<typeof Toast>;
+} satisfies Meta<ShowToastOptions>;
 
 export default meta;
-type Story = StoryObj<typeof Toast>;
+type Story = StoryObj<ShowToastOptions>;
 
 export const Default: Story = {
   args: {
