@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { IconButton } from "@/components/ui/icon-button";
 
 const toastVariants = cva(
-  "flex items-start gap-3 border rounded-md bg-background shadow-raise px-4 py-3",
+  "flex items-start gap-2 border rounded-notice bg-background shadow-raise px-3 py-2",
   {
     variants: {
       status: {
