@@ -6,9 +6,9 @@
   "description": "バッジは状態、カテゴリ、またはその他の重要な情報を示すための小さなラベルコンポーネントです。",
   "dependencies": [],
   "registryDependencies": [
-    "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+    "https://sparkle-design.vercel.app/r/sparkle-font.json",
+    "https://sparkle-design.vercel.app/r/sparkle-color.json",
+    "https://sparkle-design.vercel.app/r/sparkle-style.json"
   ],
   "files": [
     {

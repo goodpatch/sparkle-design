@@ -6,9 +6,9 @@
   "description": "カードは関連する情報をグループ化して表示するためのコンテナコンポーネントです。",
   "dependencies": [],
   "registryDependencies": [
-    "https://sparkle-ui.vercel.app/r/sparkle-font.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-color.json",
-    "https://sparkle-ui.vercel.app/r/sparkle-style.json"
+    "https://sparkle-design.vercel.app/r/sparkle-font.json",
+    "https://sparkle-design.vercel.app/r/sparkle-color.json",
+    "https://sparkle-design.vercel.app/r/sparkle-style.json"
   ],
   "files": [
     {

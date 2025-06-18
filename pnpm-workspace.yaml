@@ -1,0 +1,8 @@
+onlyBuiltDependencies:
+  - '@bundled-es-modules/glob'
+  - '@tailwindcss/oxide'
+  - esbuild
+  - msw
+  - sharp
+  - style-dictionary
+  - unrs-resolver

@@ -11,12 +11,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "vitest run --project unit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build:sd": "node sd.config.js && cp style-dictionary/build/_variables.css src/app/variables.css",
     "build:registry": "shadcn build",
+    "preinstall": "npx only-allow pnpm",
     "postinstall": "npx lightningcss --version || true",
-    "build:package": "npm run build:sd && rm -rf dist && cp -r src dist && cp src/app/globals.css dist/globals.css && cp src/app/variables.css dist/variables.css"
+    "build:package": "pnpm build:sd && rm -rf dist && cp -r src dist && cp src/app/globals.css dist/globals.css && cp src/app/variables.css dist/variables.css"
   },
   "dependencies": {
     "@figma/code-connect": "^1.0.6",

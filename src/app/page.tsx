@@ -6,7 +6,7 @@ import { Radio, RadioItem } from "@/components/ui/radio";
 import { client } from "@figma/code-connect";
 import { useState } from "react";
 
-const hostname = "sparkle-ui.vercel.app";
+const hostname = "sparkle-design.vercel.app";
 const registries = [
   "registry",
   "sparkle-style",
