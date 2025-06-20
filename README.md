@@ -37,7 +37,7 @@ pnpm build:package
 pnpm storybook
 ```
 
-コンポーネント一覧を確認できます。
+コンポーネント一覧を確認できます。Storybook の「Accessibility」タブからアクセシビリティチェックも行えます。
 
 ### デザイントークンのビルド
 
