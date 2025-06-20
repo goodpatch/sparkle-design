@@ -1,0 +1,21 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Docs/shadcn MCP" />
+
+# shadcn MCP 設定方法
+
+次の設定を使用して shadcn MCP サーバーを起動できます。
+
+```json
+{
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["-y", "shadcn@canary", "registry:mcp"],
+      "env": {
+        "REGISTRY_URL": "https://sparkle-design.vercel.app/r/registry.json"
+      }
+    }
+  }
+}
+```
