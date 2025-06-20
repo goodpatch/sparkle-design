@@ -20,12 +20,16 @@ const OpenInV0Container: FC<PropsWithChildren<DocsContainerProps>> = ({
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(registryUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (e) {
-      console.error(e);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      try {
+        await navigator.clipboard.writeText(registryUrl);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      console.warn("Clipboard API is not supported in this environment.");
     }
   };
 
