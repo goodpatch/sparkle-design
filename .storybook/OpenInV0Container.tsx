@@ -1,5 +1,6 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useState } from "react";
 import { DocsContainer, DocsContainerProps } from "@storybook/blocks";
+import { Button } from "../src/components/ui/button";
 
 const OpenInV0Container: FC<PropsWithChildren<DocsContainerProps>> = ({
   context,
@@ -16,6 +17,17 @@ const OpenInV0Container: FC<PropsWithChildren<DocsContainerProps>> = ({
   const name = camelToKebab(componentName);
   const registryUrl = `https://sparkle-design.vercel.app/r/${name}.json`;
   const openUrl = `https://v0.dev/chat/api/open?url=${registryUrl}`;
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(registryUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <DocsContainer context={context}>
@@ -54,6 +66,15 @@ const OpenInV0Container: FC<PropsWithChildren<DocsContainerProps>> = ({
               ></path>
             </svg>
           </a>
+          <Button
+            size="sm"
+            variant="outline"
+            theme="secondary"
+            className="ml-2"
+            onClick={handleCopy}
+          >
+            {copied ? "Copied" : "Copy URL"}
+          </Button>
         </div>
       )}
       {children}
