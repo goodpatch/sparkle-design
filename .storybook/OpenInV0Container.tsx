@@ -5,25 +5,38 @@ const OpenInV0Container: FC<PropsWithChildren<DocsContainerProps>> = ({
   context,
   children,
 }) => {
-  const title = context?.title || "";
-  const name = title.split("/").pop()?.toLowerCase();
+  const components = context.componentStories();
+  const title = components[0]?.title || "";
+  // キャメルケースをケバブケースに変換する関数
+  const camelToKebab = (str: string) => {
+    return str.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+  };
+
+  const componentName = title.split("/").pop() || "";
+  const name = camelToKebab(componentName);
   const registryUrl = `https://sparkle-design.vercel.app/r/${name}.json`;
   const openUrl = `https://v0.dev/chat/api/open?url=${registryUrl}`;
 
   return (
     <DocsContainer context={context}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          marginBottom: 16,
-        }}
-      >
-        <button
-          aria-label="Open in v0"
-          className="h-8 gap-1 rounded-[6px] bg-black px-3 text-xs text-white hover:bg-black hover:text-white dark:bg-white dark:text-black"
+      {components.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginBottom: 16,
+          }}
         >
-          <a href={openUrl} target="_blank" rel="noreferrer">
+          <a
+            href={openUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open in v0"
+            className="h-8 w-auto flex items-center gap-1 rounded-[6px] bg-black px-3 text-xs text-white hover:bg-black hover:text-white dark:bg-white dark:text-black"
+            style={{
+              color: "white",
+            }}
+          >
             Open in{" "}
             <svg
               viewBox="0 0 40 20"
@@ -41,8 +54,8 @@ const OpenInV0Container: FC<PropsWithChildren<DocsContainerProps>> = ({
               ></path>
             </svg>
           </a>
-        </button>
-      </div>
+        </div>
+      )}
       {children}
     </DocsContainer>
   );
