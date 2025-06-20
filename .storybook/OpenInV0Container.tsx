@@ -1,6 +1,5 @@
 import { FC, PropsWithChildren } from "react";
 import { DocsContainer, DocsContainerProps } from "@storybook/blocks";
-import { Button } from "@/components/ui/button";
 
 const OpenInV0Container: FC<PropsWithChildren<DocsContainerProps>> = ({
   context,
@@ -20,10 +19,9 @@ const OpenInV0Container: FC<PropsWithChildren<DocsContainerProps>> = ({
           marginBottom: 16,
         }}
       >
-        <Button
+        <button
           aria-label="Open in v0"
           className="h-8 gap-1 rounded-[6px] bg-black px-3 text-xs text-white hover:bg-black hover:text-white dark:bg-white dark:text-black"
-          asChild
         >
           <a href={openUrl} target="_blank" rel="noreferrer">
             Open in{" "}
@@ -43,7 +41,7 @@ const OpenInV0Container: FC<PropsWithChildren<DocsContainerProps>> = ({
               ></path>
             </svg>
           </a>
-        </Button>
+        </button>
       </div>
       {children}
     </DocsContainer>
