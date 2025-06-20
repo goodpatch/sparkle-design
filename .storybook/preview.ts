@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/react";
 import "../src/app/globals.css";
+import OpenInV0Container from "./OpenInV0Container";
 
 const preview: Preview = {
   parameters: {
@@ -8,6 +9,9 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
+    },
+    docs: {
+      container: OpenInV0Container,
     },
   },
 };
