@@ -24,7 +24,7 @@ const tokens = {
 const entries = Object.entries(tokens).sort(([a], [b]) => (a > b ? 1 : -1));
 
 /**
- * [Copilot Comment] DesignTokensTable コンポーネントは、globals.css と variables.css から取得したデザイントークンを表形式で表示します。
+ * DesignTokensTable コンポーネントは、globals.css と variables.css から取得したデザイントークンを表形式で表示します。
  */
 export const DesignTokensTable: React.FC = () => (
   <table style={{ width: '100%', borderCollapse: 'collapse' }}>
