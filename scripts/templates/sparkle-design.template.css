@@ -1,7 +1,7 @@
 /* フォントのインポート */
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,0..200");
-@import url("https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family={{FONT_PRO_URL}}:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family={{FONT_MONO_URL}}:wght@400;700&display=swap");
 
 /* Primitive Tokens */
 :root {
@@ -103,8 +103,8 @@
 
   /* タイポグラフィ変数 */
   /* フォントファミリー */
-  --font-family-pro: "BIZ UDPGothic", sans-serif;
-  --font-family-mono: "BIZ UDGothic", monospace;
+  --font-family-pro: "{{FONT_PRO}}", sans-serif;
+  --font-family-mono: "{{FONT_MONO}}", monospace;
   --font-family-icon: "Material Symbols Rounded";
 
   /* フォントサイズ */
@@ -175,16 +175,16 @@
   --color-neutral-900: var(--color-gray-900);
 
   /* プライマリカラーは設定可能 */
-  --color-primary-50: var(--color-blue-50);
-  --color-primary-100: var(--color-blue-100);
-  --color-primary-200: var(--color-blue-200);
-  --color-primary-300: var(--color-blue-300);
-  --color-primary-400: var(--color-blue-400);
-  --color-primary-500: var(--color-blue-500);
-  --color-primary-600: var(--color-blue-600);
-  --color-primary-700: var(--color-blue-700);
-  --color-primary-800: var(--color-blue-800);
-  --color-primary-900: var(--color-blue-900);
+  --color-primary-50: var(--color-{{PRIMARY}}-50);
+  --color-primary-100: var(--color-{{PRIMARY}}-100);
+  --color-primary-200: var(--color-{{PRIMARY}}-200);
+  --color-primary-300: var(--color-{{PRIMARY}}-300);
+  --color-primary-400: var(--color-{{PRIMARY}}-400);
+  --color-primary-500: var(--color-{{PRIMARY}}-500);
+  --color-primary-600: var(--color-{{PRIMARY}}-600);
+  --color-primary-700: var(--color-{{PRIMARY}}-700);
+  --color-primary-800: var(--color-{{PRIMARY}}-800);
+  --color-primary-900: var(--color-{{PRIMARY}}-900);
 
   --color-secondary-50: var(--color-gray-50);
   --color-secondary-100: var(--color-gray-100);
@@ -268,7 +268,7 @@
   --radius-divide: var(--radius-none);
   --radius-minimum: var(--radius-xs);
   --radius-notice: var(--radius-sm);
-  --radius-action: var(--radius-md);
+  --radius-action: var(--radius-{{RADIUS}});
   --radius-halfModal: var(--radius-lg);
   --radius-modal: var(--radius-xl);
   --radius-round: var(--radius-full);

@@ -2,6 +2,7 @@
   "name": "sparkle-design",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/goodpatch/sparkle-ui"
@@ -14,6 +15,7 @@
     "test": "vitest run --project unit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "build:css": "node scripts/generate-css.js",
     "build:sd": "node sd.config.js && cp style-dictionary/build/_variables.css src/app/variables.css",
     "build:registry": "shadcn build",
     "preinstall": "npx only-allow pnpm",
