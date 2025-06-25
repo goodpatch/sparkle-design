@@ -1,9 +1,8 @@
 import React from 'react';
-import fs from 'fs';
-import path from 'path';
+import globalsCss from '../app/globals.css?raw';
+import variablesCss from '../app/variables.css?raw';
 
-function loadTokens(filePath: string): Record<string, string> {
-  const content = fs.readFileSync(filePath, 'utf8');
+function loadTokens(content: string): Record<string, string> {
   const regex = /--([A-Za-z0-9_-]+):\s*([^;]+);/g;
   const tokens: Record<string, string> = {};
   let match: RegExpExecArray | null;
@@ -13,18 +12,15 @@ function loadTokens(filePath: string): Record<string, string> {
   return tokens;
 }
 
-const variablesPath = path.join(process.cwd(), 'src', 'app', 'variables.css');
-const globalsPath = path.join(process.cwd(), 'src', 'app', 'globals.css');
-
 const tokens = {
-  ...loadTokens(variablesPath),
-  ...loadTokens(globalsPath),
+  ...loadTokens(variablesCss),
+  ...loadTokens(globalsCss),
 };
 
-const entries = Object.entries(tokens).sort(([a], [b]) => (a > b ? 1 : -1));
+const entries = Object.entries(tokens).sort(([a], [b]) => a.localeCompare(b));
 
 /**
- * DesignTokensTable コンポーネントは、globals.css と variables.css から取得したデザイントークンを表形式で表示します。
+ * [Copilot Comment] DesignTokensTable コンポーネントは、globals.css と variables.css をビルド時に取り込み、定義されているカスタムプロパティを一覧表示します。
  */
 export const DesignTokensTable: React.FC = () => (
   <table style={{ width: '100%', borderCollapse: 'collapse' }}>
