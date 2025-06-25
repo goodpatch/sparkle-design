@@ -18,7 +18,8 @@
     "build:registry": "shadcn build",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npx lightningcss --version || true",
-    "build:package": "pnpm build:sd && rm -rf dist && cp -r src dist && cp src/app/globals.css dist/globals.css && cp src/app/variables.css dist/variables.css"
+    "build:package": "pnpm build:sd && rm -rf dist && cp -r src dist && cp src/app/globals.css dist/globals.css && cp src/app/variables.css dist/variables.css",
+    "changelog": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s -r 0"
   },
   "dependencies": {
     "@figma/code-connect": "^1.0.6",
@@ -52,6 +53,7 @@
     "@types/react-dom": "^18",
     "@vitest/browser": "^3.0.9",
     "@vitest/coverage-v8": "^3.0.9",
+    "conventional-changelog-cli": "^5.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
     "eslint-plugin-storybook": "^0.12.0",
