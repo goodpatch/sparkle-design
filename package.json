@@ -14,11 +14,9 @@
     "test": "vitest run --project unit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "build:sd": "node sd.config.js && cp style-dictionary/build/_variables.css src/app/variables.css",
     "build:registry": "shadcn build",
     "preinstall": "npx only-allow pnpm",
-    "postinstall": "npx lightningcss --version || true",
-    "build:package": "pnpm build:sd && rm -rf dist && cp -r src dist && cp src/app/globals.css dist/globals.css && cp src/app/variables.css dist/variables.css"
+    "postinstall": "npx lightningcss --version || true"
   },
   "dependencies": {
     "@figma/code-connect": "^1.0.6",
@@ -56,8 +54,6 @@
     "eslint-config-next": "15.3.1",
     "eslint-plugin-storybook": "^0.12.0",
     "playwright": "^1.51.1",
-    "sd-tailwindcss-transformer": "^2.1.0",
-    "style-dictionary": "^4.3.3",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^3.0.9"
