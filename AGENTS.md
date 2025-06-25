@@ -1,10 +1,11 @@
 # Repo guidelines
 
-This project is a Next.js + TypeScript component library. Tailwind CSS, Storybook and shadcn/ui are used.
+This project is a Next.js + TypeScript component library. Tailwind CSS, Storybook, style-dictionary and shadcn/ui are used.
 
 ## Directory layout
 
 - `src/` – app, components and library utilities
+- `style-dictionary/` – tokens and build output
 - `scripts/` – tooling such as `setup.sh` and Swift registry tool
 - `public/r/` – registry JSON files
 
@@ -12,6 +13,7 @@ This project is a Next.js + TypeScript component library. Tailwind CSS, Storyboo
 
 - `pnpm dev` – start development server
 - `pnpm storybook` – open Storybook
+- `pnpm build:sd` – build design tokens
 - `make registry` – generate registry and copy files to `public/r/`
 - `make new-component` or `./scripts/setup.sh <name>` – scaffold a component
 - `make help` – list Makefile targets
