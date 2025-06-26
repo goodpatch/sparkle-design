@@ -69,6 +69,64 @@ sparkle-design-cli
 
 詳しい使い方は `sparkle-design-cli --help` で確認できます。
 
+## 使用方法
+
+### パッケージのインストール
+
+```bash
+npm install sparkle-design
+# または
+pnpm add sparkle-design
+# または
+yarn add sparkle-design
+```
+
+### 基本的な使用例
+
+```tsx
+import React from "react";
+import { Button, Badge, Card } from "sparkle-design";
+
+// 必要なスタイルをインポート
+import "sparkle-design/globals.css";
+import "sparkle-design/sparkle-design.css";
+
+function App() {
+  return (
+    <div>
+      <Card>
+        <h1>Sparkle Design を使った例</h1>
+        <Badge variant="primary">新機能</Badge>
+        <Button variant="primary" size="md">
+          ボタンをクリック
+        </Button>
+      </Card>
+    </div>
+  );
+}
+
+export default App;
+```
+
+### スタイルファイルについて
+
+- **`globals.css`**: 基本的な Tailwind CSS とリセットスタイル
+- **`sparkle-design.css`**: Sparkle Design のデザイントークン（カラー、フォント、角丸、シャドウなど）
+
+両方のファイルをインポートすることで、Sparkle Design の全機能を利用できます。
+
+### TypeScript サポート
+
+Sparkle Design は完全に TypeScript で書かれており、型定義が含まれています。
+
+```tsx
+import { ButtonProps } from "sparkle-design";
+
+const MyButton: React.FC<ButtonProps> = (props) => {
+  return <Button {...props} />;
+};
+```
+
 ### コンポーネントレジストリの生成
 
 ```bash
