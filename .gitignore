@@ -45,6 +45,7 @@ next-env.d.ts
 
 # Storybook
 storybook-static
+public/storybook
 
 # local build artifacts
 dist
