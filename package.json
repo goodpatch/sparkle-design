@@ -15,7 +15,7 @@
     "test": "vitest run --project unit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "build:css": "node scripts/generate-css.js",
+    "build:css": "npx sparkle-design",
     "build:sd": "node sd.config.js && cp style-dictionary/build/_variables.css src/app/variables.css",
     "build:registry": "shadcn build",
     "preinstall": "npx only-allow pnpm",
