@@ -47,6 +47,37 @@ pnpm build:sd
 
 `style-dictionary` 配下のトークンから CSS 変数を生成します。
 
+### Sparkle Design CSS の生成
+
+```bash
+pnpm build:css
+```
+
+`sparkle.config.json` の設定に基づいて、デザインシステム CSS を生成します。このコマンドは内部的に `sparkle-design-cli` を実行し、プライマリカラー、フォント設定、角丸設定などのデザイントークンから `src/app/sparkle-design.css` ファイルを生成します。
+
+設定ファイル (`sparkle.config.json`) の内容：
+
+- `primary`: プライマリカラー（blue, red, orange など）
+- `font-pro`: プロポーショナルフォント（Google Fonts の名前）
+- `font-mono`: モノスペースフォント（Google Fonts の名前）
+- `radius`: 角丸設定（sm, md, lg など）
+
+設定ファイルは Sparkle Design Theme Settings から書き出すことができます。
+また、`sparkle-design-cli`を自分のプロジェクトで直接使用することも可能です。
+
+```bash
+npx sparkle-design-cli
+```
+
+または、グローバルにインストールした場合：
+
+```bash
+npm install -g sparkle-design-cli
+sparkle-design-cli
+```
+
+詳しい使い方は `sparkle-design-cli --help` で確認できます。
+
 ### コンポーネントレジストリの生成
 
 ```bash
