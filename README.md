@@ -1,6 +1,6 @@
 # Sparkle Design for React [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
 
-Next.js + TypeScript を用いたコンポーネントライブラリです。Tailwind CSS や Storybook、style-dictionary、shadcn/ui を利用しています。
+Next.js + TypeScript を用いたコンポーネントライブラリです。Tailwind CSS や Storybook、shadcn/ui を利用しています。
 
 ## ディレクトリ構成
 
@@ -9,7 +9,6 @@ Next.js + TypeScript を用いたコンポーネントライブラリです。Ta
 │  ├─ app/            # Next.js アプリケーション関連
 │  ├─ components/     # React コンポーネントと Storybook
 │  └─ lib/            # 共有ユーティリティ
-├─ style-dictionary/  # デザイントークンと生成ファイル
 ├─ scripts/           # 各種スクリプト
 ├─ public/r/          # 公開用レジストリ JSON
 └─ .github/           # GitHub関連の設定ファイル
@@ -38,14 +37,6 @@ pnpm storybook
 ```
 
 コンポーネント一覧を確認できます。Storybook の「Accessibility」タブからアクセシビリティチェックも行えます。
-
-### デザイントークンのビルド
-
-```bash
-pnpm build:sd
-```
-
-`style-dictionary` 配下のトークンから CSS 変数を生成します。
 
 ### Sparkle Design CSS の生成
 
