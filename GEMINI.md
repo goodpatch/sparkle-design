@@ -16,7 +16,7 @@ Gemini CLI はこのリポジトリでコードを生成するとき、次の規
 
 ## Workflow
 
-- 生成後のコードを確認して必要に応じて修正します。
+- 生成されたコードをレビューし、必要に応じて修正を加えます。
 - `pnpm lint` を実行してエラーが無いことを確認します。
 - コミットメッセージは `.github/copilot-commit-message-instructions.md` のルールに従い、日本語で絵文字から書き始めます。
 - React コンポーネントのコメントは `.github/comment-rule.md` の `[Copilot Comment]` 記法を使います。
