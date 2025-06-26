@@ -17,7 +17,9 @@ const config: StorybookConfig = {
     options: {},
   },
 
-  staticDirs: ["../public"],
+  // When outputting Storybook to `public/storybook`, copying from `public`
+  // causes a self-copy error. Disable staticDirs to avoid this.
+  staticDirs: [],
 
   docs: {
     autodocs: true
