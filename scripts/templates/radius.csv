@@ -1,9 +1,0 @@
-name,divide,minimum,notice,action,halfModal,modal,round
-none,none,none,none,none,none,none,full
-xs,none,none,none,xs,sm,md,full
-sm,none,none,xs,sm,md,lg,full
-md,none,xs,sm,md,lg,xl,full
-lg,none,sm,md,lg,xl,2xl,full
-xl,none,md,lg,xl,2xl,3xl,full
-2xl,none,lg,xl,2xl,3xl,3xl,full
-3xl,none,xl,2xl,3xl,3xl,3xl,full
