@@ -24,7 +24,7 @@
     "lint": "next lint",
     "test": "vitest run --project unit",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook": "storybook build --output-dir public/storybook",
     "build:css": "npx sparkle-design-cli",
     "build:registry": "shadcn build",
     "preinstall": "npx only-allow pnpm",
