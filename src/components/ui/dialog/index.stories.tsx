@@ -1,36 +1,33 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-
 import {
   Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription,
   DialogAction,
   DialogCancel,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "./index";
 import { Button } from "../button";
 
-const meta = {
+const meta: Meta<typeof Dialog> = {
   title: "Components/Dialog",
   component: Dialog,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
-  argTypes: {},
+  argTypes: {
+    // 引数の設定
+  },
 } satisfies Meta<typeof Dialog>;
 
 export default meta;
 type Story = StoryObj<typeof Dialog>;
 
-/**
- * 基本的なダイアログの例
- */
-export const Basic: Story = {
+export const Default: Story = {
   render: () => (
     <Dialog>
       <DialogTrigger asChild>
