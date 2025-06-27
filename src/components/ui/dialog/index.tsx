@@ -4,7 +4,7 @@ import * as React from "react";
 import { AlertDialog as DialogPrimitive } from "radix-ui";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 
 /**
  * ダイアログはユーザーにアクションの実行や中断を確認するために使用するコンポーネントです。
@@ -99,7 +99,7 @@ function DialogTitle({
     <DialogPrimitive.Title
       data-slot="dialog-title"
       className={cn(
-        "color-text-high leading-none character-4-bold-pro",
+        "text-text-high leading-none character-4-bold-pro flex gap-2 items-center justify-start",
         className
       )}
       {...props}
@@ -114,7 +114,7 @@ function DialogDescription({
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"
-      className={cn("color-text-high character-2-regular-pro", className)}
+      className={cn("text-text-high character-2-regular-pro", className)}
       {...props}
     />
   );
@@ -137,11 +137,12 @@ function DialogCancel({
 function DialogAction({
   className,
   children,
+  theme = "primary",
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Action>) {
+}: React.ComponentProps<typeof DialogPrimitive.Action> & ButtonProps) {
   return (
     <DialogPrimitive.Action data-slot="dialog-action" asChild {...props}>
-      <Button variant="solid" theme="primary" size="sm" className={className}>
+      <Button variant="solid" theme={theme} size="sm" className={className}>
         {children}
       </Button>
     </DialogPrimitive.Action>
