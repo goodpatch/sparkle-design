@@ -7,6 +7,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogIcon,
   DialogTitle,
   DialogTrigger,
 } from "./index";
@@ -59,7 +60,7 @@ export const Warning: Story = {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            <Icon icon="warning" className="text-warning-500" size={7} />
+            <DialogIcon icon="warning" className="text-warning-500" />
             警告
           </DialogTitle>
           <DialogDescription>
@@ -84,7 +85,7 @@ export const Negative: Story = {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            <Icon icon="error" className="text-negative-400" size={7} />
+            <DialogIcon icon="error" className="text-negative-400" />
             エラー
           </DialogTitle>
           <DialogDescription>

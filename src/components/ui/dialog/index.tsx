@@ -5,6 +5,7 @@ import { AlertDialog as DialogPrimitive } from "radix-ui";
 
 import { cn } from "@/lib/utils";
 import { Button, ButtonProps } from "@/components/ui/button";
+import { Icon, IconProps } from "../icon";
 
 /**
  * ダイアログはユーザーにアクションの実行や中断を確認するために使用するコンポーネントです。
@@ -91,6 +92,10 @@ function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+function DialogIcon({ className, icon, ...props }: IconProps) {
+  return <Icon icon={icon} className={className} size={7} {...props} />;
+}
+
 function DialogTitle({
   className,
   ...props
@@ -157,6 +162,7 @@ export {
   DialogHeader,
   DialogOverlay,
   DialogPortal,
+  DialogIcon,
   DialogTitle,
   DialogTrigger,
   DialogCancel,
