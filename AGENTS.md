@@ -26,7 +26,8 @@ This project is a Next.js + TypeScript component library. Tailwind CSS, Storyboo
 
 ## Component comments
 
-- Follow `.github/comment-rule.md` for React component comments using `[Copilot Comment]` syntax.
+- Follow `.github/comment-rule.md` for React component comments.
+- Write all code comments in Japanese first, then add an `en:` line with the English translation.
 
 ## Programmatic checks
 

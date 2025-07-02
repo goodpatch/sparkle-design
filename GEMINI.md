@@ -19,7 +19,8 @@ Gemini CLI はこのリポジトリでコードを生成するとき、次の規
 - 生成されたコードをレビューし、必要に応じて修正を加えます。
 - `pnpm lint` を実行してエラーが無いことを確認します。
 - コミットメッセージは `.github/copilot-commit-message-instructions.md` のルールに従い、日本語で絵文字から書き始めます。
-- React コンポーネントのコメントは `.github/comment-rule.md` の `[Copilot Comment]` 記法を使います。
+- React コンポーネントのコメントは `.github/comment-rule.md` のルールに従います。
+- コード内のコメントは日本語のあとに `en:` を付けた英語を続けて記述してください。
 - ブランチ名には英数字・ドット・ハイフン・アンダースコアのみ使用します。
 
 ## Common commands
