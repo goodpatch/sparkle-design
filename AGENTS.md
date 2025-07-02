@@ -1,6 +1,7 @@
 # Repo guidelines
 
-This project is a Next.js + TypeScript component library. Tailwind CSS, Storybook, style-dictionary and shadcn/ui are used.
+This project is a Next.js + TypeScript component library. Tailwind CSS,
+Storybook, style-dictionary and shadcn/ui are used.
 
 ## Directory layout
 
@@ -22,12 +23,14 @@ This project is a Next.js + TypeScript component library. Tailwind CSS, Storyboo
 
 - Follow `.github/copilot-commit-message-instructions.md`.
 - Messages must be written in Japanese and start with one emoji from the list.
-- Use Conventional Commit format, then add a blank line and bullet list of changes.
+- Use Conventional Commit format, then add a blank line and bullet list of
+  changes.
 
 ## Component comments
 
 - Follow `.github/comment-rule.md` for React component comments.
-- Write all code comments in Japanese first, then add an `en:` line with the English translation.
+- Write all code comments in Japanese first, then add an `en:` line with the
+  English translation.
 
 ## Programmatic checks
 
@@ -35,13 +38,15 @@ Run the following before committing:
 
 ```bash
 pnpm lint
+pnpm format
 ```
 
 There is no test script yet.
 
 ## Branch naming
 
-- Use only English letters, digits, dots, hyphens and underscores in branch names.
+- Use only English letters, digits, dots, hyphens and underscores in branch
+  names.
 - A sample `pre-push` hook can reject non-English names:
 
 ```bash
