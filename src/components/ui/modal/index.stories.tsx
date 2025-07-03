@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
+import { Button } from "../button";
 import {
   Modal,
   ModalContent,
@@ -9,8 +11,6 @@ import {
   ModalClose,
   ModalFooter,
 } from "./index";
-import { useState } from "react";
-import { Button } from "../button";
 
 const meta: Meta<typeof Modal> = {
   title: "Components/Modal",
@@ -66,12 +66,12 @@ export const SizeVariants: Story = {
     const sizes = ["sm", "md", "lg", "xl", "full"] as const;
     return (
       <div style={{ display: "flex", gap: 16 }}>
-        {sizes.map((size) => (
+        {sizes.map(size => (
           <div key={size}>
             <Button onClick={() => setOpen(size)}>Open {size}</Button>
             <Modal
               open={open === size}
-              onOpenChange={(v) => (v ? setOpen(size) : setOpen(null))}
+              onOpenChange={v => (v ? setOpen(size) : setOpen(null))}
             >
               <ModalContent size={size}>
                 <ModalHeader>

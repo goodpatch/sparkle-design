@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
+import { Button } from "../button";
 import {
   InlineMessage,
   InlineMessageTitle,
   InlineMessageDescription,
 } from "./index";
-import { Button } from "../button";
 
 const meta = {
   title: "Components/InlineMessage",
@@ -32,7 +32,7 @@ type Story = StoryObj<typeof InlineMessage>;
 // 新しい形式でストーリーを定義
 
 export const Info: Story = {
-  render: (args) => (
+  render: args => (
     <InlineMessage {...args}>
       <InlineMessageTitle>お知らせタイトル</InlineMessageTitle>
       <InlineMessageDescription>何かが起きました。</InlineMessageDescription>
@@ -45,7 +45,7 @@ export const Info: Story = {
 };
 
 export const Warning: Story = {
-  render: (args) => (
+  render: args => (
     <InlineMessage {...args}>
       <InlineMessageTitle>注意タイトル</InlineMessageTitle>
       <InlineMessageDescription>
@@ -60,7 +60,7 @@ export const Warning: Story = {
 };
 
 export const Negative: Story = {
-  render: (args) => (
+  render: args => (
     <InlineMessage {...args}>
       <InlineMessageTitle>エラータイトル</InlineMessageTitle>
       <InlineMessageDescription>問題が発生しました。</InlineMessageDescription>
@@ -73,7 +73,7 @@ export const Negative: Story = {
 };
 
 export const Success: Story = {
-  render: (args) => (
+  render: args => (
     <InlineMessage {...args}>
       <InlineMessageTitle>成功タイトル</InlineMessageTitle>
       <InlineMessageDescription>
@@ -88,7 +88,7 @@ export const Success: Story = {
 };
 
 export const WithoutTitle: Story = {
-  render: (args) => (
+  render: args => (
     <InlineMessage {...args}>
       <InlineMessageDescription>
         タイトルなしのメッセージです。
@@ -102,7 +102,7 @@ export const WithoutTitle: Story = {
 };
 
 export const WithoutDescription: Story = {
-  render: (args) => (
+  render: args => (
     <InlineMessage {...args}>
       <InlineMessageTitle>説明なしのタイトル</InlineMessageTitle>
     </InlineMessage>

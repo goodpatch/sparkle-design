@@ -1,0 +1,24 @@
+# Prettier ignore file
+
+# Build outputs
+dist/
+.next/
+storybook-static/
+
+# Dependencies
+node_modules/
+
+# Generated files
+*.log
+*.tsbuildinfo
+
+# Registry merge tool (Swift project)
+scripts/merge-registry/
+
+# Lock files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Markdown files
+*.md

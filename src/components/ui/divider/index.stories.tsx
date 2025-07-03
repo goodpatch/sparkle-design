@@ -33,7 +33,7 @@ export const Default: Story = {
     lineStyle: "solid",
     direction: "horizontal",
   },
-  render: (args) => (
+  render: args => (
     <div className="flex items-center justify-center w-40 h-40 ">
       <Divider {...args} />
     </div>
@@ -46,7 +46,7 @@ export const Vertical: Story = {
     lineStyle: "solid",
     direction: "vertical",
   },
-  render: (args) => (
+  render: args => (
     <div className="flex items-center justify-center w-40 h-40">
       <Divider {...args} />
     </div>

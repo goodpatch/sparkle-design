@@ -75,4 +75,4 @@ export const Gapped = () => {
       <Badge isGapped={false}>13</Badge>
     </div>
   );
-}
+};

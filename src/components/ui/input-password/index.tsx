@@ -21,7 +21,7 @@ const InputPassword = React.forwardRef<HTMLInputElement, InputPasswordProps>(
 
     // パスワード表示切り替えハンドラー
     const handleTogglePasswordVisibility = React.useCallback(() => {
-      setIsVisibility((prev) => !prev);
+      setIsVisibility(prev => !prev);
     }, []);
 
     return (

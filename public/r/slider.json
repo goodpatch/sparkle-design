@@ -4,9 +4,7 @@
   "type": "registry:component",
   "title": "Slider",
   "description": "スライダーは範囲内の値を選択するためのインタラクティブなコンポーネントです。",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "registryDependencies": [
     "https://sparkle-design.vercel.app/r/sparkle-color.json",
     "https://sparkle-design.vercel.app/r/sparkle-style.json"

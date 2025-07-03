@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
 import {
   Card,
   CardContent,
@@ -9,7 +10,6 @@ import {
   CardTitle,
   ClickableCard,
 } from "./index";
-import { action } from "@storybook/addon-actions";
 
 const meta: Meta<typeof Card> = {
   title: "Components/Card",

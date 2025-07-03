@@ -35,7 +35,7 @@ export const Default: Story = {
   args: {
     className: "h-4 w-[250px]",
   },
-  render: (args) => <Skeleton {...args} />,
+  render: args => <Skeleton {...args} />,
 };
 
 /**

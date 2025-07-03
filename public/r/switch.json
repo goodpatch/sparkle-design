@@ -4,9 +4,7 @@
   "type": "registry:component",
   "title": "Switch",
   "description": "スイッチはオン/オフの状態を切り替えるためのトグルコンポーネントです。",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "registryDependencies": [
     "https://sparkle-design.vercel.app/r/sparkle-color.json",
     "https://sparkle-design.vercel.app/r/sparkle-style.json"

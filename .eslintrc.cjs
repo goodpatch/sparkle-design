@@ -1,9 +1,9 @@
-{
+module.exports = {
   "extends": [
     "next/core-web-vitals",
     "plugin:storybook/recommended",
     "plugin:import/recommended",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
   ],
   "plugins": ["import"],
   "rules": {
@@ -21,4 +21,4 @@
       }
     ]
   }
-}
+};
