@@ -152,6 +152,54 @@ pnpm test
 Vitest によるユニットテストを実行します。Storybook のテストアドオンとも連携しています。
 プルリクエストを作成すると、GitHub Actions が `pnpm lint` と `pnpm test` を自動で実行し、結果が PR 画面に表示されます。
 
+## 開発環境設定
+
+### VS Code 推奨設定
+
+プロジェクトには `.vscode/settings.json` と `.vscode/extensions.json` が含まれており、以下の機能が自動で有効になります：
+
+- **Format on Save**: ファイル保存時の自動フォーマット
+- **ESLint**: コード品質チェック
+- **Prettier**: コードフォーマット
+
+推奨拡張機能:
+- Prettier - Code formatter
+- ESLint
+- Tailwind CSS IntelliSense
+- TypeScript Importer
+
+### コードフォーマット
+
+Prettier と ESLint の設定は以下のファイルで管理されています：
+
+- `prettier.config.cjs` - Prettier の設定
+- `.eslintrc.cjs` - ESLint の設定
+- `.editorconfig` - エディタの基本設定
+- `.prettierignore` - フォーマット除外ファイル
+
+コマンドライン使用:
+
+```bash
+# フォーマットチェック
+pnpm format:check
+
+# 自動フォーマット
+pnpm format
+
+# ESLint チェック (Next.js 経由)
+pnpm lint:check
+# または
+pnpm lint
+
+# ESLint 自動修正 (Next.js 経由)
+pnpm lint:fix
+
+# 型チェック
+pnpm type-check
+```
+
+**注意**: ESLintは`next lint`コマンドを使用しており、Next.jsプロジェクトに最適化された設定とルールが適用されます。
+
 ## Makefile について
 
 Makefile では次のターゲットが定義されています。
