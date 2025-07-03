@@ -1,9 +1,9 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "dialog",
-  "type": "registry:component",
   "title": "Dialog",
+  "name": "dialog",
   "description": "ダイアログはユーザーの操作を一時中断し、重要な情報を表示したり、ユーザーからの入力を求めるためのコンポーネントです。",
+  "type": "registry:component",
   "files": [
     {
       "path": "src/components/ui/dialog/index.tsx",
@@ -15,6 +15,7 @@
   ],
   "registryDependencies": [
     "https://sparkle-design.vercel.app/r/button.json",
+    "https://sparkle-design.vercel.app/r/icon.json",
     "https://sparkle-design.vercel.app/r/sparkle-font.json",
     "https://sparkle-design.vercel.app/r/sparkle-color.json",
     "https://sparkle-design.vercel.app/r/sparkle-style.json"

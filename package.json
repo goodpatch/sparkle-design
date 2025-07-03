@@ -29,11 +29,11 @@
     "build:registry": "shadcn build",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npx lightningcss --version || true",
-    "build:package": "rm -rf dist && tsc -p tsconfig.build.json && cp src/app/globals.css dist/globals.css && cp src/app/sparkle-design.css dist/sparkle-design.css"
+    "build:package": "rm -rf dist && tsc -p tsconfig.build.json && cp src/app/globals.css dist/globals.css && cp src/app/sparkle-design.css dist/sparkle-design.css",
+    "format": "prettier -w \"**/*.{js,ts,tsx,css,md,json}\""
   },
   "dependencies": {
     "@figma/code-connect": "^1.0.6",
-    "@radix-ui/react-slot": "^1.2.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.487.0",
@@ -69,7 +69,9 @@
     "playwright": "^1.51.1",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^3.0.9"
+    "vitest": "^3.0.9",
+    "prettier": "^3.6.2",
+    "eslint-plugin-import": "^2.32.0"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
