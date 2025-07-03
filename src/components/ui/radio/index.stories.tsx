@@ -42,7 +42,7 @@ export const Default: Story = {
   args: {
     defaultValue: "comfortable",
   },
-  render: (args) => (
+  render: args => (
     <Radio {...args}>
       <RadioItem value="default" id="r1" label="Default" />
       <RadioItem value="comfortable" id="r2" label="Comfortable" />
@@ -87,7 +87,7 @@ export const WithControls: StoryObj<WithControlsProps> = {
       description: "ラベルテキストを指定します",
     },
   },
-  render: (args) => (
+  render: args => (
     <Radio defaultValue={args.defaultValue}>
       <RadioItem
         value="default"

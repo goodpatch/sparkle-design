@@ -1,3 +1,4 @@
+packages: []
 onlyBuiltDependencies:
   - '@bundled-es-modules/glob'
   - '@tailwindcss/oxide'

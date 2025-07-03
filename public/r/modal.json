@@ -4,9 +4,7 @@
   "type": "registry:component",
   "title": "Modal",
   "description": "モーダルはメインコンテンツの上に表示され、ユーザーの注意を特定のタスクや情報に集中させるためのコンポーネントです。",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "registryDependencies": [
     "https://sparkle-design.vercel.app/r/icon.json",
     "https://sparkle-design.vercel.app/r/sparkle-font.json",

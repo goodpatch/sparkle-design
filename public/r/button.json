@@ -4,9 +4,7 @@
   "type": "registry:component",
   "title": "Button",
   "description": "ボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "registryDependencies": [
     "https://sparkle-design.vercel.app/r/icon.json",
     "https://sparkle-design.vercel.app/r/spinner.json",

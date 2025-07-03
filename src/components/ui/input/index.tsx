@@ -68,7 +68,7 @@ function useMergeRefs<T>(
 ): React.RefCallback<T> {
   return React.useCallback(
     (value: T) => {
-      refs.forEach((ref) => {
+      refs.forEach(ref => {
         if (typeof ref === "function") {
           ref(value);
         } else if (ref != null) {

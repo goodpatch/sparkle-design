@@ -4,9 +4,7 @@
   "type": "registry:component",
   "title": "Select",
   "description": "セレクトはオプショングループの中から値を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "registryDependencies": [
     "https://sparkle-design.vercel.app/r/sparkle-font.json",
     "https://sparkle-design.vercel.app/r/sparkle-color.json",

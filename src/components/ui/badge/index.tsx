@@ -101,9 +101,9 @@ const badgeVariants = cva(
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof badgeVariants> {
-      isNumberVisible?: boolean;
-      isGapped?: boolean;
-    }
+  isNumberVisible?: boolean;
+  isGapped?: boolean;
+}
 
 /**
  * バッジは特定の要素に対して通知の数やタスクの数などの数値情報を付与するために使用するコンポーネントです。

@@ -41,7 +41,7 @@ export default meta;
 type Story = StoryObj<typeof SelectTrigger>;
 
 export const Default: Story = {
-  render: (args) => (
+  render: args => (
     <Select>
       <SelectTrigger className="w-[280px]" {...args}>
         <SelectValue placeholder="Select a timezone" />
@@ -111,7 +111,7 @@ export const Small: Story = {
   args: {
     size: "sm",
   },
-  render: (args) => (
+  render: args => (
     <Select>
       <SelectTrigger className="w-[240px]" {...args}>
         <SelectValue placeholder="選択してください" />
@@ -129,7 +129,7 @@ export const Medium: Story = {
   args: {
     size: "md",
   },
-  render: (args) => (
+  render: args => (
     <Select>
       <SelectTrigger className="w-[240px]" {...args}>
         <SelectValue placeholder="選択してください" />
@@ -147,7 +147,7 @@ export const Large: Story = {
   args: {
     size: "lg",
   },
-  render: (args) => (
+  render: args => (
     <Select>
       <SelectTrigger className="w-[240px]" {...args}>
         <SelectValue placeholder="選択してください" />
@@ -162,7 +162,7 @@ export const Large: Story = {
 };
 
 export const Invalid: Story = {
-  render: (args) => (
+  render: args => (
     <Select>
       <SelectTrigger className="w-[240px]" isInvalid {...args}>
         <SelectValue placeholder="選択してください" />
@@ -177,7 +177,7 @@ export const Invalid: Story = {
 };
 
 export const Disabled: Story = {
-  render: (args) => (
+  render: args => (
     <Select>
       <SelectTrigger className="w-[240px]" disabled {...args}>
         <SelectValue placeholder="選択してください" />
@@ -192,7 +192,7 @@ export const Disabled: Story = {
 };
 
 export const DisabledWithInvalidState: Story = {
-  render: (args) => (
+  render: args => (
     <Select>
       <SelectTrigger className="w-[240px]" disabled isInvalid {...args}>
         <SelectValue placeholder="選択してください" />

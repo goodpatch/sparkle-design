@@ -108,14 +108,14 @@ function ModalContent({
     size === "sm"
       ? "max-w-xs"
       : size === "md"
-      ? "max-w-[480px]"
-      : size === "lg"
-      ? "max-w-[640px]"
-      : size === "xl"
-      ? "max-w-[960px]"
-      : size === "full"
-      ? "max-w-[calc(100vw-80px)] h-[calc(100vh-80px)] overflow-hidden"
-      : "";
+        ? "max-w-[480px]"
+        : size === "lg"
+          ? "max-w-[640px]"
+          : size === "xl"
+            ? "max-w-[960px]"
+            : size === "full"
+              ? "max-w-[calc(100vw-80px)] h-[calc(100vh-80px)] overflow-hidden"
+              : "";
   return (
     <ModalPortal data-slot="modal-portal">
       <ModalOverlay />

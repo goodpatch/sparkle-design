@@ -1,6 +1,5 @@
-import React from "react";
+import React, { act } from "react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { act } from "react";
 import ReactDOM from "react-dom/client";
 import { InputPassword } from "./index";
 
