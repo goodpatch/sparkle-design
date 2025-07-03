@@ -2,8 +2,20 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /**
+   * 表示するアイコン名
+   * en: Name of the icon to display
+   */
   icon: string;
+  /**
+   * アイコンサイズ
+   * en: Size of the icon
+   */
   size?: number;
+  /**
+   * 塗りつぶしアイコンかどうか
+   * en: Whether the icon is filled
+   */
   fill?: boolean;
 }
 

@@ -262,20 +262,30 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  /** ボタンを別コンポーネントの子としてレンダリングするか */
-  /** en: Whether to render the button as a child component */
+  /**
+   * ボタンを別コンポーネントの子としてレンダリングするか
+   * en: Whether to render the button as a child component
+   */
   asChild?: boolean;
-  /** 左側に表示するアイコン名 */
-  /** en: Icon name displayed on the left side */
+  /**
+   * 左側に表示するアイコン名
+   * en: Icon name displayed on the left side
+   */
   prefixIcon?: string;
-  /** 右側に表示するアイコン名 */
-  /** en: Icon name displayed on the right side */
+  /**
+   * 右側に表示するアイコン名
+   * en: Icon name displayed on the right side
+   */
   suffixIcon?: string;
-  /** ローディング状態かどうか */
-  /** en: Indicates if the button is in a loading state */
+  /**
+   * ローディング状態かどうか
+   * en: Indicates if the button is in a loading state
+   */
   isLoading?: boolean;
-  /** ボタンを無効化するかどうか */
-  /** en: Disables the button when set to true */
+  /**
+   * ボタンを無効化するかどうか
+   * en: Disables the button when set to true
+   */
   isDisabled?: boolean;
 }
 

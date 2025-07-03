@@ -133,8 +133,10 @@ const tagVariants = cva(
 export interface TagProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof tagVariants> {
-  /** タグのラベルテキスト */
-  /** en: Label text displayed inside the tag */
+  /**
+   * タグのラベルテキスト
+   * en: Label text displayed inside the tag
+   */
   children: React.ReactNode;
 }
 
