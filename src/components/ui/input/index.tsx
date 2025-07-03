@@ -113,8 +113,8 @@ export interface InputProps
 /**
  * ## 概要 / Overview
  *
- * - インプットテキストは、テキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。
- * - en: The Input component is used to get user input in the form of a text field.
+ * - インプットはテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * - en: The Input component is used to capture user input in the form of a text field.
  *
  * ## プロパティ / Props
  *

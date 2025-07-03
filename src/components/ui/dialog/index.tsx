@@ -10,8 +10,8 @@ import { Icon, IconProps } from "../icon";
 /**
  * ## 概要 / Overview
  *
- * - ダイアログは、ユーザーにアクションの実行や中断を確認するために使用するコンポーネントです。
- * - en: The Dialog component is used to confirm the execution or interruption of actions to users.
+ * - ダイアログはユーザーにアクションの実行や中断を確認するために使用するコンポーネントです。
+ * - en: The Dialog component is used to confirm the execution or interruption of actions with users.
  *
  * ## 使用例 / Usage Example
  *

@@ -3,8 +3,8 @@ import { cn } from "@/lib/utils";
 /**
  * ## 概要 / Overview
  *
- * - スケルトンは、コンテンツが読み込まれるまでの間、プレースホルダーとして表示するコンポーネントです。
- * - en: The Skeleton component is displayed as a placeholder while content is loading.
+ * - スケルトンはユーザーにコンテンツが読込中であることを提示するために使用するコンポーネントです。
+ * - en: The Skeleton component is used to indicate to users that content is loading.
  *
  * ## 使用例 / Usage Example
  *

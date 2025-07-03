@@ -286,7 +286,7 @@ export interface IconButtonProps
 /**
  * ## 概要 / Overview
  *
- * - アイコンボタンは、フォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。
+ * - アイコンボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。
  * - en: The IconButton component is used as a trigger for actions and events such as form submission, dialog expansion, action cancellation, and deletion execution.
  *
  * ## プロパティ / Props

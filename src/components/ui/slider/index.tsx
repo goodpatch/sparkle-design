@@ -52,7 +52,7 @@ const sliderThumbVariants = cva(
 /**
  * ## 概要 / Overview
  *
- * - スライダーは、範囲内の値を選択するために使用するコンポーネントです。
+ * - スライダーは任意の範囲の中からユーザーに特定の数値を選択してもらうために使用するコンポーネントです。
  * - en: The Slider component is used to select a value within a range.
  *
  * ## プロパティ / Props

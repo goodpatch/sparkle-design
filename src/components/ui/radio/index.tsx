@@ -141,7 +141,7 @@ interface RadioItemProps
 /**
  * ## 概要 / Overview
  *
- * - ラジオボタンは、複数の選択肢から1つを選択するために使用するコンポーネントです。
+ * - ラジオボタンは単一選択の形式でユーザーからの入力を取得するために使用するコンポーネントです。
  * - en: The Radio component is used to select one option from multiple choices.
  *
  * ## プロパティ / Props

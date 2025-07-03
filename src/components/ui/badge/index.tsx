@@ -117,7 +117,7 @@ export interface BadgeProps
  * ## 概要 / Overview
  *
  * - バッジは特定の要素に対して通知の数やタスクの数などの数値情報を付与するために使用するコンポーネントです。
- * - en: The Badge component is used to add numerical information such as notification counts or task counts to specific elements.
+ * - en: The Badge component is used to attach numerical information such as notification counts or task counts to specific elements.
  *
  * ## プロパティ / Props
  *

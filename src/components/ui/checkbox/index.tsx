@@ -142,8 +142,8 @@ interface CheckboxItemProps
 /**
  * ## 概要 / Overview
  *
- * - チェックボックスはユーザーが複数の選択肢から1つ以上を選択するために使用するコンポーネントです。
- * - en: The Checkbox component is used for users to select one or more options from multiple choices.
+ * - チェックボックスは複数のオプショングループから複数の項目を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * - en: The Checkbox component is used to capture user input by selecting multiple items from multiple option groups.
  *
  * ## プロパティ / Props
  *

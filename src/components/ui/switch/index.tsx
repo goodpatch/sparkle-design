@@ -51,8 +51,8 @@ export interface SwitchProps
 /**
  * ## 概要 / Overview
  *
- * - スイッチは、設定のオン・オフや状態の切り替えを行うために使用するコンポーネントです。
- * - en: The Switch component is used to toggle settings on/off or switch between states.
+ * - スイッチは設定のオンとオフを切り替えるために使用するコンポーネントです。
+ * - en: The Switch component is used to toggle settings on and off.
  *
  * ## プロパティ / Props
  *

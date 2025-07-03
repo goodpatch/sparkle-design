@@ -42,8 +42,8 @@ export interface LinkProps
 /**
  * ## 概要 / Overview
  *
- * - リンクは、コンテンツがナビゲーション可能であることを示すためのコンポーネントです。
- * - en: The Link component indicates navigable content for users.
+ * - リンクはコンテンツがナビゲーションできることをユーザーに提示するために使用するコンポーネントです。
+ * - en: The Link component is used to indicate to users that content is navigable.
  *
  * ## プロパティ / Props
  *

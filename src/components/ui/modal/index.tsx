@@ -9,7 +9,7 @@ import { IconButton } from "../icon-button";
 /**
  * ## 概要 / Overview
  *
- * - モーダルは、コンテンツに重ねられたウィンドウを介して、ユーザーの注意を特定の情報に集中させるために使用するコンポーネントです。
+ * - モーダルはコンテンツに重ねられたウィンドウを介して、ユーザーの注意を特定の情報に集中させるために使用するコンポーネントです。
  * - en: The Modal component is used to focus user attention on specific information through a window overlaid on content.
  *
  * ## 使用例 / Usage Example

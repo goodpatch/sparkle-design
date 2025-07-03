@@ -14,8 +14,8 @@ export interface InputPasswordProps
 /**
  * ## 概要 / Overview
  *
- * - インプットパスワードは、パスワードの情報をユーザーから取得するために使用するコンポーネントです。
- * - en: The InputPassword component is used to obtain password information from users.
+ * - インプットパスワードはパスワードの情報をユーザーから取得するために使用するコンポーネントです。
+ * - en: The InputPassword component is used to capture password information from users.
  *
  * ## プロパティ / Props
  *

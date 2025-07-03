@@ -113,8 +113,8 @@ const selectSeparatorVariants = cva("-mx-1 my-1 h-px bg-base-100");
 /**
  * ## 概要 / Overview
  *
- * - セレクトは、ドロップダウンリストから1つの選択肢を選択するために使用するコンポーネントです。
- * - en: The Select component is used to choose one option from a dropdown list.
+ * - セレクトはオプショングループの中から値を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * - en: The Select component is used to capture user input by selecting a value from a group of options.
  *
  * ## 使用例 / Usage Example
  *

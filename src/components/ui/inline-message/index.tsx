@@ -72,8 +72,8 @@ export interface InlineMessageProps
 /**
  * ## 概要 / Overview
  *
- * - インラインメッセージは、ユーザーにシステムやサービスの状態を伝えるために使用するコンポーネントです。
- * - en: The InlineMessage component is used to communicate system or service status to users.
+ * - インラインメッセージはユーザーにシステムやサービスの状態を伝えるために使用するコンポーネントです。
+ * - en: The InlineMessage component is used to convey system or service status to users.
  *
  * ## プロパティ / Props
  *

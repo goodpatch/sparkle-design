@@ -13,7 +13,7 @@ export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
 /**
  * ## 概要 / Overview
  *
- * - スピナーは、ダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。
+ * - スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。
  * - en: The Spinner component is used to visually present the progress of system processing such as downloads and uploads.
  *
  * ## プロパティ / Props

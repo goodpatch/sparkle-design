@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
  * ## 概要 / Overview
  *
  * - テキストエリアは複数行のテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。
- * - en: The Textarea component is used to get multi-line text input from users.
+ * - en: The Textarea component is used to capture user input in the form of multi-line text fields.
  */
 const textareaVariants = cva(
   // ベーススタイル
@@ -79,7 +79,7 @@ export interface TextareaProps
  * ## 概要 / Overview
  *
  * - テキストエリアは複数行のテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。
- * - en: The Textarea component is used to get multi-line text input from users.
+ * - en: The Textarea component is used to capture user input in the form of multi-line text fields.
  *
  * ## プロパティ / Props
  *

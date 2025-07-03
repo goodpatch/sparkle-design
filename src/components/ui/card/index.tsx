@@ -19,8 +19,8 @@ export interface ClickableCardProps
 /**
  * ## 概要 / Overview
  *
- * - 遷移トリガーやドラッグ&ドロップなど、インタラクションを想定する場合は、Clickable Cardコンポーネントを使用します。
- * - en: The ClickableCard component is used when interactions such as navigation triggers or drag & drop are expected.
+ * - カードはコンテンツをグルーピングして表示するために使用するコンポーネントです。遷移トリガーやドラッグ&ドロップなど、インタラクションを想定する場合は、Clickable Cardコンポーネントを使用します。
+ * - en: The Card component is used to group and display content. When interactions such as navigation triggers or drag & drop are expected, use the ClickableCard component.
  *
  * ## プロパティ / Props
  *

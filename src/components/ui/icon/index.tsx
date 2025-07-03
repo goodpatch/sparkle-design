@@ -22,8 +22,8 @@ export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
 /**
  * ## 概要 / Overview
  *
- * - アイコンは、情報を象形表現でユーザーに示すためのコンポーネントです。
- * - en: The Icon component provides pictorial cues to convey information.
+ * - アイコンはテキスト情報を視覚表現でユーザーに提示するために使用するコンポーネントです。
+ * - en: The Icon component is used to present textual information to users through visual representation.
  *
  * ## プロパティ / Props
  *

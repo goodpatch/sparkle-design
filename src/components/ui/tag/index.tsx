@@ -143,8 +143,8 @@ export interface TagProps
 /**
  * ## 概要 / Overview
  *
- * - タグは要素を分類・整理したり、ステータスを付与する際に使用するコンポーネントです。
- * - en: The Tag component categorizes or labels elements and can add status information.
+ * - タグは特定の要素にラベリングをすることで情報を分類・整理したり、情報にステータスを付与するために使用するコンポーネントです。
+ * - en: The Tag component is used to categorize and organize information by labeling specific elements, or to assign status to information.
  *
  * ## プロパティ / Props
  *

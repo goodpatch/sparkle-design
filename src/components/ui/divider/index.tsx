@@ -63,7 +63,7 @@ export interface DividerProps
 /**
  * ## 概要 / Overview
  *
- * - ディバイダーは、グループ内のコンテンツを視覚的に区切ってユーザーに提示する際に使用します。
+ * - ディバイダーコンポーネントはグループ内のコンテンツを視覚的に区切ってユーザーに提示する際に使用します。
  * - en: The Divider component is used to visually separate content within groups for users.
  *
  * ## プロパティ / Props
