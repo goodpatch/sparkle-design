@@ -31,9 +31,9 @@ export interface InputPasswordProps
  * ## 使用例 / Usage Example
  *
  * ```tsx
- * <InputPassword 
- *   size="md" 
- *   placeholder="パスワードを入力してください" 
+ * <InputPassword
+ *   size="md"
+ *   placeholder="パスワードを入力してください"
  * />
  * ```
  */

@@ -136,10 +136,10 @@ export interface InputProps
  * ## 使用例 / Usage Example
  *
  * ```tsx
- * <Input 
- *   size="md" 
- *   placeholder="テキストを入力" 
- *   isIconButtonEnable 
+ * <Input
+ *   size="md"
+ *   placeholder="テキストを入力"
+ *   isIconButtonEnable
  *   iconButtonIcon="search"
  * />
  * ```
