@@ -34,7 +34,7 @@ export const Default: Story = {
 };" > src/components/ui/$1/index.stories.tsx
 touch src/components/ui/$1/item.json
 echo "{
-  \"$schema\": \"https://ui.shadcn.com/schema/registry-item.json\",
+  \"\$schema\": \"https://ui.shadcn.com/schema/registry-item.json\",
   \"title\": \"$CAMEL_NAME\",
   \"name\": \"$1\",
   \"description\": \"\",
