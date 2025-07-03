@@ -1,3 +1,5 @@
+// Vitest の設定ファイル
+// en: Vitest configuration file
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -10,7 +12,8 @@ const dirname =
     ? __dirname
     : path.dirname(fileURLToPath(import.meta.url));
 
-// More info at: https://storybook.js.org/docs/writing-tests/test-addon
+// Storybook テストアドオンに関する詳細
+// en: More info at: https://storybook.js.org/docs/writing-tests/test-addon
 export default defineConfig({
   resolve: {
     alias: {

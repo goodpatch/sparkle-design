@@ -1,3 +1,5 @@
+// ESLint の設定
+// en: ESLint configuration
 module.exports = {
   "extends": [
     "next/core-web-vitals",

@@ -1,3 +1,5 @@
+// Storybook のメイン設定ファイル
+// en: Main configuration for Storybook
 import type { StorybookConfig } from "@storybook/experimental-nextjs-vite";
 
 const config: StorybookConfig = {
@@ -17,8 +19,10 @@ const config: StorybookConfig = {
     options: {},
   },
 
-  // When outputting Storybook to `public/storybook`, copying from `public`
-  // causes a self-copy error. Disable staticDirs to avoid this.
+  // Storybook を `public/storybook` に出力する際は `public` からのコピーで
+  // self-copy エラーが発生するため staticDirs を無効化します。
+  // en: When outputting Storybook to `public/storybook`, copying from `public`
+  // en: causes a self-copy error. Disable staticDirs to avoid this.
   staticDirs: [],
 
   docs: {
