@@ -32,9 +32,9 @@ export interface LinkProps
  * en: The Link component indicates navigable content for users.
  *
  * @param props.isExternalLink 外部リンクかどうか
- * en: @param props.isExternalLink Whether the link points to an external site
+ * en: Whether the link points to an external site
  * @param props.children 表示するテキスト
- * en: @param props.children Text to display inside the link
+ * en: Text to display inside the link
  */
 export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
   (

@@ -143,7 +143,7 @@ export interface TagProps
  * en: The Tag component categorizes or labels elements and can add status information.
  *
  * @param props.children タグ内に表示するラベル
- * en: @param props.children Label displayed inside the tag
+ * en: Label displayed inside the tag
  */
 const Tag = React.forwardRef<HTMLDivElement, TagProps>(
   ({ className, variant, size, status, children, ...props }, ref) => {

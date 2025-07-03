@@ -284,15 +284,15 @@ export interface ButtonProps
  * en: The Button component triggers user actions like submitting forms or opening dialogs.
  *
  * @param props.asChild 子要素として別のコンポーネントを使うかどうか
- * en: @param props.asChild Whether to render as a child component
+ * en: Whether to render as a child component
  * @param props.prefixIcon 左側に表示するアイコン名
- * en: @param props.prefixIcon Icon name shown on the left side
+ * en: Icon name shown on the left side
  * @param props.suffixIcon 右側に表示するアイコン名
- * en: @param props.suffixIcon Icon name shown on the right side
+ * en: Icon name shown on the right side
  * @param props.isLoading ローディング状態かどうか
- * en: @param props.isLoading Whether the button is in a loading state
+ * en: Whether the button is in a loading state
  * @param props.isDisabled ボタンを無効化するかどうか
- * en: @param props.isDisabled Whether the button is disabled
+ * en: Whether the button is disabled
  */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
