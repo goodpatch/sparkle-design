@@ -22,13 +22,31 @@ const linkVariants = cva(
 export interface LinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
     VariantProps<typeof linkVariants> {
+  /**
+   * 外部リンクかどうか
+   * en: Whether the link points to an external site
+   */
   isExternalLink?: boolean;
+  /**
+   * 表示するテキスト
+   * en: Text to display inside the link
+   */
   children: React.ReactNode;
+  /**
+   * 追加のクラス名
+   * en: Additional CSS classes for the link
+   */
   className?: string;
 }
 
 /**
- * リンクはコンテンツがナビゲーションできることをユーザーに提示するために使用するコンポーネントです。
+ * リンクはコンテンツがナビゲーション可能であることを示すためのコンポーネントです。
+ * en: The Link component indicates navigable content for users.
+ *
+ * @param props.isExternalLink 外部リンクかどうか
+ * en: Whether the link points to an external site
+ * @param props.children 表示するテキスト
+ * en: Text to display inside the link
  */
 export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
   (

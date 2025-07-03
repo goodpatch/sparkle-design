@@ -2,13 +2,33 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /**
+   * 表示するアイコン名
+   * en: Name of the icon to display
+   */
   icon: string;
+  /**
+   * アイコンサイズ
+   * en: Size of the icon
+   */
   size?: number;
+  /**
+   * 塗りつぶしアイコンかどうか
+   * en: Whether the icon is filled
+   */
   fill?: boolean;
 }
 
 /**
- * アイコンは情報を象形表現でユーザーに提示するために使用するコンポーネントです。
+ * アイコンは情報を象形表現でユーザーに示すためのコンポーネントです。
+ * en: The Icon component provides pictorial cues to convey information.
+ *
+ * @param props.icon 表示するアイコン名
+ * en: Name of the icon to display
+ * @param props.size アイコンサイズ
+ * en: Size of the icon
+ * @param props.fill 塗りつぶしアイコンかどうか
+ * en: Whether the icon is filled
  */
 export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
   ({ className, icon, size = 3, fill = false, ...props }, ref) => {

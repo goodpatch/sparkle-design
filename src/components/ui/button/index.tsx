@@ -262,15 +262,47 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
+  /**
+   * ボタンを別コンポーネントの子としてレンダリングするか
+   * en: Whether to render the button as a child component
+   */
   asChild?: boolean;
+  /**
+   * 左側に表示するアイコン名
+   * en: Icon name displayed on the left side
+   */
   prefixIcon?: string;
+  /**
+   * 右側に表示するアイコン名
+   * en: Icon name displayed on the right side
+   */
   suffixIcon?: string;
+  /**
+   * ローディング状態かどうか
+   * en: Indicates if the button is in a loading state
+   */
   isLoading?: boolean;
+  /**
+   * ボタンを無効化するかどうか
+   * en: Disables the button when set to true
+   */
   isDisabled?: boolean;
 }
 
 /**
- * ボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。
+ * ボタンはフォームの送信やダイアログの展開など、ユーザー操作を実行するためのコンポーネントです。
+ * en: The Button component triggers user actions like submitting forms or opening dialogs.
+ *
+ * @param props.asChild 子要素として別のコンポーネントを使うかどうか
+ * en: Whether to render as a child component
+ * @param props.prefixIcon 左側に表示するアイコン名
+ * en: Icon name shown on the left side
+ * @param props.suffixIcon 右側に表示するアイコン名
+ * en: Icon name shown on the right side
+ * @param props.isLoading ローディング状態かどうか
+ * en: Whether the button is in a loading state
+ * @param props.isDisabled ボタンを無効化するかどうか
+ * en: Whether the button is disabled
  */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
