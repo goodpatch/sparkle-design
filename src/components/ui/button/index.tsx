@@ -290,30 +290,18 @@ export interface ButtonProps
 }
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - ボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。
  * - en: The Button component is used as a trigger for actions and events such as form submission, dialog expansion, action cancellation, and deletion execution.
  *
- * ## プロパティ / Props
- *
- * @param props.asChild 子要素として別のコンポーネントを使うかどうか /
- * en: Whether to render as a child component
- * @param props.prefixIcon 左側に表示するアイコン名 /
- * en: Icon name shown on the left side
- * @param props.suffixIcon 右側に表示するアイコン名 /
- * en: Icon name shown on the right side
- * @param props.isLoading ローディング状態かどうか /
- * en: Whether the button is in a loading state
- * @param props.isDisabled ボタンを無効化するかどうか /
- * en: Whether the button is disabled
- *
- *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <Button variant="solid" size="md" theme="primary" prefixIcon="check">確定</Button>
  * ```
+ *
+ * @param {ButtonProps} props
  */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
