@@ -83,20 +83,66 @@ function useMergeRefs<T>(
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
     VariantProps<typeof inputVariants> {
-  /** フィールドが無効かどうか */
+  /**
+   * フィールドが無効かどうか
+   * en: Whether the field is invalid
+   */
   isInvalid?: boolean;
-  /** アイコンボタンを有効にするフラグ */
+  /**
+   * アイコンボタンを有効にするフラグ
+   * en: Flag to enable the icon button
+   */
   isIconButtonEnable?: boolean;
-  /** ボタンに表示するアイコン名 */
+  /**
+   * ボタンに表示するアイコン名
+   * en: Icon name displayed in the button
+   */
   iconButtonIcon?: string;
-  /** アイコンボタンのアクセシビリティラベル */
+  /**
+   * アイコンボタンのアクセシビリティラベル
+   * en: Accessibility label for the icon button
+   */
   iconButtonAriaLabel?: string;
-  /** アイコンボタンクリック時のコールバック */
+  /**
+   * アイコンボタンクリック時のコールバック
+   * en: Callback function for icon button click
+   */
   onIconButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 /**
- * インプットテキストはテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * ## 概要 / Overview
+ *
+ * - インプットテキストは、テキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * - en: The Input component is used to get user input in the form of a text field.
+ *
+ * ## プロパティ / Props
+ *
+ * @param props.size 入力フィールドのサイズ（sm、md、lg） /
+ * en: Input field size (sm, md, lg)
+ * @param props.isInvalid フィールドが無効かどうか /
+ * en: Whether the field is invalid
+ * @param props.isDisabled フィールドが無効化されているかどうか /
+ * en: Whether the field is disabled
+ * @param props.isIconButtonEnable アイコンボタンを有効にするフラグ /
+ * en: Flag to enable the icon button
+ * @param props.iconButtonIcon ボタンに表示するアイコン名 /
+ * en: Icon name displayed in the button
+ * @param props.iconButtonAriaLabel アイコンボタンのアクセシビリティラベル /
+ * en: Accessibility label for the icon button
+ * @param props.onIconButtonClick アイコンボタンクリック時のコールバック /
+ * en: Callback function for icon button click
+ *
+ * ## 使用例 / Usage Example
+ *
+ * ```tsx
+ * <Input 
+ *   size="md" 
+ *   placeholder="テキストを入力" 
+ *   isIconButtonEnable 
+ *   iconButtonIcon="search"
+ * />
+ * ```
  */
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (

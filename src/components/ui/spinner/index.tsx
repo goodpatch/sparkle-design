@@ -3,11 +3,29 @@ import { cn } from "@/lib/utils";
 import { Icon } from "@/components/ui/icon";
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /**
+   * スピナーのサイズ
+   * en: Size of the spinner
+   */
   size?: number;
 }
 
 /**
- * スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。
+ * ## 概要 / Overview
+ *
+ * - スピナーは、ダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。
+ * - en: The Spinner component is used to visually present the progress of system processing such as downloads and uploads.
+ *
+ * ## プロパティ / Props
+ *
+ * @param props.size スピナーのサイズ /
+ * en: Size of the spinner
+ *
+ * ## 使用例 / Usage Example
+ *
+ * ```tsx
+ * <Spinner size={6} />
+ * ```
  */
 export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
   ({ className, size, ...props }, ref) => {

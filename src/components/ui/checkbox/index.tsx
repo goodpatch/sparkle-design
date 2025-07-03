@@ -116,25 +116,52 @@ interface CheckboxItemProps
   extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
   /**
    * チェックボックスのサイズ
+   * en: Size of the checkbox
    * @default "md"
    */
   size?: "sm" | "md" | "lg";
   /**
    * エラー状態かどうか
+   * en: Whether the checkbox is in an error state
    * @default false
    */
   isInvalid?: boolean;
   /**
    * 無効状態かどうか
+   * en: Whether the checkbox is disabled
    * @default false
    */
   isDisabled?: boolean;
   /**
    * ラベルのテキスト
+   * en: Label text for the checkbox
    */
   label?: string;
 }
 
+/**
+ * ## 概要 / Overview
+ *
+ * - チェックボックスはユーザーが複数の選択肢から1つ以上を選択するために使用するコンポーネントです。
+ * - en: The Checkbox component is used for users to select one or more options from multiple choices.
+ *
+ * ## プロパティ / Props
+ *
+ * @param props.size チェックボックスのサイズ /
+ * en: Size of the checkbox
+ * @param props.isInvalid エラー状態かどうか /
+ * en: Whether the checkbox is in an error state
+ * @param props.isDisabled 無効状態かどうか /
+ * en: Whether the checkbox is disabled
+ * @param props.label ラベルのテキスト /
+ * en: Label text for the checkbox
+ *
+ * ## 使用例 / Usage Example
+ *
+ * ```tsx
+ * <Checkbox size="md" label="利用規約に同意する" />
+ * ```
+ */
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   CheckboxItemProps

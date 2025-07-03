@@ -121,20 +121,45 @@ interface RadioItemProps
   extends React.ComponentPropsWithoutRef<typeof RadioPrimitive.Item> {
   /**
    * ラジオボタンのサイズ
+   * en: Radio button size
    * @default "md"
    */
   size?: "sm" | "md" | "lg";
   /**
    * エラー状態かどうか
+   * en: Whether the radio button is in an error state
    * @default false
    */
   isInvalid?: boolean;
   /**
    * ラベルのテキスト
+   * en: Label text for the radio button
    */
   label?: string;
 }
 
+/**
+ * ## 概要 / Overview
+ *
+ * - ラジオボタンは、複数の選択肢から1つを選択するために使用するコンポーネントです。
+ * - en: The Radio component is used to select one option from multiple choices.
+ *
+ * ## プロパティ / Props
+ *
+ * @param props.value 選択されている値 /
+ * en: Currently selected value
+ * @param props.onValueChange 値が変更されたときのコールバック /
+ * en: Callback function called when the value changes
+ *
+ * ## 使用例 / Usage Example
+ *
+ * ```tsx
+ * <Radio value="option1" onValueChange={setValue}>
+ *   <RadioItem value="option1" label="オプション1" />
+ *   <RadioItem value="option2" label="オプション2" />
+ * </Radio>
+ * ```
+ */
 const Radio = React.forwardRef<
   React.ElementRef<typeof RadioPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof RadioPrimitive.Root>
@@ -149,6 +174,31 @@ const Radio = React.forwardRef<
 });
 Radio.displayName = RadioPrimitive.Root.displayName;
 
+/**
+ * ## 概要 / Overview
+ *
+ * - ラジオボタンのアイテムコンポーネントです。
+ * - en: Individual radio button item component.
+ *
+ * ## プロパティ / Props
+ *
+ * @param props.size ラジオボタンのサイズ（sm、md、lg） /
+ * en: Radio button size (sm, md, lg)
+ * @param props.isInvalid エラー状態かどうか /
+ * en: Whether the radio button is in an error state
+ * @param props.label ラベルのテキスト /
+ * en: Label text for the radio button
+ * @param props.value ラジオボタンの値 /
+ * en: Value of the radio button
+ * @param props.disabled ラジオボタンが無効化されているかどうか /
+ * en: Whether the radio button is disabled
+ *
+ * ## 使用例 / Usage Example
+ *
+ * ```tsx
+ * <RadioItem value="option1" label="オプション1" size="md" />
+ * ```
+ */
 const RadioItem = React.forwardRef<
   React.ElementRef<typeof RadioPrimitive.Item>,
   RadioItemProps

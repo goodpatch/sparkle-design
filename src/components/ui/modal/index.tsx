@@ -7,7 +7,30 @@ import { cn } from "@/lib/utils";
 import { IconButton } from "../icon-button";
 
 /**
- * モーダルはコンテンツに重ねられたウィンドウを介して、ユーザーの注意を特定の情報に集中させるために使用するコンポーネントです。
+ * ## 概要 / Overview
+ *
+ * - モーダルは、コンテンツに重ねられたウィンドウを介して、ユーザーの注意を特定の情報に集中させるために使用するコンポーネントです。
+ * - en: The Modal component is used to focus user attention on specific information through a window overlaid on content.
+ *
+ * ## 使用例 / Usage Example
+ *
+ * ```tsx
+ * <Modal>
+ *   <ModalTrigger>モーダルを開く</ModalTrigger>
+ *   <ModalContent size="md">
+ *     <ModalHeader>
+ *       <ModalTitle>タイトル</ModalTitle>
+ *       <ModalClose />
+ *     </ModalHeader>
+ *     <ModalBody>
+ *       <p>モーダルの内容</p>
+ *     </ModalBody>
+ *     <ModalFooter>
+ *       <button>OK</button>
+ *     </ModalFooter>
+ *   </ModalContent>
+ * </Modal>
+ * ```
  */
 function Modal({
   ...props
@@ -93,6 +116,10 @@ export type ModalSize =
 
 interface ModalContentProps
   extends React.ComponentProps<typeof DialogPrimitive.Content> {
+  /**
+   * モーダルのサイズ（sm、md、lg、xl、full）
+   * en: Modal size (sm, md, lg, xl, full)
+   */
   size?: ModalSize;
 }
 
