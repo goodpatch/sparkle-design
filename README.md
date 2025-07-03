@@ -133,8 +133,7 @@ const MyButton: React.FC<ButtonProps> = (props) => {
 make registry
 ```
 
-`scripts/merge-registry` 配下の Swift ツールを実行し、`registry.json` を生成して
-`public/r/` にコピーします。
+`scripts/merge-registry` 配下の Swift ツールを実行し、`registry.json` を生成して `public/r/` にコピーします。
 
 ### 新規コンポーネントの作成
 
@@ -165,8 +164,7 @@ Makefile では次のターゲットが定義されています。
 
 ## Sparkle Design バッジ
 
-Sparkle Design のバッジは、コンポーネントが Sparkle
-Design を使用していることを示します。README に次のように追加してください。
+Sparkle Design のバッジは、コンポーネントが Sparkle Design を使用していることを示します。README に次のように追加してください。
 
 ```markdown
 [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
@@ -174,10 +172,8 @@ Design を使用していることを示します。README に次のように追
 
 ## その他
 
-- React コンポーネントのコメント記法は `.github/comment-rule.md`
-  を参照してください。
-- コミットメッセージの形式は `.github/copilot-commit-message-instructions.md`
-  のルールに従います。
+- React コンポーネントのコメント記法は `.github/comment-rule.md` を参照してください。
+- コミットメッセージの形式は `.github/copilot-commit-message-instructions.md` のルールに従います。
 - 変更履歴は `CHANGELOG.md` を参照してください。
 
 ## コンポーネント対応状況
