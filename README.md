@@ -1,7 +1,6 @@
 # Sparkle Design for React [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
 
-Next.js + TypeScript を用いたコンポーネントライブラリです。Tailwind
-CSS や Storybook、style-dictionary、shadcn/ui を利用しています。
+Next.js + TypeScript を用いたコンポーネントライブラリです。Tailwind CSS や Storybook、shadcn/ui を利用しています。
 
 ## ディレクトリ構成
 
@@ -10,10 +9,9 @@ CSS や Storybook、style-dictionary、shadcn/ui を利用しています。
 │  ├─ app/            # Next.js アプリケーション関連
 │  ├─ components/     # React コンポーネントと Storybook
 │  └─ lib/            # 共有ユーティリティ
-├─ style-dictionary/  # デザイントークンと生成ファイル
 ├─ scripts/           # 各種スクリプト
 ├─ public/r/          # 公開用レジストリ JSON
-└─ .github/           # コントリビュートに関するドキュメント
+└─ .github/           # GitHub関連の設定ファイル
 ```
 
 ## 主なコマンド
@@ -40,13 +38,94 @@ pnpm storybook
 
 コンポーネント一覧を確認できます。Storybook の「Accessibility」タブからアクセシビリティチェックも行えます。
 
-### デザイントークンのビルド
+### Sparkle Design CSS の生成
 
 ```bash
-pnpm build:sd
+pnpm build:css
 ```
 
-`style-dictionary` 配下のトークンから CSS 変数を生成します。
+`sparkle.config.json` の設定に基づいて、デザインシステム CSS を生成します。このコマンドは内部的に `sparkle-design-cli` を実行し、プライマリカラー、フォント設定、角丸設定などのデザイントークンから `src/app/sparkle-design.css` ファイルを生成します。
+
+設定ファイル (`sparkle.config.json`) の内容：
+
+- `primary`: プライマリカラー（blue, red, orange など）
+- `font-pro`: プロポーショナルフォント（Google Fonts の名前）
+- `font-mono`: モノスペースフォント（Google Fonts の名前）
+- `radius`: 角丸設定（sm, md, lg など）
+
+設定ファイルは Sparkle Design Theme Settings から書き出すことができます。
+また、`sparkle-design-cli`を自分のプロジェクトで直接使用することも可能です。
+
+```bash
+npx sparkle-design-cli
+```
+
+または、グローバルにインストールした場合：
+
+```bash
+npm install -g sparkle-design-cli
+sparkle-design-cli
+```
+
+詳しい使い方は `sparkle-design-cli --help` で確認できます。
+
+## 使用方法
+
+### パッケージのインストール
+
+```bash
+npm install sparkle-design
+# または
+pnpm add sparkle-design
+# または
+yarn add sparkle-design
+```
+
+### 基本的な使用例
+
+```tsx
+import React from "react";
+import { Button, Badge, Card } from "sparkle-design";
+
+// 必要なスタイルをインポート
+import "sparkle-design/globals.css";
+import "sparkle-design/sparkle-design.css";
+
+function App() {
+  return (
+    <div>
+      <Card>
+        <h1>Sparkle Design を使った例</h1>
+        <Badge variant="primary">新機能</Badge>
+        <Button variant="primary" size="md">
+          ボタンをクリック
+        </Button>
+      </Card>
+    </div>
+  );
+}
+
+export default App;
+```
+
+### スタイルファイルについて
+
+- **`globals.css`**: 基本的な Tailwind CSS とリセットスタイル
+- **`sparkle-design.css`**: Sparkle Design のデザイントークン（カラー、フォント、角丸、シャドウなど）
+
+両方のファイルをインポートすることで、Sparkle Design の全機能を利用できます。
+
+### TypeScript サポート
+
+Sparkle Design は完全に TypeScript で書かれており、型定義が含まれています。
+
+```tsx
+import { ButtonProps } from "sparkle-design";
+
+const MyButton: React.FC<ButtonProps> = (props) => {
+  return <Button {...props} />;
+};
+```
 
 ### コンポーネントレジストリの生成
 
@@ -78,9 +157,9 @@ Vitest によるユニットテストを実行します。Storybook のテスト
 
 Makefile では次のターゲットが定義されています。
 
-- `registry` – レジストリの生成と公開ファイルへのコピー
-- `new-component` – 対話形式で新規コンポーネントを作成
-- `help` – 利用可能なターゲット一覧を表示
+- `registry` ... レジストリの生成と公開ファイルへのコピー
+- `new-component` ... 対話形式で新規コンポーネントを作成
+- `help` ... 利用可能なターゲット一覧を表示
 
 `make help` で詳細を確認できます。
 

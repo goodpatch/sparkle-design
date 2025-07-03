@@ -2,6 +2,17 @@
   "name": "sparkle-design",
   "version": "0.1.0",
   "private": true,
+  "author": "Goodpatch Inc. <sparkle-design@goodpatch.com>",
+  "type": "module",
+  "description": "Sparkle DesignのReactコンポーネントライブラリ",
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "design-system",
+    "tailwind",
+    "sparkle-design"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/goodpatch/sparkle-ui"
@@ -14,16 +25,15 @@
     "test": "vitest run --project unit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build --output-dir public/storybook",
-    "build:sd": "node sd.config.js && cp style-dictionary/build/_variables.css src/app/variables.css",
+    "build:css": "npx sparkle-design-cli",
     "build:registry": "shadcn build",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npx lightningcss --version || true",
-    "build:package": "pnpm build:sd && rm -rf dist && cp -r src dist && cp src/app/globals.css dist/globals.css && cp src/app/variables.css dist/variables.css",
+    "build:package": "rm -rf dist && tsc -p tsconfig.build.json && cp src/app/globals.css dist/globals.css && cp src/app/sparkle-design.css dist/sparkle-design.css",
     "format": "prettier -w \"**/*.{js,ts,tsx,css,md,json}\""
   },
   "dependencies": {
     "@figma/code-connect": "^1.0.6",
-    "@radix-ui/react-slot": "^1.2.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.487.0",
@@ -57,17 +67,24 @@
     "eslint-config-next": "15.3.1",
     "eslint-plugin-storybook": "^0.12.0",
     "playwright": "^1.51.1",
-    "sd-tailwindcss-transformer": "^2.1.0",
-    "style-dictionary": "^4.3.3",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^3.0.9",
     "prettier": "^3.6.2",
     "eslint-plugin-import": "^2.32.0"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "style": "./src/app/globals.css",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "style": "./dist/globals.css",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./globals.css": "./dist/globals.css",
+    "./sparkle-design.css": "./dist/sparkle-design.css"
+  },
   "files": [
     "dist"
   ]
