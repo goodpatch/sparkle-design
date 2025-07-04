@@ -62,4 +62,7 @@ npm test
 
 - `AGENTS.md` – リポジトリのガイドライン
 - `CONTRIBUTING.md` – コントリビュート方法
-- `.github/instructions/` – 各種開発指示
+- `.github/instructions/testing.instructions.md` – テストガイドライン
+- `.github/instructions/ai-development.instructions.md` – AI開発パターン
+- `.github/instructions/comment-style.instructions.md` – コメントスタイル
+- `.github/instructions/new-component.instructions.md` – 新規コンポーネント作成

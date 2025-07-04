@@ -20,6 +20,8 @@
   "files.associations": {
     ".github/instructions/testing.instructions.md": "markdown",
     ".github/instructions/ai-development.instructions.md": "markdown",
-    ".github/instructions/ai-context.instructions.md": "markdown"
+    ".github/instructions/ai-context.instructions.md": "markdown",
+    ".github/instructions/comment-style.instructions.md": "markdown",
+    ".github/instructions/new-component.instructions.md": "markdown"
   }
 }

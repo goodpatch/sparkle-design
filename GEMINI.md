@@ -44,6 +44,8 @@ Gemini CLI はこのリポジトリでコードを生成するとき、次の規
 
 - AI固有の開発パターンは `.github/instructions/ai-development.instructions.md` を参照
 - プロジェクトコンテキストは `.github/instructions/ai-context.instructions.md` を参照
+- コメントスタイルは `.github/instructions/comment-style.instructions.md` を参照
+- 新規コンポーネント作成は `.github/instructions/new-component.instructions.md` を参照
 
 ## Programmatic checks
 

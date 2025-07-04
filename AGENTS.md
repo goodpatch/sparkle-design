@@ -70,6 +70,11 @@ fi
 
 - Refer to `.github/instructions/ai-development.instructions.md` for AI-specific development patterns
 - Use `.github/instructions/ai-context.instructions.md` for project context
+- Follow `.github/instructions/comment-style.instructions.md` for code comment guidelines
+
+## Component Creation
+
+- Use `.github/instructions/new-component.instructions.md` for new component scaffolding
 
 ## Codex
 
