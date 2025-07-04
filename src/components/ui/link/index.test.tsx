@@ -1,193 +1,197 @@
-import React from 'react'
-import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
-import {TestContainer, EventHelpers, StyleHelpers} from '../../../test/helpers'
-import {Link} from './index'
+import React from "react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import {
+  TestContainer,
+  EventHelpers,
+  StyleHelpers,
+} from "../../../test/helpers";
+import { Link } from "./index";
 
-let testContainer: TestContainer
+let testContainer: TestContainer;
 
 beforeEach(() => {
-  testContainer = new TestContainer()
-  testContainer.setup()
-})
+  testContainer = new TestContainer();
+  testContainer.setup();
+});
 
 afterEach(() => {
-  testContainer.cleanup()
-})
+  testContainer.cleanup();
+});
 
-describe('Link', () => {
-  describe('Basic Rendering', () => {
-    it('renders a basic link', () => {
+describe("Link", () => {
+  describe("Basic Rendering", () => {
+    it("renders a basic link", () => {
       // Given: 基本的なLink
-      testContainer.render(<Link href="/test">テストリンク</Link>)
+      testContainer.render(<Link href="/test">テストリンク</Link>);
 
       // When: a要素を確認
-      const link = testContainer.querySelector('a')
+      const link = testContainer.querySelector("a");
 
       // Then: 正常に描画される
-      expect(link).toBeDefined()
-      expect(link.tagName).toBe('A')
-      expect(link.getAttribute('href')).toBe('/test')
-    })
+      expect(link).toBeDefined();
+      expect(link.tagName).toBe("A");
+      expect(link.getAttribute("href")).toBe("/test");
+    });
 
-    it('renders children text correctly', () => {
+    it("renders children text correctly", () => {
       // Given: テキスト付きのLink
-      testContainer.render(<Link href="/page">ページへ移動</Link>)
+      testContainer.render(<Link href="/page">ページへ移動</Link>);
 
       // When: span要素のテキストを確認
-      const span = testContainer.querySelector('span')
+      const span = testContainer.querySelector("span");
 
       // Then: 子要素のテキストが表示される
-      expect(span.textContent).toBe('ページへ移動')
-    })
+      expect(span.textContent).toBe("ページへ移動");
+    });
 
-    it('applies default styles correctly', () => {
+    it("applies default styles correctly", () => {
       // Given: デフォルトのLink
-      testContainer.render(<Link href="/default">デフォルト</Link>)
+      testContainer.render(<Link href="/default">デフォルト</Link>);
 
       // When: スタイルクラスを確認
-      const link = testContainer.querySelector('a')
-      const span = testContainer.querySelector('span')
+      const link = testContainer.querySelector("a");
+      const span = testContainer.querySelector("span");
 
       // Then: デフォルトスタイルが適用される
-      expect(link.className).toContain('inline')
-      expect(link.className).toContain('group')
-      expect(link.className).toContain('character-3-regular-pro')
-      expect(span.className).toContain('text-primary-600')
-      expect(span.className).toContain('group-hover:text-primary-700')
-    })
-  })
+      expect(link.className).toContain("inline");
+      expect(link.className).toContain("group");
+      expect(link.className).toContain("character-3-regular-pro");
+      expect(span.className).toContain("text-primary-600");
+      expect(span.className).toContain("group-hover:text-primary-700");
+    });
+  });
 
-  describe('Underline Variants', () => {
-    it('applies no underline by default', () => {
+  describe("Underline Variants", () => {
+    it("applies no underline by default", () => {
       // Given: isUnderline未指定のLink
-      testContainer.render(<Link href="/test">テスト</Link>)
+      testContainer.render(<Link href="/test">テスト</Link>);
 
       // When: span要素のクラス名を確認
-      const span = testContainer.querySelector('span')
+      const span = testContainer.querySelector("span");
 
       // Then: デフォルト（アンダーラインなし）スタイルが適用される
-      expect(span.className).toContain('underline')
-      expect(span.className).toContain('decoration-transparent')
-      expect(span.className).toContain('group-hover:decoration-current')
-      expect(span.className).toContain('underline-offset-2')
-    })
+      expect(span.className).toContain("underline");
+      expect(span.className).toContain("decoration-transparent");
+      expect(span.className).toContain("group-hover:decoration-current");
+      expect(span.className).toContain("underline-offset-2");
+    });
 
-    it('applies underline when isUnderline is true', () => {
+    it("applies underline when isUnderline is true", () => {
       // Given: isUnderline=trueのLink
       testContainer.render(
         <Link href="/test" isUnderline={true}>
           アンダーライン付き
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: span要素のクラス名を確認
-      const span = testContainer.querySelector('span')
+      const span = testContainer.querySelector("span");
 
       // Then: アンダーラインスタイルが適用される
-      expect(span.className).toContain('underline')
-      expect(span.className).toContain('decoration-current')
-      expect(span.className).toContain('underline-offset-2')
-    })
+      expect(span.className).toContain("underline");
+      expect(span.className).toContain("decoration-current");
+      expect(span.className).toContain("underline-offset-2");
+    });
 
-    it('applies no underline when isUnderline is false', () => {
+    it("applies no underline when isUnderline is false", () => {
       // Given: isUnderline=falseのLink
       testContainer.render(
         <Link href="/test" isUnderline={false}>
           アンダーラインなし
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: span要素のクラス名を確認
-      const span = testContainer.querySelector('span')
+      const span = testContainer.querySelector("span");
 
       // Then: アンダーラインなしスタイルが適用される
-      expect(span.className).toContain('decoration-transparent')
-      expect(span.className).toContain('group-hover:decoration-current')
-    })
-  })
+      expect(span.className).toContain("decoration-transparent");
+      expect(span.className).toContain("group-hover:decoration-current");
+    });
+  });
 
-  describe('External Link Feature', () => {
-    it('does not show external icon by default', () => {
+  describe("External Link Feature", () => {
+    it("does not show external icon by default", () => {
       // Given: isExternalLink未指定のLink
-      testContainer.render(<Link href="/internal">内部リンク</Link>)
+      testContainer.render(<Link href="/internal">内部リンク</Link>);
 
       // When: 外部リンクアイコンを確認
-      const link = testContainer.querySelector('a')
-      const spans = link.querySelectorAll('span')
+      const link = testContainer.querySelector("a");
+      const spans = link.querySelectorAll("span");
 
       // Then: 外部リンクアイコンが表示されない（spanは1つだけ）
-      expect(spans.length).toBe(1)
-    })
+      expect(spans.length).toBe(1);
+    });
 
-    it('shows external icon when isExternalLink is true', () => {
+    it("shows external icon when isExternalLink is true", () => {
       // Given: isExternalLink=trueのLink
       testContainer.render(
         <Link href="https://example.com" isExternalLink={true}>
           外部サイト
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: 外部リンクアイコンを確認
-      const link = testContainer.querySelector('a')
-      const spans = link.querySelectorAll('span')
-      const icon = spans.length > 1 ? spans[1] : null
+      const link = testContainer.querySelector("a");
+      const spans = link.querySelectorAll("span");
+      const icon = spans.length > 1 ? spans[1] : null;
 
       // Then: 外部リンクアイコンが表示される
-      expect(icon).toBeDefined()
-      expect(icon!.textContent).toBe('open_in_new')
-      expect(icon!.className).toContain('ml-1')
-      expect(icon!.className).toContain('align-middle')
-      expect(icon!.className).toContain('inline-block')
-      expect(icon!.className).toContain('text-primary-600')
-      expect(icon!.className).toContain('group-hover:text-primary-700')
-    })
+      expect(icon).toBeDefined();
+      expect(icon!.textContent).toBe("open_in_new");
+      expect(icon!.className).toContain("ml-1");
+      expect(icon!.className).toContain("align-middle");
+      expect(icon!.className).toContain("inline-block");
+      expect(icon!.className).toContain("text-primary-600");
+      expect(icon!.className).toContain("group-hover:text-primary-700");
+    });
 
-    it('does not show external icon when isExternalLink is false', () => {
+    it("does not show external icon when isExternalLink is false", () => {
       // Given: isExternalLink=falseのLink
       testContainer.render(
         <Link href="/page" isExternalLink={false}>
           内部ページ
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: 外部リンクアイコンを確認
-      const link = testContainer.querySelector('a')
-      const spans = link.querySelectorAll('span')
+      const link = testContainer.querySelector("a");
+      const spans = link.querySelectorAll("span");
 
       // Then: 外部リンクアイコンが表示されない（spanは1つだけ）
-      expect(spans.length).toBe(1)
-    })
-  })
+      expect(spans.length).toBe(1);
+    });
+  });
 
-  describe('Character Size Handling', () => {
-    it('applies default character size when no character class is provided', () => {
+  describe("Character Size Handling", () => {
+    it("applies default character size when no character class is provided", () => {
       // Given: characterクラス未指定のLink
-      testContainer.render(<Link href="/test">テスト</Link>)
+      testContainer.render(<Link href="/test">テスト</Link>);
 
       // When: a要素のクラス名を確認
-      const link = testContainer.querySelector('a')
+      const link = testContainer.querySelector("a");
 
       // Then: デフォルトcharacterクラスが適用される
-      expect(link.className).toContain('character-3-regular-pro')
-    })
+      expect(link.className).toContain("character-3-regular-pro");
+    });
 
-    it('does not override existing character class', () => {
+    it("does not override existing character class", () => {
       // Given: characterクラス指定済みのLink
       testContainer.render(
         <Link href="/test" className="character-5-bold-pro">
           大きなテキスト
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: a要素のクラス名を確認
-      const link = testContainer.querySelector('a')
+      const link = testContainer.querySelector("a");
 
       // Then: 既存のcharacterクラスが保持され、デフォルトが追加されない
-      expect(link.className).toContain('character-5-bold-pro')
-      expect(link.className).not.toContain('character-3-regular-pro')
-    })
+      expect(link.className).toContain("character-5-bold-pro");
+      expect(link.className).not.toContain("character-3-regular-pro");
+    });
 
-    it('sets correct icon size based on character class', () => {
+    it("sets correct icon size based on character class", () => {
       // Given: character-4付きのexternal Link
       testContainer.render(
         <Link
@@ -196,96 +200,96 @@ describe('Link', () => {
           isExternalLink={true}
         >
           大きなリンク
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: アイコンのサイズを確認
-      const link = testContainer.querySelector('a')
-      const spans = link.querySelectorAll('span')
-      const icon = spans.length > 1 ? spans[1] : null
+      const link = testContainer.querySelector("a");
+      const spans = link.querySelectorAll("span");
+      const icon = spans.length > 1 ? spans[1] : null;
 
       // Then: characterサイズに合わせたアイコンサイズが設定される
-      expect(icon).toBeDefined()
-      expect(icon!.className).toContain('icon-4')
-    })
+      expect(icon).toBeDefined();
+      expect(icon!.className).toContain("icon-4");
+    });
 
-    it('uses default icon size when no character class is present', () => {
+    it("uses default icon size when no character class is present", () => {
       // Given: characterクラス未指定のexternal Link
       testContainer.render(
         <Link href="https://example.com" isExternalLink={true}>
           外部リンク
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: アイコンのサイズを確認
-      const link = testContainer.querySelector('a')
-      const spans = link.querySelectorAll('span')
-      const icon = spans.length > 1 ? spans[1] : null
+      const link = testContainer.querySelector("a");
+      const spans = link.querySelectorAll("span");
+      const icon = spans.length > 1 ? spans[1] : null;
 
       // Then: デフォルトアイコンサイズが設定される
-      expect(icon).toBeDefined()
-      expect(icon!.className).toContain('icon-3')
-    })
-  })
+      expect(icon).toBeDefined();
+      expect(icon!.className).toContain("icon-3");
+    });
+  });
 
-  describe('Event Handling', () => {
-    it('handles click events properly', () => {
+  describe("Event Handling", () => {
+    it("handles click events properly", () => {
       // Given: clickハンドラー付きのLink
-      const handleClick = vi.fn()
+      const handleClick = vi.fn();
       testContainer.render(
         <Link href="/test" onClick={handleClick}>
           クリック可能
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: リンクをクリック
-      const link = testContainer.querySelector('a')
-      EventHelpers.click(link)
+      const link = testContainer.querySelector("a");
+      EventHelpers.click(link);
 
       // Then: クリックハンドラーが呼ばれる
-      expect(handleClick).toHaveBeenCalledOnce()
-    })
+      expect(handleClick).toHaveBeenCalledOnce();
+    });
 
-    it('provides click event details', () => {
+    it("provides click event details", () => {
       // Given: イベント詳細をチェックするハンドラー
-      const handleClick = vi.fn()
+      const handleClick = vi.fn();
       testContainer.render(
         <Link href="/test" onClick={handleClick}>
           テストリンク
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: リンクをクリック
-      const link = testContainer.querySelector('a')
-      EventHelpers.click(link)
+      const link = testContainer.querySelector("a");
+      EventHelpers.click(link);
 
       // Then: 正しいイベントオブジェクトが渡される
-      expect(handleClick).toHaveBeenCalledWith(expect.any(Object))
-      expect(handleClick.mock.calls[0][0].type).toBe('click')
-    })
+      expect(handleClick).toHaveBeenCalledWith(expect.any(Object));
+      expect(handleClick.mock.calls[0][0].type).toBe("click");
+    });
 
-    it('supports keyboard interaction', () => {
+    it("supports keyboard interaction", () => {
       // Given: キーボードイベントハンドラー付きのLink
-      const handleKeyDown = vi.fn()
+      const handleKeyDown = vi.fn();
       testContainer.render(
         <Link href="/test" onKeyDown={handleKeyDown}>
           キーボード対応
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: キーボードイベントを実行
-      const link = testContainer.querySelector('a')
-      EventHelpers.keyDown(link, 'Enter')
+      const link = testContainer.querySelector("a");
+      EventHelpers.keyDown(link, "Enter");
 
       // Then: キーボードイベントが処理される
-      expect(handleKeyDown).toHaveBeenCalledOnce()
-    })
-  })
+      expect(handleKeyDown).toHaveBeenCalledOnce();
+    });
+  });
 
-  describe('Custom Properties', () => {
-    it('forwards DOM attributes', () => {
+  describe("Custom Properties", () => {
+    it("forwards DOM attributes", () => {
       // Given: カスタム属性付きのLink
-      const testId = 'custom-link-id'
+      const testId = "custom-link-id";
       testContainer.render(
         <Link
           href="/test"
@@ -294,163 +298,163 @@ describe('Link', () => {
           target="_blank"
         >
           カスタムLink
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: 属性を確認
-      const link = testContainer.querySelector('a')
+      const link = testContainer.querySelector("a");
 
       // Then: DOM属性が転送される
-      expect(link.getAttribute('data-testid')).toBe(testId)
-      expect(link.getAttribute('title')).toBe('リンクの説明')
-      expect(link.getAttribute('target')).toBe('_blank')
-      expect(link.getAttribute('href')).toBe('/test')
-    })
+      expect(link.getAttribute("data-testid")).toBe(testId);
+      expect(link.getAttribute("title")).toBe("リンクの説明");
+      expect(link.getAttribute("target")).toBe("_blank");
+      expect(link.getAttribute("href")).toBe("/test");
+    });
 
-    it('supports custom className', () => {
+    it("supports custom className", () => {
       // Given: カスタムクラス付きのLink
-      const customClass = 'my-custom-link-class'
+      const customClass = "my-custom-link-class";
       testContainer.render(
         <Link href="/test" className={customClass}>
           カスタムスタイル
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: クラス名を確認
-      const link = testContainer.querySelector('a')
+      const link = testContainer.querySelector("a");
 
       // Then: カスタムクラスが追加される
-      expect(link.className).toContain(customClass)
+      expect(link.className).toContain(customClass);
       // デフォルトクラスも保持される
-      expect(link.className).toContain('inline')
-      expect(link.className).toContain('group')
-    })
+      expect(link.className).toContain("inline");
+      expect(link.className).toContain("group");
+    });
 
-    it('supports custom id and data attributes', () => {
+    it("supports custom id and data attributes", () => {
       // Given: カスタムid属性付きのLink
-      const customId = 'link-123'
+      const customId = "link-123";
       testContainer.render(
         <Link href="/test" id={customId} data-value="test-link">
           ID付きLink
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: 属性を確認
-      const link = testContainer.querySelector('a')
+      const link = testContainer.querySelector("a");
 
       // Then: 属性が正しく設定される
-      expect(link.getAttribute('id')).toBe(customId)
-      expect(link.getAttribute('data-value')).toBe('test-link')
-    })
-  })
+      expect(link.getAttribute("id")).toBe(customId);
+      expect(link.getAttribute("data-value")).toBe("test-link");
+    });
+  });
 
-  describe('Ref Forwarding', () => {
-    it('forwards ref correctly', () => {
+  describe("Ref Forwarding", () => {
+    it("forwards ref correctly", () => {
       // Given: ref付きのLink
-      const ref = React.createRef<HTMLAnchorElement>()
+      const ref = React.createRef<HTMLAnchorElement>();
       testContainer.render(
         <Link href="/test" ref={ref}>
           Ref付きLink
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: refの値を確認
-      const link = testContainer.querySelector('a')
+      const link = testContainer.querySelector("a");
 
       // Then: refが正しく設定される
-      expect(ref.current).toBe(link)
-    })
+      expect(ref.current).toBe(link);
+    });
 
-    it('allows ref access to element properties', () => {
+    it("allows ref access to element properties", () => {
       // Given: ref付きのLink
-      const ref = React.createRef<HTMLAnchorElement>()
+      const ref = React.createRef<HTMLAnchorElement>();
       testContainer.render(
         <Link href="/test" ref={ref} data-testid="ref-test">
           Refテスト
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: refを通じて要素にアクセス
-      const refElement = ref.current
+      const refElement = ref.current;
       const queryElement = testContainer.querySelector(
-        "[data-testid='ref-test']",
-      )
+        "[data-testid='ref-test']"
+      );
 
       // Then: 同じ要素を参照している
-      expect(refElement).toBe(queryElement)
-      expect(refElement!.tagName).toBe('A')
-      expect(refElement!.href).toContain('/test')
-    })
-  })
+      expect(refElement).toBe(queryElement);
+      expect(refElement!.tagName).toBe("A");
+      expect(refElement!.href).toContain("/test");
+    });
+  });
 
-  describe('Complex Children', () => {
-    it('handles text children', () => {
+  describe("Complex Children", () => {
+    it("handles text children", () => {
       // Given: テキスト子要素のLink
-      testContainer.render(<Link href="/text">シンプルテキスト</Link>)
+      testContainer.render(<Link href="/text">シンプルテキスト</Link>);
 
       // When: テキストを確認
-      const span = testContainer.querySelector('span')
+      const span = testContainer.querySelector("span");
 
       // Then: テキストが正しく表示される
-      expect(span.textContent).toBe('シンプルテキスト')
-    })
+      expect(span.textContent).toBe("シンプルテキスト");
+    });
 
-    it('handles complex JSX children', () => {
+    it("handles complex JSX children", () => {
       // Given: 複雑なJSX子要素のLink
       testContainer.render(
         <Link href="/complex">
           <strong>重要な</strong>
           <em>リンク</em>
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: 子要素を確認
-      const span = testContainer.querySelector('span')
-      const strong = span.querySelector('strong')
-      const em = span.querySelector('em')
+      const span = testContainer.querySelector("span");
+      const strong = span.querySelector("strong");
+      const em = span.querySelector("em");
 
       // Then: 複雑な構造も正常に描画される
-      expect(strong).toBeDefined()
-      expect(em).toBeDefined()
-      expect(strong!.textContent).toBe('重要な')
-      expect(em!.textContent).toBe('リンク')
-    })
+      expect(strong).toBeDefined();
+      expect(em).toBeDefined();
+      expect(strong!.textContent).toBe("重要な");
+      expect(em!.textContent).toBe("リンク");
+    });
 
-    it('handles mixed content children', () => {
+    it("handles mixed content children", () => {
       // Given: 混合コンテンツ子要素のLink
       testContainer.render(
         <Link href="/mixed">
           前のテキスト <span data-testid="inner-span">中間</span> 後のテキスト
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: 子要素を確認
-      const innerSpan = testContainer.queryByTestId('inner-span')
+      const innerSpan = testContainer.queryByTestId("inner-span");
 
       // Then: 混合コンテンツが正常に表示される
-      expect(innerSpan).toBeDefined()
-      expect(innerSpan.textContent).toBe('中間')
-    })
-  })
+      expect(innerSpan).toBeDefined();
+      expect(innerSpan.textContent).toBe("中間");
+    });
+  });
 
-  describe('Accessibility', () => {
-    it('maintains accessibility for screen readers', () => {
+  describe("Accessibility", () => {
+    it("maintains accessibility for screen readers", () => {
       // Given: accessibility属性付きのLink
       testContainer.render(
         <Link href="/accessible" aria-label="詳細ページへ移動" role="link">
           詳細
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: accessibility属性を確認
-      const link = testContainer.querySelector('a')
+      const link = testContainer.querySelector("a");
 
       // Then: accessibility属性が設定される
-      expect(link.getAttribute('aria-label')).toBe('詳細ページへ移動')
-      expect(link.getAttribute('role')).toBe('link')
-    })
+      expect(link.getAttribute("aria-label")).toBe("詳細ページへ移動");
+      expect(link.getAttribute("role")).toBe("link");
+    });
 
-    it('handles external links accessibility', () => {
+    it("handles external links accessibility", () => {
       // Given: 外部リンクのaccessibility
       testContainer.render(
         <Link
@@ -461,74 +465,74 @@ describe('Link', () => {
           rel="noopener noreferrer"
         >
           外部サイト
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: 属性を確認
-      const link = testContainer.querySelector('a')
+      const link = testContainer.querySelector("a");
 
       // Then: 外部リンクのaccessibility属性が設定される
-      expect(link.getAttribute('aria-label')).toBe(
-        '外部サイトを新しいタブで開く',
-      )
-      expect(link.getAttribute('target')).toBe('_blank')
-      expect(link.getAttribute('rel')).toBe('noopener noreferrer')
-    })
-  })
+      expect(link.getAttribute("aria-label")).toBe(
+        "外部サイトを新しいタブで開く"
+      );
+      expect(link.getAttribute("target")).toBe("_blank");
+      expect(link.getAttribute("rel")).toBe("noopener noreferrer");
+    });
+  });
 
-  describe('Edge Cases', () => {
-    it('handles empty href', () => {
+  describe("Edge Cases", () => {
+    it("handles empty href", () => {
       // Given: 空のhrefのLink
       expect(() => {
-        testContainer.render(<Link href="">空のリンク</Link>)
-      }).not.toThrow()
+        testContainer.render(<Link href="">空のリンク</Link>);
+      }).not.toThrow();
 
       // When: href属性を確認
-      const link = testContainer.querySelector('a')
+      const link = testContainer.querySelector("a");
 
       // Then: 空のhrefが設定される
-      expect(link.getAttribute('href')).toBe('')
-    })
+      expect(link.getAttribute("href")).toBe("");
+    });
 
-    it('handles missing href', () => {
+    it("handles missing href", () => {
       // Given: href未指定のLink
       expect(() => {
-        testContainer.render(<Link>hrefなしリンク</Link>)
-      }).not.toThrow()
-    })
+        testContainer.render(<Link>hrefなしリンク</Link>);
+      }).not.toThrow();
+    });
 
-    it('handles very long text content', () => {
+    it("handles very long text content", () => {
       // Given: 非常に長いテキストのLink
       const longText =
-        'これは非常に長いリンクテキストで、実際のアプリケーションでは稀ですが、テストとして動作を確認します。' +
-        'x'.repeat(100)
-      testContainer.render(<Link href="/long">{longText}</Link>)
+        "これは非常に長いリンクテキストで、実際のアプリケーションでは稀ですが、テストとして動作を確認します。" +
+        "x".repeat(100);
+      testContainer.render(<Link href="/long">{longText}</Link>);
 
       // When: テキストを確認
-      const span = testContainer.querySelector('span')
+      const span = testContainer.querySelector("span");
 
       // Then: 長いテキストも正常に表示される
-      expect(span.textContent).toBe(longText)
-    })
+      expect(span.textContent).toBe(longText);
+    });
 
-    it('handles null children gracefully', () => {
+    it("handles null children gracefully", () => {
       // Given: null children
       expect(() => {
-        testContainer.render(<Link href="/null">{null}</Link>)
-      }).not.toThrow()
-    })
-  })
+        testContainer.render(<Link href="/null">{null}</Link>);
+      }).not.toThrow();
+    });
+  });
 
-  describe('Style Integration', () => {
-    it('maintains consistency across different combinations', () => {
+  describe("Style Integration", () => {
+    it("maintains consistency across different combinations", () => {
       // Given: 異なる組み合わせのLink
       const combinations = [
-        {isUnderline: true, isExternalLink: false},
-        {isUnderline: false, isExternalLink: true},
-        {isUnderline: true, isExternalLink: true},
-      ]
+        { isUnderline: true, isExternalLink: false },
+        { isUnderline: false, isExternalLink: true },
+        { isUnderline: true, isExternalLink: true },
+      ];
 
-      combinations.forEach(({isUnderline, isExternalLink}, index) => {
+      combinations.forEach(({ isUnderline, isExternalLink }, index) => {
         // When: 特定の組み合わせを描画
         testContainer.render(
           <Link
@@ -538,43 +542,43 @@ describe('Link', () => {
             data-testid={`combo-${index}`}
           >
             組み合わせ{index}
-          </Link>,
-        )
+          </Link>
+        );
 
         // Then: 基本スタイルが一貫して適用される
-        const link = testContainer.queryByTestId(`combo-${index}`)
-        expect(link.className).toContain('inline')
-        expect(link.className).toContain('group')
+        const link = testContainer.queryByTestId(`combo-${index}`);
+        expect(link.className).toContain("inline");
+        expect(link.className).toContain("group");
 
         // Clean up for next iteration
-        testContainer.cleanup()
-        testContainer.setup()
-      })
-    })
+        testContainer.cleanup();
+        testContainer.setup();
+      });
+    });
 
-    it('works with StyleHelpers', () => {
+    it("works with StyleHelpers", () => {
       // Given: 特定スタイルのLink
       testContainer.render(
         <Link href="/style" isUnderline={true} className="custom-style">
           スタイルテスト
-        </Link>,
-      )
+        </Link>
+      );
 
       // When: StyleHelpersでクラスを確認
-      const link = testContainer.querySelector('a')
+      const link = testContainer.querySelector("a");
 
       // Then: StyleHelpersが正しく動作する
-      expect(StyleHelpers.hasClass(link, 'inline')).toBe(true)
-      expect(StyleHelpers.hasClass(link, 'group')).toBe(true)
-      expect(StyleHelpers.hasClass(link, 'custom-style')).toBe(true)
-      expect(StyleHelpers.hasClass(link, 'nonexistent-class')).toBe(false)
-    })
-  })
+      expect(StyleHelpers.hasClass(link, "inline")).toBe(true);
+      expect(StyleHelpers.hasClass(link, "group")).toBe(true);
+      expect(StyleHelpers.hasClass(link, "custom-style")).toBe(true);
+      expect(StyleHelpers.hasClass(link, "nonexistent-class")).toBe(false);
+    });
+  });
 
-  describe('Performance', () => {
-    it('renders multiple links efficiently', () => {
+  describe("Performance", () => {
+    it("renders multiple links efficiently", () => {
       // Given: 複数のLink要素
-      const manyLinks = Array.from({length: 30}, (_, i) => (
+      const manyLinks = Array.from({ length: 30 }, (_, i) => (
         <Link
           key={i}
           href={`/link-${i}`}
@@ -584,22 +588,22 @@ describe('Link', () => {
         >
           リンク{i + 1}
         </Link>
-      ))
+      ));
 
       // When: 複数のリンクを描画
-      const startTime = performance.now()
-      testContainer.render(<div>{manyLinks}</div>)
-      const endTime = performance.now()
+      const startTime = performance.now();
+      testContainer.render(<div>{manyLinks}</div>);
+      const endTime = performance.now();
 
       // Then: パフォーマンスが適切である
-      const renderTime = endTime - startTime
-      expect(renderTime).toBeLessThan(30) // 30ms以下
+      const renderTime = endTime - startTime;
+      expect(renderTime).toBeLessThan(30); // 30ms以下
 
       // And: リンクが正常に描画される
-      const firstLink = testContainer.queryByTestId('link-0')
-      const lastLink = testContainer.queryByTestId('link-29')
-      expect(firstLink).toBeDefined()
-      expect(lastLink).toBeDefined()
-    })
-  })
-})
+      const firstLink = testContainer.queryByTestId("link-0");
+      const lastLink = testContainer.queryByTestId("link-29");
+      expect(firstLink).toBeDefined();
+      expect(lastLink).toBeDefined();
+    });
+  });
+});
