@@ -32,12 +32,26 @@ Gemini CLI はこのリポジトリでコードを生成するとき、次の規
 - `make new-component` または `./scripts/setup.sh <name>` – コンポーネント作成
 - `make help` – Makefile のターゲット一覧
 
+## Testing Guidelines
+
+- **必読**: `.github/instructions/testing.instructions.md` でテストガイドライン全体を確認
+- t_wadaさんのテストベストプラクティスに厳密に従う
+- テスト分析時は中間ログファイルを使用: `npm run test:ai-analyze`
+- CVAで生成される実際のTailwindCSSクラスをテストする（バリアント名ではなく）
+- jsdomの制限を適切に処理する（キーボードナビゲーション、ポータルコンポーネント）
+
+## AI Development
+
+- AI固有の開発パターンは `.github/instructions/ai-development.instructions.md` を参照
+- プロジェクトコンテキストは `.github/instructions/ai-context.instructions.md` を参照
+
 ## Programmatic checks
 
 コミット前に次を実行します:
 
 ```bash
 pnpm lint
+npm test
 ```
 
 ## Gemini CLI
@@ -48,3 +62,4 @@ pnpm lint
 
 - `AGENTS.md` – リポジトリのガイドライン
 - `CONTRIBUTING.md` – コントリビュート方法
+- `.github/instructions/` – 各種開発指示

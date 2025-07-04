@@ -58,6 +58,19 @@ if echo "$branch_name" | grep -q '[^A-Za-z0-9._-]'; then
 fi
 ```
 
+## Testing Guidelines
+
+- **ALWAYS** refer to `.github/instructions/testing.instructions.md` for comprehensive testing guidelines
+- Follow t_wada's testing best practices for all component tests
+- Use intermediate log files for test analysis: `npm run test:ai-analyze`
+- Test actual CVA-generated TailwindCSS classes, not variant names
+- Handle jsdom limitations properly (keyboard navigation, portal components)
+
+## AI Development
+
+- Refer to `.github/instructions/ai-development.instructions.md` for AI-specific development patterns
+- Use `.github/instructions/ai-context.instructions.md` for project context
+
 ## Codex
 
 - Codex must follow all instructions in this file when preparing commits or PRs.

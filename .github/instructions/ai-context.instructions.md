@@ -1,0 +1,42 @@
+---
+applyTo: "**"
+---
+
+# AI Assistant Configuration
+
+## Project Context
+This is a React component library called "Sparkle Design" built with Next.js, TypeScript, and Vitest. All development follows strict testing guidelines based on t_wada's best practices.
+
+## Key Files for AI Reference
+- **.github/instructions/testing.instructions.md**: Complete testing guidelines and best practices (PRIMARY REFERENCE)
+- **src/test/helpers.ts**: Shared test utilities and helpers
+- **vitest.config.ts**: Test configuration
+- **tsconfig.json**: TypeScript configuration
+
+## Testing Philosophy
+Follow t_wada's testing best practices:
+- Intention-revealing test names
+- Granular test structure
+- Property-based testing
+- Accessibility verification
+- Comprehensive edge case coverage
+- Maintainable and reliable tests
+
+## AI Workflow Requirements
+1. Always use intermediate log files for test analysis: `npm run test:ai-analyze`
+2. Reference `.github/instructions/testing.instructions.md` for component-specific guidelines
+3. Use CVA-compliant class name testing (actual TailwindCSS classes)
+4. Handle jsdom limitations properly (keyboard navigation, portal components)
+5. Clean up intermediate files after analysis
+
+## Component Testing Patterns
+- **Regular Components**: Full test coverage (rendering, variants, interactions, a11y, edge cases)
+- **Portal Components**: Use `it.todo` with explanatory comments
+- **CVA Components**: Test actual generated class names, not variant names
+- **Keyboard Navigation**: Test keydown events, not click triggers in jsdom
+
+## Critical Testing Rules
+- Never test non-existent attributes (e.g., `data-icon` on Icon components)
+- Always verify actual DOM structure and CSS classes
+- Use TypeScript-safe prop testing
+- Maintain setup/cleanup lifecycle in all test files

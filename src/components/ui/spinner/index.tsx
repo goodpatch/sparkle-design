@@ -17,6 +17,7 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
         className={cn("inline-flex items-center justify-center")}
         role="status"
         aria-label="読み込み中"
+        data-testid="loading-spinner"
         {...props}
       >
         <Icon

@@ -5,5 +5,21 @@
     }
   ],
   "chat.promptFiles": true,
-  "chat.mcp.discovery.enabled": true
+  "chat.mcp.discovery.enabled": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false
+  },
+  "github.copilot.advanced": {
+    "listCount": 10,
+    "inlineSuggestCount": 3
+  },
+  "github.copilot.chat.localeOverride": "ja",
+  "files.associations": {
+    ".github/instructions/testing.instructions.md": "markdown",
+    ".github/instructions/ai-development.instructions.md": "markdown",
+    ".github/instructions/ai-context.instructions.md": "markdown"
+  }
 }
