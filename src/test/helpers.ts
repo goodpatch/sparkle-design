@@ -2,7 +2,7 @@
 // en: Test helper functions and utilities
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { act } from "react";
+import { act } from "@testing-library/react";
 
 /**
  * テストコンテナのセットアップとクリーンアップを管理するヘルパー
