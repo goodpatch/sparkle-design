@@ -2,67 +2,35 @@
 
 Claude Code はこのリポジトリでコードを生成するとき、次の規則に従います。
 
-## Environment
+## 環境設定
 
-- Node.js は `.node-version` に記載の **22.14.0** を使います。
-- 依存関係は `pnpm install` でインストールします。
+- **Node.js**: `.node-version` の **22.14.0** を使用
+- **パッケージマネージャー**: `pnpm install` で依存関係をインストール
 
-## Directory layout
+## 開発フロー
 
-- `src/` – app、コンポーネントとユーティリティ
-- `style-dictionary/` – トークンとビルド結果
-- `scripts/` – `setup.sh` などのツール
-- `public/r/` – レジストリ JSON
+1. **コード生成**: AI開発ガイドラインに従ってコードを生成
+2. **品質チェック**: `pnpm lint && pnpm format` でコード品質を確認
+3. **テスト実行**: `pnpm test` でテストを実行
+4. **コミット**: 日本語絵文字メッセージでコミット
 
-## Workflow
+## 主要参照ドキュメント
 
-- 生成されたコードをレビューし、必要に応じて修正を加えます。
-- `pnpm lint` を実行してエラーが無いことを確認します。
-- コミットメッセージは `.github/copilot-commit-message-instructions.md` に従い、日本語で絵文字から書き始めます。
-- React コンポーネントのコメントは `.github/comment-rule.md` のルールに従います。
-- コード内のコメントは日本語のあとに `en:` を付けた英語を続けて記述してください。
-- ブランチ名には英数字・ドット・ハイフン・アンダースコアのみ使用します。
+**必ず以下の順序で参照してください:**
 
-## Common commands
+1. **`.github/instructions/ai-context.instructions.md`** – プロジェクト概要
+2. **`.github/instructions/ai-development.instructions.md`** – 開発パターン
+3. **`.github/instructions/testing.instructions.md`** – テストガイドライン
+4. **`.github/instructions/comment-style.instructions.md`** – コメント規則
+5. **`.github/instructions/new-component.instructions.md`** – コンポーネント作成
 
-- `pnpm dev` – 開発サーバー起動
-- `pnpm storybook` – Storybook を開く
-- `pnpm build:sd` – デザイントークン生成
-- `make registry` – レジストリ生成
-- `make new-component` または `./scripts/setup.sh <name>` – コンポーネント作成
-- `make help` – Makefile のターゲット一覧
+## 重要なルール
 
-## Testing Guidelines
+- **コメント**: 日本語のあとに `en:` 付き英語
+- **コミット**: `.github/copilot-commit-message-instructions.md` に従う
+- **ブランチ**: 英数字・ドット・ハイフン・アンダースコアのみ
+- **テスト**: t_wadaベストプラクティスに厳密に従う
 
-- **必読**: `.github/instructions/testing.instructions.md` でテストガイドライン全体を確認
-- t_wadaさんのテストベストプラクティスに厳密に従う
-- テスト分析時は中間ログファイルを使用: `npm run test:ai-analyze`
-- CVAで生成される実際のTailwindCSSクラスをテストする（バリアント名ではなく）
-- jsdomの制限を適切に処理する（キーボードナビゲーション、ポータルコンポーネント）
+---
 
-## AI Development
-
-- AI固有の開発パターンは `.github/instructions/ai-development.instructions.md` を参照
-- プロジェクトコンテキストは `.github/instructions/ai-context.instructions.md` を参照
-
-## Programmatic checks
-
-コミット前に次を実行します:
-
-```bash
-pnpm lint
-npm test
-```
-
-## Claude Code
-
-- Claude Code はこのファイルの指示に従ってコミットや PR を準備します。
-
-## Reference
-
-- `AGENTS.md` – リポジトリのガイドライン
-- `CONTRIBUTING.md` – コントリビュート方法
-- `.github/instructions/testing.instructions.md` – テストガイドライン
-- `.github/instructions/ai-development.instructions.md` – AI開発パターン
-- `.github/instructions/comment-style.instructions.md` – コメントスタイル
-- `.github/instructions/new-component.instructions.md` – 新規コンポーネント作成
+**Claude Code専用**: このファイルの指示に従ってコミットやPRを準備します。

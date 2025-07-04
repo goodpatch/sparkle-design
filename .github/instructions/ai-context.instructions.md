@@ -4,39 +4,79 @@ applyTo: "**"
 
 # AI Assistant Configuration
 
-## Project Context
-This is a React component library called "Sparkle Design" built with Next.js, TypeScript, and Vitest. All development follows strict testing guidelines based on t_wada's best practices.
+## Project Overview
+"Sparkle Design" is a React component library built with modern web technologies, providing consistent UI components for web applications.
 
-## Key Files for AI Reference
-- **.github/instructions/testing.instructions.md**: Complete testing guidelines and best practices (PRIMARY REFERENCE)
-- **src/test/helpers.ts**: Shared test utilities and helpers
-- **vitest.config.ts**: Test configuration
-- **tsconfig.json**: TypeScript configuration
+## Technology Stack
+- **Framework**: Next.js 15.3.1 + React 18 + TypeScript
+- **Styling**: TailwindCSS 4 + CVA (Class Variance Authority)
+- **Testing**: Vitest + Testing Library + jsdom
+- **Documentation**: Storybook
+- **Package Manager**: pnpm
+- **Node.js**: 22.14.0 (see `.node-version`)
 
-## Testing Philosophy
-Follow t_wada's testing best practices:
-- Intention-revealing test names
-- Granular test structure
-- Property-based testing
-- Accessibility verification
-- Comprehensive edge case coverage
-- Maintainable and reliable tests
+## Project Structure
+```
+src/
+├── app/                    # Next.js app directory
+├── components/ui/          # UI component library
+│   └── [component]/
+│       ├── index.tsx       # Component implementation
+│       └── index.test.tsx  # Component tests
+├── docs/                   # Documentation files
+├── lib/                    # Utility functions
+└── test/                   # Shared test helpers
 
-## AI Workflow Requirements
-1. Always use intermediate log files for test analysis: `npm run test:ai-analyze`
-2. Reference `.github/instructions/testing.instructions.md` for component-specific guidelines
-3. Use CVA-compliant class name testing (actual TailwindCSS classes)
-4. Handle jsdom limitations properly (keyboard navigation, portal components)
-5. Clean up intermediate files after analysis
+.github/instructions/       # AI guidance documents
+public/r/                   # Component registry JSON
+scripts/                    # Build and setup tools
+```
 
-## Component Testing Patterns
-- **Regular Components**: Full test coverage (rendering, variants, interactions, a11y, edge cases)
-- **Portal Components**: Use `it.todo` with explanatory comments
-- **CVA Components**: Test actual generated class names, not variant names
-- **Keyboard Navigation**: Test keydown events, not click triggers in jsdom
+## Development Workflow
+1. **Setup**: `pnpm install` for dependencies
+2. **Development**: `pnpm dev` for local server
+3. **Component Creation**: `./scripts/setup.sh <ComponentName>`
+4. **Documentation**: `pnpm storybook` for component stories
+5. **Quality Checks**: `pnpm lint && pnpm format`
+6. **Testing**: `pnpm test` before commits
 
-## Critical Testing Rules
-- Never test non-existent attributes (e.g., `data-icon` on Icon components)
-- Always verify actual DOM structure and CSS classes
-- Use TypeScript-safe prop testing
-- Maintain setup/cleanup lifecycle in all test files
+## Key Configuration Files
+- **`package.json`**: Dependencies and scripts
+- **`tsconfig.json`**: TypeScript configuration
+- **`tailwind.config.js`**: TailwindCSS setup
+- **`vitest.config.ts`**: Testing configuration
+- **`components.json`**: Component library config
+
+## Coding Standards
+- **Comments**: Japanese first, then English with `en:` prefix
+- **Commits**: Japanese with emoji prefix (see `.github/copilot-commit-message-instructions.md`)
+- **Components**: Follow shadcn/ui patterns with CVA variants
+- **Testing**: Comprehensive coverage following t_wada's best practices
+- **Accessibility**: ARIA labels and semantic HTML
+
+## Commit and Branch Standards
+
+### Commit Message Rules
+- **Language**: Japanese required
+- **Format**: Emoji prefix + Conventional Commit format
+- **Structure**: Title, blank line, bullet list of changes
+- **Reference**: `.github/copilot-commit-message-instructions.md`
+
+### Branch Naming Convention
+- **Allowed characters**: English letters, digits, dots, hyphens, underscores only
+- **Pattern**: `feature/component-name`, `fix/issue-description`, etc.
+- **Example**: `feature/button-component`, `fix/test-warnings`
+
+### Quality Checks (Required before commit)
+```bash
+pnpm lint      # ESLint checks
+pnpm format    # Prettier formatting
+pnpm test      # Component tests
+```
+
+## AI Assistance Guidelines
+- Refer to specific instruction files for detailed guidance:
+  - `.github/instructions/testing.instructions.md` for testing
+  - `.github/instructions/ai-development.instructions.md` for development patterns
+  - `.github/instructions/comment-style.instructions.md` for code comments
+  - `.github/instructions/new-component.instructions.md` for component creation

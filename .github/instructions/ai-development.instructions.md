@@ -4,91 +4,154 @@ applyTo: "**"
 
 # AI Development Guidelines for Sparkle Design
 
-## 📋 Primary Reference
-**ALWAYS refer to `.github/instructions/testing.instructions.md` before making test-related changes.**
+## 🏗️ Component Development Patterns
 
-## 🧪 Testing Philosophy
-This project strictly follows **t_wada's testing best practices**:
-- Intention-revealing test names and structure
-- Granular test splitting
-- Property-based component testing
-- Accessibility verification
-- Comprehensive error/edge case coverage
-- Maintainable and refactoring-resistant tests
-- Reliable, non-flaky tests
+### CVA (Class Variance Authority) Usage
+Components use CVA for styling variants. Always define clear variant types:
 
-## 🏗️ Project Architecture
-- **Framework**: Next.js + TypeScript + Vitest + CVA (Class Variance Authority)
-- **Testing**: jsdom environment with custom TestContainer helpers
-- **Styling**: TailwindCSS with CVA for component variants
-- **Components**: Located in `src/components/ui/[component]/`
-
-## 🔧 AI Workflow Requirements
-
-### 1. Test Analysis Process
-```bash
-# ALWAYS use intermediate log files
-npm test > test-output.log 2>&1
-grep -A 5 -B 5 "FAIL\|✗\|Error" test-output.log > test-failures.log
-tail -20 test-output.log | grep -E "failed|passed|total"
-```
-
-### 2. Common Fixes Applied
-- **Button default type**: Added `type="button"` default
-- **Icon testing**: Use `span[aria-hidden="true"]` and `textContent`, not `data-icon`
-- **CVA class testing**: Test actual TailwindCSS classes (`h-8`, `px-2.5`) not variant names
-- **Keyboard navigation**: Test `onKeyDown` events, not `onClick` from keyboard in jsdom
-- **Spinner testid**: Added `data-testid="loading-spinner"`
-- **Empty test files**: Created complete test suites following standard structure
-
-### 3. Testing Patterns by Component Type
-
-#### Regular Components (Button, Input, Badge, Tag, etc.)
 ```tsx
-describe('ComponentName', () => {
-  describe('Basic Rendering', () => {})
-  describe('Variant Styling', () => {})
-  describe('User Interaction', () => {})
-  describe('Accessibility', () => {})
-  describe('Edge Cases', () => {})
-})
+import { cva, type VariantProps } from "class-variance-authority"
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground",
+        destructive: "bg-destructive text-destructive-foreground",
+        outline: "border border-input bg-background",
+      },
+      size: {
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
 ```
 
-#### Portal Components (Dialog, Modal, Select)
+### Component Interface Patterns
+Use consistent prop interfaces with proper TypeScript support:
+
 ```tsx
-describe('PortalComponent', () => {
-  // Portal-based components are challenging to test with jsdom
-  it.todo('should render portal content')
-  it.todo('should handle open/close states')
-})
+export interface ComponentProps
+  extends React.ComponentPropsWithoutRef<"button">,
+    VariantProps<typeof componentVariants> {
+  /**
+   * コンポーネントの説明
+   * en: Component description
+   */
+  children?: React.ReactNode
+}
 ```
 
-## 🚫 Critical Don'ts
-- ❌ Don't test non-existent `data-icon` attributes
-- ❌ Don't expect keyboard events to trigger clicks in jsdom
-- ❌ Don't test variant names instead of actual CSS classes
-- ❌ Don't create empty test files
-- ❌ Don't assume browser keyboard behavior works in jsdom
+### Event Handling Best Practices
+- **Form elements**: Always include `type="button"` for non-submit buttons
+- **Keyboard navigation**: Support both click and keyboard events
+- **Accessibility**: Include proper ARIA attributes
 
-## ✅ Best Practices
-- ✅ Use actual CVA-generated TailwindCSS classes in assertions
-- ✅ Test keyboard events directly (`onKeyDown`) not their side effects
-- ✅ Use `StyleHelpers.hasClass()` for CSS class verification
-- ✅ Include proper setup/cleanup in all test files
-- ✅ Follow the exact test file structure from `.github/instructions/testing.instructions.md`
+```tsx
+const handleKeyDown = (event: React.KeyboardEvent) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault()
+    onClick?.(event as any)
+  }
+}
+```
 
-## 📁 Key Files
-- `.github/instructions/testing.instructions.md` - Complete testing guidelines (PRIMARY)
-- `src/test/helpers.ts` - Shared test utilities
-- `.github/instructions/ai-context.instructions.md` - Project context
-- `.vscode/copilot-instructions.md` - VS Code Copilot context
+### State Management Patterns
+- **Controlled components**: Support both controlled and uncontrolled modes
+- **Forward refs**: Use `React.forwardRef` for proper ref forwarding
+- **Default values**: Provide sensible defaults for all props
 
-## 🎯 Quality Goals
-- **Coverage**: 90%+ of major functionality
-- **Reliability**: Tests resistant to implementation changes
-- **Maintainability**: Clear, understandable, easy to modify
-- **Practicality**: Actually catches real bugs
+## 🎨 Styling Guidelines
+
+### TailwindCSS Best Practices
+- Use design tokens from `sparkle-design.css`
+- Leverage CVA for component variants
+- Maintain consistent spacing and typography scales
+- Use semantic color names (`primary`, `destructive`, etc.)
+
+### Responsive Design
+- Mobile-first approach with responsive utilities
+- Consider touch targets (minimum 44px)
+- Test across different screen sizes
+
+## ♿ Accessibility Implementation
+
+### Required Patterns
+- **Semantic HTML**: Use appropriate elements (`button`, `input`, etc.)
+- **ARIA labels**: Provide descriptive labels for screen readers
+- **Focus management**: Ensure keyboard navigation works
+- **Color contrast**: Meet WCAG guidelines
+
+### Common Accessibility Patterns
+```tsx
+// Button with accessible label
+<button aria-label="メニューを閉じる (Close menu)">×</button>
+
+// Input with associated label
+<label htmlFor="email">Email</label>
+<input id="email" type="email" />
+
+// Hidden content for screen readers
+<span className="sr-only">ローディング中 (Loading)</span>
+```
+
+## � Development Workflow
+
+### Component Creation Process
+1. Run `./scripts/setup.sh <ComponentName>` for scaffolding
+2. Implement component with CVA variants
+3. Add comprehensive tests (refer to `testing.instructions.md`)
+4. Write Storybook stories for documentation
+5. Update component registry
+
+### Code Quality Standards
+- **Comments**: Japanese first, then English (`en:` prefix)
+- **Testing**: Follow t_wada's best practices (see `testing.instructions.md`)
+- **Linting**: Run `pnpm lint` before commits
+- **Formatting**: Use `pnpm format` for consistency
+
+### Registry System
+This project uses a component registry for distribution:
+- **Location**: `public/r/` directory
+- **Format**: JSON files for each component
+- **Generation**: Automated via build scripts
+- **Usage**: External projects can import components via registry
+
+### Build Commands
+- **Development**: `pnpm dev` - Next.js development server
+- **Testing**: `pnpm test` - Run Vitest test suite
+- **Storybook**: `pnpm storybook` - Component documentation
+- **Linting**: `pnpm lint` - ESLint checks
+- **Formatting**: `pnpm format` - Prettier formatting
+
+### Common Development Patterns
+- **Portal components**: Use appropriate libraries for overlays
+- **Form validation**: Integrate with form libraries
+- **Performance**: Lazy load heavy components
+- **Bundle size**: Monitor component size impact
+
+## � Dependencies and Tools
+
+### Key Libraries
+- **CVA**: Component variant styling
+- **clsx**: Conditional class names
+- **lucide-react**: Icon library
+- **@radix-ui**: Unstyled component primitives
+
+### Development Tools
+- **Storybook**: Component documentation
+- **Vitest**: Testing framework
+- **TypeScript**: Type safety
+- **ESLint/Prettier**: Code quality
 
 ---
 
-**Remember**: When in doubt, consult `.github/instructions/testing.instructions.md` for detailed examples and patterns.
+**For detailed testing guidelines, refer to `.github/instructions/testing.instructions.md`**
