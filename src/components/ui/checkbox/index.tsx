@@ -185,7 +185,7 @@ const Checkbox = React.forwardRef<
                 size={(function () {
                   switch (size) {
                     case "sm":
-                      return 4;
+                      return 3;
                     case "md":
                       return 5;
                     case "lg":
