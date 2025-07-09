@@ -354,6 +354,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         ref={ref}
         disabled={isButtonDisabled}
+        type={asChild ? undefined : props.type || "button"}
         {...props}
       >
         {prefixIcon && (

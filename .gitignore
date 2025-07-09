@@ -9,6 +9,12 @@
 # testing
 /coverage
 
+# AI test analysis files
+test-output.log
+test-failures.log
+test-*.log
+current-test-status.log
+
 # next.js
 /.next/
 /out/

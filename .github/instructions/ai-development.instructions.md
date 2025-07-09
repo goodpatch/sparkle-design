@@ -1,0 +1,157 @@
+---
+applyTo: "**"
+---
+
+# AI Development Guidelines for Sparkle Design
+
+## 🏗️ Component Development Patterns
+
+### CVA (Class Variance Authority) Usage
+Components use CVA for styling variants. Always define clear variant types:
+
+```tsx
+import { cva, type VariantProps } from "class-variance-authority"
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground",
+        destructive: "bg-destructive text-destructive-foreground",
+        outline: "border border-input bg-background",
+      },
+      size: {
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+```
+
+### Component Interface Patterns
+Use consistent prop interfaces with proper TypeScript support:
+
+```tsx
+export interface ComponentProps
+  extends React.ComponentPropsWithoutRef<"button">,
+    VariantProps<typeof componentVariants> {
+  /**
+   * コンポーネントの説明
+   * en: Component description
+   */
+  children?: React.ReactNode
+}
+```
+
+### Event Handling Best Practices
+- **Form elements**: Always include `type="button"` for non-submit buttons
+- **Keyboard navigation**: Support both click and keyboard events
+- **Accessibility**: Include proper ARIA attributes
+
+```tsx
+const handleKeyDown = (event: React.KeyboardEvent) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault()
+    onClick?.(event as any)
+  }
+}
+```
+
+### State Management Patterns
+- **Controlled components**: Support both controlled and uncontrolled modes
+- **Forward refs**: Use `React.forwardRef` for proper ref forwarding
+- **Default values**: Provide sensible defaults for all props
+
+## 🎨 Styling Guidelines
+
+### TailwindCSS Best Practices
+- Use design tokens from `sparkle-design.css`
+- Leverage CVA for component variants
+- Maintain consistent spacing and typography scales
+- Use semantic color names (`primary`, `destructive`, etc.)
+
+### Responsive Design
+- Mobile-first approach with responsive utilities
+- Consider touch targets (minimum 44px)
+- Test across different screen sizes
+
+## ♿ Accessibility Implementation
+
+### Required Patterns
+- **Semantic HTML**: Use appropriate elements (`button`, `input`, etc.)
+- **ARIA labels**: Provide descriptive labels for screen readers
+- **Focus management**: Ensure keyboard navigation works
+- **Color contrast**: Meet WCAG guidelines
+
+### Common Accessibility Patterns
+```tsx
+// Button with accessible label
+<button aria-label="メニューを閉じる (Close menu)">×</button>
+
+// Input with associated label
+<label htmlFor="email">Email</label>
+<input id="email" type="email" />
+
+// Hidden content for screen readers
+<span className="sr-only">ローディング中 (Loading)</span>
+```
+
+## � Development Workflow
+
+### Component Creation Process
+1. Run `./scripts/setup.sh <ComponentName>` for scaffolding
+2. Implement component with CVA variants
+3. Add comprehensive tests (refer to `testing.instructions.md`)
+4. Write Storybook stories for documentation
+5. Update component registry
+
+### Code Quality Standards
+- **Comments**: Japanese first, then English (`en:` prefix)
+- **Testing**: Follow t_wada's best practices (see `testing.instructions.md`)
+- **Linting**: Run `pnpm lint` before commits
+- **Formatting**: Use `pnpm format` for consistency
+
+### Registry System
+This project uses a component registry for distribution:
+- **Location**: `public/r/` directory
+- **Format**: JSON files for each component
+- **Generation**: Automated via build scripts
+- **Usage**: External projects can import components via registry
+
+### Build Commands
+- **Development**: `pnpm dev` - Next.js development server
+- **Testing**: `pnpm test` - Run Vitest test suite
+- **Storybook**: `pnpm storybook` - Component documentation
+- **Linting**: `pnpm lint` - ESLint checks
+- **Formatting**: `pnpm format` - Prettier formatting
+
+### Common Development Patterns
+- **Portal components**: Use appropriate libraries for overlays
+- **Form validation**: Integrate with form libraries
+- **Performance**: Lazy load heavy components
+- **Bundle size**: Monitor component size impact
+
+## � Dependencies and Tools
+
+### Key Libraries
+- **CVA**: Component variant styling
+- **clsx**: Conditional class names
+- **lucide-react**: Icon library
+- **@radix-ui**: Unstyled component primitives
+
+### Development Tools
+- **Storybook**: Component documentation
+- **Vitest**: Testing framework
+- **TypeScript**: Type safety
+- **ESLint/Prettier**: Code quality
+
+---
+
+**For detailed testing guidelines, refer to `.github/instructions/testing.instructions.md`**
