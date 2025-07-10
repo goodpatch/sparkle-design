@@ -1,0 +1,82 @@
+---
+applyTo: "**"
+---
+
+# AI Assistant Configuration
+
+## Project Overview
+"Sparkle Design" is a React component library built with modern web technologies, providing consistent UI components for web applications.
+
+## Technology Stack
+- **Framework**: Next.js 15.3.1 + React 18 + TypeScript
+- **Styling**: TailwindCSS 4 + CVA (Class Variance Authority)
+- **Testing**: Vitest + Testing Library + jsdom
+- **Documentation**: Storybook
+- **Package Manager**: pnpm
+- **Node.js**: 22.14.0 (see `.node-version`)
+
+## Project Structure
+```
+src/
+├── app/                    # Next.js app directory
+├── components/ui/          # UI component library
+│   └── [component]/
+│       ├── index.tsx       # Component implementation
+│       └── index.test.tsx  # Component tests
+├── docs/                   # Documentation files
+├── lib/                    # Utility functions
+└── test/                   # Shared test helpers
+
+.github/instructions/       # AI guidance documents
+public/r/                   # Component registry JSON
+scripts/                    # Build and setup tools
+```
+
+## Development Workflow
+1. **Setup**: `pnpm install` for dependencies
+2. **Development**: `pnpm dev` for local server
+3. **Component Creation**: `./scripts/setup.sh <ComponentName>`
+4. **Documentation**: `pnpm storybook` for component stories
+5. **Quality Checks**: `pnpm lint && pnpm format`
+6. **Testing**: `pnpm test` before commits
+
+## Key Configuration Files
+- **`package.json`**: Dependencies and scripts
+- **`tsconfig.json`**: TypeScript configuration
+- **`tailwind.config.js`**: TailwindCSS setup
+- **`vitest.config.ts`**: Testing configuration
+- **`components.json`**: Component library config
+
+## Coding Standards
+- **Comments**: Japanese first, then English with `en:` prefix
+- **Commits**: Japanese with emoji prefix (see `.github/copilot-commit-message-instructions.md`)
+- **Components**: Follow shadcn/ui patterns with CVA variants
+- **Testing**: Comprehensive coverage following t_wada's best practices
+- **Accessibility**: ARIA labels and semantic HTML
+
+## Commit and Branch Standards
+
+### Commit Message Rules
+- **Language**: Japanese required
+- **Format**: Emoji prefix + Conventional Commit format
+- **Structure**: Title, blank line, bullet list of changes
+- **Reference**: `.github/copilot-commit-message-instructions.md`
+
+### Branch Naming Convention
+- **Allowed characters**: English letters, digits, dots, hyphens, underscores only
+- **Pattern**: `feature/component-name`, `fix/issue-description`, etc.
+- **Example**: `feature/button-component`, `fix/test-warnings`
+
+### Quality Checks (Required before commit)
+```bash
+pnpm lint      # ESLint checks
+pnpm format    # Prettier formatting
+pnpm test      # Component tests
+```
+
+## AI Assistance Guidelines
+- Refer to specific instruction files for detailed guidance:
+  - `.github/instructions/testing.instructions.md` for testing
+  - `.github/instructions/ai-development.instructions.md` for development patterns
+  - `.github/instructions/comment-style.instructions.md` for code comments
+  - `.github/instructions/new-component.instructions.md` for component creation

@@ -42,7 +42,7 @@ const checkboxItemVariants = cva(
 );
 
 const checkboxRootVariants = cva(
-  "rounded-sm border-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-colors",
+  "rounded-xs border-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-colors",
   {
     variants: {
       size: {
@@ -212,7 +212,7 @@ const Checkbox = React.forwardRef<
                 size={(function () {
                   switch (size) {
                     case "sm":
-                      return 4;
+                      return 3;
                     case "md":
                       return 5;
                     case "lg":
