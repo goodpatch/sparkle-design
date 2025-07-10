@@ -9,12 +9,6 @@ const meta: Meta<typeof Switch> = {
   component: Switch,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "スイッチは設定のオンとオフを切り替えるために使用するコンポーネントです。",
-      },
-    },
   },
   tags: ["autodocs"],
   argTypes: {

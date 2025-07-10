@@ -6,12 +6,6 @@ const meta: Meta<typeof Skeleton> = {
   component: Skeleton,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "スケルトンはユーザーにコンテンツが読込中であることを提示するために使用するコンポーネントです。",
-      },
-    },
   },
   tags: ["autodocs"],
   argTypes: {
