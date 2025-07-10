@@ -40,13 +40,20 @@ export interface LinkProps
 }
 
 /**
- * リンクはコンテンツがナビゲーション可能であることを示すためのコンポーネントです。
- * en: The Link component indicates navigable content for users.
+ * **概要 / Overview**
  *
- * @param props.isExternalLink 外部リンクかどうか
- * en: Whether the link points to an external site
- * @param props.children 表示するテキスト
- * en: Text to display inside the link
+ * - リンクはコンテンツがナビゲーションできることをユーザーに提示するために使用するコンポーネントです。
+ * - en: The Link component is used to indicate to users that content is navigable.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Link href="https://example.com" isExternalLink>
+ *   外部サイトへのリンク
+ * </Link>
+ * ```
+ *
+ * @param {LinkProps} props
  */
 export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
   (

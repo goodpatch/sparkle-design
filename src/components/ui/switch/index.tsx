@@ -38,10 +38,33 @@ const thumbVariants = cva(
   }
 );
 
+export interface SwitchProps
+  extends React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>,
+    VariantProps<typeof switchVariants> {
+  /**
+   * スイッチのサイズ（sm、md、lg）
+   * en: Switch size (sm, md, lg)
+   */
+  size?: "sm" | "md" | "lg";
+}
+
+/**
+ * **概要 / Overview**
+ *
+ * - スイッチは設定のオンとオフを切り替えるために使用するコンポーネントです。
+ * - en: The Switch component is used to toggle settings on and off.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Switch size="md" checked={isEnabled} onCheckedChange={setIsEnabled} />
+ * ```
+ *
+ * @param {SwitchProps} props
+ */
 const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
-  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> &
-    VariantProps<typeof switchVariants>
+  SwitchProps
 >(({ className, size, ...props }, ref) => (
   <SwitchPrimitives.Root
     className={cn(switchVariants({ size }), className)}

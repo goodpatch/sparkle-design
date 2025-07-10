@@ -9,12 +9,6 @@ const meta: Meta<typeof InputPassword> = {
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "パスワード入力用コンポーネントです。表示/非表示を切り替えるアイコンボタンが標準で付属しています。",
-      },
-    },
   },
   args: {
     placeholder: "パスワードを入力してください",

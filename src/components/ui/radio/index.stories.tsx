@@ -7,21 +7,11 @@ const meta: Meta<typeof Radio> = {
   component: Radio,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "ラジオボタンは単一選択の形式でユーザーからの入力を取得するために使用するコンポーネントです。",
-      },
-    },
   },
   tags: ["autodocs"],
   argTypes: {
     defaultValue: {
       control: "text",
-      description: "デフォルトで選択される値",
-      table: {
-        defaultValue: { summary: "" },
-      },
     },
   },
 };

@@ -7,12 +7,6 @@ const meta: Meta<typeof Slider> = {
   component: Slider,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "スライダーは、ユーザーが指定された範囲内の値を選択するために使用するコンポーネントです。",
-      },
-    },
   },
   tags: ["autodocs"],
   argTypes: {

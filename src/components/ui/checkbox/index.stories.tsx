@@ -7,45 +7,24 @@ const meta: Meta<typeof Checkbox> = {
   component: Checkbox,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "チェックボックスは複数のオプショングループから複数の項目を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。",
-      },
-    },
   },
   tags: ["autodocs"],
   argTypes: {
     label: {
       control: "text",
-      description: "ラベルテキストを指定します",
     },
     id: {
       control: "text",
-      description: "チェックボックスのIDを指定します",
     },
     size: {
       control: "radio",
       options: ["sm", "md", "lg"],
-      description: "チェックボックスのサイズを指定します",
-      table: {
-        type: { summary: "sm | md | lg" },
-        defaultValue: { summary: "md" },
-      },
     },
     isInvalid: {
       control: "boolean",
-      description: "エラー状態を指定します",
-      table: {
-        defaultValue: { summary: "false" },
-      },
     },
     checked: {
       control: "boolean",
-      description: "チェック状態を指定します",
-      table: {
-        defaultValue: { summary: "false" },
-      },
     },
   },
 };

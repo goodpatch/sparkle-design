@@ -49,9 +49,33 @@ const sliderThumbVariants = cva(
   }
 );
 
+/**
+ * **概要 / Overview**
+ *
+ * - スライダーは任意の範囲の中からユーザーに特定の数値を選択してもらうために使用するコンポーネントです。
+ * - en: The Slider component is used to select a value within a range.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Slider
+ *   value={[50]}
+ *   onValueChange={setValue}
+ *   min={0}
+ *   max={100}
+ *   step={1}
+ * />
+ * ```
+ *
+ * @param {SliderProps} props
+ */
 export interface SliderProps
   extends React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>,
     VariantProps<typeof sliderRootVariants> {
+  /**
+   * スライダーが無効化されているかどうか
+   * en: Whether the slider is disabled
+   */
   isDisabled?: boolean;
 }
 

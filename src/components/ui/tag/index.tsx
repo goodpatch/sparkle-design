@@ -141,11 +141,18 @@ export interface TagProps
 }
 
 /**
- * タグは要素を分類・整理したり、ステータスを付与する際に使用するコンポーネントです。
- * en: The Tag component categorizes or labels elements and can add status information.
+ * **概要 / Overview**
  *
- * @param props.children タグ内に表示するラベル
- * en: Label displayed inside the tag
+ * - タグは特定の要素にラベリングをすることで情報を分類・整理したり、情報にステータスを付与するために使用するコンポーネントです。
+ * - en: The Tag component is used to categorize and organize information by labeling specific elements, or to assign status to information.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Tag variant="solid" size="md" status="info">情報</Tag>
+ * ```
+ *
+ * @param {TagProps} props
  */
 const Tag = React.forwardRef<HTMLDivElement, TagProps>(
   ({ className, variant, size, status, children, ...props }, ref) => {
