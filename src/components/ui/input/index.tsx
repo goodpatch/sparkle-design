@@ -111,29 +111,12 @@ export interface InputProps
 }
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - インプットはテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。
  * - en: The Input component is used to capture user input in the form of a text field.
  *
- * ## プロパティ / Props
- *
- * @param props.size 入力フィールドのサイズ（sm、md、lg） /
- * en: Input field size (sm, md, lg)
- * @param props.isInvalid フィールドが無効かどうか /
- * en: Whether the field is invalid
- * @param props.isDisabled フィールドが無効化されているかどうか /
- * en: Whether the field is disabled
- * @param props.isIconButtonEnable アイコンボタンを有効にするフラグ /
- * en: Flag to enable the icon button
- * @param props.iconButtonIcon ボタンに表示するアイコン名 /
- * en: Icon name displayed in the button
- * @param props.iconButtonAriaLabel アイコンボタンのアクセシビリティラベル /
- * en: Accessibility label for the icon button
- * @param props.onIconButtonClick アイコンボタンクリック時のコールバック /
- * en: Callback function for icon button click
- *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <Input
@@ -143,6 +126,8 @@ export interface InputProps
  *   iconButtonIcon="search"
  * />
  * ```
+ *
+ * @param {InputProps} props
  */
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (

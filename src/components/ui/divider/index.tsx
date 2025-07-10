@@ -61,25 +61,18 @@ export interface DividerProps
 }
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - ディバイダーコンポーネントはグループ内のコンテンツを視覚的に区切ってユーザーに提示する際に使用します。
  * - en: The Divider component is used to visually separate content within groups for users.
  *
- * ## プロパティ / Props
- *
- * @param props.emphasis ディバイダーの強調度（low、middle、high） /
- * en: Emphasis level of the divider (low, middle, high)
- * @param props.lineStyle 線のスタイル（solid、dashed） /
- * en: Line style (solid, dashed)
- * @param props.direction ディバイダーの方向（horizontal、vertical） /
- * en: Direction of the divider (horizontal, vertical)
- *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <Divider emphasis="middle" lineStyle="solid" direction="horizontal" />
  * ```
+ *
+ * @param {DividerProps} props
  */
 const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
   ({ className, emphasis, lineStyle, direction, ...props }, ref) => {

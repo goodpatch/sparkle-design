@@ -20,25 +20,18 @@ export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - アイコンはテキスト情報を視覚表現でユーザーに提示するために使用するコンポーネントです。
  * - en: The Icon component is used to present textual information to users through visual representation.
  *
- * ## プロパティ / Props
- *
- * @param props.icon 表示するアイコン名 /
- * en: Name of the icon to display
- * @param props.size アイコンサイズ /
- * en: Size of the icon
- * @param props.fill 塗りつぶしアイコンかどうか /
- * en: Whether the icon is filled
- *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <Icon icon="check" size={6} fill={true} />
  * ```
+ *
+ * @param {IconProps} props
  */
 export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
   ({ className, icon, size = 3, fill = false, ...props }, ref) => {

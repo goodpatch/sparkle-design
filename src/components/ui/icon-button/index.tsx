@@ -284,33 +284,18 @@ export interface IconButtonProps
 }
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - アイコンボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。
  * - en: The IconButton component is used as a trigger for actions and events such as form submission, dialog expansion, action cancellation, and deletion execution.
  *
- * ## プロパティ / Props
- *
- * @param props.variant ボタンのスタイルバリアント（solid、outline、ghost） /
- * en: Button style variant (solid, outline, ghost)
- * @param props.size ボタンのサイズ（xs、sm、md、lg） /
- * en: Button size (xs, sm, md, lg)
- * @param props.theme ボタンのテーマ（primary、secondary、negative） /
- * en: Button theme (primary, secondary, negative)
- * @param props.icon 表示するアイコン名 /
- * en: Icon name to display
- * @param props.isLoading ローディング状態かどうか /
- * en: Whether the button is in a loading state
- * @param props.isDisabled ボタンを無効化するかどうか /
- * en: Whether the button is disabled
- * @param props.asChild ボタンを別コンポーネントの子としてレンダリングするか /
- * en: Whether to render the button as a child component
- *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <IconButton variant="solid" size="md" theme="primary" icon="edit" />
  * ```
+ *
+ * @param {IconButtonProps} props
  */
 const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   (

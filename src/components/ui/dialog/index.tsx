@@ -8,12 +8,12 @@ import { Button, ButtonProps } from "@/components/ui/button";
 import { Icon, IconProps } from "../icon";
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - ダイアログはユーザーにアクションの実行や中断を確認するために使用するコンポーネントです。
  * - en: The Dialog component is used to confirm the execution or interruption of actions with users.
  *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <Dialog>
@@ -30,6 +30,8 @@ import { Icon, IconProps } from "../icon";
  *   </DialogContent>
  * </Dialog>
  * ```
+ *
+ * @param props
  */
 function Dialog({
   ...props

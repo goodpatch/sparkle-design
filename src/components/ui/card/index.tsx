@@ -17,25 +17,20 @@ export interface ClickableCardProps
 }
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - カードはコンテンツをグルーピングして表示するために使用するコンポーネントです。遷移トリガーやドラッグ&ドロップなど、インタラクションを想定する場合は、Clickable Cardコンポーネントを使用します。
  * - en: The Card component is used to group and display content. When interactions such as navigation triggers or drag & drop are expected, use the ClickableCard component.
  *
- * ## プロパティ / Props
- *
- * @param props.onClick クリック時の処理 /
- * en: Click handler function
- * @param props.isDisabled ボタンを無効化するかどうか /
- * en: Whether the button is disabled
- *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <ClickableCard onClick={() => console.log('Clicked')}>
  *   クリック可能なカードです
  * </ClickableCard>
  * ```
+ *
+ * @param {ClickableCardProps} props
  */
 const ClickableCard = React.forwardRef<HTMLButtonElement, ClickableCardProps>(
   ({ className, isDisabled, onClick, ...props }, ref) => (
@@ -58,12 +53,12 @@ const ClickableCard = React.forwardRef<HTMLButtonElement, ClickableCardProps>(
 ClickableCard.displayName = "ClickableCard";
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - カードはコンテンツをグルーピングして表示するために使用するコンポーネントです。
  * - en: The Card component is used to group and display content.
  *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <Card>
@@ -75,6 +70,8 @@ ClickableCard.displayName = "ClickableCard";
  *   </CardContent>
  * </Card>
  * ```
+ *
+ * @param props
  */
 const Card = React.forwardRef<
   HTMLDivElement,

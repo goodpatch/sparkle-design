@@ -114,27 +114,18 @@ export interface BadgeProps
 }
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - バッジは特定の要素に対して通知の数やタスクの数などの数値情報を付与するために使用するコンポーネントです。
  * - en: The Badge component is used to attach numerical information such as notification counts or task counts to specific elements.
  *
- * ## プロパティ / Props
- *
- * @param props.isNumberVisible 数字を表示するかどうか /
- * en: Whether to display numbers
- * @param props.isGapped 隙間を設けるかどうか /
- * en: Whether to add gaps
- * @param props.size バッジのサイズ /
- * en: Size of the badge
- * @param props.status バッジのステータス色 /
- * en: Status color of the badge
- *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <Badge size="md" status="info">5</Badge>
  * ```
+ *
+ * @param {BadgeProps} props
  */
 function Badge({
   className,

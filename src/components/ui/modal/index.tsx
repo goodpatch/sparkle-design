@@ -7,12 +7,12 @@ import { cn } from "@/lib/utils";
 import { IconButton } from "../icon-button";
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - モーダルはコンテンツに重ねられたウィンドウを介して、ユーザーの注意を特定の情報に集中させるために使用するコンポーネントです。
  * - en: The Modal component is used to focus user attention on specific information through a window overlaid on content.
  *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <Modal>
@@ -31,6 +31,8 @@ import { IconButton } from "../icon-button";
  *   </ModalContent>
  * </Modal>
  * ```
+ *
+ * @param props
  */
 function Modal({
   ...props

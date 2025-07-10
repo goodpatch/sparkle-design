@@ -70,27 +70,12 @@ export interface InlineMessageProps
 }
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - インラインメッセージはユーザーにシステムやサービスの状態を伝えるために使用するコンポーネントです。
  * - en: The InlineMessage component is used to convey system or service status to users.
  *
- * ## プロパティ / Props
- *
- * @param props.status メッセージのステータス（info、warning、negative、success） /
- * en: Status of the message (info, warning, negative, success)
- * @param props.title メッセージのタイトル（後方互換性用） /
- * en: Message title (for backward compatibility)
- * @param props.description メッセージの説明文（後方互換性用） /
- * en: Message description (for backward compatibility)
- * @param props.onClose 閉じるボタンをクリックしたときのコールバック関数 /
- * en: Callback function for close button click
- * @param props.isCloseButtonVisible 閉じるボタンを表示するかどうか /
- * en: Whether to display the close button
- * @param props.children 子要素 /
- * en: Child elements
- *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <InlineMessage status="info" onClose={() => console.log('closed')}>
@@ -100,6 +85,8 @@ export interface InlineMessageProps
  *   </InlineMessageDescription>
  * </InlineMessage>
  * ```
+ *
+ * @param {InlineMessageProps} props
  */
 const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
   (
@@ -158,16 +145,18 @@ const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
 InlineMessage.displayName = "InlineMessage";
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - インラインメッセージのタイトルコンポーネントです。
  * - en: Title component for inline messages.
  *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <InlineMessageTitle>タイトル</InlineMessageTitle>
  * ```
+ *
+ * @param props
  */
 const InlineMessageTitle = React.forwardRef<
   HTMLSpanElement,
@@ -182,16 +171,18 @@ const InlineMessageTitle = React.forwardRef<
 InlineMessageTitle.displayName = "InlineMessageTitle";
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - インラインメッセージの説明文コンポーネントです。
  * - en: Description component for inline messages.
  *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <InlineMessageDescription>詳細な説明文</InlineMessageDescription>
  * ```
+ *
+ * @param props
  */
 const InlineMessageDescription = React.forwardRef<
   HTMLParagraphElement,

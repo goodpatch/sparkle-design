@@ -49,27 +49,18 @@ export interface SwitchProps
 }
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - スイッチは設定のオンとオフを切り替えるために使用するコンポーネントです。
  * - en: The Switch component is used to toggle settings on and off.
  *
- * ## プロパティ / Props
- *
- * @param props.size スイッチのサイズ（sm、md、lg） /
- * en: Switch size (sm, md, lg)
- * @param props.checked スイッチがチェックされているかどうか /
- * en: Whether the switch is checked
- * @param props.disabled スイッチが無効化されているかどうか /
- * en: Whether the switch is disabled
- * @param props.onCheckedChange チェック状態が変更されたときのコールバック /
- * en: Callback function called when the checked state changes
- *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <Switch size="md" checked={isEnabled} onCheckedChange={setIsEnabled} />
  * ```
+ *
+ * @param {SwitchProps} props
  */
 const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,

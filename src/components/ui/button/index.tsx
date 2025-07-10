@@ -259,9 +259,24 @@ const buttonVariants = cva(
   }
 );
 
+type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * ボタンのサイズバリエーション
+   * en: Size variation of the button
+   */
+  size?: ButtonVariantProps["size"];
+  /**
+   * ボタンのスタイルバリエーション
+   * en: Style variation of the button
+   */
+  variant?: ButtonVariantProps["variant"];
+  /**
+   * ボタンのテーマバリエーション
+   * en: Theme variation of the button
+   */
+  theme?: ButtonVariantProps["theme"];
   /**
    * ボタンを別コンポーネントの子としてレンダリングするか
    * en: Whether to render the button as a child component

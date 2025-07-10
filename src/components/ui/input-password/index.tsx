@@ -12,23 +12,12 @@ export interface InputPasswordProps
   > {}
 
 /**
- * ## 概要 / Overview
+ * **概要 / Overview**
  *
  * - インプットパスワードはパスワードの情報をユーザーから取得するために使用するコンポーネントです。
  * - en: The InputPassword component is used to capture password information from users.
  *
- * ## プロパティ / Props
- *
- * @param props.size 入力フィールドのサイズ（sm、md、lg） /
- * en: Input field size (sm, md, lg)
- * @param props.isInvalid フィールドが無効かどうか /
- * en: Whether the field is invalid
- * @param props.isDisabled フィールドが無効化されているかどうか /
- * en: Whether the field is disabled
- * @param props.placeholder プレースホルダーテキスト /
- * en: Placeholder text
- *
- * ## 使用例 / Usage Example
+ * **使用例 / Usage Example**
  *
  * ```tsx
  * <InputPassword
@@ -36,6 +25,8 @@ export interface InputPasswordProps
  *   placeholder="パスワードを入力してください"
  * />
  * ```
+ *
+ * @param {InputPasswordProps} props
  */
 const InputPassword = React.forwardRef<HTMLInputElement, InputPasswordProps>(
   (props, ref) => {
