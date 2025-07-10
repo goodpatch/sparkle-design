@@ -9,42 +9,18 @@ const meta: Meta<typeof Textarea> = {
   component: Textarea,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "テキストエリアは複数行のテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。",
-      },
-    },
   },
   tags: ["autodocs"],
   argTypes: {
     isDisabled: {
       control: "boolean",
-      description: "テキストエリアを無効状態にするかどうか",
-      defaultValue: false,
-      table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
-      },
     },
     isInvalid: {
       control: "boolean",
-      description: "テキストエリアをエラー状態として表示するかどうか",
-      defaultValue: false,
-      table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
-      },
     },
     size: {
       control: { type: "radio" },
       options: ["sm", "md", "lg"],
-      description: "テキストエリアのサイズ (sm: 小, md: 中, lg: 大)",
-      defaultValue: "md",
-      table: {
-        type: { summary: "sm | md | lg" },
-        defaultValue: { summary: "md" },
-      },
     },
     placeholder: {
       control: "text",

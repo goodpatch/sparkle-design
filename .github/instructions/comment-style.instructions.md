@@ -6,29 +6,48 @@ applyTo: "**"
 
 React コンポーネントには以下のルールに従ってコメントを記述してください。
 
-コメントは **日本語のあとに `en:` を付けた英語を続ける** 形式で一行ずつ記述します。JSDoc スタイルでパラメータや戻り値の説明も記載してください。英語訳では `@param` などを繰り返さず、直前の日本語行をそのまま英訳します。
+## コメントの基本ルール
 
-インターフェイスのプロパティも同様に 1 つの JSDoc ブロック内で日本語と英語を記述します。
-
-```tsx
-/**
- * ボタンをクリックするとフォーム送信やダイアログ表示などの処理を実行します。
- * en: This button triggers actions like form submission or dialog open.
- *
- * @param props.children ボタンに表示する内容
- * en: Contents shown inside the button
- */
-const Button = () => {
-  return <button>ボタン</button>;
-};
-```
+### 1. インターフェイスのプロパティ
+各プロパティには **日本語のあとに `en:` を付けた英語を続ける** 形式で記述します。
 
 ```tsx
 export interface ButtonProps {
   /**
    * ボタンを無効化するかどうか
-   * en: Whether the button is disabled
+   * en: Disables the button when set to true
    */
-  disabled?: boolean;
+  isDisabled?: boolean;
 }
 ```
+
+### 2. コンポーネントの JSDoc
+コンポーネントには以下の構造で JSDoc を記述します：
+
+- **概要 / Overview**: コンポーネントの目的と使用場面を日本語と英語で説明
+- **使用例 / Usage Example**: 実際の使用例をコードブロックで提示
+- **@param**: プロパティの型のみを記述（例：`@param {ButtonProps} props`）
+
+```tsx
+/**
+ * **概要 / Overview**
+ *
+ * - ボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。
+ * - en: The Button component is used as a trigger for actions and events such as form submission, dialog expansion, action cancellation, and deletion execution.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Button variant="solid" size="md" theme="primary" prefixIcon="check">確定</Button>
+ * ```
+ *
+ * @param {ButtonProps} props
+ */
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(...);
+```
+
+### 3. 注意点
+- プロパティの説明は `/` で日本語と英語を区切ります（インターフェイスのプロパティのみ）
+- コンポーネントの使用例は実際に動作するコードを記述します
+- 概要セクションの後に空行を1つ追加します
+- コンポーネントの `@param` では型のみを記述し、詳細な説明は各プロパティのインターフェイスで行います

@@ -42,20 +42,51 @@ const statusColorClasses = {
 export interface InlineMessageProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof inlineMessageVariants> {
-  /** メッセージのタイトル (後方互換性用) */
+  /**
+   * メッセージのタイトル（後方互換性用）
+   * en: Message title (for backward compatibility)
+   */
   title?: string;
-  /** メッセージの説明文 (後方互換性用) */
+  /**
+   * メッセージの説明文（後方互換性用）
+   * en: Message description (for backward compatibility)
+   */
   description?: string;
-  /** 閉じるボタンをクリックしたときに呼ばれるコールバック関数 */
+  /**
+   * 閉じるボタンをクリックしたときに呼ばれるコールバック関数
+   * en: Callback function called when the close button is clicked
+   */
   onClose?: () => void;
-  /** 閉じるボタンを表示するかどうか（デフォルト: true） */
+  /**
+   * 閉じるボタンを表示するかどうか（デフォルト: true）
+   * en: Whether to display the close button (default: true)
+   */
   isCloseButtonVisible?: boolean;
-  /** 子要素 */
+  /**
+   * 子要素
+   * en: Child elements
+   */
   children?: React.ReactNode;
 }
 
 /**
- * インラインメッセージはユーザーにシステムやサービスの状態を伝えるために使用するコンポーネントです。
+ * **概要 / Overview**
+ *
+ * - インラインメッセージはユーザーにシステムやサービスの状態を伝えるために使用するコンポーネントです。
+ * - en: The InlineMessage component is used to convey system or service status to users.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <InlineMessage status="info" onClose={() => console.log('closed')}>
+ *   <InlineMessageTitle>情報</InlineMessageTitle>
+ *   <InlineMessageDescription>
+ *     これは情報メッセージです。
+ *   </InlineMessageDescription>
+ * </InlineMessage>
+ * ```
+ *
+ * @param {InlineMessageProps} props
  */
 const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
   (
@@ -114,7 +145,18 @@ const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
 InlineMessage.displayName = "InlineMessage";
 
 /**
- * インラインメッセージのタイトルコンポーネント
+ * **概要 / Overview**
+ *
+ * - インラインメッセージのタイトルコンポーネントです。
+ * - en: Title component for inline messages.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <InlineMessageTitle>タイトル</InlineMessageTitle>
+ * ```
+ *
+ * @param props
  */
 const InlineMessageTitle = React.forwardRef<
   HTMLSpanElement,
@@ -129,7 +171,18 @@ const InlineMessageTitle = React.forwardRef<
 InlineMessageTitle.displayName = "InlineMessageTitle";
 
 /**
- * インラインメッセージの説明コンポーネント
+ * **概要 / Overview**
+ *
+ * - インラインメッセージの説明文コンポーネントです。
+ * - en: Description component for inline messages.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <InlineMessageDescription>詳細な説明文</InlineMessageDescription>
+ * ```
+ *
+ * @param props
  */
 const InlineMessageDescription = React.forwardRef<
   HTMLParagraphElement,

@@ -110,6 +110,28 @@ const selectItemTextVariants = cva("character-1-regular-pro text-base-700");
 
 const selectSeparatorVariants = cva("-mx-1 my-1 h-px bg-base-100");
 
+/**
+ * **概要 / Overview**
+ *
+ * - セレクトはオプショングループの中から値を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * - en: The Select component is used to capture user input by selecting a value from a group of options.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Select>
+ *   <SelectTrigger size="md">
+ *     <SelectValue placeholder="選択してください" />
+ *   </SelectTrigger>
+ *   <SelectContent>
+ *     <SelectItem value="option1">オプション1</SelectItem>
+ *     <SelectItem value="option2">オプション2</SelectItem>
+ *   </SelectContent>
+ * </Select>
+ * ```
+ *
+ * @param props
+ */
 function Select({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
@@ -129,8 +151,10 @@ function SelectValue({
 }
 
 /**
- * セレクトのトリガー部分。
- * クリックで選択肢リストを開閉するボタンとして機能します。
+ * **概要 / Overview**
+ *
+ * - セレクトのトリガー部分で、クリックで選択肢リストを開閉するボタンとして機能します。
+ * - en: The trigger part of the select that functions as a button to open/close the option list when clicked.
  */
 function SelectTrigger({
   className,
@@ -170,8 +194,18 @@ function SelectTrigger({
 }
 
 /**
- * セレクトのドロップダウンリスト本体。
- * 選択肢リストの表示・スクロール制御を行います。
+ * **概要 / Overview**
+ *
+ * - セレクトのドロップダウンリスト本体で、選択肢リストの表示・スクロール制御を行います。
+ * - en: The main dropdown list body of the select that handles display and scroll control of option lists.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <SelectContent>
+ *   <SelectItem value="option1">オプション1</SelectItem>
+ * </SelectContent>
+ * ```
  */
 function SelectContent({
   className,
@@ -200,8 +234,16 @@ function SelectContent({
 }
 
 /**
- * セレクトのラベル部分。
- * グループ化された選択肢のラベル表示に使います。
+ * **概要 / Overview**
+ *
+ * - セレクトのラベル部分で、グループ化された選択肢のラベル表示に使います。
+ * - en: The label part of the select used to display labels for grouped options.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <SelectLabel>カテゴリー</SelectLabel>
+ * ```
  */
 function SelectLabel({
   className,
@@ -217,8 +259,16 @@ function SelectLabel({
 }
 
 /**
- * セレクトの各選択肢アイテム。
- * 選択可能なリスト項目として機能します。
+ * **概要 / Overview**
+ *
+ * - セレクトの各選択肢アイテムで、選択可能なリスト項目として機能します。
+ * - en: Each selectable item in the select that functions as a selectable list item.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <SelectItem value="option1">オプション1</SelectItem>
+ * ```
  */
 function SelectItem({
   className,
@@ -246,8 +296,16 @@ function SelectItem({
 }
 
 /**
- * セレクトの区切り線。
- * 選択肢リスト内の区切り表示に使います。
+ * **概要 / Overview**
+ *
+ * - セレクトの区切り線で、選択肢リスト内の区切り表示に使います。
+ * - en: The separator line in the select used to display divisions within the option list.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <SelectSeparator />
+ * ```
  */
 function SelectSeparator({
   className,
@@ -263,8 +321,16 @@ function SelectSeparator({
 }
 
 /**
- * セレクトの上スクロールボタン。
- * 選択肢が多い場合にリストを上方向にスクロールします。
+ * **概要 / Overview**
+ *
+ * - セレクトの上スクロールボタンで、選択肢が多い場合にリストを上方向にスクロールします。
+ * - en: The up scroll button of the select that scrolls the list upward when there are many options.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <SelectScrollUpButton />
+ * ```
  */
 function SelectScrollUpButton({
   className,
@@ -282,8 +348,16 @@ function SelectScrollUpButton({
 }
 
 /**
- * セレクトの下スクロールボタン。
- * 選択肢が多い場合にリストを下方向にスクロールします。
+ * **概要 / Overview**
+ *
+ * - セレクトの下スクロールボタンで、選択肢が多い場合にリストを下方向にスクロールします。
+ * - en: The down scroll button of the select that scrolls the list downward when there are many options.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <SelectScrollDownButton />
+ * ```
  */
 function SelectScrollDownButton({
   className,

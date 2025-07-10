@@ -121,20 +121,40 @@ interface RadioItemProps
   extends React.ComponentPropsWithoutRef<typeof RadioPrimitive.Item> {
   /**
    * ラジオボタンのサイズ
+   * en: Radio button size
    * @default "md"
    */
   size?: "sm" | "md" | "lg";
   /**
    * エラー状態かどうか
+   * en: Whether the radio button is in an error state
    * @default false
    */
   isInvalid?: boolean;
   /**
    * ラベルのテキスト
+   * en: Label text for the radio button
    */
   label?: string;
 }
 
+/**
+ * **概要 / Overview**
+ *
+ * - ラジオボタンは単一選択の形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * - en: The Radio component is used to select one option from multiple choices.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Radio value="option1" onValueChange={setValue}>
+ *   <RadioItem value="option1" label="オプション1" />
+ *   <RadioItem value="option2" label="オプション2" />
+ * </Radio>
+ * ```
+ *
+ * @param props
+ */
 const Radio = React.forwardRef<
   React.ElementRef<typeof RadioPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof RadioPrimitive.Root>
@@ -149,6 +169,20 @@ const Radio = React.forwardRef<
 });
 Radio.displayName = RadioPrimitive.Root.displayName;
 
+/**
+ * **概要 / Overview**
+ *
+ * - ラジオボタンのアイテムコンポーネントです。
+ * - en: Individual radio button item component.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <RadioItem value="option1" label="オプション1" size="md" />
+ * ```
+ *
+ * @param {RadioItemProps} props
+ */
 const RadioItem = React.forwardRef<
   React.ElementRef<typeof RadioPrimitive.Item>,
   RadioItemProps

@@ -4,7 +4,10 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /**
- * テキストエリアは複数行のテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * **概要 / Overview**
+ *
+ * - テキストエリアは複数行のテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * - en: The Textarea component is used to capture user input in the form of multi-line text fields.
  */
 const textareaVariants = cva(
   // ベーススタイル
@@ -60,16 +63,31 @@ const textareaVariants = cva(
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     VariantProps<typeof textareaVariants> {
-  /** エラー状態かどうか */
+  /**
+   * エラー状態かどうか
+   * en: Whether the textarea is in an error state
+   */
   isInvalid?: boolean;
-  /** 無効状態かどうか */
+  /**
+   * 無効状態かどうか
+   * en: Whether the textarea is disabled
+   */
   isDisabled?: boolean;
 }
 
 /**
- * /**
- * テキストエリアは複数行のテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * **概要 / Overview**
  *
+ * - テキストエリアは複数行のテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * - en: The Textarea component is used to capture user input in the form of multi-line text fields.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Textarea size="md" placeholder="複数行のテキストを入力してください" />
+ * ```
+ *
+ * @param {TextareaProps} props
  */
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, isInvalid, size, isDisabled, disabled, ...props }, ref) => {

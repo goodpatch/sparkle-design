@@ -42,10 +42,37 @@ const dividerVariants = cva("shrink-0", {
 
 export interface DividerProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof dividerVariants> {}
+    VariantProps<typeof dividerVariants> {
+  /**
+   * ディバイダーの強調度（low、middle、high）
+   * en: Emphasis level of the divider (low, middle, high)
+   */
+  emphasis?: "low" | "middle" | "high";
+  /**
+   * 線のスタイル（solid、dashed）
+   * en: Line style (solid, dashed)
+   */
+  lineStyle?: "solid" | "dashed";
+  /**
+   * ディバイダーの方向（horizontal、vertical）
+   * en: Direction of the divider (horizontal, vertical)
+   */
+  direction?: "horizontal" | "vertical";
+}
 
 /**
- * ディバイダーはグループ内のコンテンツを視覚的に区切ってユーザーに提示する際に使用します。
+ * **概要 / Overview**
+ *
+ * - ディバイダーコンポーネントはグループ内のコンテンツを視覚的に区切ってユーザーに提示する際に使用します。
+ * - en: The Divider component is used to visually separate content within groups for users.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Divider emphasis="middle" lineStyle="solid" direction="horizontal" />
+ * ```
+ *
+ * @param {DividerProps} props
  */
 const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
   ({ className, emphasis, lineStyle, direction, ...props }, ref) => {

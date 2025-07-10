@@ -34,7 +34,11 @@
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npx lightningcss --version || true",
     "build:package": "rm -rf dist && tsc -p tsconfig.build.json && cp src/app/globals.css dist/globals.css && cp src/app/sparkle-design.css dist/sparkle-design.css",
-    "format": "prettier -w \"**/*.{js,ts,tsx,css,md,json}\""
+    "format": "prettier --config ./.prettierrc -w \"**/*.{js,ts,tsx,css,md,json}\"",
+    "format:check": "prettier --config ./.prettierrc --check \"**/*.{js,ts,tsx,css,md,json}\"",
+    "lint:fix": "next lint --fix",
+    "lint:check": "next lint",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@figma/code-connect": "^1.0.6",
