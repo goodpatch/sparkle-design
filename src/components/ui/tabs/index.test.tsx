@@ -2,15 +2,10 @@
  * @jest-environment jsdom
  */
 
+import React from "react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import {
-  TestContainer,
-  EventHelpers,
-  A11yHelpers,
-  StyleHelpers,
-} from "@/test/helpers";
+import { TestContainer, EventHelpers } from "@/test/helpers";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./index";
-import * as React from "react";
 
 describe("Tabs", () => {
   let testContainer: TestContainer;
