@@ -124,7 +124,6 @@ export function BreadcrumbPage({
   return (
     <span
       data-slot="breadcrumb-page"
-      role="link"
       aria-disabled="true"
       aria-current="page"
       className={cn(
