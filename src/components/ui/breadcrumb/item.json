@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "title": "Breadcrumb",
+  "name": "breadcrumb",
+  "description": "パンくずはユーザーが現在のページ階層を理解し、親の階層へ戻るためのナビゲーションとして機能するコンポーネントです。",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "src/components/ui/breadcrumb/index.tsx",
+      "type": "registry:component"
+    }
+  ],
+  "dependencies": ["radix-ui"],
+  "registryDependencies": [
+    "https://sparkle-design.vercel.app/r/link.json",
+    "https://sparkle-design.vercel.app/r/sparkle-font.json",
+    "https://sparkle-design.vercel.app/r/sparkle-color.json",
+    "https://sparkle-design.vercel.app/r/sparkle-style.json"
+  ]
+}
