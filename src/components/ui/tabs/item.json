@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "title": "Tabs",
+  "name": "tabs",
+  "description": "タブはユーザーが扱う情報をシンプルに保つためのディスクロージャーとして使用するコンポーネントです。",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "src/components/ui/tabs/index.tsx",
+      "type": "registry:component"
+    }
+  ],
+  "dependencies": ["radix-ui"],
+  "registryDependencies": [
+    "https://sparkle-design.vercel.app/r/sparkle-color.json",
+    "https://sparkle-design.vercel.app/r/sparkle-style.json"
+  ]
+}
