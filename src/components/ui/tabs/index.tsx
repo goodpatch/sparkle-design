@@ -17,7 +17,7 @@ const TabsListVariantContext = createContext<TabsVariantType | undefined>(
  */
 const tabsTriggerVariants = cva(
   [
-    "inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors duration-150",
+    "inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors duration-150 cursor-pointer disabled:cursor-not-allowed",
     "px-3 py-2 character-3-regular-pro",
     "focus-visible:outline-none",
   ],
