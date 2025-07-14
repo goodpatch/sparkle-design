@@ -1,9 +1,7 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-
 import { Button } from "./index";
 
-const meta = {
+const meta: Meta<typeof Button> = {
   title: "Components/Button",
   component: Button,
   parameters: {
@@ -84,32 +82,26 @@ export const WithBothIcons: Story = {
   },
 };
 
-export const Variant = () => {
-  return (
-    <div className="flex flex-row gap-2">
-      <Button variant="solid">solid</Button>
-      <Button variant="outline">outline</Button>
-      <Button variant="ghost">ghost</Button>
-    </div>
-  );
-};
+export const Variant = () => (
+  <div className="flex flex-row gap-2">
+    <Button variant="solid">solid</Button>
+    <Button variant="outline">outline</Button>
+    <Button variant="ghost">ghost</Button>
+  </div>
+);
 
-export const Size = () => {
-  return (
-    <div className="flex flex-row gap-2">
-      <Button size="sm">small</Button>
-      <Button size="md">medium</Button>
-      <Button size="lg">large</Button>
-    </div>
-  );
-};
+export const Size = () => (
+  <div className="flex flex-row gap-2">
+    <Button size="sm">small</Button>
+    <Button size="md">medium</Button>
+    <Button size="lg">large</Button>
+  </div>
+);
 
-export const Theme = () => {
-  return (
-    <div className="flex flex-row gap-2">
-      <Button theme="primary">primary</Button>
-      <Button theme="secondary">secondary</Button>
-      <Button theme="negative">negative</Button>
-    </div>
-  );
-};
+export const Theme = () => (
+  <div className="flex flex-row gap-2">
+    <Button theme="primary">primary</Button>
+    <Button theme="neutral">neutral</Button>
+    <Button theme="negative">negative</Button>
+  </div>
+);

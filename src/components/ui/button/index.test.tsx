@@ -86,18 +86,18 @@ describe("Button", () => {
       expect(StyleHelpers.hasClass(button, "text-white")).toBe(true);
     });
 
-    it("applies solid secondary variant classes", () => {
-      // Given: solid secondaryバリアントのButton
+    it("applies solid neutral variant classes", () => {
+      // Given: solid neutralバリアントのButton
       testContainer.render(
-        <Button variant="solid" theme="secondary">
-          Secondary Button
+        <Button variant="solid" theme="neutral">
+          neutral Button
         </Button>
       );
 
       // When: クラス名を確認
       const button = testContainer.queryButton();
 
-      // Then: solid secondaryバリアントのクラスが適用される
+      // Then: solid neutralバリアントのクラスが適用される
       expect(StyleHelpers.hasClass(button, "border")).toBe(true);
       expect(StyleHelpers.hasClass(button, "shadow-raise")).toBe(true);
     });
