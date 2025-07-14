@@ -347,6 +347,7 @@ function Button({
           className,
         })
       )}
+      type={asChild ? undefined : props.type || "button"}
       {...props}
     >
       {prefixIcon && (
