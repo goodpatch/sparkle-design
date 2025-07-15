@@ -19,7 +19,7 @@ const meta: Meta<typeof Button> = {
     },
     theme: {
       control: "select",
-      options: ["primary", "secondary", "negative"],
+      options: ["primary", "neutral", "negative"],
     },
     isLoading: {
       control: "boolean",
@@ -82,26 +82,50 @@ export const WithBothIcons: Story = {
   },
 };
 
-export const Variant = () => (
-  <div className="flex flex-row gap-2">
-    <Button variant="solid">solid</Button>
-    <Button variant="outline">outline</Button>
-    <Button variant="ghost">ghost</Button>
-  </div>
-);
+export const Variant: Story = {
+  render: args => (
+    <div className="flex flex-row gap-2">
+      <Button {...args} variant="solid">
+        solid
+      </Button>
+      <Button {...args} variant="outline">
+        outline
+      </Button>
+      <Button {...args} variant="ghost">
+        ghost
+      </Button>
+    </div>
+  ),
+};
 
-export const Size = () => (
-  <div className="flex flex-row gap-2">
-    <Button size="sm">small</Button>
-    <Button size="md">medium</Button>
-    <Button size="lg">large</Button>
-  </div>
-);
+export const Size: Story = {
+  render: args => (
+    <div className="flex flex-row gap-2">
+      <Button {...args} size="sm">
+        small
+      </Button>
+      <Button {...args} size="md">
+        medium
+      </Button>
+      <Button {...args} size="lg">
+        large
+      </Button>
+    </div>
+  ),
+};
 
-export const Theme = () => (
-  <div className="flex flex-row gap-2">
-    <Button theme="primary">primary</Button>
-    <Button theme="neutral">neutral</Button>
-    <Button theme="negative">negative</Button>
-  </div>
-);
+export const Theme: Story = {
+  render: args => (
+    <div className="flex flex-row gap-2">
+      <Button {...args} theme="primary">
+        primary
+      </Button>
+      <Button {...args} theme="neutral">
+        neutral
+      </Button>
+      <Button {...args} theme="negative">
+        negative
+      </Button>
+    </div>
+  ),
+};

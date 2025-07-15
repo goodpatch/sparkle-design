@@ -68,7 +68,7 @@ const buttonVariants = cva(
         isLoading: false,
         className: [
           "bg-neutral-500",
-          "text-neutral-100",
+          "text-white",
           "border-neutral-600",
           "hover:bg-neutral-600",
           "hover:border-neutral-700",
@@ -83,7 +83,7 @@ const buttonVariants = cva(
         theme: "neutral",
         isLoading: true,
         className:
-          "disabled:bg-neutral-500 disabled:text-neutral-100 disabled:border-neutral-600",
+          "disabled:bg-neutral-500 disabled:text-white disabled:border-neutral-600",
       },
       // solid negative
       {
@@ -92,7 +92,7 @@ const buttonVariants = cva(
         isLoading: false,
         className: [
           "bg-negative-500",
-          "text-negative-100",
+          "text-white",
           "border-negative-600",
           "hover:bg-negative-600",
           "hover:border-negative-700",
@@ -107,7 +107,7 @@ const buttonVariants = cva(
         theme: "negative",
         isLoading: true,
         className:
-          "disabled:bg-negative-500 disabled:text-negative-100 disabled:border-negative-600",
+          "disabled:bg-negative-500 disabled:text-white disabled:border-negative-600",
       },
       // outline primary
       {
