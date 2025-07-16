@@ -39,16 +39,23 @@ figma.connect(
       disabled: figma.enum("state", {
         disabled: true,
       }),
-      name: figma.string("label"),
+      label: figma.string("label"),
       // No matching props could be found for these Figma properties:
       // "isFocused": figma.boolean('isFocused'),
-      // "isSuffixIcon": figma.boolean('isSuffixIcon'),
-      // "isPrefixIcon": figma.boolean('isPrefixIcon'),
-      // "label": figma.string('label'),
+      suffixIcon: figma.boolean("isSuffixIcon", {
+        true: "edit",
+        false: undefined,
+      }),
+      prefixIcon: figma.boolean("isPrefixIcon", {
+        true: "edit",
+        false: undefined,
+      }),
       // "prefixIcon": figma.instance('prefixIcon'),
       // "suffixIcon": figma.instance('suffixIcon')
     },
     example: props => (
+      // アイコン名は利用するアイコンの名前に置き換えてください。
+      // en: Replace the icon name with the one you want to use.
       <Button
         size={props.size}
         variant={props.variant}
@@ -56,8 +63,11 @@ figma.connect(
         isLoading={props.isLoading}
         isDisabled={props.isDisabled}
         disabled={props.disabled}
-        name={props.name}
-      />
+        prefixIcon={props.prefixIcon}
+        suffixIcon={props.suffixIcon}
+      >
+        {props.label}
+      </Button>
     ),
   }
 );
