@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/7alBZXZf65YgcII41TWT0r/Sparkle-Design?node-id=17%3A1956",
   {
     props: {},
-    example: props => <Icon icon="edit" />,
+    example: props => <Icon icon="edit" size={6} fill={true} />,
   }
 );

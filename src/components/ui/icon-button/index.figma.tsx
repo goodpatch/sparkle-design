@@ -44,6 +44,8 @@ figma.connect(
       // "isFocused": figma.boolean('isFocused')
     },
     example: props => (
+      // アイコン名は利用するアイコンの名前に置き換えてください。
+      // en: Replace the icon name with the one you want to use.
       <IconButton
         icon="edit"
         isLoading={props.isLoading}

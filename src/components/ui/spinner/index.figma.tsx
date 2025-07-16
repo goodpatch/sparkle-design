@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/7alBZXZf65YgcII41TWT0r/Sparkle-Design?node-id=1057%3A9546",
   {
     props: {},
-    example: props => <Spinner />,
+    example: props => <Spinner size={6} />,
   }
 );
