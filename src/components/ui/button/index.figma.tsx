@@ -43,19 +43,25 @@ figma.connect(
       // No matching props could be found for these Figma properties:
       // "isFocused": figma.boolean('isFocused'),
       suffixIcon: figma.boolean("isSuffixIcon", {
-        true: "edit",
+        // FIXME: 複数箇所でアイコンのインスタンスを参照しようとするとCode Connectがエラーになるためコメントアウト中
+        // true: figma.instance("suffixIcon").getProps<{
+        //   icon: string;
+        //   size: number;
+        //   fill: boolean;
+        // }>(),
+        true: "expand_more",
         false: undefined,
       }),
       prefixIcon: figma.boolean("isPrefixIcon", {
-        true: "edit",
+        true: figma.instance("prefixIcon").getProps<{
+          icon: string;
+          size: number;
+          fill: boolean;
+        }>(),
         false: undefined,
       }),
-      // "prefixIcon": figma.instance('prefixIcon'),
-      // "suffixIcon": figma.instance('suffixIcon')
     },
     example: props => (
-      // アイコン名は利用するアイコンの名前に置き換えてください。
-      // en: Replace the icon name with the one you want to use.
       <Button
         size={props.size}
         variant={props.variant}
@@ -63,7 +69,7 @@ figma.connect(
         isLoading={props.isLoading}
         isDisabled={props.isDisabled}
         disabled={props.disabled}
-        prefixIcon={props.prefixIcon}
+        prefixIcon={props.prefixIcon?.icon}
         suffixIcon={props.suffixIcon}
       >
         {props.label}

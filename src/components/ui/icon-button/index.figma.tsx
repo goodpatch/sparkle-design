@@ -40,14 +40,16 @@ figma.connect(
         negative: "negative",
       }),
       // No matching props could be found for these Figma properties:
-      // "icon": figma.instance('icon'),
+      icon: figma.instance("icon").getProps<{
+        icon: string;
+        size: number;
+        fill: boolean;
+      }>(),
       // "isFocused": figma.boolean('isFocused')
     },
     example: props => (
-      // アイコン名は利用するアイコンの名前に置き換えてください。
-      // en: Replace the icon name with the one you want to use.
       <IconButton
-        icon="edit"
+        icon={props.icon.icon}
         isLoading={props.isLoading}
         isDisabled={props.isDisabled}
         disabled={props.disabled}
