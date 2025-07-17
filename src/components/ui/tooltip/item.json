@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "title": "Tooltip",
+  "name": "tooltip",
+  "description": "ツールチップはスペースが限られた場所で情報を一時的に補足するために使用するコンポーネントです。",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "src/components/ui/tooltip/index.tsx",
+      "type": "registry:component"
+    }
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://sparkle-design.vercel.app/r/sparkle-font.json",
+    "https://sparkle-design.vercel.app/r/sparkle-color.json",
+    "https://sparkle-design.vercel.app/r/sparkle-style.json"
+  ]
+}
