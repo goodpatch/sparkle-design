@@ -12,7 +12,6 @@ const buttonVariants = cva(
     "cursor-pointer disabled:cursor-not-allowed",
     "shrink-0 outline-none",
     "focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
-    "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   ].join(" "),
   {
     variants: {
