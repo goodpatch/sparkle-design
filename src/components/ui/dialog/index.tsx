@@ -155,7 +155,7 @@ function DialogCancel({
 }: React.ComponentProps<typeof DialogPrimitive.Cancel>) {
   return (
     <DialogPrimitive.Cancel data-slot="dialog-cancel" asChild {...props}>
-      <Button variant="ghost" theme="secondary" size="sm" className={className}>
+      <Button variant="ghost" theme="neutral" size="sm" className={className}>
         {children}
       </Button>
     </DialogPrimitive.Cancel>

@@ -44,7 +44,7 @@ export const Default: Story = {
           <ModalFooter>
             <Button
               size="sm"
-              theme="secondary"
+              theme="neutral"
               variant="ghost"
               onClick={() => setOpen(false)}
             >
@@ -84,7 +84,7 @@ export const SizeVariants: Story = {
                 <ModalFooter>
                   <Button
                     size="sm"
-                    theme="secondary"
+                    theme="neutral"
                     variant="ghost"
                     onClick={() => setOpen(null)}
                   >
@@ -118,7 +118,7 @@ export const HeaderHidden: Story = {
           <ModalFooter>
             <Button
               size="sm"
-              theme="secondary"
+              theme="neutral"
               variant="ghost"
               onClick={() => setOpen(false)}
             >
@@ -153,7 +153,7 @@ export const CloseButtonHidden: Story = {
           <ModalFooter>
             <Button
               size="sm"
-              theme="secondary"
+              theme="neutral"
               variant="ghost"
               onClick={() => setOpen(false)}
             >

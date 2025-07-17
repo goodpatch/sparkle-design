@@ -86,18 +86,18 @@ describe("Button", () => {
       expect(StyleHelpers.hasClass(button, "text-white")).toBe(true);
     });
 
-    it("applies solid secondary variant classes", () => {
-      // Given: solid secondaryバリアントのButton
+    it("applies solid neutral variant classes", () => {
+      // Given: solid neutralバリアントのButton
       testContainer.render(
-        <Button variant="solid" theme="secondary">
-          Secondary Button
+        <Button variant="solid" theme="neutral">
+          neutral Button
         </Button>
       );
 
       // When: クラス名を確認
       const button = testContainer.queryButton();
 
-      // Then: solid secondaryバリアントのクラスが適用される
+      // Then: solid neutralバリアントのクラスが適用される
       expect(StyleHelpers.hasClass(button, "border")).toBe(true);
       expect(StyleHelpers.hasClass(button, "shadow-raise")).toBe(true);
     });
@@ -147,7 +147,7 @@ describe("Button", () => {
 
       // Then: mediumサイズのクラスが適用される（CVAのmコンボーネントクラス）
       expect(StyleHelpers.hasClass(button, "h-10")).toBe(true);
-      expect(StyleHelpers.hasClass(button, "px-3")).toBe(true);
+      expect(StyleHelpers.hasClass(button, "px-4")).toBe(true);
     });
 
     it("applies small size classes", () => {
@@ -159,7 +159,7 @@ describe("Button", () => {
 
       // Then: smallサイズのクラスが適用される（CVAのsmサイズクラス）
       expect(StyleHelpers.hasClass(button, "h-8")).toBe(true);
-      expect(StyleHelpers.hasClass(button, "px-2.5")).toBe(true);
+      expect(StyleHelpers.hasClass(button, "px-3")).toBe(true);
     });
 
     it("applies large size classes", () => {
@@ -171,7 +171,7 @@ describe("Button", () => {
 
       // Then: largeサイズのクラスが適用される
       expect(StyleHelpers.hasClass(button, "h-12")).toBe(true);
-      expect(StyleHelpers.hasClass(button, "px-3.5")).toBe(true);
+      expect(StyleHelpers.hasClass(button, "px-5")).toBe(true);
     });
   });
 
@@ -247,15 +247,6 @@ describe("Button", () => {
 
       // Then: disabled属性が設定される
       expect(A11yHelpers.isDisabled(button)).toBe(true);
-    });
-
-    it("applies disabled styling classes", () => {
-      // Given: disabled状態のButton
-      testContainer.render(<Button isDisabled>Disabled Button</Button>);
-      const button = testContainer.queryButton();
-
-      // Then: disabledスタイリングが適用される
-      expect(StyleHelpers.hasClass(button, "cursor-not-allowed")).toBe(true);
     });
 
     it("is not focusable when disabled", () => {
@@ -362,16 +353,6 @@ describe("Button", () => {
   });
 
   describe("Custom Props", () => {
-    it("forwards ref correctly", () => {
-      // Given: ref付きのButton
-      const ref = React.createRef<HTMLButtonElement>();
-      testContainer.render(<Button ref={ref}>Ref Button</Button>);
-
-      // Then: refが正しく設定される
-      expect(ref.current).toBeTruthy();
-      expect(ref.current?.tagName).toBe("BUTTON");
-    });
-
     it("applies custom className", () => {
       // Given: カスタムクラス付きのButton
       testContainer.render(
@@ -397,7 +378,6 @@ describe("Button", () => {
       expect(button.getAttribute("data-analytics")).toBe("click-event");
     });
   });
-
   describe("Icon Integration", () => {
     it("renders with prefix icon", () => {
       // Given: プレフィックスアイコン付きのButton

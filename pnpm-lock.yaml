@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@figma/code-connect':
-        specifier: ^1.0.6
-        version: 1.3.3
+        specifier: ^1.3.4
+        version: 1.3.4
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -513,8 +513,8 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
-  '@figma/code-connect@1.3.3':
-    resolution: {integrity: sha512-Fxb9csQXjiIIEc1SA78rQ/2yIb1zxMKL/E59LwW/m5XELVqUsuBACxXPVLxk232xoFAZigFrcAmljxhFOBmx1Q==}
+  '@figma/code-connect@1.3.4':
+    resolution: {integrity: sha512-irK9z44i5ahTsYKY/IsCVo3L9pda8SwhVPcWRUrResIcCvPr5Cl3eiys4lwpNmnFrkPjAz81io6DnlAe5Cu4IA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -5075,8 +5075,8 @@ packages:
     peerDependencies:
       zod: ^3.18.0
 
-  zod@3.23.8:
-    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+  zod@3.25.58:
+    resolution: {integrity: sha512-DVLmMQzSZwNYzQoMaM3MQWnxr2eq+AtM9Hx3w1/Yl0pH8sLTSjN4jGP7w6f7uand6Hw44tsnSu1hz1AOA6qI2Q==}
 
   zod@3.25.64:
     resolution: {integrity: sha512-hbP9FpSZf7pkS7hRVUrOjhwKJNyampPgtXKc3AN6DsWtoHsg2Sb4SQaS4Tcay380zSwd2VPo9G9180emBACp5g==}
@@ -5453,7 +5453,7 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@figma/code-connect@1.3.3':
+  '@figma/code-connect@1.3.4':
     dependencies:
       boxen: 5.1.1
       chalk: 4.1.2
@@ -5475,8 +5475,8 @@ snapshots:
       ts-morph: 23.0.0
       typescript: 5.5.4
       undici: 5.29.0
-      zod: 3.23.8
-      zod-validation-error: 3.4.0(zod@3.23.8)
+      zod: 3.25.58
+      zod-validation-error: 3.4.0(zod@3.25.58)
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -10469,10 +10469,10 @@ snapshots:
     dependencies:
       zod: 3.25.64
 
-  zod-validation-error@3.4.0(zod@3.23.8):
+  zod-validation-error@3.4.0(zod@3.25.58):
     dependencies:
-      zod: 3.23.8
+      zod: 3.25.58
 
-  zod@3.23.8: {}
+  zod@3.25.58: {}
 
   zod@3.25.64: {}

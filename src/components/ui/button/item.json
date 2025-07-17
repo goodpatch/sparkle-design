@@ -1,9 +1,9 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "button",
-  "type": "registry:component",
   "title": "Button",
+  "name": "button",
   "description": "ボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。",
+  "type": "registry:component",
   "files": [
     {
       "path": "src/components/ui/button/index.tsx",
