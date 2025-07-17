@@ -50,8 +50,21 @@ function TooltipProvider({
 }
 
 /**
- * Tooltip コンポーネント
- * en: Tooltip component
+ * **概要 / Overview**
+ *
+ * - ツールチップは情報を一時的に補足するために使用するコンポーネントです。
+ * - en: The Tooltip component is used to provide additional information temporarily.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Tooltip>
+ *   <TooltipTrigger>Tooltip Trigger</TooltipTrigger>
+ *   <TooltipContent>Tooltip Content</TooltipContent>
+ * </Tooltip>
+ * ```
+ *
+ * @param {ButtonProps} props
  */
 function Tooltip({
   ...props
