@@ -24,7 +24,6 @@ export const Default: Story = {
     side: {
       control: { type: "select" },
       options: ["top", "right", "bottom", "left"],
-      description: "TooltipContentの表示位置",
       table: { category: "TooltipContent" },
     },
   },
