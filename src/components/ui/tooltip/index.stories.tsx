@@ -1,36 +1,30 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./index";
-import type { TooltipContentVariants } from "./index";
 
-const meta: Meta<typeof Tooltip> = {
+const meta: Meta<typeof TooltipContent> = {
   title: "Components/Tooltip",
-  component: Tooltip,
+  component: TooltipContent,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
   argTypes: {},
-} satisfies Meta<typeof Tooltip>;
+} satisfies Meta<typeof TooltipContent>;
 
 export default meta;
 
-type Story = StoryObj<{ side: TooltipContentVariants["side"] }>;
+type Story = StoryObj<typeof TooltipContent>;
 
 export const Default: Story = {
   args: {
     side: "top",
   },
-  argTypes: {
-    side: {
-      control: { type: "select" },
-      options: ["top", "right", "bottom", "left"],
-      table: { category: "TooltipContent" },
-    },
-  },
   render: args => (
     <Tooltip>
       <TooltipTrigger>Tooltip Trigger</TooltipTrigger>
-      <TooltipContent side={args.side}>Tooltip Content</TooltipContent>
+      <TooltipContent side={args.side} sideOffset={args.sideOffset}>
+        Tooltip Content
+      </TooltipContent>
     </Tooltip>
   ),
 };

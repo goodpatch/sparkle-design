@@ -5,11 +5,11 @@ import { Tooltip as TooltipPrimitive } from "radix-ui";
 import { cn } from "@/lib/utils";
 
 /**
- * TooltipContentVariants
- * ツールチップの位置やオフセットを指定するための型
- * en: Type for specifying tooltip position and offset
+ * TooltipContentコンポーネントのプロパティ型
+ * en: Props type for TooltipContent component
  */
-type TooltipContentVariants = {
+interface TooltipContentProps
+  extends React.ComponentProps<typeof TooltipPrimitive.Content> {
   /**
    * ツールチップの表示位置を指定します。
    * en: Specifies the position of the tooltip (top, right, bottom, left).
@@ -21,16 +21,7 @@ type TooltipContentVariants = {
    * en: Specifies the distance between the trigger element and the tooltip.
    */
   sideOffset?: number;
-};
-
-/**
- * TooltipContentProps
- * TooltipContentコンポーネントのプロパティ型
- * en: Props type for TooltipContent component
- */
-interface TooltipContentProps
-  extends React.ComponentProps<typeof TooltipPrimitive.Content>,
-    TooltipContentVariants {}
+}
 
 /**
  * TooltipProvider コンポーネント
@@ -122,4 +113,3 @@ function TooltipContent({
 }
 
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };
-export type { TooltipContentVariants };
