@@ -21,9 +21,9 @@ const buttonVariants = cva(
         ghost: "",
       },
       size: {
-        sm: "h-8 px-3 py-1 character-2-bold-pro",
-        md: "h-10 px-4 py-1.5 character-3-bold-pro",
-        lg: "h-12 px-5 py-2 character-4-bold-pro",
+        sm: "h-8 min-w-16 px-3 py-1 character-2-bold-pro",
+        md: "h-10 min-w-20 px-4 py-1.5 character-3-bold-pro",
+        lg: "h-12 min-w-24 px-5 py-2 character-4-bold-pro",
       },
       theme: {
         primary: "",
