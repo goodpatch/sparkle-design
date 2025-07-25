@@ -8,7 +8,7 @@
 
 [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
 ![npm](https://img.shields.io/npm/v/@goodpatch/sparkle-design)
-[![ci](https://github.com/goodpatch/sparkle-design/workflows/ci.yml/badge.svg)](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml)
+[![ci](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml/badge.svg)](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml)
 
 
 React.js + TypeScript を用いたコンポーネントライブラリです。<br />
