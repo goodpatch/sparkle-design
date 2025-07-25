@@ -1,4 +1,15 @@
-# Sparkle Design for React [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
+<p align="center">
+  <a href="https://sparkle-design.goodpatch.com/">
+    <img src="./docs/images/thumbnail.png" alt="Sparkle Design" width="1200">
+  </a>
+</p>
+
+# Sparkle Design for React
+
+[![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
+![npm](https://img.shields.io/npm/v/@goodpatch/sparkle-design)
+[![ci](https://github.com/goodpatch/sparkle-design/workflows/ci.yml/badge.svg)](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml)
+
 
 Next.js + TypeScript を用いたコンポーネントライブラリです。Tailwind CSS や Storybook、shadcn/ui を利用しています。
 
