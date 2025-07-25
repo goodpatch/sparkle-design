@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Slider } from "./index";
 
 const meta: Meta<typeof Slider> = {
-  title: "Components/Slider",
+  title: "Form/Slider",
   component: Slider,
   parameters: {
     layout: "centered",

@@ -12,7 +12,7 @@ import {
 } from "./index";
 
 const meta: Meta<typeof Card> = {
-  title: "Components/Card",
+  title: "Data Display/Card",
   component: Card,
   parameters: {
     layout: "centered",

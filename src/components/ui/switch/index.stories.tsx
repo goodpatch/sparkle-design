@@ -5,7 +5,7 @@ import { Switch } from "./index";
  * スイッチコンポーネントのStorybook設定
  */
 const meta: Meta<typeof Switch> = {
-  title: "Components/Switch",
+  title: "Form/Switch",
   component: Switch,
   parameters: {
     layout: "centered",

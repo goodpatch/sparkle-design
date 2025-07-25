@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Radio, RadioItem } from "./index";
 
 const meta: Meta<typeof Radio> = {
-  title: "Components/Radio",
+  title: "Form/Radio",
   component: Radio,
   parameters: {
     layout: "centered",
