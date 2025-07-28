@@ -9,7 +9,7 @@ const badgeVariants = cva(
     variants: {
       variant: {
         normal: "bg-info-500",
-        emphasis: " bg-negative-500",
+        emphasis: "bg-negative-500",
       },
       isNumberVisible: {
         true: "",
