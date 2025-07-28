@@ -4,26 +4,22 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center text-white text-center justify-center rounded-full transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center text-white text-center justify-center rounded-full transition-colors focus:outline-hidden focus:ring-2 focus:ring-[var(--color-ring-normal)] focus:ring-offset-2",
   {
     variants: {
+      variant: {
+        normal: "bg-info-500",
+        emphasis: " bg-negative-500",
+      },
       isNumberVisible: {
         true: "",
         false: "",
       },
       size: {
-        x5s: "w-2 h-2 min-w-2",
-        x4s: "w-3 h-3 min-w-3",
-        x3s: "w-4 h-4 min-w-4",
-        x2s: "min-w-5 py-0 px-1.5 character-1-bold-mono",
-        xs: "min-w-6 py-0.5 px-1.5 character-1-bold-mono",
-        sm: "min-w-7 py-0.5 px-2 character-2-bold-mono",
-        md: "min-w-8 py-1 px-2 character-3-bold-mono",
-      },
-      status: {
-        info: "bg-info-500",
-        success: "bg-success-500",
-        negative: "bg-negative-500",
+        xs: "w-2 h-2 min-w-2",
+        sm: "w-4 h-4 min-w-4",
+        md: "min-w-6 py-0.5 px-1.5 character-1-bold-mono",
+        lg: "min-w-8 py-1 px-2 character-3-bold-mono",
       },
       isGapped: {
         true: "",
@@ -34,28 +30,8 @@ const badgeVariants = cva(
       // isGappedのボーダー設定
       {
         isGapped: true,
-        size: "x5s",
-        class: "outline-white outline-2",
-      },
-      {
-        isGapped: true,
-        size: "x4s",
-        class: "outline-white outline-2",
-      },
-      {
-        isGapped: true,
-        size: "x3s",
-        class: "outline-white outline-4",
-      },
-      {
-        isGapped: true,
-        size: "x2s",
-        class: "outline-white outline-4",
-      },
-      {
-        isGapped: true,
         size: "xs",
-        class: "outline-white outline-4",
+        class: "outline-white outline-2",
       },
       {
         isGapped: true,
@@ -65,42 +41,46 @@ const badgeVariants = cva(
       {
         isGapped: true,
         size: "md",
+        class: "outline-white outline-4",
+      },
+      {
+        isGapped: true,
+        size: "lg",
         class: "outline-white outline-4",
       },
       // 数字がない場合はheightを指定
       {
         isNumberVisible: false,
-        size: "x2s",
-        class: "h-5",
-      },
-      {
-        isNumberVisible: false,
-        size: "xs",
+        size: "md",
         class: "h-6",
       },
       {
         isNumberVisible: false,
-        size: "sm",
-        class: "h-7",
-      },
-      {
-        isNumberVisible: false,
-        size: "md",
+        size: "lg",
         class: "h-8",
       },
     ],
     defaultVariants: {
       isNumberVisible: true,
       size: "md",
-      status: "info",
+      variant: "normal",
       isGapped: false,
     },
   }
 );
 
-export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {
+type BadgeVariants = VariantProps<typeof badgeVariants>;
+export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * バッジのサイズ
+   * en: Size of the badge
+   */
+  size?: BadgeVariants["size"];
+  /**
+   * バッジのバリエーション
+   * en: Variation of the badge
+   */
+  variant?: BadgeVariants["variant"];
   /**
    * 数字表示するかどうか
    * en: Whether to display numbers
@@ -131,13 +111,13 @@ function Badge({
   className,
   isNumberVisible = true,
   size,
-  status,
+  variant = "normal",
   isGapped = false,
   children,
   ...props
 }: BadgeProps) {
-  // 3xs以下のサイズの場合は、文字を非表示にする
-  if (size === "x5s" || size === "x4s" || size === "x3s") {
+  // sm以下のサイズの場合は、文字を非表示にする
+  if (size === "sm" || size === "xs") {
     isNumberVisible = false;
   }
 
@@ -149,7 +129,7 @@ function Badge({
   return (
     <div
       className={cn(
-        badgeVariants({ isNumberVisible, size, status, isGapped }),
+        badgeVariants({ isNumberVisible, size, variant, isGapped }),
         className
       )}
       {...props}
