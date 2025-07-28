@@ -20,18 +20,15 @@ const meta = {
   argTypes: {
     disabled: {
       control: "boolean",
-      description: "セレクトを無効化します",
       defaultValue: false,
     },
     size: {
       control: { type: "radio" },
       options: ["sm", "md", "lg"],
-      description: "セレクトのサイズを指定します",
       defaultValue: "md",
     },
     isInvalid: {
       control: "boolean",
-      description: "エラー状態を指定します",
       defaultValue: false,
     },
   },

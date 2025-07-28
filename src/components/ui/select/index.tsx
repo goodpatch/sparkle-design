@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Select as SelectPrimitive } from "radix-ui";
 import { Icon } from "@/components/ui/icon";
-import { cva } from "class-variance-authority";
+import { cva, VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
@@ -100,20 +100,6 @@ const selectViewportVariants = cva("p-1", {
  * - セレクトはオプショングループの中から値を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。
  * - en: The Select component is used to capture user input by selecting a value from a group of options.
  *
- * **使用例 / Usage Example**
- *
- * ```tsx
- * <Select>
- *   <SelectTrigger size="md">
- *     <SelectValue placeholder="選択してください" />
- *   </SelectTrigger>
- *   <SelectContent>
- *     <SelectItem value="option1">オプション1</SelectItem>
- *     <SelectItem value="option2">オプション2</SelectItem>
- *   </SelectContent>
- * </Select>
- * ```
- *
  * @param props
  */
 function Select({
@@ -134,11 +120,47 @@ function SelectValue({
   return <SelectPrimitive.Value data-slot="select-value" {...props} />;
 }
 
+type SelectTriggerVariantProps = VariantProps<typeof selectTriggerVariants>;
+export interface SelectTriggerProps
+  extends React.ComponentProps<typeof SelectPrimitive.Trigger> {
+  /**
+   * セレクトトリガーのサイズバリエーション
+   * en: Size variation of the select trigger
+   */
+  size?: SelectTriggerVariantProps["size"];
+  /**
+   * セレクトトリガーのエラー状態
+   * en: Error state of the select trigger
+   */
+  isInvalid?: SelectTriggerVariantProps["isInvalid"];
+  /**
+   * セレクトトリガーの無効化状態
+   * en: Disabled state of the select trigger
+   */
+  disabled?: boolean;
+}
+
 /**
  * **概要 / Overview**
  *
  * - セレクトのトリガー部分で、クリックで選択肢リストを開閉するボタンとして機能します。
  * - en: The trigger part of the select that functions as a button to open/close the option list when clicked.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Select>
+ *   <SelectTrigger size="md">
+ *     <SelectValue placeholder="選択してください" />
+ *   </SelectTrigger>
+ *   <SelectContent>
+ *     <SelectItem value="option1">オプション1</SelectItem>
+ *     <SelectItem value="option2">オプション2</SelectItem>
+ *   </SelectContent>
+ * </Select>
+ * ```
+ *
+ * @param {SelectTriggerProps} props
  */
 function SelectTrigger({
   className,
@@ -147,10 +169,7 @@ function SelectTrigger({
   isInvalid,
   disabled,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
-  size: "sm" | "md" | "lg";
-  isInvalid?: boolean;
-}) {
+}: SelectTriggerProps) {
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
@@ -169,7 +188,7 @@ function SelectTrigger({
       {children}
       <SelectPrimitive.Icon asChild>
         <Icon
-          icon="expand_more"
+          icon="arrow_drop_down"
           className={cn(selectIconVariants({ size, isDisabled: disabled }))}
         />
       </SelectPrimitive.Icon>
