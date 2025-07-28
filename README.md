@@ -134,7 +134,7 @@ const MyButton: React.FC<ButtonProps> = (props) => {
 make registry
 ```
 
-`scripts/merge-registry` 配下の Swift ツールを実行し、`registry.json` を生成して `public/r/` にコピーします。
+`scripts/merge-registry` 配下の Swift ツールもしくはNode版のスクリプトを実行し、`registry.json` を生成して `public/r/` にコピーします。
 
 ### 新規コンポーネントの作成
 

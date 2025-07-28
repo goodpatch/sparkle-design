@@ -55,6 +55,7 @@ public/storybook
 
 # local build artifacts
 dist
+public/r/*
 
 # build cache
 node-compile-cache/
