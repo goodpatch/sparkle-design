@@ -29,13 +29,17 @@ const switchVariants = cva(
 );
 
 const thumbVariants = cva(
-  "pointer-events-none block rounded-full bg-white shadow-raise ring-0 transition-transform bg-white disabled:data-[state=unchecked]:bg-neutral-50 disabled:data-[state=checked]:bg-primary-50",
+  "pointer-events-none block rounded-full bg-white shadow-raise ring-0 transition-transform bg-white",
   {
     variants: {
       size: {
         sm: "h-3 w-3 data-[state=checked]:translate-x-3 data-[state=unchecked]:translate-x-0",
         md: "h-5 w-5 data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0",
         lg: "h-7 w-7 data-[state=checked]:translate-x-7 data-[state=unchecked]:translate-x-0",
+      },
+      disabled: {
+        true: "data-[state=unchecked]:bg-neutral-50 data-[state=checked]:bg-primary-50",
+        false: "",
       },
     },
     defaultVariants: {
@@ -92,7 +96,7 @@ function Switch({ className, size, ...props }: SwitchProps) {
     >
       <SwitchPrimitive.Thumb
         data-slot="switch-thumb"
-        className={cn(thumbVariants({ size }))}
+        className={cn(thumbVariants({ size, disabled: props.disabled }))}
       />
     </SwitchPrimitive.Root>
   );
