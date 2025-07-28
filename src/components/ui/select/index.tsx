@@ -21,12 +21,12 @@ const selectTriggerVariants = cva(
         lg: "h-12 py-1 pl-4 pr-2 gap-2 character-4-regular-pro",
       },
       isInvalid: {
-        true: "bg-negative-50 border-negative-500 hover:border-negative-600 data-[state=open]:border-negative-800",
+        true: "bg-negative-50 border-negative-500 hover:border-negative-600 data-[state=open]:border-negative-600",
         false:
-          "border-base-200 hover:border-base-300 data-[state=open]:border-base-500",
+          "border-neutral-500 hover:border-neutral-600 data-[state=open]:border-neutral-600",
       },
       isDisabled: {
-        true: "cursor-not-allowed border-neutral-200 hover:border-neutral-200 text-text-disabled",
+        true: "cursor-not-allowed bg-neutral-50 border-neutral-200 hover:border-neutral-200 text-text-disabled",
         false: "cursor-pointer",
       },
     },
@@ -34,7 +34,7 @@ const selectTriggerVariants = cva(
       {
         isInvalid: true,
         isDisabled: true,
-        class: "border-negative-200 hover:border-negative-200",
+        class: "bg-neutral-50 border-negative-200 hover:border-negative-200",
       },
     ],
     defaultVariants: {
@@ -53,8 +53,8 @@ const selectIconVariants = cva("", {
       lg: "icon-7-fill-0",
     },
     isDisabled: {
-      true: "text-base-200",
-      false: "text-base-700",
+      true: "text-text-disabled",
+      false: "text-neutral-700",
     },
   },
   defaultVariants: {
@@ -334,7 +334,7 @@ function SelectSeparator({
   return (
     <SelectPrimitive.Separator
       data-slot="select-separator"
-      className={cn("-mx-1 my-1 h-px bg-base-100", className)}
+      className={cn("-mx-1 my-1 h-px bg-divider-low", className)}
       {...props}
     />
   );
