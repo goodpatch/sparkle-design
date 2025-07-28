@@ -19,7 +19,7 @@ const badgeVariants = cva(
         xs: "w-2 h-2 min-w-2",
         sm: "w-4 h-4 min-w-4",
         md: "min-w-6 py-0.5 px-1.5 character-1-bold-mono",
-        lg: "min-w-8 py-1 px-2 character-3-bold-mono",
+        lg: "min-w-8 py-1 px-1.5 character-3-bold-mono",
       },
       isGapped: {
         true: "",
@@ -102,7 +102,7 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
  * **使用例 / Usage Example**
  *
  * ```tsx
- * <Badge size="md" status="info">5</Badge>
+ * <Badge size="md" variant="normal">5</Badge>
  * ```
  *
  * @param {BadgeProps} props
