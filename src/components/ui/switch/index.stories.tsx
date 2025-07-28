@@ -15,7 +15,6 @@ const meta: Meta<typeof Switch> = {
     size: {
       control: { type: "radio" },
       options: ["sm", "md", "lg"],
-      description: "スイッチのサイズ (sm: 小, md: 中, lg: 大)",
       defaultValue: "md",
       table: {
         type: { summary: "sm | md | lg" },
@@ -24,7 +23,6 @@ const meta: Meta<typeof Switch> = {
     },
     disabled: {
       control: "boolean",
-      description: "スイッチを無効状態にするかどうか",
       defaultValue: false,
       table: {
         type: { summary: "boolean" },
@@ -33,7 +31,6 @@ const meta: Meta<typeof Switch> = {
     },
     checked: {
       control: "boolean",
-      description: "スイッチをオン状態（チェック状態）にするかどうか",
       defaultValue: false,
       table: {
         type: { summary: "boolean" },
@@ -42,8 +39,6 @@ const meta: Meta<typeof Switch> = {
     },
     onCheckedChange: {
       action: "changed",
-      description:
-        "スイッチの状態が変更されたときに呼び出されるコールバック関数",
       table: {
         type: { summary: "function" },
       },
