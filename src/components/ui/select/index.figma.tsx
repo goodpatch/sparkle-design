@@ -26,7 +26,7 @@ figma.connect(
         md: "md",
         lg: "lg",
       }),
-      isInvalid: figma.enum("isInvaild", {
+      isInvalid: figma.enum("isInvalid", {
         false: false,
         true: true,
       }),
