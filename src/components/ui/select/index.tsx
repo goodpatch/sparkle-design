@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Select as SelectPrimitive } from "radix-ui";
 import { Icon } from "@/components/ui/icon";
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
@@ -93,22 +93,6 @@ const selectViewportVariants = cva("p-1", {
     position: "popper",
   },
 });
-
-const selectLabelVariants = cva(
-  "px-2 py-1.5 character-1-bold-pro text-base-900"
-);
-
-const selectItemVariants = cva(
-  "relative flex w-full cursor-default select-none items-center rounded-notice py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-base-100 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
-);
-
-const selectItemIndicatorVariants = cva(
-  "absolute right-2 flex h-3.5 w-3.5 items-center justify-center"
-);
-
-const selectItemTextVariants = cva("character-1-regular-pro text-base-700");
-
-const selectSeparatorVariants = cva("-mx-1 my-1 h-px bg-base-100");
 
 /**
  * **概要 / Overview**
@@ -252,7 +236,10 @@ function SelectLabel({
   return (
     <SelectPrimitive.Label
       data-slot="select-label"
-      className={cn(selectLabelVariants(), className)}
+      className={cn(
+        "px-2 py-1.5 character-1-bold-pro text-base-900",
+        className
+      )}
       {...props}
     />
   );
@@ -278,16 +265,21 @@ function SelectItem({
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
-      className={cn(selectItemVariants(), className)}
+      className={cn(
+        "relative flex w-full cursor-default select-none items-center rounded-notice py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-base-100 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        className
+      )}
       {...props}
     >
-      <span className={selectItemIndicatorVariants()}>
+      <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
           <Icon icon="check" size={4} />
         </SelectPrimitive.ItemIndicator>
       </span>
       <SelectPrimitive.ItemText>
-        <span className={cn(selectItemTextVariants(), className)}>
+        <span
+          className={cn("character-1-regular-pro text-base-700", className)}
+        >
           {children}
         </span>
       </SelectPrimitive.ItemText>
@@ -314,7 +306,7 @@ function SelectSeparator({
   return (
     <SelectPrimitive.Separator
       data-slot="select-separator"
-      className={cn(selectSeparatorVariants(), className)}
+      className={cn("-mx-1 my-1 h-px bg-base-100", className)}
       {...props}
     />
   );
