@@ -9,10 +9,14 @@ const meta: Meta<typeof Spinner> = {
   },
   tags: ["autodocs"],
   argTypes: {
-    className: {
-      control: "text",
-      description:
-        "Tailwind CSSクラスを指定してカスタマイズできます。フォントサイズやタイポグラフィ設定も反映されます。",
+    size: {
+      control: {
+        type: "range",
+        min: 1,
+        max: 12,
+        step: 1,
+      },
+      defaultValue: 6,
     },
   },
 };
@@ -21,7 +25,9 @@ export default meta;
 type Story = StoryObj<typeof Spinner>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    size: 6,
+  },
 };
 
 export const Size: Story = {

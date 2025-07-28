@@ -38,7 +38,7 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
         <Icon
           icon="progress_activity"
           size={size}
-          className={cn("animate-spin", className)}
+          className={cn("animate-spin text-text-low", className)}
         />
       </span>
     );
