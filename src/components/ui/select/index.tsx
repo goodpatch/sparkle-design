@@ -8,7 +8,11 @@ import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const selectTriggerVariants = cva(
-  "flex items-center justify-between w-full rounded-action border bg-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 overflow-hidden whitespace-pre",
+  [
+    "flex items-center justify-between w-full rounded-action border bg-white text-text-high transition-colors",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
+    "overflow-hidden whitespace-pre",
+  ].join(" "),
   {
     variants: {
       size: {
@@ -17,12 +21,12 @@ const selectTriggerVariants = cva(
         lg: "h-12 py-1 pl-4 pr-2 gap-2 character-4-regular-pro",
       },
       isInvalid: {
-        true: "border-negative-500 hover:border-negative-600 data-[state=open]:border-negative-800",
+        true: "bg-negative-50 border-negative-500 hover:border-negative-600 data-[state=open]:border-negative-800",
         false:
           "border-base-200 hover:border-base-300 data-[state=open]:border-base-500",
       },
       isDisabled: {
-        true: "cursor-not-allowed border-base-100 hover:border-base-100 text-base-200",
+        true: "cursor-not-allowed border-neutral-200 hover:border-neutral-200 text-text-disabled",
         false: "cursor-pointer",
       },
     },
@@ -30,7 +34,7 @@ const selectTriggerVariants = cva(
       {
         isInvalid: true,
         isDisabled: true,
-        class: "border-negative-100 text-base-200 hover:border-negative-100",
+        class: "border-negative-200 hover:border-negative-200",
       },
     ],
     defaultVariants: {
@@ -64,7 +68,12 @@ const selectScrollButtonVariants = cva(
 );
 
 const selectContentVariants = cva(
-  "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-action border shadow-float",
+  [
+    "bg-popover text-popover-foreground",
+    "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+    "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+    "relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-action border shadow-float",
+  ].join(" "),
   {
     variants: {
       position: {
@@ -281,7 +290,11 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "relative flex w-full cursor-default select-none items-center rounded-notice py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-base-100 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        [
+          "relative flex w-full cursor-default select-none items-center rounded-notice",
+          "py-1.5 pl-2 pr-8 text-sm",
+          "outline-none focus:bg-base-100 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        ].join(" "),
         className
       )}
       {...props}
@@ -293,7 +306,7 @@ function SelectItem({
       </span>
       <SelectPrimitive.ItemText>
         <span
-          className={cn("character-1-regular-pro text-base-700", className)}
+          className={cn("character-1-regular-pro text-neutral-700", className)}
         >
           {children}
         </span>
