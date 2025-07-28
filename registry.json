@@ -1,59 +1,77 @@
 {
   "homepage": "https://goodpatch.com",
-  "name": "sparkle-ui",
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
   "items": [
     {
-      "title": "Tabs",
+      "name": "tabs",
+      "description": "タブはユーザーが扱う情報をシンプルに保つためのディスクロージャーとして使用するコンポーネントです。",
       "files": [
         {
           "path": "src/components/ui/tabs/index.tsx",
           "type": "registry:component"
         }
       ],
-      "description": "タブはユーザーが扱う情報をシンプルに保つためのディスクロージャーとして使用するコンポーネントです。",
-      "type": "registry:component",
-      "dependencies": ["radix-ui"],
-      "name": "tabs",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
-      ]
+      ],
+      "dependencies": ["radix-ui"],
+      "title": "Tabs",
+      "type": "registry:component"
     },
     {
-      "title": "Radio",
-      "files": [
-        {
-          "type": "registry:component",
-          "path": "src/components/ui/radio/index.tsx"
-        }
-      ],
-      "description": "ラジオボタンは複数の選択肢から一つを選択するためのフォーム入力コンポーネントです。",
-      "dependencies": ["radix-ui"],
-      "type": "registry:component",
-      "name": "radio",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/sparkle-font.json",
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
-      ]
+      ],
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "src/components/ui/tooltip/index.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "name": "tooltip",
+      "description": "ツールチップは情報を一時的に補足するために使用するコンポーネントです。",
+      "dependencies": [],
+      "title": "Tooltip"
     },
     {
+      "registryDependencies": [
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
+      ],
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "src/components/ui/radio/index.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "name": "radio",
+      "description": "ラジオボタンは複数の選択肢から一つを選択するためのフォーム入力コンポーネントです。",
+      "dependencies": ["radix-ui"],
+      "title": "Radio"
+    },
+    {
+      "title": "Card",
+      "registryDependencies": [
+        "https://sparkle-design.vercel.app/r/sparkle-font.json",
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
+      ],
+      "name": "card",
+      "dependencies": [],
       "files": [
         {
           "type": "registry:component",
           "path": "src/components/ui/card/index.tsx"
         }
       ],
-      "name": "card",
-      "type": "registry:component",
-      "registryDependencies": [
-        "https://sparkle-design.vercel.app/r/sparkle-font.json",
-        "https://sparkle-design.vercel.app/r/sparkle-color.json",
-        "https://sparkle-design.vercel.app/r/sparkle-style.json"
-      ],
-      "title": "Card",
       "description": "カードは関連する情報をグループ化して表示するためのコンテナコンポーネントです。",
-      "dependencies": []
+      "type": "registry:component"
     },
     {
       "files": [
@@ -62,8 +80,8 @@
           "path": "src/components/ui/input/index.tsx"
         }
       ],
-      "name": "input",
-      "type": "registry:component",
+      "dependencies": [],
+      "description": "インプットはユーザーがテキストデータを入力するためのフォーム要素です。",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/sparkle-font.json",
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
@@ -71,8 +89,8 @@
         "https://sparkle-design.vercel.app/r/icon-button.json"
       ],
       "title": "Input",
-      "description": "インプットはユーザーがテキストデータを入力するためのフォーム要素です。",
-      "dependencies": []
+      "type": "registry:component",
+      "name": "input"
     },
     {
       "files": [
@@ -83,79 +101,75 @@
       ],
       "name": "skeleton",
       "type": "registry:component",
+      "dependencies": [],
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
-      "title": "Skeleton",
       "description": "スケルトンはコンテンツの読み込み中に表示するプレースホルダーコンポーネントです。",
-      "dependencies": []
+      "title": "Skeleton"
     },
     {
-      "name": "checkbox",
-      "dependencies": ["radix-ui"],
-      "description": "チェックボックスは複数のオプショングループから複数の項目を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。",
-      "type": "registry:component",
-      "title": "Checkbox",
       "files": [
         {
-          "type": "registry:component",
-          "path": "src/components/ui/checkbox/index.tsx"
+          "path": "src/components/ui/checkbox/index.tsx",
+          "type": "registry:component"
         }
       ],
+      "name": "checkbox",
+      "type": "registry:component",
+      "dependencies": ["radix-ui"],
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/sparkle-font.json",
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json",
         "https://sparkle-design.vercel.app/r/icon.json"
-      ]
+      ],
+      "description": "チェックボックスは複数のオプショングループから複数の項目を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。",
+      "title": "Checkbox"
     },
     {
-      "name": "slider",
+      "registryDependencies": [
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
+      ],
       "dependencies": ["radix-ui"],
-      "description": "スライダーは範囲内の値を選択するためのインタラクティブなコンポーネントです。",
-      "type": "registry:component",
+      "name": "slider",
       "title": "Slider",
+      "description": "スライダーは範囲内の値を選択するためのインタラクティブなコンポーネントです。",
       "files": [
         {
           "path": "src/components/ui/slider/index.tsx",
           "type": "registry:component"
         }
       ],
-      "registryDependencies": [
-        "https://sparkle-design.vercel.app/r/sparkle-color.json",
-        "https://sparkle-design.vercel.app/r/sparkle-style.json"
-      ]
+      "type": "registry:component"
     },
     {
-      "files": [
-        {
-          "path": "src/components/ui/spinner/index.tsx",
-          "type": "registry:component"
-        }
-      ],
+      "title": "Spinner",
+      "type": "registry:component",
+      "name": "spinner",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/sparkle-font.json",
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json",
         "https://sparkle-design.vercel.app/r/icon.json"
       ],
-      "name": "spinner",
-      "description": "スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。",
-      "title": "Spinner",
-      "type": "registry:component"
+      "files": [
+        {
+          "path": "src/components/ui/spinner/index.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "description": "スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。"
     },
     {
-      "name": "inline-message",
-      "dependencies": [],
       "files": [
         {
           "path": "src/components/ui/inline-message/index.tsx",
           "type": "registry:component"
         }
       ],
-      "type": "registry:component",
-      "title": "InlineMessage",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/icon.json",
         "https://sparkle-design.vercel.app/r/icon-button.json",
@@ -163,19 +177,19 @@
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
-      "description": "インラインメッセージは情報、警告、エラーなどの状態を表示するためのコンポーネントです。"
+      "type": "registry:component",
+      "title": "InlineMessage",
+      "name": "inline-message",
+      "description": "インラインメッセージは情報、警告、エラーなどの状態を表示するためのコンポーネントです。",
+      "dependencies": []
     },
     {
-      "name": "dialog",
-      "dependencies": ["radix-ui"],
       "files": [
         {
-          "path": "src/components/ui/dialog/index.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "path": "src/components/ui/dialog/index.tsx"
         }
       ],
-      "type": "registry:component",
-      "title": "Dialog",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/button.json",
         "https://sparkle-design.vercel.app/r/icon.json",
@@ -183,29 +197,31 @@
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
-      "description": "ダイアログはユーザーの操作を一時中断し、重要な情報を表示したり、ユーザーからの入力を求めるためのコンポーネントです。"
+      "type": "registry:component",
+      "title": "Dialog",
+      "name": "dialog",
+      "description": "ダイアログはユーザーの操作を一時中断し、重要な情報を表示したり、ユーザーからの入力を求めるためのコンポーネントです。",
+      "dependencies": ["radix-ui"]
     },
     {
-      "description": "テキストエリアは複数行のテキスト入力を可能にするフォーム要素です。",
-      "title": "Textarea",
-      "type": "registry:component",
-      "dependencies": [],
       "files": [
         {
-          "type": "registry:component",
-          "path": "src/components/ui/textarea/index.tsx"
+          "path": "src/components/ui/textarea/index.tsx",
+          "type": "registry:component"
         }
       ],
-      "name": "textarea",
+      "title": "Textarea",
+      "dependencies": [],
+      "type": "registry:component",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/sparkle-font.json",
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
-      ]
+      ],
+      "name": "textarea",
+      "description": "テキストエリアは複数行のテキスト入力を可能にするフォーム要素です。"
     },
     {
-      "name": "button",
-      "title": "Button",
       "files": [
         {
           "path": "src/components/ui/button/index.tsx",
@@ -213,6 +229,7 @@
         }
       ],
       "description": "ボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。",
+      "title": "Button",
       "type": "registry:component",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/icon.json",
@@ -221,46 +238,46 @@
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
+      "name": "button",
       "dependencies": ["radix-ui"]
     },
     {
+      "files": [
+        {
+          "type": "registry:component",
+          "path": "src/components/ui/link/index.tsx"
+        }
+      ],
+      "description": "リンクは他のページやセクションへナビゲーションするためのコンポーネントです。",
+      "title": "Link",
+      "type": "registry:component",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/icon.json",
         "https://sparkle-design.vercel.app/r/sparkle-font.json",
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
-      "dependencies": [],
-      "files": [
-        {
-          "path": "src/components/ui/link/index.tsx",
-          "type": "registry:component"
-        }
-      ],
-      "type": "registry:component",
       "name": "link",
-      "title": "Link",
-      "description": "リンクは他のページやセクションへナビゲーションするためのコンポーネントです。"
+      "dependencies": []
     },
     {
+      "type": "registry:component",
+      "description": "ディバイダーはコンテンツを視覚的に分離するための区切り線コンポーネントです。",
+      "name": "divider",
+      "title": "Divider",
+      "dependencies": [],
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
-      "dependencies": [],
       "files": [
         {
           "type": "registry:component",
           "path": "src/components/ui/divider/index.tsx"
         }
-      ],
-      "type": "registry:component",
-      "name": "divider",
-      "title": "Divider",
-      "description": "ディバイダーはコンテンツを視覚的に分離するための区切り線コンポーネントです。"
+      ]
     },
     {
-      "type": "registry:component",
       "dependencies": [],
       "files": [
         {
@@ -268,86 +285,85 @@
           "type": "registry:component"
         }
       ],
-      "name": "input-password",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/input.json",
         "https://sparkle-design.vercel.app/r/sparkle-font.json",
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
+      "type": "registry:component",
       "description": "パスワード入力専用のインプットコンポーネントで、表示/非表示の切り替え機能を提供します。",
+      "name": "input-password",
       "title": "InputPassword"
     },
     {
-      "type": "registry:component",
       "dependencies": ["radix-ui"],
+      "description": "スイッチはオン/オフの状態を切り替えるためのトグルコンポーネントです。",
       "title": "Switch",
-      "name": "switch",
+      "registryDependencies": [
+        "https://sparkle-design.vercel.app/r/sparkle-color.json",
+        "https://sparkle-design.vercel.app/r/sparkle-style.json"
+      ],
       "files": [
         {
           "path": "src/components/ui/switch/index.tsx",
           "type": "registry:component"
         }
       ],
-      "description": "スイッチはオン/オフの状態を切り替えるためのトグルコンポーネントです。",
-      "registryDependencies": [
-        "https://sparkle-design.vercel.app/r/sparkle-color.json",
-        "https://sparkle-design.vercel.app/r/sparkle-style.json"
-      ]
+      "type": "registry:component",
+      "name": "switch"
     },
     {
+      "dependencies": ["radix-ui"],
+      "description": "セレクトはオプショングループの中から値を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。",
       "title": "Select",
-      "files": [
-        {
-          "type": "registry:component",
-          "path": "src/components/ui/select/index.tsx"
-        }
-      ],
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/sparkle-font.json",
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json",
         "https://sparkle-design.vercel.app/r/icon.json"
       ],
-      "dependencies": ["radix-ui"],
-      "type": "registry:component",
-      "name": "select",
-      "description": "セレクトはオプショングループの中から値を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。"
-    },
-    {
-      "title": "Breadcrumb",
       "files": [
         {
           "type": "registry:component",
-          "path": "src/components/ui/breadcrumb/index.tsx"
+          "path": "src/components/ui/select/index.tsx"
         }
       ],
+      "type": "registry:component",
+      "name": "select"
+    },
+    {
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "src/components/ui/breadcrumb/index.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["radix-ui"],
+      "description": "パンくずはユーザーが現在のページ階層を理解し、親の階層へ戻るためのナビゲーションとして機能するコンポーネントです。",
+      "name": "breadcrumb",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/link.json",
         "https://sparkle-design.vercel.app/r/sparkle-font.json",
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
-      "dependencies": ["radix-ui"],
-      "type": "registry:component",
-      "name": "breadcrumb",
-      "description": "パンくずはユーザーが現在のページ階層を理解し、親の階層へ戻るためのナビゲーションとして機能するコンポーネントです。"
+      "title": "Breadcrumb"
     },
     {
+      "title": "Icon",
+      "type": "registry:component",
+      "name": "icon",
       "files": [
         {
           "type": "registry:component",
           "path": "src/components/ui/icon/index.tsx"
         }
       ],
-      "name": "icon",
-      "description": "アイコンは情報を象形表現でユーザーに提示するために使用するコンポーネントです。",
-      "title": "Icon",
-      "type": "registry:component"
+      "description": "アイコンは情報を象形表現でユーザーに提示するために使用するコンポーネントです。"
     },
     {
-      "dependencies": ["radix-ui"],
-      "description": "モーダルはメインコンテンツの上に表示され、ユーザーの注意を特定のタスクや情報に集中させるためのコンポーネントです。",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/icon.json",
         "https://sparkle-design.vercel.app/r/sparkle-font.json",
@@ -355,19 +371,18 @@
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
       "type": "registry:component",
-      "title": "Modal",
+      "dependencies": ["radix-ui"],
       "files": [
         {
           "path": "src/components/ui/modal/index.tsx",
           "type": "registry:component"
         }
       ],
+      "description": "モーダルはメインコンテンツの上に表示され、ユーザーの注意を特定のタスクや情報に集中させるためのコンポーネントです。",
+      "title": "Modal",
       "name": "modal"
     },
     {
-      "description": "アイコンボタンはアイコンのみを表示するコンパクトなボタンコンポーネントです。",
-      "title": "IconButton",
-      "name": "icon-button",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/icon.json",
         "https://sparkle-design.vercel.app/r/spinner.json",
@@ -376,15 +391,26 @@
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
       "type": "registry:component",
+      "dependencies": ["radix-ui"],
       "files": [
         {
           "path": "src/components/ui/icon-button/index.tsx",
           "type": "registry:component"
         }
       ],
-      "dependencies": ["radix-ui"]
+      "description": "アイコンボタンはアイコンのみを表示するコンパクトなボタンコンポーネントです。",
+      "title": "IconButton",
+      "name": "icon-button"
     },
     {
+      "title": "Tag",
+      "files": [
+        {
+          "path": "src/components/ui/tag/index.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "name": "tag",
       "type": "registry:component",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/icon.json",
@@ -392,198 +418,74 @@
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
-      "description": "タグはカテゴリやラベルを表示し、削除可能なアクションを提供するコンポーネントです。",
       "dependencies": [],
-      "name": "tag",
+      "description": "タグはカテゴリやラベルを表示し、削除可能なアクションを提供するコンポーネントです。"
+    },
+    {
+      "title": "Badge",
       "files": [
         {
-          "path": "src/components/ui/tag/index.tsx",
+          "path": "src/components/ui/badge/index.tsx",
           "type": "registry:component"
         }
       ],
-      "title": "Tag"
-    },
-    {
+      "name": "badge",
       "type": "registry:component",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/sparkle-font.json",
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-style.json"
       ],
-      "description": "バッジは状態、カテゴリ、またはその他の重要な情報を示すための小さなラベルコンポーネントです。",
       "dependencies": [],
-      "name": "badge",
-      "files": [
-        {
-          "type": "registry:component",
-          "path": "src/components/ui/badge/index.tsx"
-        }
-      ],
-      "title": "Badge"
+      "description": "バッジは状態、カテゴリ、またはその他の重要な情報を示すための小さなラベルコンポーネントです。"
     },
     {
+      "title": "Sparkle Font",
+      "type": "registry:component",
+      "name": "sparkle-font",
       "css": {
         "@layer utilities": {
-          "icon-11-fill-0": {
-            "letter-spacing": "var(--letter-spacing-normal)",
-            "font-family": "var(--font-family-icon)",
-            "font-variation-settings": "var(--font-weight-icon-fill-0)",
-            "font-size": "var(--font-size-48)",
-            "line-height": "var(--line-height-leading-none)"
-          },
-          "character-3-bold-mono": {
-            "font-size": "var(--font-size-16)",
-            "line-height": "var(--line-height-24)",
-            "font-family": "var(--font-family-mono)",
-            "font-weight": "var(--font-weight-char-bold)",
-            "letter-spacing": "var(--letter-spacing-wider)"
-          },
-          "character-8-bold-mono": {
-            "font-size": "var(--font-size-32)",
-            "font-weight": "var(--font-weight-char-bold)",
-            "line-height": "var(--line-height-48)",
+          "character-1-regular-mono": {
+            "font-size": "var(--font-size-12)",
             "letter-spacing": "var(--letter-spacing-wider)",
-            "font-family": "var(--font-family-mono)"
-          },
-          "character-12-bold-mono": {
-            "font-family": "var(--font-family-mono)",
-            "line-height": "var(--line-height-84)",
-            "font-size": "var(--font-size-54)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-weight": "var(--font-weight-char-bold)"
-          },
-          "icon-4-fill-0": {
-            "font-size": "var(--font-size-18)",
-            "letter-spacing": "var(--letter-spacing-normal)",
-            "line-height": "var(--line-height-leading-none)",
-            "font-family": "var(--font-family-icon)",
-            "font-variation-settings": "var(--font-weight-icon-fill-0)"
-          },
-          "character-5-bold-mono": {
-            "font-weight": "var(--font-weight-char-bold)",
-            "font-size": "var(--font-size-20)",
-            "line-height": "var(--line-height-32)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-family": "var(--font-family-mono)"
-          },
-          "character-11-regular-pro": {
             "font-weight": "var(--font-weight-char-normal)",
-            "font-family": "var(--font-family-pro)",
-            "font-size": "var(--font-size-48)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "line-height": "var(--line-height-72)"
-          },
-          "character-11-bold-pro": {
-            "font-weight": "var(--font-weight-char-bold)",
-            "font-family": "var(--font-family-pro)",
-            "font-size": "var(--font-size-48)",
-            "line-height": "var(--line-height-72)",
-            "letter-spacing": "var(--letter-spacing-wider)"
-          },
-          "icon-7-fill-1": {
-            "line-height": "var(--line-height-leading-none)",
-            "font-size": "var(--font-size-28)",
-            "font-variation-settings": "var(--font-weight-icon-fill-1)",
-            "font-family": "var(--font-family-icon)",
-            "letter-spacing": "var(--letter-spacing-normal)"
-          },
-          "character-4-bold-pro": {
-            "font-size": "var(--font-size-18)",
-            "font-weight": "var(--font-weight-char-bold)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-family": "var(--font-family-pro)",
-            "line-height": "var(--line-height-28)"
-          },
-          "character-7-regular-mono": {
-            "font-size": "var(--font-size-28)",
             "font-family": "var(--font-family-mono)",
-            "font-weight": "var(--font-weight-char-normal)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "line-height": "var(--line-height-44)"
-          },
-          "character-8-regular-pro": {
-            "font-size": "var(--font-size-32)",
-            "line-height": "var(--line-height-48)",
-            "font-weight": "var(--font-weight-char-normal)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-family": "var(--font-family-pro)"
+            "line-height": "var(--line-height-20)"
           },
           "character-4-bold-mono": {
             "font-weight": "var(--font-weight-char-bold)",
-            "line-height": "var(--line-height-28)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-size": "var(--font-size-18)",
-            "font-family": "var(--font-family-mono)"
-          },
-          "character-9-bold-mono": {
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-weight": "var(--font-weight-char-bold)",
-            "font-size": "var(--font-size-36)",
-            "line-height": "var(--line-height-56)",
-            "font-family": "var(--font-family-mono)"
-          },
-          "character-5-regular-mono": {
-            "line-height": "var(--line-height-32)",
-            "font-size": "var(--font-size-20)",
             "font-family": "var(--font-family-mono)",
-            "font-weight": "var(--font-weight-char-normal)",
+            "line-height": "var(--line-height-28)",
+            "font-size": "var(--font-size-18)",
             "letter-spacing": "var(--letter-spacing-wider)"
           },
-          "character-9-regular-pro": {
-            "font-weight": "var(--font-weight-char-normal)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "line-height": "var(--line-height-56)",
-            "font-family": "var(--font-family-pro)",
-            "font-size": "var(--font-size-36)"
-          },
-          "character-10-bold-mono": {
+          "character-4-bold-pro": {
             "font-weight": "var(--font-weight-char-bold)",
-            "font-family": "var(--font-family-mono)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-family": "var(--font-family-pro)",
+            "line-height": "var(--line-height-28)",
+            "font-size": "var(--font-size-18)"
+          },
+          "character-10-regular-mono": {
+            "font-weight": "var(--font-weight-char-normal)",
             "line-height": "var(--line-height-64)",
             "font-size": "var(--font-size-42)",
+            "font-family": "var(--font-family-mono)",
             "letter-spacing": "var(--letter-spacing-wider)"
           },
-          "character-5-regular-pro": {
-            "font-size": "var(--font-size-20)",
+          "character-10-bold-pro": {
             "font-family": "var(--font-family-pro)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-weight": "var(--font-weight-char-normal)",
-            "line-height": "var(--line-height-28)"
-          },
-          "character-3-regular-mono": {
-            "font-size": "var(--font-size-16)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-weight": "var(--font-weight-char-normal)",
-            "font-family": "var(--font-family-mono)",
-            "line-height": "var(--line-height-24)"
-          },
-          "icon-9-fill-1": {
-            "font-variation-settings": "var(--font-weight-icon-fill-1)",
-            "letter-spacing": "var(--letter-spacing-normal)",
-            "font-size": "var(--font-size-36)",
-            "font-family": "var(--font-family-icon)",
-            "line-height": "var(--line-height-leading-none)"
-          },
-          "character-12-bold-pro": {
             "font-weight": "var(--font-weight-char-bold)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "line-height": "var(--line-height-84)",
-            "font-size": "var(--font-size-54)",
-            "font-family": "var(--font-family-pro)"
+            "font-size": "var(--font-size-42)",
+            "line-height": "var(--line-height-64)",
+            "letter-spacing": "var(--letter-spacing-wider)"
           },
-          "icon-4-fill-1": {
-            "font-size": "var(--font-size-18)",
+          "icon-1-fill-0": {
             "letter-spacing": "var(--letter-spacing-normal)",
             "line-height": "var(--line-height-leading-none)",
-            "font-variation-settings": "var(--font-weight-icon-fill-1)",
+            "font-size": "var(--font-size-12)",
+            "font-variation-settings": "var(--font-weight-icon-fill-0)",
             "font-family": "var(--font-family-icon)"
-          },
-          "icon-11-fill-1": {
-            "line-height": "var(--line-height-leading-none)",
-            "font-variation-settings": "var(--font-weight-icon-fill-1)",
-            "letter-spacing": "var(--letter-spacing-normal)",
-            "font-family": "var(--font-family-icon)",
-            "font-size": "var(--font-size-48)"
           },
           "character-6-bold-mono": {
             "font-weight": "var(--font-weight-char-bold)",
@@ -592,388 +494,506 @@
             "line-height": "var(--line-height-36)",
             "font-family": "var(--font-family-mono)"
           },
-          "character-11-bold-mono": {
+          "icon-5-fill-0": {
+            "font-variation-settings": "var(--font-weight-icon-fill-0)",
+            "line-height": "var(--line-height-leading-none)",
+            "font-size": "var(--font-size-20)",
+            "letter-spacing": "var(--letter-spacing-normal)",
+            "font-family": "var(--font-family-icon)"
+          },
+          "character-1-regular-pro": {
+            "line-height": "var(--line-height-20)",
+            "font-family": "var(--font-family-pro)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "font-size": "var(--font-size-12)",
+            "letter-spacing": "var(--letter-spacing-wider)"
+          },
+          "character-12-bold-mono": {
+            "line-height": "var(--line-height-84)",
             "font-weight": "var(--font-weight-char-bold)",
-            "line-height": "var(--line-height-72)",
+            "font-size": "var(--font-size-54)",
             "font-family": "var(--font-family-mono)",
+            "letter-spacing": "var(--letter-spacing-wider)"
+          },
+          "character-5-regular-mono": {
+            "font-size": "var(--font-size-20)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "line-height": "var(--line-height-32)",
+            "font-family": "var(--font-family-mono)",
+            "letter-spacing": "var(--letter-spacing-wider)"
+          },
+          "character-1-bold-pro": {
+            "font-family": "var(--font-family-pro)",
             "letter-spacing": "var(--letter-spacing-wider)",
-            "font-size": "var(--font-size-48)"
+            "line-height": "var(--line-height-20)",
+            "font-weight": "var(--font-weight-char-bold)",
+            "font-size": "var(--font-size-12)"
+          },
+          "icon-11-fill-1": {
+            "font-family": "var(--font-family-icon)",
+            "line-height": "var(--line-height-leading-none)",
+            "letter-spacing": "var(--letter-spacing-normal)",
+            "font-size": "var(--font-size-48)",
+            "font-variation-settings": "var(--font-weight-icon-fill-1)"
+          },
+          "character-7-bold-mono": {
+            "font-family": "var(--font-family-mono)",
+            "font-size": "var(--font-size-28)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "line-height": "var(--line-height-44)",
+            "font-weight": "var(--font-weight-char-bold)"
+          },
+          "character-3-regular-pro": {
+            "font-weight": "var(--font-weight-char-normal)",
+            "font-size": "var(--font-size-16)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "line-height": "var(--line-height-24)",
+            "font-family": "var(--font-family-pro)"
+          },
+          "character-10-regular-pro": {
+            "font-family": "var(--font-family-pro)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "font-size": "var(--font-size-42)",
+            "line-height": "var(--line-height-64)"
           },
           "icon-8-fill-0": {
             "line-height": "var(--line-height-leading-none)",
-            "font-variation-settings": "var(--font-weight-icon-fill-0)",
             "letter-spacing": "var(--letter-spacing-normal)",
+            "font-variation-settings": "var(--font-weight-icon-fill-0)",
             "font-size": "var(--font-size-32)",
             "font-family": "var(--font-family-icon)"
           },
-          "icon-9-fill-0": {
-            "font-size": "var(--font-size-36)",
-            "line-height": "var(--line-height-leading-none)",
+          "icon-7-fill-0": {
             "letter-spacing": "var(--letter-spacing-normal)",
-            "font-variation-settings": "var(--font-weight-icon-fill-0)",
-            "font-family": "var(--font-family-icon)"
-          },
-          "character-4-regular-mono": {
-            "font-family": "var(--font-family-mono)",
-            "line-height": "var(--line-height-32)",
-            "font-weight": "var(--font-weight-char-normal)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-size": "var(--font-size-18)"
-          },
-          "character-5-bold-pro": {
-            "line-height": "var(--line-height-32)",
-            "font-size": "var(--font-size-20)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-weight": "var(--font-weight-char-bold)",
-            "font-family": "var(--font-family-pro)"
-          },
-          "icon-6-fill-0": {
             "line-height": "var(--line-height-leading-none)",
             "font-variation-settings": "var(--font-weight-icon-fill-0)",
             "font-family": "var(--font-family-icon)",
-            "letter-spacing": "var(--letter-spacing-normal)",
-            "font-size": "var(--font-size-24)"
-          },
-          "icon-5-fill-0": {
-            "font-family": "var(--font-family-icon)",
-            "letter-spacing": "var(--letter-spacing-normal)",
-            "font-variation-settings": "var(--font-weight-icon-fill-0)",
-            "line-height": "var(--line-height-leading-none)",
-            "font-size": "var(--font-size-20)"
-          },
-          "icon-10-fill-1": {
-            "font-size": "var(--font-size-42)",
-            "line-height": "var(--line-height-leading-none)",
-            "letter-spacing": "var(--letter-spacing-normal)",
-            "font-variation-settings": "var(--font-weight-icon-fill-1)",
-            "font-family": "var(--font-family-icon)"
-          },
-          "character-3-regular-pro": {
-            "font-family": "var(--font-family-pro)",
-            "font-weight": "var(--font-weight-char-normal)",
-            "font-size": "var(--font-size-16)",
-            "line-height": "var(--line-height-24)",
-            "letter-spacing": "var(--letter-spacing-wider)"
-          },
-          "icon-2-fill-0": {
-            "letter-spacing": "var(--letter-spacing-normal)",
-            "line-height": "var(--line-height-leading-none)",
-            "font-family": "var(--font-family-icon)",
-            "font-size": "var(--font-size-14)",
-            "font-variation-settings": "var(--font-weight-icon-fill-0)"
+            "font-size": "var(--font-size-28)"
           },
           "icon-8-fill-1": {
-            "font-family": "var(--font-family-icon)",
-            "letter-spacing": "var(--letter-spacing-normal)",
-            "line-height": "var(--line-height-leading-none)",
             "font-size": "var(--font-size-32)",
-            "font-variation-settings": "var(--font-weight-icon-fill-1)"
-          },
-          "character-11-regular-mono": {
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-family": "var(--font-family-mono)",
-            "font-weight": "var(--font-weight-char-normal)",
-            "font-size": "var(--font-size-48)",
-            "line-height": "var(--line-height-72)"
-          },
-          "icon-5-fill-1": {
-            "line-height": "var(--line-height-leading-none)",
-            "letter-spacing": "var(--letter-spacing-normal)",
+            "font-family": "var(--font-family-icon)",
             "font-variation-settings": "var(--font-weight-icon-fill-1)",
-            "font-family": "var(--font-family-icon)",
-            "font-size": "var(--font-size-20)"
-          },
-          "character-2-bold-pro": {
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-family": "var(--font-family-pro)",
-            "line-height": "var(--line-height-24)",
-            "font-size": "var(--font-size-14)",
-            "font-weight": "var(--font-weight-char-bold)"
-          },
-          "icon-1-fill-0": {
-            "font-size": "var(--font-size-12)",
             "letter-spacing": "var(--letter-spacing-normal)",
-            "font-family": "var(--font-family-icon)",
-            "line-height": "var(--line-height-leading-none)",
-            "font-variation-settings": "var(--font-weight-icon-fill-0)"
-          },
-          "icon-3-fill-1": {
-            "font-variation-settings": "var(--font-weight-icon-fill-1)",
-            "font-family": "var(--font-family-icon)",
-            "letter-spacing": "var(--letter-spacing-normal)",
-            "font-size": "var(--font-size-16)",
             "line-height": "var(--line-height-leading-none)"
           },
-          "character-8-bold-pro": {
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-size": "var(--font-size-32)",
-            "font-weight": "var(--font-weight-char-bold)",
+          "character-8-regular-pro": {
+            "font-family": "var(--font-family-pro)",
             "line-height": "var(--line-height-48)",
-            "font-family": "var(--font-family-pro)"
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "font-size": "var(--font-size-32)"
           },
-          "character-4-regular-pro": {
-            "line-height": "var(--line-height-28)",
+          "icon-9-fill-1": {
+            "font-size": "var(--font-size-36)",
+            "font-variation-settings": "var(--font-weight-icon-fill-1)",
+            "letter-spacing": "var(--letter-spacing-normal)",
+            "font-family": "var(--font-family-icon)",
+            "line-height": "var(--line-height-leading-none)"
+          },
+          "character-3-regular-mono": {
+            "line-height": "var(--line-height-24)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "font-size": "var(--font-size-16)",
+            "font-family": "var(--font-family-mono)",
+            "letter-spacing": "var(--letter-spacing-wider)"
+          },
+          "character-1-bold-mono": {
+            "font-size": "var(--font-size-12)",
+            "font-weight": "var(--font-weight-char-bold)",
+            "line-height": "var(--line-height-20)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-family": "var(--font-family-mono)"
+          },
+          "icon-4-fill-1": {
+            "letter-spacing": "var(--letter-spacing-normal)",
+            "font-variation-settings": "var(--font-weight-icon-fill-1)",
+            "line-height": "var(--line-height-leading-none)",
             "font-size": "var(--font-size-18)",
+            "font-family": "var(--font-family-icon)"
+          },
+          "character-2-regular-pro": {
+            "line-height": "var(--line-height-24)",
+            "font-size": "var(--font-size-14)",
             "letter-spacing": "var(--letter-spacing-wider)",
             "font-weight": "var(--font-weight-char-normal)",
             "font-family": "var(--font-family-pro)"
           },
           "character-6-bold-pro": {
             "line-height": "var(--line-height-36)",
-            "font-weight": "var(--font-weight-char-bold)",
-            "letter-spacing": "var(--letter-spacing-wider)",
             "font-size": "var(--font-size-24)",
+            "font-family": "var(--font-family-pro)",
+            "font-weight": "var(--font-weight-char-bold)",
+            "letter-spacing": "var(--letter-spacing-wider)"
+          },
+          "character-5-regular-pro": {
+            "font-size": "var(--font-size-20)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "line-height": "var(--line-height-28)",
+            "font-weight": "var(--font-weight-char-normal)",
             "font-family": "var(--font-family-pro)"
           },
-          "character-9-regular-mono": {
-            "font-size": "var(--font-size-36)",
+          "character-5-bold-pro": {
+            "font-weight": "var(--font-weight-char-bold)",
+            "font-size": "var(--font-size-20)",
+            "line-height": "var(--line-height-32)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-family": "var(--font-family-pro)"
+          },
+          "icon-10-fill-1": {
+            "line-height": "var(--line-height-leading-none)",
+            "font-size": "var(--font-size-42)",
+            "font-variation-settings": "var(--font-weight-icon-fill-1)",
+            "letter-spacing": "var(--letter-spacing-normal)",
+            "font-family": "var(--font-family-icon)"
+          },
+          "character-3-bold-mono": {
+            "letter-spacing": "var(--letter-spacing-wider)",
             "font-family": "var(--font-family-mono)",
-            "line-height": "var(--line-height-56)",
-            "font-weight": "var(--font-weight-char-normal)",
-            "letter-spacing": "var(--letter-spacing-wider)"
+            "font-size": "var(--font-size-16)",
+            "font-weight": "var(--font-weight-char-bold)",
+            "line-height": "var(--line-height-24)"
           },
           "icon-12-fill-1": {
-            "font-family": "var(--font-family-icon)",
-            "font-variation-settings": "var(--font-weight-icon-fill-1)",
             "line-height": "var(--line-height-leading-none)",
-            "font-size": "var(--font-size-54)",
-            "letter-spacing": "var(--letter-spacing-normal)"
-          },
-          "character-2-bold-mono": {
-            "font-size": "var(--font-size-14)",
-            "font-weight": "var(--font-weight-char-bold)",
-            "font-family": "var(--font-family-mono)",
-            "line-height": "var(--line-height-24)",
-            "letter-spacing": "var(--letter-spacing-wider)"
-          },
-          "character-10-bold-pro": {
-            "font-weight": "var(--font-weight-char-bold)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-size": "var(--font-size-42)",
-            "line-height": "var(--line-height-64)",
-            "font-family": "var(--font-family-pro)"
-          },
-          "character-6-regular-pro": {
-            "font-weight": "var(--font-weight-char-normal)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-size": "var(--font-size-24)",
-            "line-height": "var(--line-height-36)",
-            "font-family": "var(--font-family-pro)"
-          },
-          "character-12-regular-mono": {
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-weight": "var(--font-weight-char-normal)",
-            "font-size": "var(--font-size-54)",
-            "line-height": "var(--line-height-84)",
-            "font-family": "var(--font-family-mono)"
-          },
-          "character-1-bold-mono": {
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "line-height": "var(--line-height-20)",
-            "font-size": "var(--font-size-12)",
-            "font-weight": "var(--font-weight-char-bold)",
-            "font-family": "var(--font-family-mono)"
-          },
-          "icon-10-fill-0": {
-            "line-height": "var(--line-height-leading-none)",
-            "font-size": "var(--font-size-42)",
-            "font-variation-settings": "var(--font-weight-icon-fill-0)",
             "letter-spacing": "var(--letter-spacing-normal)",
-            "font-family": "var(--font-family-icon)"
-          },
-          "character-7-regular-pro": {
-            "line-height": "var(--line-height-44)",
-            "font-family": "var(--font-family-pro)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-size": "var(--font-size-28)",
-            "font-weight": "var(--font-weight-char-normal)"
-          },
-          "character-6-regular-mono": {
-            "font-weight": "var(--font-weight-char-normal)",
-            "font-family": "var(--font-family-mono)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-size": "var(--font-size-24)",
-            "line-height": "var(--line-height-36)"
-          },
-          "character-2-regular-mono": {
-            "font-family": "var(--font-family-mono)",
-            "font-size": "var(--font-size-14)",
-            "font-weight": "var(--font-weight-char-normal)",
-            "line-height": "var(--line-height-24)",
-            "letter-spacing": "var(--letter-spacing-wider)"
-          },
-          "character-10-regular-pro": {
-            "line-height": "var(--line-height-64)",
-            "font-family": "var(--font-family-pro)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-weight": "var(--font-weight-char-normal)",
-            "font-size": "var(--font-size-42)"
+            "font-family": "var(--font-family-icon)",
+            "font-size": "var(--font-size-54)",
+            "font-variation-settings": "var(--font-weight-icon-fill-1)"
           },
           "icon-6-fill-1": {
-            "font-variation-settings": "var(--font-weight-icon-fill-1)",
             "line-height": "var(--line-height-leading-none)",
+            "font-family": "var(--font-family-icon)",
             "letter-spacing": "var(--letter-spacing-normal)",
+            "font-size": "var(--font-size-24)",
+            "font-variation-settings": "var(--font-weight-icon-fill-1)"
+          },
+          "icon-6-fill-0": {
+            "font-variation-settings": "var(--font-weight-icon-fill-0)",
+            "letter-spacing": "var(--letter-spacing-normal)",
+            "line-height": "var(--line-height-leading-none)",
             "font-size": "var(--font-size-24)",
             "font-family": "var(--font-family-icon)"
           },
-          "character-3-bold-pro": {
-            "font-size": "var(--font-size-16)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "line-height": "var(--line-height-24)",
-            "font-family": "var(--font-family-pro)",
-            "font-weight": "var(--font-weight-char-bold)"
-          },
-          "character-2-regular-pro": {
-            "font-size": "var(--font-size-14)",
+          "character-11-regular-pro": {
+            "line-height": "var(--line-height-72)",
             "font-weight": "var(--font-weight-char-normal)",
-            "font-family": "var(--font-family-pro)",
-            "line-height": "var(--line-height-24)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-size": "var(--font-size-48)",
+            "font-family": "var(--font-family-pro)"
+          },
+          "icon-11-fill-0": {
+            "font-variation-settings": "var(--font-weight-icon-fill-0)",
+            "letter-spacing": "var(--letter-spacing-normal)",
+            "line-height": "var(--line-height-leading-none)",
+            "font-family": "var(--font-family-icon)",
+            "font-size": "var(--font-size-48)"
+          },
+          "character-8-regular-mono": {
+            "font-family": "var(--font-family-mono)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "line-height": "var(--line-height-48)",
+            "font-size": "var(--font-size-32)",
             "letter-spacing": "var(--letter-spacing-wider)"
+          },
+          "character-5-bold-mono": {
+            "line-height": "var(--line-height-32)",
+            "font-weight": "var(--font-weight-char-bold)",
+            "font-family": "var(--font-family-mono)",
+            "font-size": "var(--font-size-20)",
+            "letter-spacing": "var(--letter-spacing-wider)"
+          },
+          "character-9-regular-pro": {
+            "font-weight": "var(--font-weight-char-normal)",
+            "font-size": "var(--font-size-36)",
+            "line-height": "var(--line-height-56)",
+            "font-family": "var(--font-family-pro)",
+            "letter-spacing": "var(--letter-spacing-wider)"
+          },
+          "icon-2-fill-0": {
+            "font-size": "var(--font-size-14)",
+            "font-variation-settings": "var(--font-weight-icon-fill-0)",
+            "font-family": "var(--font-family-icon)",
+            "line-height": "var(--line-height-leading-none)",
+            "letter-spacing": "var(--letter-spacing-normal)"
+          },
+          "icon-7-fill-1": {
+            "font-family": "var(--font-family-icon)",
+            "line-height": "var(--line-height-leading-none)",
+            "font-size": "var(--font-size-28)",
+            "font-variation-settings": "var(--font-weight-icon-fill-1)",
+            "letter-spacing": "var(--letter-spacing-normal)"
+          },
+          "icon-4-fill-0": {
+            "font-variation-settings": "var(--font-weight-icon-fill-0)",
+            "font-size": "var(--font-size-18)",
+            "font-family": "var(--font-family-icon)",
+            "line-height": "var(--line-height-leading-none)",
+            "letter-spacing": "var(--letter-spacing-normal)"
           },
           "icon-1-fill-1": {
             "font-family": "var(--font-family-icon)",
             "font-size": "var(--font-size-12)",
             "letter-spacing": "var(--letter-spacing-normal)",
-            "font-variation-settings": "var(--font-weight-icon-fill-1)",
-            "line-height": "var(--line-height-leading-none)"
+            "line-height": "var(--line-height-leading-none)",
+            "font-variation-settings": "var(--font-weight-icon-fill-1)"
           },
-          "character-7-bold-pro": {
-            "line-height": "var(--line-height-44)",
-            "font-size": "var(--font-size-28)",
+          "character-12-regular-pro": {
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "line-height": "var(--line-height-84)",
             "font-family": "var(--font-family-pro)",
+            "font-size": "var(--font-size-54)"
+          },
+          "character-11-bold-pro": {
+            "font-weight": "var(--font-weight-char-bold)",
+            "font-family": "var(--font-family-pro)",
+            "font-size": "var(--font-size-48)",
+            "line-height": "var(--line-height-72)",
+            "letter-spacing": "var(--letter-spacing-wider)"
+          },
+          "icon-5-fill-1": {
+            "font-family": "var(--font-family-icon)",
+            "font-variation-settings": "var(--font-weight-icon-fill-1)",
+            "line-height": "var(--line-height-leading-none)",
+            "font-size": "var(--font-size-20)",
+            "letter-spacing": "var(--letter-spacing-normal)"
+          },
+          "character-7-regular-pro": {
+            "line-height": "var(--line-height-44)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "font-family": "var(--font-family-pro)",
+            "font-size": "var(--font-size-28)"
+          },
+          "icon-2-fill-1": {
+            "line-height": "var(--line-height-leading-none)",
+            "font-variation-settings": "var(--font-weight-icon-fill-1)",
+            "font-size": "var(--font-size-14)",
+            "font-family": "var(--font-family-icon)",
+            "letter-spacing": "var(--letter-spacing-normal)"
+          },
+          "character-2-regular-mono": {
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-size": "var(--font-size-14)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "line-height": "var(--line-height-24)",
+            "font-family": "var(--font-family-mono)"
+          },
+          "character-12-regular-mono": {
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "font-size": "var(--font-size-54)",
+            "font-family": "var(--font-family-mono)",
+            "line-height": "var(--line-height-84)"
+          },
+          "character-10-bold-mono": {
+            "font-family": "var(--font-family-mono)",
+            "line-height": "var(--line-height-64)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-size": "var(--font-size-42)",
+            "font-weight": "var(--font-weight-char-bold)"
+          },
+          "character-4-regular-pro": {
+            "line-height": "var(--line-height-28)",
+            "font-family": "var(--font-family-pro)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "font-size": "var(--font-size-18)"
+          },
+          "character-9-regular-mono": {
+            "font-family": "var(--font-family-mono)",
+            "line-height": "var(--line-height-56)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "font-size": "var(--font-size-36)"
+          },
+          "icon-3-fill-0": {
+            "font-variation-settings": "var(--font-weight-icon-fill-0)",
+            "letter-spacing": "var(--letter-spacing-normal)",
+            "font-family": "var(--font-family-icon)",
+            "line-height": "var(--line-height-leading-none)",
+            "font-size": "var(--font-size-16)"
+          },
+          "character-2-bold-mono": {
+            "font-weight": "var(--font-weight-char-bold)",
+            "line-height": "var(--line-height-24)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-size": "var(--font-size-14)",
+            "font-family": "var(--font-family-mono)"
+          },
+          "character-4-regular-mono": {
+            "font-size": "var(--font-size-18)",
+            "line-height": "var(--line-height-32)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "font-family": "var(--font-family-mono)",
+            "letter-spacing": "var(--letter-spacing-wider)"
+          },
+          "icon-9-fill-0": {
+            "font-family": "var(--font-family-icon)",
+            "font-size": "var(--font-size-36)",
+            "line-height": "var(--line-height-leading-none)",
+            "letter-spacing": "var(--letter-spacing-normal)",
+            "font-variation-settings": "var(--font-weight-icon-fill-0)"
+          },
+          "character-8-bold-pro": {
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-weight": "var(--font-weight-char-bold)",
+            "font-size": "var(--font-size-32)",
+            "line-height": "var(--line-height-48)",
+            "font-family": "var(--font-family-pro)"
+          },
+          "character-7-regular-mono": {
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "line-height": "var(--line-height-44)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "font-family": "var(--font-family-mono)",
+            "font-size": "var(--font-size-28)"
+          },
+          "icon-12-fill-0": {
+            "font-variation-settings": "var(--font-weight-icon-fill-0)",
+            "letter-spacing": "var(--letter-spacing-normal)",
+            "line-height": "var(--line-height-leading-none)",
+            "font-family": "var(--font-family-icon)",
+            "font-size": "var(--font-size-54)"
+          },
+          "character-11-regular-mono": {
+            "line-height": "var(--line-height-72)",
+            "font-weight": "var(--font-weight-char-normal)",
+            "font-family": "var(--font-family-mono)",
+            "font-size": "var(--font-size-48)",
+            "letter-spacing": "var(--letter-spacing-wider)"
+          },
+          "character-9-bold-mono": {
+            "line-height": "var(--line-height-56)",
+            "font-family": "var(--font-family-mono)",
+            "font-size": "var(--font-size-36)",
+            "font-weight": "var(--font-weight-char-bold)",
+            "letter-spacing": "var(--letter-spacing-wider)"
+          },
+          "icon-3-fill-1": {
+            "font-size": "var(--font-size-16)",
+            "line-height": "var(--line-height-leading-none)",
+            "letter-spacing": "var(--letter-spacing-normal)",
+            "font-family": "var(--font-family-icon)",
+            "font-variation-settings": "var(--font-weight-icon-fill-1)"
+          },
+          "character-2-bold-pro": {
+            "line-height": "var(--line-height-24)",
+            "font-family": "var(--font-family-pro)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-size": "var(--font-size-14)",
+            "font-weight": "var(--font-weight-char-bold)"
+          },
+          "character-3-bold-pro": {
+            "font-size": "var(--font-size-16)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-family": "var(--font-family-pro)",
+            "line-height": "var(--line-height-24)",
+            "font-weight": "var(--font-weight-char-bold)"
+          },
+          "character-6-regular-pro": {
+            "font-family": "var(--font-family-pro)",
+            "line-height": "var(--line-height-36)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-size": "var(--font-size-24)",
+            "font-weight": "var(--font-weight-char-normal)"
+          },
+          "character-12-bold-pro": {
+            "font-size": "var(--font-size-54)",
+            "font-family": "var(--font-family-pro)",
+            "line-height": "var(--line-height-84)",
             "letter-spacing": "var(--letter-spacing-wider)",
             "font-weight": "var(--font-weight-char-bold)"
           },
           "character-9-bold-pro": {
+            "line-height": "var(--line-height-56)",
             "font-family": "var(--font-family-pro)",
-            "font-size": "var(--font-size-36)",
             "letter-spacing": "var(--letter-spacing-wider)",
             "font-weight": "var(--font-weight-char-bold)",
-            "line-height": "var(--line-height-56)"
+            "font-size": "var(--font-size-36)"
           },
-          "character-10-regular-mono": {
+          "character-6-regular-mono": {
+            "font-size": "var(--font-size-24)",
             "letter-spacing": "var(--letter-spacing-wider)",
-            "font-size": "var(--font-size-42)",
+            "line-height": "var(--line-height-36)",
             "font-weight": "var(--font-weight-char-normal)",
-            "line-height": "var(--line-height-64)",
             "font-family": "var(--font-family-mono)"
           },
-          "icon-12-fill-0": {
-            "font-size": "var(--font-size-54)",
-            "letter-spacing": "var(--letter-spacing-normal)",
-            "line-height": "var(--line-height-leading-none)",
-            "font-variation-settings": "var(--font-weight-icon-fill-0)",
-            "font-family": "var(--font-family-icon)"
-          },
-          "character-8-regular-mono": {
-            "font-size": "var(--font-size-32)",
-            "font-weight": "var(--font-weight-char-normal)",
+          "character-7-bold-pro": {
             "letter-spacing": "var(--letter-spacing-wider)",
-            "line-height": "var(--line-height-48)",
-            "font-family": "var(--font-family-mono)"
-          },
-          "character-1-regular-mono": {
-            "font-family": "var(--font-family-mono)",
-            "line-height": "var(--line-height-20)",
-            "font-size": "var(--font-size-12)",
-            "font-weight": "var(--font-weight-char-normal)",
-            "letter-spacing": "var(--letter-spacing-wider)"
-          },
-          "character-12-regular-pro": {
-            "font-weight": "var(--font-weight-char-normal)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-size": "var(--font-size-54)",
-            "font-family": "var(--font-family-pro)",
-            "line-height": "var(--line-height-84)"
-          },
-          "character-1-bold-pro": {
-            "font-size": "var(--font-size-12)",
-            "line-height": "var(--line-height-20)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-weight": "var(--font-weight-char-bold)",
-            "font-family": "var(--font-family-pro)"
-          },
-          "icon-2-fill-1": {
-            "font-variation-settings": "var(--font-weight-icon-fill-1)",
-            "font-size": "var(--font-size-14)",
-            "letter-spacing": "var(--letter-spacing-normal)",
-            "line-height": "var(--line-height-leading-none)",
-            "font-family": "var(--font-family-icon)"
-          },
-          "icon-3-fill-0": {
-            "font-family": "var(--font-family-icon)",
-            "line-height": "var(--line-height-leading-none)",
-            "font-size": "var(--font-size-16)",
-            "letter-spacing": "var(--letter-spacing-normal)",
-            "font-variation-settings": "var(--font-weight-icon-fill-0)"
-          },
-          "character-1-regular-pro": {
-            "font-family": "var(--font-family-pro)",
-            "font-weight": "var(--font-weight-char-normal)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-size": "var(--font-size-12)",
-            "line-height": "var(--line-height-20)"
-          },
-          "character-7-bold-mono": {
             "line-height": "var(--line-height-44)",
-            "letter-spacing": "var(--letter-spacing-wider)",
-            "font-family": "var(--font-family-mono)",
+            "font-family": "var(--font-family-pro)",
             "font-size": "var(--font-size-28)",
             "font-weight": "var(--font-weight-char-bold)"
           },
-          "icon-7-fill-0": {
+          "character-8-bold-mono": {
+            "font-weight": "var(--font-weight-char-bold)",
+            "font-size": "var(--font-size-32)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-family": "var(--font-family-mono)",
+            "line-height": "var(--line-height-48)"
+          },
+          "character-11-bold-mono": {
+            "font-size": "var(--font-size-48)",
+            "line-height": "var(--line-height-72)",
+            "letter-spacing": "var(--letter-spacing-wider)",
+            "font-weight": "var(--font-weight-char-bold)",
+            "font-family": "var(--font-family-mono)"
+          },
+          "icon-10-fill-0": {
             "font-family": "var(--font-family-icon)",
-            "line-height": "var(--line-height-leading-none)",
             "letter-spacing": "var(--letter-spacing-normal)",
-            "font-size": "var(--font-size-28)",
+            "line-height": "var(--line-height-leading-none)",
+            "font-size": "var(--font-size-42)",
             "font-variation-settings": "var(--font-weight-icon-fill-0)"
           }
         }
       },
-      "name": "sparkle-font",
       "cssVars": {
         "theme": {
-          "font-size-16": "1rem",
-          "line-height-leading-none": "1",
-          "line-height-48": "3rem",
-          "letter-spacing-normal": "0",
-          "line-height-32": "2rem",
-          "font-family-pro": "\"BIZ UDPGothic\", sans-serif",
-          "line-height-84": "5.25rem",
-          "font-size-28": "1.75rem",
-          "font-weight-icon-fill-0": "\"FILL\" 0, \"wght\" 500, \"GRAD\" 0, \"opsz\" 24",
-          "font-size-14": "0.875rem",
-          "letter-spacing-wider": "0.05em",
-          "font-family-mono": "\"BIZ UDGothic\", monospace",
-          "font-size-54": "3.375rem",
-          "line-height-56": "3.5rem",
-          "font-size-48": "3rem",
-          "letter-spacing-widest": "0.1em",
-          "line-height-64": "4rem",
-          "font-weight-char-normal": "400",
-          "font-size-36": "2.25rem",
-          "font-size-18": "1.125rem",
-          "line-height-24": "1.5rem",
-          "font-size-12": "0.75rem",
-          "line-height-20": "1.25rem",
-          "font-weight-icon-fill-1": "\"FILL\" 1, \"wght\" 500, \"GRAD\" 0, \"opsz\" 24",
-          "font-size-42": "2.625rem",
-          "font-size-32": "2rem",
-          "line-height-44": "2.75rem",
           "font-size-24": "1.5rem",
-          "letter-spacing-wide": "0.025em",
-          "font-weight-char-bold": "700",
-          "font-family-icon": "\"Material Symbols Rounded\"",
+          "letter-spacing-widest": "0.1em",
+          "line-height-32": "2rem",
+          "font-size-14": "0.875rem",
           "font-size-20": "1.25rem",
-          "line-height-72": "4.5rem",
+          "font-weight-char-bold": "700",
+          "font-size-16": "1rem",
+          "font-family-pro": "\"BIZ UDPGothic\", sans-serif",
+          "font-size-48": "3rem",
+          "line-height-leading-none": "1",
+          "font-family-icon": "\"Material Symbols Rounded\"",
+          "font-size-18": "1.125rem",
+          "font-size-32": "2rem",
+          "font-size-42": "2.625rem",
+          "font-size-28": "1.75rem",
+          "line-height-28": "1.75rem",
+          "font-weight-char-normal": "400",
+          "font-weight-icon-fill-1": "\"FILL\" 1, \"wght\" 500, \"GRAD\" 0, \"opsz\" 24",
+          "line-height-20": "1.25rem",
           "line-height-36": "2.25rem",
-          "line-height-28": "1.75rem"
+          "font-family-mono": "\"BIZ UDGothic\", monospace",
+          "font-size-36": "2.25rem",
+          "font-size-12": "0.75rem",
+          "font-weight-icon-fill-0": "\"FILL\" 0, \"wght\" 500, \"GRAD\" 0, \"opsz\" 24",
+          "letter-spacing-wider": "0.05em",
+          "line-height-24": "1.5rem",
+          "line-height-64": "4rem",
+          "line-height-56": "3.5rem",
+          "line-height-48": "3rem",
+          "line-height-84": "5.25rem",
+          "line-height-44": "2.75rem",
+          "letter-spacing-wide": "0.025em",
+          "letter-spacing-normal": "0",
+          "line-height-72": "4.5rem",
+          "font-size-54": "3.375rem"
         }
-      },
-      "title": "Sparkle Font",
-      "type": "registry:component"
+      }
     },
     {
+      "type": "registry:style",
+      "name": "sparkle-style",
       "registryDependencies": [
         "https://sparkle-design.vercel.app/r/button.json",
         "https://sparkle-design.vercel.app/r/checkbox.json",
@@ -982,149 +1002,147 @@
         "https://sparkle-design.vercel.app/r/sparkle-color.json",
         "https://sparkle-design.vercel.app/r/sparkle-font.json"
       ],
-      "name": "sparkle-style",
       "cssVars": {
         "theme": {
-          "radius-xs": "0.125rem",
-          "shadow-xs": "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
           "radius-xl": "1rem",
-          "radius-none": "0",
           "radius-sm": "0.25rem",
-          "shadow-lg": "0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 0, 0.10)",
-          "shadow-2xs": "0px 1px 0px 0px rgba(0, 0, 0, 0.05)",
-          "radius-full": "9999px",
-          "shadow-base": "var(--shadow-none)",
-          "shadow-none": "0px 0px 0px 0px #000",
-          "shadow-sm": "0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10)",
           "shadow-md": "0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -2px rgba(0, 0, 0, 0.10)",
-          "radius-md": "0.5rem",
-          "shadow-popout": "var(--shadow-lg)",
-          "shadow-stick": "var(--shadow-sm)",
-          "radius-lg": "0.75rem",
-          "radius-3xl": "2rem",
+          "shadow-xs": "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+          "shadow-raise": "var(--shadow-xs)",
           "shadow-flat": "var(--shadow-2xs)",
+          "shadow-popout": "var(--shadow-lg)",
+          "radius-full": "9999px",
+          "shadow-2xs": "0px 1px 0px 0px rgba(0, 0, 0, 0.05)",
+          "shadow-base": "var(--shadow-none)",
+          "radius-lg": "0.75rem",
+          "radius-xs": "0.125rem",
           "radius-2xl": "1.5rem",
-          "shadow-float": "var(--shadow-md)",
-          "shadow-raise": "var(--shadow-xs)"
+          "shadow-none": "0px 0px 0px 0px #000",
+          "radius-md": "0.5rem",
+          "radius-3xl": "2rem",
+          "radius-none": "0",
+          "shadow-sm": "0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10)",
+          "shadow-stick": "var(--shadow-sm)",
+          "shadow-lg": "0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 0, 0.10)",
+          "shadow-float": "var(--shadow-md)"
         }
-      },
-      "type": "registry:style"
+      }
     },
     {
+      "title": "Sparkle Color",
+      "type": "registry:component",
+      "name": "sparkle-color",
       "css": {
-        "@utility warning-*": {
-          "color": "var(--color-yellow-*)"
-        },
-        "@utility negative-*": {
-          "color": "var(--color-red-*)"
-        },
-        "@utility primary-*": {
-          "color": "var(--color-blue-*)"
-        },
         "@utility secondary-*": {
           "color": "var(--color-gray-*)"
         },
         "@utility info-*": {
           "color": "var(--color-blue-*)"
         },
-        "@utility neutral-*": {
-          "color": "var(--color-gray-*)"
+        "@utility primary-*": {
+          "color": "var(--color-blue-*)"
         },
         "@utility success-*": {
           "color": "var(--color-green-*)"
+        },
+        "@utility neutral-*": {
+          "color": "var(--color-gray-*)"
+        },
+        "@utility negative-*": {
+          "color": "var(--color-red-*)"
+        },
+        "@utility warning-*": {
+          "color": "var(--color-yellow-*)"
         }
       },
-      "name": "sparkle-color",
       "cssVars": {
         "theme": {
-          "color-pink-800": "rgba(97,19,71,1)",
-          "color-yellow-700": "rgba(99,60,1,1)",
-          "color-pink-900": "rgba(77,3,54,1)",
-          "color-blue-100": "rgba(206,237,255,1)",
-          "color-orange-100": "rgba(255,216,181,1)",
-          "color-purple-200": "rgba(216,185,255,1)",
-          "color-green-600": "rgba(17,99,41,1)",
-          "color-green-50": "rgba(237,253,240,1)",
-          "color-orange-500": "rgba(188,76,0,1)",
-          "color-yellow-200": "rgba(250,213,115,1)",
-          "color-orange-700": "rgba(118,44,0,1)",
-          "color-orange-600": "rgba(149,56,0,1)",
-          "color-red-100": "rgba(255,229,228,1)",
-          "color-gray-300": "rgba(175,184,193,1)",
-          "color-gray-50": "rgba(246,248,250,1)",
-          "color-blue-900": "rgba(0,33,85,1)",
           "color-purple-500": "rgba(130,80,223,1)",
-          "color-yellow-500": "rgba(154,103,0,1)",
-          "color-gray-200": "rgba(208,215,222,1)",
-          "color-yellow-300": "rgba(240,184,0,1)",
-          "color-green-900": "rgba(0,45,17,1)",
-          "color-yellow-800": "rgba(77,45,0,1)",
-          "color-gray-800": "rgba(50,56,63,1)",
-          "color-pink-300": "rgba(255,128,200,1)",
-          "color-purple-100": "rgba(236,216,255,1)",
-          "color-yellow-400": "rgba(204,143,0,1)",
-          "color-gray-100": "rgba(234,238,242,1)",
-          "color-blue-600": "rgba(5,80,174,1)",
-          "color-blue-500": "rgba(9,105,218,1)",
-          "color-red-300": "rgba(255,129,130,1)",
-          "color-web-focus": "rgba(9,108,220,1)",
-          "color-blue-800": "rgba(10,48,105,1)",
-          "color-green-400": "rgba(45,164,78,1)",
           "color-red-900": "rgba(76,0,20,1)",
-          "color-pink-700": "rgba(119,32,87,1)",
-          "color-orange-200": "rgba(255,183,124,1)",
-          "color-blue-300": "rgba(97,179,255,1)",
-          "color-green-200": "rgba(111,221,139,1)",
-          "color-pink-600": "rgba(153,40,110,1)",
-          "color-blue-700": "rgba(3,61,139,1)",
-          "color-orange-900": "rgba(71,23,0,1)",
-          "color-black": "rgba(0,0,0,1)",
-          "color-pink-400": "rgba(232,90,173,1)",
-          "color-blue-50": "rgba(229,246,255,1)",
-          "color-orange-300": "rgba(251,143,68,1)",
-          "color-yellow-50": "rgba(255,251,226,1)",
-          "color-purple-300": "rgba(194,151,255,1)",
-          "color-red-200": "rgba(255,187,185,1)",
-          "color-pink-200": "rgba(255,173,218,1)",
-          "color-red-500": "rgba(207,34,46,1)",
+          "color-gray-300": "rgba(175,184,193,1)",
           "color-pink-50": "rgba(255,239,247,1)",
-          "color-purple-50": "rgba(251,239,255,1)",
-          "color-yellow-100": "rgba(253,237,186,1)",
-          "color-blue-200": "rgba(151,211,255,1)",
-          "color-green-500": "rgba(26,127,55,1)",
-          "color-purple-600": "rgba(102,57,186,1)",
-          "color-green-100": "rgba(197,247,208,1)",
-          "color-red-800": "rgba(102,0,24,1)",
-          "color-gray-700": "rgba(66,74,83,1)",
-          "color-green-800": "rgba(0,61,22,1)",
-          "color-white": "rgba(255,255,255,1)",
-          "color-gray-500": "rgba(110,119,129,1)",
-          "color-green-700": "rgba(4,79,30,1)",
-          "color-orange-800": "rgba(92,34,0,1)",
-          "color-orange-400": "rgba(225,111,36,1)",
-          "color-red-600": "rgba(164,14,38,1)",
+          "color-blue-600": "rgba(5,80,174,1)",
           "color-red-400": "rgba(250,69,73,1)",
-          "color-purple-900": "rgba(46,20,97,1)",
-          "color-blue-400": "rgba(33,139,255,1)",
-          "color-red-700": "rgba(130,7,30,1)",
-          "color-pink-500": "rgba(191,57,137,1)",
-          "color-purple-400": "rgba(164,117,249,1)",
-          "color-yellow-900": "rgba(59,35,0,1)",
-          "color-pink-100": "rgba(255,211,235,1)",
-          "color-yellow-600": "rgba(125,78,0,1)",
+          "color-green-400": "rgba(45,164,78,1)",
+          "color-orange-100": "rgba(255,216,181,1)",
           "color-red-50": "rgba(255,246,245,1)",
-          "color-green-300": "rgba(74,194,107,1)",
-          "color-purple-800": "rgba(62,31,121,1)",
-          "color-gray-600": "rgba(87,96,106,1)",
-          "color-purple-700": "rgba(81,42,151,1)",
-          "color-gray-900": "rgba(36,41,47,1)",
+          "color-blue-900": "rgba(0,33,85,1)",
           "color-gray-400": "rgba(140,149,159,1)",
-          "color-orange-50": "rgba(255,241,229,1)"
+          "color-pink-400": "rgba(232,90,173,1)",
+          "color-pink-700": "rgba(119,32,87,1)",
+          "color-yellow-400": "rgba(204,143,0,1)",
+          "color-green-900": "rgba(0,45,17,1)",
+          "color-green-100": "rgba(197,247,208,1)",
+          "color-red-200": "rgba(255,187,185,1)",
+          "color-pink-900": "rgba(77,3,54,1)",
+          "color-orange-50": "rgba(255,241,229,1)",
+          "color-gray-50": "rgba(246,248,250,1)",
+          "color-yellow-200": "rgba(250,213,115,1)",
+          "color-blue-200": "rgba(151,211,255,1)",
+          "color-green-50": "rgba(237,253,240,1)",
+          "color-green-200": "rgba(111,221,139,1)",
+          "color-pink-800": "rgba(97,19,71,1)",
+          "color-gray-700": "rgba(66,74,83,1)",
+          "color-red-300": "rgba(255,129,130,1)",
+          "color-blue-300": "rgba(97,179,255,1)",
+          "color-red-700": "rgba(130,7,30,1)",
+          "color-blue-100": "rgba(206,237,255,1)",
+          "color-gray-100": "rgba(234,238,242,1)",
+          "color-red-500": "rgba(207,34,46,1)",
+          "color-green-500": "rgba(26,127,55,1)",
+          "color-yellow-50": "rgba(255,251,226,1)",
+          "color-blue-700": "rgba(3,61,139,1)",
+          "color-orange-700": "rgba(118,44,0,1)",
+          "color-purple-800": "rgba(62,31,121,1)",
+          "color-purple-300": "rgba(194,151,255,1)",
+          "color-black": "rgba(0,0,0,1)",
+          "color-red-800": "rgba(102,0,24,1)",
+          "color-green-700": "rgba(4,79,30,1)",
+          "color-purple-700": "rgba(81,42,151,1)",
+          "color-orange-500": "rgba(188,76,0,1)",
+          "color-web-focus": "rgba(9,108,220,1)",
+          "color-yellow-100": "rgba(253,237,186,1)",
+          "color-red-600": "rgba(164,14,38,1)",
+          "color-pink-300": "rgba(255,128,200,1)",
+          "color-yellow-300": "rgba(240,184,0,1)",
+          "color-blue-800": "rgba(10,48,105,1)",
+          "color-yellow-600": "rgba(125,78,0,1)",
+          "color-purple-50": "rgba(251,239,255,1)",
+          "color-purple-600": "rgba(102,57,186,1)",
+          "color-yellow-800": "rgba(77,45,0,1)",
+          "color-orange-300": "rgba(251,143,68,1)",
+          "color-pink-200": "rgba(255,173,218,1)",
+          "color-gray-900": "rgba(36,41,47,1)",
+          "color-purple-100": "rgba(236,216,255,1)",
+          "color-yellow-700": "rgba(99,60,1,1)",
+          "color-green-600": "rgba(17,99,41,1)",
+          "color-blue-500": "rgba(9,105,218,1)",
+          "color-white": "rgba(255,255,255,1)",
+          "color-pink-100": "rgba(255,211,235,1)",
+          "color-gray-200": "rgba(208,215,222,1)",
+          "color-red-100": "rgba(255,229,228,1)",
+          "color-purple-400": "rgba(164,117,249,1)",
+          "color-blue-50": "rgba(229,246,255,1)",
+          "color-gray-800": "rgba(50,56,63,1)",
+          "color-yellow-900": "rgba(59,35,0,1)",
+          "color-gray-600": "rgba(87,96,106,1)",
+          "color-orange-200": "rgba(255,183,124,1)",
+          "color-orange-400": "rgba(225,111,36,1)",
+          "color-yellow-500": "rgba(154,103,0,1)",
+          "color-green-800": "rgba(0,61,22,1)",
+          "color-gray-500": "rgba(110,119,129,1)",
+          "color-pink-500": "rgba(191,57,137,1)",
+          "color-purple-900": "rgba(46,20,97,1)",
+          "color-purple-200": "rgba(216,185,255,1)",
+          "color-pink-600": "rgba(153,40,110,1)",
+          "color-green-300": "rgba(74,194,107,1)",
+          "color-orange-600": "rgba(149,56,0,1)",
+          "color-blue-400": "rgba(33,139,255,1)",
+          "color-orange-900": "rgba(71,23,0,1)",
+          "color-orange-800": "rgba(92,34,0,1)"
         }
-      },
-      "title": "Sparkle Color",
-      "type": "registry:component"
+      }
     }
   ],
-  "$schema": "https://ui.shadcn.com/schema/registry.json"
+  "name": "sparkle-ui"
 }
