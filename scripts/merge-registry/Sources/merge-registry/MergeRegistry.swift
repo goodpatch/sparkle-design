@@ -3,10 +3,10 @@ import Foundation
 
 @main
 struct MergeRegistry {
-  static func main() async throws {
+  static func main() async {
     let itemPaths = fetchRegistryItemsPath()
     do {
-      let registry = try fetchRegistry()
+      let registry = fetchRegistry()
 
       let items = itemPaths.compactMap { itemPath in
         do {
@@ -23,24 +23,84 @@ struct MergeRegistry {
       let newRegistry = registry.copyWithNewItems(sortedItems)
       try writeRegistry(newRegistry)
     } catch {
-      print(error)
+      print("Error: \(error)")
+      // エラーが発生した場合でも、デフォルトのレジストリを作成
+      do {
+        let defaultRegistry = ShadcnRegistry(
+          schema: "https://ui.shadcn.com/schema/registry.json",
+          name: "sparkle-ui",
+          homepage: "https://goodpatch.com",
+          items: []
+        )
+        try writeRegistry(defaultRegistry)
+        print("Created default registry due to error")
+      } catch {
+        print("Failed to create default registry: \(error)")
+      }
     }
   }
 
   /// 現在のレジストリを取得する
-  private static func fetchRegistry() throws -> ShadcnRegistry {
+  private static func fetchRegistry() -> ShadcnRegistry {
+    let registryPath = "../../registry.json"
+
+    // ファイルが存在するかチェック
+    if !FileManager.default.fileExists(atPath: registryPath) {
+      print("📝 registry.json not found, creating new one")
+      return ShadcnRegistry(
+        schema: "https://ui.shadcn.com/schema/registry.json",
+        name: "sparkle-ui",
+        homepage: "https://goodpatch.com",
+        items: []
+      )
+    }
+
+    // catコマンドで読み込み
     let pipe = Pipe()
     let process = Process()
     process.launchPath = "/bin/cat"
-    process.arguments = ["../../registry.json"]
+    process.arguments = [registryPath]
     process.standardOutput = pipe
     process.launch()
     process.waitUntilExit()
 
-    let data = pipe.fileHandleForReading.readDataToEndOfFile()
-    return try JSONDecoder().decode(ShadcnRegistry.self, from: data)
-  }
+    // プロセスが失敗した場合もデフォルトレジストリを返す
+    if process.terminationStatus != 0 {
+      print("📝 Failed to read registry.json, creating new one")
+      return ShadcnRegistry(
+        schema: "https://ui.shadcn.com/schema/registry.json",
+        name: "sparkle-ui",
+        homepage: "https://goodpatch.com",
+        items: []
+      )
+    }
 
+    let data = pipe.fileHandleForReading.readDataToEndOfFile()
+
+    // 空のデータの場合はデフォルトレジストリを返す
+    if data.isEmpty {
+      print("📝 registry.json is empty, creating new one")
+      return ShadcnRegistry(
+        schema: "https://ui.shadcn.com/schema/registry.json",
+        name: "sparkle-ui",
+        homepage: "https://goodpatch.com",
+        items: []
+      )
+    }
+
+    // JSONデコードも失敗した場合はキャッチしてデフォルトを返す
+    do {
+      return try JSONDecoder().decode(ShadcnRegistry.self, from: data)
+    } catch {
+      print("📝 Failed to parse registry.json, creating new one")
+      return ShadcnRegistry(
+        schema: "https://ui.shadcn.com/schema/registry.json",
+        name: "sparkle-ui",
+        homepage: "https://goodpatch.com",
+        items: []
+      )
+    }
+  }
   /// レジストリを更新する
   private static func writeRegistry(_ registry: ShadcnRegistry) throws {
     let encoder = JSONEncoder()

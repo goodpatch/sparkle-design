@@ -84,9 +84,11 @@ async function mergeRegistry() {
       const registryContent = fs.readFileSync(registryPath, "utf8");
       registry = JSON.parse(registryContent);
     } catch (error) {
-      console.log("registry.json not found, creating new one");
+      console.log("📝 registry.json not found, creating new one");
       registry = {
-        name: "sparkle-design",
+        $schema: "https://ui.shadcn.com/schema/registry.json",
+        name: "sparkle-ui",
+        homepage: "https://goodpatch.com",
         items: [],
       };
     }
