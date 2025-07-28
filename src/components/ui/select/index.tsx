@@ -94,14 +94,6 @@ const selectViewportVariants = cva("p-1", {
   },
 });
 
-/**
- * **概要 / Overview**
- *
- * - セレクトはオプショングループの中から値を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。
- * - en: The Select component is used to capture user input by selecting a value from a group of options.
- *
- * @param props
- */
 function Select({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
@@ -141,6 +133,10 @@ export interface SelectTriggerProps
 }
 
 /**
+ * - セレクトはオプショングループの中から値を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * - en: The Select component is used to capture user input by selecting a value from a group of options.
+ *
+ * ## SelectTrigger
  * **概要 / Overview**
  *
  * - セレクトのトリガー部分で、クリックで選択肢リストを開閉するボタンとして機能します。
