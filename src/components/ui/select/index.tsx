@@ -261,7 +261,7 @@ function SelectLabel({
     <SelectPrimitive.Label
       data-slot="select-label"
       className={cn(
-        "px-2 py-1.5 character-1-bold-pro text-base-900",
+        "px-2 py-1.5 character-1-bold-pro text-text-high",
         className
       )}
       {...props}
@@ -293,7 +293,7 @@ function SelectItem({
         [
           "relative flex w-full cursor-default select-none items-center rounded-notice",
           "py-1.5 pl-2 pr-8 text-sm",
-          "outline-none focus:bg-base-100 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+          "outline-none focus:bg-neutral-100 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         ].join(" "),
         className
       )}
