@@ -1,9 +1,15 @@
 .PHONY: registry
 registry: ## Build the registry.
 	@echo "🤖 Running the registry..."
-	cd scripts/merge-registry && \
-	./merge-registry && \
-	cd ../..
+	@if command -v swift >/dev/null 2>&1; then \
+		echo "🤖 Using Swift merge-registry tool..."; \
+		cd scripts/merge-registry && \
+		./merge-registry && \
+		cd ../..; \
+	else \
+		echo "🤖 Swift not available, using Node.js fallback..."; \
+		node scripts/merge-registry.mjs; \
+	fi
 	@echo "🤖 Registry ran successfully."
 	pnpm build:registry
 	@echo "🤖 Registry built successfully."
@@ -11,6 +17,8 @@ registry: ## Build the registry.
 	cp src/components/sparkle-color.json ./public/r/
 	cp src/components/sparkle-font.json ./public/r/
 	cp src/components/sparkle-style.json ./public/r/
+	pnpm lint:fix
+	pnpm format
 
 .PHONY: new-component
 new-component: ## Create a new component.
