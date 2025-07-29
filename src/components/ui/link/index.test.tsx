@@ -56,57 +56,38 @@ describe("Link", () => {
       expect(link.className).toContain("inline");
       expect(link.className).toContain("group");
       expect(link.className).toContain("character-3-regular-pro");
-      expect(span.className).toContain("text-primary-600");
-      expect(span.className).toContain("group-hover:text-primary-700");
+      expect(span.className).toContain("text-info-500");
+      expect(span.className).toContain("group-hover:text-info-600");
     });
   });
 
-  describe("Underline Variants", () => {
-    it("applies no underline by default", () => {
-      // Given: isUnderline未指定のLink
+  describe("Underline Styling", () => {
+    it("applies underline styling by default", () => {
+      // Given: デフォルトのLink
       testContainer.render(<Link href="/test">テスト</Link>);
 
       // When: span要素のクラス名を確認
       const span = testContainer.querySelector("span");
 
-      // Then: デフォルト（アンダーラインなし）スタイルが適用される
-      expect(span.className).toContain("underline");
-      expect(span.className).toContain("decoration-transparent");
-      expect(span.className).toContain("group-hover:decoration-current");
-      expect(span.className).toContain("underline-offset-2");
-    });
-
-    it("applies underline when isUnderline is true", () => {
-      // Given: isUnderline=trueのLink
-      testContainer.render(
-        <Link href="/test" isUnderline={true}>
-          アンダーライン付き
-        </Link>
-      );
-
-      // When: span要素のクラス名を確認
-      const span = testContainer.querySelector("span");
-
-      // Then: アンダーラインスタイルが適用される
+      // Then: 常にアンダーラインスタイルが適用される
       expect(span.className).toContain("underline");
       expect(span.className).toContain("decoration-current");
       expect(span.className).toContain("underline-offset-2");
     });
 
-    it("applies no underline when isUnderline is false", () => {
-      // Given: isUnderline=falseのLink
+    it("maintains underline styling consistently", () => {
+      // Given: 異なるhrefのLink
       testContainer.render(
-        <Link href="/test" isUnderline={false}>
-          アンダーラインなし
-        </Link>
+        <Link href="https://example.com">外部リンクテスト</Link>
       );
 
       // When: span要素のクラス名を確認
       const span = testContainer.querySelector("span");
 
-      // Then: アンダーラインなしスタイルが適用される
-      expect(span.className).toContain("decoration-transparent");
-      expect(span.className).toContain("group-hover:decoration-current");
+      // Then: 一貫してアンダーラインスタイルが適用される
+      expect(span.className).toContain("underline");
+      expect(span.className).toContain("decoration-current");
+      expect(span.className).toContain("underline-offset-2");
     });
   });
 
@@ -117,10 +98,10 @@ describe("Link", () => {
 
       // When: 外部リンクアイコンを確認
       const link = testContainer.querySelector("a");
-      const spans = link.querySelectorAll("span");
+      const icon = link.querySelector("span[aria-hidden='true']");
 
-      // Then: 外部リンクアイコンが表示されない（spanは1つだけ）
-      expect(spans.length).toBe(1);
+      // Then: 外部リンクアイコンが表示されない
+      expect(icon).toBeNull();
     });
 
     it("shows external icon when isExternalLink is true", () => {
@@ -133,8 +114,7 @@ describe("Link", () => {
 
       // When: 外部リンクアイコンを確認
       const link = testContainer.querySelector("a");
-      const spans = link.querySelectorAll("span");
-      const icon = spans.length > 1 ? spans[1] : null;
+      const icon = link.querySelector("span[aria-hidden='true']");
 
       // Then: 外部リンクアイコンが表示される
       expect(icon).toBeDefined();
@@ -142,8 +122,8 @@ describe("Link", () => {
       expect(icon!.className).toContain("ml-1");
       expect(icon!.className).toContain("align-middle");
       expect(icon!.className).toContain("inline-block");
-      expect(icon!.className).toContain("text-primary-600");
-      expect(icon!.className).toContain("group-hover:text-primary-700");
+      expect(icon!.className).toContain("text-info-500");
+      expect(icon!.className).toContain("group-hover:text-info-600");
     });
 
     it("does not show external icon when isExternalLink is false", () => {
@@ -156,10 +136,10 @@ describe("Link", () => {
 
       // When: 外部リンクアイコンを確認
       const link = testContainer.querySelector("a");
-      const spans = link.querySelectorAll("span");
+      const icon = link.querySelector("span[aria-hidden='true']");
 
-      // Then: 外部リンクアイコンが表示されない（spanは1つだけ）
-      expect(spans.length).toBe(1);
+      // Then: 外部リンクアイコンが表示されない
+      expect(icon).toBeNull();
     });
   });
 
@@ -205,8 +185,7 @@ describe("Link", () => {
 
       // When: アイコンのサイズを確認
       const link = testContainer.querySelector("a");
-      const spans = link.querySelectorAll("span");
-      const icon = spans.length > 1 ? spans[1] : null;
+      const icon = link.querySelector("span[aria-hidden='true']");
 
       // Then: characterサイズに合わせたアイコンサイズが設定される
       expect(icon).toBeDefined();
@@ -223,8 +202,7 @@ describe("Link", () => {
 
       // When: アイコンのサイズを確認
       const link = testContainer.querySelector("a");
-      const spans = link.querySelectorAll("span");
-      const icon = spans.length > 1 ? spans[1] : null;
+      const icon = link.querySelector("span[aria-hidden='true']");
 
       // Then: デフォルトアイコンサイズが設定される
       expect(icon).toBeDefined();
@@ -527,17 +505,15 @@ describe("Link", () => {
     it("maintains consistency across different combinations", () => {
       // Given: 異なる組み合わせのLink
       const combinations = [
-        { isUnderline: true, isExternalLink: false },
-        { isUnderline: false, isExternalLink: true },
-        { isUnderline: true, isExternalLink: true },
+        { isExternalLink: false },
+        { isExternalLink: true },
       ];
 
-      combinations.forEach(({ isUnderline, isExternalLink }, index) => {
+      combinations.forEach(({ isExternalLink }, index) => {
         // When: 特定の組み合わせを描画
         testContainer.render(
           <Link
             href="/test"
-            isUnderline={isUnderline}
             isExternalLink={isExternalLink}
             data-testid={`combo-${index}`}
           >
@@ -559,7 +535,7 @@ describe("Link", () => {
     it("works with StyleHelpers", () => {
       // Given: 特定スタイルのLink
       testContainer.render(
-        <Link href="/style" isUnderline={true} className="custom-style">
+        <Link href="/style" className="custom-style">
           スタイルテスト
         </Link>
       );
@@ -583,7 +559,6 @@ describe("Link", () => {
           key={i}
           href={`/link-${i}`}
           isExternalLink={i % 2 === 0}
-          isUnderline={i % 3 === 0}
           data-testid={`link-${i}`}
         >
           リンク{i + 1}
