@@ -9,7 +9,7 @@ const meta: Meta<typeof Link> = {
   },
   tags: ["autodocs"],
   argTypes: {
-    isExternalLink: {
+    isOpenInNew: {
       control: "boolean",
     },
   },
@@ -21,7 +21,7 @@ type Story = StoryObj<typeof Link>;
 export const Default: Story = {
   args: {
     children: "リンクテキスト",
-    isExternalLink: false,
+    isOpenInNew: false,
     href: "#",
   },
 };
@@ -29,7 +29,7 @@ export const Default: Story = {
 export const ExternalLink: Story = {
   args: {
     children: "リンクテキスト",
-    isExternalLink: true,
+    isOpenInNew: true,
     href: "#",
   },
 };

@@ -78,7 +78,7 @@ describe("Link", () => {
     it("maintains underline styling consistently", () => {
       // Given: 異なるhrefのLink
       testContainer.render(
-        <Link href="https://example.com">外部リンクテスト</Link>
+        <Link href="https://example.com">新しいサイトへのリンク</Link>
       );
 
       // When: span要素のクラス名を確認
@@ -91,32 +91,32 @@ describe("Link", () => {
     });
   });
 
-  describe("External Link Feature", () => {
-    it("does not show external icon by default", () => {
-      // Given: isExternalLink未指定のLink
-      testContainer.render(<Link href="/internal">内部リンク</Link>);
+  describe("Open In New Window/Tab Feature", () => {
+    it("does not show open in new icon by default", () => {
+      // Given: isOpenInNew未指定のLink
+      testContainer.render(<Link href="/internal">同じタブで開く</Link>);
 
-      // When: 外部リンクアイコンを確認
+      // When: 新しいタブで開くアイコンを確認
       const link = testContainer.querySelector("a");
       const icon = link.querySelector("span[aria-hidden='true']");
 
-      // Then: 外部リンクアイコンが表示されない
+      // Then: 新しいタブで開くアイコンが表示されない
       expect(icon).toBeNull();
     });
 
-    it("shows external icon when isExternalLink is true", () => {
-      // Given: isExternalLink=trueのLink
+    it("shows open in new icon when isOpenInNew is true", () => {
+      // Given: isOpenInNew=trueのLink
       testContainer.render(
-        <Link href="https://example.com" isExternalLink={true}>
-          外部サイト
+        <Link href="https://example.com" isOpenInNew={true}>
+          新しいタブで開く
         </Link>
       );
 
-      // When: 外部リンクアイコンを確認
+      // When: 新しいタブで開くアイコンを確認
       const link = testContainer.querySelector("a");
       const icon = link.querySelector("span[aria-hidden='true']");
 
-      // Then: 外部リンクアイコンが表示される
+      // Then: 新しいタブで開くアイコンが表示される
       expect(icon).toBeDefined();
       expect(icon!.textContent).toBe("open_in_new");
       expect(icon!.className).toContain("ml-1");
@@ -126,19 +126,19 @@ describe("Link", () => {
       expect(icon!.className).toContain("group-hover:text-info-600");
     });
 
-    it("does not show external icon when isExternalLink is false", () => {
-      // Given: isExternalLink=falseのLink
+    it("does not show open in new icon when isOpenInNew is false", () => {
+      // Given: isOpenInNew=falseのLink
       testContainer.render(
-        <Link href="/page" isExternalLink={false}>
-          内部ページ
+        <Link href="/page" isOpenInNew={false}>
+          同じタブで開く
         </Link>
       );
 
-      // When: 外部リンクアイコンを確認
+      // When: 新しいタブで開くアイコンを確認
       const link = testContainer.querySelector("a");
       const icon = link.querySelector("span[aria-hidden='true']");
 
-      // Then: 外部リンクアイコンが表示されない
+      // Then: 新しいタブで開くアイコンが表示されない
       expect(icon).toBeNull();
     });
   });
@@ -172,12 +172,12 @@ describe("Link", () => {
     });
 
     it("sets correct icon size based on character class", () => {
-      // Given: character-4付きのexternal Link
+      // Given: character-4付きで新しいタブで開くLink
       testContainer.render(
         <Link
           href="https://example.com"
           className="character-4-bold-pro"
-          isExternalLink={true}
+          isOpenInNew={true}
         >
           大きなリンク
         </Link>
@@ -193,10 +193,10 @@ describe("Link", () => {
     });
 
     it("uses default icon size when no character class is present", () => {
-      // Given: characterクラス未指定のexternal Link
+      // Given: characterクラス未指定で新しいタブで開くLink
       testContainer.render(
-        <Link href="https://example.com" isExternalLink={true}>
-          外部リンク
+        <Link href="https://example.com" isOpenInNew={true}>
+          新しいタブで開く
         </Link>
       );
 
@@ -432,27 +432,25 @@ describe("Link", () => {
       expect(link.getAttribute("role")).toBe("link");
     });
 
-    it("handles external links accessibility", () => {
-      // Given: 外部リンクのaccessibility
+    it("handles new tab/window links accessibility", () => {
+      // Given: 新しいタブで開くリンクのaccessibility
       testContainer.render(
         <Link
           href="https://example.com"
-          isExternalLink={true}
-          aria-label="外部サイトを新しいタブで開く"
+          isOpenInNew={true}
+          aria-label="新しいタブでサイトを開く"
           target="_blank"
           rel="noopener noreferrer"
         >
-          外部サイト
+          新しいタブで開く
         </Link>
       );
 
       // When: 属性を確認
       const link = testContainer.querySelector("a");
 
-      // Then: 外部リンクのaccessibility属性が設定される
-      expect(link.getAttribute("aria-label")).toBe(
-        "外部サイトを新しいタブで開く"
-      );
+      // Then: 新しいタブで開くリンクのaccessibility属性が設定される
+      expect(link.getAttribute("aria-label")).toBe("新しいタブでサイトを開く");
       expect(link.getAttribute("target")).toBe("_blank");
       expect(link.getAttribute("rel")).toBe("noopener noreferrer");
     });
@@ -504,17 +502,14 @@ describe("Link", () => {
   describe("Style Integration", () => {
     it("maintains consistency across different combinations", () => {
       // Given: 異なる組み合わせのLink
-      const combinations = [
-        { isExternalLink: false },
-        { isExternalLink: true },
-      ];
+      const combinations = [{ isOpenInNew: false }, { isOpenInNew: true }];
 
-      combinations.forEach(({ isExternalLink }, index) => {
+      combinations.forEach(({ isOpenInNew }, index) => {
         // When: 特定の組み合わせを描画
         testContainer.render(
           <Link
             href="/test"
-            isExternalLink={isExternalLink}
+            isOpenInNew={isOpenInNew}
             data-testid={`combo-${index}`}
           >
             組み合わせ{index}
@@ -558,7 +553,7 @@ describe("Link", () => {
         <Link
           key={i}
           href={`/link-${i}`}
-          isExternalLink={i % 2 === 0}
+          isOpenInNew={i % 2 === 0}
           data-testid={`link-${i}`}
         >
           リンク{i + 1}

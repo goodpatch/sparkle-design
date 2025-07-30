@@ -24,7 +24,7 @@ figma.connect(
       // })
     },
     example: props => (
-      <Link href="https://example.com" isExternalLink={props.isOpenInNew}>
+      <Link href="https://example.com" isOpenInNew={props.isOpenInNew}>
         {props.label}
       </Link>
     ),

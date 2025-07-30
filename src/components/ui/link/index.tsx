@@ -5,10 +5,10 @@ import { Icon } from "@/components/ui/icon";
 export interface LinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   /**
-   * 外部リンクかどうか
-   * en: Whether the link points to an external site
+   * 新しいウィンドウやタブで開くかどうか
+   * en: Whether to open the link in a new window or tab
    */
-  isExternalLink?: boolean;
+  isOpenInNew?: boolean;
   /**
    * 表示するテキスト
    * en: Text to display inside the link
@@ -38,7 +38,10 @@ export interface LinkProps
  * @param {LinkProps} props
  */
 export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ isExternalLink = false, children, className = "", ...props }, ref) => {
+  (
+    { isOpenInNew: isExternalLink = false, children, className = "", ...props },
+    ref
+  ) => {
     // character-*-*-* クラスがあるかチェック
     const hasCharacterClass = className?.includes("character-");
 
