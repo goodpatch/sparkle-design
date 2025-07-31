@@ -47,7 +47,11 @@ export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
     return (
       <span
         ref={ref}
-        className={cn(iconTypographyClass, "select-none", className)}
+        className={cn(
+          iconTypographyClass,
+          "select-none antialiased",
+          className
+        )}
         aria-hidden="true"
         {...props}
       >
