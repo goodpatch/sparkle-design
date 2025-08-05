@@ -6,17 +6,8 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/ui/icon";
 
-const checkboxGroupVariants = cva("flex items-center", {
-  variants: {
-    isDisabled: {
-      true: "",
-      false: "",
-    },
-  },
-});
-
 const checkboxItemVariants = cva(
-  "relative rounded-sm transition-colors flex items-center justify-center",
+  "relative rounded-sm transition-colors flex items-center justify-center cursor-pointer",
   {
     variants: {
       size: {
@@ -42,7 +33,7 @@ const checkboxItemVariants = cva(
 );
 
 const checkboxRootVariants = cva(
-  "rounded-xs border-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-colors",
+  "rounded-xs border-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-colors cursor-pointer",
   {
     variants: {
       size: {
@@ -94,7 +85,7 @@ const checkboxRootVariants = cva(
   }
 );
 
-const checkboxLabelVariants = cva("", {
+const checkboxLabelVariants = cva("cursor-pointer", {
   variants: {
     size: {
       sm: "character-2-regular-pro",
@@ -133,6 +124,12 @@ interface CheckboxItemProps
    */
   isDisabled?: boolean;
   /**
+   * 中間状態かどうか
+   * en: Whether the checkbox is in an interminate state
+   * @default false
+   */
+  isInterminate?: boolean;
+  /**
    * ラベルのテキスト
    * en: Label text for the checkbox
    */
@@ -163,6 +160,7 @@ const Checkbox = React.forwardRef<
       size = "md",
       isInvalid = false,
       isDisabled = false,
+      isInterminate = false,
       disabled,
       label,
       id,
@@ -174,11 +172,7 @@ const Checkbox = React.forwardRef<
     const isCheckboxDisabled = isDisabled || disabled;
 
     return (
-      <div
-        className={cn(
-          checkboxGroupVariants({ isDisabled: isCheckboxDisabled })
-        )}
-      >
+      <div className="flex items-center">
         <div
           className={cn(
             checkboxItemVariants({ size, isDisabled: isCheckboxDisabled })
@@ -195,11 +189,12 @@ const Checkbox = React.forwardRef<
               })
             )}
             disabled={isCheckboxDisabled}
+            defaultChecked={isInterminate ? true : undefined}
             {...props}
           >
             <CheckboxPrimitive.Indicator className="flex items-center justify-center text-white">
               <Icon
-                icon="check"
+                icon={isInterminate ? "check_indeterminate_small" : "check"}
                 size={(function () {
                   switch (size) {
                     case "sm":

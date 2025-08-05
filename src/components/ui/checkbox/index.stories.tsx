@@ -96,3 +96,30 @@ export const DisabledAndInvalid: Story = {
     </div>
   ),
 };
+
+export const Interminate: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <Checkbox id="intermediate1" isInterminate label="中間状態" />
+      <Checkbox
+        id="intermediate2"
+        isInterminate
+        isInvalid
+        label="中間状態（エラー）"
+      />
+      <Checkbox
+        id="intermediate3"
+        isInterminate
+        disabled
+        label="中間状態（無効）"
+      />
+      <Checkbox
+        id="intermediate4"
+        isInterminate
+        isInvalid
+        disabled
+        label="中間状態（エラーで無効）"
+      />
+    </div>
+  ),
+};
