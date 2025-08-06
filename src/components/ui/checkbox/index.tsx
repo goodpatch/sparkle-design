@@ -33,7 +33,7 @@ const checkboxItemVariants = cva(
 );
 
 const checkboxRootVariants = cva(
-  "rounded-xs border-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-colors cursor-pointer",
+  "rounded-xs border-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2 transition-colors cursor-pointer",
   {
     variants: {
       size: {
@@ -42,9 +42,16 @@ const checkboxRootVariants = cva(
         lg: "h-6 w-6",
       },
       isInvalid: {
-        true: "border-negative-500 data-[state=checked]:bg-negative-500 data-[state=checked]:border-none",
-        false:
-          "border-base-500 data-[state=checked]:bg-primary-500 data-[state=checked]:border-none",
+        true: [
+          "border-negative-500",
+          "data-[state=checked]:bg-negative-500 data-[state=checked]:border-none",
+          "data-[state=indeterminate]:bg-negative-500 data-[state=indeterminate]:border-none",
+        ].join(" "),
+        false: [
+          "border-base-500",
+          "data-[state=checked]:bg-primary-500 data-[state=checked]:border-none",
+          "data-[state=indeterminate]:bg-primary-500 data-[state=indeterminate]:border-none",
+        ].join(" "),
       },
       isDisabled: {
         true: "cursor-not-allowed",
@@ -55,26 +62,38 @@ const checkboxRootVariants = cva(
       {
         isDisabled: false,
         isInvalid: false,
-        className:
-          "hover:border-base-600 data-[state=checked]:hover:bg-primary-600",
+        className: [
+          "hover:border-base-600",
+          "data-[state=checked]:hover:bg-primary-600",
+          "data-[state=indeterminate]:hover:bg-primary-600",
+        ].join(" "),
       },
       {
         isDisabled: false,
         isInvalid: true,
-        className:
-          "hover:border-negative-600 data-[state=checked]:hover:bg-negative-600",
+        className: [
+          "hover:border-negative-600",
+          "data-[state=checked]:hover:bg-negative-600",
+          "data-[state=indeterminate]:hover:bg-negative-600",
+        ].join(" "),
       },
       {
         isDisabled: true,
         isInvalid: false,
-        className:
-          "border-base-200 data-[state=checked]:bg-primary-200 data-[state=checked]:border-primary-200",
+        className: [
+          "border-base-200",
+          "data-[state=checked]:bg-primary-200 data-[state=checked]:border-primary-200",
+          "data-[state=indeterminate]:bg-primary-200 data-[state=indeterminate]:border-primary-200",
+        ].join(" "),
       },
       {
         isDisabled: true,
         isInvalid: true,
-        className:
-          "border-negative-200 data-[state=checked]:bg-negative-200 data-[state=checked]:border-negative-200",
+        className: [
+          "border-negative-200",
+          "data-[state=checked]:bg-negative-200 data-[state=checked]:border-negative-200",
+          "data-[state=indeterminate]:bg-negative-200 data-[state=indeterminate]:border-negative-200",
+        ].join(" "),
       },
     ],
     defaultVariants: {
@@ -103,14 +122,17 @@ const checkboxLabelVariants = cva("cursor-pointer", {
   },
 });
 
-interface CheckboxItemProps
-  extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
+type CheckboxPrimitiveProps = React.ComponentProps<
+  typeof CheckboxPrimitive.Root
+>;
+type CheckboxVariants = VariantProps<typeof checkboxRootVariants>;
+interface CheckboxItemProps extends CheckboxPrimitiveProps {
   /**
    * チェックボックスのサイズ
    * en: Size of the checkbox
    * @default "md"
    */
-  size?: "sm" | "md" | "lg";
+  size?: CheckboxVariants["size"];
   /**
    * エラー状態かどうか
    * en: Whether the checkbox is in an error state
@@ -124,16 +146,15 @@ interface CheckboxItemProps
    */
   isDisabled?: boolean;
   /**
-   * 中間状態かどうか
-   * en: Whether the checkbox is in an interminate state
-   * @default false
-   */
-  isInterminate?: boolean;
-  /**
    * ラベルのテキスト
    * en: Label text for the checkbox
    */
   label?: string;
+  /**
+   * 不確定状態かどうか
+   * en: Whether the checkbox is in an indeterminate state
+   */
+  indeterminate?: boolean;
 }
 
 /**
@@ -150,82 +171,115 @@ interface CheckboxItemProps
  *
  * @param {CheckboxItemProps} props
  */
-const Checkbox = React.forwardRef<
-  React.ElementRef<typeof CheckboxPrimitive.Root>,
-  CheckboxItemProps
->(
-  (
-    {
-      className,
-      size = "md",
-      isInvalid = false,
-      isDisabled = false,
-      isInterminate = false,
-      disabled,
-      label,
-      id,
-      ...props
-    },
-    ref
-  ) => {
-    // isDisabledとdisabledの組み合わせで無効状態を管理
-    const isCheckboxDisabled = isDisabled || disabled;
+function Checkbox({
+  className,
+  size = "md",
+  isInvalid = false,
+  isDisabled = false,
+  disabled,
+  label,
+  id,
+  checked: controlledChecked,
+  defaultChecked,
+  indeterminate = false,
+  onCheckedChange,
+  ...props
+}: CheckboxItemProps) {
+  // 内部状態の初期値を決定
+  const initialChecked = React.useMemo(() => {
+    if (controlledChecked !== undefined) return controlledChecked;
+    if (indeterminate) return "indeterminate";
+    return defaultChecked || false;
+  }, [controlledChecked, indeterminate, defaultChecked]);
 
-    return (
-      <div className="flex items-center">
-        <div
+  const [internalChecked, setInternalChecked] =
+    React.useState<CheckboxPrimitiveProps["checked"]>(initialChecked);
+
+  // 制御されているかどうかを判定
+  const isControlled = controlledChecked !== undefined;
+  const checked = isControlled ? controlledChecked : internalChecked;
+
+  // indeterminateプロパティが変更された場合の処理
+  React.useEffect(() => {
+    if (!isControlled && indeterminate) {
+      setInternalChecked("indeterminate");
+    }
+  }, [indeterminate, isControlled]);
+
+  const handleChange = React.useCallback(
+    (newChecked: boolean | "indeterminate") => {
+      if (!isControlled) {
+        setInternalChecked(newChecked);
+      }
+      onCheckedChange?.(newChecked);
+    },
+    [isControlled, onCheckedChange]
+  );
+
+  // isDisabledとdisabledの組み合わせで無効状態を管理
+  const isCheckboxDisabled = isDisabled || disabled;
+
+  return (
+    <div className="flex items-center">
+      <div
+        className={cn(
+          checkboxItemVariants({ size, isDisabled: isCheckboxDisabled })
+        )}
+      >
+        <CheckboxPrimitive.Root
+          data-slot="checkbox"
+          id={id}
           className={cn(
-            checkboxItemVariants({ size, isDisabled: isCheckboxDisabled })
+            checkboxRootVariants({
+              size,
+              isInvalid,
+              isDisabled: isCheckboxDisabled,
+            })
+          )}
+          disabled={isCheckboxDisabled}
+          checked={checked}
+          onCheckedChange={handleChange}
+          {...props}
+        >
+          <CheckboxPrimitive.Indicator
+            data-slot="checkbox-indicator"
+            className="flex items-center justify-center text-white"
+          >
+            <Icon
+              icon={
+                checked == "indeterminate"
+                  ? "check_indeterminate_small"
+                  : "check"
+              }
+              size={(function () {
+                switch (size) {
+                  case "sm":
+                    return 3;
+                  case "md":
+                    return 5;
+                  case "lg":
+                    return 6;
+                  default:
+                    return 5;
+                }
+              })()}
+            />
+          </CheckboxPrimitive.Indicator>
+        </CheckboxPrimitive.Root>
+      </div>
+      {label && (
+        <label
+          htmlFor={id}
+          className={cn(
+            checkboxLabelVariants({ size, isDisabled: isCheckboxDisabled })
           )}
         >
-          <CheckboxPrimitive.Root
-            ref={ref}
-            id={id}
-            className={cn(
-              checkboxRootVariants({
-                size,
-                isInvalid,
-                isDisabled: isCheckboxDisabled,
-              })
-            )}
-            disabled={isCheckboxDisabled}
-            defaultChecked={isInterminate ? true : undefined}
-            {...props}
-          >
-            <CheckboxPrimitive.Indicator className="flex items-center justify-center text-white">
-              <Icon
-                icon={isInterminate ? "check_indeterminate_small" : "check"}
-                size={(function () {
-                  switch (size) {
-                    case "sm":
-                      return 3;
-                    case "md":
-                      return 5;
-                    case "lg":
-                      return 6;
-                    default:
-                      return 5;
-                  }
-                })()}
-              />
-            </CheckboxPrimitive.Indicator>
-          </CheckboxPrimitive.Root>
-        </div>
-        {label && (
-          <label
-            htmlFor={id}
-            className={cn(
-              checkboxLabelVariants({ size, isDisabled: isCheckboxDisabled })
-            )}
-          >
-            {label}
-          </label>
-        )}
-      </div>
-    );
-  }
-);
-Checkbox.displayName = CheckboxPrimitive.Root.displayName;
+          {label}
+        </label>
+      )}
+    </div>
+  );
+}
 
 export { Checkbox };
 export type { CheckboxItemProps };
