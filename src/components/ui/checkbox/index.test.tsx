@@ -292,6 +292,132 @@ describe("Checkbox", () => {
     });
   });
 
+  describe("Indeterminate State", () => {
+    it("renders with indeterminate state when indeterminate prop is true", () => {
+      // Given: indeterminate=trueのCheckbox
+      testContainer.render(
+        <Checkbox id="test-checkbox" indeterminate={true} />
+      );
+      const checkbox = testContainer.querySelector("#test-checkbox");
+
+      // Then: indeterminate状態になっている
+      expect(checkbox.getAttribute("data-state")).toBe("indeterminate");
+      expect(checkbox.getAttribute("aria-checked")).toBe("mixed");
+    });
+
+    it("renders with indeterminate state when controlled checked is 'indeterminate'", () => {
+      // Given: checked="indeterminate"のControlled Checkbox
+      testContainer.render(
+        <Checkbox id="test-checkbox" checked="indeterminate" />
+      );
+      const checkbox = testContainer.querySelector("#test-checkbox");
+
+      // Then: indeterminate状態になっている
+      expect(checkbox.getAttribute("data-state")).toBe("indeterminate");
+      expect(checkbox.getAttribute("aria-checked")).toBe("mixed");
+    });
+
+    it("transitions from indeterminate to checked when clicked", () => {
+      // Given: indeterminate状態のCheckbox
+      testContainer.render(
+        <Checkbox id="test-checkbox" indeterminate={true} />
+      );
+      const checkbox = testContainer.querySelector("#test-checkbox");
+
+      // When: クリックされる
+      EventHelpers.click(checkbox);
+
+      // Then: checked状態に変わる
+      expect(checkbox.getAttribute("data-state")).toBe("checked");
+      expect(checkbox.getAttribute("aria-checked")).toBe("true");
+    });
+
+    it("calls onCheckedChange with true when indeterminate checkbox is clicked", () => {
+      // Given: indeterminate状態でコールバック付きのCheckbox
+      const handleChange = vi.fn();
+      testContainer.render(
+        <Checkbox
+          id="test-checkbox"
+          indeterminate={true}
+          onCheckedChange={handleChange}
+        />
+      );
+      const checkbox = testContainer.querySelector("#test-checkbox");
+
+      // When: クリックされる
+      EventHelpers.click(checkbox);
+
+      // Then: コールバックがtrueで呼ばれる
+      expect(handleChange).toHaveBeenCalledTimes(1);
+      expect(handleChange).toHaveBeenCalledWith(true);
+    });
+
+    it("displays correct icon for indeterminate state", () => {
+      // Given: indeterminate状態のCheckbox
+      testContainer.render(
+        <Checkbox id="test-checkbox" indeterminate={true} />
+      );
+
+      // Then: indeterminate用のアイコンが表示されている
+      const container = testContainer.getContainer();
+      const icon = container.querySelector('[data-slot="checkbox-indicator"]');
+      expect(icon?.textContent).toBe("check_indeterminate_small");
+    });
+
+    it("applies correct styling for indeterminate state", () => {
+      // Given: indeterminate状態のCheckbox
+      testContainer.render(
+        <Checkbox id="test-checkbox" indeterminate={true} />
+      );
+      const checkbox = testContainer.querySelector("#test-checkbox");
+
+      // Then: indeterminate状態のスタイルが適用されている
+      expect(checkbox.getAttribute("data-state")).toBe("indeterminate");
+      // CVAで定義されたクラスが適用されていることを確認
+      expect(checkbox.className).toContain("border-2");
+    });
+
+    it("handles controlled indeterminate state correctly", () => {
+      // Given: controlled indeterminate状態のCheckbox
+      const handleChange = vi.fn();
+      testContainer.render(
+        <Checkbox
+          id="test-checkbox"
+          checked="indeterminate"
+          onCheckedChange={handleChange}
+        />
+      );
+      const checkbox = testContainer.querySelector("#test-checkbox");
+
+      // When: クリックされる
+      EventHelpers.click(checkbox);
+
+      // Then: コールバックが呼ばれるが、状態は制御されている
+      expect(handleChange).toHaveBeenCalledWith(true);
+      expect(checkbox.getAttribute("data-state")).toBe("indeterminate");
+    });
+
+    it("respects indeterminate prop changes in uncontrolled mode", () => {
+      // Given: 最初はfalseのindeterminateプロパティ
+      testContainer.render(
+        <Checkbox id="test-checkbox" indeterminate={false} />
+      );
+      let checkbox = testContainer.querySelector("#test-checkbox");
+      expect(checkbox.getAttribute("data-state")).toBe("unchecked");
+
+      // When: 新しいコンポーネントでindeterminateプロパティがtrueに変更される
+      testContainer.cleanup();
+      testContainer.setup();
+      testContainer.render(
+        <Checkbox id="test-checkbox" indeterminate={true} />
+      );
+      checkbox = testContainer.querySelector("#test-checkbox");
+
+      // Then: indeterminate状態に変わる
+      expect(checkbox.getAttribute("data-state")).toBe("indeterminate");
+    });
+  });
+
   describe("Controlled vs Uncontrolled", () => {
     it("works in uncontrolled mode with defaultChecked", () => {
       // Given: uncontrolledモードのCheckbox
@@ -326,6 +452,45 @@ describe("Checkbox", () => {
       expect(handleChange).toHaveBeenCalledWith(true);
       // controlled modeなので、propが変わらない限り状態は変わらない
       expect(checkbox.getAttribute("data-state")).toBe("unchecked");
+    });
+
+    it("prioritizes controlled checked prop over indeterminate prop", () => {
+      // Given: checkedプロパティとindeterminateプロパティが両方設定されている
+      testContainer.render(
+        <Checkbox id="test-checkbox" checked={true} indeterminate={true} />
+      );
+      const checkbox = testContainer.querySelector("#test-checkbox");
+
+      // Then: checkedプロパティが優先される
+      expect(checkbox.getAttribute("data-state")).toBe("checked");
+      expect(checkbox.getAttribute("aria-checked")).toBe("true");
+    });
+
+    it("handles indeterminate state with invalid styling", () => {
+      // Given: indeterminate かつ invalid状態のCheckbox
+      testContainer.render(
+        <Checkbox id="test-checkbox" indeterminate={true} isInvalid={true} />
+      );
+      const checkbox = testContainer.querySelector("#test-checkbox");
+
+      // Then: indeterminate状態でinvalidスタイルが適用されている
+      expect(checkbox.getAttribute("data-state")).toBe("indeterminate");
+      expect(checkbox.className).toContain("border-negative-500");
+    });
+
+    it("handles indeterminate state when disabled", () => {
+      // Given: indeterminate かつ disabled状態のCheckbox
+      testContainer.render(
+        <Checkbox id="test-checkbox" indeterminate={true} isDisabled={true} />
+      );
+      const checkbox = testContainer.querySelector("#test-checkbox");
+
+      // When: クリックしようとする
+      EventHelpers.click(checkbox);
+
+      // Then: indeterminate状態のままでクリックは無効
+      expect(checkbox.getAttribute("data-state")).toBe("indeterminate");
+      expect(A11yHelpers.isDisabled(checkbox)).toBe(true);
     });
   });
 });
