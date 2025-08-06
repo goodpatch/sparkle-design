@@ -48,7 +48,7 @@ const checkboxRootVariants = cva(
           "data-[state=indeterminate]:bg-negative-500 data-[state=indeterminate]:border-none",
         ].join(" "),
         false: [
-          "border-base-500",
+          "border-neutral-500",
           "data-[state=checked]:bg-primary-500 data-[state=checked]:border-none",
           "data-[state=indeterminate]:bg-primary-500 data-[state=indeterminate]:border-none",
         ].join(" "),
@@ -63,7 +63,7 @@ const checkboxRootVariants = cva(
         isDisabled: false,
         isInvalid: false,
         className: [
-          "hover:border-base-600",
+          "hover:border-neutral-600",
           "data-[state=checked]:hover:bg-primary-600",
           "data-[state=indeterminate]:hover:bg-primary-600",
         ].join(" "),
@@ -81,7 +81,7 @@ const checkboxRootVariants = cva(
         isDisabled: true,
         isInvalid: false,
         className: [
-          "border-base-200",
+          "border-neutral-200",
           "data-[state=checked]:bg-primary-200 data-[state=checked]:border-primary-200",
           "data-[state=indeterminate]:bg-primary-200 data-[state=indeterminate]:border-primary-200",
         ].join(" "),
@@ -112,8 +112,8 @@ const checkboxLabelVariants = cva("cursor-pointer", {
       lg: "character-4-regular-pro",
     },
     isDisabled: {
-      true: "text-base-200 cursor-not-allowed",
-      false: "text-base-900",
+      true: "text-text-disabled cursor-not-allowed",
+      false: "text-text-middle",
     },
   },
   defaultVariants: {
