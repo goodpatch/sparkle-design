@@ -352,7 +352,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
     ref
   ) => {
     // disabled状態の管理（isDisabled、disabled、またはisLoadingがtrueの場合）
-    const isIconButtonDisabled = isLoading || isDisabled;
+    const isIconButtonDisabled = isLoading || isDisabled || disabled;
 
     const Comp = asChild ? SlotPrimitive.Slot : "button";
 
@@ -372,6 +372,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
 
     return (
       <Comp
+        type="button"
         className={cn(
           iconButtonVariants({
             variant,
