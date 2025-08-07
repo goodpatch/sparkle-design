@@ -311,7 +311,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <IconButton
             ref={buttonRef}
             icon={iconButtonIcon}
-            theme="secondary"
+            theme="neutral"
             variant="ghost"
             size={iconButtonSize}
             onClick={onIconButtonClick}
