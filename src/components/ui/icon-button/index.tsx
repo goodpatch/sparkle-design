@@ -7,28 +7,32 @@ import { Icon } from "@/components/ui/icon";
 import { Spinner } from "@/components/ui/spinner";
 
 const iconButtonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2 relative cursor-pointer antialiased",
+  [
+    "inline-flex items-center justify-center whitespace-nowrap rounded-action",
+    "ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
+    "relative cursor-pointer antialiased",
+  ].join(" "),
   {
     variants: {
       variant: {
-        solid: "border shadow-sm",
-        outline: "border shadow-sm",
+        solid: "border",
+        outline: "border",
         ghost: "",
       },
       size: {
-        xs: "w-6 h-6 p-0.5 character-1-bold-pro",
-        sm: "w-8 h-8 p-1 character-2-bold-pro",
-        md: "w-10 h-10 p-2 character-3-bold-pro",
-        lg: "w-12 h-12 p-2.5 character-4-bold-pro",
+        xs: "w-6 h-6 p-1",
+        sm: "w-8 h-8 p-1.5",
+        md: "w-10 h-10 p-2",
+        lg: "w-12 h-12 p-2",
       },
       theme: {
         primary: "",
-        secondary: "",
+        neutral: "",
         negative: "",
       },
       isLoading: {
         true: "cursor-not-allowed",
-        false: "gap-2",
+        false: "",
       },
       isDisabled: {
         true: "cursor-not-allowed",
@@ -42,8 +46,11 @@ const iconButtonVariants = cva(
         theme: "primary",
         isLoading: false,
         isDisabled: false,
-        className:
-          "bg-primary-500 text-white border-primary-600 hover:bg-primary-600 hover:border-primary-700 active:bg-primary-700 active:border-primary-800 active:shadow-sm",
+        className: [
+          "bg-primary-500 text-white border-primary-600",
+          "hover:bg-primary-600 hover:border-primary-700",
+          "active:bg-primary-700 active:border-primary-800",
+        ].join(" "),
       },
       {
         variant: "solid",
@@ -53,21 +60,24 @@ const iconButtonVariants = cva(
         className: "bg-primary-500 text-white border-primary-600",
       },
 
-      // Solid Secondary バリアント
+      // Solid Neutral バリアント
       {
         variant: "solid",
-        theme: "secondary",
+        theme: "neutral",
         isLoading: false,
         isDisabled: false,
-        className:
-          "bg-secondary-500 text-white border-secondary-600 hover:bg-secondary-600 hover:border-secondary-700 active:bg-secondary-700 active:border-secondary-800 active:shadow-sm",
+        className: [
+          "bg-neutral-500 text-white border-neutral-600",
+          "hover:bg-neutral-600 hover:border-neutral-700",
+          "active:bg-neutral-700 active:border-neutral-800",
+        ].join(" "),
       },
       {
         variant: "solid",
-        theme: "secondary",
+        theme: "neutral",
         isLoading: true,
         isDisabled: false,
-        className: "bg-secondary-500 text-white border-secondary-600",
+        className: "bg-neutral-500 text-white border-neutral-600",
       },
 
       // Solid Negative バリアント
@@ -76,8 +86,11 @@ const iconButtonVariants = cva(
         theme: "negative",
         isLoading: false,
         isDisabled: false,
-        className:
-          "bg-negative-500 text-white border-negative-600 hover:bg-negative-600 hover:border-negative-700 active:bg-negative-700 active:border-negative-800 active:shadow-sm",
+        className: [
+          "bg-negative-500 text-white border-negative-600",
+          "hover:bg-negative-600 hover:border-negative-700",
+          "active:bg-negative-700 active:border-negative-800",
+        ].join(" "),
       },
       {
         variant: "solid",
@@ -92,31 +105,37 @@ const iconButtonVariants = cva(
         variant: "outline",
         theme: "primary",
         isLoading: false,
-        className:
-          "bg-white text-primary-500 border-primary-500 shadow-sm hover:bg-primary-50 active:bg-primary-100",
+        className: [
+          "bg-white text-primary-500 border-primary-300",
+          "hover:bg-primary-50",
+          "active:bg-primary-100 active:border-primary-400 active:text-primary-600",
+        ].join(" "),
       },
       {
         variant: "outline",
         theme: "primary",
         isLoading: true,
         isDisabled: false,
-        className: "bg-white text-primary-500 border-primary-500 shadow-sm",
+        className: "bg-white text-primary-500 border-primary-300",
       },
 
-      // Outline Secondary バリアント
+      // Outline Neutral バリアント
       {
         variant: "outline",
-        theme: "secondary",
+        theme: "neutral",
         isLoading: false,
-        className:
-          "bg-white text-secondary-700 border-secondary-500 shadow-sm hover:bg-secondary-50 active:bg-secondary-100",
+        className: [
+          "bg-white text-neutral-700 border-neutral-300",
+          "hover:bg-neutral-50",
+          "active:bg-neutral-100",
+        ].join(" "),
       },
       {
         variant: "outline",
-        theme: "secondary",
+        theme: "neutral",
         isLoading: true,
         isDisabled: false,
-        className: "bg-white text-secondary-700 border-secondary-500 shadow-sm",
+        className: "bg-white text-neutral-700 border-neutral-300",
       },
 
       // Outline Negative バリアント
@@ -125,15 +144,18 @@ const iconButtonVariants = cva(
         theme: "negative",
         isLoading: false,
         isDisabled: false,
-        className:
-          "bg-white text-negative-500 border-negative-500 shadow-sm hover:bg-negative-50 active:bg-negative-100",
+        className: [
+          "bg-white text-negative-500 border-negative-300",
+          "hover:bg-negative-50",
+          "active:bg-negative-100 active:border-negative-400 active:text-negative-600",
+        ].join(" "),
       },
       {
         variant: "outline",
         theme: "negative",
         isLoading: true,
         isDisabled: false,
-        className: "bg-white text-negative-500 border-negative-500 shadow-sm",
+        className: "bg-white text-negative-500 border-negative-300",
       },
 
       // Ghost Primary バリアント
@@ -142,7 +164,8 @@ const iconButtonVariants = cva(
         theme: "primary",
         isLoading: false,
         isDisabled: false,
-        className: "text-primary-500 hover:bg-primary-50 active:bg-primary-100",
+        className:
+          "text-primary-500 hover:bg-primary-50 active:bg-primary-100 active:text-primary-600",
       },
       {
         variant: "ghost",
@@ -152,21 +175,20 @@ const iconButtonVariants = cva(
         className: "text-primary-500",
       },
 
-      // Ghost Secondary バリアント
+      // Ghost neutral バリアント
       {
         variant: "ghost",
-        theme: "secondary",
+        theme: "neutral",
         isLoading: false,
         isDisabled: false,
-        className:
-          "text-secondary-700 hover:bg-secondary-50 active:bg-secondary-100",
+        className: "text-neutral-700 hover:bg-neutral-50 active:bg-neutral-100",
       },
       {
         variant: "ghost",
-        theme: "secondary",
+        theme: "neutral",
         isLoading: true,
         isDisabled: false,
-        className: "text-secondary-700",
+        className: "text-neutral-700",
       },
 
       // Ghost Negative バリアント
@@ -176,7 +198,7 @@ const iconButtonVariants = cva(
         isLoading: false,
         isDisabled: false,
         className:
-          "text-negative-500 hover:bg-negative-100 active:bg-negative-100",
+          "text-negative-500 hover:bg-negative-50 active:bg-negative-100 active:text-negative-600",
       },
       {
         variant: "ghost",
@@ -196,10 +218,10 @@ const iconButtonVariants = cva(
       },
       {
         variant: "solid",
-        theme: "secondary",
+        theme: "neutral",
         isDisabled: true,
         className:
-          "disabled:bg-secondary-200 disabled:text-white disabled:border-none",
+          "disabled:bg-neutral-200 disabled:text-white disabled:border-none",
       },
       {
         variant: "solid",
@@ -217,10 +239,10 @@ const iconButtonVariants = cva(
       },
       {
         variant: "outline",
-        theme: "secondary",
+        theme: "neutral",
         isDisabled: true,
         className:
-          "disabled:bg-white disabled:text-secondary-200 disabled:border-secondary-100",
+          "disabled:bg-white disabled:text-neutral-200 disabled:border-neutral-100",
       },
       {
         variant: "outline",
@@ -237,9 +259,9 @@ const iconButtonVariants = cva(
       },
       {
         variant: "ghost",
-        theme: "secondary",
+        theme: "neutral",
         isDisabled: true,
-        className: "disabled:text-secondary-200",
+        className: "disabled:text-neutral-200",
       },
       {
         variant: "ghost",

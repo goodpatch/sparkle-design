@@ -21,7 +21,7 @@ const meta = {
     },
     theme: {
       control: "select",
-      options: ["primary", "secondary", "negative"],
+      options: ["primary", "neutral", "negative"],
     },
     isLoading: {
       control: "boolean",
@@ -105,8 +105,8 @@ export const Theme: Story = {
         <IconButton {...args} theme="primary" icon="edit">
           primary
         </IconButton>
-        <IconButton {...args} theme="secondary" icon="edit">
-          secondary
+        <IconButton {...args} theme="neutral" icon="edit">
+          neutral
         </IconButton>
         <IconButton {...args} theme="negative" icon="edit">
           negative
