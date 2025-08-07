@@ -7,7 +7,7 @@ import { Icon } from "@/components/ui/icon";
 import { Spinner } from "@/components/ui/spinner";
 
 const iconButtonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2 relative cursor-pointer antialiased",
   {
     variants: {
       variant: {
@@ -258,9 +258,24 @@ const iconButtonVariants = cva(
   }
 );
 
+type IconButtonVariants = VariantProps<typeof iconButtonVariants>;
 export interface IconButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof iconButtonVariants> {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * アイコンボタンのバリエーション
+   * en: Variation of the icon button
+   */
+  variant?: IconButtonVariants["variant"];
+  /**
+   * アイコンボタンのサイズ
+   * en: Size of the icon button
+   */
+  size?: IconButtonVariants["size"];
+  /**
+   * アイコンボタンのテーマ
+   * en: Theme of the icon button
+   */
+  theme?: IconButtonVariants["theme"];
   /**
    * ボタンを別コンポーネントの子としてレンダリングするか
    * en: Whether to render the button as a child component
@@ -351,7 +366,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
       >
         {isLoading ? (
           <>
-            <Spinner size={getIconSize()} />
+            <Spinner size={getIconSize()} className="text-current" />
           </>
         ) : (
           <Icon icon={icon} size={getIconSize()} />
