@@ -6,7 +6,7 @@ import { IconButton } from "@/components/ui/icon-button";
 
 // 入力フィールドのスタイル定義
 const inputVariants = cva(
-  "flex items-center w-full rounded-md border bg-white transition-colors p-1",
+  "flex gap-0 items-center w-full rounded-action border bg-white transition-colors p-1",
   {
     variants: {
       size: {
@@ -81,9 +81,24 @@ function useMergeRefs<T>(
   );
 }
 
+type InputVariantProps = VariantProps<typeof inputVariants>;
 export interface InputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
-    VariantProps<typeof inputVariants> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
+  /**
+   * Inputサイズ指定
+   * en: Input size specification
+   */
+  size?: InputVariantProps["size"];
+  /**
+   * 無効にするかどうか
+   * en: Whether to disable the input
+   */
+  isDisabled?: boolean;
+  /**
+   * フォーカスするかどうか
+   * en: Whether to focus the input
+   */
+  isFocused?: boolean;
   /**
    * フィールドが無効かどうか
    * en: Whether the field is invalid
@@ -296,8 +311,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             "w-full h-full bg-transparent border-none outline-hidden focus:outline-hidden",
             "text-text-high placeholder:text-text-placeholder px-2",
             isInputDisabled &&
-              "cursor-not-allowed text-neutral-400 placeholder:text-text-disabled",
-            isIconButtonEnable && "pr-2" // ボタンがある場合は右側の余白を追加
+              "cursor-not-allowed text-neutral-400 placeholder:text-text-disabled"
           )}
           onChange={handleChange}
           onFocus={handleInputFocus}

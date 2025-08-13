@@ -19,7 +19,6 @@ const meta: Meta<typeof Input> = {
         type: "radio",
       },
       options: ["sm", "md", "lg"],
-      description: "入力フィールドのサイズを指定します",
       table: {
         defaultValue: { summary: "md" },
       },
@@ -28,7 +27,6 @@ const meta: Meta<typeof Input> = {
       control: {
         type: "boolean",
       },
-      description: "エラー状態を指定します",
       table: {
         defaultValue: { summary: "false" },
       },
@@ -37,7 +35,6 @@ const meta: Meta<typeof Input> = {
       control: {
         type: "boolean",
       },
-      description: "無効状態を指定します",
       table: {
         defaultValue: { summary: "false" },
       },
@@ -46,7 +43,6 @@ const meta: Meta<typeof Input> = {
       control: {
         type: "boolean",
       },
-      description: "アイコンボタンを表示するかどうかを指定します",
       table: {
         defaultValue: { summary: "false" },
       },
@@ -55,7 +51,6 @@ const meta: Meta<typeof Input> = {
       control: {
         type: "text",
       },
-      description: "ボタンのアイコン名を指定します",
       table: {
         defaultValue: { summary: "search" },
       },
@@ -64,29 +59,24 @@ const meta: Meta<typeof Input> = {
       control: {
         type: "text",
       },
-      description: "アイコンボタンのアクセシビリティラベルを指定します",
     },
     onIconButtonClick: {
       action: "buttonClicked",
-      description: "ボタンクリック時のイベントハンドラ",
     },
     placeholder: {
       control: {
         type: "text",
       },
-      description: "プレースホルダーテキスト",
     },
     defaultValue: {
       control: {
         type: "text",
       },
-      description: "デフォルト値",
     },
     className: {
       control: {
         type: "text",
       },
-      description: "カスタムCSSクラス",
     },
   },
 };
