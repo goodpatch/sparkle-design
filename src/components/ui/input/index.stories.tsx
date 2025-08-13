@@ -91,9 +91,10 @@ export const Default: Story = {
 };
 
 export const Size: Story = {
-  render: () => (
+  render: args => (
     <div className="flex flex-col gap-4">
       <Input
+        {...args}
         size="sm"
         placeholder="Small input (sm)"
         isIconButtonEnable
@@ -101,6 +102,7 @@ export const Size: Story = {
         iconButtonAriaLabel="入力内容を消去する"
       />
       <Input
+        {...args}
         size="md"
         placeholder="Medium input (md)"
         isIconButtonEnable
@@ -108,6 +110,7 @@ export const Size: Story = {
         iconButtonAriaLabel="入力内容を消去する"
       />
       <Input
+        {...args}
         size="lg"
         placeholder="Large input (lg)"
         isIconButtonEnable
@@ -119,17 +122,17 @@ export const Size: Story = {
 };
 
 export const Invalid: Story = {
-  render: () => (
+  render: args => (
     <div className="flex flex-col gap-4">
-      <Input placeholder="Invalid input" isInvalid />
+      <Input {...args} placeholder="Invalid input" isInvalid />
     </div>
   ),
 };
 
 export const Disabled: Story = {
-  render: () => (
+  render: args => (
     <div className="flex flex-col gap-4">
-      <Input placeholder="Disabled input" isDisabled />
+      <Input {...args} placeholder="Disabled input" isDisabled />
     </div>
   ),
 };
