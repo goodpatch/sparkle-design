@@ -217,14 +217,20 @@ describe("InputPassword", () => {
   describe("Size Variants", () => {
     it("applies size variant classes correctly", () => {
       // Given: 異なるサイズのInputPassword
-      const sizes = ["sm", "md", "lg"] as const;
+      const sizeClassMap = {
+        sm: "h-8",
+        md: "h-10",
+        lg: "h-12",
+      } as const;
 
-      sizes.forEach(size => {
-        testContainer.render(<InputPassword size={size} />);
+      Object.entries(sizeClassMap).forEach(([size, expectedClass]) => {
+        testContainer.render(
+          <InputPassword size={size as keyof typeof sizeClassMap} />
+        );
         const container = testContainer.getContainer().firstElementChild;
 
-        // Then: 適切なサイズクラスが適用されている
-        expect(container?.className).toContain(size);
+        // Then: 適切なサイズクラスが適用される
+        expect(container?.className).toContain(expectedClass);
       });
     });
   });
