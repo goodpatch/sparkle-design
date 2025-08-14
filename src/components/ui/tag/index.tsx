@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 // タグのスタイル定義
 const tagVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-center whitespace-nowrap",
+  "inline-flex items-center justify-center rounded-notice text-center whitespace-nowrap",
   {
     variants: {
       variant: {
@@ -13,9 +13,9 @@ const tagVariants = cva(
         subtle: "",
       },
       size: {
-        sm: "py-0 px-1 h-5 character-1-regular-pro",
-        md: "py-0 px-2 h-6 character-1-regular-pro",
-        lg: "py-1 px-2 h-8 character-2-regular-pro",
+        sm: "py-0 px-2 h-5 character-1-bold-pro",
+        md: "py-0.5 px-2 h-6 character-1-bold-pro",
+        lg: "py-1 px-2 h-8 character-2-bold-pro",
       },
       status: {
         neutral: "",
@@ -31,7 +31,7 @@ const tagVariants = cva(
       {
         variant: "solid",
         status: "neutral",
-        className: "bg-base-500 text-white",
+        className: "bg-neutral-500 text-white",
       },
       // info + solid
       {
@@ -63,7 +63,7 @@ const tagVariants = cva(
       {
         variant: "outline",
         status: "neutral",
-        className: "border-base-500 text-base-700 bg-white",
+        className: "border-neutral-500 text-neutral-500 bg-white",
       },
       // info + outline
       {
@@ -95,31 +95,31 @@ const tagVariants = cva(
       {
         variant: "subtle",
         status: "neutral",
-        className: "bg-base-100 text-base-700",
+        className: "bg-neutral-100 text-neutral-600",
       },
       // info + subtle
       {
         variant: "subtle",
         status: "info",
-        className: "bg-primary-100 text-primary-500",
+        className: "bg-primary-100 text-primary-600",
       },
       // success + subtle
       {
         variant: "subtle",
         status: "success",
-        className: "bg-success-100 text-success-700",
+        className: "bg-success-100 text-success-600",
       },
       // warning + subtle
       {
         variant: "subtle",
         status: "warning",
-        className: "bg-warning-100 text-warning-700",
+        className: "bg-warning-100 text-warning-600",
       },
       // negative + subtle
       {
         variant: "subtle",
         status: "negative",
-        className: "bg-negative-100 text-negative-500",
+        className: "bg-negative-100 text-negative-600",
       },
     ],
     defaultVariants: {
