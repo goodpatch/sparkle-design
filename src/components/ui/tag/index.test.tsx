@@ -41,7 +41,7 @@ describe("Tag", () => {
   describe("Variant Styling", () => {
     const variants = [
       { variant: "solid" as const, expected: "bg-neutral-500" },
-      { variant: "outline" as const, expected: "bg-neutral-500" },
+      { variant: "outline" as const, expected: "bg-white" },
       { variant: "subtle" as const, expected: "bg-neutral-100" },
     ];
 
@@ -117,7 +117,7 @@ describe("Tag", () => {
 
       // Then: すべてのプロパティが適用される
       expect(tag).toHaveClass("border", "h-8", "custom");
-      expect(tag.className).toContain("primary-500");
+      expect(tag.className).toContain("border-primary-500");
     });
   });
 
