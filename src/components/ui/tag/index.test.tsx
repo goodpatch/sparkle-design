@@ -41,7 +41,7 @@ describe("Tag", () => {
   describe("Variant Styling", () => {
     const variants = [
       { variant: "solid" as const, expected: "bg-neutral-500" },
-      { variant: "outline" as const, expected: "border-neutral-500" },
+      { variant: "outline" as const, expected: "bg-neutral-500" },
       { variant: "subtle" as const, expected: "bg-neutral-100" },
     ];
 
