@@ -84,9 +84,9 @@ describe("Tag", () => {
     const statuses = [
       { status: "neutral" as const, expected: "bg-neutral-500" },
       { status: "info" as const, expected: "bg-primary-500" },
-      { status: "success" as const, expected: "success-500" },
-      { status: "warning" as const, expected: "warning-500" },
-      { status: "negative" as const, expected: "negative-500" },
+      { status: "success" as const, expected: "bg-success-500" },
+      { status: "warning" as const, expected: "bg-warning-500" },
+      { status: "negative" as const, expected: "bg-negative-500" },
     ];
 
     statuses.forEach(({ status, expected }) => {
