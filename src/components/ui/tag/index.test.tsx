@@ -1,188 +1,177 @@
-/**
- * @jest-environment jsdom
- */
-
 import React from "react";
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { TestContainer, StyleHelpers } from "../../../test/helpers";
+import { render, screen } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
 import { Tag } from "./index";
-
-let testContainer: TestContainer;
-
-beforeEach(() => {
-  testContainer = new TestContainer();
-  testContainer.setup();
-});
-
-afterEach(() => {
-  testContainer.cleanup();
-});
 
 describe("Tag", () => {
   describe("Basic Rendering", () => {
-    it("renders a basic tag", () => {
-      // Given: 基本的なTag
-      testContainer.render(<Tag>Sample Tag</Tag>);
+    it("renders with default props", () => {
+      // Given: デフォルトプロパティでTagをレンダリング
+      render(<Tag>Sample Tag</Tag>);
 
-      // When: span要素を確認
-      const container = testContainer.getContainer();
-      const tag = container.firstElementChild;
+      // When: 要素を確認
+      const tag = screen.getByText("Sample Tag");
 
       // Then: 正常に描画される
-      expect(tag).toBeTruthy();
-      expect(tag?.textContent).toBe("Sample Tag");
+      expect(tag).toBeInTheDocument();
+      expect(tag).toHaveClass("inline-flex", "items-center", "justify-center");
     });
 
-    it("applies base styles correctly", () => {
-      // Given: 基本的なTag
-      testContainer.render(<Tag>Styled Tag</Tag>);
-      const container = testContainer.getContainer();
-      const tag = container.firstElementChild;
+    it("renders with custom content", () => {
+      // Given: カスタムコンテンツでTagをレンダリング
+      render(<Tag>Custom Content</Tag>);
 
-      // Then: 基本スタイルが適用される
-      expect(tag?.className).toContain("inline-flex");
-      expect(tag?.className).toContain("items-center");
-      expect(tag?.className).toContain("rounded-md");
+      // When: テキストを確認
+      // Then: カスタムコンテンツが表示される
+      expect(screen.getByText("Custom Content")).toBeInTheDocument();
     });
 
-    it("supports custom className", () => {
+    it("applies custom className", () => {
       // Given: カスタムクラス付きのTag
-      testContainer.render(<Tag className="custom-class">Custom Tag</Tag>);
-      const container = testContainer.getContainer();
-      const tag = container.firstElementChild;
+      render(<Tag className="custom-class">Test</Tag>);
+
+      // When: 要素を確認
+      const tag = screen.getByText("Test");
 
       // Then: カスタムクラスが適用される
-      expect(tag?.className).toContain("custom-class");
+      expect(tag).toHaveClass("custom-class");
     });
   });
 
   describe("Variant Styling", () => {
-    it("applies solid variant by default", () => {
-      // Given: variant未指定のTag
-      testContainer.render(<Tag>Solid Tag</Tag>);
-      const container = testContainer.getContainer();
-      const tag = container.firstElementChild;
+    const variants = [
+      { variant: "solid" as const, expected: "bg-neutral-500" },
+      { variant: "outline" as const, expected: "border-neutral-500" },
+      { variant: "subtle" as const, expected: "bg-neutral-100" },
+    ];
 
-      // Then: solidバリアントのクラスが適用される
-      expect(StyleHelpers.hasClass(tag as Element, "bg-base-500")).toBe(true);
-    });
+    variants.forEach(({ variant, expected }) => {
+      it(`applies ${variant} variant styles`, () => {
+        // Given: 指定されたvariantのTag
+        render(<Tag variant={variant}>Test Tag</Tag>);
 
-    it("applies outline variant classes", () => {
-      // Given: outlineバリアントのTag
-      testContainer.render(<Tag variant="outline">Outline Tag</Tag>);
-      const container = testContainer.getContainer();
-      const tag = container.firstElementChild;
+        // When: 要素を確認
+        const tag = screen.getByText("Test Tag");
 
-      // Then: outlineバリアントのクラスが適用される
-      expect(StyleHelpers.hasClass(tag as Element, "border")).toBe(true);
+        // Then: 対応するスタイルが適用される
+        expect(tag).toHaveClass(expected);
+      });
     });
   });
 
   describe("Size Variants", () => {
-    it("applies medium size by default", () => {
-      // Given: size未指定のTag
-      testContainer.render(<Tag>Medium Tag</Tag>);
-      const container = testContainer.getContainer();
-      const tag = container.firstElementChild;
+    const sizes = [
+      { size: "sm" as const, expected: "h-5" },
+      { size: "md" as const, expected: "h-6" },
+      { size: "lg" as const, expected: "h-8" },
+    ];
 
-      // Then: mediumサイズのクラスが適用される
-      expect(StyleHelpers.hasClass(tag as Element, "h-6")).toBe(true);
-    });
+    sizes.forEach(({ size, expected }) => {
+      it(`applies ${size} size styles`, () => {
+        // Given: 指定されたsizeのTag
+        render(<Tag size={size}>Test Tag</Tag>);
 
-    it("applies small size classes", () => {
-      // Given: smallサイズのTag
-      testContainer.render(<Tag size="sm">Small Tag</Tag>);
-      const container = testContainer.getContainer();
-      const tag = container.firstElementChild;
+        // When: 要素を確認
+        const tag = screen.getByText("Test Tag");
 
-      // Then: smallサイズのクラスが適用される
-      expect(StyleHelpers.hasClass(tag as Element, "h-5")).toBe(true);
-    });
-
-    it("applies large size classes", () => {
-      // Given: largeサイズのTag
-      testContainer.render(<Tag size="lg">Large Tag</Tag>);
-      const container = testContainer.getContainer();
-      const tag = container.firstElementChild;
-
-      // Then: largeサイズのクラスが適用される
-      expect(StyleHelpers.hasClass(tag as Element, "h-8")).toBe(true);
+        // Then: 対応するサイズスタイルが適用される
+        expect(tag).toHaveClass(expected);
+      });
     });
   });
 
   describe("Status Variants", () => {
-    it("applies info status classes", () => {
-      // Given: infoステータスのTag
-      testContainer.render(<Tag status="info">Info Tag</Tag>);
-      const container = testContainer.getContainer();
-      const tag = container.firstElementChild;
+    const statuses = [
+      { status: "neutral" as const, expected: "bg-neutral-500" },
+      { status: "info" as const, expected: "bg-primary-500" },
+      { status: "success" as const, expected: "success-500" },
+      { status: "warning" as const, expected: "warning-500" },
+      { status: "negative" as const, expected: "negative-500" },
+    ];
 
-      // Then: infoステータスのクラスが適用される
-      expect(StyleHelpers.hasClass(tag as Element, "bg-primary-500")).toBe(
-        true
-      );
+    statuses.forEach(({ status, expected }) => {
+      it(`applies ${status} status styles`, () => {
+        // Given: 指定されたstatusのTag
+        render(<Tag status={status}>Test Tag</Tag>);
+
+        // When: 要素を確認
+        const tag = screen.getByText("Test Tag");
+
+        // Then: 対応するステータススタイルが適用される
+        expect(tag.className).toContain(expected);
+      });
     });
+  });
 
-    it("applies success status classes", () => {
-      // Given: successステータスのTag
-      testContainer.render(<Tag status="success">Success Tag</Tag>);
-      const container = testContainer.getContainer();
-      const tag = container.firstElementChild;
-
-      // Then: successステータスのクラスが適用される
-      expect(StyleHelpers.hasClass(tag as Element, "bg-success-500")).toBe(
-        true
+  describe("Combined Props", () => {
+    it("applies multiple props correctly", () => {
+      // Given: 複数のプロパティを持つTag
+      render(
+        <Tag variant="outline" size="lg" status="info" className="custom">
+          Combined Props
+        </Tag>
       );
+
+      // When: 要素を確認
+      const tag = screen.getByText("Combined Props");
+
+      // Then: すべてのプロパティが適用される
+      expect(tag).toHaveClass("border", "h-8", "custom");
+      expect(tag.className).toContain("primary-500");
     });
+  });
 
-    it("applies warning status classes", () => {
-      // Given: warningステータスのTag
-      testContainer.render(<Tag status="warning">Warning Tag</Tag>);
-      const container = testContainer.getContainer();
-      const tag = container.firstElementChild;
-
-      // Then: warningステータスのクラスが適用される
-      expect(StyleHelpers.hasClass(tag as Element, "bg-warning-500")).toBe(
-        true
+  describe("Accessibility", () => {
+    it("supports ARIA attributes", () => {
+      // Given: ARIA属性付きのTag
+      render(
+        <Tag aria-label="Information tag" role="status">
+          Info
+        </Tag>
       );
-    });
 
-    it("applies negative status classes", () => {
-      // Given: negativeステータスのTag
-      testContainer.render(<Tag status="negative">Error Tag</Tag>);
-      const container = testContainer.getContainer();
-      const tag = container.firstElementChild;
+      // When: 要素を確認
+      const tag = screen.getByText("Info");
 
-      // Then: negativeステータスのクラスが適用される
-      expect(StyleHelpers.hasClass(tag as Element, "bg-negative-500")).toBe(
-        true
-      );
+      // Then: ARIA属性が適用される
+      expect(tag).toHaveAttribute("aria-label", "Information tag");
+      expect(tag).toHaveAttribute("role", "status");
     });
   });
 
   describe("Edge Cases", () => {
-    it("handles minimal content gracefully", () => {
-      // Given: 最小限の内容のTag
-      expect(() => {
-        testContainer.render(<Tag> </Tag>);
-      }).not.toThrow();
+    it("handles empty content", () => {
+      // Given: 空のコンテンツでTagをレンダリング
+      render(<Tag data-testid="empty-tag">{""}</Tag>);
+
+      // When: 要素を確認
+      const tag = screen.getByTestId("empty-tag");
 
       // Then: 正常に描画される
-      const container = testContainer.getContainer();
-      const tag = container.firstElementChild;
-      expect(tag).toBeTruthy();
+      expect(tag).toBeInTheDocument();
     });
 
-    it("handles null children gracefully", () => {
-      // Given: null childrenのTag
-      expect(() => {
-        testContainer.render(<Tag>{null}</Tag>);
-      }).not.toThrow();
+    it("handles numeric content", () => {
+      // Given: 数値コンテンツでTagをレンダリング
+      render(<Tag>{42}</Tag>);
 
-      // Then: 正常に描画される
-      const container = testContainer.getContainer();
-      const tag = container.firstElementChild;
-      expect(tag).toBeTruthy();
+      // When: 数値を確認
+      // Then: 数値が正しく表示される
+      expect(screen.getByText("42")).toBeInTheDocument();
+    });
+
+    it("handles React node content", () => {
+      // Given: React要素を含むTag
+      render(
+        <Tag>
+          <span>Complex</span> Content
+        </Tag>
+      );
+
+      // When: 要素を確認
+      // Then: React要素が正しく表示される
+      expect(screen.getByText("Complex")).toBeInTheDocument();
+      expect(screen.getByText("Content")).toBeInTheDocument();
     });
   });
 });
