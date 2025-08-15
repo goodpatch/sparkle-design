@@ -3,7 +3,7 @@
   "name": "tag",
   "type": "registry:component",
   "title": "Tag",
-  "description": "タグはカテゴリやラベルを表示し、削除可能なアクションを提供するコンポーネントです。",
+  "description": "タグは特定の要素にラベリングをすることで情報を分類・整理したり、情報にステータスを付与するために使用するコンポーネントです。",
   "files": [
     {
       "path": "src/components/ui/tag/index.tsx",
