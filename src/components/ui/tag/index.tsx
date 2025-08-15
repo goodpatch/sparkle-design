@@ -13,9 +13,9 @@ const tagVariants = cva(
         subtle: "",
       },
       size: {
-        sm: "py-0 px-2 h-5 character-1-bold-pro",
-        md: "py-0.5 px-2 h-6 character-1-bold-pro",
-        lg: "py-1 px-2 h-8 character-2-bold-pro",
+        sm: "py-0 px-2 min-w-10 h-5 character-1-bold-pro",
+        md: "py-0.5 px-2 min-w-12 h-6 character-1-bold-pro",
+        lg: "py-1 px-2 min-w-14 h-8 character-2-bold-pro",
       },
       status: {
         neutral: "",
