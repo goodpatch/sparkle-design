@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { Icon } from "@/components/ui/icon";
 
 const checkboxItemVariants = cva(
-  "relative rounded-sm transition-colors flex items-center justify-center cursor-pointer",
+  "relative rounded-sm transition-colors flex items-center justify-center",
   {
     variants: {
       size: {
@@ -15,19 +15,9 @@ const checkboxItemVariants = cva(
         md: "h-10 w-10",
         lg: "h-12 w-12",
       },
-      isInvalid: {
-        true: "",
-        false: "",
-      },
-      isDisabled: {
-        true: "cursor-not-allowed",
-        false: "",
-      },
     },
     defaultVariants: {
       size: "md",
-      isInvalid: false,
-      isDisabled: false,
     },
   }
 );
@@ -226,11 +216,7 @@ function Checkbox({
 
   return (
     <div className="flex items-center">
-      <div
-        className={cn(
-          checkboxItemVariants({ size, isDisabled: isCheckboxDisabled })
-        )}
-      >
+      <div className={cn(checkboxItemVariants({ size }))}>
         <CheckboxPrimitive.Root
           data-slot="checkbox"
           id={id}
