@@ -155,6 +155,11 @@ interface CheckboxItemProps extends CheckboxPrimitiveProps {
    * en: Whether the checkbox is in an indeterminate state
    */
   indeterminate?: boolean;
+  /**
+   * チェック状態
+   * en: Checked state of the checkbox
+   */
+  checked?: CheckboxPrimitiveProps["checked"];
 }
 
 /**
@@ -247,7 +252,7 @@ function Checkbox({
           >
             <Icon
               icon={
-                checked == "indeterminate"
+                checked === "indeterminate"
                   ? "check_indeterminate_small"
                   : "check"
               }
