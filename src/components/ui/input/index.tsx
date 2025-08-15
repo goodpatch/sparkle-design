@@ -108,17 +108,17 @@ export interface InputProps
    * アイコンボタンを有効にするフラグ
    * en: Flag to enable the icon button
    */
-  isIconButtonEnable?: boolean;
+  isTrigger?: boolean;
   /**
    * ボタンに表示するアイコン名
    * en: Icon name displayed in the button
    */
-  iconButtonIcon?: string;
+  triggerIcon?: string;
   /**
    * アイコンボタンのアクセシビリティラベル
    * en: Accessibility label for the icon button
    */
-  iconButtonAriaLabel?: string;
+  triggerAriaLabel?: string;
   /**
    * アイコンボタンクリック時のコールバック
    * en: Callback function for icon button click
@@ -152,9 +152,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       size,
       isInvalid = false,
       isDisabled = false,
-      isIconButtonEnable = false,
-      iconButtonIcon = "edit",
-      iconButtonAriaLabel,
+      isTrigger = false,
+      triggerIcon = "edit",
+      triggerAriaLabel,
       onIconButtonClick,
       disabled,
       defaultValue,
@@ -323,10 +323,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
 
-        {isIconButtonEnable && (
+        {isTrigger && (
           <IconButton
             ref={buttonRef}
-            icon={iconButtonIcon}
+            icon={triggerIcon}
             theme="neutral"
             variant="ghost"
             size={iconButtonSize}
@@ -334,7 +334,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             isDisabled={isInputDisabled}
             disabled={isInputDisabled}
             type="button" // フォーム内でデフォルトのsubmit動作を防ぐ
-            aria-label={iconButtonAriaLabel}
+            aria-label={triggerAriaLabel}
             onFocus={handleIconButtonFocus}
             onBlur={handleIconButtonBlur}
           />

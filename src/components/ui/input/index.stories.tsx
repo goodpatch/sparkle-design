@@ -39,7 +39,7 @@ const meta: Meta<typeof Input> = {
         defaultValue: { summary: "false" },
       },
     },
-    isIconButtonEnable: {
+    isTrigger: {
       control: {
         type: "boolean",
       },
@@ -47,7 +47,7 @@ const meta: Meta<typeof Input> = {
         defaultValue: { summary: "false" },
       },
     },
-    iconButtonIcon: {
+    triggerIcon: {
       control: {
         type: "text",
       },
@@ -55,7 +55,7 @@ const meta: Meta<typeof Input> = {
         defaultValue: { summary: "search" },
       },
     },
-    iconButtonAriaLabel: {
+    triggerAriaLabel: {
       control: {
         type: "text",
       },
@@ -97,25 +97,25 @@ export const Size: Story = {
         {...args}
         size="sm"
         placeholder="Small input (sm)"
-        isIconButtonEnable
-        iconButtonIcon="cancel"
-        iconButtonAriaLabel="入力内容を消去する"
+        isTrigger
+        triggerIcon="cancel"
+        triggerAriaLabel="入力内容を消去する"
       />
       <Input
         {...args}
         size="md"
         placeholder="Medium input (md)"
-        isIconButtonEnable
-        iconButtonIcon="cancel"
-        iconButtonAriaLabel="入力内容を消去する"
+        isTrigger
+        triggerIcon="cancel"
+        triggerAriaLabel="入力内容を消去する"
       />
       <Input
         {...args}
         size="lg"
         placeholder="Large input (lg)"
-        isIconButtonEnable
-        iconButtonIcon="cancel"
-        iconButtonAriaLabel="入力内容を消去する"
+        isTrigger
+        triggerIcon="cancel"
+        triggerAriaLabel="入力内容を消去する"
       />
     </div>
   ),
@@ -137,10 +137,10 @@ export const Disabled: Story = {
   ),
 };
 
-export const WithIconButton: Story = {
+export const WithTrigger: Story = {
   args: {
-    isIconButtonEnable: true,
-    iconButtonIcon: "cancel",
-    iconButtonAriaLabel: "入力内容を消去する",
+    isTrigger: true,
+    triggerIcon: "cancel",
+    triggerAriaLabel: "入力内容を消去する",
   },
 };

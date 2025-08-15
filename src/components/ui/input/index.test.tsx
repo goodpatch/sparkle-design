@@ -58,7 +58,7 @@ describe("Input", () => {
   describe("Icon Button Functionality", () => {
     it("renders icon button when isIconButtonEnable is true", () => {
       // Given: アイコンボタン有効なInput
-      testContainer.render(<Input isIconButtonEnable iconButtonIcon="edit" />);
+      testContainer.render(<Input isTrigger triggerIcon="edit" />);
 
       // When: button要素を確認
       const button = testContainer.queryButton();
@@ -69,7 +69,7 @@ describe("Input", () => {
 
     it("does not render icon button when isIconButtonEnable is false", () => {
       // Given: アイコンボタン無効なInput
-      testContainer.render(<Input isIconButtonEnable={false} />);
+      testContainer.render(<Input isTrigger={false} />);
 
       // When: button要素を確認
       const container = testContainer.getContainer();
@@ -83,11 +83,7 @@ describe("Input", () => {
       // Given: onIconButtonClickコールバック付きのInput
       const handleClick = vi.fn();
       testContainer.render(
-        <Input
-          isIconButtonEnable
-          iconButtonIcon="edit"
-          onIconButtonClick={handleClick}
-        />
+        <Input isTrigger triggerIcon="edit" onIconButtonClick={handleClick} />
       );
       const button = testContainer.queryButton();
 
@@ -103,8 +99,8 @@ describe("Input", () => {
       const handleClick = vi.fn();
       testContainer.render(
         <Input
-          isIconButtonEnable
-          iconButtonIcon="edit"
+          isTrigger
+          triggerIcon="edit"
           onIconButtonClick={handleClick}
           isDisabled
         />
@@ -260,9 +256,7 @@ describe("Input", () => {
 
     it("maintains invalid state with icon button", () => {
       // Given: invalid状態でアイコンボタン付きのInput
-      testContainer.render(
-        <Input isInvalid isIconButtonEnable iconButtonIcon="edit" />
-      );
+      testContainer.render(<Input isInvalid isTrigger triggerIcon="edit" />);
       const container = testContainer.getContainer().firstElementChild;
 
       // Then: invalid状態のクラスが保持される（実際のCVAクラス名）
@@ -325,7 +319,7 @@ describe("Input", () => {
 
     it("allows tab navigation to icon button when present", () => {
       // Given: アイコンボタン付きのInput
-      testContainer.render(<Input isIconButtonEnable iconButtonIcon="edit" />);
+      testContainer.render(<Input isTrigger triggerIcon="edit" />);
       const input = testContainer.queryInput();
       const button = testContainer.queryButton();
 

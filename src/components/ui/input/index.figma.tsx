@@ -23,7 +23,7 @@ figma.connect(
       isDisabled: figma.enum("state", {
         disabled: true,
       }),
-      isFocused: figma.boolean("isFocused"),
+      // isFocused: figma.boolean("isFocused"),
       isInvalid: figma.boolean("isInvalid"),
       defaultValue: figma.boolean("isEmpty", {
         true: undefined,
@@ -34,16 +34,16 @@ figma.connect(
         false: undefined,
       }),
       // No matching props could be found for these Figma properties:
-      // "isTrigger": figma.boolean('isTrigger'),
+      isTrigger: figma.boolean("isTrigger"),
       // "isFocused": figma.boolean('isFocused'),
     },
     example: props => (
       <Input
         size={props.size}
         isDisabled={props.isDisabled}
-        isFocused={props.isFocused}
         isInvalid={props.isInvalid}
         defaultValue={props.defaultValue}
+        isTrigger={props.isTrigger}
         placeholder={props.placeholder}
       />
     ),
