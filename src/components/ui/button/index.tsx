@@ -367,7 +367,7 @@ function Button({
           </span>
         </>
       ) : (
-        <span className="px-1 antialiased">{children}</span>
+        <span className="px-1">{children}</span>
       )}
 
       {suffixIcon && (
