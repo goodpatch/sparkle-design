@@ -61,9 +61,9 @@ describe("Tag", () => {
 
   describe("Size Variants", () => {
     const sizes = [
-      { size: "sm" as const, expected: "h-5" },
-      { size: "md" as const, expected: "h-6" },
-      { size: "lg" as const, expected: "h-8" },
+      { size: "sm" as const, expected: "min-w-10" },
+      { size: "md" as const, expected: "min-w-12" },
+      { size: "lg" as const, expected: "min-w-14" },
     ];
 
     sizes.forEach(({ size, expected }) => {
@@ -116,7 +116,7 @@ describe("Tag", () => {
       const tag = screen.getByText("Combined Props");
 
       // Then: すべてのプロパティが適用される
-      expect(tag).toHaveClass("border", "h-8", "custom");
+      expect(tag).toHaveClass("border", "min-w-14", "custom");
       expect(tag.className).toContain("border-primary-500");
     });
   });
