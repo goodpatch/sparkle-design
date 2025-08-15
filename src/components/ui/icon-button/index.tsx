@@ -10,7 +10,7 @@ const iconButtonVariants = cva(
   [
     "inline-flex items-center justify-center whitespace-nowrap rounded-action",
     "ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
-    "relative cursor-pointer antialiased",
+    "relative cursor-pointer",
   ].join(" "),
   {
     variants: {
