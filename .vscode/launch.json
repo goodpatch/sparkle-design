@@ -1,0 +1,22 @@
+{
+  "configurations": [
+    {
+      "type": "swift",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder:sparkle-design}/scripts/merge-registry",
+      "name": "Debug merge-registry (scripts/merge-registry)",
+      "program": "${workspaceFolder:sparkle-design}/scripts/merge-registry/.build/debug/merge-registry",
+      "preLaunchTask": "swift: Build Debug merge-registry (scripts/merge-registry)"
+    },
+    {
+      "type": "swift",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder:sparkle-design}/scripts/merge-registry",
+      "name": "Release merge-registry (scripts/merge-registry)",
+      "program": "${workspaceFolder:sparkle-design}/scripts/merge-registry/.build/release/merge-registry",
+      "preLaunchTask": "swift: Build Release merge-registry (scripts/merge-registry)"
+    }
+  ]
+}

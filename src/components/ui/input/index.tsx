@@ -282,8 +282,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           }),
           !isInputDisabled && "cursor-text" // 入力可能な場合はテキストカーソルを表示
         )}
-        aria-disabled={isInputDisabled}
-        aria-invalid={isInvalid === null ? undefined : isInvalid}
+        // NOTE: not supportエラーがLintで出るためコメントアウト
+        // aria-disabled={isInputDisabled}
+        // aria-invalid={isInvalid === null ? undefined : isInvalid}
         onClick={handleContainerClick}
         role="presentation"
         tabIndex={-1}
