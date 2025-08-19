@@ -245,7 +245,9 @@ const buttonVariants = cva(
 );
 
 type ButtonVariantProps = VariantProps<typeof buttonVariants>;
-export interface ButtonProps extends React.ComponentProps<"button"> {
+type ButtonComponentProps = React.ComponentProps<"button">;
+
+export interface ButtonProps extends ButtonComponentProps {
   /**
    * ボタンのサイズバリエーション
    * en: Size variation of the button
@@ -286,6 +288,27 @@ export interface ButtonProps extends React.ComponentProps<"button"> {
    * en: Disables the button when set to true
    */
   isDisabled?: boolean;
+  /**
+   * @deprecated アクセシビリティ観点により、別の手段を検討してください。
+   * en: Please consider alternative methods for accessibility reasons.
+   *
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   */
+  onMouseDown?: ButtonComponentProps["onMouseDown"];
+  /**
+   * @deprecated アクセシビリティ観点により、別の手段を検討してください。
+   * en: Please consider alternative methods for accessibility reasons.
+   *
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   */
+  onPointerDown?: ButtonComponentProps["onPointerDown"];
+  /**
+   * @deprecated アクセシビリティ観点により、別の手段を検討してください。
+   * en: Please consider alternative methods for accessibility reasons.
+   *
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   */
+  onTouchStart?: ButtonComponentProps["onTouchStart"];
 }
 
 /**
