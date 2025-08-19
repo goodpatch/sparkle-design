@@ -497,4 +497,30 @@ describe("Button", () => {
       // 実際のブラウザ環境やE2Eテストでのテストが推奨されます
     });
   });
+
+  describe("Security", () => {
+    it("prevents XSS in children content", () => {
+      // Given: HTMLを含む文字列
+      const maliciousContent = "<script>alert('xss')</script>";
+      testContainer.render(<Button>{maliciousContent}</Button>);
+      const button = testContainer.queryButton();
+
+      // Then: HTMLがエスケープされる
+      expect(button.textContent).toBe(maliciousContent);
+      expect(button.innerHTML).not.toContain("<script>");
+    });
+
+    it("handles special characters in aria-label", () => {
+      // Given: 特殊文字を含むaria-label
+      testContainer.render(
+        <Button aria-label="保存 & 閉じる (Save & Close)">保存</Button>
+      );
+      const button = testContainer.queryButton();
+
+      // Then: 特殊文字が適切に処理される
+      expect(
+        A11yHelpers.hasAriaLabel(button, "保存 & 閉じる (Save & Close)")
+      ).toBe(true);
+    });
+  });
 });
