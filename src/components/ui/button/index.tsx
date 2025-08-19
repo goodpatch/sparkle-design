@@ -377,6 +377,7 @@ function Button({
           icon={prefixIcon}
           size={getIconSize()}
           className={cn({ "opacity-0": isLoading })}
+          aria-hidden
         />
       )}
 
@@ -398,6 +399,7 @@ function Button({
           icon={suffixIcon}
           size={getIconSize()}
           className={cn({ "opacity-0": isLoading })}
+          aria-hidden
         />
       )}
     </Comp>
