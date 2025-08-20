@@ -5,9 +5,7 @@ import { RadioGroup as RadioPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-const radioGroupVariants = cva("grid gap-2");
-
-const labelVariants = cva("", {
+const labelVariants = cva("cursor-pointer", {
   variants: {
     size: {
       sm: "character-2-regular-pro",
@@ -15,8 +13,8 @@ const labelVariants = cva("", {
       lg: "character-4-regular-pro",
     },
     isDisabled: {
-      true: "text-base-200",
-      false: "text-base-900",
+      true: "text-text-disabled cursor-not-allowed",
+      false: "text-text-medium",
     },
   },
   defaultVariants: {
@@ -26,7 +24,7 @@ const labelVariants = cva("", {
 });
 
 const radioItemVariants = cva(
-  "relative rounded-full transition-colors flex items-center justify-center",
+  "relative rounded-full transition-colors flex items-center justify-center cursor-pointer",
   {
     variants: {
       size: {
@@ -52,7 +50,11 @@ const radioItemVariants = cva(
 );
 
 const radioIndicatorVariants = cva(
-  "relative rounded-full border border-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors",
+  [
+    "relative rounded-full border border-2 data-[state=checked]:border-none",
+    "focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
+    "transition-colors cursor-pointer",
+  ].join(" "),
   {
     variants: {
       size: {
@@ -62,11 +64,10 @@ const radioIndicatorVariants = cva(
       },
       isInvalid: {
         true: "border-negative-500 data-[state=checked]:bg-negative-500",
-        false:
-          "border-base-500 data-[state=checked]:bg-primary-500 data-[state=checked]:border-primary-500",
+        false: "border-neutral-500 data-[state=checked]:bg-primary-500",
       },
       isDisabled: {
-        true: "",
+        true: "cursor-not-allowed",
         false: "",
       },
     },
@@ -75,7 +76,7 @@ const radioIndicatorVariants = cva(
         isDisabled: false,
         isInvalid: false,
         className:
-          "hover:border-base-600 data-[state=checked]:hover:bg-primary-600 data-[state=checked]:hover:border-primary-600",
+          "hover:border-neutral-600 data-[state=checked]:hover:bg-primary-600",
       },
       {
         isDisabled: false,
@@ -86,14 +87,12 @@ const radioIndicatorVariants = cva(
       {
         isDisabled: true,
         isInvalid: false,
-        className:
-          "border-base-200 data-[state=checked]:bg-primary-200 data-[state=checked]:border-primary-200",
+        className: "border-neutral-200 data-[state=checked]:bg-primary-100",
       },
       {
         isDisabled: true,
         isInvalid: true,
-        className:
-          "border-negative-200 data-[state=checked]:bg-negative-200 data-[state=checked]:border-negative-200",
+        className: "border-negative-200 data-[state=checked]:bg-negative-200",
       },
     ],
     defaultVariants: {
@@ -117,6 +116,8 @@ const radioIndicatorDotVariants = cva("absolute rounded-full bg-white", {
   },
 });
 
+type RadioItemVariantProps = VariantProps<typeof radioItemVariants>;
+
 interface RadioItemProps
   extends React.ComponentPropsWithoutRef<typeof RadioPrimitive.Item> {
   /**
@@ -124,13 +125,13 @@ interface RadioItemProps
    * en: Radio button size
    * @default "md"
    */
-  size?: "sm" | "md" | "lg";
+  size?: RadioItemVariantProps["size"];
   /**
    * エラー状態かどうか
    * en: Whether the radio button is in an error state
    * @default false
    */
-  isInvalid?: boolean;
+  isInvalid?: RadioItemVariantProps["isInvalid"];
   /**
    * ラベルのテキスト
    * en: Label text for the radio button
@@ -161,7 +162,7 @@ const Radio = React.forwardRef<
 >(({ className, ...props }, ref) => {
   return (
     <RadioPrimitive.Root
-      className={cn(radioGroupVariants(), className)}
+      className={cn("grid gap-2", className)}
       {...props}
       ref={ref}
     />
@@ -201,7 +202,7 @@ const RadioItem = React.forwardRef<
   ) => {
     return (
       <div className="flex items-center">
-        <div className={cn(radioItemVariants({ size }))}>
+        <div className={cn(radioItemVariants({ size, isDisabled: disabled }))}>
           <RadioPrimitive.Item
             ref={ref}
             id={id}
