@@ -117,7 +117,6 @@ const radioIndicatorDotVariants = cva("absolute rounded-full bg-white", {
 });
 
 type RadioItemVariantProps = VariantProps<typeof radioItemVariants>;
-
 interface RadioItemProps
   extends React.ComponentPropsWithoutRef<typeof RadioPrimitive.Item> {
   /**
@@ -139,30 +138,13 @@ interface RadioItemProps
   label?: string;
 }
 
-/**
- * **概要 / Overview**
- *
- * - ラジオボタンは単一選択の形式でユーザーからの入力を取得するために使用するコンポーネントです。
- * - en: The Radio component is used to select one option from multiple choices.
- *
- * **使用例 / Usage Example**
- *
- * ```tsx
- * <Radio value="option1" onValueChange={setValue}>
- *   <RadioItem value="option1" label="オプション1" />
- *   <RadioItem value="option2" label="オプション2" />
- * </Radio>
- * ```
- *
- * @param props
- */
 const Radio = React.forwardRef<
   React.ElementRef<typeof RadioPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof RadioPrimitive.Root>
 >(({ className, ...props }, ref) => {
   return (
     <RadioPrimitive.Root
-      className={cn("grid gap-2", className)}
+      className={cn("grid gap-y-2 gap-x-4", className)}
       {...props}
       ref={ref}
     />
@@ -171,6 +153,10 @@ const Radio = React.forwardRef<
 Radio.displayName = RadioPrimitive.Root.displayName;
 
 /**
+ * - ラジオボタンは単一選択の形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * - en: The Radio component is used to select one option from multiple choices.
+ *
+ * ## SelectItem
  * **概要 / Overview**
  *
  * - ラジオボタンのアイテムコンポーネントです。
@@ -179,7 +165,10 @@ Radio.displayName = RadioPrimitive.Root.displayName;
  * **使用例 / Usage Example**
  *
  * ```tsx
- * <RadioItem value="option1" label="オプション1" size="md" />
+ * <Radio value="option1" onValueChange={setValue}>
+ *   <RadioItem value="option1" label="オプション1" />
+ *   <RadioItem value="option2" label="オプション2" />
+ * </Radio>
  * ```
  *
  * @param {RadioItemProps} props

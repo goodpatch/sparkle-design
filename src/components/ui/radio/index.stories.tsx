@@ -1,10 +1,10 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Radio, RadioItem } from "./index";
+import { Radio, RadioItem, RadioItemProps } from "./index";
 
-const meta: Meta<typeof Radio> = {
+const meta: Meta<typeof RadioItem> = {
   title: "Components/Radio",
-  component: Radio,
+  component: RadioItem,
   parameters: {
     layout: "centered",
   },
@@ -12,20 +12,18 @@ const meta: Meta<typeof Radio> = {
   argTypes: {
     defaultValue: {
       control: "text",
+      description:
+        "Radioに設定するデフォルトの値 en: The default value to set for the radio group",
     },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Radio>;
+type Story = StoryObj<RadioItemProps & { defaultValue: string }>;
 
 // WithControlsストーリー用の型定義
-interface WithControlsProps {
+interface WithControlsProps extends RadioItemProps {
   defaultValue: string;
-  size?: "sm" | "md" | "lg";
-  isInvalid?: boolean;
-  disabled?: boolean;
-  label?: string;
 }
 
 export const Default: Story = {
@@ -33,8 +31,8 @@ export const Default: Story = {
     defaultValue: "comfortable",
   },
   render: args => (
-    <Radio {...args}>
-      <RadioItem value="default" id="r1" label="Default" />
+    <Radio defaultValue={args.defaultValue}>
+      <RadioItem {...args} value="default" id="r1" label="Default" />
       <RadioItem value="comfortable" id="r2" label="Comfortable" />
       <RadioItem value="compact" id="r3" label="Compact" />
     </Radio>
@@ -53,28 +51,24 @@ export const WithControls: StoryObj<WithControlsProps> = {
     size: {
       control: "radio",
       options: ["sm", "md", "lg"],
-      description: "ラジオボタンのサイズを指定します",
       table: {
         defaultValue: { summary: "md" },
       },
     },
     isInvalid: {
       control: "boolean",
-      description: "エラー状態を指定します",
       table: {
         defaultValue: { summary: "false" },
       },
     },
     disabled: {
       control: "boolean",
-      description: "無効状態を指定します",
       table: {
         defaultValue: { summary: "false" },
       },
     },
     label: {
       control: "text",
-      description: "ラベルテキストを指定します",
     },
   },
   render: args => (
@@ -92,60 +86,94 @@ export const WithControls: StoryObj<WithControlsProps> = {
 };
 
 export const Sizes: Story = {
-  render: () => (
+  render: args => (
     <div className="space-y-8">
       <Radio defaultValue="sm">
-        <RadioItem value="sm" id="sm" size="sm" label="Small" />
+        <RadioItem {...args} value="sm" id="sm" size="sm" label="Small" />
       </Radio>
 
       <Radio defaultValue="md">
-        <RadioItem value="md" id="md" size="md" label="Medium" />
+        <RadioItem {...args} value="md" id="md" size="md" label="Medium" />
       </Radio>
 
       <Radio defaultValue="lg">
-        <RadioItem value="lg" id="lg" size="lg" label="Large" />
+        <RadioItem {...args} value="lg" id="lg" size="lg" label="Large" />
       </Radio>
     </div>
   ),
 };
 
 export const Invalid: Story = {
-  render: () => (
+  render: args => (
     <Radio defaultValue="comfortable">
-      <RadioItem value="default" id="invalid1" isInvalid label="Default" />
       <RadioItem
+        {...args}
+        value="default"
+        id="invalid1"
+        isInvalid
+        label="Default"
+      />
+      <RadioItem
+        {...args}
         value="comfortable"
         id="invalid2"
         isInvalid
         label="Comfortable"
       />
-      <RadioItem value="compact" id="invalid3" isInvalid label="Compact" />
+      <RadioItem
+        {...args}
+        value="compact"
+        id="invalid3"
+        isInvalid
+        label="Compact"
+      />
     </Radio>
   ),
 };
 
 export const Disabled: Story = {
-  render: () => (
+  render: args => (
     <Radio defaultValue="comfortable">
-      <RadioItem value="default" id="r4" disabled label="Default" />
-      <RadioItem value="comfortable" id="r5" disabled label="Comfortable" />
-      <RadioItem value="compact" id="r6" disabled label="Compact" />
+      <RadioItem {...args} value="default" id="r4" disabled label="Default" />
+      <RadioItem
+        {...args}
+        value="comfortable"
+        id="r5"
+        disabled
+        label="Comfortable"
+      />
+      <RadioItem {...args} value="compact" id="r6" disabled label="Compact" />
     </Radio>
   ),
 };
 
 export const DisabledAndInvalid: Story = {
-  render: () => (
+  render: args => (
     <Radio defaultValue="comfortable">
-      <RadioItem value="default" id="r7" disabled isInvalid label="Default" />
       <RadioItem
+        {...args}
+        value="default"
+        id="r7"
+        disabled
+        isInvalid
+        label="Default"
+      />
+      <RadioItem
+        {...args}
         value="comfortable"
         id="r8"
         disabled
         isInvalid
         label="Comfortable"
       />
-      <RadioItem value="compact" id="r9" disabled isInvalid label="Compact" />
+      <RadioItem
+        {...args}
+        value="compact"
+        id="r9"
+        disabled
+        isInvalid
+        label="Compact"
+      />
     </Radio>
   ),
 };
