@@ -68,7 +68,7 @@ const TestHelpers = {
       "w-full",
       "h-px",
     ];
-    this.expectClassesToExist(element, defaultClasses);
+    TestHelpers.expectClassesToExist(element, defaultClasses);
   },
 };
 
