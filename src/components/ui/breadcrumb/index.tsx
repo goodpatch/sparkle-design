@@ -1,6 +1,6 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 
 /**
  * パンくずはユーザーが現在のページ階層を理解し、親の階層へ戻るためのナビゲーションとして機能するコンポーネントです。
@@ -77,10 +77,7 @@ export function BreadcrumbLink({
   return (
     <Link
       data-slot="breadcrumb-link"
-      className={cn(
-        "character-3-regular-pro text-primary-700 hover:underline focus-visible:underline outline-none transition-colors",
-        className
-      )}
+      className={cn("character-3-regular-pro", className)}
       {...props}
     />
   );
@@ -102,7 +99,7 @@ export function BreadcrumbSeparator({
     <span
       aria-hidden="true"
       data-slot="breadcrumb-separator"
-      className={cn("mx-1 text-gray-300 select-none", className)}
+      className={cn("mx-1 text-neutral-500 select-none", className)}
       {...props}
     >
       {children ?? "/"}
