@@ -3,8 +3,8 @@ import { cn } from "@/lib/utils";
 import { Link } from "@/components/ui/link";
 
 /**
- * パンくずはユーザーが現在のページ階層を理解し、親の階層へ戻るためのナビゲーションとして機能するコンポーネントです。
- * en: The Breadcrumb component helps users understand the current page hierarchy and navigate back to parent levels.
+ * - パンくずはユーザーが現在のページ階層を理解し、親の階層へ戻るためのナビゲーションとして機能するコンポーネントです。
+ * - en: The Breadcrumb component helps users understand the current page hierarchy and navigate back to parent levels.
  *
  * @param props nav要素のprops
  * en: Props for nav element
