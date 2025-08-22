@@ -116,9 +116,53 @@ const radioIndicatorDotVariants = cva("absolute rounded-full bg-white", {
   },
 });
 
+type RadioPrimitiveProps = React.ComponentProps<typeof RadioPrimitive.Root>;
+export interface RadioProps extends RadioPrimitiveProps {
+  /**
+   * ラジオのデフォルト値
+   * en: Default value of the radio group
+   */
+  defaultValue?: RadioPrimitiveProps["defaultValue"];
+  /**
+   * ラジオの値が変更されたときのコールバック
+   * en: Callback when the radio value changes
+   */
+  onValueChange?: RadioPrimitiveProps["onValueChange"];
+}
+
+/**
+ * **概要 / Overview**
+ *
+ * - ラジオボタンは単一選択の形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * - en: The Radio component is used to select one option from multiple choices.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Radio value="option1" onValueChange={setValue}>
+ *   <RadioItem value="option1" label="オプション1" />
+ *   <RadioItem value="option2" label="オプション2" />
+ * </Radio>
+ * ```
+ *
+ * @param props
+ */
+function Radio({ className, ...props }: RadioProps) {
+  return (
+    <RadioPrimitive.Root
+      data-slot="radio-group"
+      className={cn("grid gap-y-2 gap-x-4", className)}
+      {...props}
+    />
+  );
+}
+Radio.displayName = RadioPrimitive.Root.displayName;
+
 type RadioItemVariantProps = VariantProps<typeof radioItemVariants>;
-interface RadioItemProps
-  extends React.ComponentPropsWithoutRef<typeof RadioPrimitive.Item> {
+type RadioPrimitiveItemProps = React.ComponentPropsWithoutRef<
+  typeof RadioPrimitive.Item
+>;
+interface RadioItemProps extends RadioPrimitiveItemProps {
   /**
    * ラジオボタンのサイズ
    * en: Radio button size
@@ -132,31 +176,19 @@ interface RadioItemProps
    */
   isInvalid?: RadioItemVariantProps["isInvalid"];
   /**
+   * ラジオボタンが無効かどうか
+   * en: Whether the radio button is disabled
+   * @default false
+   */
+  disabled?: RadioPrimitiveItemProps["disabled"];
+  /**
    * ラベルのテキスト
    * en: Label text for the radio button
    */
   label?: string;
 }
 
-const Radio = React.forwardRef<
-  React.ElementRef<typeof RadioPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof RadioPrimitive.Root>
->(({ className, ...props }, ref) => {
-  return (
-    <RadioPrimitive.Root
-      className={cn("grid gap-y-2 gap-x-4", className)}
-      {...props}
-      ref={ref}
-    />
-  );
-});
-Radio.displayName = RadioPrimitive.Root.displayName;
-
 /**
- * - ラジオボタンは単一選択の形式でユーザーからの入力を取得するために使用するコンポーネントです。
- * - en: The Radio component is used to select one option from multiple choices.
- *
- * ## SelectItem
  * **概要 / Overview**
  *
  * - ラジオボタンのアイテムコンポーネントです。
@@ -165,59 +197,48 @@ Radio.displayName = RadioPrimitive.Root.displayName;
  * **使用例 / Usage Example**
  *
  * ```tsx
- * <Radio value="option1" onValueChange={setValue}>
- *   <RadioItem value="option1" label="オプション1" />
- *   <RadioItem value="option2" label="オプション2" />
- * </Radio>
+ * <RadioItem value="option1" label="オプション1" size="md" />
  * ```
  *
  * @param {RadioItemProps} props
  */
-const RadioItem = React.forwardRef<
-  React.ElementRef<typeof RadioPrimitive.Item>,
-  RadioItemProps
->(
-  (
-    {
-      className,
-      size = "md",
-      isInvalid = false,
-      disabled = false,
-      label,
-      id,
-      ...props
-    },
-    ref
-  ) => {
-    return (
-      <div className="flex items-center">
-        <div className={cn(radioItemVariants({ size, isDisabled: disabled }))}>
-          <RadioPrimitive.Item
-            ref={ref}
-            id={id}
-            className={cn(
-              radioIndicatorVariants({ size, isInvalid, isDisabled: disabled })
-            )}
-            disabled={disabled}
-            {...props}
-          >
-            <RadioPrimitive.Indicator className="flex items-center justify-center">
-              <div className={cn(radioIndicatorDotVariants({ size }))} />
-            </RadioPrimitive.Indicator>
-          </RadioPrimitive.Item>
-        </div>
-        {label && (
-          <label
-            htmlFor={id}
-            className={cn(labelVariants({ size, isDisabled: disabled }))}
-          >
-            {label}
-          </label>
-        )}
+function RadioItem({
+  className,
+  size = "md",
+  isInvalid = false,
+  disabled = false,
+  label,
+  id,
+  ...props
+}: RadioItemProps) {
+  return (
+    <div className="flex items-center">
+      <div className={cn(radioItemVariants({ size, isDisabled: disabled }))}>
+        <RadioPrimitive.Item
+          data-slot="radio-group-item"
+          id={id}
+          className={cn(
+            radioIndicatorVariants({ size, isInvalid, isDisabled: disabled })
+          )}
+          disabled={disabled}
+          {...props}
+        >
+          <RadioPrimitive.Indicator className="flex items-center justify-center">
+            <div className={cn(radioIndicatorDotVariants({ size }))} />
+          </RadioPrimitive.Indicator>
+        </RadioPrimitive.Item>
       </div>
-    );
-  }
-);
+      {label && (
+        <label
+          htmlFor={id}
+          className={cn(labelVariants({ size, isDisabled: disabled }))}
+        >
+          {label}
+        </label>
+      )}
+    </div>
+  );
+}
 RadioItem.displayName = RadioPrimitive.Item.displayName;
 
 export { Radio, RadioItem };
