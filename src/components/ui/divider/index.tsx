@@ -21,17 +21,17 @@ const dividerVariants = cva("shrink-0", {
   },
   compoundVariants: [
     // 水平方向の破線
-    // {
-    //   direction: "horizontal",
-    //   lineStyle: "dashed",
-    //   className: "bg-transparent border-t",
-    // },
-    // // 垂直方向の破線
-    // {
-    //   direction: "vertical",
-    //   lineStyle: "dashed",
-    //   className: "bg-transparent border-l",
-    // },
+    {
+      direction: "horizontal",
+      lineStyle: "dashed",
+      className: "bg-transparent border-t",
+    },
+    // 垂直方向の破線
+    {
+      direction: "vertical",
+      lineStyle: "dashed",
+      className: "bg-transparent border-l",
+    },
   ],
   defaultVariants: {
     emphasis: "middle",
