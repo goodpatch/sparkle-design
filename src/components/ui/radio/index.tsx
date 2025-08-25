@@ -24,7 +24,7 @@ const labelVariants = cva("cursor-pointer", {
 });
 
 const radioItemVariants = cva(
-  "relative rounded-full transition-colors flex items-center justify-center cursor-pointer",
+  "relative rounded-full transition-colors flex items-center justify-center",
   {
     variants: {
       size: {
@@ -51,7 +51,7 @@ const radioItemVariants = cva(
 
 const radioIndicatorVariants = cva(
   [
-    "relative rounded-full border border-2 data-[state=checked]:border-none",
+    "relative rounded-full border border-2",
     "focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
     "transition-colors cursor-pointer",
   ].join(" "),
@@ -63,8 +63,9 @@ const radioIndicatorVariants = cva(
         lg: "h-6 w-6",
       },
       isInvalid: {
-        true: "border-negative-500 data-[state=checked]:bg-negative-500",
-        false: "border-neutral-500 data-[state=checked]:bg-primary-500",
+        true: "border-negative-500 data-[state=checked]:border-negative-500 data-[state=checked]:bg-negative-500",
+        false:
+          "border-neutral-500 data-[state=checked]:border-primary-500 data-[state=checked]:bg-primary-500",
       },
       isDisabled: {
         true: "cursor-not-allowed",
@@ -76,23 +77,25 @@ const radioIndicatorVariants = cva(
         isDisabled: false,
         isInvalid: false,
         className:
-          "hover:border-neutral-600 data-[state=checked]:hover:bg-primary-600",
+          "hover:border-neutral-600 data-[state=checked]:hover:border-primary-600 data-[state=checked]:hover:bg-primary-600",
       },
       {
         isDisabled: false,
         isInvalid: true,
         className:
-          "hover:border-negative-600 data-[state=checked]:hover:bg-negative-600",
+          "hover:border-negative-600 data-[state=checked]:hover:border-negative-600 data-[state=checked]:hover:bg-negative-600",
       },
       {
         isDisabled: true,
         isInvalid: false,
-        className: "border-neutral-200 data-[state=checked]:bg-primary-100",
+        className:
+          "border-neutral-200 data-[state=checked]:border-primary-100 data-[state=checked]:bg-primary-100",
       },
       {
         isDisabled: true,
         isInvalid: true,
-        className: "border-negative-200 data-[state=checked]:bg-negative-200",
+        className:
+          "border-negative-200 data-[state=checked]:border-negative-100 data-[state=checked]:bg-negative-200",
       },
     ],
     defaultVariants: {
@@ -223,7 +226,10 @@ function RadioItem({
           disabled={disabled}
           {...props}
         >
-          <RadioPrimitive.Indicator className="flex items-center justify-center">
+          <RadioPrimitive.Indicator
+            data-slot="radio-group-indicator"
+            className="flex items-center justify-center"
+          >
             <div className={cn(radioIndicatorDotVariants({ size }))} />
           </RadioPrimitive.Indicator>
         </RadioPrimitive.Item>
