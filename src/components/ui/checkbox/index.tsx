@@ -7,7 +7,10 @@ import { cn } from "@/lib/utils";
 import { Icon } from "@/components/ui/icon";
 
 const checkboxItemVariants = cva(
-  "relative rounded-sm transition-colors flex items-center justify-center",
+  [
+    "relative rounded-sm transition-colors flex items-center justify-center cursor-pointer",
+    "focus:outline-none",
+  ].join(" "),
   {
     variants: {
       size: {
@@ -15,15 +18,23 @@ const checkboxItemVariants = cva(
         md: "h-10 w-10",
         lg: "h-12 w-12",
       },
+      isDisabled: {
+        true: "cursor-not-allowed",
+        false: "",
+      },
     },
     defaultVariants: {
       size: "md",
+      isDisabled: false,
     },
   }
 );
 
 const checkboxRootVariants = cva(
-  "rounded-xs border-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2 transition-colors cursor-pointer",
+  [
+    "rounded-xs border-2 transition-colors",
+    "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-[var(--color-ring-normal)] [.group:focus-visible_&]:ring-offset-2",
+  ].join(" "),
   {
     variants: {
       size: {
@@ -34,17 +45,17 @@ const checkboxRootVariants = cva(
       isInvalid: {
         true: [
           "border-negative-500",
-          "data-[state=checked]:bg-negative-500 data-[state=checked]:border-none",
-          "data-[state=indeterminate]:bg-negative-500 data-[state=indeterminate]:border-none",
+          "[.group[data-state=checked]_&]:bg-negative-500 [.group[data-state=checked]_&]:border-none",
+          "[.group[data-state=indeterminate]_&]:bg-negative-500 [.group[data-state=indeterminate]_&]:border-none",
         ].join(" "),
         false: [
           "border-neutral-500",
-          "data-[state=checked]:bg-primary-500 data-[state=checked]:border-none",
-          "data-[state=indeterminate]:bg-primary-500 data-[state=indeterminate]:border-none",
+          "[.group[data-state=checked]_&]:bg-primary-500 [.group[data-state=checked]_&]:border-none",
+          "[.group[data-state=indeterminate]_&]:bg-primary-500 [.group[data-state=indeterminate]_&]:border-none",
         ].join(" "),
       },
       isDisabled: {
-        true: "cursor-not-allowed",
+        true: "",
         false: "",
       },
     },
@@ -54,8 +65,8 @@ const checkboxRootVariants = cva(
         isInvalid: false,
         className: [
           "hover:border-neutral-600",
-          "data-[state=checked]:hover:bg-primary-600",
-          "data-[state=indeterminate]:hover:bg-primary-600",
+          "[.group[data-state=checked]_&]:hover:bg-primary-600",
+          "[.group[data-state=indeterminate]_&]:hover:bg-primary-600",
         ].join(" "),
       },
       {
@@ -63,8 +74,8 @@ const checkboxRootVariants = cva(
         isInvalid: true,
         className: [
           "hover:border-negative-600",
-          "data-[state=checked]:hover:bg-negative-600",
-          "data-[state=indeterminate]:hover:bg-negative-600",
+          "[.group[data-state=checked]_&]:hover:bg-negative-600",
+          "[.group[data-state=indeterminate]_&]:hover:bg-negative-600",
         ].join(" "),
       },
       {
@@ -72,8 +83,8 @@ const checkboxRootVariants = cva(
         isInvalid: false,
         className: [
           "border-neutral-200",
-          "data-[state=checked]:bg-primary-200 data-[state=checked]:border-primary-200",
-          "data-[state=indeterminate]:bg-primary-200 data-[state=indeterminate]:border-primary-200",
+          "[.group[data-state=checked]_&]:bg-primary-200 [.group[data-state=checked]_&]:border-primary-200",
+          "[.group[data-state=indeterminate]_&]:bg-primary-200 [.group[data-state=indeterminate]_&]:border-primary-200",
         ].join(" "),
       },
       {
@@ -81,8 +92,8 @@ const checkboxRootVariants = cva(
         isInvalid: true,
         className: [
           "border-negative-200",
-          "data-[state=checked]:bg-negative-200 data-[state=checked]:border-negative-200",
-          "data-[state=indeterminate]:bg-negative-200 data-[state=indeterminate]:border-negative-200",
+          "[.group[data-state=checked]_&]:bg-negative-200 [.group[data-state=checked]_&]:border-negative-200",
+          "[.group[data-state=indeterminate]_&]:bg-negative-200 [.group[data-state=indeterminate]_&]:border-negative-200",
         ].join(" "),
       },
     ],
@@ -216,10 +227,20 @@ function Checkbox({
 
   return (
     <div className="flex items-center">
-      <div className={cn(checkboxItemVariants({ size }))}>
-        <CheckboxPrimitive.Root
-          data-slot="checkbox"
-          id={id}
+      <CheckboxPrimitive.Root
+        data-slot="checkbox"
+        id={id}
+        className={cn(
+          checkboxItemVariants({ size, isDisabled: isCheckboxDisabled }),
+          "group",
+          className
+        )}
+        disabled={isCheckboxDisabled}
+        checked={checked}
+        onCheckedChange={handleChange}
+        {...props}
+      >
+        <div
           className={cn(
             checkboxRootVariants({
               size,
@@ -227,10 +248,6 @@ function Checkbox({
               isDisabled: isCheckboxDisabled,
             })
           )}
-          disabled={isCheckboxDisabled}
-          checked={checked}
-          onCheckedChange={handleChange}
-          {...props}
         >
           <CheckboxPrimitive.Indicator
             data-slot="checkbox-indicator"
@@ -256,8 +273,8 @@ function Checkbox({
               })()}
             />
           </CheckboxPrimitive.Indicator>
-        </CheckboxPrimitive.Root>
-      </div>
+        </div>
+      </CheckboxPrimitive.Root>
       {label && (
         <label
           htmlFor={id}

@@ -222,20 +222,41 @@ describe("Checkbox", () => {
     it("applies size variant classes correctly", () => {
       // Given: 異なるサイズのCheckbox
       const testCases = [
-        { size: "sm", expectedClasses: ["h-4", "w-4"] },
-        { size: "md", expectedClasses: ["h-5", "w-5"] },
-        { size: "lg", expectedClasses: ["h-6", "w-6"] },
+        {
+          size: "sm",
+          expectedOuterClasses: ["h-8", "w-8"],
+          expectedInnerClasses: ["h-4", "w-4"],
+        },
+        {
+          size: "md",
+          expectedOuterClasses: ["h-10", "w-10"],
+          expectedInnerClasses: ["h-5", "w-5"],
+        },
+        {
+          size: "lg",
+          expectedOuterClasses: ["h-12", "w-12"],
+          expectedInnerClasses: ["h-6", "w-6"],
+        },
       ] as const;
 
-      testCases.forEach(({ size, expectedClasses }) => {
-        testContainer.render(<Checkbox id={`test-${size}`} size={size} />);
-        const checkbox = testContainer.querySelector(`#test-${size}`);
+      testCases.forEach(
+        ({ size, expectedOuterClasses, expectedInnerClasses }) => {
+          testContainer.render(<Checkbox id={`test-${size}`} size={size} />);
+          const checkboxOuter = testContainer.querySelector(`#test-${size}`);
+          const checkboxInner = checkboxOuter.querySelector(
+            'div[class*="rounded-xs"]'
+          );
 
-        // Then: 適切なサイズクラスが適用されている
-        expectedClasses.forEach(className => {
-          expect(checkbox.className).toContain(className);
-        });
-      });
+          // Then: 外側（タップ可能領域）と内側（視覚的チェックボックス）に適切なサイズクラスが適用されている
+          expectedOuterClasses.forEach(className => {
+            expect(checkboxOuter.className).toContain(className);
+          });
+          expect(checkboxInner).toBeTruthy();
+          expectedInnerClasses.forEach(className => {
+            expect(checkboxInner!.className).toContain(className);
+          });
+        }
+      );
     });
 
     it("applies correct classes for different states", () => {
@@ -252,10 +273,14 @@ describe("Checkbox", () => {
     it("applies invalid state classes when isInvalid is true", () => {
       // Given: invalid状態のCheckbox
       testContainer.render(<Checkbox id="test-checkbox" isInvalid />);
-      const checkbox = testContainer.querySelector("#test-checkbox");
+      const checkboxOuter = testContainer.querySelector("#test-checkbox");
+      const checkboxInner = checkboxOuter.querySelector(
+        'div[class*="border-negative-500"]'
+      );
 
-      // Then: invalid状態のクラスが適用されている（実際のCVAクラス名）
-      expect(checkbox.className).toContain("border-negative-500");
+      // Then: invalid状態のクラスが内側のチェックボックスに適用されている
+      expect(checkboxInner).toBeTruthy();
+      expect(checkboxInner!.className).toContain("border-negative-500");
     });
   });
 
@@ -369,12 +394,16 @@ describe("Checkbox", () => {
       testContainer.render(
         <Checkbox id="test-checkbox" indeterminate={true} />
       );
-      const checkbox = testContainer.querySelector("#test-checkbox");
+      const checkboxOuter = testContainer.querySelector("#test-checkbox");
+      const checkboxInner = checkboxOuter.querySelector(
+        'div[class*="border-2"]'
+      );
 
       // Then: indeterminate状態のスタイルが適用されている
-      expect(checkbox.getAttribute("data-state")).toBe("indeterminate");
-      // CVAで定義されたクラスが適用されていることを確認
-      expect(checkbox.className).toContain("border-2");
+      expect(checkboxOuter.getAttribute("data-state")).toBe("indeterminate");
+      // CVAで定義されたクラスが内側のチェックボックスに適用されていることを確認
+      expect(checkboxInner).toBeTruthy();
+      expect(checkboxInner!.className).toContain("border-2");
     });
 
     it("handles controlled indeterminate state correctly", () => {
@@ -471,11 +500,15 @@ describe("Checkbox", () => {
       testContainer.render(
         <Checkbox id="test-checkbox" indeterminate={true} isInvalid={true} />
       );
-      const checkbox = testContainer.querySelector("#test-checkbox");
+      const checkboxOuter = testContainer.querySelector("#test-checkbox");
+      const checkboxInner = checkboxOuter.querySelector(
+        'div[class*="border-negative-500"]'
+      );
 
-      // Then: indeterminate状態でinvalidスタイルが適用されている
-      expect(checkbox.getAttribute("data-state")).toBe("indeterminate");
-      expect(checkbox.className).toContain("border-negative-500");
+      // Then: indeterminate状態でinvalidスタイルが内側のチェックボックスに適用されている
+      expect(checkboxOuter.getAttribute("data-state")).toBe("indeterminate");
+      expect(checkboxInner).toBeTruthy();
+      expect(checkboxInner!.className).toContain("border-negative-500");
     });
 
     it("handles indeterminate state when disabled", () => {
