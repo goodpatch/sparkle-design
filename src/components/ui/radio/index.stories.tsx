@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Radio, RadioItem, RadioItemProps } from "./index";
 import { action } from "@storybook/addon-actions";
+import { Radio, RadioItem, RadioItemProps } from "./index";
 
 const meta: Meta<typeof Radio> = {
   title: "Components/Radio",

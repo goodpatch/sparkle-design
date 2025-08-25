@@ -51,12 +51,14 @@ describe("Radio", () => {
         </Radio>
       );
 
-      // When: ラジオボタンのindicatorを取得
-      const indicator = testContainer.querySelector("#radio1");
+      // When: ラジオボタンの外側（Item）と内側（Indicator）を取得
+      const radioItem = testContainer.querySelector("#radio1");
+      const indicator = radioItem.querySelector('div[class*="h-5"]');
 
-      // Then: mediumサイズのクラスが適用されている
-      expect(StyleHelpers.hasClass(indicator, "h-5")).toBe(true);
-      expect(StyleHelpers.hasClass(indicator, "w-5")).toBe(true);
+      // Then: 外側はh-10（mediumサイズ）、内側はh-5（indicatorサイズ）が適用されている
+      expect(StyleHelpers.hasClass(radioItem, "h-10")).toBe(true);
+      expect(StyleHelpers.hasClass(radioItem, "w-10")).toBe(true);
+      expect(indicator).toBeTruthy();
     });
   });
 
@@ -69,12 +71,14 @@ describe("Radio", () => {
         </Radio>
       );
 
-      // When: ラジオボタンのindicatorを取得
-      const indicator = testContainer.querySelector("#radio1");
+      // When: ラジオボタンの外側（Item）と内側（Indicator）を取得
+      const radioItem = testContainer.querySelector("#radio1");
+      const indicator = radioItem.querySelector('div[class*="h-4"]');
 
-      // Then: smallサイズのクラスが適用されている
-      expect(StyleHelpers.hasClass(indicator, "h-4")).toBe(true);
-      expect(StyleHelpers.hasClass(indicator, "w-4")).toBe(true);
+      // Then: 外側はh-8（smallサイズ）、内側はh-4（indicatorサイズ）が適用されている
+      expect(StyleHelpers.hasClass(radioItem, "h-8")).toBe(true);
+      expect(StyleHelpers.hasClass(radioItem, "w-8")).toBe(true);
+      expect(indicator).toBeTruthy();
     });
 
     it("applies large size classes correctly", () => {
@@ -85,12 +89,14 @@ describe("Radio", () => {
         </Radio>
       );
 
-      // When: ラジオボタンのindicatorを取得
-      const indicator = testContainer.querySelector("#radio1");
+      // When: ラジオボタンの外側（Item）と内側（Indicator）を取得
+      const radioItem = testContainer.querySelector("#radio1");
+      const indicator = radioItem.querySelector('div[class*="h-6"]');
 
-      // Then: largeサイズのクラスが適用されている
-      expect(StyleHelpers.hasClass(indicator, "h-6")).toBe(true);
-      expect(StyleHelpers.hasClass(indicator, "w-6")).toBe(true);
+      // Then: 外側はh-12（largeサイズ）、内側はh-6（indicatorサイズ）が適用されている
+      expect(StyleHelpers.hasClass(radioItem, "h-12")).toBe(true);
+      expect(StyleHelpers.hasClass(radioItem, "w-12")).toBe(true);
+      expect(indicator).toBeTruthy();
     });
   });
 
@@ -238,11 +244,17 @@ describe("Radio", () => {
         </Radio>
       );
 
-      // When: ラジオボタンを取得
-      const radio = testContainer.querySelector("#radio1");
+      // When: ラジオボタンの内側のindicatorを取得
+      const radioItem = testContainer.querySelector("#radio1");
+      const indicator = radioItem.querySelector(
+        'div[class*="border-negative-500"]'
+      );
 
-      // Then: エラー状態のスタイリングが適用されている
-      expect(StyleHelpers.hasClass(radio, "border-negative-500")).toBe(true);
+      // Then: エラー状態のスタイリングが内側のindicatorに適用されている
+      expect(indicator).toBeTruthy();
+      expect(StyleHelpers.hasClass(indicator!, "border-negative-500")).toBe(
+        true
+      );
     });
 
     it("applies error styling when selected and invalid", () => {
@@ -258,12 +270,18 @@ describe("Radio", () => {
         </Radio>
       );
 
-      // When: ラジオボタンを取得（選択済み状態）
-      const radio = testContainer.querySelector("#radio1");
+      // When: ラジオボタンの内側のindicatorを取得（選択済み状態）
+      const radioItem = testContainer.querySelector("#radio1");
+      const indicator = radioItem.querySelector(
+        'div[class*="border-negative-500"]'
+      );
 
-      // Then: エラー状態のスタイリングが適用されている
-      expect(radio.getAttribute("data-state")).toBe("checked");
-      expect(StyleHelpers.hasClass(radio, "border-negative-500")).toBe(true);
+      // Then: エラー状態のスタイリングが内側のindicatorに適用されている
+      expect(radioItem.getAttribute("data-state")).toBe("checked");
+      expect(indicator).toBeTruthy();
+      expect(StyleHelpers.hasClass(indicator!, "border-negative-500")).toBe(
+        true
+      );
     });
   });
 
