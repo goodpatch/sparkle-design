@@ -24,17 +24,16 @@ const labelVariants = cva("cursor-pointer", {
 });
 
 const radioItemVariants = cva(
-  "relative rounded-full transition-colors flex items-center justify-center",
+  [
+    "relative rounded-full transition-colors flex items-center justify-center cursor-pointer",
+    "focus:outline-none",
+  ].join(" "),
   {
     variants: {
       size: {
         sm: "h-8 w-8",
         md: "h-10 w-10",
         lg: "h-12 w-12",
-      },
-      isInvalid: {
-        true: "",
-        false: "",
       },
       isDisabled: {
         true: "cursor-not-allowed",
@@ -43,7 +42,6 @@ const radioItemVariants = cva(
     },
     defaultVariants: {
       size: "md",
-      isInvalid: false,
       isDisabled: false,
     },
   }
@@ -51,9 +49,8 @@ const radioItemVariants = cva(
 
 const radioIndicatorVariants = cva(
   [
-    "relative rounded-full border border-2",
-    "focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
-    "transition-colors cursor-pointer",
+    "relative rounded-full border border-2 transition-colors",
+    "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-[var(--color-ring-normal)] [.group:focus-visible_&]:ring-offset-2",
   ].join(" "),
   {
     variants: {
@@ -63,12 +60,12 @@ const radioIndicatorVariants = cva(
         lg: "h-6 w-6",
       },
       isInvalid: {
-        true: "border-negative-500 data-[state=checked]:border-negative-500 data-[state=checked]:bg-negative-500",
+        true: "border-negative-500 [.group[data-state=checked]_&]:border-negative-500 [.group[data-state=checked]_&]:bg-negative-500",
         false:
-          "border-neutral-500 data-[state=checked]:border-primary-500 data-[state=checked]:bg-primary-500",
+          "border-neutral-500 [.group[data-state=checked]_&]:border-primary-500 [.group[data-state=checked]_&]:bg-primary-500",
       },
       isDisabled: {
-        true: "cursor-not-allowed",
+        true: "",
         false: "",
       },
     },
@@ -77,25 +74,25 @@ const radioIndicatorVariants = cva(
         isDisabled: false,
         isInvalid: false,
         className:
-          "hover:border-neutral-600 data-[state=checked]:hover:border-primary-600 data-[state=checked]:hover:bg-primary-600",
+          "hover:border-neutral-600 [.group[data-state=checked]_&]:hover:border-primary-600 [.group[data-state=checked]_&]:hover:bg-primary-600",
       },
       {
         isDisabled: false,
         isInvalid: true,
         className:
-          "hover:border-negative-600 data-[state=checked]:hover:border-negative-600 data-[state=checked]:hover:bg-negative-600",
+          "hover:border-negative-600 [.group[data-state=checked]_&]:hover:border-negative-600 [.group[data-state=checked]_&]:hover:bg-negative-600",
       },
       {
         isDisabled: true,
         isInvalid: false,
         className:
-          "border-neutral-200 data-[state=checked]:border-primary-100 data-[state=checked]:bg-primary-100",
+          "border-neutral-200 [.group[data-state=checked]_&]:border-primary-100 [.group[data-state=checked]_&]:bg-primary-100",
       },
       {
         isDisabled: true,
         isInvalid: true,
         className:
-          "border-negative-200 data-[state=checked]:border-negative-100 data-[state=checked]:bg-negative-200",
+          "border-negative-200 [.group[data-state=checked]_&]:border-negative-100 [.group[data-state=checked]_&]:bg-negative-200",
       },
     ],
     defaultVariants: {
@@ -106,7 +103,7 @@ const radioIndicatorVariants = cva(
   }
 );
 
-const radioIndicatorDotVariants = cva("absolute rounded-full bg-white", {
+const radioIndicatorDotVariants = cva("rounded-full bg-white", {
   variants: {
     size: {
       sm: "h-2 w-2",
@@ -162,6 +159,7 @@ function Radio({ className, ...props }: RadioProps) {
 Radio.displayName = RadioPrimitive.Root.displayName;
 
 type RadioItemVariantProps = VariantProps<typeof radioItemVariants>;
+type RadioIndicatorVariantProps = VariantProps<typeof radioIndicatorVariants>;
 type RadioPrimitiveItemProps = React.ComponentPropsWithoutRef<
   typeof RadioPrimitive.Item
 >;
@@ -177,7 +175,7 @@ interface RadioItemProps extends RadioPrimitiveItemProps {
    * en: Whether the radio button is in an error state
    * @default false
    */
-  isInvalid?: RadioItemVariantProps["isInvalid"];
+  isInvalid?: RadioIndicatorVariantProps["isInvalid"];
   /**
    * ラジオボタンが無効かどうか
    * en: Whether the radio button is disabled
@@ -216,24 +214,30 @@ function RadioItem({
 }: RadioItemProps) {
   return (
     <div className="flex items-center">
-      <div className={cn(radioItemVariants({ size, isDisabled: disabled }))}>
-        <RadioPrimitive.Item
-          data-slot="radio-group-item"
-          id={id}
+      <RadioPrimitive.Item
+        data-slot="radio-group-item"
+        id={id}
+        className={cn(
+          radioItemVariants({ size, isDisabled: disabled }),
+          "group",
+          className
+        )}
+        disabled={disabled}
+        {...props}
+      >
+        <div
           className={cn(
             radioIndicatorVariants({ size, isInvalid, isDisabled: disabled })
           )}
-          disabled={disabled}
-          {...props}
         >
           <RadioPrimitive.Indicator
             data-slot="radio-group-indicator"
-            className="flex items-center justify-center"
+            className="absolute inset-0 flex items-center justify-center"
           >
             <div className={cn(radioIndicatorDotVariants({ size }))} />
           </RadioPrimitive.Indicator>
-        </RadioPrimitive.Item>
-      </div>
+        </div>
+      </RadioPrimitive.Item>
       {label && (
         <label
           htmlFor={id}
