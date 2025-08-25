@@ -71,128 +71,100 @@ describe("Badge", () => {
       const badge = testContainer.querySelector("div");
 
       // Then: mediumサイズのクラスが適用される
-      expect(badge.className).toContain("min-w-8");
-      expect(badge.className).toContain("py-1");
-      expect(badge.className).toContain("px-2");
-      expect(badge.className).toContain("character-3-bold-mono");
-    });
-
-    it("applies x5s size correctly", () => {
-      // Given: x5sサイズのBadge
-      testContainer.render(<Badge size="x5s">1</Badge>);
-
-      // When: クラス名を確認
-      const badge = testContainer.querySelector("div");
-
-      // Then: x5sサイズのクラスが適用される（数字は非表示）
-      expect(badge.className).toContain("w-2");
-      expect(badge.className).toContain("h-2");
-      expect(badge.className).toContain("min-w-2");
-      expect(badge.textContent).toBe(""); // 数字は非表示
-    });
-
-    it("applies x4s size correctly", () => {
-      // Given: x4sサイズのBadge
-      testContainer.render(<Badge size="x4s">2</Badge>);
-
-      // When: クラス名を確認
-      const badge = testContainer.querySelector("div");
-
-      // Then: x4sサイズのクラスが適用される（数字は非表示）
-      expect(badge.className).toContain("w-3");
-      expect(badge.className).toContain("h-3");
-      expect(badge.className).toContain("min-w-3");
-      expect(badge.textContent).toBe(""); // 数字は非表示
-    });
-
-    it("applies x3s size correctly", () => {
-      // Given: x3sサイズのBadge
-      testContainer.render(<Badge size="x3s">3</Badge>);
-
-      // When: クラス名を確認
-      const badge = testContainer.querySelector("div");
-
-      // Then: x3sサイズのクラスが適用される（数字は非表示）
-      expect(badge.className).toContain("w-4");
-      expect(badge.className).toContain("h-4");
-      expect(badge.className).toContain("min-w-4");
-      expect(badge.textContent).toBe(""); // 数字は非表示
-    });
-
-    it("applies x2s size correctly", () => {
-      // Given: x2sサイズのBadge
-      testContainer.render(<Badge size="x2s">4</Badge>);
-
-      // When: クラス名を確認
-      const badge = testContainer.querySelector("div");
-
-      // Then: x2sサイズのクラスが適用される
-      expect(badge.className).toContain("min-w-5");
-      expect(badge.className).toContain("py-0");
-      expect(badge.className).toContain("px-1.5");
-      expect(badge.className).toContain("character-1-bold-mono");
-    });
-
-    it("applies xs size correctly", () => {
-      // Given: xsサイズのBadge
-      testContainer.render(<Badge size="xs">5</Badge>);
-
-      // When: クラス名を確認
-      const badge = testContainer.querySelector("div");
-
-      // Then: xsサイズのクラスが適用される
       expect(badge.className).toContain("min-w-6");
       expect(badge.className).toContain("py-0.5");
       expect(badge.className).toContain("px-1.5");
       expect(badge.className).toContain("character-1-bold-mono");
     });
 
-    it("applies sm size correctly", () => {
-      // Given: smサイズのBadge
-      testContainer.render(<Badge size="sm">6</Badge>);
+    it("applies xs size correctly", () => {
+      // Given: xsサイズのBadge
+      testContainer.render(<Badge size="xs">1</Badge>);
 
       // When: クラス名を確認
       const badge = testContainer.querySelector("div");
 
-      // Then: smサイズのクラスが適用される
-      expect(badge.className).toContain("min-w-7");
+      // Then: xsサイズのクラスが適用される（数字は非表示）
+      expect(badge.className).toContain("w-2");
+      expect(badge.className).toContain("h-2");
+      expect(badge.className).toContain("min-w-2");
+      expect(badge.textContent).toBe(""); // 数字は非表示
+    });
+
+    it("applies sm size correctly", () => {
+      // Given: smサイズのBadge
+      testContainer.render(<Badge size="sm">2</Badge>);
+
+      // When: クラス名を確認
+      const badge = testContainer.querySelector("div");
+
+      // Then: smサイズのクラスが適用される（数字は非表示）
+      expect(badge.className).toContain("w-4");
+      expect(badge.className).toContain("h-4");
+      expect(badge.className).toContain("min-w-4");
+      expect(badge.textContent).toBe(""); // 数字は非表示
+    });
+
+    it("applies md size correctly", () => {
+      // Given: mdサイズのBadge
+      testContainer.render(<Badge size="md">3</Badge>);
+
+      // When: クラス名を確認
+      const badge = testContainer.querySelector("div");
+
+      // Then: mdサイズのクラスが適用される
+      expect(badge.className).toContain("min-w-6");
       expect(badge.className).toContain("py-0.5");
-      expect(badge.className).toContain("px-2");
-      expect(badge.className).toContain("character-2-bold-mono");
+      expect(badge.className).toContain("px-1.5");
+      expect(badge.className).toContain("character-1-bold-mono");
+    });
+
+    it("applies lg size correctly", () => {
+      // Given: lgサイズのBadge
+      testContainer.render(<Badge size="lg">4</Badge>);
+
+      // When: クラス名を確認
+      const badge = testContainer.querySelector("div");
+
+      // Then: lgサイズのクラスが適用される
+      expect(badge.className).toContain("min-w-8");
+      expect(badge.className).toContain("py-1");
+      expect(badge.className).toContain("px-1.5");
+      expect(badge.className).toContain("character-3-bold-mono");
     });
   });
 
-  describe("Status Colors", () => {
-    it("applies info status by default", () => {
-      // Given: status未指定のBadge
+  describe("Variant Colors", () => {
+    it("applies normal variant by default", () => {
+      // Given: variant未指定のBadge
       testContainer.render(<Badge>7</Badge>);
 
       // When: クラス名を確認
       const badge = testContainer.querySelector("div");
 
-      // Then: infoステータスのスタイルが適用される
+      // Then: normalバリアントのスタイルが適用される
       expect(badge.className).toContain("bg-info-500");
     });
 
-    it("applies success status correctly", () => {
-      // Given: successステータスのBadge
-      testContainer.render(<Badge status="success">8</Badge>);
+    it("applies normal variant correctly", () => {
+      // Given: normalバリアントのBadge
+      testContainer.render(<Badge variant="normal">8</Badge>);
 
       // When: クラス名を確認
       const badge = testContainer.querySelector("div");
 
-      // Then: successステータスのスタイルが適用される
-      expect(badge.className).toContain("bg-success-500");
+      // Then: normalバリアントのスタイルが適用される
+      expect(badge.className).toContain("bg-info-500");
     });
 
-    it("applies negative status correctly", () => {
-      // Given: negativeステータスのBadge
-      testContainer.render(<Badge status="negative">9</Badge>);
+    it("applies emphasis variant correctly", () => {
+      // Given: emphasisバリアントのBadge
+      testContainer.render(<Badge variant="emphasis">9</Badge>);
 
       // When: クラス名を確認
       const badge = testContainer.querySelector("div");
 
-      // Then: negativeステータスのスタイルが適用される
+      // Then: emphasisバリアントのスタイルが適用される
       expect(badge.className).toContain("bg-negative-500");
     });
   });
@@ -212,7 +184,7 @@ describe("Badge", () => {
     it("hides number when isNumberVisible is false", () => {
       // Given: isNumberVisible=falseのBadge
       testContainer.render(
-        <Badge isNumberVisible={false} size="md">
+        <Badge isNumberVisible={false} size="lg">
           11
         </Badge>
       );
@@ -222,12 +194,12 @@ describe("Badge", () => {
 
       // Then: 数字が非表示になり、適切な高さが設定される
       expect(badge.textContent).toBe("");
-      expect(badge.className).toContain("h-8"); // mdサイズの場合
+      expect(badge.className).toContain("h-8"); // lgサイズの場合
     });
 
     it("automatically hides number for small sizes", () => {
       // Given: 小さなサイズのBadge
-      const sizes = ["x5s", "x4s", "x3s"] as const;
+      const sizes = ["xs", "sm"] as const;
 
       sizes.forEach(size => {
         testContainer.render(<Badge size={size}>12</Badge>);
@@ -246,7 +218,7 @@ describe("Badge", () => {
 
     it("hides number when children is not provided", () => {
       // Given: children未指定のBadge
-      testContainer.render(<Badge size="md" />);
+      testContainer.render(<Badge size="lg" />);
 
       // When: コンテンツとクラスを確認
       const badge = testContainer.querySelector("div");
@@ -272,7 +244,7 @@ describe("Badge", () => {
     it("applies gap styles when isGapped is true", () => {
       // Given: isGapped=trueのBadge
       testContainer.render(
-        <Badge isGapped={true} size="md">
+        <Badge isGapped={true} size="lg">
           14
         </Badge>
       );
@@ -288,13 +260,10 @@ describe("Badge", () => {
     it("applies different outline width for different sizes", () => {
       // Given: 異なるサイズのgapped Badge
       const testCases = [
-        { size: "x5s" as const, expectedOutline: "outline-2" },
-        { size: "x4s" as const, expectedOutline: "outline-2" },
-        { size: "x3s" as const, expectedOutline: "outline-4" },
-        { size: "x2s" as const, expectedOutline: "outline-4" },
-        { size: "xs" as const, expectedOutline: "outline-4" },
+        { size: "xs" as const, expectedOutline: "outline-2" },
         { size: "sm" as const, expectedOutline: "outline-4" },
         { size: "md" as const, expectedOutline: "outline-4" },
+        { size: "lg" as const, expectedOutline: "outline-4" },
       ];
 
       testCases.forEach(({ size, expectedOutline }) => {
@@ -421,7 +390,9 @@ describe("Badge", () => {
       // Then: フォーカススタイルが適用される
       expect(badge.className).toContain("focus:outline-hidden");
       expect(badge.className).toContain("focus:ring-2");
-      expect(badge.className).toContain("focus:ring-ring");
+      expect(badge.className).toContain(
+        "focus:ring-[var(--color-ring-normal)]"
+      );
       expect(badge.className).toContain("focus:ring-offset-2");
     });
   });
@@ -530,19 +501,19 @@ describe("Badge", () => {
   });
 
   describe("Style Integration", () => {
-    it("maintains consistency across different size and status combinations", () => {
-      // Given: 異なるサイズとステータスの組み合わせ
+    it("maintains consistency across different size and variant combinations", () => {
+      // Given: 異なるサイズとバリアントの組み合わせ
       const combinations = [
-        { size: "x2s" as const, status: "info" as const },
-        { size: "xs" as const, status: "success" as const },
-        { size: "sm" as const, status: "negative" as const },
-        { size: "md" as const, status: "info" as const },
+        { size: "xs" as const, variant: "normal" as const },
+        { size: "sm" as const, variant: "emphasis" as const },
+        { size: "md" as const, variant: "normal" as const },
+        { size: "lg" as const, variant: "emphasis" as const },
       ];
 
-      combinations.forEach(({ size, status }) => {
+      combinations.forEach(({ size, variant }) => {
         // When: 特定の組み合わせを描画
         testContainer.render(
-          <Badge size={size} status={status}>
+          <Badge size={size} variant={variant}>
             27
           </Badge>
         );
@@ -563,10 +534,8 @@ describe("Badge", () => {
     it("applies proper typography for each size", () => {
       // Given: タイポグラフィが指定される各サイズ
       const typographySizes = [
-        { size: "x2s" as const, expectedClass: "character-1-bold-mono" },
-        { size: "xs" as const, expectedClass: "character-1-bold-mono" },
-        { size: "sm" as const, expectedClass: "character-2-bold-mono" },
-        { size: "md" as const, expectedClass: "character-3-bold-mono" },
+        { size: "md" as const, expectedClass: "character-1-bold-mono" },
+        { size: "lg" as const, expectedClass: "character-3-bold-mono" },
       ];
 
       typographySizes.forEach(({ size, expectedClass }) => {
@@ -590,34 +559,31 @@ describe("Badge", () => {
       testContainer.render(
         <div>
           <span>Messages</span>
-          <Badge status="info">5</Badge>
+          <Badge variant="normal">5</Badge>
           <span>Alerts</span>
-          <Badge status="negative">2</Badge>
+          <Badge variant="emphasis">2</Badge>
         </div>
       );
 
       // When: 通知バッジを確認
-      const infoBadge = testContainer.querySelector(
+      const normalBadge = testContainer.querySelector(
         "div[class*='bg-info-500']"
       );
-      const negativeBadge = testContainer.querySelector(
+      const emphasisBadge = testContainer.querySelector(
         "div[class*='bg-negative-500']"
       );
 
       // Then: 通知コンテキストで正常に機能する
-      expect(infoBadge).toBeTruthy();
-      expect(negativeBadge).toBeTruthy();
-      expect(infoBadge.textContent).toBe("5");
-      expect(negativeBadge.textContent).toBe("2");
+      expect(normalBadge).toBeTruthy();
+      expect(emphasisBadge).toBeTruthy();
+      expect(normalBadge.textContent).toBe("5");
+      expect(emphasisBadge.textContent).toBe("2");
     });
 
     it("maintains performance with multiple badges", () => {
       // Given: 複数のBadge要素
       const manyBadges = Array.from({ length: 20 }, (_, i) => (
-        <Badge
-          key={i}
-          status={i % 3 === 0 ? "info" : i % 3 === 1 ? "success" : "negative"}
-        >
+        <Badge key={i} variant={i % 2 === 0 ? "normal" : "emphasis"}>
           {i + 1}
         </Badge>
       ));
@@ -642,7 +608,7 @@ describe("Badge", () => {
       testContainer.render(
         <div>
           <span data-testid="icon">🔔</span>
-          <Badge size="xs" status="negative">
+          <Badge size="md" variant="emphasis">
             3
           </Badge>
         </div>

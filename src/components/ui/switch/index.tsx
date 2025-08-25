@@ -1,13 +1,19 @@
 "use client";
 
 import * as React from "react";
-import { Switch as SwitchPrimitives } from "radix-ui";
-import { cva, type VariantProps } from "class-variance-authority";
+import { Switch as SwitchPrimitive } from "radix-ui";
 
 import { cn } from "@/lib/utils";
+import { cva, VariantProps } from "class-variance-authority";
 
 const switchVariants = cva(
-  "peer inline-flex shrink-0 cursor-pointer items-center rounded-full border transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[state=unchecked]:bg-gray-500 data-[state=unchecked]:border-gray-600 data-[state=unchecked]:hover:bg-gray-600 data-[state=unchecked]:hover:border-gray-700 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-600 data-[state=checked]:hover:bg-blue-600 data-[state=checked]:hover:border-blue-700 disabled:cursor-not-allowed disabled:data-[state=unchecked]:bg-gray-200 disabled:data-[state=unchecked]:border-transparent disabled:data-[state=checked]:bg-blue-200 disabled:data-[state=checked]:border-transparent",
+  [
+    "peer inline-flex shrink-0 cursor-pointer items-center rounded-full border transition-colors",
+    "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+    "data-[state=unchecked]:bg-neutral-500 data-[state=unchecked]:border-neutral-600 data-[state=unchecked]:hover:bg-neutral-600 data-[state=unchecked]:hover:border-neutral-700",
+    "data-[state=checked]:bg-primary-500 data-[state=checked]:border-primary-600 data-[state=checked]:hover:bg-primary-600 data-[state=checked]:hover:border-primary-700",
+    "disabled:cursor-not-allowed disabled:data-[state=unchecked]:bg-neutral-100 disabled:data-[state=unchecked]:border-transparent disabled:data-[state=checked]:bg-primary-200 disabled:data-[state=checked]:border-transparent",
+  ].join(" "),
   {
     variants: {
       size: {
@@ -23,13 +29,17 @@ const switchVariants = cva(
 );
 
 const thumbVariants = cva(
-  "pointer-events-none block rounded-full bg-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] ring-0 transition-transform",
+  "pointer-events-none block rounded-full bg-white shadow-raise ring-0 transition-transform bg-white",
   {
     variants: {
       size: {
         sm: "h-3 w-3 data-[state=checked]:translate-x-3 data-[state=unchecked]:translate-x-0",
         md: "h-5 w-5 data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0",
         lg: "h-7 w-7 data-[state=checked]:translate-x-7 data-[state=unchecked]:translate-x-0",
+      },
+      disabled: {
+        true: "data-[state=unchecked]:bg-neutral-50 data-[state=checked]:bg-primary-50",
+        false: "",
       },
     },
     defaultVariants: {
@@ -38,14 +48,29 @@ const thumbVariants = cva(
   }
 );
 
-export interface SwitchProps
-  extends React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>,
-    VariantProps<typeof switchVariants> {
+type SwitchVariants = VariantProps<typeof switchVariants>;
+type ReactSwitchProps = React.ComponentProps<typeof SwitchPrimitive.Root>;
+export interface SwitchProps extends ReactSwitchProps {
   /**
    * スイッチのサイズ（sm、md、lg）
    * en: Switch size (sm, md, lg)
    */
-  size?: "sm" | "md" | "lg";
+  size?: SwitchVariants["size"];
+  /**
+   * スイッチを無効状態にするかどうか
+   * en: Whether to disable the switch
+   */
+  disabled?: ReactSwitchProps["disabled"];
+  /**
+   * スイッチをオン状態（チェック状態）にするかどうか
+   * en: Whether to make the switch checked (on)
+   */
+  checked?: ReactSwitchProps["checked"];
+  /**
+   * スイッチの状態が変更されたときに呼び出されるコールバック関数
+   * en: Callback function called when the switch state changes
+   */
+  onCheckedChange?: ReactSwitchProps["onCheckedChange"];
 }
 
 /**
@@ -62,18 +87,19 @@ export interface SwitchProps
  *
  * @param {SwitchProps} props
  */
-const Switch = React.forwardRef<
-  React.ElementRef<typeof SwitchPrimitives.Root>,
-  SwitchProps
->(({ className, size, ...props }, ref) => (
-  <SwitchPrimitives.Root
-    className={cn(switchVariants({ size }), className)}
-    {...props}
-    ref={ref}
-  >
-    <SwitchPrimitives.Thumb className={cn(thumbVariants({ size }))} />
-  </SwitchPrimitives.Root>
-));
-Switch.displayName = SwitchPrimitives.Root.displayName;
+function Switch({ className, size, ...props }: SwitchProps) {
+  return (
+    <SwitchPrimitive.Root
+      data-slot="switch"
+      className={cn(switchVariants({ size }), className)}
+      {...props}
+    >
+      <SwitchPrimitive.Thumb
+        data-slot="switch-thumb"
+        className={cn(thumbVariants({ size, disabled: props.disabled }))}
+      />
+    </SwitchPrimitive.Root>
+  );
+}
 
-export { Switch, switchVariants, thumbVariants };
+export { Switch };

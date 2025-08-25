@@ -1,9 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Switch } from "./index";
 
-/**
- * スイッチコンポーネントのStorybook設定
- */
 const meta: Meta<typeof Switch> = {
   title: "Components/Switch",
   component: Switch,
@@ -15,7 +12,6 @@ const meta: Meta<typeof Switch> = {
     size: {
       control: { type: "radio" },
       options: ["sm", "md", "lg"],
-      description: "スイッチのサイズ (sm: 小, md: 中, lg: 大)",
       defaultValue: "md",
       table: {
         type: { summary: "sm | md | lg" },
@@ -24,7 +20,6 @@ const meta: Meta<typeof Switch> = {
     },
     disabled: {
       control: "boolean",
-      description: "スイッチを無効状態にするかどうか",
       defaultValue: false,
       table: {
         type: { summary: "boolean" },
@@ -33,7 +28,6 @@ const meta: Meta<typeof Switch> = {
     },
     checked: {
       control: "boolean",
-      description: "スイッチをオン状態（チェック状態）にするかどうか",
       defaultValue: false,
       table: {
         type: { summary: "boolean" },
@@ -42,8 +36,6 @@ const meta: Meta<typeof Switch> = {
     },
     onCheckedChange: {
       action: "changed",
-      description:
-        "スイッチの状態が変更されたときに呼び出されるコールバック関数",
       table: {
         type: { summary: "function" },
       },
@@ -98,19 +90,19 @@ export const CheckedAndDisabled: Story = {
  * サイズバリエーション
  */
 export const SizeVariations: Story = {
-  render: () => (
+  render: args => (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-4">
         <span className="w-10 text-right font-bold">小:</span>
-        <Switch size="sm" />
+        <Switch {...args} size="sm" />
       </div>
       <div className="flex items-center gap-4">
         <span className="w-10 text-right font-bold">中:</span>
-        <Switch size="md" />
+        <Switch {...args} size="md" />
       </div>
       <div className="flex items-center gap-4">
         <span className="w-10 text-right font-bold">大:</span>
-        <Switch size="lg" />
+        <Switch {...args} size="lg" />
       </div>
     </div>
   ),

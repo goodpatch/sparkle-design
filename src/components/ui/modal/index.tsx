@@ -79,7 +79,7 @@ function ModalClose({
         data-slot="modal-close"
         size="xs"
         variant="ghost"
-        theme="secondary"
+        theme="neutral"
         {...props}
       />
     </DialogPrimitive.Close>

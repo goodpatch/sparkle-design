@@ -38,6 +38,7 @@ figma.connect(
       theme: figma.enum("theme", {
         primary: "primary",
         negative: "negative",
+        neutral: "neutral",
       }),
       // No matching props could be found for these Figma properties:
       icon: figma.instance("icon").getProps<{
