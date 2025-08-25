@@ -3,7 +3,7 @@
   "name": "icon-button",
   "type": "registry:component",
   "title": "IconButton",
-  "description": "アイコンボタンはアイコンのみを表示するコンパクトなボタンコンポーネントです。",
+  "description": "アイコンボタンはフォームの送信、ダイアログの展開、アクションのキャンセル、削除の実行など、アクションやイベントのトリガーとして使用するコンポーネントです。",
   "files": [
     {
       "path": "src/components/ui/icon-button/index.tsx",

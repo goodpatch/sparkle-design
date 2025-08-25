@@ -360,14 +360,14 @@ function Button({
       {isLoading ? (
         <>
           <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-flex">
-            <Spinner size={getIconSize()} />
+            <Spinner size={getIconSize()} className="text-current" />
           </span>
           <span className="opacity-0" aria-hidden="true">
             {children}
           </span>
         </>
       ) : (
-        children
+        <span className="px-1">{children}</span>
       )}
 
       {suffixIcon && (
