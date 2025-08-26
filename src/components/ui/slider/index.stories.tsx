@@ -11,7 +11,6 @@ const meta: Meta<typeof Slider> = {
   tags: ["autodocs"],
   argTypes: {
     defaultValue: {
-      description: "スライダーの初期値",
       control: { type: "object" },
       table: {
         type: { summary: "number[]" },
@@ -19,7 +18,6 @@ const meta: Meta<typeof Slider> = {
       },
     },
     max: {
-      description: "スライダーの最大値",
       control: { type: "number" },
       table: {
         type: { summary: "number" },
@@ -27,7 +25,6 @@ const meta: Meta<typeof Slider> = {
       },
     },
     step: {
-      description: "スライダーの増減単位",
       control: { type: "number" },
       table: {
         type: { summary: "number" },
@@ -35,7 +32,6 @@ const meta: Meta<typeof Slider> = {
       },
     },
     disabled: {
-      description: "スライダーを無効にするかどうか",
       control: { type: "boolean" },
       table: {
         type: { summary: "boolean" },
@@ -43,7 +39,6 @@ const meta: Meta<typeof Slider> = {
       },
     },
     orientation: {
-      description: "スライダーの向き",
       control: { type: "radio", options: ["horizontal", "vertical"] },
       table: {
         type: { summary: "string" },
@@ -51,7 +46,6 @@ const meta: Meta<typeof Slider> = {
       },
     },
     className: {
-      description: "コンポーネントのスタイルをカスタマイズするためのクラス名",
       control: "text",
       table: {
         type: { summary: "string" },

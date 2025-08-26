@@ -20,14 +20,10 @@ const sliderRootVariants = cva(
   }
 );
 
-const sliderTrackVariants = cva(
-  "relative w-full grow overflow-hidden rounded-sm bg-neutral-200 h-1"
-);
-
 const sliderRangeVariants = cva("absolute h-full bg-primary-500", {
   variants: {
     isDisabled: {
-      true: "bg-primary-200",
+      true: "bg-neutral-200",
     },
   },
   defaultVariants: {
@@ -36,11 +32,17 @@ const sliderRangeVariants = cva("absolute h-full bg-primary-500", {
 });
 
 const sliderThumbVariants = cva(
-  "block rounded-full border border-neutral-200 bg-white shadow-raise ring-offset-background transition-colors hover:bg-neutral-100 focus:outline-hidden focus:bg-primary-100 focus:border-primary-200 focus:ring-2 focus:ring-ring focus:ring-offset-2 h-4 w-4",
+  [
+    "block rounded-full border border-neutral-500 bg-white shadow-raise",
+    "ring-offset-background transition-colors hover:bg-neutral-100",
+    "focus:outline-hidden focus:bg-primary-100 focus:border-primary-200",
+    "focus:ring-2 focus:ring-[var(--color-ring-normal)] focus:ring-offset-2",
+    "h-4 w-4",
+  ].join(" "),
   {
     variants: {
       isDisabled: {
-        true: "pointer-events-none bg-neutral-100 hover:bg-neutral-100 focus:bg-neutral-300 focus:border-neutral-300",
+        true: "pointer-events-none bg-neutral-100 hover:bg-neutral-100 border-none",
       },
     },
     defaultVariants: {
@@ -48,6 +50,49 @@ const sliderThumbVariants = cva(
     },
   }
 );
+
+type SliderVariantProps = VariantProps<typeof sliderRootVariants>;
+type SliderPrimitiveProps = React.ComponentPropsWithoutRef<
+  typeof SliderPrimitive.Root
+>;
+
+export interface SliderProps extends SliderPrimitiveProps {
+  /**
+   * スライダーが無効化されているかどうか
+   * en: Whether the slider is disabled
+   */
+  isDisabled?: SliderVariantProps["isDisabled"];
+  /**
+   * スライダーの最大値
+   * en: The maximum value of the slider
+   */
+  max?: SliderPrimitiveProps["max"];
+  /**
+   * スライダーの最小値
+   * en: The minimum value of the slider
+   */
+  min?: SliderPrimitiveProps["min"];
+  /**
+   * スライダーのステップ値
+   * en: The step value of the slider
+   */
+  step?: SliderPrimitiveProps["step"];
+  /**
+   * スライダーの向き
+   * en: The orientation of the slider
+   */
+  orientation?: SliderPrimitiveProps["orientation"];
+  /**
+   * スライダーの値
+   * en: The value of the slider
+   */
+  value?: SliderPrimitiveProps["value"];
+  /**
+   * スライダーの値が変更されたときに呼び出されるコールバック
+   * en: Callback invoked when the value of the slider changes
+   */
+  onValueChange?: SliderPrimitiveProps["onValueChange"];
+}
 
 /**
  * **概要 / Overview**
@@ -69,16 +114,6 @@ const sliderThumbVariants = cva(
  *
  * @param {SliderProps} props
  */
-export interface SliderProps
-  extends React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>,
-    VariantProps<typeof sliderRootVariants> {
-  /**
-   * スライダーが無効化されているかどうか
-   * en: Whether the slider is disabled
-   */
-  isDisabled?: boolean;
-}
-
 const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
   SliderProps
@@ -96,7 +131,12 @@ const Slider = React.forwardRef<
       )}
       {...props}
     >
-      <SliderPrimitive.Track className={cn(sliderTrackVariants())}>
+      <SliderPrimitive.Track
+        className={cn(
+          "relative w-full grow overflow-hidden rounded-xs h-1",
+          isDisabledState ? "bg-neutral-100" : "bg-neutral-200"
+        )}
+      >
         <SliderPrimitive.Range
           className={cn(sliderRangeVariants({ isDisabled: isDisabledState }))}
         />
