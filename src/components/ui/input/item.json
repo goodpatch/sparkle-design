@@ -3,7 +3,7 @@
   "name": "input",
   "type": "registry:component",
   "title": "Input",
-  "description": "インプットはユーザーがテキストデータを入力するためのフォーム要素です。",
+  "description": "インプットはテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。",
   "files": [
     {
       "path": "src/components/ui/input/index.tsx",
