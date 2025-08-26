@@ -38,8 +38,7 @@ const inputVariants = cva(
       {
         isInvalid: true,
         isDisabled: false,
-        className:
-          "border-negative-500 hover:border-negative-600 bg-negative-50 hover:bg-white",
+        className: "border-negative-500 hover:border-negative-600 bg-white",
       },
       // 無効状態
       {
