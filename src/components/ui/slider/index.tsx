@@ -197,7 +197,7 @@ const Slider = React.forwardRef<
         </SliderPrimitive.Root>
         <span
           className={cn(
-            "min-w-10 text-left tabular-nums character-3-regular-pro",
+            "min-w-10 text-left tabular-nums character-3-regular-pro shrink-0",
             isDisabledState
               ? "text-text-disabled cursor-not-allowed"
               : "text-text-middle"

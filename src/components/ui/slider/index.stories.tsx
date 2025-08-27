@@ -102,7 +102,7 @@ export const WithUnit: Story = {
     unit: "%",
   },
   render: ({ className, ...props }) => (
-    <div className="flex flex-col items-center justify-center w-[300px]">
+    <div className="flex flex-col items-center justify-center w-[240px]">
       <Slider {...props} />
     </div>
   ),
