@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { cn } from "@/lib/utils";
+import { useState } from "react";
 import { Slider } from "./index";
 
 const meta: Meta<typeof Slider> = {
@@ -38,13 +38,6 @@ const meta: Meta<typeof Slider> = {
         defaultValue: { summary: "false" },
       },
     },
-    orientation: {
-      control: { type: "radio", options: ["horizontal", "vertical"] },
-      table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "horizontal" },
-      },
-    },
     className: {
       control: "text",
       table: {
@@ -76,6 +69,37 @@ export const Disabled: Story = {
     max: 100,
     step: 1,
     disabled: true,
+  },
+  render: ({ className, ...props }) => (
+    <div className="flex flex-col items-center justify-center w-[240px]">
+      <Slider {...props} />
+    </div>
+  ),
+};
+
+export const Controlled: Story = {
+  args: {
+    max: 100,
+    step: 1,
+  },
+  render: ({ className, ...props }) => {
+    const [value, setValue] = useState([50]);
+
+    return (
+      <div className="flex flex-col items-center justify-center w-[240px] gap-4">
+        <Slider {...props} value={value} onValueChange={setValue} />
+        <p className="text-sm text-gray-600">現在の値: {value[0]}</p>
+      </div>
+    );
+  },
+};
+
+export const WithUnit: Story = {
+  args: {
+    defaultValue: [25],
+    max: 100,
+    step: 1,
+    unit: "%",
   },
   render: ({ className, ...props }) => (
     <div className="flex flex-col items-center justify-center w-[240px]">
