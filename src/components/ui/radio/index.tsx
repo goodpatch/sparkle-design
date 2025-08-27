@@ -5,9 +5,7 @@ import { RadioGroup as RadioPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-const radioGroupVariants = cva("grid gap-2");
-
-const labelVariants = cva("", {
+const labelVariants = cva("cursor-pointer", {
   variants: {
     size: {
       sm: "character-2-regular-pro",
@@ -15,8 +13,8 @@ const labelVariants = cva("", {
       lg: "character-4-regular-pro",
     },
     isDisabled: {
-      true: "text-base-200",
-      false: "text-base-900",
+      true: "text-text-disabled cursor-not-allowed",
+      false: "text-text-medium",
     },
   },
   defaultVariants: {
@@ -26,17 +24,16 @@ const labelVariants = cva("", {
 });
 
 const radioItemVariants = cva(
-  "relative rounded-full transition-colors flex items-center justify-center",
+  [
+    "relative rounded-full transition-colors flex items-center justify-center cursor-pointer",
+    "focus:outline-none",
+  ].join(" "),
   {
     variants: {
       size: {
         sm: "h-8 w-8",
         md: "h-10 w-10",
         lg: "h-12 w-12",
-      },
-      isInvalid: {
-        true: "",
-        false: "",
       },
       isDisabled: {
         true: "cursor-not-allowed",
@@ -45,14 +42,16 @@ const radioItemVariants = cva(
     },
     defaultVariants: {
       size: "md",
-      isInvalid: false,
       isDisabled: false,
     },
   }
 );
 
 const radioIndicatorVariants = cva(
-  "relative rounded-full border border-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors",
+  [
+    "flex items-center justify-center rounded-full border border-2 transition-colors",
+    "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-[var(--color-ring-normal)] [.group:focus-visible_&]:ring-offset-2",
+  ].join(" "),
   {
     variants: {
       size: {
@@ -61,9 +60,8 @@ const radioIndicatorVariants = cva(
         lg: "h-6 w-6",
       },
       isInvalid: {
-        true: "border-negative-500 data-[state=checked]:bg-negative-500",
-        false:
-          "border-base-500 data-[state=checked]:bg-primary-500 data-[state=checked]:border-primary-500",
+        true: "border-negative-500 [.group[data-state=checked]_&]:border-negative-500",
+        false: "border-neutral-500",
       },
       isDisabled: {
         true: "",
@@ -74,26 +72,70 @@ const radioIndicatorVariants = cva(
       {
         isDisabled: false,
         isInvalid: false,
-        className:
-          "hover:border-base-600 data-[state=checked]:hover:bg-primary-600 data-[state=checked]:hover:border-primary-600",
+        className: "hover:border-neutral-600",
       },
       {
         isDisabled: false,
         isInvalid: true,
-        className:
-          "hover:border-negative-600 data-[state=checked]:hover:bg-negative-600",
+        className: "hover:border-negative-600",
       },
       {
         isDisabled: true,
         isInvalid: false,
         className:
-          "border-base-200 data-[state=checked]:bg-primary-200 data-[state=checked]:border-primary-200",
+          "border-neutral-200 [.group[data-state=checked]_&]:border-primary-100",
       },
       {
         isDisabled: true,
         isInvalid: true,
         className:
-          "border-negative-200 data-[state=checked]:bg-negative-200 data-[state=checked]:border-negative-200",
+          "border-negative-200 [.group[data-state=checked]_&]:border-negative-200",
+      },
+    ],
+    defaultVariants: {
+      size: "md",
+    },
+  }
+);
+
+const radioIndicatorDotVariants = cva(
+  "rounded-full transition-colors flex items-center justify-center shrink-0",
+  {
+    variants: {
+      size: {
+        sm: "h-4 w-4",
+        md: "h-5 w-5",
+        lg: "h-6 w-6",
+      },
+      isInvalid: {
+        true: "[.group[data-state=checked]_&]:bg-negative-500",
+        false: "[.group[data-state=checked]_&]:bg-primary-500",
+      },
+      isDisabled: {
+        true: "",
+        false: "",
+      },
+    },
+    compoundVariants: [
+      {
+        isDisabled: false,
+        isInvalid: false,
+        className: "[.group[data-state=checked]_&]:hover:bg-primary-600",
+      },
+      {
+        isDisabled: false,
+        isInvalid: true,
+        className: "[.group[data-state=checked]_&]:hover:bg-negative-600",
+      },
+      {
+        isDisabled: true,
+        isInvalid: false,
+        className: "[.group[data-state=checked]_&]:bg-primary-100",
+      },
+      {
+        isDisabled: true,
+        isInvalid: true,
+        className: "[.group[data-state=checked]_&]:bg-negative-200",
       },
     ],
     defaultVariants: {
@@ -104,7 +146,7 @@ const radioIndicatorVariants = cva(
   }
 );
 
-const radioIndicatorDotVariants = cva("absolute rounded-full bg-white", {
+const radioIndicatorDotInnerVariants = cva("rounded-full bg-white", {
   variants: {
     size: {
       sm: "h-2 w-2",
@@ -117,25 +159,18 @@ const radioIndicatorDotVariants = cva("absolute rounded-full bg-white", {
   },
 });
 
-interface RadioItemProps
-  extends React.ComponentPropsWithoutRef<typeof RadioPrimitive.Item> {
+type RadioPrimitiveProps = React.ComponentProps<typeof RadioPrimitive.Root>;
+export interface RadioProps extends RadioPrimitiveProps {
   /**
-   * ラジオボタンのサイズ
-   * en: Radio button size
-   * @default "md"
+   * ラジオのデフォルト値
+   * en: Default value of the radio group
    */
-  size?: "sm" | "md" | "lg";
+  defaultValue?: RadioPrimitiveProps["defaultValue"];
   /**
-   * エラー状態かどうか
-   * en: Whether the radio button is in an error state
-   * @default false
+   * ラジオの値が変更されたときのコールバック
+   * en: Callback when the radio value changes
    */
-  isInvalid?: boolean;
-  /**
-   * ラベルのテキスト
-   * en: Label text for the radio button
-   */
-  label?: string;
+  onValueChange?: RadioPrimitiveProps["onValueChange"];
 }
 
 /**
@@ -155,19 +190,49 @@ interface RadioItemProps
  *
  * @param props
  */
-const Radio = React.forwardRef<
-  React.ElementRef<typeof RadioPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof RadioPrimitive.Root>
->(({ className, ...props }, ref) => {
+function Radio({ className, ...props }: RadioProps) {
   return (
     <RadioPrimitive.Root
-      className={cn(radioGroupVariants(), className)}
+      data-slot="radio-group"
+      className={cn("grid gap-y-2 gap-x-4", className)}
       {...props}
-      ref={ref}
     />
   );
-});
+}
 Radio.displayName = RadioPrimitive.Root.displayName;
+
+type RadioItemVariantProps = VariantProps<typeof radioItemVariants>;
+type RadioIndicatorDotVariantProps = VariantProps<
+  typeof radioIndicatorDotVariants
+>;
+type RadioPrimitiveItemProps = React.ComponentPropsWithoutRef<
+  typeof RadioPrimitive.Item
+>;
+interface RadioItemProps extends RadioPrimitiveItemProps {
+  /**
+   * ラジオボタンのサイズ
+   * en: Radio button size
+   * @default "md"
+   */
+  size?: RadioItemVariantProps["size"];
+  /**
+   * エラー状態かどうか
+   * en: Whether the radio button is in an error state
+   * @default false
+   */
+  isInvalid?: RadioIndicatorDotVariantProps["isInvalid"];
+  /**
+   * ラジオボタンが無効かどうか
+   * en: Whether the radio button is disabled
+   * @default false
+   */
+  disabled?: RadioPrimitiveItemProps["disabled"];
+  /**
+   * ラベルのテキスト
+   * en: Label text for the radio button
+   */
+  label?: string;
+}
 
 /**
  * **概要 / Overview**
@@ -183,51 +248,58 @@ Radio.displayName = RadioPrimitive.Root.displayName;
  *
  * @param {RadioItemProps} props
  */
-const RadioItem = React.forwardRef<
-  React.ElementRef<typeof RadioPrimitive.Item>,
-  RadioItemProps
->(
-  (
-    {
-      className,
-      size = "md",
-      isInvalid = false,
-      disabled = false,
-      label,
-      id,
-      ...props
-    },
-    ref
-  ) => {
-    return (
-      <div className="flex items-center">
-        <div className={cn(radioItemVariants({ size }))}>
-          <RadioPrimitive.Item
-            ref={ref}
-            id={id}
-            className={cn(
-              radioIndicatorVariants({ size, isInvalid, isDisabled: disabled })
-            )}
-            disabled={disabled}
-            {...props}
-          >
-            <RadioPrimitive.Indicator className="flex items-center justify-center">
-              <div className={cn(radioIndicatorDotVariants({ size }))} />
-            </RadioPrimitive.Indicator>
-          </RadioPrimitive.Item>
-        </div>
-        {label && (
-          <label
-            htmlFor={id}
-            className={cn(labelVariants({ size, isDisabled: disabled }))}
-          >
-            {label}
-          </label>
+function RadioItem({
+  className,
+  size = "md",
+  isInvalid = false,
+  disabled = false,
+  label,
+  id,
+  ...props
+}: RadioItemProps) {
+  return (
+    <div className="flex items-center">
+      <RadioPrimitive.Item
+        data-slot="radio-group-item"
+        id={id}
+        className={cn(
+          radioItemVariants({ size, isDisabled: disabled }),
+          "group",
+          className
         )}
-      </div>
-    );
-  }
-);
+        disabled={disabled}
+        {...props}
+      >
+        <div
+          className={cn(
+            radioIndicatorVariants({ size, isInvalid, isDisabled: disabled })
+          )}
+        >
+          <RadioPrimitive.Indicator
+            data-slot="radio-group-indicator"
+            className={cn(
+              radioIndicatorDotVariants({
+                size,
+                isInvalid,
+                isDisabled: disabled,
+              })
+            )}
+          >
+            <div className={cn(radioIndicatorDotInnerVariants({ size }))} />
+          </RadioPrimitive.Indicator>
+        </div>
+      </RadioPrimitive.Item>
+      {label && (
+        <label
+          htmlFor={id}
+          className={cn(labelVariants({ size, isDisabled: disabled }))}
+        >
+          {label}
+        </label>
+      )}
+    </div>
+  );
+}
 RadioItem.displayName = RadioPrimitive.Item.displayName;
 
 export { Radio, RadioItem };

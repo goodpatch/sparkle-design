@@ -42,11 +42,11 @@ const InputPassword = React.forwardRef<HTMLInputElement, InputPasswordProps>(
       <Input
         ref={ref}
         type={isVisibility ? "text" : "password"}
-        iconButtonIcon={isVisibility ? "visibility_off" : "visibility"}
-        iconButtonAriaLabel={
+        triggerIcon={isVisibility ? "visibility_off" : "visibility"}
+        triggerAriaLabel={
           isVisibility ? "パスワードを隠す" : "パスワードを表示する"
         }
-        isIconButtonEnable={true}
+        isTrigger={true}
         onIconButtonClick={handleTogglePasswordVisibility}
         {...props}
       />
