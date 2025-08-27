@@ -55,7 +55,7 @@ function TooltipProvider({
  * </Tooltip>
  * ```
  *
- * @prop {} props
+ * @param props
  */
 function Tooltip({
   ...props
