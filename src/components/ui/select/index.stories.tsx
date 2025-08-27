@@ -1,43 +1,59 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import {
   Select,
-  SelectContent,
   SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
   SelectValue,
+  SelectTrigger,
+  SelectContent,
+  SelectLabel,
+  SelectItem,
   SelectSeparator,
+  SelectScrollUpButton,
+  SelectScrollDownButton,
+  SelectTriggerProps,
 } from "./index";
 
 const meta = {
   title: "Components/Select",
-  component: SelectTrigger,
+  component: Select,
+  subcomponents: {
+    SelectGroup,
+    SelectValue,
+    SelectTrigger,
+    SelectContent,
+    SelectLabel,
+    SelectItem,
+    SelectSeparator,
+    SelectScrollUpButton,
+    SelectScrollDownButton,
+  },
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
-  argTypes: {
-    disabled: {
-      control: "boolean",
-      defaultValue: false,
-    },
-    size: {
-      control: { type: "radio" },
-      options: ["sm", "md", "lg"],
-      defaultValue: "md",
-    },
-    isInvalid: {
-      control: "boolean",
-      defaultValue: false,
-    },
-  },
-} satisfies Meta<typeof SelectTrigger>;
+  argTypes: {},
+} satisfies Meta<typeof Select>;
 
 export default meta;
-type Story = StoryObj<typeof SelectTrigger>;
+type Story = StoryObj<SelectTriggerProps>;
+const argTypes: Story["argTypes"] = {
+  disabled: {
+    control: "boolean",
+    defaultValue: false,
+  },
+  size: {
+    control: { type: "radio" },
+    options: ["sm", "md", "lg"],
+    defaultValue: "md",
+  },
+  isInvalid: {
+    control: "boolean",
+    defaultValue: false,
+  },
+};
 
 export const Default: Story = {
+  argTypes: argTypes,
   render: args => (
     <Select>
       <SelectTrigger className="w-[280px]" {...args}>
@@ -108,6 +124,7 @@ export const Small: Story = {
   args: {
     size: "sm",
   },
+  argTypes: argTypes,
   render: args => (
     <Select>
       <SelectTrigger className="w-[240px]" {...args}>
@@ -126,6 +143,7 @@ export const Medium: Story = {
   args: {
     size: "md",
   },
+  argTypes: argTypes,
   render: args => (
     <Select>
       <SelectTrigger className="w-[240px]" {...args}>
@@ -144,6 +162,7 @@ export const Large: Story = {
   args: {
     size: "lg",
   },
+  argTypes: argTypes,
   render: args => (
     <Select>
       <SelectTrigger className="w-[240px]" {...args}>
@@ -159,6 +178,7 @@ export const Large: Story = {
 };
 
 export const Invalid: Story = {
+  argTypes: argTypes,
   render: args => (
     <Select>
       <SelectTrigger className="w-[240px]" isInvalid {...args}>
@@ -174,6 +194,7 @@ export const Invalid: Story = {
 };
 
 export const Disabled: Story = {
+  argTypes: argTypes,
   render: args => (
     <Select>
       <SelectTrigger className="w-[240px]" disabled {...args}>
@@ -189,6 +210,7 @@ export const Disabled: Story = {
 };
 
 export const DisabledWithInvalidState: Story = {
+  argTypes: argTypes,
   render: args => (
     <Select>
       <SelectTrigger className="w-[240px]" disabled isInvalid {...args}>

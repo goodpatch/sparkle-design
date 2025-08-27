@@ -99,6 +99,28 @@ const selectViewportVariants = cva("p-1", {
   },
 });
 
+/**
+ * **概要 / Overview**
+ *
+ * - セレクトはオプショングループの中から値を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。
+ * - en: The Select component is used to capture user input by selecting a value from a group of options.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Select>
+ *   <SelectTrigger size="md">
+ *     <SelectValue placeholder="選択してください" />
+ *   </SelectTrigger>
+ *   <SelectContent>
+ *     <SelectItem value="option1">オプション1</SelectItem>
+ *     <SelectItem value="option2">オプション2</SelectItem>
+ *   </SelectContent>
+ * </Select>
+ * ```
+ *
+ * @param props
+ */
 function Select({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
@@ -138,28 +160,10 @@ export interface SelectTriggerProps
 }
 
 /**
- * - セレクトはオプショングループの中から値を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。
- * - en: The Select component is used to capture user input by selecting a value from a group of options.
- *
- * ## SelectTrigger
  * **概要 / Overview**
  *
  * - セレクトのトリガー部分で、クリックで選択肢リストを開閉するボタンとして機能します。
  * - en: The trigger part of the select that functions as a button to open/close the option list when clicked.
- *
- * **使用例 / Usage Example**
- *
- * ```tsx
- * <Select>
- *   <SelectTrigger size="md">
- *     <SelectValue placeholder="選択してください" />
- *   </SelectTrigger>
- *   <SelectContent>
- *     <SelectItem value="option1">オプション1</SelectItem>
- *     <SelectItem value="option2">オプション2</SelectItem>
- *   </SelectContent>
- * </Select>
- * ```
  *
  * @param {SelectTriggerProps} props
  */
