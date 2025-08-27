@@ -142,7 +142,7 @@ const Slider = React.forwardRef<
 
     // 非制御コンポーネントの場合の内部状態管理
     const [internalValue, setInternalValue] = React.useState<number[]>(
-      defaultValue || [0]
+      defaultValue || [props?.min ?? 0]
     );
 
     // 制御コンポーネントかどうかを判定
