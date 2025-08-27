@@ -24,7 +24,8 @@ const meta: Meta<typeof Checkbox> = {
       control: "boolean",
     },
     checked: {
-      control: "boolean",
+      control: "radio",
+      options: [true, false, "indeterminate"],
     },
   },
 };
@@ -35,25 +36,26 @@ type Story = StoryObj<typeof Checkbox>;
 export const Default: Story = {
   args: {
     id: "default",
-    label: "Checkbox",
+    label: "選択肢",
   },
 };
 
 export const Sizes: Story = {
-  render: () => (
+  render: args => (
     <div className="space-y-8">
-      <Checkbox id="small" size="sm" label="Small" />
-      <Checkbox id="medium" size="md" label="Medium" />
-      <Checkbox id="large" size="lg" label="Large" />
+      <Checkbox {...args} id="small" size="sm" label="Small" />
+      <Checkbox {...args} id="medium" size="md" label="Medium" />
+      <Checkbox {...args} id="large" size="lg" label="Large" />
     </div>
   ),
 };
 
 export const Invalid: Story = {
-  render: () => (
+  render: args => (
     <div className="space-y-4">
-      <Checkbox id="invalid1" isInvalid label="エラー状態" />
+      <Checkbox {...args} id="invalid1" isInvalid label="エラー状態" />
       <Checkbox
+        {...args}
         id="invalid2"
         isInvalid
         checked
@@ -64,10 +66,11 @@ export const Invalid: Story = {
 };
 
 export const Disabled: Story = {
-  render: () => (
+  render: args => (
     <div className="space-y-4">
-      <Checkbox id="disabled1" disabled label="無効状態" />
+      <Checkbox {...args} id="disabled1" disabled label="無効状態" />
       <Checkbox
+        {...args}
         id="disabled2"
         disabled
         checked
@@ -78,20 +81,52 @@ export const Disabled: Story = {
 };
 
 export const DisabledAndInvalid: Story = {
-  render: () => (
+  render: args => (
     <div className="space-y-4">
       <Checkbox
+        {...args}
         id="disabledInvalid1"
         disabled
         isInvalid
         label="無効状態とエラー状態"
       />
       <Checkbox
+        {...args}
         id="disabledInvalid2"
         disabled
         isInvalid
         checked
         label="無効状態とエラー状態（チェック済み）"
+      />
+    </div>
+  ),
+};
+
+export const Indeterminate: Story = {
+  render: args => (
+    <div className="space-y-4">
+      <Checkbox {...args} id="indeterminate1" indeterminate label="中間状態" />
+      <Checkbox
+        {...args}
+        id="indeterminate2"
+        indeterminate
+        isInvalid
+        label="中間状態（エラー）"
+      />
+      <Checkbox
+        {...args}
+        id="indeterminate3"
+        indeterminate
+        disabled
+        label="中間状態（無効）"
+      />
+      <Checkbox
+        {...args}
+        id="indeterminate4"
+        indeterminate
+        isInvalid
+        disabled
+        label="中間状態（エラーで無効）"
       />
     </div>
   ),

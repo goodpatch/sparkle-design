@@ -1,32 +1,14 @@
 import React from "react";
-import { VariantProps, cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/ui/icon";
 
-const linkVariants = cva(
-  "transition-colors text-primary-600 group-hover:text-primary-700",
-  {
-    variants: {
-      isUnderline: {
-        true: "underline decoration-current underline-offset-2",
-        false:
-          "underline decoration-transparent underline-offset-2 group-hover:decoration-current",
-      },
-    },
-    defaultVariants: {
-      isUnderline: false,
-    },
-  }
-);
-
 export interface LinkProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
-    VariantProps<typeof linkVariants> {
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   /**
-   * 外部リンクかどうか
-   * en: Whether the link points to an external site
+   * 新しいウィンドウやタブで開くかどうか
+   * en: Whether to open the link in a new window or tab
    */
-  isExternalLink?: boolean;
+  isOpenInNew?: boolean;
   /**
    * 表示するテキスト
    * en: Text to display inside the link
@@ -57,7 +39,7 @@ export interface LinkProps
  */
 export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
   (
-    { isUnderline, isExternalLink = false, children, className = "", ...props },
+    { isOpenInNew: isExternalLink = false, children, className = "", ...props },
     ref
   ) => {
     // character-*-*-* クラスがあるかチェック
@@ -81,18 +63,14 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
         className={cn("inline group", characterSizeClass, className)}
         {...props}
       >
-        <span
-          className={linkVariants({
-            isUnderline,
-          })}
-        >
+        <span className="transition-colors text-info-500 group-hover:text-info-600 underline decoration-current underline-offset-2">
           {children}
         </span>
         {isExternalLink && (
           <Icon
             icon="open_in_new"
             size={characterSize}
-            className="ml-1 align-middle inline-block text-primary-600 group-hover:text-primary-700"
+            className="ml-1 align-middle inline-block text-info-500 group-hover:text-info-600"
           />
         )}
       </a>

@@ -29,54 +29,66 @@ type Story = StoryObj<typeof Tag>;
 
 export const Default: Story = {
   args: {
-    children: "Tag",
+    children: "ラベル",
     variant: "solid",
     size: "md",
     status: "neutral",
   },
 };
 
-export const Variant = () => {
-  return (
+export const Variant: Story = {
+  render: args => (
     <div className="flex flex-col gap-4">
       <div className="flex gap-4">
-        <Tag variant="solid">Solid</Tag>
-        <Tag variant="outline">Outline</Tag>
-        <Tag variant="subtle">Subtle</Tag>
+        <Tag {...args} variant="solid">
+          Solid
+        </Tag>
+        <Tag {...args} variant="outline">
+          Outline
+        </Tag>
+        <Tag {...args} variant="subtle">
+          Subtle
+        </Tag>
       </div>
     </div>
-  );
+  ),
 };
 
-export const Size = () => {
-  return (
+export const Size: Story = {
+  render: args => (
     <div className="flex gap-4 items-center">
-      <Tag size="sm">Small</Tag>
-      <Tag size="md">Medium</Tag>
-      <Tag size="lg">Large</Tag>
+      <Tag {...args} size="sm">
+        Small
+      </Tag>
+      <Tag {...args} size="md">
+        Medium
+      </Tag>
+      <Tag {...args} size="lg">
+        Large
+      </Tag>
     </div>
-  );
+  ),
 };
 
-export const Status = () => {
-  return (
+export const Status: Story = {
+  render: args => (
     <div className="flex flex-col gap-4">
       <div>
         <h3 className="text-sm font-bold mb-2">Solid Variant</h3>
         <div className="flex gap-2">
-          <Tag variant="solid" status="neutral">
+          <Tag {...args} variant="solid" status="neutral">
             Neutral
           </Tag>
-          <Tag variant="solid" status="info">
+          <Tag {...args} variant="solid" status="info">
             Info
           </Tag>
-          <Tag variant="solid" status="success">
+          <Tag {...args} variant="solid" status="success">
             Success
           </Tag>
-          <Tag variant="solid" status="warning">
+          <Tag {...args} variant="solid" status="warning">
             Warning
           </Tag>
-          <Tag variant="solid" status="negative">
+          <Tag {...args} variant="solid" status="negative">
             Negative
           </Tag>
         </div>
@@ -85,19 +97,19 @@ export const Status = () => {
       <div>
         <h3 className="text-sm font-bold mb-2">Outline Variant</h3>
         <div className="flex gap-2">
-          <Tag variant="outline" status="neutral">
+          <Tag {...args} variant="outline" status="neutral">
             Neutral
           </Tag>
-          <Tag variant="outline" status="info">
+          <Tag {...args} variant="outline" status="info">
             Info
           </Tag>
-          <Tag variant="outline" status="success">
+          <Tag {...args} variant="outline" status="success">
             Success
           </Tag>
-          <Tag variant="outline" status="warning">
+          <Tag {...args} variant="outline" status="warning">
             Warning
           </Tag>
-          <Tag variant="outline" status="negative">
+          <Tag {...args} variant="outline" status="negative">
             Negative
           </Tag>
         </div>
@@ -106,23 +118,23 @@ export const Status = () => {
       <div>
         <h3 className="text-sm font-bold mb-2">Subtle Variant</h3>
         <div className="flex gap-2">
-          <Tag variant="subtle" status="neutral">
+          <Tag {...args} variant="subtle" status="neutral">
             Neutral
           </Tag>
-          <Tag variant="subtle" status="info">
+          <Tag {...args} variant="subtle" status="info">
             Info
           </Tag>
-          <Tag variant="subtle" status="success">
+          <Tag {...args} variant="subtle" status="success">
             Success
           </Tag>
-          <Tag variant="subtle" status="warning">
+          <Tag {...args} variant="subtle" status="warning">
             Warning
           </Tag>
-          <Tag variant="subtle" status="negative">
+          <Tag {...args} variant="subtle" status="negative">
             Negative
           </Tag>
         </div>
       </div>
     </div>
-  );
+  ),
 };

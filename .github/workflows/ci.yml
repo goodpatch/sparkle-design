@@ -1,6 +1,8 @@
 name: CI
 
 on:
+  push:
+    branches: [main]
   pull_request:
 
 jobs:
@@ -8,13 +10,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+
+      # .tool-versionsファイルからNode.jsとpnpmのバージョンを読み取り
+      - name: Read .tool-versions
+        id: tool-versions
+        run: |
+          echo "node-version=$(grep nodejs .tool-versions | cut -d' ' -f2)" >> $GITHUB_OUTPUT
+          echo "pnpm-version=$(grep pnpm .tool-versions | cut -d' ' -f2)" >> $GITHUB_OUTPUT
+
+      # pnpmセットアップ（.tool-versionsから読み取ったバージョンを使用）
+      - uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: ${{ steps.tool-versions.outputs.pnpm-version }}
+
+      # Node.jsセットアップ（.tool-versionsから読み取ったバージョンを使用）
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'pnpm'
-      - run: pnpm install
-      - run: pnpm lint
-      - run: pnpm test
+          node-version: ${{ steps.tool-versions.outputs.node-version }}
+          cache: "pnpm"
+
+      # 依存関係のインストール（lockfileを正しく読み込み）
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # リントとテストの実行
+      - name: Run lint
+        run: pnpm lint
+
+      - name: Run tests
+        run: pnpm test

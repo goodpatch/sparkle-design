@@ -14,11 +14,11 @@ const meta: Meta<typeof Badge> = {
     },
     size: {
       control: "select",
-      options: ["x5s", "x4s", "x3s", "x2s", "xs", "sm", "md"],
+      options: ["xs", "sm", "md", "lg"],
     },
-    status: {
+    variant: {
       control: "select",
-      options: ["info", "success", "negative"],
+      options: ["normal", "emphasis"],
     },
     isGapped: {
       control: "boolean",
@@ -35,44 +35,68 @@ export const Default: Story = {
   },
 };
 
-export const Size = () => {
-  return (
-    <div className="flex flex-row gap-2 items-start">
-      <Badge size="x5s">13</Badge>
-      <Badge size="x4s">13</Badge>
-      <Badge size="x3s">13</Badge>
-      <Badge size="x2s">13</Badge>
-      <Badge size="xs">13</Badge>
-      <Badge size="sm">13</Badge>
-      <Badge size="md">13</Badge>
-    </div>
-  );
+export const Size: Story = {
+  render: args => {
+    return (
+      <div className="flex flex-row gap-2 items-start">
+        <Badge {...args} size="xs">
+          13
+        </Badge>
+        <Badge {...args} size="sm">
+          13
+        </Badge>
+        <Badge {...args} size="md">
+          13
+        </Badge>
+        <Badge {...args} size="lg">
+          13
+        </Badge>
+      </div>
+    );
+  },
 };
 
-export const Status = () => {
-  return (
-    <div className="flex flex-row gap-2  items-start">
-      <Badge status="info">13</Badge>
-      <Badge status="success">13</Badge>
-      <Badge status="negative">13</Badge>
-    </div>
-  );
+export const Variant: Story = {
+  render: args => {
+    return (
+      <div className="flex flex-row gap-2  items-start">
+        <Badge {...args} variant="normal">
+          13
+        </Badge>
+        <Badge {...args} variant="emphasis">
+          13
+        </Badge>
+      </div>
+    );
+  },
 };
 
-export const NumberVisible = () => {
-  return (
-    <div className="flex flex-row gap-2 items-start">
-      <Badge isNumberVisible={false}>13</Badge>
-      <Badge isNumberVisible={true}>13</Badge>
-    </div>
-  );
+export const NumberVisible: Story = {
+  render: args => {
+    return (
+      <div className="flex flex-row gap-2 items-start">
+        <Badge {...args} isNumberVisible={false}>
+          13
+        </Badge>
+        <Badge {...args} isNumberVisible={true}>
+          13
+        </Badge>
+      </div>
+    );
+  },
 };
 
-export const Gapped = () => {
-  return (
-    <div className="flex flex-row gap-2 items-start">
-      <Badge isGapped={true}>13</Badge>
-      <Badge isGapped={false}>13</Badge>
-    </div>
-  );
+export const Gapped: Story = {
+  render: args => {
+    return (
+      <div className="flex flex-row gap-2 items-start">
+        <Badge {...args} isGapped={true}>
+          13
+        </Badge>
+        <Badge {...args} isGapped={false}>
+          13
+        </Badge>
+      </div>
+    );
+  },
 };
