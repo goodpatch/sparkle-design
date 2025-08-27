@@ -121,95 +121,88 @@ export interface SliderProps extends SliderPrimitiveProps {
  *
  * @param {SliderProps} props
  */
-const Slider = React.forwardRef<
-  React.ElementRef<typeof SliderPrimitive.Root>,
-  SliderProps
->(
-  (
-    {
-      className,
-      isDisabled,
-      disabled,
-      value,
-      defaultValue,
-      onValueChange,
-      unit,
-      ...props
+function Slider({
+  className,
+  isDisabled,
+  disabled,
+  value,
+  defaultValue,
+  onValueChange,
+  unit,
+  ...props
+}: SliderProps) {
+  const isDisabledState = Boolean(isDisabled || disabled);
+
+  // 非制御コンポーネントの場合の内部状態管理
+  const [internalValue, setInternalValue] = React.useState<number[]>(
+    defaultValue || [props?.min ?? 0]
+  );
+
+  // 制御コンポーネントかどうかを判定
+  const isControlled = value !== undefined;
+
+  // 現在の値を取得（制御/非制御コンポーネントに対応）
+  const currentValue = isControlled ? value : internalValue;
+
+  // 値変更ハンドラー
+  const handleValueChange = React.useCallback(
+    (newValue: number[]) => {
+      if (!isControlled) {
+        setInternalValue(newValue);
+      }
+      onValueChange?.(newValue);
     },
-    ref
-  ) => {
-    const isDisabledState = Boolean(isDisabled || disabled);
+    [isControlled, onValueChange]
+  );
 
-    // 非制御コンポーネントの場合の内部状態管理
-    const [internalValue, setInternalValue] = React.useState<number[]>(
-      defaultValue || [props?.min ?? 0]
-    );
-
-    // 制御コンポーネントかどうかを判定
-    const isControlled = value !== undefined;
-
-    // 現在の値を取得（制御/非制御コンポーネントに対応）
-    const currentValue = isControlled ? value : internalValue;
-
-    // 値変更ハンドラー
-    const handleValueChange = React.useCallback(
-      (newValue: number[]) => {
-        if (!isControlled) {
-          setInternalValue(newValue);
-        }
-        onValueChange?.(newValue);
-      },
-      [isControlled, onValueChange]
-    );
-
-    return (
-      <div className="flex justify-center gap-3 w-full">
-        <SliderPrimitive.Root
-          ref={ref}
-          disabled={isDisabledState}
-          aria-disabled={isDisabledState}
+  return (
+    <div className="flex justify-center gap-3 w-full">
+      <SliderPrimitive.Root
+        data-slot="slider"
+        disabled={isDisabledState}
+        aria-disabled={isDisabledState}
+        className={cn(
+          sliderRootVariants({ isDisabled: isDisabledState }),
+          className
+        )}
+        value={value}
+        defaultValue={defaultValue}
+        onValueChange={handleValueChange}
+        {...props}
+      >
+        <SliderPrimitive.Track
+          data-slot="slider-track"
           className={cn(
-            sliderRootVariants({ isDisabled: isDisabledState }),
-            className
-          )}
-          value={value}
-          defaultValue={defaultValue}
-          onValueChange={handleValueChange}
-          {...props}
-        >
-          <SliderPrimitive.Track
-            className={cn(
-              "relative w-full grow overflow-hidden rounded-xs h-1",
-              isDisabledState
-                ? "bg-neutral-100 cursor-not-allowed"
-                : "bg-neutral-200 cursor-pointer"
-            )}
-          >
-            <SliderPrimitive.Range
-              className={cn(
-                sliderRangeVariants({ isDisabled: isDisabledState })
-              )}
-            />
-          </SliderPrimitive.Track>
-          <SliderPrimitive.Thumb
-            className={cn(sliderThumbVariants({ isDisabled: isDisabledState }))}
-          />
-        </SliderPrimitive.Root>
-        <span
-          className={cn(
-            "min-w-10 text-left tabular-nums character-3-regular-pro shrink-0",
+            "relative w-full grow overflow-hidden rounded-xs h-1",
             isDisabledState
-              ? "text-text-disabled cursor-not-allowed"
-              : "text-text-middle"
+              ? "bg-neutral-100 cursor-not-allowed"
+              : "bg-neutral-200 cursor-pointer"
           )}
         >
-          {currentValue[0]}
-          {unit}
-        </span>
-      </div>
-    );
-  }
-);
+          <SliderPrimitive.Range
+            data-slot="slider-range"
+            className={cn(sliderRangeVariants({ isDisabled: isDisabledState }))}
+          />
+        </SliderPrimitive.Track>
+        <SliderPrimitive.Thumb
+          data-slot="slider-thumb"
+          className={cn(sliderThumbVariants({ isDisabled: isDisabledState }))}
+        />
+      </SliderPrimitive.Root>
+      <span
+        className={cn(
+          "min-w-10 text-left tabular-nums character-3-regular-pro shrink-0",
+          isDisabledState
+            ? "text-text-disabled cursor-not-allowed"
+            : "text-text-middle"
+        )}
+      >
+        {currentValue[0]}
+        {unit}
+      </span>
+    </div>
+  );
+}
 
 Slider.displayName = SliderPrimitive.Root.displayName;
 
