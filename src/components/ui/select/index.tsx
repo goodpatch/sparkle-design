@@ -63,10 +63,6 @@ const selectIconVariants = cva("", {
   },
 });
 
-const selectScrollButtonVariants = cva(
-  "flex cursor-default items-center justify-center py-1"
-);
-
 const selectContentVariants = cva(
   [
     "bg-popover text-popover-foreground",
@@ -359,7 +355,10 @@ function SelectScrollUpButton({
   return (
     <SelectPrimitive.ScrollUpButton
       data-slot="select-scroll-up-button"
-      className={cn(selectScrollButtonVariants(), className)}
+      className={cn(
+        "flex cursor-default items-center justify-center py-1",
+        className
+      )}
       {...props}
     >
       <Icon icon="expand_less" size={4} />
@@ -386,7 +385,10 @@ function SelectScrollDownButton({
   return (
     <SelectPrimitive.ScrollDownButton
       data-slot="select-scroll-down-button"
-      className={cn(selectScrollButtonVariants(), className)}
+      className={cn(
+        "flex cursor-default items-center justify-center py-1",
+        className
+      )}
       {...props}
     >
       <Icon icon="expand_more" size={4} />
