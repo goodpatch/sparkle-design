@@ -5,7 +5,6 @@ import { Slider as SliderPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
-import { useCallback, useState } from "react";
 
 const sliderRootVariants = cva(
   "relative flex w-full touch-none select-none items-center py-1.5",
@@ -141,16 +140,26 @@ const Slider = React.forwardRef<
   ) => {
     const isDisabledState = Boolean(isDisabled || disabled);
 
-    // 現在の値を取得（制御/非制御コンポーネントに対応）
-    const [currentValue, setCurrentValue] = useState(
-      value || defaultValue || [0]
+    // 非制御コンポーネントの場合の内部状態管理
+    const [internalValue, setInternalValue] = React.useState<number[]>(
+      defaultValue || [0]
     );
-    const handleValueChange = useCallback(
+
+    // 制御コンポーネントかどうかを判定
+    const isControlled = value !== undefined;
+
+    // 現在の値を取得（制御/非制御コンポーネントに対応）
+    const currentValue = isControlled ? value : internalValue;
+
+    // 値変更ハンドラー
+    const handleValueChange = React.useCallback(
       (newValue: number[]) => {
-        setCurrentValue(newValue);
+        if (!isControlled) {
+          setInternalValue(newValue);
+        }
         onValueChange?.(newValue);
       },
-      [onValueChange]
+      [isControlled, onValueChange]
     );
 
     return (
