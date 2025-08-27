@@ -3,7 +3,7 @@
   "name": "radio",
   "type": "registry:component",
   "title": "Radio",
-  "description": "ラジオボタンは複数の選択肢から一つを選択するためのフォーム入力コンポーネントです。",
+  "description": "ラジオボタンは単一選択の形式でユーザーからの入力を取得するために使用するコンポーネントです。",
   "files": [
     {
       "path": "src/components/ui/radio/index.tsx",
