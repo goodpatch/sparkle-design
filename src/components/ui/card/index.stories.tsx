@@ -31,11 +31,11 @@ const meta: Meta<CardStoryArgs> = {
   argTypes: {
     title: {
       control: "text",
-      description: "カードタイトル",
+      description: "カードタイトル en: Card title",
     },
     isSpace: {
       control: "boolean",
-      description: "スペースを含むかどうか",
+      description: "スペースを含むかどうか en: Whether to include spacing",
     },
   },
 } satisfies Meta<CardStoryArgs>;
@@ -120,11 +120,12 @@ export const Clickable: ClickableStory = {
   argTypes: {
     isDisabled: {
       control: "boolean",
-      description: "カードを無効化するかどうか",
+      description: "カードを無効化するかどうか en: Whether to disable the card",
     },
     onClick: {
       action: "clicked",
-      description: "クリック時のイベントハンドラー",
+      description:
+        "クリック時のイベントハンドラー en: Event handler for click events",
     },
   },
 };
