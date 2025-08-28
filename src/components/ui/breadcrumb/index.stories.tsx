@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -11,6 +12,9 @@ import {
 const meta: Meta<typeof Breadcrumb> = {
   title: "Components/Breadcrumb",
   component: Breadcrumb,
+  subcomponents: {
+    BreadcrumbLink,
+  },
   parameters: {
     layout: "centered",
   },
