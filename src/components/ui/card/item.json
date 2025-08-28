@@ -3,7 +3,7 @@
   "name": "card",
   "type": "registry:component",
   "title": "Card",
-  "description": "カードは関連する情報をグループ化して表示するためのコンテナコンポーネントです。",
+  "description": "カードはコンテンツをグルーピングして表示するために使用するコンポーネントです。",
   "files": [
     {
       "path": "src/components/ui/card/index.tsx",
