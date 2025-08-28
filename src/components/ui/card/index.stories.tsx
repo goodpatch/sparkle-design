@@ -13,10 +13,6 @@ import {
 
 interface CardStoryArgs {
   title: string;
-  description: string;
-  control: string;
-  content: string;
-  footerText: string;
   isSpace: boolean;
 }
 
@@ -37,22 +33,6 @@ const meta: Meta<CardStoryArgs> = {
       control: "text",
       description: "カードタイトル",
     },
-    description: {
-      control: "text", 
-      description: "カードの説明",
-    },
-    control: {
-      control: "text",
-      description: "コントロール内容",
-    },
-    content: {
-      control: "text",
-      description: "カードの内容",
-    },
-    footerText: {
-      control: "text",
-      description: "フッターのテキスト",
-    },
     isSpace: {
       control: "boolean",
       description: "スペースを含むかどうか",
@@ -69,11 +49,7 @@ type ClickableStory = StoryObj<ClickableCardStoryArgs>;
  */
 export const Default: Story = {
   args: {
-    title: "カードタイトル",
-    description: "カードの説明文がここに入ります。",
-    control: "編集",
-    content: "ここにカードの主要なコンテンツが表示されます。テキストや画像、その他の要素を含めることができます。",
-    footerText: "フッター情報",
+    title: "タイトル",
     isSpace: true,
   },
   render: args => (
@@ -82,18 +58,26 @@ export const Default: Story = {
         <CardTitle>
           {args.title}
           <CardDescription>
-            {args.description}
+            <div className="border border-dashed border-purple-300 text-purple-300">
+              SLOT
+            </div>
           </CardDescription>
         </CardTitle>
         <CardControl>
-          {args.control}
+          <div className="border border-dashed border-purple-300 text-purple-300">
+            SLOT
+          </div>
         </CardControl>
       </CardHeader>
       <CardContent isSpace={args.isSpace}>
-        {args.content}
+        <div className="border border-dashed border-purple-300 text-purple-300 w-[272px]">
+          SLOT
+        </div>
       </CardContent>
       <CardFooter>
-        {args.footerText}
+        <div className="border border-dashed border-purple-300 text-purple-300">
+          SLOT
+        </div>
       </CardFooter>
     </Card>
   ),
@@ -104,11 +88,7 @@ export const Default: Story = {
  */
 export const Clickable: ClickableStory = {
   args: {
-    title: "クリック可能なカード",
-    description: "このカードはクリック可能です。",
-    control: "詳細",
-    content: "クリックすると何らかのアクションが実行されます。ボタンとしての機能を持つカードです。",
-    footerText: "",
+    title: "タイトル",
     isSpace: true,
     isDisabled: false,
     onClick: action("clicked"),
@@ -119,21 +99,22 @@ export const Clickable: ClickableStory = {
         <CardTitle>
           {args.title}
           <CardDescription>
-            {args.description}
+            <div className="border border-dashed border-purple-300 text-purple-300">
+              SLOT
+            </div>
           </CardDescription>
         </CardTitle>
         <CardControl>
-          {args.control}
+          <div className="border border-dashed border-purple-300 text-purple-300">
+            SLOT
+          </div>
         </CardControl>
       </CardHeader>
       <CardContent isSpace={args.isSpace}>
-        {args.content}
+        <div className="border border-dashed border-purple-300 text-purple-300 w-[272px]">
+          SLOT
+        </div>
       </CardContent>
-      {args.footerText && (
-        <CardFooter>
-          {args.footerText}
-        </CardFooter>
-      )}
     </ClickableCard>
   ),
   argTypes: {
@@ -154,79 +135,31 @@ export const Clickable: ClickableStory = {
 export const ClickableDisabled: ClickableStory = {
   args: {
     ...Clickable.args,
-    title: "無効化されたカード",
-    description: "このカードは無効化されており、クリックできません。",
-    content: "無効化状態では、カードの外観が変化し、クリックイベントが発火しません。",
     isDisabled: true,
   },
-  render: Clickable.render,
-  argTypes: Clickable.argTypes,
-};
-
-/**
- * シンプルなカード（コンテンツのみ）
- */
-export const Simple: Story = {
-  args: {
-    title: "",
-    description: "",
-    control: "",
-    content: "シンプルなカードコンテンツ",
-    footerText: "",
-    isSpace: true,
-  },
   render: args => (
-    <Card>
-      <CardContent isSpace={args.isSpace}>
-        {args.content}
-      </CardContent>
-    </Card>
-  ),
-};
-
-/**
- * ヘッダーのみのカード
- */
-export const HeaderOnly: Story = {
-  args: {
-    title: "ヘッダーのみ",
-    description: "説明文も表示可能",
-    control: "アクション",
-    content: "",
-    footerText: "",
-    isSpace: true,
-  },
-  render: args => (
-    <Card>
+    <ClickableCard onClick={args.onClick} isDisabled={args.isDisabled}>
       <CardHeader>
         <CardTitle>
           {args.title}
-          {args.description && (
-            <CardDescription>
-              {args.description}
-            </CardDescription>
-          )}
+          <CardDescription>
+            <div className="border border-dashed border-purple-300 text-purple-300">
+              SLOT
+            </div>
+          </CardDescription>
         </CardTitle>
-        {args.control && (
-          <CardControl>
-            {args.control}
-          </CardControl>
-        )}
+        <CardControl>
+          <div className="border border-dashed border-purple-300 text-purple-300">
+            SLOT
+          </div>
+        </CardControl>
       </CardHeader>
-    </Card>
+      <CardContent isSpace={args.isSpace}>
+        <div className="border border-dashed border-purple-300 text-purple-300 w-[272px]">
+          SLOT
+        </div>
+      </CardContent>
+    </ClickableCard>
   ),
-};
-
-/**
- * スペーシングなしのカード
- */
-export const NoSpacing: Story = {
-  args: {
-    ...Default.args,
-    title: "スペーシングなしカード",
-    description: "コンテンツ部分にパディングがありません。",
-    content: "このコンテンツは境界まで広がります。",
-    isSpace: false,
-  },
-  render: Default.render,
+  argTypes: Clickable.argTypes,
 };
