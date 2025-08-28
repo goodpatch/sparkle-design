@@ -6,8 +6,27 @@ import { Link } from "@/components/ui/link";
  * - パンくずはユーザーが現在のページ階層を理解し、親の階層へ戻るためのナビゲーションとして機能するコンポーネントです。
  * - en: The Breadcrumb component helps users understand the current page hierarchy and navigate back to parent levels.
  *
- * @param props nav要素のprops
- * en: Props for nav element
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Breadcrumb>
+ *   <BreadcrumbList>
+ *     <BreadcrumbItem>
+ *       <BreadcrumbLink href="/">Home</BreadcrumbLink>
+ *     </BreadcrumbItem>
+ *     <BreadcrumbSeparator />
+ *     <BreadcrumbItem>
+ *       <BreadcrumbLink href="/">Link</BreadcrumbLink>
+ *     </BreadcrumbItem>
+ *     <BreadcrumbSeparator />
+ *     <BreadcrumbItem>
+ *       <BreadcrumbPage>Current Page</BreadcrumbPage>
+ *     </BreadcrumbItem>
+ *   </BreadcrumbList>
+ * </Breadcrumb>
+ * ```
+ *
+ * @param {BreadcrumbProps} props
  */
 export function Breadcrumb({
   className,
