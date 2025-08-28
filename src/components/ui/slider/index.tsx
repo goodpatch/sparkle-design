@@ -7,7 +7,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const sliderRootVariants = cva(
-  "relative flex w-full touch-none select-none items-center py-1.5",
+  "relative flex touch-none select-none items-center py-1.5 flex-1 min-w-0",
   {
     variants: {
       isDisabled: {
@@ -191,7 +191,7 @@ function Slider({
       </SliderPrimitive.Root>
       <span
         className={cn(
-          "min-w-10 text-left tabular-nums character-3-regular-pro shrink-0",
+          "min-w-14 text-left tabular-nums character-3-regular-pro flex-shrink-0",
           isDisabledState
             ? "text-text-disabled cursor-not-allowed"
             : "text-text-middle"
