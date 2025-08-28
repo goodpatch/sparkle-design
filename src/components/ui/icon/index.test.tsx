@@ -204,7 +204,9 @@ describe("Icon", () => {
     it("負のサイズでもクラッシュしない", () => {
       // Given / When / Then
       // en: Given / When / Then
-      expect(() => testContainer.render(<Icon icon="home" size={-1} />)).not.toThrow();
+      expect(() =>
+        testContainer.render(<Icon icon="home" size={-1} />)
+      ).not.toThrow();
     });
   });
 });
