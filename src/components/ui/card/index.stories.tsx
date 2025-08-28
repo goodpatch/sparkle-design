@@ -24,6 +24,10 @@ interface ClickableCardStoryArgs extends CardStoryArgs {
 const meta: Meta<CardStoryArgs> = {
   title: "Components/Card",
   component: Card,
+  subcomponents: {
+    ClickableCard,
+    CardContent,
+  },
   parameters: {
     layout: "centered",
   },
