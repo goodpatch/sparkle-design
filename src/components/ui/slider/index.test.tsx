@@ -489,7 +489,7 @@ describe("Slider", () => {
       const valueIndicator = getValueIndicator(testContainer.getContainer());
 
       if (valueIndicator) {
-        expect(StyleHelpers.hasClass(valueIndicator, "min-w-10")).toBe(true);
+        expect(StyleHelpers.hasClass(valueIndicator, "min-w-14")).toBe(true);
         expect(StyleHelpers.hasClass(valueIndicator, "text-left")).toBe(true);
         expect(StyleHelpers.hasClass(valueIndicator, "tabular-nums")).toBe(
           true
