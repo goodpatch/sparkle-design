@@ -10,11 +10,11 @@
       "type": "registry:component"
     }
   ],
-  "dependencies": ["radix-ui"],
+  "dependencies": [
+    "radix-ui"
+  ],
   "registryDependencies": [
     "https://sparkle-design.vercel.app/r/link.json",
-    "https://sparkle-design.vercel.app/r/sparkle-font.json",
-    "https://sparkle-design.vercel.app/r/sparkle-color.json",
-    "https://sparkle-design.vercel.app/r/sparkle-style.json"
+    "https://sparkle-design.vercel.app/r/sparkle-design-theme.json"
   ]
 }
