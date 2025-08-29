@@ -5,6 +5,7 @@ import { Slider as SliderPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+import { getIndicatorMinCh } from "./utils";
 
 const sliderRootVariants = cva(
   "relative flex touch-none select-none items-center py-1.5 flex-1 min-w-0",
@@ -155,6 +156,13 @@ function Slider({
     [isControlled, onValueChange]
   );
 
+  // 最小幅のみ制御するため style のみ指定
+  // en: Control only min width
+  const valueMinWidthStyle = React.useMemo<React.CSSProperties>(() => {
+    const ch = getIndicatorMinCh(props?.max, unit);
+    return ch > 0 ? { minWidth: `${ch}ch` } : {};
+  }, [props?.max, unit]);
+
   return (
     <div className="flex justify-center gap-3 w-full">
       <SliderPrimitive.Root
@@ -191,11 +199,12 @@ function Slider({
       </SliderPrimitive.Root>
       <span
         className={cn(
-          "min-w-14 text-right tabular-nums character-3-regular-mono flex-shrink-0",
+          "text-right tabular-nums character-3-regular-mono flex-shrink-0",
           isDisabledState
             ? "text-text-disabled cursor-not-allowed"
             : "text-text-middle"
         )}
+        style={valueMinWidthStyle}
       >
         {currentValue[0]}
         {unit}

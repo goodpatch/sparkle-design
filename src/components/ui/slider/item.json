@@ -8,6 +8,10 @@
     {
       "path": "src/components/ui/slider/index.tsx",
       "type": "registry:component"
+    },
+    {
+      "path": "src/components/ui/slider/utils.ts",
+      "type": "registry:lib"
     }
   ],
   "dependencies": ["radix-ui"],

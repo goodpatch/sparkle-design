@@ -489,15 +489,42 @@ describe("Slider", () => {
       const valueIndicator = getValueIndicator(testContainer.getContainer());
 
       if (valueIndicator) {
-        expect(StyleHelpers.hasClass(valueIndicator, "min-w-14")).toBe(true);
-        expect(StyleHelpers.hasClass(valueIndicator, "text-left")).toBe(true);
+        expect(StyleHelpers.hasClass(valueIndicator, "text-right")).toBe(true);
         expect(StyleHelpers.hasClass(valueIndicator, "tabular-nums")).toBe(
           true
         );
         expect(
-          StyleHelpers.hasClass(valueIndicator, "character-3-regular-pro")
+          StyleHelpers.hasClass(valueIndicator, "character-3-regular-mono")
         ).toBe(true);
       }
+    });
+
+    it("sets min-width based on digits and unit (default)", () => {
+      testContainer.render(<Slider />);
+      const valueIndicator = getValueIndicator(testContainer.getContainer());
+      // default max is 100 -> 3 digits, no unit => 3ch
+      expect(valueIndicator).toHaveStyle({ minWidth: "3ch" });
+    });
+
+    it("sets min-width with ASCII unit", () => {
+      testContainer.render(<Slider unit="%" />);
+      const valueIndicator = getValueIndicator(testContainer.getContainer());
+      // 3 digits (100) + 1 (%) => 4ch
+      expect(valueIndicator).toHaveStyle({ minWidth: "4ch" });
+    });
+
+    it("sets min-width with multibyte unit (CJK)", () => {
+      testContainer.render(<Slider unit="回" />);
+      const valueIndicator = getValueIndicator(testContainer.getContainer());
+      // 3 digits (100) + 2ch (全角1文字) => 5ch
+      expect(valueIndicator).toHaveStyle({ minWidth: "5ch" });
+    });
+
+    it("sets min-width with custom max and emoji unit", () => {
+      testContainer.render(<Slider max={1000} unit="🧪" />);
+      const valueIndicator = getValueIndicator(testContainer.getContainer());
+      // 4 digits (1000) + 2ch (emoji) => 6ch
+      expect(valueIndicator).toHaveStyle({ minWidth: "6ch" });
     });
   });
 });
