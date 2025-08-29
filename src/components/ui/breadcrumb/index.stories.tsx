@@ -30,11 +30,30 @@ export const Default: Story = {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          <BreadcrumbLink
+            href="/"
+            onClick={e => {
+              e.preventDefault();
+              action("breadcrumb link clicked")({ href: "/", label: "Home" });
+            }}
+          >
+            Home
+          </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">Link</BreadcrumbLink>
+          <BreadcrumbLink
+            href="/link"
+            onClick={e => {
+              e.preventDefault();
+              action("breadcrumb link clicked")({
+                href: "/link",
+                label: "Link",
+              });
+            }}
+          >
+            Link
+          </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
