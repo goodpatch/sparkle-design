@@ -503,28 +503,36 @@ describe("Slider", () => {
       testContainer.render(<Slider />);
       const valueIndicator = getValueIndicator(testContainer.getContainer());
       // default max is 100 -> 3 digits, no unit => 3ch
-      expect(valueIndicator).toHaveStyle({ minWidth: "3ch" });
+      expect(valueIndicator).toHaveStyle({
+        minWidth: "calc(3ch + var(--spacing) * 2)",
+      });
     });
 
     it("sets min-width with ASCII unit", () => {
       testContainer.render(<Slider unit="%" />);
       const valueIndicator = getValueIndicator(testContainer.getContainer());
       // 3 digits (100) + 1 (%) => 4ch
-      expect(valueIndicator).toHaveStyle({ minWidth: "4ch" });
+      expect(valueIndicator).toHaveStyle({
+        minWidth: "calc(4ch + var(--spacing) * 2)",
+      });
     });
 
     it("sets min-width with multibyte unit (CJK)", () => {
       testContainer.render(<Slider unit="回" />);
       const valueIndicator = getValueIndicator(testContainer.getContainer());
       // 3 digits (100) + 2ch (全角1文字) => 5ch
-      expect(valueIndicator).toHaveStyle({ minWidth: "5ch" });
+      expect(valueIndicator).toHaveStyle({
+        minWidth: "calc(5ch + var(--spacing) * 2)",
+      });
     });
 
     it("sets min-width with custom max and emoji unit", () => {
       testContainer.render(<Slider max={1000} unit="🧪" />);
       const valueIndicator = getValueIndicator(testContainer.getContainer());
       // 4 digits (1000) + 2ch (emoji) => 6ch
-      expect(valueIndicator).toHaveStyle({ minWidth: "6ch" });
+      expect(valueIndicator).toHaveStyle({
+        minWidth: "calc(6ch + var(--spacing) * 2)",
+      });
     });
   });
 });

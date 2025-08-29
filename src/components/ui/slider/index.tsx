@@ -160,7 +160,8 @@ function Slider({
   // en: Control only min width
   const valueMinWidthStyle = React.useMemo<React.CSSProperties>(() => {
     const ch = getIndicatorMinCh(props?.max, unit);
-    return ch > 0 ? { minWidth: `${ch}ch` } : {};
+    // NOTE: 端にThumbが来た時サイズ変化してしまうため、Thumbの半径分の余白を加算
+    return ch > 0 ? { minWidth: `calc(${ch}ch + var(--spacing) * 2)` } : {};
   }, [props?.max, unit]);
 
   return (
