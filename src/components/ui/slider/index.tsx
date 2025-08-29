@@ -191,7 +191,7 @@ function Slider({
       </SliderPrimitive.Root>
       <span
         className={cn(
-          "min-w-14 text-left tabular-nums character-3-regular-pro flex-shrink-0",
+          "min-w-14 text-right tabular-nums character-3-regular-mono flex-shrink-0",
           isDisabledState
             ? "text-text-disabled cursor-not-allowed"
             : "text-text-middle"
