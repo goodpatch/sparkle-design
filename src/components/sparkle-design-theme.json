@@ -1,0 +1,754 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sparkle-design-theme",
+  "title": "Sparkle Design Theme",
+  "type": "registry:theme",
+  "css": {
+    "@import url(\"https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@400;700&display=swap\")": {},
+    "@import url(\"https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap\")": {},
+    "@import url(\"https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,0..200\")": {},
+    "@utility character-1-bold-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-12)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-20)"
+    },
+    "@utility character-1-bold-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-12)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-20)"
+    },
+    "@utility character-1-regular-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-12)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-20)"
+    },
+    "@utility character-1-regular-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-12)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-20)"
+    },
+    "@utility character-10-bold-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-42)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-64)"
+    },
+    "@utility character-10-bold-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-42)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-64)"
+    },
+    "@utility character-10-regular-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-42)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-64)"
+    },
+    "@utility character-10-regular-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-42)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-64)"
+    },
+    "@utility character-11-bold-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-48)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-72)"
+    },
+    "@utility character-11-bold-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-48)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-72)"
+    },
+    "@utility character-11-regular-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-48)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-72)"
+    },
+    "@utility character-11-regular-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-48)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-72)"
+    },
+    "@utility character-12-bold-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-54)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-84)"
+    },
+    "@utility character-12-bold-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-54)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-84)"
+    },
+    "@utility character-12-regular-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-54)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-84)"
+    },
+    "@utility character-12-regular-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-54)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-84)"
+    },
+    "@utility character-2-bold-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-14)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-24)"
+    },
+    "@utility character-2-bold-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-14)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-24)"
+    },
+    "@utility character-2-regular-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-14)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-24)"
+    },
+    "@utility character-2-regular-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-14)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-24)"
+    },
+    "@utility character-3-bold-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-16)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-24)"
+    },
+    "@utility character-3-bold-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-16)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-24)"
+    },
+    "@utility character-3-regular-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-16)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-24)"
+    },
+    "@utility character-3-regular-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-16)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-24)"
+    },
+    "@utility character-4-bold-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-18)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-28)"
+    },
+    "@utility character-4-bold-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-18)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-28)"
+    },
+    "@utility character-4-regular-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-18)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-32)"
+    },
+    "@utility character-4-regular-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-18)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-28)"
+    },
+    "@utility character-5-bold-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-20)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-32)"
+    },
+    "@utility character-5-bold-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-20)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-32)"
+    },
+    "@utility character-5-regular-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-20)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-32)"
+    },
+    "@utility character-5-regular-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-20)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-28)"
+    },
+    "@utility character-6-bold-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-24)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-36)"
+    },
+    "@utility character-6-bold-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-24)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-36)"
+    },
+    "@utility character-6-regular-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-24)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-36)"
+    },
+    "@utility character-6-regular-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-24)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-36)"
+    },
+    "@utility character-7-bold-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-28)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-44)"
+    },
+    "@utility character-7-bold-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-28)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-44)"
+    },
+    "@utility character-7-regular-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-28)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-44)"
+    },
+    "@utility character-7-regular-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-28)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-44)"
+    },
+    "@utility character-8-bold-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-32)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-48)"
+    },
+    "@utility character-8-bold-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-32)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-48)"
+    },
+    "@utility character-8-regular-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-32)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-48)"
+    },
+    "@utility character-8-regular-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-32)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-48)"
+    },
+    "@utility character-9-bold-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-36)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-56)"
+    },
+    "@utility character-9-bold-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-36)",
+      "font-weight": "var(--font-weight-char-bold)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-56)"
+    },
+    "@utility character-9-regular-mono": {
+      "font-family": "var(--font-family-mono)",
+      "font-size": "var(--font-size-36)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-56)"
+    },
+    "@utility character-9-regular-pro": {
+      "font-family": "var(--font-family-pro)",
+      "font-size": "var(--font-size-36)",
+      "font-weight": "var(--font-weight-char-normal)",
+      "letter-spacing": "var(--letter-spacing-wider)",
+      "line-height": "var(--line-height-56)"
+    },
+    "@utility icon-1-fill-0": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-12)",
+      "font-variation-settings": "var(--font-weight-icon-fill-0)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-1-fill-1": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-12)",
+      "font-variation-settings": "var(--font-weight-icon-fill-1)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-10-fill-0": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-42)",
+      "font-variation-settings": "var(--font-weight-icon-fill-0)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-10-fill-1": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-42)",
+      "font-variation-settings": "var(--font-weight-icon-fill-1)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-11-fill-0": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-48)",
+      "font-variation-settings": "var(--font-weight-icon-fill-0)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-11-fill-1": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-48)",
+      "font-variation-settings": "var(--font-weight-icon-fill-1)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-12-fill-0": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-54)",
+      "font-variation-settings": "var(--font-weight-icon-fill-0)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-12-fill-1": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-54)",
+      "font-variation-settings": "var(--font-weight-icon-fill-1)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-2-fill-0": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-14)",
+      "font-variation-settings": "var(--font-weight-icon-fill-0)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-2-fill-1": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-14)",
+      "font-variation-settings": "var(--font-weight-icon-fill-1)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-3-fill-0": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-16)",
+      "font-variation-settings": "var(--font-weight-icon-fill-0)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-3-fill-1": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-16)",
+      "font-variation-settings": "var(--font-weight-icon-fill-1)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-4-fill-0": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-18)",
+      "font-variation-settings": "var(--font-weight-icon-fill-0)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-4-fill-1": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-18)",
+      "font-variation-settings": "var(--font-weight-icon-fill-1)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-5-fill-0": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-20)",
+      "font-variation-settings": "var(--font-weight-icon-fill-0)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-5-fill-1": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-20)",
+      "font-variation-settings": "var(--font-weight-icon-fill-1)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-6-fill-0": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-24)",
+      "font-variation-settings": "var(--font-weight-icon-fill-0)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-6-fill-1": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-24)",
+      "font-variation-settings": "var(--font-weight-icon-fill-1)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-7-fill-0": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-28)",
+      "font-variation-settings": "var(--font-weight-icon-fill-0)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-7-fill-1": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-28)",
+      "font-variation-settings": "var(--font-weight-icon-fill-1)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-8-fill-0": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-32)",
+      "font-variation-settings": "var(--font-weight-icon-fill-0)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-8-fill-1": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-32)",
+      "font-variation-settings": "var(--font-weight-icon-fill-1)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-9-fill-0": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-36)",
+      "font-variation-settings": "var(--font-weight-icon-fill-0)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    },
+    "@utility icon-9-fill-1": {
+      "font-family": "var(--font-family-icon)",
+      "font-size": "var(--font-size-36)",
+      "font-variation-settings": "var(--font-weight-icon-fill-1)",
+      "letter-spacing": "var(--letter-spacing-normal)",
+      "line-height": "var(--line-height-leading-none)"
+    }
+  },
+  "cssVars": {
+    "theme": {
+      "color-base-100": "var(--color-gray-100)",
+      "color-base-200": "var(--color-gray-200)",
+      "color-base-300": "var(--color-gray-300)",
+      "color-base-400": "var(--color-gray-400)",
+      "color-base-50": "var(--color-gray-50)",
+      "color-base-500": "var(--color-gray-500)",
+      "color-base-600": "var(--color-gray-600)",
+      "color-base-700": "var(--color-gray-700)",
+      "color-base-800": "var(--color-gray-800)",
+      "color-base-900": "var(--color-gray-900)",
+      "color-black": "oklch(0 0 0)",
+      "color-blue-100": "oklch(0.9293 0.0407 233.3)",
+      "color-blue-200": "oklch(0.8417 0.0872 240.9)",
+      "color-blue-300": "oklch(0.7469 0.1366 248.5)",
+      "color-blue-400": "oklch(0.6418 0.1951 255)",
+      "color-blue-50": "oklch(0.9632 0.0217 230.5)",
+      "color-blue-500": "oklch(0.5399 0.1906 257.5)",
+      "color-blue-600": "oklch(0.4509 0.1641 258.2)",
+      "color-blue-700": "oklch(0.379 0.1412 258.7)",
+      "color-blue-800": "oklch(0.321 0.1084 259.1)",
+      "color-blue-900": "oklch(0.2635 0.1022 259)",
+      "color-divider-high": "var(--color-neutral-300)",
+      "color-divider-low": "var(--color-neutral-100)",
+      "color-divider-middle": "var(--color-neutral-200)",
+      "color-gray-100": "oklch(0.9472 0.0069 247.9)",
+      "color-gray-200": "oklch(0.8758 0.0123 248)",
+      "color-gray-300": "oklch(0.7783 0.0163 248)",
+      "color-gray-400": "oklch(0.6658 0.0181 250.9)",
+      "color-gray-50": "oklch(0.9782 0.0034 247.9)",
+      "color-gray-500": "oklch(0.5651 0.0189 251)",
+      "color-gray-600": "oklch(0.4849 0.0196 251)",
+      "color-gray-700": "oklch(0.4053 0.0184 251.4)",
+      "color-gray-800": "oklch(0.3378 0.0148 252.3)",
+      "color-gray-900": "oklch(0.2785 0.0132 253)",
+      "color-green-100": "oklch(0.9311 0.0733 151.4)",
+      "color-green-200": "oklch(0.8119 0.154 150.1)",
+      "color-green-300": "oklch(0.7257 0.1643 149.5)",
+      "color-green-400": "oklch(0.6343 0.162 148.4)",
+      "color-green-50": "oklch(0.9787 0.024 151.2)",
+      "color-green-500": "oklch(0.5244 0.1401 148)",
+      "color-green-600": "oklch(0.4391 0.1179 148.1)",
+      "color-green-700": "oklch(0.3741 0.1042 148.5)",
+      "color-green-800": "oklch(0.3144 0.0881 149.3)",
+      "color-green-900": "oklch(0.26 0.0698 151.1)",
+      "color-info-100": "var(--color-blue-100)",
+      "color-info-200": "var(--color-blue-200)",
+      "color-info-300": "var(--color-blue-300)",
+      "color-info-400": "var(--color-blue-400)",
+      "color-info-50": "var(--color-blue-50)",
+      "color-info-500": "var(--color-blue-500)",
+      "color-info-600": "var(--color-blue-600)",
+      "color-info-700": "var(--color-blue-700)",
+      "color-info-800": "var(--color-blue-800)",
+      "color-info-900": "var(--color-blue-900)",
+      "color-negative-100": "var(--color-red-100)",
+      "color-negative-200": "var(--color-red-200)",
+      "color-negative-300": "var(--color-red-300)",
+      "color-negative-400": "var(--color-red-400)",
+      "color-negative-50": "var(--color-red-50)",
+      "color-negative-500": "var(--color-red-500)",
+      "color-negative-600": "var(--color-red-600)",
+      "color-negative-700": "var(--color-red-700)",
+      "color-negative-800": "var(--color-red-800)",
+      "color-negative-900": "var(--color-red-900)",
+      "color-neutral-100": "var(--color-gray-100)",
+      "color-neutral-200": "var(--color-gray-200)",
+      "color-neutral-300": "var(--color-gray-300)",
+      "color-neutral-400": "var(--color-gray-400)",
+      "color-neutral-50": "var(--color-gray-50)",
+      "color-neutral-500": "var(--color-gray-500)",
+      "color-neutral-600": "var(--color-gray-600)",
+      "color-neutral-700": "var(--color-gray-700)",
+      "color-neutral-800": "var(--color-gray-800)",
+      "color-neutral-900": "var(--color-gray-900)",
+      "color-orange-100": "oklch(0.9066 0.0635 63.8)",
+      "color-orange-200": "oklch(0.8344 0.1125 59.7)",
+      "color-orange-300": "oklch(0.7534 0.1573 52.4)",
+      "color-orange-400": "oklch(0.6653 0.1638 48.8)",
+      "color-orange-50": "oklch(0.9659 0.022 63.2)",
+      "color-orange-500": "oklch(0.5572 0.1601 44.7)",
+      "color-orange-600": "oklch(0.4657 0.1371 43.3)",
+      "color-orange-700": "oklch(0.3953 0.1146 44.2)",
+      "color-orange-800": "oklch(0.3339 0.0949 45.4)",
+      "color-orange-900": "oklch(0.2774 0.0809 43.8)",
+      "color-pink-100": "oklch(0.9112 0.058 344.3)",
+      "color-pink-200": "oklch(0.8395 0.1106 345.7)",
+      "color-pink-300": "oklch(0.7647 0.1734 346.9)",
+      "color-pink-400": "oklch(0.6759 0.1953 347.5)",
+      "color-pink-50": "oklch(0.967 0.0201 345.7)",
+      "color-pink-500": "oklch(0.5655 0.1871 348)",
+      "color-pink-600": "oklch(0.4767 0.1641 347.1)",
+      "color-pink-700": "oklch(0.4013 0.1343 346)",
+      "color-pink-800": "oklch(0.3423 0.1236 344.8)",
+      "color-pink-900": "oklch(0.2827 0.1157 345.2)",
+      "color-primary-100": "var(--color-blue-100)",
+      "color-primary-200": "var(--color-blue-200)",
+      "color-primary-300": "var(--color-blue-300)",
+      "color-primary-400": "var(--color-blue-400)",
+      "color-primary-50": "var(--color-blue-50)",
+      "color-primary-500": "var(--color-blue-500)",
+      "color-primary-600": "var(--color-blue-600)",
+      "color-primary-700": "var(--color-blue-700)",
+      "color-primary-800": "var(--color-blue-800)",
+      "color-primary-900": "var(--color-blue-900)",
+      "color-purple-100": "oklch(0.9105 0.0565 308.3)",
+      "color-purple-200": "oklch(0.8362 0.1012 304.5)",
+      "color-purple-300": "oklch(0.7564 0.1508 302)",
+      "color-purple-400": "oklch(0.669 0.1902 297.4)",
+      "color-purple-50": "oklch(0.9661 0.0246 317.7)",
+      "color-purple-500": "oklch(0.5631 0.2069 295)",
+      "color-purple-600": "oklch(0.4743 0.1908 293.8)",
+      "color-purple-700": "oklch(0.4024 0.1668 293.9)",
+      "color-purple-800": "oklch(0.3397 0.143 292.9)",
+      "color-purple-900": "oklch(0.2834 0.1259 291.7)",
+      "color-red-100": "oklch(0.9427 0.0286 20.3)",
+      "color-red-200": "oklch(0.8541 0.0791 20.8)",
+      "color-red-300": "oklch(0.7463 0.1536 21)",
+      "color-red-400": "oklch(0.6568 0.217 24.4)",
+      "color-red-50": "oklch(0.9798 0.0098 25.1)",
+      "color-red-500": "oklch(0.5517 0.2051 24.5)",
+      "color-red-600": "oklch(0.4591 0.1777 21.9)",
+      "color-red-700": "oklch(0.387 0.1507 20.8)",
+      "color-red-800": "oklch(0.3233 0.1296 18.4)",
+      "color-red-900": "oklch(0.2649 0.1059 14.7)",
+      "color-ring-normal": "oklch(0.5478 0.1896 257)",
+      "color-secondary-100": "var(--color-gray-100)",
+      "color-secondary-200": "var(--color-gray-200)",
+      "color-secondary-300": "var(--color-gray-300)",
+      "color-secondary-400": "var(--color-gray-400)",
+      "color-secondary-50": "var(--color-gray-50)",
+      "color-secondary-500": "var(--color-gray-500)",
+      "color-secondary-600": "var(--color-gray-600)",
+      "color-secondary-700": "var(--color-gray-700)",
+      "color-secondary-800": "var(--color-gray-800)",
+      "color-secondary-900": "var(--color-gray-900)",
+      "color-skeleton-fill": "var(--color-neutral-200)",
+      "color-success-100": "var(--color-green-100)",
+      "color-success-200": "var(--color-green-200)",
+      "color-success-300": "var(--color-green-300)",
+      "color-success-400": "var(--color-green-400)",
+      "color-success-50": "var(--color-green-50)",
+      "color-success-500": "var(--color-green-500)",
+      "color-success-600": "var(--color-green-600)",
+      "color-success-700": "var(--color-green-700)",
+      "color-success-800": "var(--color-green-800)",
+      "color-success-900": "var(--color-green-900)",
+      "color-text-disabled": "var(--color-neutral-300)",
+      "color-text-high": "var(--color-neutral-900)",
+      "color-text-low": "var(--color-neutral-500)",
+      "color-text-middle": "var(--color-neutral-700)",
+      "color-text-placeholder": "var(--color-neutral-500)",
+      "color-warning-100": "var(--color-yellow-100)",
+      "color-warning-200": "var(--color-yellow-200)",
+      "color-warning-300": "var(--color-yellow-300)",
+      "color-warning-400": "var(--color-yellow-400)",
+      "color-warning-50": "var(--color-yellow-50)",
+      "color-warning-500": "var(--color-yellow-500)",
+      "color-warning-600": "var(--color-yellow-600)",
+      "color-warning-700": "var(--color-yellow-700)",
+      "color-warning-800": "var(--color-yellow-800)",
+      "color-warning-900": "var(--color-yellow-900)",
+      "color-white": "oklch(1 0 0)",
+      "color-yellow-100": "oklch(0.9465 0.0678 92.7)",
+      "color-yellow-200": "oklch(0.8849 0.1243 89.1)",
+      "color-yellow-300": "oklch(0.8111 0.166 86.4)",
+      "color-yellow-400": "oklch(0.6925 0.1442 78.3)",
+      "color-yellow-50": "oklch(0.9846 0.0329 99.5)",
+      "color-yellow-500": "oklch(0.5542 0.1169 75)",
+      "color-yellow-600": "oklch(0.4665 0.1009 70.2)",
+      "color-yellow-700": "oklch(0.3937 0.0852 68.9)",
+      "color-yellow-800": "oklch(0.3298 0.0722 68.3)",
+      "color-yellow-900": "oklch(0.2803 0.0602 71.5)",
+      "font-family-icon": "\"Material Symbols Rounded\"",
+      "font-family-mono": "\"BIZ UDGothic\", monospace",
+      "font-family-pro": "\"BIZ UDPGothic\", sans-serif",
+      "font-size-12": "0.75rem",
+      "font-size-14": "0.875rem",
+      "font-size-16": "1rem",
+      "font-size-18": "1.125rem",
+      "font-size-20": "1.25rem",
+      "font-size-24": "1.5rem",
+      "font-size-28": "1.75rem",
+      "font-size-32": "2rem",
+      "font-size-36": "2.25rem",
+      "font-size-42": "2.625rem",
+      "font-size-48": "3rem",
+      "font-size-54": "3.375rem",
+      "font-weight-char-bold": "700",
+      "font-weight-char-normal": "400",
+      "font-weight-icon-fill-0": "\"FILL\" 0, \"wght\" 500, \"GRAD\" 0, \"opsz\" 24",
+      "font-weight-icon-fill-1": "\"FILL\" 1, \"wght\" 500, \"GRAD\" 0, \"opsz\" 24",
+      "letter-spacing-normal": "0",
+      "letter-spacing-wide": "0.025em",
+      "letter-spacing-wider": "0.05em",
+      "letter-spacing-widest": "0.1em",
+      "line-height-20": "1.25rem",
+      "line-height-24": "1.5rem",
+      "line-height-28": "1.75rem",
+      "line-height-32": "2rem",
+      "line-height-36": "2.25rem",
+      "line-height-44": "2.75rem",
+      "line-height-48": "3rem",
+      "line-height-56": "3.5rem",
+      "line-height-64": "4rem",
+      "line-height-72": "4.5rem",
+      "line-height-84": "5.25rem",
+      "line-height-leading-none": "1",
+      "radius-2xl": "1rem",
+      "radius-3xl": "1.5rem",
+      "radius-action": "var(--radius-md)",
+      "radius-divide": "var(--radius-none)",
+      "radius-full": "9999px",
+      "radius-halfModal": "var(--radius-lg)",
+      "radius-lg": "0.5rem",
+      "radius-md": "0.375rem",
+      "radius-minimum": "var(--radius-xs)",
+      "radius-modal": "var(--radius-xl)",
+      "radius-none": "0",
+      "radius-notice": "var(--radius-sm)",
+      "radius-round": "var(--radius-full)",
+      "radius-sm": "0.25rem",
+      "radius-xl": "0.75rem",
+      "radius-xs": "0.125rem",
+      "shadow-2xs": "0px 1px 0px 0px rgba(0, 0, 0, 0.05)",
+      "shadow-base": "var(--shadow-none)",
+      "shadow-flat": "var(--shadow-2xs)",
+      "shadow-float": "var(--shadow-md)",
+      "shadow-lg": "0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1)",
+      "shadow-md": "0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -2px rgba(0, 0, 0, 0.1)",
+      "shadow-none": "0px 0px 0px 0px #000",
+      "shadow-popout": "var(--shadow-lg)",
+      "shadow-raise": "var(--shadow-xs)",
+      "shadow-sm": "0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1)",
+      "shadow-stick": "var(--shadow-sm)",
+      "shadow-xs": "0px 1px 2px 0px rgba(0, 0, 0, 0.05)"
+    }
+  }
+}
