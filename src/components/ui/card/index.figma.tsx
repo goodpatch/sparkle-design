@@ -48,7 +48,7 @@ figma.connect(
  */
 figma.connect(
   ClickableCard,
-  "https://www.figma.com/design/7alBZXZf65YgcII41TWT0r/Sparkle-Design?node-id=8271-617&t=A1ymB6VaQrqwNcKU-4`",
+  "https://www.figma.com/design/7alBZXZf65YgcII41TWT0r/Sparkle-Design?node-id=8271-617&t=A1ymB6VaQrqwNcKU-4",
   {
     props: {
       /**
