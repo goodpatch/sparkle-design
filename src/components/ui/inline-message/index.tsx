@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 // ステータスごとのスタイル定義
 const inlineMessageVariants = cva(
-  "relative w-full rounded-md border p-3 flex items-center gap-3",
+  "relative w-full rounded-md border p-3 flex gap-2",
   {
     variants: {
       status: {
@@ -33,38 +33,43 @@ const statusIcons = {
 
 // ステータスごとの色クラス
 const statusColorClasses = {
-  info: "text-info-600",
-  warning: "text-warning-600",
-  negative: "text-negative-600",
-  success: "text-success-600",
+  info: "text-info-500",
+  warning: "text-warning-500",
+  negative: "text-negative-500",
+  success: "text-success-500",
 };
 
 export interface InlineMessageProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof inlineMessageVariants> {
   /**
-   * メッセージのタイトル（後方互換性用）
-   * en: Message title (for backward compatibility)
+   * タイトル（後方互換: childrenで <InlineMessageTitle/> を使うことを推奨）
+   * en: Title (backward compatibility: prefer using <InlineMessageTitle /> as child)
    */
   title?: string;
   /**
-   * メッセージの説明文（後方互換性用）
-   * en: Message description (for backward compatibility)
+   * 説明文（後方互換: childrenで <InlineMessageDescription/> を使うことを推奨）
+   * en: Description (backward compatibility: prefer using <InlineMessageDescription /> as child)
    */
   description?: string;
   /**
-   * 閉じるボタンをクリックしたときに呼ばれるコールバック関数
-   * en: Callback function called when the close button is clicked
+   * 閉じる時のハンドラー
+   * en: Handler when the message is dismissed
    */
   onClose?: () => void;
   /**
    * 閉じるボタンを表示するかどうか（デフォルト: true）
-   * en: Whether to display the close button (default: true)
+   * en: Whether to show close button (default: true)
    */
-  isCloseButtonVisible?: boolean;
+  isCloseTrigger?: boolean;
+  /**
+   * タイトルを表示するかどうか（デフォルト: true）
+   * en: Whether to display the title (default: true)
+   */
+  isTitle?: boolean;
   /**
    * 子要素
-   * en: Child elements
+   * en: Child nodes
    */
   children?: React.ReactNode;
 }
@@ -94,12 +99,51 @@ const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
       className,
       status = "info",
       onClose,
-      isCloseButtonVisible = true,
+      isCloseTrigger = true,
+      isTitle = true,
+      title,
+      description,
       children,
       ...props
     },
     ref
   ) => {
+    // 子要素を正規化: 後方互換 props(title/description) を children に注入
+    const normalizedChildren = React.useMemo(() => {
+      const nodes: React.ReactNode[] = [];
+      let hasTitle = false;
+      let hasDescription = false;
+      React.Children.forEach(children, child => {
+        if (!React.isValidElement(child)) return nodes.push(child);
+        if (child.type === InlineMessageTitle) hasTitle = true;
+        if (child.type === InlineMessageDescription) hasDescription = true;
+        nodes.push(child);
+      });
+      if (title && !hasTitle) {
+        nodes.unshift(
+          <InlineMessageTitle key="_fallback_title">{title}</InlineMessageTitle>
+        );
+      }
+      if (description && !hasDescription) {
+        nodes.push(
+          <InlineMessageDescription key="_fallback_desc">
+            {description}
+          </InlineMessageDescription>
+        );
+      }
+      return nodes;
+    }, [children, title, description]);
+
+    // isTitle=false の場合に Title を除外
+    const processedChildren = React.useMemo(
+      () =>
+        normalizedChildren.map(child => {
+          if (!React.isValidElement(child)) return child;
+          if (!isTitle && child.type === InlineMessageTitle) return null;
+          return child;
+        }),
+      [normalizedChildren, isTitle]
+    );
     // ステータスに対応するアイコン情報の取得
     const statusIcon = status ? statusIcons[status] : statusIcons.info;
 
@@ -116,18 +160,23 @@ const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
         {...props}
       >
         {/* ステータスアイコン */}
-        <Icon
-          icon={statusIcon}
-          size={6}
-          fill={true}
-          className={cn(colorClass)}
-        />
+        <span
+          className="inline-flex w-8 h-8 items-center justify-center"
+          aria-hidden="true"
+        >
+          <Icon
+            icon={statusIcon}
+            size={6}
+            fill={false}
+            className={cn(colorClass)}
+          />
+        </span>
 
         {/* メッセージ本文 */}
-        <div className="flex flex-col gap-1 flex-1">{children}</div>
+        <div className="flex flex-col flex-1 min-h-8">{processedChildren}</div>
 
         {/* 閉じるボタン（表示条件あり） */}
-        {isCloseButtonVisible && onClose && (
+        {isCloseTrigger && onClose && (
           <IconButton
             icon="close"
             size="sm"
@@ -162,11 +211,13 @@ const InlineMessageTitle = React.forwardRef<
   HTMLSpanElement,
   React.HTMLAttributes<HTMLSpanElement>
 >(({ className, ...props }, ref) => (
-  <span
-    ref={ref}
-    className={cn("character-3-bold-pro text-base-900", className)}
-    {...props}
-  />
+  <div className={cn("flex items-center min-h-8")}>
+    <span
+      ref={ref}
+      className={cn("character-3-bold-pro text-text-high", className)}
+      {...props}
+    />
+  </div>
 ));
 InlineMessageTitle.displayName = "InlineMessageTitle";
 
@@ -188,11 +239,13 @@ const InlineMessageDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cn("character-3-regular-pro text-base-700", className)}
-    {...props}
-  />
+  <div className={cn("flex items-center min-h-8")}>
+    <p
+      ref={ref}
+      className={cn("character-3-regular-pro text-text-middle", className)}
+      {...props}
+    />
+  </div>
 ));
 InlineMessageDescription.displayName = "InlineMessageDescription";
 

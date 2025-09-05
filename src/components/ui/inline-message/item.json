@@ -3,7 +3,7 @@
   "name": "inline-message",
   "type": "registry:component",
   "title": "InlineMessage",
-  "description": "インラインメッセージは情報、警告、エラーなどの状態を表示するためのコンポーネントです。",
+  "description": "インラインメッセージはユーザーにシステムやサービスの状態を伝えるために使用するコンポーネントです。",
   "files": [
     {
       "path": "src/components/ui/inline-message/index.tsx",
