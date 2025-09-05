@@ -108,6 +108,17 @@ const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
     },
     ref
   ) => {
+    // ルート要素参照 / en: root element ref
+    const rootRef = React.useRef<HTMLDivElement | null>(null);
+    const setRootRef = React.useCallback(
+      (node: HTMLDivElement | null) => {
+        rootRef.current = node;
+        if (typeof ref === "function") ref(node);
+        else if (ref)
+          (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+      },
+      [ref]
+    );
     // 子要素を正規化: 後方互換 props(title/description) を children に注入
     const normalizedChildren = React.useMemo(() => {
       const nodes: React.ReactNode[] = [];
@@ -152,9 +163,35 @@ const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
       ? statusColorClasses[status]
       : statusColorClasses.info;
 
+    // aria 属性自動付与 / en: auto wiring aria-labelledby & aria-describedby
+    React.useEffect(() => {
+      const root = rootRef.current;
+      if (!root) return;
+      const titleEl = root.querySelector<HTMLElement>(
+        "[data-inline-message-title]"
+      );
+      const descEl = root.querySelector<HTMLElement>(
+        "[data-inline-message-description]"
+      );
+      if (titleEl) {
+        if (!titleEl.id)
+          titleEl.id = `inline-message-title-${Math.random().toString(36).slice(2, 9)}`;
+        root.setAttribute("aria-labelledby", titleEl.id);
+      } else {
+        root.removeAttribute("aria-labelledby");
+      }
+      if (descEl) {
+        if (!descEl.id)
+          descEl.id = `inline-message-desc-${Math.random().toString(36).slice(2, 9)}`;
+        root.setAttribute("aria-describedby", descEl.id);
+      } else {
+        root.removeAttribute("aria-describedby");
+      }
+    }, [processedChildren]);
+
     return (
       <div
-        ref={ref}
+        ref={setRootRef}
         role="alert"
         className={cn(inlineMessageVariants({ status }), className)}
         {...props}
@@ -214,6 +251,7 @@ const InlineMessageTitle = React.forwardRef<
   <div className={cn("flex items-center min-h-8")}>
     <span
       ref={ref}
+      data-inline-message-title
       className={cn("character-3-bold-pro text-text-high", className)}
       {...props}
     />
@@ -242,6 +280,7 @@ const InlineMessageDescription = React.forwardRef<
   <div className={cn("flex items-center min-h-8")}>
     <p
       ref={ref}
+      data-inline-message-description
       className={cn("character-3-regular-pro text-text-middle", className)}
       {...props}
     />
