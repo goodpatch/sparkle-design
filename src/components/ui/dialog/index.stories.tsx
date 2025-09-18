@@ -55,21 +55,21 @@ export const Warning: Story = {
   render: () => (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">警告ダイアログを開く</Button>
+        <Button variant="outline">ダイアログを開く</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
             <DialogIcon icon="warning" className="text-warning-500" />
-            警告
+            変更内容を破棄
           </DialogTitle>
           <DialogDescription>
-            この操作は取り消せません。続行しますか？
+            変更内容が保存されていません。このままページを移動すると変更内容が破棄されます。変更内容を破棄しますか？
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <DialogCancel>キャンセル</DialogCancel>
-          <DialogAction>続行</DialogAction>
+          <DialogAction theme="negative">破棄</DialogAction>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -80,21 +80,21 @@ export const Negative: Story = {
   render: () => (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">ネガティブダイアログを開く</Button>
+        <Button variant="outline">ダイアログを開く</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
             <DialogIcon icon="error" className="text-negative-400" />
-            エラー
+            アドレスを削除
           </DialogTitle>
           <DialogDescription>
-            予期しないエラーが発生しました。後でもう一度お試しください。
+            削除されたアドレスは復元できません。連絡先からアドレスを削除しますか？。
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <DialogCancel>キャンセル</DialogCancel>
-          <DialogAction theme="negative">破棄</DialogAction>
+          <DialogAction theme="negative">削除</DialogAction>
         </DialogFooter>
       </DialogContent>
     </Dialog>
