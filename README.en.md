@@ -247,7 +247,7 @@ The table below shows the current implementation status of each component.
 | Popover           | ❌             | ❌        | ❌       | ❌                 | ❌         |
 | Radio             | ✅             | ✅        | ✅       | ✅                 | ❌         |
 | Segmented Control | ❌             | ❌        | ❌       | ❌                 | ❌         |
-| Select            | ✅             | ✅        | ✅       | ❌                 | ❌         |
+| Select            | ✅             | ✅        | ✅       | ✅                 | ❌         |
 | Side Navigation   | ❌             | ❌        | ❌       | ❌                 | ❌         |
 | Skeleton          | ✅             | ✅        | ✅       | ❌                 | ❌         |
 | Slider            | ✅             | ✅        | ✅       | ✅                 | ❌         |
