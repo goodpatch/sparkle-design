@@ -41,6 +41,20 @@ shadcn/ui registry の詳細な情報は [公式ドキュメント](https://ui.s
 pnpm dlx shadcn@latest add [registry URL]
 ```
 
+また[Namespaces](https://ui.shadcn.com/docs/registry/namespace)を`components.json`に指定することで、コンポーネント名でのインストールも可能になります。
+
+```json
+{
+  "registries": {
+    "@sparkle-design": "https://sparkle-design.vercel.app/r/{name}.json"
+  }
+}
+```
+
+```bash
+pnpm dlx shadcn@latest add @sparkle-design/button
+```
+
 ### 基本的な使用例
 
 ```tsx
