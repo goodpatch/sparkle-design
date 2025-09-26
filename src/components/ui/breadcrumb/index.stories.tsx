@@ -10,7 +10,7 @@ import {
 } from "./index";
 
 const meta: Meta<typeof Breadcrumb> = {
-  title: "Components/Breadcrumb",
+  title: "Navigation/Breadcrumb",
   component: Breadcrumb,
   subcomponents: {
     BreadcrumbLink,

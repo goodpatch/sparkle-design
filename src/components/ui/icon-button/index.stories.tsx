@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { IconButton } from "./index";
 
 const meta = {
-  title: "Components/IconButton",
+  title: "Form/Icon Button",
   component: IconButton,
   parameters: {
     layout: "centered",

@@ -3,12 +3,11 @@ import {
   Tooltip,
   TooltipContent,
   TooltipContentProps,
-  TooltipProvider,
   TooltipTrigger,
 } from "./index";
 
 const meta: Meta<typeof Tooltip> = {
-  title: "Components/Tooltip",
+  title: "Overlay/Tooltip",
   component: Tooltip,
   subcomponents: { TooltipContent, TooltipTrigger },
   parameters: {
