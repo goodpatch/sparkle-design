@@ -9,7 +9,7 @@ import {
 } from "./index";
 
 const meta = {
-  title: "Components/InlineMessage",
+  title: "Feedback/Inline Message",
   component: InlineMessage,
   parameters: {
     layout: "centered",

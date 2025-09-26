@@ -5,7 +5,7 @@ import { Textarea } from "./index";
  * テキストエリアコンポーネントのStorybook設定
  */
 const meta: Meta<typeof Textarea> = {
-  title: "Components/Textarea",
+  title: "Form/Textarea",
   component: Textarea,
   parameters: {
     layout: "centered",

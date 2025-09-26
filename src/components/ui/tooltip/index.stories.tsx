@@ -1,23 +1,38 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./index";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipContentProps,
+  TooltipTrigger,
+} from "./index";
 
-const meta: Meta<typeof TooltipContent> = {
-  title: "Components/Tooltip",
-  component: TooltipContent,
+const meta: Meta<typeof Tooltip> = {
+  title: "Overlay/Tooltip",
+  component: Tooltip,
+  subcomponents: { TooltipContent, TooltipTrigger },
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
   argTypes: {},
-} satisfies Meta<typeof TooltipContent>;
+} satisfies Meta<typeof Tooltip>;
 
 export default meta;
 
-type Story = StoryObj<typeof TooltipContent>;
+type Story = StoryObj<typeof Tooltip>;
 
-export const Default: Story = {
+export const Default: StoryObj<TooltipContentProps> = {
   args: {
     side: "top",
+  },
+  argTypes: {
+    side: {
+      control: "radio",
+      options: ["top", "right", "bottom", "left"],
+      table: {
+        defaultValue: { summary: "top" },
+      },
+    },
   },
   render: args => (
     <Tooltip>

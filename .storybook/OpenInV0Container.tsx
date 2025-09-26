@@ -73,7 +73,7 @@ const OpenInV0Container: FC<PropsWithChildren<DocsContainerProps>> = ({
           <Button
             size="sm"
             variant="outline"
-            theme="secondary"
+            theme="neutral"
             className="ml-2"
             onClick={handleCopy}
           >

@@ -3,7 +3,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "./index";
 import type { TabsListVariants } from "./index";
 
 const meta: Meta<typeof Tabs> = {
-  title: "Components/Tabs",
+  title: "Disclosure/Tabs",
   component: Tabs,
   parameters: {
     layout: "centered",

@@ -19,8 +19,8 @@ export interface ClickableCardProps
 /**
  * **概要 / Overview**
  *
- * - カードはコンテンツをグルーピングして表示するために使用するコンポーネントです。遷移トリガーやドラッグ&ドロップなど、インタラクションを想定する場合は、Clickable Cardコンポーネントを使用します。
- * - en: The Card component is used to group and display content. When interactions such as navigation triggers or drag & drop are expected, use the ClickableCard component.
+ * - カードはコンテンツをグルーピングして表示するために使用するコンポーネントです。
+ * - en: The Card component is used to group and display content.
  *
  * **使用例 / Usage Example**
  *
@@ -37,8 +37,8 @@ const ClickableCard = React.forwardRef<HTMLButtonElement, ClickableCardProps>(
     <button
       ref={ref}
       className={cn(
-        "rounded-action border border-divider-low bg-white shadow-raise text-text-middle py-4 cursor-pointer hover:bg-neutral-50",
-        "transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        "rounded-action border border-divider-middle bg-white shadow-raise text-text-middle py-4 cursor-pointer hover:bg-neutral-50",
+        "transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
         "active:bg-neutral-50 active:shadow-float active:border-primary-400",
         "disabled:cursor-not-allowed disabled:bg-white disabled:border-secondary-100 disabled:text-secondary-200 disabled:shadow-flat",
         className
@@ -80,7 +80,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-minimum border border-divider-low bg-white text-text-middle py-4",
+      "rounded-minimum border border-divider-middle bg-white text-text-middle py-4",
       className
     )}
     {...props}

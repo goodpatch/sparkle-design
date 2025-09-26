@@ -3,7 +3,7 @@
   "name": "textarea",
   "type": "registry:component",
   "title": "Textarea",
-  "description": "テキストエリアは複数行のテキスト入力を可能にするフォーム要素です。",
+  "description": "テキストエリアは複数行のテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。",
   "files": [
     {
       "path": "src/components/ui/textarea/index.tsx",
@@ -12,8 +12,6 @@
   ],
   "dependencies": [],
   "registryDependencies": [
-    "https://sparkle-design.vercel.app/r/sparkle-font.json",
-    "https://sparkle-design.vercel.app/r/sparkle-color.json",
-    "https://sparkle-design.vercel.app/r/sparkle-style.json"
+    "https://sparkle-design.vercel.app/r/sparkle-design-theme.json"
   ]
 }

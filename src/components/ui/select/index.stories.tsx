@@ -14,7 +14,7 @@ import {
 } from "./index";
 
 const meta = {
-  title: "Components/Select",
+  title: "Form/Select",
   component: Select,
   subcomponents: {
     SelectGroup,

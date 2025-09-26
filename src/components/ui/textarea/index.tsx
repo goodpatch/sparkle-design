@@ -11,20 +11,20 @@ import { cn } from "@/lib/utils";
  */
 const textareaVariants = cva(
   // ベーススタイル
-  "flex w-full rounded-md border bg-white ring-offset-background placeholder:text-base-400 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize",
+  "flex w-full rounded-action border bg-white px-3 py-1 ring-offset-background placeholder:text-base-400 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2 resize",
   {
     variants: {
       // サイズバリアント（sm, md, lg）
       size: {
-        sm: "px-2 py-1 min-h-[56px] character-2-regular-pro",
-        md: "px-3 py-1 min-h-[56px] character-3-regular-pro",
-        lg: "px-4 py-1 min-h-[64px] character-4-regular-pro",
+        sm: "min-h-[56px] character-2-regular-pro",
+        md: "min-h-[56px] character-3-regular-pro",
+        lg: "min-h-[64px] character-4-regular-pro",
       },
       // エラー状態のバリアント
       isInvalid: {
         true: "border-negative-500 hover:border-negative-600 focus-visible:border-negative-600",
         false:
-          "border-base-200 hover:border-base-400 focus-visible:border-base-500",
+          "border-neutral-500 hover:border-neutral-600 focus-visible:border-neutral-600",
       },
       // 無効状態のバリアント
       isDisabled: {
@@ -38,13 +38,14 @@ const textareaVariants = cva(
       {
         isInvalid: true,
         isDisabled: true,
-        className: "border-negative-100 hover:border-negative-100",
+        className:
+          "bg-neutral-50 border-negative-200 hover:border-negative-200",
       },
       // 無効状態かつ通常状態の場合
       {
         isInvalid: false,
         isDisabled: true,
-        className: "border-base-100 hover:border-base-100",
+        className: "bg-neutral-50 border-neutral-200 hover:border-neutral-200",
       },
     ],
     // デフォルト値
