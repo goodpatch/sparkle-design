@@ -3,7 +3,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { Icon } from "./index";
 
 const meta: Meta<typeof Icon> = {
-  title: "Components/Icon",
+  title: "Media/Icon",
   component: Icon,
   parameters: {
     layout: "centered",
@@ -12,19 +12,15 @@ const meta: Meta<typeof Icon> = {
   argTypes: {
     icon: {
       control: "text",
-      description: "Material Symbols Roundedのアイコン名",
     },
     size: {
       control: "number",
-      description: "アイコンのサイズ",
     },
     fill: {
       control: "boolean",
-      description: "アイコンの塗りつぶし",
     },
     className: {
       control: "text",
-      description: "追加のTailwindクラス（サイズや塗りつぶしスタイルなど）",
     },
   },
 };

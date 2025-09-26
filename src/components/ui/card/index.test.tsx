@@ -1,11 +1,6 @@
 import React from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import {
-  TestContainer,
-  EventHelpers,
-  A11yHelpers,
-  StyleHelpers,
-} from "../../../test/helpers";
+import { TestContainer, EventHelpers } from "../../../test/helpers";
 import {
   Card,
   ClickableCard,
@@ -15,7 +10,111 @@ import {
   CardControl,
   CardContent,
   CardFooter,
+  type ClickableCardProps,
+  type CardContentProps,
 } from "./index";
+
+/**
+ * テストデータ定数
+ * en: Test data constants
+ */
+const CARD_BASE_CLASSES = [
+  "rounded-minimum",
+  "border",
+  "border-divider-middle",
+  "bg-white",
+  "text-text-middle",
+  "py-4",
+] as const;
+const CLICKABLE_CARD_BASE_CLASSES = [
+  "rounded-action",
+  "border",
+  "border-divider-middle",
+  "bg-white",
+  "shadow-raise",
+  "text-text-middle",
+  "py-4",
+  "cursor-pointer",
+  "hover:bg-neutral-50",
+  "transition-colors",
+] as const;
+
+const CLICKABLE_CARD_INTERACTION_CLASSES = [
+  "active:bg-neutral-50",
+  "active:shadow-float",
+  "active:border-primary-400",
+] as const;
+
+const CLICKABLE_CARD_FOCUS_CLASSES = [
+  "focus-visible:outline-hidden",
+  "focus-visible:ring-2",
+  "focus-visible:ring-[var(--color-ring-normal)]",
+  "focus-visible:ring-offset-2",
+] as const;
+
+const CLICKABLE_CARD_DISABLED_CLASSES = [
+  "disabled:cursor-not-allowed",
+  "disabled:bg-white",
+  "disabled:border-secondary-100",
+  "disabled:text-secondary-200",
+  "disabled:shadow-flat",
+] as const;
+
+const CARD_CONTENT_SPACING_TEST_CASES = [
+  { isSpace: true, expectedClasses: ["px-6", "py-2"] },
+  { isSpace: false, expectedClasses: [] },
+] as const;
+
+/**
+ * テストヘルパー関数
+ * en: Test helper functions
+ */
+const TestHelpers = {
+  /**
+   * Cardを描画して要素を取得
+   * en: Render Card and get element
+   */
+  renderCard(
+    container: TestContainer,
+    props: React.HTMLAttributes<HTMLDivElement> = {}
+  ) {
+    container.render(<Card {...props}>Test Card</Card>);
+    return container.querySelector("div");
+  },
+
+  /**
+   * ClickableCardを描画して要素を取得
+   * en: Render ClickableCard and get element
+   */
+  renderClickableCard(
+    container: TestContainer,
+    props: ClickableCardProps = {}
+  ) {
+    container.render(
+      <ClickableCard {...props}>Test Clickable Card</ClickableCard>
+    );
+    return container.querySelector("button");
+  },
+
+  /**
+   * CardContentを描画して要素を取得
+   * en: Render CardContent and get element
+   */
+  renderCardContent(container: TestContainer, props: CardContentProps = {}) {
+    container.render(<CardContent {...props}>Test Content</CardContent>);
+    return container.querySelector("div");
+  },
+
+  /**
+   * 複数のクラスが存在することを確認
+   * en: Verify that multiple classes exist
+   */
+  expectClassesToExist(element: Element, classes: readonly string[]) {
+    classes.forEach(className => {
+      expect(element.className).toContain(className);
+    });
+  },
+};
 
 let testContainer: TestContainer;
 
@@ -33,39 +132,27 @@ describe("Card Components", () => {
     describe("Basic Rendering", () => {
       it("renders a basic card", () => {
         // Given: 基本的なCard
-        testContainer.render(<Card>Basic Card Content</Card>);
-
-        // When: div要素を確認
-        const card = testContainer.querySelector("div");
+        const card = TestHelpers.renderCard(testContainer);
 
         // Then: 正常に描画される
         expect(card).toBeTruthy();
-        expect(card.textContent).toBe("Basic Card Content");
+        expect(card.textContent).toBe("Test Card");
       });
 
       it("applies base styles correctly", () => {
         // Given: 基本的なCard
-        testContainer.render(<Card>Styled Card</Card>);
-
-        // When: スタイルクラスを確認
-        const card = testContainer.querySelector("div");
+        const card = TestHelpers.renderCard(testContainer);
 
         // Then: 基本スタイルが適用される
-        expect(card.className).toContain("rounded-minimum");
-        expect(card.className).toContain("border");
-        expect(card.className).toContain("border-divider-low");
-        expect(card.className).toContain("bg-white");
-        expect(card.className).toContain("text-text-middle");
-        expect(card.className).toContain("py-4");
+        TestHelpers.expectClassesToExist(card, CARD_BASE_CLASSES);
       });
 
       it("supports custom className", () => {
         // Given: カスタムクラス付きのCard
         const customClass = "my-custom-card-class";
-        testContainer.render(<Card className={customClass}>Custom Card</Card>);
-
-        // When: クラス名を確認
-        const card = testContainer.querySelector("div");
+        const card = TestHelpers.renderCard(testContainer, {
+          className: customClass,
+        });
 
         // Then: カスタムクラスが追加される
         expect(card.className).toContain(customClass);
@@ -76,11 +163,9 @@ describe("Card Components", () => {
         const testId = "custom-card-id";
         testContainer.render(
           <Card data-testid={testId} role="article">
-            Attributed Card
+            Test Card
           </Card>
         );
-
-        // When: 属性を確認
         const card = testContainer.querySelector("div");
 
         // Then: DOM属性が転送される
@@ -94,46 +179,32 @@ describe("Card Components", () => {
     describe("Basic Rendering", () => {
       it("renders as a button element", () => {
         // Given: 基本的なClickableCard
-        testContainer.render(<ClickableCard>Clickable Card</ClickableCard>);
-
-        // When: button要素を確認
-        const card = testContainer.querySelector("button");
+        const card = TestHelpers.renderClickableCard(testContainer);
 
         // Then: 正常に描画される
         expect(card).toBeTruthy();
-        expect(card.textContent).toBe("Clickable Card");
+        expect(card.textContent).toBe("Test Clickable Card");
         expect((card as HTMLButtonElement).type).toBe("button");
       });
 
       it("applies clickable styles correctly", () => {
         // Given: 基本的なClickableCard
-        testContainer.render(<ClickableCard>Clickable Card</ClickableCard>);
-
-        // When: スタイルクラスを確認
-        const card = testContainer.querySelector("button");
+        const card = TestHelpers.renderClickableCard(testContainer);
 
         // Then: クリック可能なスタイルが適用される
-        expect(card.className).toContain("rounded-action");
-        expect(card.className).toContain("cursor-pointer");
-        expect(card.className).toContain("hover:bg-neutral-50");
-        expect(card.className).toContain("transition-colors");
-        expect(card.className).toContain("active:bg-neutral-50");
-        expect(card.className).toContain("active:shadow-float");
-        expect(card.className).toContain("active:border-primary-400");
+        TestHelpers.expectClassesToExist(card, CLICKABLE_CARD_BASE_CLASSES);
+        TestHelpers.expectClassesToExist(
+          card,
+          CLICKABLE_CARD_INTERACTION_CLASSES
+        );
       });
 
       it("has proper focus styles", () => {
         // Given: フォーカス可能なClickableCard
-        testContainer.render(<ClickableCard>Focusable Card</ClickableCard>);
-
-        // When: フォーカススタイルを確認
-        const card = testContainer.querySelector("button");
+        const card = TestHelpers.renderClickableCard(testContainer);
 
         // Then: フォーカススタイルが適用される
-        expect(card.className).toContain("focus-visible:outline-hidden");
-        expect(card.className).toContain("focus-visible:ring-2");
-        expect(card.className).toContain("focus-visible:ring-ring");
-        expect(card.className).toContain("focus-visible:ring-offset-2");
+        TestHelpers.expectClassesToExist(card, CLICKABLE_CARD_FOCUS_CLASSES);
       });
     });
 
@@ -141,12 +212,11 @@ describe("Card Components", () => {
       it("handles click events properly", async () => {
         // Given: clickハンドラー付きのClickableCard
         const handleClick = vi.fn();
-        testContainer.render(
-          <ClickableCard onClick={handleClick}>Click Me</ClickableCard>
-        );
+        const card = TestHelpers.renderClickableCard(testContainer, {
+          onClick: handleClick,
+        });
 
         // When: カードをクリック
-        const card = testContainer.querySelector("button");
         await EventHelpers.click(card);
 
         // Then: クリックハンドラーが呼ばれる
@@ -156,12 +226,11 @@ describe("Card Components", () => {
       it("provides click event details", async () => {
         // Given: イベント詳細をチェックするハンドラー
         const handleClick = vi.fn();
-        testContainer.render(
-          <ClickableCard onClick={handleClick}>Event Card</ClickableCard>
-        );
+        const card = TestHelpers.renderClickableCard(testContainer, {
+          onClick: handleClick,
+        });
 
         // When: カードをクリック
-        const card = testContainer.querySelector("button");
         await EventHelpers.click(card);
 
         // Then: 正しいイベントオブジェクトが渡される
@@ -172,12 +241,11 @@ describe("Card Components", () => {
       it("supports keyboard interaction", async () => {
         // Given: キーボードイベントハンドラー付きのClickableCard
         const handleKeyDown = vi.fn();
-        testContainer.render(
-          <ClickableCard onKeyDown={handleKeyDown}>Keyboard Card</ClickableCard>
-        );
+        const card = TestHelpers.renderClickableCard(testContainer, {
+          onKeyDown: handleKeyDown,
+        });
 
         // When: キーボードイベントを実行
-        const card = testContainer.querySelector("button");
         await EventHelpers.keyDown(card, "Enter");
 
         // Then: キーボードイベントが処理される
@@ -186,10 +254,9 @@ describe("Card Components", () => {
 
       it("can be focused", () => {
         // Given: フォーカス可能なClickableCard
-        testContainer.render(<ClickableCard>Focusable Card</ClickableCard>);
+        const card = TestHelpers.renderClickableCard(testContainer);
 
         // When: フォーカスする
-        const card = testContainer.querySelector("button");
         EventHelpers.focus(card as HTMLElement);
 
         // Then: フォーカスが設定される
@@ -200,34 +267,25 @@ describe("Card Components", () => {
     describe("Disabled State", () => {
       it("applies disabled styles when isDisabled is true", () => {
         // Given: 無効化されたClickableCard
-        testContainer.render(
-          <ClickableCard isDisabled>Disabled Card</ClickableCard>
-        );
-
-        // When: 要素とスタイルを確認
-        const card = testContainer.querySelector("button");
+        const card = TestHelpers.renderClickableCard(testContainer, {
+          isDisabled: true,
+        });
 
         // Then: 無効化スタイルが適用される
         expect((card as HTMLButtonElement).disabled).toBe(true);
-        expect(card.className).toContain("disabled:cursor-not-allowed");
-        expect(card.className).toContain("disabled:bg-white");
-        expect(card.className).toContain("disabled:border-secondary-100");
-        expect(card.className).toContain("disabled:text-secondary-200");
-        expect(card.className).toContain("disabled:shadow-flat");
+        TestHelpers.expectClassesToExist(card, CLICKABLE_CARD_DISABLED_CLASSES);
       });
 
       it("does not respond to clicks when disabled", async () => {
         // Given: 無効化されたClickableCard
         const handleClick = vi.fn();
-        testContainer.render(
-          <ClickableCard isDisabled onClick={handleClick}>
-            Disabled Clickable
-          </ClickableCard>
-        );
+        const disabledCard = TestHelpers.renderClickableCard(testContainer, {
+          isDisabled: true,
+          onClick: handleClick,
+        });
 
-        // When: クリックを試行
-        const card = testContainer.querySelector("button");
-        await EventHelpers.click(card);
+        // When: 無効化されたカードをクリック
+        await EventHelpers.click(disabledCard);
 
         // Then: クリックハンドラーが呼ばれない
         expect(handleClick).not.toHaveBeenCalled();
@@ -395,32 +453,25 @@ describe("Card Components", () => {
   });
 
   describe("CardContent", () => {
-    it("applies spacing by default", () => {
-      // Given: デフォルトのCardContent
-      testContainer.render(<CardContent>Content with spacing</CardContent>);
+    describe("Spacing Behavior", () => {
+      CARD_CONTENT_SPACING_TEST_CASES.forEach(
+        ({ isSpace, expectedClasses }) => {
+          it(`${isSpace ? "applies" : "removes"} spacing when isSpace is ${isSpace}`, () => {
+            // Given: isSpace設定のCardContent
+            const content = TestHelpers.renderCardContent(testContainer, {
+              isSpace,
+            });
 
-      // When: スタイルクラスを確認
-      const content = testContainer.querySelector("div");
-
-      // Then: デフォルトでスペーシングが適用される
-      expect(content.className).toContain("px-6");
-      expect(content.className).toContain("py-2");
-      expect(content.textContent).toBe("Content with spacing");
-    });
-
-    it("removes spacing when isSpace is false", () => {
-      // Given: isSpace=falseのCardContent
-      testContainer.render(
-        <CardContent isSpace={false}>Content without spacing</CardContent>
+            // Then: 期待されるスペーシングが適用される
+            if (expectedClasses.length > 0) {
+              TestHelpers.expectClassesToExist(content, expectedClasses);
+            } else {
+              expect(content.className).not.toContain("px-6");
+              expect(content.className).not.toContain("py-2");
+            }
+          });
+        }
       );
-
-      // When: スタイルクラスを確認
-      const content = testContainer.querySelector("div");
-
-      // Then: スペーシングが適用されない
-      expect(content.className).not.toContain("px-6");
-      expect(content.className).not.toContain("py-2");
-      expect(content.textContent).toBe("Content without spacing");
     });
 
     it("supports complex content structure", () => {

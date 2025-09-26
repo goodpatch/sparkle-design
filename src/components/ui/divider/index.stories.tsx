@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Divider } from "./index";
 
 const meta: Meta<typeof Divider> = {
-  title: "Components/Divider",
+  title: "Data Display/Divider",
   component: Divider,
   parameters: {
     layout: "centered",
@@ -53,55 +53,67 @@ export const Vertical: Story = {
   ),
 };
 
-export const Emphasis = () => {
-  return (
+export const Emphasis: Story = {
+  args: {
+    lineStyle: "solid",
+    direction: "horizontal",
+  },
+  render: args => (
     <div className="flex flex-col gap-4 w-full max-w-md">
       <div>
         <p className="text-sm font-bold mb-2">Low</p>
-        <Divider emphasis="low" />
+        <Divider {...args} emphasis="low" />
       </div>
       <div>
         <p className="text-sm font-bold mb-2">Middle (Default)</p>
-        <Divider emphasis="middle" />
+        <Divider {...args} emphasis="middle" />
       </div>
       <div>
         <p className="text-sm font-bold mb-2">High</p>
-        <Divider emphasis="high" />
+        <Divider {...args} emphasis="high" />
       </div>
     </div>
-  );
+  ),
 };
 
-export const LineStyle = () => {
-  return (
+export const LineStyle: Story = {
+  args: {
+    emphasis: "middle",
+    direction: "horizontal",
+  },
+  render: args => (
     <div className="flex flex-col gap-4 w-full max-w-md">
       <div>
         <p className="text-sm font-bold mb-2">Solid (Default)</p>
-        <Divider lineStyle="solid" />
+        <Divider {...args} lineStyle="solid" />
       </div>
       <div>
         <p className="text-sm font-bold mb-2">Dashed</p>
-        <Divider lineStyle="dashed" />
+        <Divider {...args} lineStyle="dashed" />
       </div>
     </div>
-  );
+  ),
 };
 
-export const Direction = () => {
-  return (
+export const Direction: Story = {
+  args: {
+    emphasis: "middle",
+    lineStyle: "solid",
+  },
+  render: args => (
     <div className="flex flex-row gap-8 items-center">
       <div>
         <p className="text-sm font-bold mb-2">Horizontal (Default)</p>
         <div className="w-40">
-          <Divider direction="horizontal" />
+          <Divider {...args} direction="horizontal" />
         </div>
       </div>
       <div>
         <p className="text-sm font-bold mb-2">Vertical</p>
         <div className="h-32">
-          <Divider direction="vertical" />
+          <Divider {...args} direction="vertical" />
         </div>
       </div>
     </div>
-  );
+  ),
 };

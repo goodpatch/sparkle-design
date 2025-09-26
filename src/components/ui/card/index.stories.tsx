@@ -11,28 +11,56 @@ import {
   ClickableCard,
 } from "./index";
 
-const meta: Meta<typeof Card> = {
-  title: "Components/Card",
+interface CardStoryArgs {
+  title: string;
+  isSpace: boolean;
+}
+
+interface ClickableCardStoryArgs extends CardStoryArgs {
+  isDisabled: boolean;
+  onClick: () => void;
+}
+
+const meta: Meta<CardStoryArgs> = {
+  title: "Data Display/Card",
   component: Card,
+  subcomponents: {
+    ClickableCard,
+    CardContent,
+  },
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
-  argTypes: {},
-} satisfies Meta<typeof Card>;
+  argTypes: {
+    title: {
+      control: "text",
+      description: "カードタイトル en: Card title",
+    },
+    isSpace: {
+      control: "boolean",
+      description: "スペースを含むかどうか en: Whether to include spacing",
+    },
+  },
+} satisfies Meta<CardStoryArgs>;
 
 export default meta;
-type Story = StoryObj<typeof Card>;
+type Story = StoryObj<CardStoryArgs>;
+type ClickableStory = StoryObj<ClickableCardStoryArgs>;
 
 /**
  * 基本的なカードの例
  */
 export const Default: Story = {
-  render: () => (
+  args: {
+    title: "タイトル",
+    isSpace: true,
+  },
+  render: args => (
     <Card>
       <CardHeader>
         <CardTitle>
-          タイトル
+          {args.title}
           <CardDescription>
             <div className="border border-dashed border-purple-300 text-purple-300">
               SLOT
@@ -45,7 +73,7 @@ export const Default: Story = {
           </div>
         </CardControl>
       </CardHeader>
-      <CardContent>
+      <CardContent isSpace={args.isSpace}>
         <div className="border border-dashed border-purple-300 text-purple-300 w-[272px]">
           SLOT
         </div>
@@ -62,12 +90,18 @@ export const Default: Story = {
 /**
  * クリッカブルなカードの例
  */
-export const Clickable: Story = {
-  render: () => (
-    <ClickableCard onClick={action("clicked")}>
+export const Clickable: ClickableStory = {
+  args: {
+    title: "タイトル",
+    isSpace: true,
+    isDisabled: false,
+    onClick: action("clicked"),
+  },
+  render: args => (
+    <ClickableCard onClick={args.onClick} isDisabled={args.isDisabled}>
       <CardHeader>
         <CardTitle>
-          タイトル
+          {args.title}
           <CardDescription>
             <div className="border border-dashed border-purple-300 text-purple-300">
               SLOT
@@ -80,24 +114,39 @@ export const Clickable: Story = {
           </div>
         </CardControl>
       </CardHeader>
-      <CardContent>
+      <CardContent isSpace={args.isSpace}>
         <div className="border border-dashed border-purple-300 text-purple-300 w-[272px]">
           SLOT
         </div>
       </CardContent>
     </ClickableCard>
   ),
+  argTypes: {
+    isDisabled: {
+      control: "boolean",
+      description: "カードを無効化するかどうか en: Whether to disable the card",
+    },
+    onClick: {
+      action: "clicked",
+      description:
+        "クリック時のイベントハンドラー en: Event handler for click events",
+    },
+  },
 };
 
 /**
  * クリッカブルなカードが無効な状態の例
  */
-export const ClickableDisabled: Story = {
-  render: () => (
-    <ClickableCard onClick={action("clicked")} isDisabled>
+export const ClickableDisabled: ClickableStory = {
+  args: {
+    ...Clickable.args,
+    isDisabled: true,
+  },
+  render: args => (
+    <ClickableCard onClick={args.onClick} isDisabled={args.isDisabled}>
       <CardHeader>
         <CardTitle>
-          タイトル
+          {args.title}
           <CardDescription>
             <div className="border border-dashed border-purple-300 text-purple-300">
               SLOT
@@ -110,11 +159,12 @@ export const ClickableDisabled: Story = {
           </div>
         </CardControl>
       </CardHeader>
-      <CardContent>
+      <CardContent isSpace={args.isSpace}>
         <div className="border border-dashed border-purple-300 text-purple-300 w-[272px]">
           SLOT
         </div>
       </CardContent>
     </ClickableCard>
   ),
+  argTypes: Clickable.argTypes,
 };

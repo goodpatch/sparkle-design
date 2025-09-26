@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -9,8 +10,11 @@ import {
 } from "./index";
 
 const meta: Meta<typeof Breadcrumb> = {
-  title: "Components/Breadcrumb",
+  title: "Navigation/Breadcrumb",
   component: Breadcrumb,
+  subcomponents: {
+    BreadcrumbLink,
+  },
   parameters: {
     layout: "centered",
   },
@@ -26,15 +30,34 @@ export const Default: Story = {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          <BreadcrumbLink
+            href="/"
+            onClick={e => {
+              e.preventDefault();
+              action("breadcrumb link clicked")({ href: "/", label: "Home" });
+            }}
+          >
+            Home
+          </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+          <BreadcrumbLink
+            href="/link"
+            onClick={e => {
+              e.preventDefault();
+              action("breadcrumb link clicked")({
+                href: "/link",
+                label: "Link",
+              });
+            }}
+          >
+            Link
+          </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+          <BreadcrumbPage>Current Page</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

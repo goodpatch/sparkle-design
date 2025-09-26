@@ -3,16 +3,19 @@
   "name": "slider",
   "type": "registry:component",
   "title": "Slider",
-  "description": "スライダーは範囲内の値を選択するためのインタラクティブなコンポーネントです。",
+  "description": "スライダーは任意の範囲の中からユーザーに特定の数値を選択してもらうために使用するコンポーネントです。",
   "files": [
     {
       "path": "src/components/ui/slider/index.tsx",
       "type": "registry:component"
+    },
+    {
+      "path": "src/components/ui/slider/utils.ts",
+      "type": "registry:lib"
     }
   ],
   "dependencies": ["radix-ui"],
   "registryDependencies": [
-    "https://sparkle-design.vercel.app/r/sparkle-color.json",
-    "https://sparkle-design.vercel.app/r/sparkle-style.json"
+    "https://sparkle-design.vercel.app/r/sparkle-design-theme.json"
   ]
 }

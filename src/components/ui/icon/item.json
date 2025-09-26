@@ -3,7 +3,7 @@
   "name": "icon",
   "type": "registry:component",
   "title": "Icon",
-  "description": "アイコンは情報を象形表現でユーザーに提示するために使用するコンポーネントです。",
+  "description": "アイコンはテキスト情報を視覚表現でユーザーに提示するために使用するコンポーネントです。",
   "files": [
     {
       "path": "src/components/ui/icon/index.tsx",

@@ -89,16 +89,22 @@ export const EventHelpers = {
     });
   },
 
-  change(element: HTMLInputElement, value: string): void {
+  change(element: HTMLInputElement | HTMLTextAreaElement, value: string): void {
     act(() => {
-      const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-        window.HTMLInputElement.prototype,
+      // input/textarea 双方に対応した value セッターを取得
+      // en: obtain native value setter for both input and textarea
+      const proto =
+        element instanceof HTMLTextAreaElement
+          ? window.HTMLTextAreaElement.prototype
+          : window.HTMLInputElement.prototype;
+      const nativeValueSetter = Object.getOwnPropertyDescriptor(
+        proto,
         "value"
       )?.set;
-      if (nativeInputValueSetter) {
-        nativeInputValueSetter.call(element, value);
+      if (nativeValueSetter) {
+        nativeValueSetter.call(element, value);
       } else {
-        element.value = value;
+        (element as any).value = value; // フォールバック / fallback
       }
       element.dispatchEvent(new Event("input", { bubbles: true }));
       element.dispatchEvent(new Event("change", { bubbles: true }));
