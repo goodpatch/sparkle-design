@@ -1,6 +1,10 @@
 .PHONY: registry
 registry: ## Build the registry.
 	@echo "🤖 Running the registry..."
+	@echo "🎨 Generate sparkle-design.css..."
+	pnpm build:css
+	@echo "🎨 Generate sparkle-design-theme.json..."
+	node scripts/build-sparkle-design-theme.mjs
 	@if command -v swift >/dev/null 2>&1; then \
 		echo "🤖 Using Swift merge-registry tool..."; \
 		cd scripts/merge-registry && \
@@ -13,29 +17,19 @@ registry: ## Build the registry.
 	@echo "🤖 Registry ran successfully."
 	pnpm build:registry
 	@echo "🤖 Registry built successfully."
+	@echo "📁 Ensuring public/r/ directory exists..."
+	mkdir -p ./public/r/
 	@if [ -f registry.json ]; then \
 		cp registry.json ./public/r/registry.json && \
 		echo "✅ Copied registry.json"; \
 	else \
 		echo "⚠️  registry.json not found, skipping copy"; \
 	fi
-	@if [ -f src/components/sparkle-color.json ]; then \
-		cp src/components/sparkle-color.json ./public/r/ && \
-		echo "✅ Copied sparkle-color.json"; \
+	@if [ -f src/components/sparkle-design-theme.json ]; then \
+		cp src/components/sparkle-design-theme.json ./public/r/ && \
+		echo "✅ Copied sparkle-design-theme.json"; \
 	else \
-		echo "⚠️  sparkle-color.json not found, skipping copy"; \
-	fi
-	@if [ -f src/components/sparkle-font.json ]; then \
-		cp src/components/sparkle-font.json ./public/r/ && \
-		echo "✅ Copied sparkle-font.json"; \
-	else \
-		echo "⚠️  sparkle-font.json not found, skipping copy"; \
-	fi
-	@if [ -f src/components/sparkle-style.json ]; then \
-		cp src/components/sparkle-style.json ./public/r/ && \
-		echo "✅ Copied sparkle-style.json"; \
-	else \
-		echo "⚠️  sparkle-style.json not found, skipping copy"; \
+		echo "⚠️  sparkle-design-theme.json not found, skipping copy"; \
 	fi
 	pnpm lint:fix
 	pnpm format

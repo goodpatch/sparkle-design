@@ -624,6 +624,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-12);
   font-variation-settings: var(--font-weight-icon-fill-0);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -631,6 +632,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-12);
   font-variation-settings: var(--font-weight-icon-fill-1);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -638,6 +640,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-14);
   font-variation-settings: var(--font-weight-icon-fill-0);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -645,6 +648,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-14);
   font-variation-settings: var(--font-weight-icon-fill-1);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -652,6 +656,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-16);
   font-variation-settings: var(--font-weight-icon-fill-0);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -659,6 +664,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-16);
   font-variation-settings: var(--font-weight-icon-fill-1);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -666,6 +672,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-18);
   font-variation-settings: var(--font-weight-icon-fill-0);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -673,6 +680,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-18);
   font-variation-settings: var(--font-weight-icon-fill-1);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -680,6 +688,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-20);
   font-variation-settings: var(--font-weight-icon-fill-0);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -687,6 +696,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-20);
   font-variation-settings: var(--font-weight-icon-fill-1);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -694,6 +704,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-24);
   font-variation-settings: var(--font-weight-icon-fill-0);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -701,6 +712,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-24);
   font-variation-settings: var(--font-weight-icon-fill-1);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -708,6 +720,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-28);
   font-variation-settings: var(--font-weight-icon-fill-0);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -715,6 +728,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-28);
   font-variation-settings: var(--font-weight-icon-fill-1);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -722,6 +736,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-32);
   font-variation-settings: var(--font-weight-icon-fill-0);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -729,6 +744,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-32);
   font-variation-settings: var(--font-weight-icon-fill-1);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -736,6 +752,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-36);
   font-variation-settings: var(--font-weight-icon-fill-0);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -743,6 +760,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-36);
   font-variation-settings: var(--font-weight-icon-fill-1);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -750,6 +768,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-42);
   font-variation-settings: var(--font-weight-icon-fill-0);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -757,6 +776,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-42);
   font-variation-settings: var(--font-weight-icon-fill-1);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -764,6 +784,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-48);
   font-variation-settings: var(--font-weight-icon-fill-0);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -771,6 +792,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-48);
   font-variation-settings: var(--font-weight-icon-fill-1);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -778,6 +800,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-54);
   font-variation-settings: var(--font-weight-icon-fill-0);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
@@ -785,6 +808,7 @@
   font-family: var(--font-family-icon);
   font-size: var(--font-size-54);
   font-variation-settings: var(--font-weight-icon-fill-1);
+  font-display: optional;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-leading-none);
 }
