@@ -269,6 +269,15 @@ function SelectLabel({
   );
 }
 
+export interface SelectItemProps
+  extends React.ComponentProps<typeof SelectPrimitive.Item> {
+  /**
+   * 選択肢テキスト部分に適用するクラス名
+   * en: Class name applied to the selectable item text area
+   */
+  textClassName?: string;
+}
+
 /**
  * **概要 / Overview**
  *
@@ -284,8 +293,9 @@ function SelectLabel({
 function SelectItem({
   className,
   children,
+  textClassName,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Item>) {
+}: SelectItemProps) {
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
@@ -293,6 +303,7 @@ function SelectItem({
         [
           "relative flex w-full cursor-default select-none items-center rounded-notice",
           "py-1.5 pl-2 pr-8 text-sm",
+          "character-1-regular-pro text-neutral-700",
           "outline-none focus:bg-neutral-100 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         ].join(" "),
         className
@@ -304,12 +315,8 @@ function SelectItem({
           <Icon icon="check" size={4} />
         </SelectPrimitive.ItemIndicator>
       </span>
-      <SelectPrimitive.ItemText>
-        <span
-          className={cn("character-1-regular-pro text-neutral-700", className)}
-        >
-          {children}
-        </span>
+      <SelectPrimitive.ItemText className={cn("flex-1", className)}>
+        {children}
       </SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
   );
