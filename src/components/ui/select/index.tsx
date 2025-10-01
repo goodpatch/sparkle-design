@@ -302,7 +302,7 @@ function SelectItem({
       className={cn(
         [
           "relative flex w-full cursor-default select-none items-center rounded-notice",
-          "py-1.5 pl-2 pr-8 text-sm",
+          "py-1.5 pl-8 pr-2 text-sm",
           "character-1-regular-pro text-neutral-700",
           "outline-none focus:bg-neutral-100 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         ].join(" "),
@@ -310,11 +310,9 @@ function SelectItem({
       )}
       {...props}
     >
-      <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
-        <SelectPrimitive.ItemIndicator>
-          <Icon icon="check" size={4} />
-        </SelectPrimitive.ItemIndicator>
-      </span>
+      <SelectPrimitive.ItemIndicator className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+        <Icon icon="check" size={4} />
+      </SelectPrimitive.ItemIndicator>
       <SelectPrimitive.ItemText className={cn("flex-1", className)}>
         {children}
       </SelectPrimitive.ItemText>
