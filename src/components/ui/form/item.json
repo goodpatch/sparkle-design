@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "title": "Form Control",
+  "name": "form",
+  "description": "フォームコントロールはフォームの入力要素・ラベル・ヘルパーテキストを包括して提供するために使用するコンポーネントです。",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "src/components/ui/form/index.tsx",
+      "type": "registry:component"
+    },
+    {
+      "path": "src/components/ui/form/label.tsx",
+      "type": "registry:component"
+    }
+  ],
+  "dependencies": ["react-hook-form", "radix-ui"]
+}
