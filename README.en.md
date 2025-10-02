@@ -249,7 +249,7 @@ The table below shows the current implementation status of each component.
 | Segmented Control | ❌             | ❌        | ❌       | ❌                 | ❌         |
 | Select            | ✅             | ✅        | ✅       | ❌                 | ❌         |
 | Side Navigation   | ❌             | ❌        | ❌       | ❌                 | ❌         |
-| Skeleton          | ✅             | ✅        | ✅       | ❌                 | ❌         |
+| Skeleton          | ✅             | ✅        | ✅       | ✅                 | ❌         |
 | Slider            | ✅             | ✅        | ✅       | ✅                 | ❌         |
 | Slot              | ❌             | ❌        | ❌       | ❌                 | ❌         |
 | Spinner           | ✅             | ✅        | ✅       | ✅                 | ❌         |
