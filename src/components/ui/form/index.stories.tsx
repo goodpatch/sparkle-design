@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from "@storybook/react";
 import {
   Form,
   FormControl,
-  FormDescription,
+  FormHelperMessage,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormErrorMessage,
 } from "./index";
 
 const meta: Meta<typeof Form> = {
@@ -16,8 +16,8 @@ const meta: Meta<typeof Form> = {
     FormItem,
     FormLabel,
     FormControl,
-    FormDescription,
-    FormMessage,
+    FormHelperMessage,
+    FormErrorMessage,
     FormField,
   },
   parameters: {
