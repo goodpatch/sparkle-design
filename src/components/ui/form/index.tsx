@@ -18,6 +18,38 @@ import { Tag } from "../tag";
 import { Icon } from "../icon";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 
+/**
+ * **概要 / Overview**
+ *
+ * - フォームはフォームの入力要素・ラベル・ヘルパーテキストを包括して提供するために使用するコンポーネントです。
+ * - en: The Form component is used to encapsulate form input elements, labels, and helper text.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Form {...form}>
+ *   <FormField
+ *     control={form.control}
+ *     name="example"
+ *     render={({ field, fieldState }) => (
+ *       <FormItem>
+ *         <FormHeader label="ラベル" />
+ *         <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
+ *         <FormControl>
+ *           <Input
+ *             placeholder="入力してください"
+ *             {...field}
+ *             {...fieldState}
+ *             isInvalid={fieldState.invalid}
+ *           />
+ *         </FormControl>
+ *         <FormErrorMessage />
+ *       </FormItem>
+ *     )}
+ *   />
+ * </Form>
+ * ```
+ */
 const Form = FormProvider;
 
 type FormFieldContextValue<
@@ -103,11 +135,35 @@ function FormLabel({
 }
 
 export interface FormHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * ラベルのテキスト
+   * en: Text of the label
+   */
   label: string;
+  /**
+   * 必須フィールドかどうか
+   * en: Whether it is a required field
+   */
   isRequired?: boolean;
+  /**
+   * ヘルプテキスト
+   * en: Help text
+   */
   helpText?: string;
 }
 
+/**
+ * **概要 / Overview**
+ *
+ * - フォームヘッダーはフォームフィールドのラベル、必須マーク、ヘルプテキストを表示するために使用するコンポーネントです。
+ * - en: The FormHeader component is used to display the label, required mark, and help text of a form field.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <FormHeader label="ラベル" isRequired helpText="ヘルプテキスト" />
+ * ```
+ */
 function FormHeader({
   className,
   label,
