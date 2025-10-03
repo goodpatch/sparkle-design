@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/form/label";
 import { Tag } from "../tag";
 import { Icon } from "../icon";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 
 const Form = FormProvider;
 
@@ -102,14 +103,16 @@ function FormLabel({
 }
 
 export interface FormHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-  isRequired?: boolean;
   label: string;
+  isRequired?: boolean;
+  helpText?: string;
 }
 
 function FormHeader({
   className,
-  isRequired,
   label,
+  isRequired,
+  helpText,
   ...props
 }: FormHeaderProps) {
   return (
@@ -119,6 +122,14 @@ function FormHeader({
         <Tag status="negative" size="sm" variant="subtle">
           必須
         </Tag>
+      )}
+      {helpText && (
+        <Tooltip>
+          <TooltipTrigger className="flex items-center">
+            <Icon icon="help" size={5} className="cursor-help text-text-low" />
+          </TooltipTrigger>
+          <TooltipContent>{helpText}</TooltipContent>
+        </Tooltip>
       )}
     </div>
   );
@@ -176,7 +187,7 @@ function FormErrorMessage({ className, ...props }: React.ComponentProps<"p">) {
       )}
       {...props}
     >
-      <Icon icon="error" size={4} />
+      <Icon icon="error" size={3} />
       {body}
     </p>
   );

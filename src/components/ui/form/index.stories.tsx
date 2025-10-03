@@ -44,7 +44,36 @@ export const Default: Story = {
           name="example"
           render={({ field, fieldState }) => (
             <FormItem>
-              <FormHeader label="ラベル" isRequired />
+              <FormHeader label="ラベル" />
+              <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
+              <FormControl>
+                <Input
+                  placeholder="入力してください"
+                  {...field}
+                  {...fieldState}
+                  isInvalid={fieldState.invalid}
+                />
+              </FormControl>
+              <FormErrorMessage />
+            </FormItem>
+          )}
+        />
+      </Form>
+    );
+  },
+};
+
+export const WithHeaderItem: Story = {
+  render: () => {
+    const form = useForm();
+    return (
+      <Form {...form}>
+        <FormField
+          control={form.control}
+          name="example"
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <FormHeader label="ラベル" isRequired helpText="ヘルプテキスト" />
               <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
               <FormControl>
                 <Input
