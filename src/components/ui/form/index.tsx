@@ -14,9 +14,13 @@ import {
 
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/form/label";
-import { Tag } from "../tag";
-import { Icon } from "../icon";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
+import { Tag } from "@/components/ui/tag";
+import { Icon } from "@/components/ui/icon";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 /**
  * **概要 / Overview**
@@ -50,7 +54,9 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
  * </Form>
  * ```
  */
-const Form = FormProvider;
+function Form(props: React.ComponentProps<typeof FormProvider>) {
+  return <FormProvider {...props} />;
+}
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
@@ -63,6 +69,36 @@ const FormFieldContext = React.createContext<FormFieldContextValue>(
   {} as FormFieldContextValue
 );
 
+/**
+ * **概要 / Overview**
+ *
+ * - フォームフィールドはフォームの各入力要素を管理するために使用するコンポーネントです。
+ * - en: The FormField component is used to manage each input element of the form.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <FormField
+ *   control={form.control}
+ *   name="example"
+ *   render={({ field, fieldState }) => (
+ *    <FormItem>
+ *       <FormHeader label="ラベル" />
+ *       <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
+ *       <FormControl>
+ *         <Input
+ *           placeholder="入力してください"
+ *           {...field}
+ *           {...fieldState}
+ *           isInvalid={fieldState.invalid}
+ *         />
+ *       </FormControl>
+ *       <FormErrorMessage />
+ *     </FormItem>
+ *   )}
+ * />
+ * ```
+ */
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -107,6 +143,25 @@ const FormItemContext = React.createContext<FormItemContextValue>(
   {} as FormItemContextValue
 );
 
+/**
+ * **概要 / Overview**
+ *
+ * - フォームアイテムはフォームフィールドのラベル、入力要素、ヘルパーテキストをグループ化するために使用するコンポーネントです。
+ * - en: The FormItem component is used to group the label, input elements, and helper text of a form field.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <FormItem>
+ *   <FormHeader label="ラベル" />
+ *   <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
+ *   <FormControl>
+ *     <Input placeholder="入力してください" {...field} {...fieldState} isInvalid={fieldState.invalid} />
+ *   </FormControl>
+ *   <FormErrorMessage />
+ * </FormItem>
+ * ```
+ */
 function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   const id = React.useId();
 
@@ -191,6 +246,20 @@ function FormHeader({
   );
 }
 
+/**
+ * **概要 / Overview**
+ *
+ * - フォームコントロールはフォームフィールドの入力要素をラップするために使用するコンポーネントです。
+ * - en: The FormControl component is used to wrap the input elements of a form field.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <FormControl>
+ *   <Input placeholder="入力してください" {...field} {...fieldState} isInvalid={fieldState.invalid} />
+ * </FormControl>
+ * ```
+ */
 function FormControl({ ...props }: React.ComponentProps<typeof Slot.Root>) {
   const { error, formItemId, formDescriptionId, formMessageId } =
     useFormField();
@@ -212,6 +281,18 @@ function FormControl({ ...props }: React.ComponentProps<typeof Slot.Root>) {
   );
 }
 
+/**
+ * **概要 / Overview**
+ *
+ * - フォームヘルパーメッセージはフォームフィールドの補足説明やヒントを表示するために使用するコンポーネントです。
+ * - en: The FormHelperMessage component is used to display supplementary explanations or hints for form fields.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
+ * ```
+ */
 function FormHelperMessage({ className, ...props }: React.ComponentProps<"p">) {
   const { formDescriptionId } = useFormField();
 
@@ -225,6 +306,18 @@ function FormHelperMessage({ className, ...props }: React.ComponentProps<"p">) {
   );
 }
 
+/**
+ * **概要 / Overview**
+ *
+ * - フォームエラーメッセージはフォームフィールドのバリデーションエラーを表示するために使用するコンポーネントです。
+ * - en: The FormErrorMessage component is used to display validation errors for form fields.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <FormErrorMessage />
+ * ```
+ */
 function FormErrorMessage({ className, ...props }: React.ComponentProps<"p">) {
   const { error, formMessageId } = useFormField();
   const body = error ? String(error?.message ?? "") : props.children;
