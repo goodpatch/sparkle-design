@@ -5,16 +5,18 @@ import {
   FormHelperMessage,
   FormField,
   FormItem,
-  FormLabel,
+  FormHeader,
   FormErrorMessage,
 } from "./index";
+import { FieldError, useForm } from "react-hook-form";
+import { Input } from "../input";
 
 const meta: Meta<typeof Form> = {
-  title: "Form/Form Control",
+  title: "Form/Form",
   component: Form,
   subcomponents: {
     FormItem,
-    FormLabel,
+    FormHeader,
     FormControl,
     FormHelperMessage,
     FormErrorMessage,
@@ -33,7 +35,61 @@ export default meta;
 type Story = StoryObj<typeof Form>;
 
 export const Default: Story = {
-  args: {
-    // デフォルトの引数をここに設定
+  render: () => {
+    const form = useForm();
+    return (
+      <Form {...form}>
+        <FormField
+          control={form.control}
+          name="example"
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <FormHeader label="ラベル" isRequired />
+              <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
+              <FormControl>
+                <Input
+                  placeholder="入力してください"
+                  {...field}
+                  {...fieldState}
+                  isInvalid={fieldState.invalid}
+                />
+              </FormControl>
+              <FormErrorMessage />
+            </FormItem>
+          )}
+        />
+      </Form>
+    );
+  },
+};
+
+export const Error: Story = {
+  render: () => {
+    const form = useForm({
+      errors: { example: { message: "エラーメッセージ" } as FieldError },
+    });
+    return (
+      <Form {...form}>
+        <FormField
+          control={form.control}
+          name="example"
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <FormHeader label="ラベル" isRequired />
+              <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
+              <FormControl>
+                <Input
+                  placeholder="入力してください"
+                  {...field}
+                  {...fieldState}
+                  isInvalid={fieldState.invalid}
+                />
+              </FormControl>
+              <FormErrorMessage />
+            </FormItem>
+          )}
+        />
+      </Form>
+    );
   },
 };

@@ -14,6 +14,8 @@ import {
 
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/form/label";
+import { Tag } from "../tag";
+import { Icon } from "../icon";
 
 const Form = FormProvider;
 
@@ -77,11 +79,7 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div
-        data-slot="form-item"
-        className={cn("grid gap-2", className)}
-        {...props}
-      />
+      <div data-slot="form-item" className={cn("grid", className)} {...props} />
     </FormItemContext.Provider>
   );
 }
@@ -103,22 +101,47 @@ function FormLabel({
   );
 }
 
+export interface FormHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  isRequired?: boolean;
+  label: string;
+}
+
+function FormHeader({
+  className,
+  isRequired,
+  label,
+  ...props
+}: FormHeaderProps) {
+  return (
+    <div className={cn("flex gap-2", className)} {...props}>
+      <FormLabel>{label}</FormLabel>
+      {isRequired && (
+        <Tag status="negative" size="sm" variant="subtle">
+          必須
+        </Tag>
+      )}
+    </div>
+  );
+}
+
 function FormControl({ ...props }: React.ComponentProps<typeof Slot.Root>) {
   const { error, formItemId, formDescriptionId, formMessageId } =
     useFormField();
 
   return (
-    <Slot.Root
-      data-slot="form-control"
-      id={formItemId}
-      aria-describedby={
-        !error
-          ? `${formDescriptionId}`
-          : `${formDescriptionId} ${formMessageId}`
-      }
-      aria-invalid={!!error}
-      {...props}
-    />
+    <div className="py-1">
+      <Slot.Root
+        data-slot="form-control"
+        id={formItemId}
+        aria-describedby={
+          !error
+            ? `${formDescriptionId}`
+            : `${formDescriptionId} ${formMessageId}`
+        }
+        aria-invalid={!!error}
+        {...props}
+      />
+    </div>
   );
 }
 
@@ -147,9 +170,13 @@ function FormErrorMessage({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="form-message"
       id={formMessageId}
-      className={cn("text-negative-500 character-1-regular-pro", className)}
+      className={cn(
+        "flex gap-1 items-center text-negative-500 character-1-regular-pro",
+        className
+      )}
       {...props}
     >
+      <Icon icon="error" size={4} />
       {body}
     </p>
   );
@@ -159,7 +186,7 @@ export {
   useFormField,
   Form,
   FormItem,
-  FormLabel,
+  FormHeader,
   FormControl,
   FormHelperMessage,
   FormErrorMessage,
