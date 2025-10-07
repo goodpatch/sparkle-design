@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "overlay",
+  "type": "registry:component",
+  "title": "Overlay",
+  "description": "背面コンテンツを減光してモーダルなどにフォーカスを集める半透明レイヤーです。",
+  "files": [
+    {
+      "path": "src/components/ui/overlay/index.tsx",
+      "type": "registry:component"
+    }
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://sparkle-design.vercel.app/r/sparkle-design-theme.json"
+  ]
+}
