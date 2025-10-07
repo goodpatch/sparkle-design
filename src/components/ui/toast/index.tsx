@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+// eslint-disable-next-line import/no-unresolved -- SonnerはESMのエクスポート構造によりLintの解決が失敗するため。 en: Sonner's ESM export map confuses the lint resolver.
 import {
   Toaster as SonnerToaster,
   toast as sonnerToast,
