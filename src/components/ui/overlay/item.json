@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "overlay",
+  "type": "registry:component",
+  "title": "Overlay",
+  "description": "Overlayはモーダルやドロワーなどの背後に敷く半透明のレイヤーを提供します。",
+  "files": [
+    {
+      "path": "src/components/ui/overlay/index.tsx",
+      "type": "registry:component"
+    }
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://sparkle-design.vercel.app/r/sparkle-design-theme.json"
+  ]
+}

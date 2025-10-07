@@ -11,6 +11,7 @@ export * from "./components/ui/icon-button";
 export * from "./components/ui/inline-message";
 export * from "./components/ui/link";
 export * from "./components/ui/modal";
+export * from "./components/ui/overlay";
 export * from "./components/ui/select";
 export * from "./components/ui/radio";
 export * from "./components/ui/slider";
