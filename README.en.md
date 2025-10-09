@@ -235,7 +235,7 @@ The table below shows the current implementation status of each component.
 | Input Date        | ❌             | ❌        | ❌       | ❌                 | ❌         |
 | Input File        | ❌             | ❌        | ❌       | ❌                 | ❌         |
 | Input Number      | ❌             | ❌        | ❌       | ❌                 | ❌         |
-| Input Password    | ✅             | ✅        | ✅       | ❌                 | ❌         |
+| Input Password    | ✅             | ✅        | ✅       | ✅                 | ❌         |
 | Input Search      | ❌             | ❌        | ❌       | ❌                 | ❌         |
 | Input Time        | ❌             | ❌        | ❌       | ❌                 | ❌         |
 | Link              | ✅             | ✅        | ✅       | ❌                 | ❌         |
