@@ -241,7 +241,7 @@ The table below shows the current implementation status of each component.
 | Link              | ✅             | ✅        | ✅       | ❌                 | ❌         |
 | List              | ❌             | ❌        | ❌       | ❌                 | ❌         |
 | Menu              | ❌             | ❌        | ❌       | ❌                 | ❌         |
-| Modal             | ✅             | ✅        | ✅       | ❌                 | ❌         |
+| Modal             | ✅             | ✅        | ✅       | ✅                 | ❌         |
 | Package           | ❌             | ❌        | ❌       | ❌                 | ❌         |
 | Pagination        | ❌             | ❌        | ❌       | ❌                 | ❌         |
 | Popover           | ❌             | ❌        | ❌       | ❌                 | ❌         |
