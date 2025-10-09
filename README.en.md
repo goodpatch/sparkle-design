@@ -225,7 +225,7 @@ The table below shows the current implementation status of each component.
 | Dialog            | ✅             | ✅        | ✅       | ❌                 | ❌         |
 | Divider           | ✅             | ✅        | ✅       | ✅                 | ❌         |
 | Filter Chip       | ❌             | ❌        | ❌       | ❌                 | ❌         |
-| Form Control      | ❌             | ❌        | ❌       | ❌                 | ❌         |
+| Form              | ✅             | ✅        | ✅       | ✅                 | ❌         |
 | Icon              | ✅             | ✅        | ✅       | ✅                 | ❌         |
 | Icon Button       | ✅             | ✅        | ✅       | ✅                 | ❌         |
 | Image             | ❌             | ❌        | ❌       | ❌                 | ❌         |
