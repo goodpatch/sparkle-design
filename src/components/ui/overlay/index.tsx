@@ -9,8 +9,8 @@ export interface OverlayProps extends React.HTMLAttributes<HTMLDivElement> {}
 /**
  * **概要 / Overview**
  *
- * - Overlayはモーダルなどの背後に敷かれる半透明のレイヤーを表示するためのコンポーネントです。
- * - en: The Overlay component renders a semi-transparent layer behind elements such as modals.
+ * - オーバーレイはシステムのモードが切り替わったことを伝えるために使用するコンポーネントです。
+ * - en: The Overlay component is used to indicate that the system mode has changed.
  *
  * **使用例 / Usage Example**
  *
