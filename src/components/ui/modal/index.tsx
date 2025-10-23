@@ -123,6 +123,11 @@ interface ModalContentProps
    * en: Modal size (sm, md, lg, xl, full)
    */
   size?: ModalSize;
+  /**
+   * オーバーレイクリック時にモーダルを閉じるかどうか
+   * en: Determines whether clicking the overlay closes the modal
+   */
+  closeOnOverlayClick?: boolean;
 }
 
 /// モーダルの本体
@@ -130,8 +135,22 @@ function ModalContent({
   className,
   children,
   size = "md",
+  closeOnOverlayClick = false,
+  onInteractOutside,
   ...props
 }: ModalContentProps) {
+  const handleInteractOutside = React.useCallback<
+    NonNullable<ModalContentProps["onInteractOutside"]>
+  >(
+    (event) => {
+      onInteractOutside?.(event);
+      if (!closeOnOverlayClick && !event.defaultPrevented) {
+        event.preventDefault();
+      }
+    },
+    [closeOnOverlayClick, onInteractOutside]
+  );
+
   // Figmaのsizeバリアントに合わせたサイズごとのスタイル定義
   const sizeClass =
     size === "sm"
@@ -155,6 +174,7 @@ function ModalContent({
           "z-50 flex flex-col gap-0 w-full max-h-[calc(100vh-80px)] bg-background border py-4 rounded-modal data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] shadow-lg duration-200",
           className
         )}
+        onInteractOutside={handleInteractOutside}
         {...props}
       >
         {children}
