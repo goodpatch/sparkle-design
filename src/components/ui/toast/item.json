@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toast",
+  "type": "registry:component",
+  "title": "Toast",
+  "description": "Sonner をベースにした通知コンポーネントです。",
+  "files": [
+    {
+      "path": "src/components/ui/toast/index.tsx",
+      "type": "registry:component"
+    }
+  ],
+  "dependencies": ["sonner"],
+  "registryDependencies": [
+    "https://sparkle-design.vercel.app/r/button.json",
+    "https://sparkle-design.vercel.app/r/sparkle-design-theme.json"
+  ]
+}
