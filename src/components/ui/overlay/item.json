@@ -3,7 +3,7 @@
   "name": "overlay",
   "type": "registry:component",
   "title": "Overlay",
-  "description": "Overlayはモーダルやドロワーなどの背後に敷く半透明のレイヤーを提供します。",
+  "description": "オーバーレイはシステムのモードが切り替わったことを伝えるために使用するコンポーネントです。",
   "files": [
     {
       "path": "src/components/ui/overlay/index.tsx",
