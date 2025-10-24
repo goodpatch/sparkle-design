@@ -3,7 +3,7 @@
   "name": "toast",
   "type": "registry:component",
   "title": "Toast",
-  "description": "Sonner をベースにした通知コンポーネントです。",
+  "description": "トーストはアクションの発生時にユーザーへフィードバックを行うために使用するコンポーネントです。",
   "files": [
     {
       "path": "src/components/ui/toast/index.tsx",
@@ -12,7 +12,6 @@
   ],
   "dependencies": ["sonner"],
   "registryDependencies": [
-    "https://sparkle-design.vercel.app/r/button.json",
     "https://sparkle-design.vercel.app/r/sparkle-design-theme.json"
   ]
 }

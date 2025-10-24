@@ -2,12 +2,12 @@ import React from "react";
 import { act, render, waitFor } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 
-import { toast, ToastToaster } from "./index";
+import { toast, Toast } from "./index";
 
 describe("ToastToaster", () => {
   it("renders the toaster container", async () => {
     // Given: デフォルトのトーストコンテナをレンダリングする
-    render(<ToastToaster />);
+    render(<Toast />);
 
     // Then: data-slot="toast-toaster" を持つ要素が配置される
     await waitFor(() => {
@@ -18,7 +18,7 @@ describe("ToastToaster", () => {
 
   it("returns an identifier when triggering toast", () => {
     // Given: トーストを表示できるコンテナをレンダリングする
-    render(<ToastToaster />);
+    render(<Toast />);
 
     // When: toast を呼び出す
     let toastId: string | number | undefined;

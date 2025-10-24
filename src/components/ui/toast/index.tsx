@@ -3,90 +3,127 @@
 import * as React from "react";
 // eslint-disable-next-line import/no-unresolved -- SonnerはESMのエクスポート構造によりLintの解決が失敗するため。 en: Sonner's ESM export map confuses the lint resolver.
 import {
-  Toaster as SonnerToaster,
+  Toaster,
   toast as sonnerToast,
   type ToastClassnames,
   type ToasterProps as SonnerToasterProps,
 } from "sonner";
 
 import { cn } from "@/lib/utils";
+import { cva, VariantProps } from "class-variance-authority";
+import { Icon } from "../icon";
+import { IconButton } from "../icon-button";
 
 export type { ExternalToast, ToastClassnames, ToastT } from "sonner";
 
-export const toast = sonnerToast;
-
-export type ToastToasterProps = React.ComponentProps<typeof SonnerToaster>;
-
-const baseClassNames: Partial<Record<keyof ToastClassnames, string>> = {
-  toast:
-    "pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-lg border border-border-subtle bg-surface shadow-elevation-3 p-4",
-  title: "character-3-medium-pro text-foreground",
-  description: "character-4-regular-pro text-foreground-subtle",
-  actionButton:
-    "character-4-medium-pro inline-flex items-center justify-center rounded-button border border-border-strong bg-surface-strong px-3 py-2 transition-colors hover:bg-surface-strong/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-  closeButton:
-    "inline-flex size-7 items-center justify-center rounded-full border border-border-subtle text-foreground-subtle transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-};
-
-function mergeClassNames(
-  overrides?: ToastClassnames
-): ToastClassnames | undefined {
-  if (!overrides) {
-    return baseClassNames as ToastClassnames;
-  }
-
-  return Object.entries(baseClassNames).reduce<ToastClassnames>(
-    (acc, [key, base]) => {
-      acc[key as keyof ToastClassnames] = cn(
-        base,
-        overrides[key as keyof ToastClassnames]
-      );
-      return acc;
+const toastVariants = cva(
+  "shadow-float px-3 py-2 text-neutral-50 flex w-[320px] rounded-notice gap-2",
+  {
+    variants: {
+      variant: {
+        neutral: "bg-neutral-700",
+        success: "bg-success-500",
+        negative: "bg-negative-500",
+      },
     },
-    { ...overrides }
-  );
+  }
+);
+
+type ReactToastProps = React.ComponentProps<typeof Toaster>;
+export interface ToastProps
+  extends Omit<ReactToastProps, "id">,
+    VariantProps<typeof toastVariants> {
+  id?: string | number;
+  title: string;
+  description?: string;
 }
 
 /**
  * **概要 / Overview**
  *
- * - Toastコンポーネントは shadcn/ui の Sonner をベースに、ユーザー操作のフィードバックや通知を非同期に表示します。
- * - en: The Toast component wraps shadcn/ui's Sonner to present asynchronous feedback and lightweight notifications to users.
+ * - トーストはアクションの発生時にユーザーへフィードバックを行うために使用するコンポーネントです。
+ * - en: Toasts are used to provide feedback to users when actions occur.
  *
  * **使用例 / Usage Example**
  *
  * ```tsx
  * <>
- *   <ToastToaster />
- *   <Button onClick={() => toast("保存しました", { description: "1件の変更が反映されました" })}>
+ *   <Toaster />
+ *   <Button onClick={() => toast({
+ *     title: "保存しました",
+ *     description: "1件の変更が反映されました",
+ *     variant: "success",
+ *   })}>
  *     トーストを表示
  *   </Button>
  * </>
  * ```
  *
- * @param {ToastToasterProps} props
+ * @param {ToastProps} props
  */
-export function ToastToaster({
+export function Toast({
   className,
-  toastOptions,
-  ...props
-}: ToastToasterProps) {
-  const mergedToastOptions: SonnerToasterProps["toastOptions"] = {
-    duration: 4000,
-    closeButton: true,
-    ...toastOptions,
-    classNames: mergeClassNames(toastOptions?.classNames),
+  variant,
+  title,
+  description,
+  id,
+}: ToastProps) {
+  const ToastIcon = () => {
+    switch (variant) {
+      case "success":
+        return <Icon icon="check_circle" size={6} fill />;
+      case "negative":
+        return <Icon icon="error" size={6} fill />;
+      default:
+        return null;
+    }
   };
 
   return (
-    <SonnerToaster
-      data-slot="toast-toaster"
-      className={cn(
-        "pointer-events-none fixed inset-x-0 top-0 z-[60] flex flex-col items-center gap-3 p-4 sm:items-end sm:p-6",
-        className
-      )}
-      toastOptions={mergedToastOptions}
-      {...props}
-    />
+    <div className={cn(toastVariants({ variant }), className)}>
+      <ToastIcon />
+      <div className="gap-0 px-1 grow">
+        <p className="character-3-bold-pro">{title}</p>
+        {description && (
+          <p
+            className={cn(
+              "character-3-regular-pro",
+              variant === "neutral" ? "text-neutral-100" : ""
+            )}
+          >
+            {description}
+          </p>
+        )}
+      </div>
+      <IconButton
+        icon="close"
+        size="sm"
+        variant="ghost"
+        theme="neutral"
+        onClick={() => {
+          sonnerToast.dismiss(id);
+        }}
+        className="text-neutral-50"
+      />
+    </div>
   );
 }
+
+export function toast(toast: Omit<ToastProps, "id">) {
+  const { title, description, variant, ...rest } = toast;
+  return sonnerToast.custom(
+    id => (
+      <Toast
+        title={title}
+        description={description}
+        variant={variant}
+        id={id}
+      />
+    ),
+    {
+      ...rest,
+    }
+  );
+}
+
+export { Toaster };
