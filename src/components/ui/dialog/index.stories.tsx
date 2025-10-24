@@ -37,9 +37,9 @@ export const Neutral: Story = {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>確認</DialogTitle>
+          <DialogTitle>ネットワークを再試行</DialogTitle>
           <DialogDescription>
-            この操作を実行してもよろしいですか？
+            通信状態を確認し、再度お試しください。
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -61,15 +61,15 @@ export const Warning: Story = {
         <DialogHeader>
           <DialogTitle>
             <DialogIcon icon="warning" className="text-warning-500" />
-            警告
+            変更内容を保存せずに移動
           </DialogTitle>
           <DialogDescription>
-            この操作は取り消せません。続行しますか？
+            このまま画面を離れると変更内容が保存されません。
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <DialogCancel>キャンセル</DialogCancel>
-          <DialogAction>続行</DialogAction>
+          <DialogAction>再試行</DialogAction>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -86,15 +86,15 @@ export const Negative: Story = {
         <DialogHeader>
           <DialogTitle>
             <DialogIcon icon="error" className="text-negative-400" />
-            エラー
+            アドレスを削除
           </DialogTitle>
           <DialogDescription>
-            予期しないエラーが発生しました。後でもう一度お試しください。
+            連絡先からアドレスを削除します。削除されたアドレスは復元できません。
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <DialogCancel>キャンセル</DialogCancel>
-          <DialogAction theme="negative">破棄</DialogAction>
+          <DialogAction theme="negative">削除</DialogAction>
         </DialogFooter>
       </DialogContent>
     </Dialog>
