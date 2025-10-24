@@ -28,7 +28,7 @@ export const Default: Story = {
             setCount(previous => previous + 1);
             toast({
               ...args,
-              title: `保存しました (${count + 1})`,
+              title: `カウントアップしました (${count + 1})`,
               description: "最新の変更が反映されました",
               variant: "neutral",
               duration: 4000,
@@ -82,8 +82,8 @@ export const Negative: Story = {
             setCount(previous => previous + 1);
             toast({
               ...args,
-              title: `保存しました (${count + 1})`,
-              description: "最新の変更が反映されました",
+              title: `エラーが発生しました (${count + 1})`,
+              description: "変更を保存できませんでした",
               variant: "negative",
               duration: 4000,
               position: "bottom-center",

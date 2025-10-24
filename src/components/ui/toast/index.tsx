@@ -25,12 +25,38 @@ const toastVariants = cva(
 );
 
 type ReactToastProps = React.ComponentProps<typeof Toaster>;
-export interface ToastProps
-  extends Omit<ReactToastProps, "id">,
-    VariantProps<typeof toastVariants> {
+type ToastVariant = VariantProps<typeof toastVariants>;
+export interface ToastProps extends Omit<ReactToastProps, "id">, ToastVariant {
+  /**
+   * トーストの識別子
+   * en: Identifier of the toast
+   */
   id?: string | number;
+  /**
+   * トーストのタイトル
+   * en: Title of the toast
+   */
   title: string;
+  /**
+   * トーストの説明
+   * en: Description of the toast
+   */
   description?: string;
+  /**
+   * トーストのバリアント
+   * en: Variant of the toast
+   */
+  variant?: ToastVariant["variant"];
+  /**
+   * トーストの表示時間（ミリ秒）
+   * en: Duration of the toast (in milliseconds)
+   */
+  duration?: ReactToastProps["duration"];
+  /**
+   * トーストの表示位置
+   * en: Position of the toast
+   */
+  position?: ReactToastProps["position"];
 }
 
 /**
@@ -58,7 +84,7 @@ export interface ToastProps
  */
 export function Toast({
   className,
-  variant,
+  variant = "neutral",
   title,
   description,
   id,
@@ -98,7 +124,7 @@ export function Toast({
         onClick={() => {
           sonnerToast.dismiss(id);
         }}
-        className="text-neutral-50"
+        className="text-neutral-50 hover:bg-neutral-700 active:bg-neutral-800"
       />
     </div>
   );
