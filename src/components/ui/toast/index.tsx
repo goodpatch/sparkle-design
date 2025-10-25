@@ -6,8 +6,8 @@ import { Toaster, toast as sonnerToast } from "sonner";
 
 import { cn } from "@/lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
-import { Icon } from "../icon";
-import { IconButton } from "../icon-button";
+import { Icon } from "@/components/ui/icon";
+import { IconButton } from "@/components/ui/icon-button";
 
 export type { ExternalToast, ToastClassnames, ToastT } from "sonner";
 
@@ -36,12 +36,17 @@ export interface ToastProps extends Omit<ReactToastProps, "id">, ToastVariant {
    * トーストのタイトル
    * en: Title of the toast
    */
-  title: string;
+  title?: string;
   /**
    * トーストの説明
    * en: Description of the toast
    */
-  description?: string;
+  description: string;
+  /**
+   * 閉じるボタンを表示するかどうか
+   * en: Whether to show the close button
+   */
+  isCloseTrigger?: boolean;
   /**
    * トーストのバリアント
    * en: Variant of the toast
@@ -52,11 +57,6 @@ export interface ToastProps extends Omit<ReactToastProps, "id">, ToastVariant {
    * en: Duration of the toast (in milliseconds)
    */
   duration?: ReactToastProps["duration"];
-  /**
-   * トーストの表示位置
-   * en: Position of the toast
-   */
-  position?: ReactToastProps["position"];
 }
 
 /**
@@ -87,6 +87,7 @@ export function Toast({
   variant = "neutral",
   title,
   description,
+  isCloseTrigger = true,
   id,
 }: ToastProps) {
   const ToastIcon = () => {
@@ -103,46 +104,52 @@ export function Toast({
   return (
     <div className={cn(toastVariants({ variant }), className)}>
       <ToastIcon />
-      <div className="gap-0 px-1 grow">
-        <p className="character-3-bold-pro">{title}</p>
-        {description && (
-          <p
-            className={cn(
-              "character-3-regular-pro",
-              variant === "neutral" ? "text-neutral-100" : ""
-            )}
-          >
-            {description}
-          </p>
-        )}
+      <div className="h-full flex flex-col justify-center gap-0 px-1 grow">
+        {title && <p className="character-3-bold-pro">{title}</p>}
+        <p
+          className={cn(
+            "character-3-regular-pro",
+            variant === "neutral" ? "text-neutral-100" : ""
+          )}
+        >
+          {description}
+        </p>
       </div>
-      <IconButton
-        icon="close"
-        size="sm"
-        variant="ghost"
-        theme="neutral"
-        onClick={() => {
-          sonnerToast.dismiss(id);
-        }}
-        className="text-neutral-50 hover:bg-neutral-700 active:bg-neutral-800"
-      />
+      {isCloseTrigger && (
+        <IconButton
+          icon="close"
+          size="sm"
+          variant="ghost"
+          theme="neutral"
+          onClick={() => {
+            sonnerToast.dismiss(id);
+          }}
+          className="text-neutral-50 hover:bg-neutral-700 active:bg-neutral-800"
+        />
+      )}
     </div>
   );
 }
 
-export function toast(toast: Omit<ToastProps, "id">) {
-  const { title, description, variant, ...rest } = toast;
+/**
+ * - トーストはアクションの発生時にユーザーへフィードバックを行うために使用するコンポーネントです。
+ * - en: Toasts are used to provide feedback to users when actions occur.
+ */
+export function toast(toast: Omit<ToastProps, "id" | "position">) {
+  const { title, description, variant, isCloseTrigger, ...rest } = toast;
   return sonnerToast.custom(
     id => (
       <Toast
         title={title}
         description={description}
         variant={variant}
+        isCloseTrigger={isCloseTrigger}
         id={id}
       />
     ),
     {
       ...rest,
+      position: "top-center",
     }
   );
 }

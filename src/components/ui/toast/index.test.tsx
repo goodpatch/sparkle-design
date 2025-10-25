@@ -38,30 +38,44 @@ describe("Toast", () => {
     });
 
     it("Toastコンポーネントが必須プロパティでレンダリングされる", () => {
-      // Given: Toastコンポーネントを直接レンダリングする
-      const { container } = render(<Toast title="テストメッセージ" />);
+      // Given: descriptionのみでToastをレンダリングする
+      const { container } = render(<Toast description="テストメッセージ" />);
 
-      // Then: タイトルが表示される
+      // Then: descriptionが表示される
       expect(container.textContent).toContain("テストメッセージ");
     });
 
-    it("descriptionが指定された場合に説明文が表示される", () => {
-      // Given: descriptionを含むToastをレンダリングする
+    it("titleとdescriptionが両方指定された場合に表示される", () => {
+      // Given: titleとdescriptionを含むToastをレンダリングする
       const { container } = render(
         <Toast title="タイトル" description="詳細な説明文" />
       );
 
-      // Then: descriptionが表示される
+      // Then: 両方が表示される
+      expect(container.textContent).toContain("タイトル");
       expect(container.textContent).toContain("詳細な説明文");
     });
 
-    it("descriptionが指定されない場合は説明文が表示されない", () => {
-      // Given: descriptionなしのToastをレンダリングする
-      const { container } = render(<Toast title="タイトルのみ" />);
+    it("titleが指定されない場合はdescriptionのみ表示される", () => {
+      // Given: descriptionのみのToastをレンダリングする
+      const { container } = render(<Toast description="説明文のみ" />);
 
-      // Then: タイトルのみが表示される
+      // Then: descriptionのみが表示される
       const paragraphs = container.querySelectorAll("p");
       expect(paragraphs).toHaveLength(1);
+      expect(container.textContent).toContain("説明文のみ");
+    });
+
+    it("titleのみが指定された場合も表示される", () => {
+      // Given: titleとdescriptionを持つToastをレンダリングする
+      const { container } = render(
+        <Toast title="タイトル" description="説明" />
+      );
+
+      // Then: タイトルが表示される
+      const paragraphs = container.querySelectorAll("p");
+      expect(paragraphs.length).toBeGreaterThanOrEqual(1);
+      expect(container.textContent).toContain("タイトル");
     });
   });
 
@@ -69,7 +83,11 @@ describe("Toast", () => {
     it("neutralバリアントで正しいスタイルが適用される", () => {
       // Given: neutralバリアントのToastをレンダリングする
       const { container } = render(
-        <Toast title="中立メッセージ" variant="neutral" />
+        <Toast
+          title="中立メッセージ"
+          description="説明"
+          variant="neutral"
+        />
       );
 
       // Then: bg-neutral-700クラスが適用される
@@ -80,7 +98,11 @@ describe("Toast", () => {
     it("successバリアントで正しいスタイルが適用される", () => {
       // Given: successバリアントのToastをレンダリングする
       const { container } = render(
-        <Toast title="成功メッセージ" variant="success" />
+        <Toast
+          title="成功メッセージ"
+          description="成功しました"
+          variant="success"
+        />
       );
 
       // Then: bg-success-500クラスが適用される
@@ -91,7 +113,11 @@ describe("Toast", () => {
     it("negativeバリアントで正しいスタイルが適用される", () => {
       // Given: negativeバリアントのToastをレンダリングする
       const { container } = render(
-        <Toast title="エラーメッセージ" variant="negative" />
+        <Toast
+          title="エラーメッセージ"
+          description="エラーが発生しました"
+          variant="negative"
+        />
       );
 
       // Then: bg-negative-500クラスが適用される
@@ -101,7 +127,9 @@ describe("Toast", () => {
 
     it("successバリアントでチェックアイコンが表示される", () => {
       // Given: successバリアントのToastをレンダリングする
-      const { container } = render(<Toast title="成功" variant="success" />);
+      const { container } = render(
+        <Toast title="成功" description="完了" variant="success" />
+      );
 
       // Then: check_circleアイコンが表示される
       const icon = container.querySelector('[aria-hidden="true"]');
@@ -110,7 +138,9 @@ describe("Toast", () => {
 
     it("negativeバリアントでエラーアイコンが表示される", () => {
       // Given: negativeバリアントのToastをレンダリングする
-      const { container } = render(<Toast title="エラー" variant="negative" />);
+      const { container } = render(
+        <Toast title="エラー" description="失敗" variant="negative" />
+      );
 
       // Then: errorアイコンが表示される
       const icon = container.querySelector('[aria-hidden="true"]');
@@ -119,7 +149,9 @@ describe("Toast", () => {
 
     it("neutralバリアントではアイコンが表示されない", () => {
       // Given: neutralバリアントのToastをレンダリングする
-      const { container } = render(<Toast title="通知" variant="neutral" />);
+      const { container } = render(
+        <Toast title="通知" description="お知らせ" variant="neutral" />
+      );
 
       // Then: アイコンが存在しない
       const icons = container.querySelectorAll('[aria-hidden="true"]');
@@ -149,6 +181,7 @@ describe("Toast", () => {
       act(() => {
         toastId = toast({
           title: "テストトースト",
+          description: "テストの説明",
         });
       });
 
@@ -199,6 +232,7 @@ describe("Toast", () => {
       act(() => {
         toast({
           title: "成功",
+          description: "処理が完了しました",
           variant: "success",
         });
       });
@@ -215,7 +249,9 @@ describe("Toast", () => {
     it("閉じるボタンをクリックするとトーストが閉じる", async () => {
       // Given: Toastをレンダリングする
       const testId = "test-toast-id";
-      const { container } = render(<Toast title="閉じるテスト" id={testId} />);
+      const { container } = render(
+        <Toast title="閉じるテスト" description="テスト" id={testId} />
+      );
 
       // When: 閉じるボタンをクリックする
       const closeButton = container.querySelector("button");
@@ -233,7 +269,9 @@ describe("Toast", () => {
 
     it("閉じるボタンに適切なアイコンが表示される", () => {
       // Given: Toastをレンダリングする
-      const { container } = render(<Toast title="アイコンテスト" />);
+      const { container } = render(
+        <Toast title="アイコンテスト" description="テスト" />
+      );
 
       // Then: closeアイコンが表示される
       const closeButtons = container.querySelectorAll("button");
@@ -242,6 +280,36 @@ describe("Toast", () => {
           btn.querySelector('[aria-hidden="true"]')?.textContent === "close"
       );
       expect(closeButton).toBeTruthy();
+    });
+
+    it("isCloseTrigger=falseの場合は閉じるボタンが表示されない", () => {
+      // Given: isCloseTriggerをfalseに設定したToastをレンダリングする
+      const { container } = render(
+        <Toast
+          title="閉じるボタンなし"
+          description="テスト"
+          isCloseTrigger={false}
+        />
+      );
+
+      // Then: 閉じるボタンが存在しない
+      const closeButton = container.querySelector("button");
+      expect(closeButton).toBeNull();
+    });
+
+    it("isCloseTrigger=trueの場合は閉じるボタンが表示される（デフォルト動作）", () => {
+      // Given: isCloseTriggerを明示的にtrueに設定したToastをレンダリングする
+      const { container } = render(
+        <Toast
+          title="閉じるボタンあり"
+          description="テスト"
+          isCloseTrigger={true}
+        />
+      );
+
+      // Then: 閉じるボタンが存在する
+      const closeButton = container.querySelector("button");
+      expect(closeButton).not.toBeNull();
     });
   });
 
@@ -257,7 +325,9 @@ describe("Toast", () => {
 
     it("タイトルが適切なセマンティックマークアップで表示される", () => {
       // Given: Toastをレンダリングする
-      const { container } = render(<Toast title="アクセシビリティテスト" />);
+      const { container } = render(
+        <Toast title="アクセシビリティテスト" description="テスト" />
+      );
 
       // Then: タイトルがp要素として表示される
       const title = Array.from(container.querySelectorAll("p")).find(
@@ -269,7 +339,11 @@ describe("Toast", () => {
     it("アイコンにaria-hidden属性が設定される", () => {
       // Given: successバリアントのToastをレンダリングする
       const { container } = render(
-        <Toast title="アイコンテスト" variant="success" />
+        <Toast
+          title="アイコンテスト"
+          description="テスト"
+          variant="success"
+        />
       );
 
       // Then: アイコンにaria-hidden="true"が設定される
@@ -282,14 +356,16 @@ describe("Toast", () => {
     it("空のtitleでもエラーなくレンダリングされる", () => {
       // Given: 空のtitleでToastをレンダリングする
       expect(() => {
-        render(<Toast title="" />);
+        render(<Toast title="" description="説明のみ" />);
       }).not.toThrow();
     });
 
     it("非常に長いtitleでもレンダリングされる", () => {
       // Given: 非常に長いtitleを持つToastをレンダリングする
       const longTitle = "あ".repeat(1000);
-      const { container } = render(<Toast title={longTitle} />);
+      const { container } = render(
+        <Toast title={longTitle} description="説明" />
+      );
 
       // Then: テキストが表示される
       expect(container.textContent).toContain(longTitle);
@@ -309,7 +385,11 @@ describe("Toast", () => {
     it("複数のクラス名が適用できる", () => {
       // Given: カスタムclassNameを持つToastをレンダリングする
       const { container } = render(
-        <Toast title="カスタムクラス" className="custom-class another-class" />
+        <Toast
+          title="カスタムクラス"
+          description="テスト"
+          className="custom-class another-class"
+        />
       );
 
       // Then: カスタムクラスが適用される
@@ -320,8 +400,27 @@ describe("Toast", () => {
     it("undefined variantでもエラーなくレンダリングされる", () => {
       // Given: variantなしでToastをレンダリングする
       expect(() => {
-        render(<Toast title="デフォルト" variant={undefined} />);
+        render(
+          <Toast title="デフォルト" description="テスト" variant={undefined} />
+        );
       }).not.toThrow();
+    });
+
+    it("titleなしdescriptionのみでもレンダリングされる", () => {
+      // Given: titleなしのToastをレンダリングする
+      const { container } = render(<Toast description="説明のみのトースト" />);
+
+      // Then: descriptionが表示される
+      expect(container.textContent).toContain("説明のみのトースト");
+
+      // Then: titleのp要素は存在しない（または空）
+      const paragraphs = container.querySelectorAll("p");
+      const hasTitle = Array.from(paragraphs).some(
+        p =>
+          p.className.includes("character-3-bold-pro") &&
+          p.textContent !== ""
+      );
+      expect(hasTitle).toBe(false);
     });
   });
 });

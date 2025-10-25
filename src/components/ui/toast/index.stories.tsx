@@ -32,7 +32,6 @@ export const Default: Story = {
               description: "最新の変更が反映されました",
               variant: "neutral",
               duration: 4000,
-              position: "bottom-center",
             });
           }}
         >
@@ -59,7 +58,6 @@ export const Success: Story = {
               description: "最新の変更が反映されました",
               variant: "success",
               duration: 4000,
-              position: "bottom-center",
             });
           }}
         >
@@ -86,7 +84,52 @@ export const Negative: Story = {
               description: "変更を保存できませんでした",
               variant: "negative",
               duration: 4000,
-              position: "bottom-center",
+            });
+          }}
+        >
+          トーストを表示
+        </Button>
+        <Toaster />
+      </div>
+    );
+  },
+};
+
+export const WithoutTitle: Story = {
+  render: args => {
+    return (
+      <div className="flex h-[320px] items-center justify-center bg-surface-muted">
+        <Button
+          onClick={() => {
+            toast({
+              ...args,
+              description: "タイトルなしのトーストです",
+              variant: "neutral",
+              duration: 4000,
+            });
+          }}
+        >
+          トーストを表示
+        </Button>
+        <Toaster />
+      </div>
+    );
+  },
+};
+
+export const WithoutCloseButton: Story = {
+  render: args => {
+    return (
+      <div className="flex h-[320px] items-center justify-center bg-surface-muted">
+        <Button
+          onClick={() => {
+            toast({
+              ...args,
+              title: "閉じるボタンなしのトーストです",
+              description: "自動で閉じるまで表示されます",
+              variant: "neutral",
+              isCloseTrigger: false,
+              duration: 4000,
             });
           }}
         >
