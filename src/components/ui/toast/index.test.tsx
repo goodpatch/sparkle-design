@@ -83,11 +83,7 @@ describe("Toast", () => {
     it("neutralバリアントで正しいスタイルが適用される", () => {
       // Given: neutralバリアントのToastをレンダリングする
       const { container } = render(
-        <Toast
-          title="中立メッセージ"
-          description="説明"
-          variant="neutral"
-        />
+        <Toast title="中立メッセージ" description="説明" variant="neutral" />
       );
 
       // Then: bg-neutral-700クラスが適用される
@@ -339,11 +335,7 @@ describe("Toast", () => {
     it("アイコンにaria-hidden属性が設定される", () => {
       // Given: successバリアントのToastをレンダリングする
       const { container } = render(
-        <Toast
-          title="アイコンテスト"
-          description="テスト"
-          variant="success"
-        />
+        <Toast title="アイコンテスト" description="テスト" variant="success" />
       );
 
       // Then: アイコンにaria-hidden="true"が設定される
@@ -417,8 +409,7 @@ describe("Toast", () => {
       const paragraphs = container.querySelectorAll("p");
       const hasTitle = Array.from(paragraphs).some(
         p =>
-          p.className.includes("character-3-bold-pro") &&
-          p.textContent !== ""
+          p.className.includes("character-3-bold-pro") && p.textContent !== ""
       );
       expect(hasTitle).toBe(false);
     });
