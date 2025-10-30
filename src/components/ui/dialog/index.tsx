@@ -166,11 +166,12 @@ function DialogAction({
   className,
   children,
   theme = "primary",
+  variant = "solid",
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Action> & ButtonProps) {
   return (
     <DialogPrimitive.Action data-slot="dialog-action" asChild {...props}>
-      <Button variant="solid" theme={theme} size="sm" className={className}>
+      <Button variant={variant} theme={theme} size="sm" className={className}>
         {children}
       </Button>
     </DialogPrimitive.Action>
