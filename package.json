@@ -54,6 +54,7 @@
     "react": "^18",
     "react-dom": "^18",
     "shadcn": "^2.5.0",
+    "sonner": "^2.0.7",
     "storybook": "^8.6.14",
     "tailwind-merge": "^3.2.0",
     "tw-animate-css": "^1.2.5"
