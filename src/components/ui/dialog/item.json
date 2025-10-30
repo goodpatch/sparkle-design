@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "title": "Dialog",
   "name": "dialog",
-  "description": "ダイアログはユーザーの操作を一時中断し、重要な情報を表示したり、ユーザーからの入力を求めるためのコンポーネントです。",
+  "description": "ダイアログはユーザーにアクションの実行や中断を確認するために使用するコンポーネントです。",
   "type": "registry:component",
   "files": [
     {

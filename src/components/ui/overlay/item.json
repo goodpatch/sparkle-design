@@ -1,12 +1,12 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "skeleton",
+  "name": "overlay",
   "type": "registry:component",
-  "title": "Skeleton",
-  "description": "スケルトンはユーザーにコンテンツが読込中であることを提示するために使用するコンポーネントです。",
+  "title": "Overlay",
+  "description": "オーバーレイはシステムのモードが切り替わったことを伝えるために使用するコンポーネントです。",
   "files": [
     {
-      "path": "src/components/ui/skeleton/index.tsx",
+      "path": "src/components/ui/overlay/index.tsx",
       "type": "registry:component"
     }
   ],
