@@ -5,10 +5,10 @@ export interface InputPasswordProps
   extends Omit<
     InputProps,
     | "type"
-    | "iconButtonIcon"
-    | "isIconButtonEnable"
+    | "triggerIcon"
+    | "triggerAriaLabel"
+    | "isTrigger"
     | "onIconButtonClick"
-    | "iconButtonAriaLabel"
   > {}
 
 /**
