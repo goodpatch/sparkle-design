@@ -142,7 +142,7 @@ function ModalContent({
   const handleInteractOutside = React.useCallback<
     NonNullable<ModalContentProps["onInteractOutside"]>
   >(
-    (event) => {
+    event => {
       onInteractOutside?.(event);
       if (!closeOnOverlayClick && !event.defaultPrevented) {
         event.preventDefault();
