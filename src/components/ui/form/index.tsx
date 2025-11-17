@@ -41,7 +41,7 @@ import {
  *         <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
  *         <FormControl>
  *           <Input
- *             placeholder="入力してください"
+ *             placeholder="プレースホルダー"
  *             {...field}
  *             {...fieldState}
  *             isInvalid={fieldState.invalid}
@@ -87,7 +87,7 @@ const FormFieldContext = React.createContext<FormFieldContextValue>(
  *       <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
  *       <FormControl>
  *         <Input
- *           placeholder="入力してください"
+ *           placeholder="プレースホルダー"
  *           {...field}
  *           {...fieldState}
  *           isInvalid={fieldState.invalid}
@@ -156,7 +156,7 @@ const FormItemContext = React.createContext<FormItemContextValue>(
  *   <FormHeader label="ラベル" />
  *   <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
  *   <FormControl>
- *     <Input placeholder="入力してください" {...field} {...fieldState} isInvalid={fieldState.invalid} />
+ *     <Input placeholder="プレースホルダー" {...field} {...fieldState} isInvalid={fieldState.invalid} />
  *   </FormControl>
  *   <FormErrorMessage />
  * </FormItem>
@@ -256,7 +256,7 @@ function FormHeader({
  *
  * ```tsx
  * <FormControl>
- *   <Input placeholder="入力してください" {...field} {...fieldState} isInvalid={fieldState.invalid} />
+ *   <Input placeholder="プレースホルダー" {...field} {...fieldState} isInvalid={fieldState.invalid} />
  * </FormControl>
  * ```
  */

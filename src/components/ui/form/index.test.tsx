@@ -60,7 +60,7 @@ function TestFormComponent({
             <FormItem>
               <FormHeader label="テストフィールド" />
               <FormControl>
-                <Input placeholder="入力してください" {...field} />
+                <Input placeholder="プレースホルダー" {...field} />
               </FormControl>
               <FormHelperMessage>これはヘルプメッセージです</FormHelperMessage>
               <FormErrorMessage />
@@ -189,7 +189,7 @@ describe("Form", () => {
       const input = testContainer.queryInput();
 
       // Then: placeholderが設定される
-      expect(input.placeholder).toBe("入力してください");
+      expect(input.placeholder).toBe("プレースホルダー");
     });
   });
 

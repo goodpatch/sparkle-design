@@ -48,7 +48,7 @@ export const Default: Story = {
               <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
               <FormControl>
                 <Input
-                  placeholder="入力してください"
+                  placeholder="プレースホルダー"
                   {...field}
                   {...fieldState}
                   isInvalid={fieldState.invalid}
@@ -77,7 +77,7 @@ export const WithHeaderItem: Story = {
               <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
               <FormControl>
                 <Input
-                  placeholder="入力してください"
+                  placeholder="プレースホルダー"
                   {...field}
                   {...fieldState}
                   isInvalid={fieldState.invalid}
@@ -108,7 +108,7 @@ export const Error: Story = {
               <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
               <FormControl>
                 <Input
-                  placeholder="入力してください"
+                  placeholder="プレースホルダー"
                   {...field}
                   {...fieldState}
                   isInvalid={fieldState.invalid}

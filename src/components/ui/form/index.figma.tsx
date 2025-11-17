@@ -40,7 +40,7 @@ import {
 //                 <FormHelperMessage>ヘルプメッセージ</FormHelperMessage>
 //                 <FormControl>
 //                   <Input
-//                     placeholder="入力してください"
+//                     placeholder="サンプルテキスト"
 //                     {...field}
 //                     {...fieldState}
 //                     isInvalid={fieldState.invalid}
@@ -167,7 +167,7 @@ figma.connect(
     },
     example: props => (
       <FormControl>
-        <Input placeholder="入力してください" />
+        <Input placeholder="サンプルテキスト" />
       </FormControl>
     ),
   }
