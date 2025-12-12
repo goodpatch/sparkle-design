@@ -21,7 +21,7 @@ const selectTriggerVariants = cva(
         lg: "h-12 py-1 pl-4 pr-2 gap-2 character-4-regular-pro",
       },
       isInvalid: {
-        true: "bg-negative-50 border-negative-500 hover:border-negative-600 data-[state=open]:border-negative-600",
+        true: "bg-white border-negative-500 hover:border-negative-600 data-[state=open]:border-negative-600",
         false:
           "border-neutral-500 hover:border-neutral-600 data-[state=open]:border-neutral-600",
       },
