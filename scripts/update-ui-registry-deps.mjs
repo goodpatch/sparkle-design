@@ -45,4 +45,3 @@ for (const file of walk(BASE_DIR)) {
 }
 
 console.log(`🎯 Done. Updated ${updated} files.`);
-
