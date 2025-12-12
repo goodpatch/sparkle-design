@@ -167,7 +167,11 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div data-slot="form-item" className={cn("grid", className)} {...props} />
+      <div
+        data-slot="form-item"
+        className={cn("grid content-start", className)}
+        {...props}
+      />
     </FormItemContext.Provider>
   );
 }
@@ -227,7 +231,7 @@ function FormHeader({
   ...props
 }: FormHeaderProps) {
   return (
-    <div className={cn("flex gap-2", className)} {...props}>
+    <div className={cn("flex gap-2 h-fit items-center", className)} {...props}>
       <FormLabel>{label}</FormLabel>
       {isRequired && (
         <Tag status="negative" size="sm" variant="subtle">
