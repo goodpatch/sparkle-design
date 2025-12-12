@@ -20,7 +20,7 @@ import {
  */
 
 figma.connect(
-  "dialog",
+  Dialog,
   "https://www.figma.com/design/7alBZXZf65YgcII41TWT0r/Sparkle-Design?node-id=14857-825",
   {
     props: {
@@ -29,33 +29,22 @@ figma.connect(
         warning: "warning",
         negative: "negative",
       }),
-      showCloseButton: figma.boolean("showCloseButton"),
       title: figma.string("title"),
       description: figma.string("description"),
     },
-    example: props => {
-      const iconMap: Record<string, React.ReactNode> = {
-        neutral: null,
-        warning: <DialogIcon icon="warning" className="text-warning-500" />,
-        negative: <DialogIcon icon="error" className="text-negative-400" />,
-      };
-      return (
-        <Dialog>
-          <DialogContent showCloseButton={props.showCloseButton}>
-            <DialogHeader>
-              <DialogTitle>
-                {iconMap[props.variant]}
-                {props.title}
-              </DialogTitle>
-              <DialogDescription>{props.description}</DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <DialogCancel>キャンセル</DialogCancel>
-              <DialogAction>保存</DialogAction>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      );
-    },
+    example: props => (
+      <Dialog>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{props.title}</DialogTitle>
+            <DialogDescription>{props.description}</DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogCancel>キャンセル</DialogCancel>
+            <DialogAction>保存</DialogAction>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    ),
   }
 );
