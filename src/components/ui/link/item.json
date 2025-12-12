@@ -12,7 +12,6 @@
   ],
   "dependencies": [],
   "registryDependencies": [
-    "https://sparkle-design.vercel.app/r/icon.json",
-    "https://sparkle-design.vercel.app/r/sparkle-design-theme.json"
+    "https://sparkle-design.vercel.app/r/icon.json"
   ]
 }
