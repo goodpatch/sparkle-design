@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 
 import { Button } from "../button";
-import { toast, ToastToaster } from "./index";
+import { toastFn, ToastToaster } from "./index";
 
 const meta: Meta<typeof ToastToaster> = {
   title: "Feedback/Toast",
@@ -27,7 +27,7 @@ export const Playground: Story = {
         <Button
           onClick={() => {
             setCount(previous => previous + 1);
-            toast(`保存しました (${count + 1})`, {
+            toastFn(`保存しました (${count + 1})`, {
               description: "最新の変更が反映されました",
             });
           }}

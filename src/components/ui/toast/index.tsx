@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 
 export type { ExternalToast, ToastClassnames, ToastT } from "sonner";
 
-const toast = sonnerToast;
+export { sonnerToast as toastFn };
 
 export type ToastToasterProps = React.ComponentProps<typeof SonnerToaster>;
 

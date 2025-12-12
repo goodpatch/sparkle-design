@@ -2,7 +2,7 @@ import React from "react";
 import { act, render, waitFor } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 
-import { toast, ToastToaster } from "./index";
+import { toastFn, ToastToaster } from "./index";
 
 describe("ToastToaster", () => {
   it("renders the toaster container", async () => {
@@ -23,7 +23,7 @@ describe("ToastToaster", () => {
     // When: toast を呼び出す
     let toastId: string | number | undefined;
     act(() => {
-      toastId = toast("テストトースト");
+      toastId = toastFn("テストトースト");
     });
 
     // Then: toast 関数は識別子を返す
@@ -32,7 +32,7 @@ describe("ToastToaster", () => {
     );
 
     act(() => {
-      toast.dismiss(toastId);
+      toastFn.dismiss(toastId);
     });
   });
 });
