@@ -136,10 +136,7 @@ export const Default: Story = {
                 <FormItem>
                   <FormHeader label="アカウント種別" isRequired />
                   <FormControl>
-                    <Radio
-                      onValueChange={field.onChange}
-                      value={field.value}
-                    >
+                    <Radio onValueChange={field.onChange} value={field.value}>
                       <RadioItem value="personal" label="個人" />
                       <RadioItem value="company" label="法人" />
                     </Radio>
