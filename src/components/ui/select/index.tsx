@@ -313,7 +313,7 @@ function SelectItem({
       <SelectPrimitive.ItemIndicator className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
         <Icon icon="check" size={4} />
       </SelectPrimitive.ItemIndicator>
-      <SelectPrimitive.ItemText className={cn("flex-1", className)}>
+      <SelectPrimitive.ItemText className={cn("flex-1", textClassName)}>
         {children}
       </SelectPrimitive.ItemText>
     </SelectPrimitive.Item>

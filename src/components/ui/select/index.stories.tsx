@@ -56,7 +56,7 @@ export const Default: Story = {
   argTypes: argTypes,
   render: args => (
     <Select>
-      <SelectTrigger className="w-[280px]" {...args}>
+      <SelectTrigger className="w-[480px]" {...args}>
         <SelectValue placeholder="Select a timezone" />
       </SelectTrigger>
       <SelectContent>
