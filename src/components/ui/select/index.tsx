@@ -11,7 +11,7 @@ const selectTriggerVariants = cva(
   [
     "flex items-center justify-between w-full rounded-action border bg-white text-text-high transition-colors",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
-    "overflow-hidden whitespace-pre",
+    "overflow-hidden whitespace-nowrap",
   ].join(" "),
   {
     variants: {
@@ -179,6 +179,7 @@ function SelectTrigger({
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       data-size={size}
+      aria-invalid={isInvalid || undefined}
       className={cn(
         selectTriggerVariants({
           size,
@@ -190,11 +191,14 @@ function SelectTrigger({
       disabled={disabled}
       {...props}
     >
-      {children}
+      <span className="flex-1 min-w-0 text-left truncate">{children}</span>
       <SelectPrimitive.Icon asChild>
         <Icon
           icon="arrow_drop_down"
-          className={cn(selectIconVariants({ size, isDisabled: disabled }))}
+          className={cn(
+            selectIconVariants({ size, isDisabled: disabled }),
+            "shrink-0"
+          )}
         />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
