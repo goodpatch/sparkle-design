@@ -10,10 +10,6 @@
       "type": "registry:component"
     }
   ],
-  "dependencies": [
-    "sonner"
-  ],
-  "registryDependencies": [
-    "https://sparkle-design.vercel.app/r/button.json"
-  ]
+  "dependencies": ["sonner"],
+  "registryDependencies": ["https://sparkle-design.vercel.app/r/button.json"]
 }

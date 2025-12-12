@@ -9,7 +9,7 @@
 
 ## 動作確認
 
-- [ ] `pnpm lint` を実行
+- [ ] `pnpm lint:fix && pnpm format` を実行
 - [ ] `pnpm build:package` を実行してパッケージが正常にビルドされることを確認
 - [ ] `pnpm test` を実行してテストがすべて成功することを確認
 

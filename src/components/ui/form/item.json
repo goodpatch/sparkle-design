@@ -14,10 +14,7 @@
       "type": "registry:component"
     }
   ],
-  "dependencies": [
-    "react-hook-form",
-    "radix-ui"
-  ],
+  "dependencies": ["react-hook-form", "radix-ui"],
   "registryDependencies": [
     "https://sparkle-design.vercel.app/r/tag.json",
     "https://sparkle-design.vercel.app/r/icon.json",

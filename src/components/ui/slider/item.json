@@ -14,8 +14,6 @@
       "type": "registry:lib"
     }
   ],
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "registryDependencies": []
 }
