@@ -50,19 +50,19 @@ type Story = StoryObj<typeof Form>;
 
 const formSchema = z.object({
   username: z.string().min(2, {
-    message: "ユーザー名は2文字以上である必要があります。",
+    error: "ユーザー名は2文字以上である必要があります。",
   }),
   email: z.email({
-    message: "有効なメールアドレスを入力してください。",
+    error: "有効なメールアドレスを入力してください。",
   }),
   type: z.enum(["personal", "company"], {
-    message: "アカウント種別を選択してください。",
+    error: "アカウント種別を選択してください。",
   }),
   role: z.string({
-    message: "役割を選択してください。",
+    error: "役割を選択してください。",
   }),
   bio: z.string().max(160).min(4, {
-    message: "自己紹介は4文字以上160文字以内で入力してください。",
+    error: "自己紹介は4文字以上160文字以内で入力してください。",
   }),
 });
 type FormValues = z.infer<typeof formSchema>;
