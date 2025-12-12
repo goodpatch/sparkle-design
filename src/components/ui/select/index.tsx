@@ -3,12 +3,16 @@
 import * as React from "react";
 import { Select as SelectPrimitive } from "radix-ui";
 import { Icon } from "@/components/ui/icon";
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva, VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
 const selectTriggerVariants = cva(
-  "flex items-center justify-between w-full rounded-action border bg-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 overflow-hidden whitespace-pre",
+  [
+    "flex items-center justify-between w-full rounded-action border bg-white text-text-high transition-colors",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
+    "overflow-hidden whitespace-nowrap",
+  ].join(" "),
   {
     variants: {
       size: {
@@ -17,12 +21,12 @@ const selectTriggerVariants = cva(
         lg: "h-12 py-1 pl-4 pr-2 gap-2 character-4-regular-pro",
       },
       isInvalid: {
-        true: "border-negative-500 hover:border-negative-600 data-[state=open]:border-negative-800",
+        true: "bg-white border-negative-500 hover:border-negative-600 data-[state=open]:border-negative-600",
         false:
-          "border-base-200 hover:border-base-300 data-[state=open]:border-base-500",
+          "border-neutral-500 hover:border-neutral-600 data-[state=open]:border-neutral-600",
       },
       isDisabled: {
-        true: "cursor-not-allowed border-base-100 hover:border-base-100 text-base-200",
+        true: "cursor-not-allowed bg-neutral-50 border-neutral-200 hover:border-neutral-200 text-text-disabled",
         false: "cursor-pointer",
       },
     },
@@ -30,7 +34,7 @@ const selectTriggerVariants = cva(
       {
         isInvalid: true,
         isDisabled: true,
-        class: "border-negative-100 text-base-200 hover:border-negative-100",
+        class: "bg-neutral-50 border-negative-200 hover:border-negative-200",
       },
     ],
     defaultVariants: {
@@ -49,8 +53,8 @@ const selectIconVariants = cva("", {
       lg: "icon-7-fill-0",
     },
     isDisabled: {
-      true: "text-base-200",
-      false: "text-base-700",
+      true: "text-text-disabled",
+      false: "text-neutral-700",
     },
   },
   defaultVariants: {
@@ -59,12 +63,13 @@ const selectIconVariants = cva("", {
   },
 });
 
-const selectScrollButtonVariants = cva(
-  "flex cursor-default items-center justify-center py-1"
-);
-
 const selectContentVariants = cva(
-  "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-action border shadow-float",
+  [
+    "bg-popover text-popover-foreground",
+    "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+    "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+    "relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-action border shadow-float",
+  ].join(" "),
   {
     variants: {
       position: {
@@ -93,22 +98,6 @@ const selectViewportVariants = cva("p-1", {
     position: "popper",
   },
 });
-
-const selectLabelVariants = cva(
-  "px-2 py-1.5 character-1-bold-pro text-base-900"
-);
-
-const selectItemVariants = cva(
-  "relative flex w-full cursor-default select-none items-center rounded-notice py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-base-100 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
-);
-
-const selectItemIndicatorVariants = cva(
-  "absolute right-2 flex h-3.5 w-3.5 items-center justify-center"
-);
-
-const selectItemTextVariants = cva("character-1-regular-pro text-base-700");
-
-const selectSeparatorVariants = cva("-mx-1 my-1 h-px bg-base-100");
 
 /**
  * **概要 / Overview**
@@ -150,11 +139,33 @@ function SelectValue({
   return <SelectPrimitive.Value data-slot="select-value" {...props} />;
 }
 
+type SelectTriggerVariantProps = VariantProps<typeof selectTriggerVariants>;
+export interface SelectTriggerProps
+  extends React.ComponentProps<typeof SelectPrimitive.Trigger> {
+  /**
+   * セレクトトリガーのサイズバリエーション
+   * en: Size variation of the select trigger
+   */
+  size?: SelectTriggerVariantProps["size"];
+  /**
+   * セレクトトリガーのエラー状態
+   * en: Error state of the select trigger
+   */
+  isInvalid?: SelectTriggerVariantProps["isInvalid"];
+  /**
+   * セレクトトリガーの無効化状態
+   * en: Disabled state of the select trigger
+   */
+  disabled?: boolean;
+}
+
 /**
  * **概要 / Overview**
  *
  * - セレクトのトリガー部分で、クリックで選択肢リストを開閉するボタンとして機能します。
  * - en: The trigger part of the select that functions as a button to open/close the option list when clicked.
+ *
+ * @param {SelectTriggerProps} props
  */
 function SelectTrigger({
   className,
@@ -163,14 +174,12 @@ function SelectTrigger({
   isInvalid,
   disabled,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
-  size: "sm" | "md" | "lg";
-  isInvalid?: boolean;
-}) {
+}: SelectTriggerProps) {
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       data-size={size}
+      aria-invalid={isInvalid || undefined}
       className={cn(
         selectTriggerVariants({
           size,
@@ -182,11 +191,14 @@ function SelectTrigger({
       disabled={disabled}
       {...props}
     >
-      {children}
+      <span className="flex-1 min-w-0 text-left truncate">{children}</span>
       <SelectPrimitive.Icon asChild>
         <Icon
-          icon="expand_more"
-          className={cn(selectIconVariants({ size, isDisabled: disabled }))}
+          icon="arrow_drop_down"
+          className={cn(
+            selectIconVariants({ size, isDisabled: disabled }),
+            "shrink-0"
+          )}
         />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
@@ -252,10 +264,22 @@ function SelectLabel({
   return (
     <SelectPrimitive.Label
       data-slot="select-label"
-      className={cn(selectLabelVariants(), className)}
+      className={cn(
+        "px-2 py-1.5 character-1-bold-pro text-text-high",
+        className
+      )}
       {...props}
     />
   );
+}
+
+export interface SelectItemProps
+  extends React.ComponentProps<typeof SelectPrimitive.Item> {
+  /**
+   * 選択肢テキスト部分に適用するクラス名
+   * en: Class name applied to the selectable item text area
+   */
+  textClassName?: string;
 }
 
 /**
@@ -273,23 +297,28 @@ function SelectLabel({
 function SelectItem({
   className,
   children,
+  textClassName,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Item>) {
+}: SelectItemProps) {
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
-      className={cn(selectItemVariants(), className)}
+      className={cn(
+        [
+          "relative flex w-full cursor-default select-none items-center rounded-notice",
+          "py-1.5 pl-8 pr-2 text-sm",
+          "character-1-regular-pro text-neutral-700",
+          "outline-none focus:bg-neutral-100 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        ].join(" "),
+        className
+      )}
       {...props}
     >
-      <span className={selectItemIndicatorVariants()}>
-        <SelectPrimitive.ItemIndicator>
-          <Icon icon="check" size={4} />
-        </SelectPrimitive.ItemIndicator>
-      </span>
-      <SelectPrimitive.ItemText>
-        <span className={cn(selectItemTextVariants(), className)}>
-          {children}
-        </span>
+      <SelectPrimitive.ItemIndicator className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+        <Icon icon="check" size={4} />
+      </SelectPrimitive.ItemIndicator>
+      <SelectPrimitive.ItemText className={cn("flex-1", textClassName)}>
+        {children}
       </SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
   );
@@ -314,7 +343,7 @@ function SelectSeparator({
   return (
     <SelectPrimitive.Separator
       data-slot="select-separator"
-      className={cn(selectSeparatorVariants(), className)}
+      className={cn("-mx-1 my-1 h-px bg-divider-low", className)}
       {...props}
     />
   );
@@ -339,7 +368,10 @@ function SelectScrollUpButton({
   return (
     <SelectPrimitive.ScrollUpButton
       data-slot="select-scroll-up-button"
-      className={cn(selectScrollButtonVariants(), className)}
+      className={cn(
+        "flex cursor-default items-center justify-center py-1",
+        className
+      )}
       {...props}
     >
       <Icon icon="expand_less" size={4} />
@@ -366,7 +398,10 @@ function SelectScrollDownButton({
   return (
     <SelectPrimitive.ScrollDownButton
       data-slot="select-scroll-down-button"
-      className={cn(selectScrollButtonVariants(), className)}
+      className={cn(
+        "flex cursor-default items-center justify-center py-1",
+        className
+      )}
       {...props}
     >
       <Icon icon="expand_more" size={4} />
