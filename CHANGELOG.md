@@ -5,16 +5,20 @@
 
 ## [Unreleased]
 
+## [0.0.1] - 2025-12-12
+
 ### 追加
 
 #### UI コンポーネント
 
 - Badge コンポーネントの実装
+- Breadcrumb コンポーネントの実装
 - Button コンポーネント（複数バリアント対応）
 - Card コンポーネントの実装
 - Checkbox コンポーネントの実装
 - Dialog コンポーネントの実装
 - Divider コンポーネントの実装
+- Form コンポーネントの実装
 - Icon コンポーネントの実装
 - Icon Button コンポーネントの実装
 - Inline Message コンポーネントの実装
@@ -22,19 +26,21 @@
 - Input Password コンポーネントの実装
 - Link コンポーネントの実装
 - Modal コンポーネントの実装
+- Overlay コンポーネントの実装
 - Radio コンポーネントの実装
 - Select コンポーネントの実装
 - Skeleton コンポーネントの実装
 - Slider コンポーネントの実装
 - Spinner コンポーネントの実装
 - Switch コンポーネントの実装
+- Tabs コンポーネントの実装
 - Tag コンポーネントの実装
 - Textarea コンポーネントの実装
 - Toast コンポーネントの実装
+- Tooltip コンポーネントの実装
 
 #### デザインシステム
 
-- Style Dictionary による デザイントークン管理システムの構築
 - CSS カスタムプロパティの自動生成機能
 - Tailwind CSS との統合によるトークンベースのスタイリング
 
@@ -44,13 +50,11 @@
 - アクセシビリティチェック機能の統合（@storybook/addon-a11y） (`a06e66e`)
 - Storybook に URL コピー機能を追加 (`9e4c070`)
 - Vitest による単体テスト環境の構築
-- Playwright による E2E テスト環境の整備
 - ESLint による コード品質管理
 
 #### Figma 統合
 
 - Figma Code Connect による デザイン・コード連携機能
-- コンポーネントと Figma デザインファイルの自動同期
 
 #### ビルド・配布
 
@@ -64,3 +68,11 @@
 - コントリビューションガイドライン（CONTRIBUTING.md）の整備
 - MCP（Model Context Protocol）に関するドキュメント
 - CHANGELOG の作成 (`7276c4d`)
+
+### 修正
+
+- `sparkle-design-theme.json` の依存関係を削除し、ユーザー定義のテーマを優先するように変更
+- Tailwind CSS JIT ビルドエラーの修正（`@utility` から `@layer utilities` への変更）
+- Form コンポーネントのレイアウト調整（Grid レイアウトの適用、高さの自動調整）
+- Tag コンポーネントの高さが親要素に合わせて伸長しないように修正
+- Storybook の型安全性向上とレイアウト改善

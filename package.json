@@ -1,7 +1,9 @@
 {
   "name": "sparkle-design",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.1",
+  "publishConfig": {
+    "access": "restricted"
+  },
   "author": "Goodpatch Inc. <sparkle-design@goodpatch.com>",
   "type": "module",
   "description": "Sparkle DesignのReactコンポーネントライブラリ",
@@ -36,7 +38,7 @@
     "build:registry:vercel": "bash scripts/build-registry-vercel.sh",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npx lightningcss --version || true",
-    "build:package": "rm -rf dist && tsc -p tsconfig.build.json && cp src/app/globals.css dist/globals.css && cp src/app/sparkle-design.css dist/sparkle-design.css",
+    "build:package": "rm -rf dist && tsc -p tsconfig.build.json",
     "format": "prettier --config ./.prettierrc -w \"**/*.{js,ts,tsx,css,md,json}\"",
     "format:check": "prettier --config ./.prettierrc --check \"**/*.{js,ts,tsx,css,md,json}\"",
     "lint:fix": "next lint --fix",
@@ -102,9 +104,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.js"
-    },
-    "./globals.css": "./dist/globals.css",
-    "./sparkle-design.css": "./dist/sparkle-design.css"
+    }
   },
   "files": [
     "dist"
