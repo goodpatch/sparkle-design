@@ -138,7 +138,7 @@ export const Default: Story = {
                   <FormControl>
                     <Radio
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                     >
                       <RadioItem value="personal" label="個人" />
                       <RadioItem value="company" label="法人" />
@@ -184,7 +184,7 @@ export const Default: Story = {
                 <FormHeader label="自己紹介" />
                 <FormControl>
                   <Textarea
-                    placeholder="自己紹介を入力してください"
+                    placeholder="2026年生まれ、東京育ち"
                     className="resize-none"
                     {...field}
                     isInvalid={fieldState.invalid}
