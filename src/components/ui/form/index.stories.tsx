@@ -58,7 +58,7 @@ const formSchema = z.object({
   type: z.enum(["personal", "company"], {
     error: "アカウント種別を選択してください。",
   }),
-  role: z.string({
+  role: z.enum(["developer", "designer", "manager"], {
     error: "役割を選択してください。",
   }),
   bio: z.string().max(160).min(4, {
@@ -75,6 +75,8 @@ export const Default: Story = {
         username: "",
         email: "",
         bio: "",
+        type: "personal",
+        role: "developer",
       },
     });
 
@@ -155,7 +157,7 @@ export const Default: Story = {
                   <FormControl>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                     >
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="選択してください" />
