@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 // タグのスタイル定義
 const tagVariants = cva(
-  "inline-flex items-center justify-center rounded-notice text-center",
+  "inline-flex items-center justify-center rounded-notice text-center h-fit",
   {
     variants: {
       variant: {

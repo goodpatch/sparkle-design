@@ -18,7 +18,6 @@
   "registryDependencies": [
     "https://sparkle-design.vercel.app/r/tag.json",
     "https://sparkle-design.vercel.app/r/icon.json",
-    "https://sparkle-design.vercel.app/r/tooltip.json",
-    "https://sparkle-design.vercel.app/r/sparkle-design-theme.json"
+    "https://sparkle-design.vercel.app/r/tooltip.json"
   ]
 }

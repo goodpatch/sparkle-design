@@ -11,8 +11,5 @@
     }
   ],
   "dependencies": [],
-  "registryDependencies": [
-    "https://sparkle-design.vercel.app/r/input.json",
-    "https://sparkle-design.vercel.app/r/sparkle-design-theme.json"
-  ]
+  "registryDependencies": ["https://sparkle-design.vercel.app/r/input.json"]
 }
