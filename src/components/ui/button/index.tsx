@@ -341,7 +341,8 @@ function Button({
   };
 
   const hasAccessibleNameProp =
-    Boolean((props as any)["aria-label"]) || Boolean((props as any)["aria-labelledby"]);
+    Boolean((props as any)["aria-label"]) ||
+    Boolean((props as any)["aria-labelledby"]);
   const hasChildren = React.Children.count(children) > 0;
 
   if (process.env.NODE_ENV !== "production") {
@@ -416,9 +417,7 @@ function Button({
           <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-flex">
             <Spinner size={getIconSize()} className="text-current" />
           </span>
-          <span className="opacity-0">
-            {children}
-          </span>
+          <span className="opacity-0">{children}</span>
         </>
       ) : (
         <span className="px-1">{children}</span>
