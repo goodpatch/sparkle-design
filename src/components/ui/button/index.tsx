@@ -245,7 +245,9 @@ const buttonVariants = cva(
 );
 
 type ButtonVariantProps = VariantProps<typeof buttonVariants>;
-export interface ButtonProps extends React.ComponentProps<"button"> {
+type ButtonComponentProps = React.ComponentProps<"button">;
+
+export interface ButtonProps extends ButtonComponentProps {
   /**
    * ボタンのサイズバリエーション
    * en: Size variation of the button
@@ -286,6 +288,33 @@ export interface ButtonProps extends React.ComponentProps<"button"> {
    * en: Disables the button when set to true
    */
   isDisabled?: boolean;
+
+  /**
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   */
+  onMouseDown?: ButtonComponentProps["onMouseDown"];
+
+  /**
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   */
+  onPointerDown?: ButtonComponentProps["onPointerDown"];
+
+  /**
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   */
+  onTouchStart?: ButtonComponentProps["onTouchStart"];
 }
 
 /**
@@ -356,6 +385,16 @@ function Button({
     if (asChild && isButtonDisabled) {
       console.warn(
         "[Button] asChild + disabled/loading: the child element must handle disabled semantics (e.g., aria-disabled + preventing activation). Ensure the slotted element is button-like."
+      );
+    }
+
+    if (
+      (props as any).onMouseDown ||
+      (props as any).onPointerDown ||
+      (props as any).onTouchStart
+    ) {
+      console.warn(
+        "[Button] onMouseDown/onPointerDown/onTouchStart are deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Prefer onClick (activation on release)."
       );
     }
   }

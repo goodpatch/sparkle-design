@@ -468,6 +468,18 @@ describe("Button", () => {
       warnSpy.mockRestore();
     });
 
+    it("warns when pointer-down style handlers are provided (deprecated for a11y)", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <Button onPointerDown={() => {}}>PointerDown Button</Button>
+      );
+      testContainer.queryButton();
+
+      expect(warnSpy).toHaveBeenCalled();
+      warnSpy.mockRestore();
+    });
+
     it("handles rapid clicks gracefully", () => {
       // Given: onClickコールバック付きのButton
       const handleClick = vi.fn();

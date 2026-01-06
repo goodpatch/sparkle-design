@@ -44,6 +44,29 @@ Use this skill to:
 2. **Component-by-component**: take the extracted viewpoints and review each relevant component/story, focusing on applicability and evidence.
 3. **Fix**: apply minimal, safe code changes per component, then re-check affected checklist items.
 
+## Project-specific policy (sparkle-design)
+
+This repo has a few conventions about **where guarantees live**. Keep the checklist WCAG-aligned, but apply these policies when deciding whether a *code* change is required.
+
+- Project policy doc: `docs/PROJECT_POLICY.md`
+
+### Color / contrast are guaranteed in Figma
+
+In this project, color/contrast criteria (e.g. **1.4.1 / 1.4.3 / 1.4.11**) are *primarily guaranteed* by the design system (Figma).
+
+- In code reviews, **do not require code changes** for these by default.
+- If you see **token deviations / custom colors / style overrides**, mark **Needs review** and describe what to confirm with design.
+
+### Deprecate a11y-risky APIs (progressive disclosure)
+
+If an API is easy to misuse and frequently leads to WCAG violations, prefer **non-breaking deprecation** over sudden removal.
+
+Example: **WCAG 2.5.2 Pointer Cancellation**
+
+- Avoid triggering actions on `onMouseDown` / `onPointerDown` / `onTouchStart`.
+- Prefer `onClick` (activation on release).
+- Implementation approach: add `@deprecated` JSDoc + dev-only warnings; optionally reduce exposure in Storybook Docs/Controls.
+
 ## Workflow
 
 ### 1) Confirm scope and evidence sources
@@ -86,6 +109,10 @@ For each checklist item:
   - Propose a fix with minimal, safe changes.
 - When passing:
   - Record the evidence briefly (what you checked).
+
+When a check is **design-system guaranteed** (per this repo’s policy), it is acceptable to mark it **Pass** with evidence like:
+
+- "Design-system guaranteed (Figma). No code-level action required unless token deviation exists."
 
 Do **not** claim you ran tools/tests unless you actually did. If you can’t verify, use **Needs review** and state what is required to verify.
 
