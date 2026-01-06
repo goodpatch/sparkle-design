@@ -8,6 +8,7 @@ import { Spinner } from "@/components/ui/spinner";
 
 const buttonVariants = cva(
   [
+    // `relative` is required because we absolutely-position the loading spinner at the center.
     "relative inline-flex items-center justify-center gap-0.5 whitespace-nowrap rounded-action transition-colors",
     "cursor-pointer disabled:cursor-not-allowed",
     "shrink-0 outline-none",
@@ -245,9 +246,10 @@ const buttonVariants = cva(
 );
 
 type ButtonVariantProps = VariantProps<typeof buttonVariants>;
-type ButtonComponentProps = React.ComponentProps<"button">;
+type NativeButtonProps = React.ComponentPropsWithoutRef<"button">;
 
-export interface ButtonProps extends ButtonComponentProps {
+export interface ButtonProps
+  extends Omit<NativeButtonProps, "onClick" | "onKeyDown"> {
   /**
    * ボタンのサイズバリエーション
    * en: Size variation of the button
@@ -290,13 +292,18 @@ export interface ButtonProps extends ButtonComponentProps {
   isDisabled?: boolean;
 
   /**
-   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
-   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   * onClick handler.
    *
-   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
-   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   * We intentionally type this as HTMLElement because `asChild` can render non-button elements.
    */
-  onMouseDown?: ButtonComponentProps["onMouseDown"];
+  onClick?: React.MouseEventHandler<HTMLElement>;
+
+  /**
+   * onKeyDown handler.
+   *
+   * We intentionally type this as HTMLElement because `asChild` can render non-button elements.
+   */
+  onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
 
   /**
    * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
@@ -305,7 +312,7 @@ export interface ButtonProps extends ButtonComponentProps {
    * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
    * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
    */
-  onPointerDown?: ButtonComponentProps["onPointerDown"];
+  onMouseDown?: React.MouseEventHandler<HTMLElement>;
 
   /**
    * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
@@ -314,7 +321,16 @@ export interface ButtonProps extends ButtonComponentProps {
    * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
    * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
    */
-  onTouchStart?: ButtonComponentProps["onTouchStart"];
+  onPointerDown?: React.PointerEventHandler<HTMLElement>;
+
+  /**
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   */
+  onTouchStart?: React.TouchEventHandler<HTMLElement>;
 }
 
 /**
@@ -397,16 +413,16 @@ function Button({
 
   const { onClick, onKeyDown, ...restProps } = props;
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick: React.MouseEventHandler<HTMLElement> = event => {
     if (isButtonDisabled) {
       event.preventDefault();
       event.stopPropagation();
       return;
     }
-    (onClick as any)?.(event);
+    onClick?.(event);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+  const handleKeyDown: React.KeyboardEventHandler<HTMLElement> = event => {
     if (isButtonDisabled) {
       // Prevent activation keys when used with asChild (e.g., <a>).
       if (event.key === "Enter" || event.key === " ") {
@@ -415,7 +431,7 @@ function Button({
       }
       return;
     }
-    (onKeyDown as any)?.(event);
+    onKeyDown?.(event);
   };
 
   return (

@@ -449,7 +449,9 @@ describe("Button", () => {
       }).not.toThrow();
 
       // Then: a11y上の警告を出す
-      expect(warnSpy).toHaveBeenCalled();
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("[Button] Accessible name is missing")
+      );
       warnSpy.mockRestore();
 
       // Then: 正常に描画される
@@ -476,7 +478,11 @@ describe("Button", () => {
       );
       testContainer.queryButton();
 
-      expect(warnSpy).toHaveBeenCalled();
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining(
+          "[Button] onMouseDown/onPointerDown/onTouchStart are deprecated"
+        )
+      );
       warnSpy.mockRestore();
     });
 

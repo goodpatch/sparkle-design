@@ -31,7 +31,7 @@ cd <project-name>
 
 This creates a fully configured project with:
 - ✅ React + TypeScript (via Vite)
-- ✅ Tailwind CSS 3.4.1 with shadcn/ui theming system
+- ✅ Tailwind CSS 3.4.x with shadcn/ui theming system
 - ✅ Path aliases (`@/`) configured
 - ✅ 40+ shadcn/ui components pre-installed
 - ✅ All Radix UI dependencies included
@@ -41,6 +41,36 @@ This creates a fully configured project with:
 ### Step 2: Develop Your Artifact
 
 To build the artifact, edit the generated files. See **Common Development Tasks** below for guidance.
+
+## Common Development Tasks
+
+### Install dependencies
+
+```bash
+pnpm install
+```
+
+### Run the dev server
+
+```bash
+pnpm dev
+```
+
+### Build for production
+
+```bash
+pnpm build
+```
+
+### Add a shadcn/ui component
+
+The generated project includes shadcn/ui. You can add components using the shadcn CLI (if configured) or by copying components into `src/components/ui`.
+
+### Bundle into a single HTML artifact
+
+```bash
+bash scripts/bundle-artifact.sh
+```
 
 ### Step 3: Bundle to Single HTML File
 

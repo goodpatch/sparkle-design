@@ -66,7 +66,10 @@ def build_mapping(headers: list[str]) -> dict[str, str]:
     for jp_header, canonical in JP_COLUMNS.items():
         actual = header_by_norm.get(norm(jp_header))
         if actual:
-            mapping[canonical] = actual
+            # Don't override an already-mapped canonical column.
+            # Example: prefer "備考" over legacy "maddyさんチェックリスト" if both exist.
+            if canonical not in mapping:
+                mapping[canonical] = actual
 
     # Fill remaining via English-ish synonyms.
     for canonical, candidates in EN_SYNONYMS.items():
@@ -122,6 +125,8 @@ def main() -> int:
         print("⚠️  Missing required columns (cannot reliably interpret rows):")
         for c in missing_required:
             print(f"  - {c}")
+        # Non-zero exit so CI can detect invalid CSV shape.
+        return 2
 
     def col_values(canonical: str) -> list[str]:
         actual = mapping.get(canonical)

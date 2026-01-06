@@ -84,7 +84,9 @@ if [ "$NODE_VERSION" -lt 20 ]; then
 fi
 
 echo "📦 Installing Tailwind CSS and dependencies..."
-pnpm install -D tailwindcss@3.4.1 postcss autoprefixer @types/node tailwindcss-animate
+# Tailwind is kept on the 3.4.x line for compatibility with the generated shadcn setup.
+# Use a caret range to avoid locking to an old patch release.
+pnpm install -D tailwindcss@^3.4.1 postcss autoprefixer @types/node tailwindcss-animate
 pnpm install class-variance-authority clsx tailwind-merge lucide-react next-themes
 
 echo "⚙️  Creating Tailwind and PostCSS configuration..."
