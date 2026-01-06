@@ -8,7 +8,7 @@ import { Spinner } from "@/components/ui/spinner";
 
 const buttonVariants = cva(
   [
-    "inline-flex items-center justify-center gap-0.5 whitespace-nowrap rounded-action transition-colors",
+    "relative inline-flex items-center justify-center gap-0.5 whitespace-nowrap rounded-action transition-colors",
     "cursor-pointer disabled:cursor-not-allowed",
     "shrink-0 outline-none",
     "focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
@@ -300,6 +300,13 @@ export interface ButtonProps extends React.ComponentProps<"button"> {
  * <Button variant="solid" size="md" theme="primary" prefixIcon="check">確定</Button>
  * ```
  *
+ * **アクセシビリティ / Accessibility**
+ *
+ * - ボタンにはアクセシブルネームが必要です（通常は `children` のテキスト）。
+ *   アイコンのみの場合は `aria-label` / `aria-labelledby` を付与するか、可能なら `IconButton` を使用してください。
+ * - `isLoading` の場合でもアクセシブルネームは維持されます。
+ * - `asChild` を使う場合、子要素がボタン相当のセマンティクス（role/disabled/キーボード操作）を満たすようにしてください。
+ *
  * @param {ButtonProps} props
  */
 function Button({
@@ -333,10 +340,55 @@ function Button({
     }
   };
 
+  const hasAccessibleNameProp =
+    Boolean((props as any)["aria-label"]) || Boolean((props as any)["aria-labelledby"]);
+  const hasChildren = React.Children.count(children) > 0;
+
+  if (process.env.NODE_ENV !== "production") {
+    if (!hasChildren && !hasAccessibleNameProp) {
+      // Icon-only button should use IconButton, or provide aria-label/labelledby.
+      // Keep it as a warning (not an exception) to avoid breaking existing usage.
+      console.warn(
+        "[Button] Accessible name is missing. Provide children text, or set aria-label/aria-labelledby. For icon-only actions, consider using IconButton."
+      );
+    }
+    if (asChild && isButtonDisabled) {
+      console.warn(
+        "[Button] asChild + disabled/loading: the child element must handle disabled semantics (e.g., aria-disabled + preventing activation). Ensure the slotted element is button-like."
+      );
+    }
+  }
+
+  const { onClick, onKeyDown, ...restProps } = props;
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (isButtonDisabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    (onClick as any)?.(event);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (isButtonDisabled) {
+      // Prevent activation keys when used with asChild (e.g., <a>).
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      return;
+    }
+    (onKeyDown as any)?.(event);
+  };
+
   return (
     <Comp
       data-slot="button"
-      disabled={isButtonDisabled}
+      aria-busy={isLoading || undefined}
+      aria-disabled={asChild && isButtonDisabled ? true : undefined}
+      data-disabled={asChild && isButtonDisabled ? "true" : undefined}
+      disabled={asChild ? undefined : isButtonDisabled}
       className={cn(
         buttonVariants({
           variant,
@@ -347,7 +399,9 @@ function Button({
         })
       )}
       type={asChild ? undefined : props.type || "button"}
-      {...props}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      {...restProps}
     >
       {prefixIcon && (
         <Icon
@@ -362,7 +416,7 @@ function Button({
           <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-flex">
             <Spinner size={getIconSize()} className="text-current" />
           </span>
-          <span className="opacity-0" aria-hidden="true">
+          <span className="opacity-0">
             {children}
           </span>
         </>
