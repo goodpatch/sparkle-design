@@ -6,8 +6,9 @@ This is a lightweight helper script to sanity-check the checklist file structure
 It intentionally avoids enforcing a strict schema because real checklists vary.
 Instead it:
 - prints detected headers
-- checks presence of a small set of commonly expected columns
-- prints basic stats (row count, distinct severities, distinct categories)
+- detects a best-effort column mapping (JP/EN)
+- warns if important columns are missing
+- prints basic stats (row count and some distributions)
 
 Usage:
   validate_checklist_csv.py [path/to/checklist.csv]
@@ -24,17 +25,60 @@ from collections import Counter
 from pathlib import Path
 
 
-COMMON_COLUMNS = [
-    "id",
-    "category",
-    "check",
-    "how_to_test",
-    "severity",
-]
+# In this repo, the checklist uses Japanese headers. We still support common
+# English-like schemas to keep the script reusable.
+JP_COLUMNS = {
+    "達成基準": "id",
+    "項目": "category",
+    "レベル": "level",
+    "確認ポイント": "check",
+    "単体チェック可否": "unit_check",
+    "Reactでの実装例": "react_example",
+    "デザインチェック可否": "design_check",
+    # Prefer a generic header name. Keep the old one for backward compatibility.
+    "備考": "notes",
+    "maddyさんチェックリスト": "notes",
+}
+
+EN_SYNONYMS = {
+    "id": ["id", "sc", "successcriterion", "criterion"],
+    "category": ["category", "area", "topic"],
+    "level": ["level", "wcaglevel"],
+    "check": ["check", "title", "item", "description", "expected"],
+    "how_to_test": ["howtotest", "test", "steps"],
+    "severity": ["severity", "priority"],
+    "notes": ["notes", "note", "memo"],
+}
+
+REQUIRED_CANONICAL = ["id", "category", "check"]
 
 
 def norm(s: str) -> str:
     return "".join(ch.lower() for ch in s.strip() if ch not in " \t\r\n")
+
+
+def build_mapping(headers: list[str]) -> dict[str, str]:
+    """Return mapping from canonical field -> actual header name."""
+    header_by_norm = {norm(h): h for h in headers}
+    mapping: dict[str, str] = {}
+
+    # Prefer known JP headers when present.
+    for jp_header, canonical in JP_COLUMNS.items():
+        actual = header_by_norm.get(norm(jp_header))
+        if actual:
+            mapping[canonical] = actual
+
+    # Fill remaining via English-ish synonyms.
+    for canonical, candidates in EN_SYNONYMS.items():
+        if canonical in mapping:
+            continue
+        for cand in candidates:
+            actual = header_by_norm.get(norm(cand))
+            if actual:
+                mapping[canonical] = actual
+                break
+
+    return mapping
 
 
 def main() -> int:
@@ -53,8 +97,8 @@ def main() -> int:
             print("❌ CSV has no header row")
             return 1
 
-        normalized = {norm(h): h for h in headers}
-        missing = [c for c in COMMON_COLUMNS if c not in normalized]
+        mapping = build_mapping(headers)
+        missing_required = [c for c in REQUIRED_CANONICAL if c not in mapping]
 
         rows = list(reader)
 
@@ -62,30 +106,56 @@ def main() -> int:
     print(f"Headers ({len(headers)}): {headers}")
     print(f"Rows: {len(rows)}")
 
-    if missing:
-        print("⚠️  Missing common columns (this may be OK if your checklist uses different names):")
-        for c in missing:
+    if mapping:
+        print("Detected column mapping (canonical → header):")
+        for k in sorted(mapping.keys()):
+            print(f"  - {k} → {mapping[k]}")
+
+    if missing_required:
+        print("⚠️  Missing required columns (cannot reliably interpret rows):")
+        for c in missing_required:
             print(f"  - {c}")
 
-    def col_values(col_name: str) -> list[str]:
-        actual = normalized.get(col_name)
+    def col_values(canonical: str) -> list[str]:
+        actual = mapping.get(canonical)
         if not actual:
             return []
         return [r.get(actual, "").strip() for r in rows if r.get(actual, "").strip()]
 
-    severities = col_values("severity")
     categories = col_values("category")
-
-    if severities:
-        sev_counts = Counter(severities)
-        print("Severity counts:")
-        for k, v in sev_counts.most_common():
-            print(f"  - {k}: {v}")
+    levels = col_values("level")
+    unit_checks = col_values("unit_check")
+    design_checks = col_values("design_check")
+    severities = col_values("severity")
 
     if categories:
         cat_counts = Counter(categories)
         print("Category counts:")
         for k, v in cat_counts.most_common():
+            print(f"  - {k}: {v}")
+
+    if levels:
+        level_counts = Counter(levels)
+        print("Level counts:")
+        for k, v in level_counts.most_common():
+            print(f"  - {k}: {v}")
+
+    if unit_checks:
+        uc_counts = Counter(unit_checks)
+        print("Unit-check feasibility counts:")
+        for k, v in uc_counts.most_common():
+            print(f"  - {k}: {v}")
+
+    if design_checks:
+        dc_counts = Counter(design_checks)
+        print("Design-check feasibility counts:")
+        for k, v in dc_counts.most_common():
+            print(f"  - {k}: {v}")
+
+    if severities:
+        sev_counts = Counter(severities)
+        print("Severity counts:")
+        for k, v in sev_counts.most_common():
             print(f"  - {k}: {v}")
 
     return 0

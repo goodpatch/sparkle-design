@@ -23,6 +23,27 @@ This skill is designed to work even when you only have a PR diff or partial cont
 	- Default location: `assets/checklist.csv` (you can replace this file with your real checklist)
 	- If the CSV is missing or the columns are unclear: ask the user where it is and what the columns mean.
 
+### Checklist columns (current repo)
+
+The bundled checklist uses these columns (Japanese headers):
+
+- `達成基準`: WCAG success criterion id (e.g. `2.4.7`)
+- `項目`: short check name (what you are checking)
+- `レベル`: `A` / `AA` / `AAA`
+- `確認ポイント`: what to verify (acceptance criteria / expected behavior)
+- `単体チェック可否`: whether it can be checked per-component (`単体可`) or needs broader context (`単体不可`)
+- `Reactでの実装例`: implementation hints (e.g. `aria-*`, `tabIndex`, CSS)
+- `デザインチェック可否`: whether design review can validate it (`可` / `不可`)
+- `備考`: extra notes/links (may be empty)
+
+## Intended usage in this repo
+
+Use this skill to:
+
+1. **Review**: run the checklist against the target (PR / story / page / component set) and produce a structured findings report.
+2. **Component-by-component**: take the extracted viewpoints and review each relevant component/story, focusing on applicability and evidence.
+3. **Fix**: apply minimal, safe code changes per component, then re-check affected checklist items.
+
 ## Workflow
 
 ### 1) Confirm scope and evidence sources
@@ -35,10 +56,18 @@ Ask (or infer) what artifacts are in scope and what “done” means.
 
 ### 2) Load the checklist CSV and normalize it
 
-Checklist CSV can vary. Use a tolerant approach:
+Checklist CSV can vary. Use a tolerant approach.
 
-- Identify header columns for: `id`, `category`, `title`/`check`, `how_to_test`, `severity`/`priority`, `applies_to`/`component`, `notes`.
-- If you cannot map columns unambiguously, ask the user for a mapping.
+For this repo’s checklist, map it like this when producing your report:
+
+- **ID** → `達成基準`
+- **Category** → `項目`
+- **Level** → `レベル`
+- **Check / Expected** → `確認ポイント`
+- **Implementation hints** → `Reactでの実装例`
+- **Scope note** → `単体チェック可否` / `デザインチェック可否`
+
+If you cannot map columns unambiguously, ask the user for a mapping.
 
 Treat each row as a single “check item” with:
 
@@ -68,7 +97,7 @@ Output in this structure:
 	- Totals: Pass / Fail / N/A / Needs review
 	- Top risks (highest severity failures)
 2. **Findings table** (one row per checklist item)
-	- ID, Category, Check, Result, Severity, Evidence, Recommended fix
+	- ID, Category, Level, Check, Result, Evidence, Recommended fix
 3. **Action list**
 	- Concrete tasks grouped by area (components, docs, tests, tooling)
 4. **Follow-ups**
@@ -76,7 +105,7 @@ Output in this structure:
 
 ## Output table template
 
-| ID | Category | Check | Result | Severity | Evidence | Recommended fix |
+| ID | Category | Level | Check | Result | Evidence | Recommended fix |
 |---:|---|---|---|---|---|---|
 
 ## Guardrails
