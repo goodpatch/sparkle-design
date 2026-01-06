@@ -44,6 +44,12 @@ Use this skill to:
 2. **Component-by-component**: take the extracted viewpoints and review each relevant component/story, focusing on applicability and evidence.
 3. **Fix**: apply minimal, safe code changes per component, then re-check affected checklist items.
 
+## Workflow (detailed)
+
+For the detailed, step-by-step workflow (including **status updates like `README.md`**), see:
+
+- `docs/WORKFLOW.md`
+
 ## Project-specific policy (sparkle-design)
 
 This repo has a few conventions about **where guarantees live**. Keep the checklist WCAG-aligned, but apply these policies when deciding whether a *code* change is required.
@@ -68,6 +74,8 @@ Example: **WCAG 2.5.2 Pointer Cancellation**
 - Implementation approach: add `@deprecated` JSDoc + dev-only warnings; optionally reduce exposure in Storybook Docs/Controls.
 
 ## Workflow
+
+This section is a short overview. For the full workflow (including status update criteria), see `docs/WORKFLOW.md`.
 
 ### 1) Confirm scope and evidence sources
 
