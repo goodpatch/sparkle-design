@@ -1,0 +1,2 @@
+id,category,check,how_to_test,severity,applies_to,notes
+EX-001,Forms,Inputs have an accessible name,Verify input has associated label or aria-label/aria-labelledby,high,all,
