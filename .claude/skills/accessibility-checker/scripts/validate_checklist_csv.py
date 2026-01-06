@@ -90,17 +90,24 @@ def main() -> int:
         print(f"❌ Checklist not found: {path}")
         return 1
 
-    with path.open(newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        headers = reader.fieldnames or []
-        if not headers:
-            print("❌ CSV has no header row")
-            return 1
+    try:
+        with path.open(newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            headers = reader.fieldnames or []
+            if not headers:
+                print("❌ CSV has no header row")
+                return 1
 
-        mapping = build_mapping(headers)
-        missing_required = [c for c in REQUIRED_CANONICAL if c not in mapping]
+            mapping = build_mapping(headers)
+            missing_required = [c for c in REQUIRED_CANONICAL if c not in mapping]
 
-        rows = list(reader)
+            rows = list(reader)
+    except UnicodeDecodeError as e:
+        print(f"❌ Encoding error reading CSV: {e}")
+        return 1
+    except csv.Error as e:
+        print(f"❌ CSV parsing error: {e}")
+        return 1
 
     print(f"✅ Checklist: {path}")
     print(f"Headers ({len(headers)}): {headers}")

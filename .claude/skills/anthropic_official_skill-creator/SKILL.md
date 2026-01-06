@@ -48,7 +48,7 @@ Think of Claude as exploring a path: a narrow bridge with cliffs needs specific 
 
 Every skill consists of a required SKILL.md file and optional bundled resources:
 
-```
+```text
 skill-name/
 ├── SKILL.md (required)
 │   ├── YAML frontmatter metadata (required)
@@ -109,7 +109,7 @@ A skill should only contain essential files that directly support its functional
 - CHANGELOG.md
 - etc.
 
-The skill should only contain the information needed for an AI agent to do the job at hand. It should not contain auxilary context about the process that went into creating it, setup and testing procedures, user-facing documentation, etc. Creating additional documentation files just adds clutter and confusion.
+The skill should only contain the information needed for an AI agent to do the job at hand. It should not contain auxiliary context about the process that went into creating it, setup and testing procedures, user-facing documentation, etc. Creating additional documentation files just adds clutter and confusion.
 
 ### Progressive Disclosure Design Principle
 
@@ -148,7 +148,7 @@ Claude loads FORMS.md, REFERENCE.md, or EXAMPLES.md only when needed.
 
 For Skills with multiple domains, organize content by domain to avoid loading irrelevant context:
 
-```
+```text
 bigquery-skill/
 ├── SKILL.md (overview and navigation)
 └── reference/
@@ -162,7 +162,7 @@ When a user asks about sales metrics, Claude only reads sales.md.
 
 Similarly, for skills supporting multiple frameworks or variants, organize by variant:
 
-```
+```text
 cloud-deploy/
 ├── SKILL.md (workflow + provider selection)
 └── references/

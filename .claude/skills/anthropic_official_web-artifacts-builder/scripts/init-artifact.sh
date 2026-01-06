@@ -25,15 +25,17 @@ fi
 
 # Detect OS and set sed syntax
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  SED_INPLACE="sed -i ''"
+  SED_INPLACE=(sed -i '')
 else
-  SED_INPLACE="sed -i"
+  SED_INPLACE=(sed -i)
 fi
 
 # Check if pnpm is installed
 if ! command -v pnpm &> /dev/null; then
-  echo "📦 pnpm not found. Installing pnpm..."
-  npm install -g pnpm
+  echo "❌ pnpm not found. Please install pnpm before running this script."
+  echo "   Recommended (Node 16.13+): corepack enable && corepack prepare pnpm@latest --activate"
+  echo "   Or: npm install -g pnpm"
+  exit 1
 fi
 
 # Check if project name is provided
@@ -45,6 +47,13 @@ fi
 PROJECT_NAME="$1"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 COMPONENTS_TARBALL="$SCRIPT_DIR/shadcn-components.tar.gz"
+
+# Abort if project directory already exists
+if [ -e "$PROJECT_NAME" ]; then
+  echo "❌ Error: Directory (or file) '$PROJECT_NAME' already exists."
+  echo "   Please choose a different project name or remove the existing path."
+  exit 1
+fi
 
 # Check if components tarball exists
 if [ ! -f "$COMPONENTS_TARBALL" ]; then
@@ -62,8 +71,8 @@ pnpm create vite "$PROJECT_NAME" --template react-ts
 cd "$PROJECT_NAME"
 
 echo "🧹 Cleaning up Vite template..."
-$SED_INPLACE '/<link rel="icon".*vite\.svg/d' index.html
-$SED_INPLACE 's/<title>.*<\/title>/<title>'"$PROJECT_NAME"'<\/title>/' index.html
+"${SED_INPLACE[@]}" '/<link rel="icon".*vite\.svg/d' index.html
+"${SED_INPLACE[@]}" 's/<title>.*<\/title>/<title>'"$PROJECT_NAME"'<\/title>/' index.html
 
 echo "📦 Installing base dependencies..."
 pnpm install

@@ -370,8 +370,8 @@ function Button({
   };
 
   const hasAccessibleNameProp =
-    Boolean((props as any)["aria-label"]) ||
-    Boolean((props as any)["aria-labelledby"]);
+    ("aria-label" in props && Boolean(props["aria-label"])) ||
+    ("aria-labelledby" in props && Boolean(props["aria-labelledby"]));
   const hasChildren = React.Children.count(children) > 0;
 
   if (process.env.NODE_ENV !== "production") {
@@ -388,11 +388,7 @@ function Button({
       );
     }
 
-    if (
-      (props as any).onMouseDown ||
-      (props as any).onPointerDown ||
-      (props as any).onTouchStart
-    ) {
+    if (props.onMouseDown || props.onPointerDown || props.onTouchStart) {
       console.warn(
         "[Button] onMouseDown/onPointerDown/onTouchStart are deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Prefer onClick (activation on release)."
       );

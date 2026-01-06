@@ -291,7 +291,7 @@ Loop back to refinement for problematic sections.
 
 The user will need to do the testing manually.
 
-### Step 1: Predict Reader Questions
+### Step 1 (No Sub-Agent): Predict Reader Questions
 
 Ask what questions people might ask when trying to discover this document. What would they type into Claude.ai?
 
@@ -300,7 +300,7 @@ Generate 5-10 questions that readers would realistically ask.
 ### Step 2: Setup Testing
 
 Provide testing instructions:
-1. Open a fresh Claude conversation: https://claude.ai
+1. Open a fresh Claude conversation: [Claude](https://claude.ai)
 2. Paste or share the document content (if using a shared doc platform with connectors enabled, provide the link)
 3. Ask Reader Claude the generated questions
 

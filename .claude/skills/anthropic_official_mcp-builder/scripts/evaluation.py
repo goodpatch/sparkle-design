@@ -10,9 +10,10 @@ import re
 import sys
 import time
 import traceback
-import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any
+
+from defusedxml import ElementTree as ET
 
 from anthropic import Anthropic
 
@@ -107,7 +108,9 @@ async def agent_loop(
     tool_metrics = {}
 
     while response.stop_reason == "tool_use":
-        tool_use = next(block for block in response.content if block.type == "tool_use")
+        tool_use = next((block for block in response.content if block.type == "tool_use"), None)
+        if tool_use is None:
+            break
         tool_name = tool_use.name
         tool_input = tool_use.input
 
@@ -165,9 +168,14 @@ async def evaluate_single_task(
     print(f"Task {task_index + 1}: Running task with question: {qa_pair['question']}")
     response, tool_metrics = await agent_loop(client, model, qa_pair["question"], tools, connection)
 
-    response_value = extract_xml_content(response, "response")
-    summary = extract_xml_content(response, "summary")
-    feedback = extract_xml_content(response, "feedback")
+    if response is None:
+        response_value = None
+        summary = None
+        feedback = None
+    else:
+        response_value = extract_xml_content(response, "response")
+        summary = extract_xml_content(response, "summary")
+        feedback = extract_xml_content(response, "feedback")
 
     duration_seconds = time.time() - start_time
 
@@ -266,7 +274,7 @@ async def run_evaluation(
             summary=result["summary"] or "N/A",
             feedback=result["feedback"] or "N/A",
         )
-        for i, (qa_pair, result) in enumerate(zip(qa_pairs, results))
+        for i, (qa_pair, result) in enumerate(zip(qa_pairs, results, strict=True))
     ])
 
     return report
