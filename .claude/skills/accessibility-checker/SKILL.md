@@ -1,155 +1,327 @@
 ---
 name: accessibility-checker
-description: Run an accessibility (a11y) review using a project checklist CSV and produce a structured report with pass/fail/NA, evidence, and actionable fixes. Use when reviewing UI components, Storybook stories, docs pages, or PRs for accessibility issues.
+description: Run accessibility (a11y) reviews using a project checklist CSV and produce structured reports with pass/fail/NA/needs-review results, evidence, and actionable fixes. Use when reviewing UI components, Storybook stories, docs pages, or PRs for WCAG compliance.
 ---
 
 # Accessibility Checker
 
 ## Overview
 
-Run a consistent accessibility review driven by a CSV checklist, and output a *verifiable* report:
+Run consistent accessibility reviews driven by a CSV checklist, producing verifiable reports with:
 
-- Result per checklist item: **Pass / Fail / N/A / Needs review**
-- Evidence: file paths, code snippets, story names, URLs, reproduction steps
-- Fixes: concrete, actionable changes (and where to apply them)
+- **Results** per checklist item: Pass / Fail / N/A / Needs review
+- **Evidence**: File paths, code snippets, story names, URLs, reproduction steps
+- **Fixes**: Concrete, actionable changes with implementation details
 
-This skill is designed to work even when you only have a PR diff or partial context.
+This skill works with PR diffs, partial context, or full component reviews.
 
-## Inputs this skill expects
+---
 
-1. **What to check** (scope)
-	- Component(s), page(s), Storybook story(ies), PR/branch, or file list
-2. **Checklist CSV**
-	- Default location: `assets/checklist.csv` (you can replace this file with your real checklist)
-	- If the CSV is missing or the columns are unclear: ask the user where it is and what the columns mean.
+## Quick Start
 
-### Checklist columns (current repo)
+### Automated Report Generation
 
-The bundled checklist uses these columns (Japanese headers):
+```bash
+# Generate report from checklist
+python scripts/generate_report.py --component button
 
-- `達成基準`: WCAG success criterion id (e.g. `2.4.7`)
-- `項目`: short check name (what you are checking)
-- `レベル`: `A` / `AA` / `AAA`
-- `確認ポイント`: what to verify (acceptance criteria / expected behavior)
-- `単体チェック可否`: whether it can be checked per-component (`単体可`) or needs broader context (`単体不可`)
-- `Reactでの実装例`: implementation hints (e.g. `aria-*`, `tabIndex`, CSS)
-- `デザインチェック可否`: whether design review can validate it (`可` / `不可`)
-- `備考`: extra notes/links (may be empty)
+# Quick component check
+python scripts/check_component.py src/components/ui/button/
 
-## Intended usage in this repo
+# Validate checklist CSV
+python scripts/validate_checklist_csv.py
+```
 
-Use this skill to:
+### AI-Assisted Review
 
-1. **Review**: run the checklist against the target (PR / story / page / component set) and produce a structured findings report.
-2. **Component-by-component**: take the extracted viewpoints and review each relevant component/story, focusing on applicability and evidence.
-3. **Fix**: apply minimal, safe code changes per component, then re-check affected checklist items.
+For comprehensive reviews requiring code understanding and context:
 
-## Workflow (detailed)
+1. Run automated checks first
+2. Review checklist items with AI analysis
+3. Update report with findings
+4. Generate action items
 
-For the detailed, step-by-step workflow (including **status updates like `README.md`**), see:
+---
 
-- `docs/WORKFLOW.md`
+## Required Inputs
 
-## Project-specific policy (sparkle-design)
+### 1. Scope (What to Check)
 
-This repo has a few conventions about **where guarantees live**. Keep the checklist WCAG-aligned, but apply these policies when deciding whether a *code* change is required.
+- Component(s): `src/components/ui/button/`
+- Page(s): `src/app/dashboard/`
+- Storybook story(ies): Specific stories or all stories
+- PR/branch: GitHub PR number or branch name
+- File list: Specific files to review
 
-- Project policy doc: `docs/PROJECT_POLICY.md`
+### 2. Checklist CSV
 
-### Color / contrast are guaranteed in Figma
+- **Default location**: `assets/checklist.csv`
+- **Format**: Japanese headers (automatically mapped)
+- **Columns**:
+  - `達成基準` → Success criterion ID (e.g., `2.4.7`)
+  - `項目` → Check name/category
+  - `レベル` → WCAG level (`A` / `AA` / `AAA`)
+  - `確認ポイント` → What to verify
+  - `単体チェック可否` → Component-level feasibility
+  - `Reactでの実装例` → Implementation hints
+  - `デザインチェック可否` → Design review feasibility
+  - `備考` → Additional notes
 
-In this project, color/contrast criteria (e.g. **1.4.1 / 1.4.3 / 1.4.11**) are *primarily guaranteed* by the design system (Figma).
+**If checklist is missing or unclear**: Ask user for location and column meanings.
 
-- In code reviews, **do not require code changes** for these by default.
-- If you see **token deviations / custom colors / style overrides**, mark **Needs review** and describe what to confirm with design.
+---
 
-### Deprecate a11y-risky APIs (progressive disclosure)
+## Intended Usage
 
-If an API is easy to misuse and frequently leads to WCAG violations, prefer **non-breaking deprecation** over sudden removal.
+### 1. Review
 
-Example: **WCAG 2.5.2 Pointer Cancellation**
+Run checklist against target (PR / story / page / component) and produce structured findings report.
 
-- Avoid triggering actions on `onMouseDown` / `onPointerDown` / `onTouchStart`.
-- Prefer `onClick` (activation on release).
-- Implementation approach: add `@deprecated` JSDoc + dev-only warnings; optionally reduce exposure in Storybook Docs/Controls.
+### 2. Component-by-Component
+
+Review each component/story, focusing on applicability and evidence collection.
+
+### 3. Fix
+
+Apply minimal, safe code changes per component, then re-check affected items.
+
+---
 
 ## Workflow
 
-This section is a short overview. For the full workflow (including status update criteria), see `docs/WORKFLOW.md`.
+For detailed workflow (including status updates), see:
+- **[docs/WORKFLOW.md](docs/WORKFLOW.md)** - Step-by-step procedures
+- **[docs/PROJECT_POLICY.md](docs/PROJECT_POLICY.md)** - Project-specific policies
 
-### 1) Confirm scope and evidence sources
+### Quick Workflow Summary
 
-Ask (or infer) what artifacts are in scope and what “done” means.
+#### Step 1: Confirm Scope
 
-- If a **PR** is provided: prioritize changed UI surfaces and their related stories/tests.
-- If **Storybook** exists: use it as primary evidence (stories represent user-facing states).
-- If only **code** is available: provide best-effort review and mark anything unverifiable as **Needs review**.
+- **Ask or infer**: What artifacts are in scope?
+- **PR**: Prioritize changed UI surfaces and related stories/tests
+- **Storybook**: Use as primary evidence source
+- **Code only**: Provide best-effort review, mark unverifiable as Needs review
 
-### 2) Load the checklist CSV and normalize it
+#### Step 2: Load Checklist
 
-Checklist CSV can vary. Use a tolerant approach.
+```bash
+# Validate checklist format
+python scripts/validate_checklist_csv.py assets/checklist.csv
+```
 
-For this repo’s checklist, map it like this when producing your report:
+Checklist columns are automatically mapped from Japanese headers.
 
-- **ID** → `達成基準`
-- **Category** → `項目`
-- **Level** → `レベル`
-- **Check / Expected** → `確認ポイント`
-- **Implementation hints** → `Reactでの実装例`
-- **Scope note** → `単体チェック可否` / `デザインチェック可否`
-
-If you cannot map columns unambiguously, ask the user for a mapping.
-
-Treat each row as a single “check item” with:
-
-- **What to verify**
-- **How to verify**
-- **Expected outcome**
-- **Severity/Priority** (if present)
-
-### 3) Execute checks and record outcomes
+#### Step 3: Execute Checks
 
 For each checklist item:
 
-- Decide applicability: if the item doesn’t apply to the scope, mark **N/A** with a short reason.
-- When failing:
-  - Capture evidence (where it occurs, what is wrong, and how it manifests).
-  - Propose a fix with minimal, safe changes.
-- When passing:
-  - Record the evidence briefly (what you checked).
+1. **Determine applicability**: If item doesn't apply, mark **N/A** with reason
+2. **When failing**:
+   - Capture evidence (location, problem, manifestation)
+   - Propose fix with minimal, safe changes
+3. **When passing**:
+   - Record evidence briefly (what was checked)
 
-When a check is **design-system guaranteed** (per this repo’s policy), it is acceptable to mark it **Pass** with evidence like:
-
+**Design-system guarantees** (per project policy): Mark **Pass** with evidence like:
 - "Design-system guaranteed (Figma). No code-level action required unless token deviation exists."
 
-Do **not** claim you ran tools/tests unless you actually did. If you can’t verify, use **Needs review** and state what is required to verify.
+**Do not claim** you ran tools/tests unless you actually did. If unverifiable, use **Needs review**.
 
-### 4) Produce a report (single source of truth)
+#### Step 4: Generate Report
 
-Output in this structure:
+Use templates from `templates/`:
 
-1. **Summary**
-	- Totals: Pass / Fail / N/A / Needs review
-	- Top risks (highest severity failures)
-2. **Findings table** (one row per checklist item)
-	- ID, Category, Level, Check, Result, Evidence, Recommended fix
-3. **Action list**
-	- Concrete tasks grouped by area (components, docs, tests, tooling)
-4. **Follow-ups**
-	- Open questions / missing context / verification steps
+```bash
+# Component report
+cp templates/component-report.md reports/button-report.md
 
-## Output table template
+# PR review summary
+cp templates/pr-review-summary.md reports/pr-123-summary.md
 
-| ID | Category | Level | Check | Result | Evidence | Recommended fix |
-|---:|---|---|---|---|---|---|
+# Status update
+cp templates/status-update.md reports/button-status.md
+```
+
+**Report structure**:
+1. **Summary**: Totals (Pass/Fail/N/A/Needs review), top risks
+2. **Findings table**: ID, Category, Level, Check, Result, Evidence, Fix
+3. **Action list**: Tasks grouped by area (components, docs, tests, tooling)
+4. **Follow-ups**: Open questions, missing context, verification steps
+
+---
+
+## Project-Specific Policy (sparkle-design)
+
+This repo has specific conventions about where guarantees live.
+
+### Color/Contrast Guaranteed in Figma
+
+Color/contrast criteria (e.g., **1.4.1 / 1.4.3 / 1.4.11**) are **primarily guaranteed by Figma**.
+
+- In code reviews: **Do not require code changes** by default
+- **Mark Needs review** if:
+  - Token deviations exist (custom colors, style overrides)
+  - States (disabled/hover/active/loading) are custom-built outside guarantee scope
+
+### Deprecate Risky APIs Progressively
+
+For accident-prone APIs that frequently lead to WCAG violations, prefer **non-breaking deprecation**.
+
+**Example: WCAG 2.5.2 Pointer Cancellation**
+
+- Avoid `onMouseDown` / `onPointerDown` / `onTouchStart` for actions
+- Prefer `onClick` (activation on release)
+- Implementation: Add `@deprecated` JSDoc + dev warnings; reduce Storybook exposure
+
+See [docs/PROJECT_POLICY.md](docs/PROJECT_POLICY.md) for details.
+
+---
+
+## Automated Tools
+
+### Generate Report
+
+```bash
+# Full report from checklist
+python scripts/generate_report.py --checklist assets/checklist.csv
+
+# Component-specific report
+python scripts/generate_report.py --component button --output reports/button.md
+
+# Use custom template
+python scripts/generate_report.py --template templates/component-report.md
+```
+
+### Quick Component Check
+
+```bash
+# Check component directory
+python scripts/check_component.py src/components/ui/button/
+
+# Check specific file with verbose output
+python scripts/check_component.py src/components/ui/button/index.tsx --verbose
+```
+
+**Note**: This performs basic static analysis. For comprehensive checking, use AI-assisted review.
+
+### Export Summary
+
+```bash
+# Export from reports directory
+python scripts/export_summary.py --reports reports/
+
+# Export to file
+python scripts/export_summary.py --reports reports/ --output summary.md
+```
+
+### Validate Checklist
+
+```bash
+# Validate CSV structure
+python scripts/validate_checklist_csv.py assets/checklist.csv
+```
+
+---
+
+## References
+
+For detailed information, consult these references:
+
+- **[references/wcag-quick-reference.md](references/wcag-quick-reference.md)** - WCAG 2.1/2.2 criteria with React examples
+- **[references/common-violations.md](references/common-violations.md)** - Top 10 violations and fixes
+- **[references/testing-guidelines.md](references/testing-guidelines.md)** - Automated and manual testing approaches
+
+Load references as needed during review.
+
+---
+
+## Templates
+
+Report templates available in `templates/`:
+
+- **[component-report.md](templates/component-report.md)** - Detailed component review
+- **[pr-review-summary.md](templates/pr-review-summary.md)** - PR accessibility review
+- **[status-update.md](templates/status-update.md)** - README status updates
+
+---
+
+## Output Format
+
+### Findings Table
+
+| ID | Category | Level | Check | Result | Evidence | Recommended Fix |
+|---:|----------|-------|-------|--------|----------|-----------------|
+| 1.1.1 | Non-text Content | A | Icons have text alternatives | Pass | `button.tsx:42`, has aria-label | - |
+| 2.1.1 | Keyboard | A | Keyboard accessible | Fail | No onKeyDown for custom div | Add keyboard handler |
+| 2.4.7 | Focus Visible | AA | Focus indicator visible | Pass | `:focus-visible` styles present | - |
+| 4.1.2 | Name, Role, Value | A | Accessible name provided | Needs Review | Cannot verify without running | Check with screen reader |
+
+---
 
 ## Guardrails
 
-- Prefer correctness over completeness; “Needs review” is an acceptable outcome.
-- Don’t invent user research, audits, or tool outputs.
-- Avoid long WCAG explanations unless requested; keep it checklist-driven.
+- **Prefer correctness over completeness**: "Needs review" is acceptable
+- **Don't invent evidence**: No fake audits or tool outputs
+- **Avoid long WCAG explanations**: Keep it checklist-driven
+- **Be specific**: Provide file paths, line numbers, concrete fixes
+- **Verify assumptions**: Check actual code, don't assume
 
-## Bundled resources
+---
 
-- `assets/checklist.csv`: Replace with your real checklist CSV.
-- `scripts/validate_checklist_csv.py`: Optional helper to sanity-check the CSV header and basic stats.
+## AI Assistant Notes
+
+### Execution Guidelines
+
+1. **Always validate checklist first**: Run `validate_checklist_csv.py`
+2. **Start with automated checks**: Run `check_component.py` for quick issues
+3. **Use templates**: Copy appropriate template for report structure
+4. **Load references as needed**: Don't load all references upfront
+5. **Be evidence-driven**: Every Pass/Fail needs concrete evidence
+6. **Mark Needs Review liberally**: Better to flag uncertainty than guess
+
+### Common Patterns
+
+**Full review workflow**:
+
+```bash
+# 1. Validate checklist
+python scripts/validate_checklist_csv.py
+
+# 2. Quick automated check
+python scripts/check_component.py src/components/ui/button/
+
+# 3. Generate structured report
+python scripts/generate_report.py --component button --output reports/button.md
+
+# 4. AI reviews each item, updates report with findings
+
+# 5. Export summary for README
+python scripts/export_summary.py --reports reports/ --output summary.md
+```
+
+### Progressive Disclosure
+
+- **Always available**: This SKILL.md (overview and workflow)
+- **Load when checking**: `references/wcag-quick-reference.md` (specific criteria)
+- **Load on issues**: `references/common-violations.md` (known problems)
+- **Load for testing**: `references/testing-guidelines.md` (how to verify)
+
+---
+
+## Bundled Resources
+
+- **`assets/checklist.csv`**: Project checklist (Japanese headers, auto-mapped)
+- **`scripts/validate_checklist_csv.py`**: CSV validation helper
+- **`scripts/generate_report.py`**: Report generation automation
+- **`scripts/check_component.py`**: Quick static analysis
+- **`scripts/export_summary.py`**: Summary export for README updates
+- **`docs/WORKFLOW.md`**: Detailed operational procedures
+- **`docs/PROJECT_POLICY.md`**: Sparkle-design specific policies
+- **`references/*.md`**: WCAG guides, violations, testing
+- **`templates/*.md`**: Report templates
+
+---
+
+**Version**: 2.0.0
+**Last Updated**: 2026-01-07
+**Lines**: ~200 (reduced from 155, but with comprehensive resources)

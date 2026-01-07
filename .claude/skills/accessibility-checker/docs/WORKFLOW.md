@@ -1,112 +1,112 @@
 # Workflow (accessibility-checker)
 
-このドキュメントは `accessibility-checker` の運用手順（レビュー→修正→検証→ステータス更新）を、段階的開示できる形でまとめたものです。
+This document outlines the operational procedures (review → fix → verify → status update) for the `accessibility-checker` skill in a progressively disclosed format.
 
-関連:
+Related:
 
-- スキル本体: `../SKILL.md`
-- プロジェクト方針: `./PROJECT_POLICY.md`
-- チェックリスト: `../assets/checklist.csv`
-
----
-
-## 1. スコープの確定
-
-最初に「何をもって完了とするか」を確定します。
-
-- 対象: コンポーネント単体 / ストーリー / ページ / PR
-- 対象状態: default / hover / active / disabled / loading / error 等
-- 証跡ソース:
-  - Storybook（推奨）
-  - unit test
-  - 実装コード
-  - PR差分
+- Main skill: `../SKILL.md`
+- Project policy: `./PROJECT_POLICY.md`
+- Checklist: `../assets/checklist.csv`
 
 ---
 
-## 2. チェックリストの読み替え（このプロジェクトの方針を反映）
+## 1. Scope Definition
 
-`checklist.csv` の各行を **Pass / Fail / N/A / Needs review** で評価します。
+First, establish "what constitutes completion."
 
-### デザインシステム（Figma）保証の扱い
+- **Target**: Individual component / Story / Page / PR
+- **Target states**: default / hover / active / disabled / loading / error, etc.
+- **Evidence sources**:
+  - Storybook (recommended)
+  - Unit tests
+  - Implementation code
+  - PR diff
 
-このプロジェクトでは、色/コントラスト関連（例: 1.4.1 / 1.4.3 / 1.4.11）は **原則としてFigma側で保証**します。
+---
 
-- レポート上は Pass としてよい
-- Evidence には以下のように書く
+## 2. Checklist Interpretation (Reflecting Project Policy)
+
+Evaluate each row in `checklist.csv` as **Pass / Fail / N/A / Needs review**.
+
+### Handling Design System (Figma) Guarantees
+
+In this project, color/contrast criteria (e.g., **1.4.1 / 1.4.3 / 1.4.11**) are **primarily guaranteed by Figma**.
+
+- Report these as **Pass** by default
+- Evidence should state:
   - "Design-system guaranteed (Figma). No code-level action required unless token deviation exists."
-- ただし、以下の場合は Needs review（またはFail）
-  - デザイントークンから逸脱している（独自色指定、強い上書き、外部ライブラリ由来のスタイルなど）
-  - 状態（disabled/hover/active/loading 等）を独自に構築しており保証範囲外に見える
+- However, mark as **Needs review** (or **Fail**) if:
+  - Design tokens are deviated from (custom colors, strong overrides, external library styles)
+  - States (disabled/hover/active/loading, etc.) are custom-built and appear outside guarantee scope
 
 ---
 
-## 3. レビュー（Evidenceを残す）
+## 3. Review (Recording Evidence)
 
-チェック項目ごとに、次のどれで確認したかを記録します。
+For each checklist item, record how it was verified:
 
-- 実装コード: どのファイル/どの条件分岐/どの属性で担保しているか
-- Storybook: story名 + 再現手順
-- テスト: どのテストで何を担保しているか
+- **Implementation code**: Which file/condition/attribute ensures compliance
+- **Storybook**: Story name + reproduction steps
+- **Tests**: Which test ensures what aspect
 
-### Evidence の最低要件（推奨）
+### Minimum Evidence Requirements (Recommended)
 
-- ファイルパス（例: `src/components/ui/button/index.tsx`）
-- 状態（例: loading/disabled）
-- 何が担保されているか（例: aria-busy、アクセシブルネーム維持）
-
----
-
-## 4. 修正（最小変更 + 非破壊的改善）
-
-- 互換性を壊さずに直せるものを優先
-- 「事故りやすいAPI」は削除よりも **段階的deprecation** を優先（詳細は `PROJECT_POLICY.md`）
-
-例: WCAG 2.5.2 Pointer Cancellation
-
-- `onMouseDown` / `onPointerDown` / `onTouchStart` の常用を避ける
-- `@deprecated` + dev warning + docs で誘導する（段階的開示）
+- File path (e.g., `src/components/ui/button/index.tsx`)
+- State (e.g., loading/disabled)
+- What is guaranteed (e.g., aria-busy, accessible name maintained)
 
 ---
 
-## 5. 検証
+## 4. Fixes (Minimal Changes + Non-Breaking Improvements)
 
-- 追加/更新したテストが通ること
-- Storybookで想定状態が確認できること（可能なら）
-- 検証できない項目は Needs review として残す
+- Prioritize fixes that don't break compatibility
+- For "accident-prone APIs," prefer **gradual deprecation** over removal (see `PROJECT_POLICY.md` for details)
 
----
+Example: WCAG 2.5.2 Pointer Cancellation
 
-## 6. ステータス更新（READMEなど）
-
-### 対象
-
-`sparkle-design/README.md` の「コンポーネント対応状況」表（`A11y チェック`列）を更新します。
-
-### ✅ にしてよい条件（推奨）
-
-- チェックリストのうち、そのコンポーネントに適用される項目が **Fail なし**
-- Needs review が残る場合は、以下のどちらか
-  - それが **プロジェクト方針上の設計保証**（Figma保証など）として説明できる
-  - もしくは、そのコンポーネント単体では検証できず、別スコープで追うべきだと明確にできる
-
-### ❌ のままにする条件（例）
-
-- 主要な操作（キーボード操作/アクセシブルネーム/disabled/loading 等）に Fail がある
-- Evidence が不足しており、確認が終わっていない（= Needs review が実質的に未完了）
-
-### ステータス更新の証跡（最低限）
-
-READMEのステータスを変えるPRには、以下のどれかを添付（またはリンク）します。
-
-- PR貼り付け用のレビューまとめMarkdown（例: `docs/pr/*.md`）
-- 実行したテスト（例: `vitest run --project unit ...`）
-- 参照したStory一覧
+- Avoid routine use of `onMouseDown` / `onPointerDown` / `onTouchStart`
+- Guide with `@deprecated` + dev warning + docs (progressive disclosure)
 
 ---
 
-## 7. 変更点の共有（短いまとめ）
+## 5. Verification
 
-- 何を直したか（アクセシブルネーム、状態通知、deprecated誘導など）
-- 何を確認したか（テスト/Story）
-- 何が未確認か（Needs review）
+- Added/updated tests pass
+- Expected states can be confirmed in Storybook (if possible)
+- Items that cannot be verified remain as **Needs review**
+
+---
+
+## 6. Status Updates (README, etc.)
+
+### Target
+
+Update the "Component Status" table (`A11y Check` column) in `sparkle-design/README.md`.
+
+### ✅ Conditions for Marking Complete (Recommended)
+
+- Among checklist items applicable to the component, there are **no Fails**
+- If **Needs review** items remain, either:
+  - They can be explained as **project policy design guarantees** (e.g., Figma guarantee)
+  - Or they cannot be verified at the component level and should be tracked in a different scope
+
+### ❌ Conditions for Leaving Incomplete (Examples)
+
+- Major operations (keyboard operation/accessible name/disabled/loading, etc.) have **Fails**
+- Evidence is insufficient and verification is incomplete (i.e., **Needs review** is effectively unfinished)
+
+### Status Update Evidence (Minimum)
+
+When changing README status in a PR, attach (or link) one of the following:
+
+- Review summary Markdown for PR (e.g., `docs/pr/*.md`)
+- Test run results (e.g., `vitest run --project unit ...`)
+- List of referenced Stories
+
+---
+
+## 7. Change Summary (Brief Summary)
+
+- What was fixed (accessible name, state notification, deprecated guidance, etc.)
+- What was verified (tests/stories)
+- What remains unverified (Needs review)

@@ -1,40 +1,40 @@
-# Project policy (sparkle-design)
+# Project Policy (sparkle-design)
 
-このスキルは一般的なWCAGチェックリストに従いますが、**sparkle-design では「どこで何を保証するか」**をプロジェクト方針として定めています。
+This skill follows general WCAG checklists, but **sparkle-design defines project policy for "where to guarantee what."**
 
-## 色/コントラスト（Figma側で保証）
+## Color/Contrast (Guaranteed by Figma)
 
-このプロジェクトでは、以下は **原則としてFigma/デザインシステム側で保証**します。
+In this project, the following are **primarily guaranteed by Figma/design system**:
 
-- 1.4.1 色の使用
-- 1.4.3 コントラスト（最低限）
-- 1.4.11 非テキストのコントラスト（フォーカスリング等）
+- 1.4.1 Use of Color
+- 1.4.3 Contrast (Minimum)
+- 1.4.11 Non-text Contrast (focus rings, etc.)
 
-### レビュー時の扱い
+### Handling in Reviews
 
-- コードレビューでは **原則として修正要求しない**
-- ただし、次のようなケースは **Needs review**（またはFail）
-  - デザイントークンから逸脱した色指定（例: 独自カラー値、任意のCSS値、外部ライブラリのスタイル上書きなど）
-  - 状態（disabled/hover/active/loading等）を独自に組み立てていて、デザイン保証の範囲外に見える
+- In code reviews, **do not require code changes by default**
+- However, mark as **Needs review** (or **Fail**) in these cases:
+  - Design tokens are deviated from (e.g., custom color values, arbitrary CSS values, external library style overrides)
+  - States (disabled/hover/active/loading, etc.) are custom-built and appear outside design guarantee scope
 
-レポートには「Figma側保証のためコード変更不要」と根拠を明記し、必要ならデザイン側の確認タスクに回します。
+In reports, clearly state "Guaranteed by Figma, no code changes needed" with rationale, and escalate to design verification tasks if necessary.
 
-## アクセシビリティ的にリスクの高いAPIは段階的にdeprecated化する
+## Gradually Deprecate Accessibility-Risky APIs
 
-WCAGの達成に直接効く場合、または事故が起きやすい場合、**破壊的変更を避けつつ段階的に利用を減らす**ために `@deprecated` を活用します。
+When directly impacting WCAG achievement or when accidents are common, **use `@deprecated` to gradually reduce usage while avoiding breaking changes.**
 
-### 代表例: WCAG 2.5.2 Pointer Cancellation と Down系イベント
+### Representative Example: WCAG 2.5.2 Pointer Cancellation and Down-Event Handlers
 
-- `onMouseDown` / `onPointerDown` / `onTouchStart` でアクションを確定させる設計は、誤操作の取り消しを困難にしがち
-- 基本は **`onClick`（releaseで確定）** を推奨
+- Designs that finalize actions with `onMouseDown` / `onPointerDown` / `onTouchStart` make error recovery difficult
+- Basically recommend **`onClick` (finalize on release)**
 
-#### 実装ガイド（推奨）
+#### Implementation Guide (Recommended)
 
-- Propsを `@deprecated` として型情報に載せる（利用者へ明示）
-- 開発時（非production）に `console.warn` で誘導する（段階的開示）
-- Storybook Docs/Controls などで露出を下げる（任意）
+- Mark Props as `@deprecated` in type information (explicit to users)
+- In development (non-production), guide with `console.warn` (progressive disclosure)
+- Reduce exposure in Storybook Docs/Controls (optional)
 
-### レビュー時の扱い
+### Handling in Reviews
 
-- deprecated APIの導入は **「WCAG達成のためのプロジェクト改善」**として、チェックリストのFix候補に含めてよい
-- ただし、互換性・移行コストを考慮し、原則は warning + docs から開始する
+- Introducing deprecated APIs can be included as Fix candidates in the checklist as **"project improvement for WCAG achievement"**
+- However, consider compatibility and migration costs; start with warning + docs as a principle
