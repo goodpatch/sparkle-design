@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Local modification notice:
+# This script is based on Anthropic's official skill resources and has been modified in this repository.
+# Changes are documented in git history (e.g., dependency pinning/compatibility adjustments).
+
 # Exit on error
 set -e
 

@@ -6,6 +6,11 @@ license: Complete terms in LICENSE.txt
 
 # Web Artifacts Builder
 
+> **Local modification notice**
+>
+> This file is based on Anthropic's official skill content and has been **modified in this repository**.
+> Changes are documented in git history and include small fixes for consistency (e.g., adding missing sections referenced by the text).
+
 To build powerful frontend claude.ai artifacts, follow these steps:
 1. Initialize the frontend repo using `scripts/init-artifact.sh`
 2. Develop your artifact by editing the generated code

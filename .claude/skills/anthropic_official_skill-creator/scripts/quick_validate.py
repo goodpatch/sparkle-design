@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """
 Quick validation script for skills - minimal version
+
+Local modification notice:
+This file is based on Anthropic's official skill resources and has been modified in this repository.
+Changes are documented in git history (e.g., cross-platform robustness improvements).
 """
 
 import sys

@@ -6,6 +6,11 @@ license: Complete terms in LICENSE.txt
 
 # Skill Creator
 
+> **Local modification notice**
+>
+> This file is based on Anthropic's official skill content and has been **modified in this repository**.
+> Changes are documented in git history and were made to improve repo consistency (e.g., lint/format tweaks) and tooling compatibility.
+
 This skill provides guidance for creating effective skills.
 
 ## About Skills

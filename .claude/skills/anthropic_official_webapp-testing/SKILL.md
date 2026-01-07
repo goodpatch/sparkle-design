@@ -6,6 +6,11 @@ license: Complete terms in LICENSE.txt
 
 # Web Application Testing
 
+> **Local modification notice**
+>
+> This file is based on Anthropic's official skill content and has been **modified in this repository**.
+> Changes are documented in git history and were made to improve documentation quality and consistency.
+
 To test local web applications, write native Python Playwright scripts.
 
 **Helper Scripts Available**:
