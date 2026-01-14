@@ -295,12 +295,19 @@ Path aliases should work automatically in Next.js if tsconfig.json is configured
 
 **Cause A:** Story file is not in the correct location
 
-**Solution A:** Use co-location pattern
+**Solution A:** Use co-location pattern (path depends on your `components.json` configuration)
 
 ```
-src/components/ui/<component-name>/
+<ui-alias-path>/<component-name>/
 ├── index.tsx                      # Component
 └── <component-name>.stories.tsx   # Story (same directory)
+```
+
+Example with default configuration:
+```
+src/components/ui/<component-name>/
+├── index.tsx
+└── <component-name>.stories.tsx
 ```
 
 **Cause B:** Storybook configuration doesn't include the story path

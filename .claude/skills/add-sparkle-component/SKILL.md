@@ -123,56 +123,67 @@ python scripts/install_component.py <component-name>
 ```
 
 **What happens:**
-- Component files installed to `src/components/ui/<component-name>/index.tsx`
+- Component files installed to the path specified in `components.json` (typically `src/components/ui/<component-name>/index.tsx` or similar)
 - Dependencies automatically installed
 - TypeScript types generated
 - Related components installed if needed (Icon, Spinner, etc.)
+
+**Note:** The exact installation path is determined by the `aliases.ui` field in your `components.json` file.
 
 **Important:** CSS regeneration is **NOT needed** after installing components.
 
 ### 4. Verify CSS Imports (First Time Only)
 
-For first-time setup, verify CSS import structure:
+For first-time setup, verify CSS import structure. The validation script will check common locations for your project structure.
 
-**Next.js App Router:**
+**Typical Next.js App Router setup:**
 
 ```tsx
-// src/app/globals.css
+// <your-project>/app/globals.css or src/app/globals.css
 @import "tailwindcss";
 @import "./sparkle-design.css";
 
-// src/app/layout.tsx
+// <your-project>/app/layout.tsx or src/app/layout.tsx
 import "./globals.css";
 ```
 
-**Next.js Pages Router:**
+**Typical Next.js Pages Router setup:**
 
 ```tsx
-// styles/globals.css
+// styles/globals.css or src/styles/globals.css
 @import "tailwindcss";
 @import "./sparkle-design.css";
 
 // pages/_app.tsx
-import "../styles/globals.css";
+import "../styles/globals.css";  // Adjust path as needed
 ```
 
-**Storybook:**
+**Storybook (adjust path to match your structure):**
 
 ```js
 // .storybook/preview.js
-import "../src/app/globals.css";
+import "../src/app/globals.css";  // or "../app/globals.css" or "../styles/globals.css"
 ```
+
+**Note:** The validation script automatically detects CSS files in common locations. Your project structure may vary.
 
 **For detailed CSS setup instructions**, see [references/css-structure.md](references/css-structure.md)
 
 ### 5. Create/Update Storybook Story
 
-Components use co-location pattern - stories live next to components:
+Components use co-location pattern - stories live next to components. The exact path depends on your `components.json` configuration:
 
 ```
-src/components/ui/<component-name>/
+<ui-alias-path>/<component-name>/
 ├── index.tsx                      # Component
 └── <component-name>.stories.tsx   # Story
+```
+
+**Example with default configuration (`src/components/ui`):**
+```
+src/components/ui/<component-name>/
+├── index.tsx
+└── <component-name>.stories.tsx
 ```
 
 **Create new story:**
@@ -239,14 +250,16 @@ export const Wrong: Story = {
 
 After installation, verify:
 
-- [ ] Component installed at `src/components/ui/<component-name>/index.tsx`
+- [ ] Component installed at the correct path (check console output after installation)
 - [ ] CSS imports configured correctly (first time only)
 - [ ] Old duplicate files removed (if any)
-- [ ] Storybook story created/updated
+- [ ] Storybook story created/updated at the component location
 - [ ] No type errors: `<pm> lint`
 - [ ] Component displays correctly: `<pm> storybook`
 
-**Note:** `<pm>` means your package manager (npm/pnpm/yarn/bun)
+**Note:**
+- `<pm>` means your package manager (npm/pnpm/yarn/bun)
+- Component path is determined by the `aliases.ui` field in your `components.json`
 
 ---
 
@@ -285,7 +298,7 @@ pnpm dlx sparkle-design-cli
 ### Quick Solutions
 
 **Type errors in stories:**
-- Fix import path: `import { Button } from "./button/"` (with trailing slash)
+- Fix import path: `import { Button } from "./"` (import from the component directory)
 
 **Styles not applying:**
 - Check CSS import order: Tailwind before Sparkle Design CSS
@@ -372,9 +385,10 @@ Sparkle Design components provide:
 
 ### Project Documentation
 
-- [AGENTS.md](../../AGENTS.md) - Project guidelines
-- [src/components/AGENTS.md](../../src/components/AGENTS.md) - Component development guide
-- [README.md](../../README.md) - Project overview
+Check your project's documentation for:
+- Project-specific guidelines (e.g., AGENTS.md, CONTRIBUTING.md)
+- Component development conventions
+- Code style and patterns
 
 ---
 

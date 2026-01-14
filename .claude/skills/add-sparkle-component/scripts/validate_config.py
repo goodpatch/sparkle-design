@@ -108,6 +108,33 @@ def check_sparkle_config(project_path: Path) -> tuple[bool, list[str]]:
         return False, messages
 
 
+def find_css_files(project_path: Path, css_pattern: str) -> list[Path]:
+    """Find CSS files matching the pattern in common locations.
+
+    Args:
+        project_path: Path to the project directory
+        css_pattern: CSS filename to search for (e.g., "sparkle-design.css")
+
+    Returns:
+        List of matching paths
+    """
+    common_locations = [
+        "src/app",
+        "src/styles",
+        "styles",
+        "app",
+        "public/styles",
+    ]
+
+    matches = []
+    for loc in common_locations:
+        css_path = project_path / loc / css_pattern
+        if css_path.exists():
+            matches.append(css_path)
+
+    return matches
+
+
 def check_css_imports(project_path: Path) -> tuple[bool, list[str]]:
     """Check CSS import structure.
 
@@ -119,52 +146,51 @@ def check_css_imports(project_path: Path) -> tuple[bool, list[str]]:
     """
     messages: list[str] = []
 
-    # Check for sparkle-design.css
-    css_locations = [
-        project_path / "src" / "app" / "sparkle-design.css",
-        project_path / "src" / "styles" / "sparkle-design.css",
-        project_path / "styles" / "sparkle-design.css",
-    ]
+    # Check for sparkle-design.css (or similar design system CSS)
+    design_css_names = ["sparkle-design.css", "design-system.css", "theme.css"]
+    design_css_found = False
+    design_css_name = "sparkle-design.css"
 
-    css_found = False
-    for css_path in css_locations:
-        if css_path.exists():
-            messages.append(f"✅ Found sparkle-design.css at {css_path.relative_to(project_path)}")
-            css_found = True
+    for css_name in design_css_names:
+        matches = find_css_files(project_path, css_name)
+        if matches:
+            design_css_found = True
+            design_css_name = css_name
+            messages.append(f"✅ Found {css_name} at {matches[0].relative_to(project_path)}")
             break
 
-    if not css_found:
-        messages.append("⚠️  sparkle-design.css not found in common locations")
+    if not design_css_found:
+        messages.append("⚠️  Design system CSS not found in common locations")
+        messages.append("   Expected filenames: sparkle-design.css, design-system.css, or theme.css")
         messages.append("   Generate it with: <pm> dlx sparkle-design-cli")
 
-    # Check for globals.css
-    globals_locations = [
-        project_path / "src" / "app" / "globals.css",
-        project_path / "src" / "styles" / "globals.css",
-        project_path / "styles" / "globals.css",
-    ]
-
+    # Check for globals.css (or similar main CSS file)
+    globals_names = ["globals.css", "global.css", "main.css", "styles.css"]
     globals_found = False
-    for globals_path in globals_locations:
-        if globals_path.exists():
-            # Check if it imports sparkle-design.css
+
+    for globals_name in globals_names:
+        matches = find_css_files(project_path, globals_name)
+        if matches:
+            globals_path = matches[0]
             try:
                 content = globals_path.read_text(encoding="utf-8")
-                if "sparkle-design.css" in content:
-                    messages.append(f"✅ globals.css imports sparkle-design.css at {globals_path.relative_to(project_path)}")
+                # Check if it imports the design system CSS
+                if design_css_name in content or any(name in content for name in design_css_names):
+                    messages.append(f"✅ {globals_name} imports design system CSS at {globals_path.relative_to(project_path)}")
                     globals_found = True
                 else:
-                    messages.append(f"⚠️  globals.css found but doesn't import sparkle-design.css")
-                    messages.append(f"   Add: @import \"./sparkle-design.css\";")
+                    messages.append(f"⚠️  {globals_name} found but doesn't import design system CSS")
+                    messages.append(f"   Add: @import \"./{design_css_name}\";")
                 break
             except Exception as e:
-                messages.append(f"⚠️  Error reading globals.css: {e}")
+                messages.append(f"⚠️  Error reading {globals_name}: {e}")
                 break
 
-    if not globals_found and css_found:
-        messages.append("⚠️  globals.css not found or doesn't import sparkle-design.css")
+    if not globals_found and design_css_found:
+        messages.append("⚠️  Main CSS file not found or doesn't import design system CSS")
+        messages.append("   Expected filenames: globals.css, global.css, main.css, or styles.css")
 
-    return css_found, messages
+    return design_css_found, messages
 
 
 def main() -> int:

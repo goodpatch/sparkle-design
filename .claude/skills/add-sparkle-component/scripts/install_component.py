@@ -77,6 +77,38 @@ def validate_components_json(project_path: Path) -> tuple[bool, str]:
     return True, ""
 
 
+def get_component_path(project_path: Path, component_name: str) -> str:
+    """Get the installation path for components from components.json.
+
+    Args:
+        project_path: Path to the project directory
+        component_name: Name of the component
+
+    Returns:
+        Relative path where components are installed
+    """
+    components_json = project_path / "components.json"
+    default_path = "src/components/ui"
+
+    if not components_json.exists():
+        return f"{default_path}/{component_name}/"
+
+    try:
+        with components_json.open(encoding="utf-8") as f:
+            config = json.load(f)
+
+        # Get aliases.ui path, fallback to default
+        aliases = config.get("aliases", {})
+        ui_alias = aliases.get("ui", default_path)
+
+        # Remove @ prefix if present (e.g., @/components/ui -> components/ui)
+        ui_path = ui_alias.lstrip("@/")
+
+        return f"{ui_path}/{component_name}/"
+    except Exception:
+        return f"{default_path}/{component_name}/"
+
+
 def get_package_manager_command(manager: str) -> list[str]:
     """Get the appropriate command for the package manager.
 
@@ -233,10 +265,21 @@ Examples:
 
     # Print result
     if success:
+        component_path = get_component_path(args.path, args.component)
+        # Get import path from components.json aliases or default
+        components_json = args.path / "components.json"
+        import_alias = "@/components/ui"
+        try:
+            with components_json.open(encoding="utf-8") as f:
+                config = json.load(f)
+                import_alias = config.get("aliases", {}).get("ui", "@/components/ui")
+        except Exception:
+            pass
+
         print(f"\n✅ Successfully installed: {args.component}")
-        print(f"\n📍 Component location: src/components/ui/{args.component}/")
+        print(f"\n📍 Component location: {component_path}")
         print("\n💡 Next steps:")
-        print(f"   1. Import: import {{ ComponentName }} from '@/components/ui/{args.component}'")
+        print(f"   1. Import: import {{ ComponentName }} from '{import_alias}/{args.component}'")
         print("   2. Check if CSS imports are configured (first time only)")
         print("   3. Run type checking: <pm> lint")
         print("   4. View in Storybook: <pm> storybook")

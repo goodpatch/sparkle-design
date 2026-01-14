@@ -318,12 +318,19 @@ export const AllVariants: Story = {
 
 ### Co-location Pattern
 
-Stories are co-located with component files:
+Stories are co-located with component files. The exact path depends on your `components.json` configuration:
 
 ```
-src/components/ui/<component-name>/
+<ui-alias-path>/<component-name>/
 ├── index.tsx                      # Component
 └── <component-name>.stories.tsx   # Story
+```
+
+Example with default configuration (`src/components/ui`):
+```
+src/components/ui/<component-name>/
+├── index.tsx
+└── <component-name>.stories.tsx
 ```
 
 ### Interactive Controls
