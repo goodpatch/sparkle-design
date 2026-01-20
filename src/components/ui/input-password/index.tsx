@@ -1,3 +1,8 @@
+/**
+ * This file is part of Sparkle Design.
+ * License: https://github.com/goodpatch/sparkle-design/LICENSE
+ * If you modify this file, add a "Modifications" note here.
+ */
 import * as React from "react";
 import { Input, type InputProps } from "@/components/ui/input";
 
