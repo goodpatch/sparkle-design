@@ -1,6 +1,6 @@
 /**
  * This file is part of Sparkle Design.
- * License: https://github.com/goodpatch/sparkle-design/LICENSE
+ * License: https://github.com/goodpatch/sparkle-design/blob/main/LICENSE
  * If you modify this file, add a "Modifications" note here.
  */
 import React from "react";
