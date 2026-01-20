@@ -1,3 +1,8 @@
+/**
+ * This file is part of Sparkle Design.
+ * License: https://github.com/goodpatch/sparkle-design/blob/main/LICENSE
+ * If you modify this file, add a "Modifications" note here.
+ */
 import React from "react";
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/ui/icon";

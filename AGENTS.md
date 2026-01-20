@@ -78,6 +78,9 @@ This project is a Next.js + TypeScript component library using TailwindCSS, Stor
 - Follow `.github/comment-rule.md` for React component comments.
 - Write all code comments in Japanese first, then add an `en:` line with the
   English translation.
+- `src/components/ui/**/index.tsx` must start with the Sparkle Design header
+  comment (license URL included). If you modify the file, add a "Modifications"
+  note in that header.
 
 ## Programmatic checks
 

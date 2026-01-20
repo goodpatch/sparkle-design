@@ -1,0 +1,11 @@
+# よく使うコマンド
+- 依存インストール: `pnpm install`
+- 開発: `pnpm dev`
+- ビルド: `pnpm build`
+- Storybook: `pnpm storybook`
+- テスト: `pnpm test` / `pnpm test:watch`
+- 型チェック: `pnpm type-check`
+- リント: `pnpm lint` / `pnpm lint:check` / `pnpm lint:fix`
+- フォーマット: `pnpm format` / `pnpm format:check`
+- パッケージビルド: `pnpm build:package`
+- CSS生成: `pnpm build:css`
