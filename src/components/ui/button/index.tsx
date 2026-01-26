@@ -13,7 +13,8 @@ import { Spinner } from "@/components/ui/spinner";
 
 const buttonVariants = cva(
   [
-    "inline-flex items-center justify-center gap-0.5 whitespace-nowrap rounded-action transition-colors",
+    // `relative` is required because we absolutely-position the loading spinner at the center.
+    "relative inline-flex items-center justify-center gap-0.5 whitespace-nowrap rounded-action transition-colors",
     "cursor-pointer disabled:cursor-not-allowed",
     "shrink-0 outline-none",
     "focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
@@ -250,7 +251,10 @@ const buttonVariants = cva(
 );
 
 type ButtonVariantProps = VariantProps<typeof buttonVariants>;
-export interface ButtonProps extends React.ComponentProps<"button"> {
+type NativeButtonProps = React.ComponentPropsWithoutRef<"button">;
+
+export interface ButtonProps
+  extends Omit<NativeButtonProps, "onClick" | "onKeyDown"> {
   /**
    * ボタンのサイズバリエーション
    * en: Size variation of the button
@@ -291,6 +295,47 @@ export interface ButtonProps extends React.ComponentProps<"button"> {
    * en: Disables the button when set to true
    */
   isDisabled?: boolean;
+
+  /**
+   * onClick handler.
+   *
+   * We intentionally type this as HTMLElement because `asChild` can render non-button elements.
+   */
+  onClick?: React.MouseEventHandler<HTMLElement>;
+
+  /**
+   * onKeyDown handler.
+   *
+   * We intentionally type this as HTMLElement because `asChild` can render non-button elements.
+   */
+  onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
+
+  /**
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   */
+  onMouseDown?: React.MouseEventHandler<HTMLElement>;
+
+  /**
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   */
+  onPointerDown?: React.PointerEventHandler<HTMLElement>;
+
+  /**
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   */
+  onTouchStart?: React.TouchEventHandler<HTMLElement>;
 }
 
 /**
@@ -304,6 +349,13 @@ export interface ButtonProps extends React.ComponentProps<"button"> {
  * ```tsx
  * <Button variant="solid" size="md" theme="primary" prefixIcon="check">確定</Button>
  * ```
+ *
+ * **アクセシビリティ / Accessibility**
+ *
+ * - ボタンにはアクセシブルネームが必要です（通常は `children` のテキスト）。
+ *   アイコンのみの場合は `aria-label` / `aria-labelledby` を付与するか、可能なら `IconButton` を使用してください。
+ * - `isLoading` の場合でもアクセシブルネームは維持されます。
+ * - `asChild` を使う場合、子要素がボタン相当のセマンティクス（role/disabled/キーボード操作）を満たすようにしてください。
  *
  * @param {ButtonProps} props
  */
@@ -338,10 +390,62 @@ function Button({
     }
   };
 
+  const hasAccessibleNameProp =
+    ("aria-label" in props && Boolean(props["aria-label"])) ||
+    ("aria-labelledby" in props && Boolean(props["aria-labelledby"]));
+  const hasChildren = React.Children.count(children) > 0;
+
+  if (process.env.NODE_ENV !== "production") {
+    if (!hasChildren && !hasAccessibleNameProp) {
+      // Icon-only button should use IconButton, or provide aria-label/labelledby.
+      // Keep it as a warning (not an exception) to avoid breaking existing usage.
+      console.warn(
+        "[Button] Accessible name is missing. Provide children text, or set aria-label/aria-labelledby. For icon-only actions, consider using IconButton."
+      );
+    }
+    if (asChild && isButtonDisabled) {
+      console.warn(
+        "[Button] asChild + disabled/loading: the child element must handle disabled semantics (e.g., aria-disabled + preventing activation). Ensure the slotted element is button-like."
+      );
+    }
+
+    if (props.onMouseDown || props.onPointerDown || props.onTouchStart) {
+      console.warn(
+        "[Button] onMouseDown/onPointerDown/onTouchStart are deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Prefer onClick (activation on release)."
+      );
+    }
+  }
+
+  const { onClick, onKeyDown, ...restProps } = props;
+
+  const handleClick: React.MouseEventHandler<HTMLElement> = event => {
+    if (isButtonDisabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    onClick?.(event);
+  };
+
+  const handleKeyDown: React.KeyboardEventHandler<HTMLElement> = event => {
+    if (isButtonDisabled) {
+      // Prevent activation keys when used with asChild (e.g., <a>).
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      return;
+    }
+    onKeyDown?.(event);
+  };
+
   return (
     <Comp
       data-slot="button"
-      disabled={isButtonDisabled}
+      aria-busy={isLoading || undefined}
+      aria-disabled={asChild && isButtonDisabled ? true : undefined}
+      data-disabled={asChild && isButtonDisabled ? "true" : undefined}
+      disabled={asChild ? undefined : isButtonDisabled}
       className={cn(
         buttonVariants({
           variant,
@@ -352,7 +456,9 @@ function Button({
         })
       )}
       type={asChild ? undefined : props.type || "button"}
-      {...props}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      {...restProps}
     >
       {prefixIcon && (
         <Icon
@@ -367,9 +473,7 @@ function Button({
           <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-flex">
             <Spinner size={getIconSize()} className="text-current" />
           </span>
-          <span className="opacity-0" aria-hidden="true">
-            {children}
-          </span>
+          <span className="opacity-0">{children}</span>
         </>
       ) : (
         <span className="px-1">{children}</span>

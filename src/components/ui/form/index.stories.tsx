@@ -155,10 +155,7 @@ export const Default: Story = {
                 <FormItem>
                   <FormHeader label="役割" isRequired />
                   <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value}
-                    >
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="選択してください" />
                       </SelectTrigger>

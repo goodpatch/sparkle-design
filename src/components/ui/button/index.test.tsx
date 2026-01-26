@@ -277,6 +277,15 @@ describe("Button", () => {
       expect(loadingIndicator).toBeTruthy();
     });
 
+    it("sets aria-busy when isLoading", () => {
+      // Given: loading状態のButton
+      testContainer.render(<Button isLoading>Loading Button</Button>);
+      const button = testContainer.queryButton();
+
+      // Then: aria-busy が付与される
+      expect(button.getAttribute("aria-busy")).toBe("true");
+    });
+
     it("is disabled when isLoading", () => {
       // Given: loading状態のButton
       testContainer.render(<Button isLoading>Loading Button</Button>);
@@ -434,13 +443,47 @@ describe("Button", () => {
   describe("Error Handling", () => {
     it("handles missing children gracefully", () => {
       // Given: 子要素なしのButton
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
       expect(() => {
         testContainer.render(<Button />);
       }).not.toThrow();
 
+      // Then: a11y上の警告を出す
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("[Button] Accessible name is missing")
+      );
+      warnSpy.mockRestore();
+
       // Then: 正常に描画される
       const button = testContainer.queryButton();
       expect(button).toBeTruthy();
+    });
+
+    it("does not warn when aria-label is provided even without children", () => {
+      // Given: aria-label 付きで子要素なしのButton
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      testContainer.render(<Button aria-label="Close" />);
+      testContainer.queryButton();
+
+      // Then: 警告は不要
+      expect(warnSpy).not.toHaveBeenCalled();
+      warnSpy.mockRestore();
+    });
+
+    it("warns when pointer-down style handlers are provided (deprecated for a11y)", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <Button onPointerDown={() => {}}>PointerDown Button</Button>
+      );
+      testContainer.queryButton();
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining(
+          "[Button] onMouseDown/onPointerDown/onTouchStart are deprecated"
+        )
+      );
+      warnSpy.mockRestore();
     });
 
     it("handles rapid clicks gracefully", () => {
