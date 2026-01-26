@@ -30,59 +30,6 @@ export const Default: Story = {
               ...args,
               title: `カウントアップしました (${count + 1})`,
               description: "最新の変更が反映されました",
-              variant: "neutral",
-              duration: 4000,
-            });
-          }}
-        >
-          トーストを表示
-        </Button>
-        <Toaster />
-      </div>
-    );
-  },
-};
-
-export const Success: Story = {
-  render: args => {
-    const [count, setCount] = useState(0);
-
-    return (
-      <div className="flex h-[320px] items-center justify-center bg-surface-muted">
-        <Button
-          onClick={() => {
-            setCount(previous => previous + 1);
-            toast({
-              ...args,
-              title: `保存しました (${count + 1})`,
-              description: "最新の変更が反映されました",
-              variant: "success",
-              duration: 4000,
-            });
-          }}
-        >
-          トーストを表示
-        </Button>
-        <Toaster />
-      </div>
-    );
-  },
-};
-
-export const Negative: Story = {
-  render: args => {
-    const [count, setCount] = useState(0);
-
-    return (
-      <div className="flex h-[320px] items-center justify-center bg-surface-muted">
-        <Button
-          onClick={() => {
-            setCount(previous => previous + 1);
-            toast({
-              ...args,
-              title: `エラーが発生しました (${count + 1})`,
-              description: "変更を保存できませんでした",
-              variant: "negative",
               duration: 4000,
             });
           }}
@@ -104,7 +51,6 @@ export const WithoutTitle: Story = {
             toast({
               ...args,
               description: "タイトルなしのトーストです",
-              variant: "neutral",
               duration: 4000,
             });
           }}
@@ -127,7 +73,6 @@ export const WithoutCloseButton: Story = {
               ...args,
               title: "閉じるボタンなしのトーストです",
               description: "自動で閉じるまで表示されます",
-              variant: "neutral",
               isCloseTrigger: false,
               duration: 4000,
             });

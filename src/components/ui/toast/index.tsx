@@ -16,22 +16,11 @@ import { IconButton } from "@/components/ui/icon-button";
 
 export type { ExternalToast, ToastClassnames, ToastT } from "sonner";
 
-const toastVariants = cva(
-  "shadow-float px-3 py-2 text-neutral-50 flex w-[320px] rounded-notice gap-2",
-  {
-    variants: {
-      variant: {
-        neutral: "bg-neutral-700",
-        success: "bg-success-500",
-        negative: "bg-negative-500",
-      },
-    },
-  }
-);
+const toastVariants =
+  "shadow-float px-3 py-2 text-neutral-50 flex w-[320px] rounded-notice gap-2 bg-neutral-50";
 
 type ReactToastProps = React.ComponentProps<typeof Toaster>;
-type ToastVariant = VariantProps<typeof toastVariants>;
-export interface ToastProps extends Omit<ReactToastProps, "id">, ToastVariant {
+export interface ToastProps extends Omit<ReactToastProps, "id"> {
   /**
    * トーストの識別子
    * en: Identifier of the toast
@@ -52,11 +41,6 @@ export interface ToastProps extends Omit<ReactToastProps, "id">, ToastVariant {
    * en: Whether to show the close button
    */
   isCloseTrigger?: boolean;
-  /**
-   * トーストのバリアント
-   * en: Variant of the toast
-   */
-  variant?: ToastVariant["variant"];
   /**
    * トーストの表示時間（ミリ秒）
    * en: Duration of the toast (in milliseconds)
@@ -89,36 +73,21 @@ export interface ToastProps extends Omit<ReactToastProps, "id">, ToastVariant {
  */
 export function Toast({
   className,
-  variant = "neutral",
   title,
   description,
   isCloseTrigger = true,
   id,
 }: ToastProps) {
-  const ToastIcon = () => {
-    switch (variant) {
-      case "success":
-        return <Icon icon="check_circle" size={6} fill />;
-      case "negative":
-        return <Icon icon="error" size={6} fill />;
-      default:
-        return null;
-    }
-  };
-
   return (
-    <div className={cn(toastVariants({ variant }), className)}>
-      <ToastIcon />
+    <div
+      className={cn(
+        "shadow-float px-3 py-2 text-text-high flex w-[320px] rounded-notice gap-2 bg-neutral-50 border border-divider-middle",
+        className
+      )}
+    >
       <div className="h-full flex flex-col justify-center gap-0 px-1 grow">
         {title && <p className="character-3-bold-pro">{title}</p>}
-        <p
-          className={cn(
-            "character-3-regular-pro",
-            variant === "neutral" ? "text-neutral-100" : ""
-          )}
-        >
-          {description}
-        </p>
+        <p className={cn("character-3-regular-pro")}>{description}</p>
       </div>
       {isCloseTrigger && (
         <IconButton
@@ -129,7 +98,6 @@ export function Toast({
           onClick={() => {
             sonnerToast.dismiss(id);
           }}
-          className="text-neutral-50 hover:bg-neutral-700 active:bg-neutral-800"
         />
       )}
     </div>
