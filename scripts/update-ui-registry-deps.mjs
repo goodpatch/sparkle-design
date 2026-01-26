@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 
-// UI配下のitem.jsonのregistryDependenciesをsparkle-design-themeに統一
-// en: Normalize registryDependencies in UI item.json files to the theme URL
+// UI配下のitem.jsonから古いテーマ依存関係を削除
+// en: Remove old theme dependencies from UI item.json files
 
 import fs from "fs";
 import path from "path";
 
 const ROOT = process.cwd();
 const BASE_DIR = path.resolve(ROOT, "src/components/ui");
-const THEME_URL = "https://sparkle-design.vercel.app/r/sparkle-design-theme.json";
 const OLD_URLS = new Set([
   "https://sparkle-design.vercel.app/r/sparkle-font.json",
   "https://sparkle-design.vercel.app/r/sparkle-color.json",
   "https://sparkle-design.vercel.app/r/sparkle-style.json",
+  "https://sparkle-design.vercel.app/r/sparkle-design-theme.json",
 ]);
 
 function* walk(dir) {
@@ -34,7 +34,6 @@ for (const file of walk(BASE_DIR)) {
     const filtered = before.filter((u) => !OLD_URLS.has(u));
     const hasAnyOld = filtered.length !== before.length;
     if (hasAnyOld) {
-      if (!filtered.includes(THEME_URL)) filtered.push(THEME_URL);
       json.registryDependencies = filtered;
       fs.writeFileSync(file, JSON.stringify(json, null, 2) + "\n");
       console.log(`✅ Updated: ${path.relative(ROOT, file)}`);
@@ -46,4 +45,3 @@ for (const file of walk(BASE_DIR)) {
 }
 
 console.log(`🎯 Done. Updated ${updated} files.`);
-

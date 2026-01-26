@@ -1,3 +1,8 @@
+/**
+ * This file is part of Sparkle Design.
+ * License: https://github.com/goodpatch/sparkle-design/blob/main/LICENSE
+ * If you modify this file, add a "Modifications" note here.
+ */
 import * as React from "react";
 import { Input, type InputProps } from "@/components/ui/input";
 
@@ -5,10 +10,10 @@ export interface InputPasswordProps
   extends Omit<
     InputProps,
     | "type"
-    | "iconButtonIcon"
-    | "isIconButtonEnable"
+    | "triggerIcon"
+    | "triggerAriaLabel"
+    | "isTrigger"
     | "onIconButtonClick"
-    | "iconButtonAriaLabel"
   > {}
 
 /**

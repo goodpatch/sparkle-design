@@ -15,7 +15,5 @@
     }
   ],
   "dependencies": ["radix-ui"],
-  "registryDependencies": [
-    "https://sparkle-design.vercel.app/r/sparkle-design-theme.json"
-  ]
+  "registryDependencies": []
 }

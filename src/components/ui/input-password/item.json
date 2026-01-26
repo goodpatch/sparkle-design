@@ -3,7 +3,7 @@
   "name": "input-password",
   "type": "registry:component",
   "title": "InputPassword",
-  "description": "パスワード入力専用のインプットコンポーネントで、表示/非表示の切り替え機能を提供します。",
+  "description": "インプットパスワードはパスワードの情報をユーザーから取得するために使用するコンポーネントです。",
   "files": [
     {
       "path": "src/components/ui/input-password/index.tsx",
@@ -11,8 +11,5 @@
     }
   ],
   "dependencies": [],
-  "registryDependencies": [
-    "https://sparkle-design.vercel.app/r/input.json",
-    "https://sparkle-design.vercel.app/r/sparkle-design-theme.json"
-  ]
+  "registryDependencies": ["https://sparkle-design.vercel.app/r/input.json"]
 }

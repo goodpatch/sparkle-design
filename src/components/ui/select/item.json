@@ -1,9 +1,9 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "select",
-  "type": "registry:component",
   "title": "Select",
+  "name": "select",
   "description": "セレクトはオプショングループの中から値を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。",
+  "type": "registry:component",
   "files": [
     {
       "path": "src/components/ui/select/index.tsx",
@@ -11,8 +11,5 @@
     }
   ],
   "dependencies": ["radix-ui"],
-  "registryDependencies": [
-    "https://sparkle-design.vercel.app/r/icon.json",
-    "https://sparkle-design.vercel.app/r/sparkle-design-theme.json"
-  ]
+  "registryDependencies": ["https://sparkle-design.vercel.app/r/icon.json"]
 }
