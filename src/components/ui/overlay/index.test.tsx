@@ -46,7 +46,7 @@ describe("Overlay", () => {
       // Then: 基本スタイルが適用される
       expect(overlay.className).toContain("fixed");
       expect(overlay.className).toContain("inset-0");
-      expect(overlay.className).toContain("bg-[rgba(36,41,47,0.30)]");
+      expect(overlay.className).toContain("bg-[var(--color-black-alpha-300)]");
     });
 
     it("renders as a div element", () => {
@@ -262,7 +262,7 @@ describe("Overlay", () => {
       const overlay = testContainer.querySelector('[data-slot="overlay"]');
 
       // Then: 半透明の背景色が適用される
-      expect(overlay.className).toContain("bg-[rgba(36,41,47,0.30)]");
+      expect(overlay.className).toContain("bg-[var(--color-black-alpha-300)]");
     });
   });
 

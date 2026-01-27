@@ -10,8 +10,6 @@ import * as React from "react";
 import { Toaster, toast as sonnerToast } from "sonner";
 
 import { cn } from "@/lib/utils";
-import { cva, VariantProps } from "class-variance-authority";
-import { Icon } from "@/components/ui/icon";
 import { IconButton } from "@/components/ui/icon-button";
 
 export type { ExternalToast, ToastClassnames, ToastT } from "sonner";
@@ -109,13 +107,12 @@ export function Toast({
  * - en: Toasts are used to provide feedback to users when actions occur.
  */
 export function toast(toast: Omit<ToastProps, "id" | "position">) {
-  const { title, description, variant, isCloseTrigger, ...rest } = toast;
+  const { title, description, isCloseTrigger, ...rest } = toast;
   return sonnerToast.custom(
     id => (
       <Toast
         title={title}
         description={description}
-        variant={variant}
         isCloseTrigger={isCloseTrigger}
         id={id}
       />

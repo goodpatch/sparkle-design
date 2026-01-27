@@ -72,14 +72,14 @@ const buttonVariants = cva(
         theme: "neutral",
         isLoading: false,
         className: [
-          "bg-neutral-500",
+          "bg-[var(--color-black-alpha-600)]",
           "text-white",
           "border-neutral-600",
-          "hover:bg-neutral-600",
+          "hover:bg-[var(--color-black-alpha-700)]",
           "hover:border-neutral-700",
-          "active:bg-neutral-700",
+          "active:bg-[var(--color-black-alpha-800)]",
           "active:border-neutral-800",
-          "disabled:bg-neutral-200",
+          "disabled:bg-[var(--color-black-alpha-200)]",
           "disabled:border-none",
         ].join(" "),
       },
@@ -88,7 +88,7 @@ const buttonVariants = cva(
         theme: "neutral",
         isLoading: true,
         className:
-          "disabled:bg-neutral-500 disabled:text-white disabled:border-neutral-600",
+          "disabled:bg-[var(--color-black-alpha-600)] disabled:text-white disabled:border-neutral-600",
       },
       // solid negative
       {
@@ -147,8 +147,8 @@ const buttonVariants = cva(
           "bg-white",
           "text-neutral-700",
           "border-neutral-300",
-          "hover:bg-neutral-50",
-          "active:bg-neutral-100",
+          "hover:bg-[var(--color-black-alpha-50)]",
+          "active:bg-[var(--color-black-alpha-100)]",
           "active:border-neutral-300",
           "disabled:border-neutral-100",
           "disabled:text-neutral-200",
@@ -211,8 +211,8 @@ const buttonVariants = cva(
         isLoading: false,
         className: [
           "text-neutral-700",
-          "hover:bg-neutral-50",
-          "active:bg-neutral-100",
+          "hover:bg-[var(--color-black-alpha-50)]",
+          "active:bg-[var(--color-black-alpha-100)]",
           "disabled:text-neutral-200",
         ].join(" "),
       },
@@ -408,6 +408,11 @@ function Button({
         "[Button] asChild + disabled/loading: the child element must handle disabled semantics (e.g., aria-disabled + preventing activation). Ensure the slotted element is button-like."
       );
     }
+    if (asChild && (prefixIcon || suffixIcon || isLoading)) {
+      console.warn(
+        "[Button] asChild mode does not support prefixIcon, suffixIcon, or isLoading. These props will be ignored."
+      );
+    }
 
     if (props.onMouseDown || props.onPointerDown || props.onTouchStart) {
       console.warn(
@@ -460,31 +465,37 @@ function Button({
       onKeyDown={handleKeyDown}
       {...restProps}
     >
-      {prefixIcon && (
-        <Icon
-          icon={prefixIcon}
-          size={getIconSize()}
-          className={cn({ "opacity-0": isLoading })}
-        />
-      )}
-
-      {isLoading ? (
-        <>
-          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-flex">
-            <Spinner size={getIconSize()} className="text-current" />
-          </span>
-          <span className="opacity-0">{children}</span>
-        </>
+      {asChild ? (
+        children
       ) : (
-        <span className="px-1">{children}</span>
-      )}
+        <>
+          {prefixIcon && (
+            <Icon
+              icon={prefixIcon}
+              size={getIconSize()}
+              className={cn({ "opacity-0": isLoading })}
+            />
+          )}
 
-      {suffixIcon && (
-        <Icon
-          icon={suffixIcon}
-          size={getIconSize()}
-          className={cn({ "opacity-0": isLoading })}
-        />
+          {isLoading ? (
+            <>
+              <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-flex">
+                <Spinner size={getIconSize()} className="text-current" />
+              </span>
+              <span className="opacity-0">{children}</span>
+            </>
+          ) : (
+            <span className="px-1">{children}</span>
+          )}
+
+          {suffixIcon && (
+            <Icon
+              icon={suffixIcon}
+              size={getIconSize()}
+              className={cn({ "opacity-0": isLoading })}
+            />
+          )}
+        </>
       )}
     </Comp>
   );
