@@ -78,6 +78,7 @@ export function Toast({
 }: ToastProps) {
   return (
     <div
+      role="status"
       className={cn(
         "shadow-float px-3 py-2 text-text-high flex w-[320px] rounded-notice gap-2 bg-neutral-50 border border-divider-middle",
         className
@@ -93,6 +94,7 @@ export function Toast({
           size="sm"
           variant="ghost"
           theme="neutral"
+          aria-label="閉じる"
           onClick={() => {
             sonnerToast.dismiss(id);
           }}

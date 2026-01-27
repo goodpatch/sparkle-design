@@ -190,6 +190,41 @@ describe("Toast", () => {
       ).find(p => p.textContent === "アクセシビリティテスト");
       expect(title).not.toBeNull();
     });
+
+    it("Toastコンポーネントにrole=statusが設定される", () => {
+      // Given: Toastをレンダリングする
+      testContainer.render(
+        <Toast title="ステータステスト" description="テスト" />
+      );
+
+      // Then: role="status"が設定される
+      const toastElement = testContainer.getContainer().firstElementChild;
+      expect(toastElement?.getAttribute("role")).toBe("status");
+    });
+
+    it("閉じるボタンにaria-labelが設定される", () => {
+      // Given: Toastをレンダリングする
+      testContainer.render(<Toast title="閉じるテスト" description="テスト" />);
+
+      // Then: 閉じるボタンにaria-label="閉じる"が設定される
+      const closeButton = testContainer.queryButton();
+      expect(closeButton.getAttribute("aria-label")).toBe("閉じる");
+    });
+
+    it("閉じるボタンなしの場合はaria-labelも存在しない", () => {
+      // Given: isCloseTrigger=falseでToastをレンダリングする
+      testContainer.render(
+        <Toast
+          title="ボタンなし"
+          description="テスト"
+          isCloseTrigger={false}
+        />
+      );
+
+      // Then: ボタンが存在しない
+      const button = testContainer.getContainer().querySelector("button");
+      expect(button).toBeNull();
+    });
   });
 
   describe("Edge Cases", () => {
