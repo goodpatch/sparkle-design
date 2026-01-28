@@ -312,6 +312,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={mergedInputRef}
           disabled={isInputDisabled}
+          aria-invalid={isInvalid || undefined}
           className={cn(
             "w-full h-full bg-transparent border-none outline-hidden focus:outline-hidden",
             "text-text-high placeholder:text-text-placeholder px-2",
