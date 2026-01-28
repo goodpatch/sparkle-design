@@ -75,6 +75,7 @@ function ModalTitle({
 
 /// モーダルのクローズボタン
 function ModalClose({
+  "aria-label": ariaLabel = "閉じる",
   ...props
 }: Omit<React.ComponentProps<typeof IconButton>, "icon">) {
   return (
@@ -85,6 +86,7 @@ function ModalClose({
         size="xs"
         variant="ghost"
         theme="neutral"
+        aria-label={ariaLabel}
         {...props}
       />
     </DialogPrimitive.Close>
