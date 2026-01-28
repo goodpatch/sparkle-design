@@ -13,7 +13,7 @@ import { cva, VariantProps } from "class-variance-authority";
 
 const switchVariants = cva(
   [
-    "peer inline-flex shrink-0 cursor-pointer items-center rounded-full border transition-colors",
+    "relative peer inline-flex shrink-0 cursor-pointer items-center rounded-full border transition-colors",
     "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2 focus-visible:ring-offset-background",
     "data-[state=unchecked]:bg-neutral-500 data-[state=unchecked]:border-neutral-600 data-[state=unchecked]:hover:bg-neutral-600 data-[state=unchecked]:hover:border-neutral-700",
     "data-[state=checked]:bg-primary-500 data-[state=checked]:border-primary-600 data-[state=checked]:hover:bg-primary-600 data-[state=checked]:hover:border-primary-700",
@@ -22,7 +22,9 @@ const switchVariants = cva(
   {
     variants: {
       size: {
-        sm: "h-4 w-7 p-px",
+        // smサイズのタッチターゲットを24px以上に拡張（WCAG 2.5.8）
+        // en: Expand sm size touch target to 24px minimum (WCAG 2.5.8)
+        sm: "h-4 w-7 p-px before:absolute before:content-[''] before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-full before:min-h-6",
         md: "h-6 w-11 p-px",
         lg: "h-8 w-[60px] p-px",
       },
