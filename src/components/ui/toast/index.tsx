@@ -110,8 +110,8 @@ export function Toast({
  * - トーストはアクションの発生時にユーザーへフィードバックを行うために使用するコンポーネントです。
  * - en: Toasts are used to provide feedback to users when actions occur.
  */
-export function toast(toast: Omit<ToastProps, "id" | "position">) {
-  const { title, description, isCloseTrigger, ...rest } = toast;
+export function toast(props: Omit<ToastProps, "id" | "position">) {
+  const { title, description, isCloseTrigger, ...rest } = props;
   return sonnerToast.custom(
     id => (
       <Toast
