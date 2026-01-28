@@ -2,10 +2,6 @@
  * This file is part of Sparkle Design.
  * License: https://github.com/goodpatch/sparkle-design/blob/main/LICENSE
  * If you modify this file, add a "Modifications" note here.
- *
- * Modifications:
- * - isInvalid 時に aria-invalid 属性を付与（WCAG 3.3.1 対応）
- * - en: Added aria-invalid attribute when isInvalid is true (WCAG 3.3.1 compliance)
  */
 "use client";
 
