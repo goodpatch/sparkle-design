@@ -102,6 +102,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     return (
       <textarea
+        aria-invalid={isInvalid || undefined}
         className={cn(
           textareaVariants({
             size,
