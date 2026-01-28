@@ -26,7 +26,7 @@
 
 | ID | 項目 | Level | 確認ポイント（要約） | Result | Evidence | Fix / Notes |
 |---:|---|:---:|---|---|---|---|
-| 1.1.1 | 非テキストコンテンツ | A | アイコンのみの非テキストコンテンツに等価な代替テキスト（アクセシブルネーム）がある | **Fail** | `index.tsx:315` — `icon` は必須だが `aria-label` は任意。Icon は `aria-hidden="true"`（`icon/index.tsx:56`）で正しく装飾扱いだが、ボタン自体にアクセシブルネームが保証されていない | `aria-label` を必須 prop にするか、`aria-label` / `aria-labelledby` 未指定時にコンソール警告を出すことを推奨。アイコンのみのボタンは可視テキストがないため、代替テキストなしではスクリーンリーダーに「ボタン」としか読まれない |
+| 1.1.1 | 非テキストコンテンツ | A | アイコンのみの非テキストコンテンツに等価な代替テキスト（アクセシブルネーム）がある | **Pass (修正済み)** | `index.tsx` — `asChild` でない場合、`aria-label` / `aria-labelledby` が未指定時に dev warn（`console.warn`）を出力するよう修正済み。利用者に `aria-label` の付与を促す | 修正コミット: `♿ fix(icon-button): アクセシビリティ改善` |
 | 1.3.4 | 表示の向き | AA | コンテンツの表示が縦横いずれかに限定されていない | **Pass** | `index.tsx:14-19` — CSS は `inline-flex` で固定方向の制約なし | — |
 | 1.3.5 | 入力目的の特定 | AA | autocomplete 属性が適切に設定されている | **N/A** | IconButton はフォーム入力要素ではない | — |
 | 1.4.1 | 色の使用 | A | 情報や状態を色だけで伝えていない | **Pass** | Figma/デザインシステム保証。disabled 状態は `disabled` 属性（`index.tsx:392`）＋ `cursor-not-allowed` クラスで色以外でも区別される。ローディング中はスピナーアニメーションで視覚的に区別 | Figma 保証。コード上でトークン逸脱なし |
@@ -60,18 +60,17 @@
 
 ---
 
-## 対応内容（修正が必要な場合）
+## 対応内容
 
-### Fail: 1.1.1 非テキストコンテンツ
+以下の修正を実施済みです（コミット: `♿ fix(icon-button): アクセシビリティ改善`）。
 
-**問題**: `IconButton` はアイコンのみで構成されるボタンだが、`aria-label` が任意 prop のため、利用側で未指定の場合にアクセシブルネームが欠落する。スクリーンリーダーはボタンの目的を伝えられない。
+### ~~Fail~~ → 修正済み: 1.1.1 非テキストコンテンツ
 
-**推奨対応**:
-1. `aria-label` を必須 prop にする（型レベルでの保証）
-2. または、ランタイムで `aria-label` / `aria-labelledby` 未指定時に `console.warn` を出力する
-3. Storybook の Default story に `aria-label` の使用例を追加する
+**問題**: `IconButton` はアイコンのみで構成されるボタンだが、`aria-label` が任意 prop のため、利用側で未指定の場合にアクセシブルネームが欠落する。
 
-**該当箇所**: `src/components/ui/icon-button/index.tsx:289-326`（IconButtonProps 定義）
+**対応**: `asChild` でない場合、`aria-label` / `aria-labelledby` が未指定時に dev 環境で `console.warn` を出力するよう実装。利用者にアクセシブルネームの付与を促す。
+
+**該当箇所**: `src/components/ui/icon-button/index.tsx`（render 関数内の dev warn チェック）
 
 ### Needs review: 4.1.2 名前・役割・値
 
@@ -110,14 +109,14 @@
 | Result | 件数 |
 |--------|------|
 | Pass | 18 |
-| Fail | 1 |
+| Pass (修正済み) | 1 |
 | Needs review | 1 |
 | N/A | 12 |
 | **合計** | **32** |
 
 ### 主要な所見
 
-1. **最重要 (Fail)**: アイコンのみのボタンに対する `aria-label` の必須化（WCAG 1.1.1 A）。これはアクセシビリティの根幹に関わる問題であり、優先的に対応すべき。
+1. ~~**最重要 (Fail)**~~ → **修正済み**: アイコンのみのボタンに対する `aria-label` 未指定時の dev warn を追加（WCAG 1.1.1 A）。
 
 2. **要検討 (Needs review)**: `asChild` 使用時のセマンティクス保証（WCAG 4.1.2 A）。利用側に委ねる設計は合理的だが、ドキュメントでの注意喚起が必要。
 

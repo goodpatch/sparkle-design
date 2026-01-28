@@ -50,7 +50,7 @@
 | 3.2.1 | フォーカス時 | A | フォーカスで予期しない動作が起きない | Pass | フォーカス時に `onFocus` でのコンテキスト変更やページ遷移等なし。フォーカスリング表示のみ。 | -- |
 | 3.2.2 | 入力時 | A | 入力で意図しない動作が起きない | Pass | `onCheckedChange` コールバックは状態変更の通知のみ。ページ遷移やフォーム送信等の副作用なし。 | -- |
 | 3.2.4 | 一貫した識別性 | AA | 同じコンポーネントは一貫したラベル | Pass | 同一コンポーネントを再利用する設計。Storybook の各ストーリーで一貫したラベル付け（`label` prop）を使用。 | -- |
-| 3.3.1 | エラーの特定 | A | 入力エラーが利用者に伝わる | Fail | `isInvalid` prop でボーダー色が `border-negative-500` に変わるが、`aria-invalid` 属性が設定されない。スクリーンリーダーがエラー状態を認識できない。 | **`isInvalid={true}` の場合、`aria-invalid="true"` を `CheckboxPrimitive.Root` に付与すべき。** 併せて `aria-errormessage` または `aria-describedby` でエラーメッセージへの参照も検討。 |
+| 3.3.1 | エラーの特定 | A | 入力エラーが利用者に伝わる | Pass (修正済み) | `index.tsx` — `isInvalid={true}` の場合に `aria-invalid="true"` を `CheckboxPrimitive.Root` に付与するよう修正済み。スクリーンリーダーがエラー状態を認識可能。 | 修正コミット: `♿ fix(checkbox): アクセシビリティ改善` |
 | 3.3.2 | ラベル又は説明 | A | 入力欄にラベル/説明がある | Needs review | `label` prop で `<label htmlFor={id}>` を生成。ただし前述の通り `id` 未指定時は関連付けが切れる。`aria-describedby` による追加説明のサポートは `...props` 経由で可能だが、明示的な prop としては提供されていない。 | `id` 未指定時の自動生成を推奨。`description` prop の追加も検討。 |
 | 3.3.3 | エラー修正方法の提案 | AA | 修正方法が提示されている | N/A | チェックボックスのエラー修正は「チェックする/外す」のみで自明。フォーム全体でのエラーメッセージ表示はフォーム側の責務。 | -- |
 | 3.3.8 | アクセシブル認証（最低限） | AA | 認証が記憶依存になっていない | N/A | 認証コンポーネントではない。 | -- |
@@ -61,18 +61,15 @@
 
 ## 対応が必要な項目のサマリ
 
-### Fail: 1件
+### ~~Fail~~ → 修正済み: 1件
 
-#### 3.3.1 エラーの特定 (Level A)
+#### 3.3.1 エラーの特定 (Level A) → **修正済み**
 
 - **問題**: `isInvalid` prop によるエラー状態が視覚的（ボーダー色変更）のみで、`aria-invalid` 属性がセットされない
-- **影響**: スクリーンリーダー利用者がエラー状態を認識できない
-- **修正提案**:
-  1. `isInvalid={true}` の場合に `aria-invalid="true"` を `CheckboxPrimitive.Root` に付与する
-  2. オプションで `aria-errormessage` / `aria-describedby` によるエラーメッセージ参照をサポートする
+- **対応**: `CheckboxPrimitive.Root` に `aria-invalid={isInvalid || undefined}` を追加（コミット: `♿ fix(checkbox): アクセシビリティ改善`）
 
 ```tsx
-// 修正案（概念）
+// 適用された修正
 <CheckboxPrimitive.Root
   aria-invalid={isInvalid || undefined}
   // ...

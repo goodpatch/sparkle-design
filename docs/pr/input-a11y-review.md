@@ -53,7 +53,7 @@
 | 3.2.1 | フォーカス時 | A | フォーカスで予期しない動作が起きない | Pass | `index.tsx:196-203` — `handleInputFocus` はフォーカス状態の更新と `onFocus` コールバック呼び出しのみ。コンテキスト変更やページ遷移なし | ― |
 | 3.2.2 | 入力時 | A | 入力で意図しない動作が起きない | Pass | `index.tsx:187-193` — `handleChange` は `onChange` コールバック呼び出しのみ。自動送信やコンテキスト変更なし | ― |
 | 3.2.4 | 一貫した識別性 | AA | 同じコンポーネントは一貫したラベル | Pass | CVAベースのバリアント管理で一貫したスタイル。propsによるカスタマイズはあるが基本構造は同一 | ― |
-| 3.3.1 | エラーの特定 | A | 入力エラーが利用者に伝わる | Fail | `index.tsx:307` — `aria-invalid` がコメントアウトされている。`isInvalid=true` 時に視覚的なエラー表示（`border-negative-500`）はあるが、`aria-invalid` 属性が `<input>` 要素に設定されないため、支援技術にエラー状態が伝わらない | `aria-invalid={isInvalid}` を `<input>` 要素に追加する必要あり。`aria-describedby` でエラーメッセージとの関連付けは利用側で可能（テスト: `index.test.tsx:291-303`） |
+| 3.3.1 | エラーの特定 | A | 入力エラーが利用者に伝わる | Pass (修正済み) | `index.tsx` — `<input>` 要素に `aria-invalid={isInvalid || undefined}` を追加。`isInvalid=true` 時にスクリーンリーダーがエラー状態を認識可能。`aria-describedby` でエラーメッセージとの関連付けは利用側で可能（テスト: `index.test.tsx:291-303`） | 修正コミット: `♿ fix(input): アクセシビリティ改善` |
 | 3.3.2 | ラベル又は説明 | A | 入力欄にラベル/説明がある | Pass | `...props` のスプレッドにより `aria-label`, `aria-labelledby`, `id`（`<label htmlFor>` 連携）を利用側で指定可能。テスト: `index.test.tsx:268-289` で `aria-label` と `<label>` 連携を確認済み | コンポーネント自体はラベルを強制しないため、利用側の責務 |
 | 3.3.3 | エラー修正方法の提案 | AA | 修正方法が提示されている | N/A | Inputコンポーネント単体ではエラーメッセージの表示機能を持たない。エラーメッセージの提供は利用側（Form等）の責務 | ― |
 | 3.3.8 | アクセシブル認証（最低限） | AA | 認証が記憶依存になっていない | N/A | 認証フローはInputコンポーネントの責務外 | ― |
@@ -62,28 +62,22 @@
 
 ---
 
-## 対応内容（修正が必要な場合）
+## 対応内容
 
-### 1) `aria-invalid` のコメントアウト解除（3.3.1 / 4.1.2）
+以下の修正を実施済みです（コミット: `♿ fix(input): アクセシビリティ改善`）。
 
-**重要度: 高（WCAG A基準の Fail）**
+### ~~Fail~~ → 修正済み: `aria-invalid` の追加（3.3.1 / 4.1.2）
 
-`index.tsx:307` にて `aria-invalid` がコメントアウトされている。
+**問題**: `<input>` 要素に `aria-invalid` が設定されていなかった（コンテナ `<div>` でコメントアウトされていた）。
 
-```tsx
-// NOTE: not supportエラーがLintで出るためコメントアウト
-// aria-disabled={isInputDisabled}
-// aria-invalid={isInvalid === null ? undefined : isInvalid}
-```
-
-コンテナ `<div>` ではなく、`<input>` 要素側に `aria-invalid` を追加すべき。`<input>` 要素はネイティブに `aria-invalid` をサポートしているため、Lintエラーは発生しないはず。
+**対応**: `<input>` 要素に `aria-invalid={isInvalid || undefined}` を追加。`<input>` 要素はネイティブに `aria-invalid` をサポートしているため、Lint エラーは発生しない。
 
 ```tsx
+// 適用された修正
 <input
   ref={mergedInputRef}
   disabled={isInputDisabled}
   aria-invalid={isInvalid || undefined}
-  aria-disabled={isInputDisabled}
   ...
 />
 ```

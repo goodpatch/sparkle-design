@@ -50,7 +50,7 @@
 | 3.2.1 | フォーカス時 | A | フォーカスで予期しない動作が起きない | Pass | フォーカス時のカスタムハンドラなし（`onFocus` / `onBlur` の定義なし、grep で確認済み）。フォーカスリング表示のみ。`...props` で外部から渡すことは可能だが、コンポーネント自体は副作用を持たない。 | -- |
 | 3.2.2 | 入力時 | A | 入力で意図しない動作が起きない | Pass | `onChange` コールバックは `...props` 経由で渡される（`index.tsx:115`）。コンポーネント自体は入力時に副作用（ページ遷移、フォーム送信等）を起こさない。テスト `index.test.tsx:104-127` で onChange の正常動作を確認済み。 | -- |
 | 3.2.4 | 一貫した識別性 | AA | 同じコンポーネントは一貫したラベル | Pass | 単一の `Textarea` コンポーネントとして一貫した API を提供。CVA バリアントによるスタイル分岐のみで、構造的な差異なし。Storybook で各バリアントを網羅（`index.stories.tsx:55-108`）。 | -- |
-| 3.3.1 | エラーの特定 | A | 入力エラーが利用者に伝わる | Fail | `isInvalid` prop でボーダー色が `border-negative-500` に変わるが（`index.tsx:30`）、`aria-invalid` 属性が設定されない（`index.tsx:104-116` に `aria-invalid` の記述なし）。スクリーンリーダーがエラー状態を認識できない。テストでも `aria-invalid` の検証なし。 | **`isInvalid={true}` の場合、`aria-invalid="true"` を `<textarea>` に付与すべき。** 併せて `aria-errormessage` または `aria-describedby` でエラーメッセージへの参照も検討。 |
+| 3.3.1 | エラーの特定 | A | 入力エラーが利用者に伝わる | Pass (修正済み) | `index.tsx` — `<textarea>` 要素に `aria-invalid={isInvalid || undefined}` を追加。`isInvalid=true` 時にスクリーンリーダーがエラー状態を認識可能。 | 修正コミット: `♿ fix(textarea): アクセシビリティ改善` |
 | 3.3.2 | ラベル又は説明 | A | 入力欄にラベル/説明がある | Needs review | コンポーネントは `<textarea>` 要素のみをレンダリングし、ラベルや説明を内包しない（`index.tsx:104-116`）。使用側で `<label>` / `aria-label` / `aria-describedby` を付与する設計。テスト `index.test.tsx:129-149` で `aria-label` と `id/for` によるラベル関連付けを確認済み。ただし Storybook の全ストーリーではラベルなしで使用（`index.stories.tsx`）。 | Storybook に `<label>` 付きの正しい使用例を追加すべき。使用側ガイドラインで `<label>` または `aria-label` の必須化を推奨。 |
 | 3.3.3 | エラー修正方法の提案 | AA | 修正方法が提示されている | N/A | テキストエリア自体はエラーメッセージ表示の責務を持たない。フォーム全体でのエラーメッセージ表示はフォーム側の責務。`isInvalid` prop によりエラー状態の視覚的表示は可能。 | フォーム統合時に `aria-describedby` でエラーメッセージと関連付けるパターンのドキュメント化を推奨。 |
 | 3.3.8 | アクセシブル認証（最低限） | AA | 認証が記憶依存になっていない | N/A | 認証コンポーネントではない。 | -- |
@@ -61,19 +61,15 @@
 
 ## 対応が必要な項目のサマリ
 
-### Fail: 1件
+### ~~Fail~~ → 修正済み: 1件
 
-#### 3.3.1 エラーの特定 (Level A)
+#### 3.3.1 エラーの特定 (Level A) → **修正済み**
 
 - **問題**: `isInvalid` prop によるエラー状態が視覚的（ボーダー色変更）のみで、`aria-invalid` 属性がセットされない
-- **箇所**: `src/components/ui/textarea/index.tsx:104-116`
-- **影響**: スクリーンリーダー利用者がエラー状態を認識できない
-- **修正提案**:
-  1. `isInvalid={true}` の場合に `aria-invalid="true"` を `<textarea>` に付与する
-  2. オプションで `aria-errormessage` / `aria-describedby` によるエラーメッセージ参照をサポートする
+- **対応**: `<textarea>` 要素に `aria-invalid={isInvalid || undefined}` を追加（コミット: `♿ fix(textarea): アクセシビリティ改善`）
 
 ```tsx
-// 修正案（概念）
+// 適用された修正
 <textarea
   aria-invalid={isInvalid || undefined}
   className={cn(textareaVariants({ size, isInvalid, isDisabled: isTextareaDisabled }), className)}

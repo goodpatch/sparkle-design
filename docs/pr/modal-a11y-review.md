@@ -29,7 +29,7 @@
 
 | ID | 項目 | Level | 確認ポイント（要約） | Result | Evidence | Fix / Notes |
 |---:|---|:---:|---|---|---|---|
-| 1.1.1 | 非テキストコンテンツ | A | アイコンのみ等の非テキストコンテンツに等価な代替テキスト（アクセシブルネーム/説明）がある | Fail | `ModalClose`（`index.tsx:77-92`）は `IconButton` に `icon="close"` を渡すが、`aria-label` を明示的に設定していない。`IconButton` コンポーネント自体もアイコンのみの場合にデフォルトの `aria-label` を付与しない（利用者が props で渡す必要がある）。スクリーンリーダーでは閉じるボタンの目的が伝わらない可能性がある。 | `ModalClose` に `aria-label="閉じる"` をデフォルトで付与すべき（例: `<IconButton icon="close" aria-label="閉じる" ...>`）。利用者が上書き可能なように props 経由で受け付ける設計が望ましい。 |
+| 1.1.1 | 非テキストコンテンツ | A | アイコンのみ等の非テキストコンテンツに等価な代替テキスト（アクセシブルネーム/説明）がある | Pass (修正済み) | `index.tsx` — `ModalClose` に `aria-label="閉じる"` をデフォルトで付与するよう修正済み。利用者が props で上書き可能。スクリーンリーダーが閉じるボタンの目的を読み上げ可能。 | 修正コミット: `♿ fix(modal): アクセシビリティ改善` |
 | 1.3.4 | 表示の向き | AA | コンテンツやコンポーネントの表示を、縦向きまたは横向きのいずれかに限定していない | Pass | CSS に `orientation` を制限するスタイルなし。`fixed` + `top-[50%] left-[50%] translate` で中央配置しており、向きに依存しない（`index.tsx:179`）。 | -- |
 | 1.3.5 | 入力目的の特定 | AA | `autocomplete` 属性が適切に設定されており、入力目的がプログラムで特定できる | N/A | モーダルは入力フィールドではないため `autocomplete` は該当しない。 | -- |
 | 1.4.1 | 色の使用 | A | 情報や状態を色だけで伝えていない | Pass (Figma) | Design-system guaranteed (Figma). モーダルのオーバーレイ（`bg-black/50`）は視覚的な背景暗転であり、情報伝達は色に依存していない。モーダルの開閉状態は `role="dialog"` + `aria-modal`（Radix 内部）で支援技術に伝達される。 | トークン逸脱があれば `Needs review` |
@@ -63,14 +63,15 @@
 
 ---
 
-## 対応内容（修正が必要な場合）
+## 対応内容
 
-### Fail: 1.1.1 非テキストコンテンツ
+以下の修正を実施済みです（コミット: `♿ fix(modal): アクセシビリティ改善`）。
+
+### ~~Fail~~ → 修正済み: 1.1.1 非テキストコンテンツ
 
 - **問題**: `ModalClose` コンポーネントが `IconButton` に `aria-label` を付与していない
-- **影響**: スクリーンリーダーが閉じるボタンの目的を読み上げられない
-- **推奨修正**: `ModalClose` に `aria-label="閉じる"` をデフォルトで付与し、props で上書き可能にする
-- **該当箇所**: `src/components/ui/modal/index.tsx:77-92`
+- **対応**: `ModalClose` に `aria-label="閉じる"` をデフォルトで付与し、props で上書き可能に修正
+- **該当箇所**: `src/components/ui/modal/index.tsx`（ModalClose コンポーネント）
 
 ### Needs review: 2.5.3 ラベルを含む名前
 
