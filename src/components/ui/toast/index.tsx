@@ -14,9 +14,6 @@ import { IconButton } from "@/components/ui/icon-button";
 
 export type { ExternalToast, ToastClassnames, ToastT } from "sonner";
 
-const toastVariants =
-  "shadow-float px-3 py-2 text-neutral-50 flex w-[320px] rounded-notice gap-2 bg-neutral-50";
-
 type ReactToastProps = React.ComponentProps<typeof Toaster>;
 export interface ToastProps extends Omit<ReactToastProps, "id"> {
   /**
@@ -60,7 +57,6 @@ export interface ToastProps extends Omit<ReactToastProps, "id"> {
  *   <Button onClick={() => toast({
  *     title: "保存しました",
  *     description: "1件の変更が反映されました",
- *     variant: "success",
  *   })}>
  *     トーストを表示
  *   </Button>

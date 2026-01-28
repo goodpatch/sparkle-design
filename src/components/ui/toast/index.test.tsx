@@ -214,11 +214,7 @@ describe("Toast", () => {
     it("閉じるボタンなしの場合はaria-labelも存在しない", () => {
       // Given: isCloseTrigger=falseでToastをレンダリングする
       testContainer.render(
-        <Toast
-          title="ボタンなし"
-          description="テスト"
-          isCloseTrigger={false}
-        />
+        <Toast title="ボタンなし" description="テスト" isCloseTrigger={false} />
       );
 
       // Then: ボタンが存在しない

@@ -16,14 +16,12 @@ figma.connect(
     props: {
       title: figma.string("title"),
       description: figma.string("description"),
-      className: figma.string("description"),
       isCloseTrigger: figma.boolean("isCloseTrigger"),
     },
     example: props => (
       <Toast
         title={props.title}
         description={props.description}
-        className={props.className}
         isCloseTrigger={props.isCloseTrigger}
       />
     ),
