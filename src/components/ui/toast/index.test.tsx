@@ -5,42 +5,45 @@
 import React from "react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
+  A11yHelpers,
   AsyncHelpers,
   EventHelpers,
   StyleHelpers,
   TestContainer,
-} from "../../../test/helpers";
+} from "@/test/helpers";
 
 import { toast, Toast, Toaster } from "./index";
 
-let testContainer: TestContainer;
-
-beforeEach(() => {
-  testContainer = new TestContainer();
-  testContainer.setup();
-});
-
-afterEach(() => {
-  const toasts = document.querySelectorAll("[data-sonner-toast]");
-  toasts.forEach(toastElement => {
-    const closeButton = toastElement.querySelector("button");
-    if (closeButton instanceof HTMLElement) {
-      EventHelpers.click(closeButton);
-    } else {
-      toastElement.remove();
-    }
-  });
-  testContainer.cleanup();
-});
-
 describe("Toast", () => {
+  let testContainer: TestContainer;
+
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    const toasts = document.querySelectorAll("[data-sonner-toast]");
+    toasts.forEach(toastElement => {
+      const closeButton = toastElement.querySelector("button");
+      if (closeButton instanceof HTMLElement) {
+        EventHelpers.click(closeButton);
+      } else {
+        toastElement.remove();
+      }
+    });
+    testContainer.cleanup();
+  });
+
   describe("Basic Rendering", () => {
     it("Toasterコンポーネントがレンダリングされる", () => {
       // Given: Toasterコンポーネントをレンダリングする
       testContainer.render(<Toaster />);
 
-      // Then: aria-live="polite" を持つ要素が配置される
+      // When: aria-live属性を持つ要素を検索する
       const liveRegion = document.querySelector('[aria-live="polite"]');
+
+      // Then: aria-live="polite" を持つ要素が配置される
       expect(liveRegion).not.toBeNull();
     });
 
@@ -48,10 +51,11 @@ describe("Toast", () => {
       // Given: descriptionのみでToastをレンダリングする
       testContainer.render(<Toast description="テストメッセージ" />);
 
+      // When: テキスト内容を確認する
+      const textContent = testContainer.getContainer().textContent;
+
       // Then: descriptionが表示される
-      expect(testContainer.getContainer().textContent).toContain(
-        "テストメッセージ"
-      );
+      expect(textContent).toContain("テストメッセージ");
     });
 
     it("titleとdescriptionが両方指定された場合に表示される", () => {
@@ -60,8 +64,10 @@ describe("Toast", () => {
         <Toast title="タイトル" description="詳細な説明文" />
       );
 
-      // Then: 両方が表示される
+      // When: テキスト内容を確認する
       const textContent = testContainer.getContainer().textContent;
+
+      // Then: 両方が表示される
       expect(textContent).toContain("タイトル");
       expect(textContent).toContain("詳細な説明文");
     });
@@ -70,8 +76,10 @@ describe("Toast", () => {
       // Given: descriptionのみのToastをレンダリングする
       testContainer.render(<Toast description="説明文のみ" />);
 
-      // Then: descriptionのみが表示される
+      // When: p要素を確認する
       const paragraphs = testContainer.getContainer().querySelectorAll("p");
+
+      // Then: descriptionのみが表示される
       expect(paragraphs).toHaveLength(1);
       expect(testContainer.getContainer().textContent).toContain("説明文のみ");
     });
@@ -82,8 +90,10 @@ describe("Toast", () => {
       // Given: Toastをレンダリングする
       testContainer.render(<Toast title="通知" description="内容" />);
 
-      // Then: コンテナに基本クラスが付与される
+      // When: コンテナ要素を取得する
       const toastElement = testContainer.getContainer().firstElementChild;
+
+      // Then: コンテナに基本クラスが付与される
       expect(toastElement).not.toBeNull();
       if (toastElement) {
         expect(StyleHelpers.hasClass(toastElement, "shadow-float")).toBe(true);
@@ -155,9 +165,11 @@ describe("Toast", () => {
         <Toast title="アイコンテスト" description="テスト" />
       );
 
-      // Then: closeアイコンが表示される
+      // When: 閉じるボタン内のアイコンを確認する
       const closeButton = testContainer.queryButton();
       const icon = closeButton.querySelector('[aria-hidden="true"]');
+
+      // Then: closeアイコンが表示される
       expect(icon?.textContent).toBe("close");
     });
 
@@ -171,8 +183,10 @@ describe("Toast", () => {
         />
       );
 
-      // Then: 閉じるボタンが存在しない
+      // When: ボタン要素を検索する
       const button = testContainer.getContainer().querySelector("button");
+
+      // Then: 閉じるボタンが存在しない
       expect(button).toBeNull();
     });
   });
@@ -184,10 +198,12 @@ describe("Toast", () => {
         <Toast title="アクセシビリティテスト" description="テスト" />
       );
 
-      // Then: タイトルがp要素として表示される
+      // When: p要素からタイトルを検索する
       const title = Array.from(
         testContainer.getContainer().querySelectorAll("p")
       ).find(p => p.textContent === "アクセシビリティテスト");
+
+      // Then: タイトルがp要素として表示される
       expect(title).not.toBeNull();
     });
 
@@ -197,18 +213,22 @@ describe("Toast", () => {
         <Toast title="ステータステスト" description="テスト" />
       );
 
+      // When: Toast要素を取得する
+      const toastElement = testContainer.getContainer().firstElementChild!;
+
       // Then: role="status"が設定される
-      const toastElement = testContainer.getContainer().firstElementChild;
-      expect(toastElement?.getAttribute("role")).toBe("status");
+      expect(A11yHelpers.hasRole(toastElement, "status")).toBe(true);
     });
 
     it("閉じるボタンにaria-labelが設定される", () => {
       // Given: Toastをレンダリングする
       testContainer.render(<Toast title="閉じるテスト" description="テスト" />);
 
-      // Then: 閉じるボタンにaria-label="閉じる"が設定される
+      // When: 閉じるボタンを取得する
       const closeButton = testContainer.queryButton();
-      expect(closeButton.getAttribute("aria-label")).toBe("閉じる");
+
+      // Then: 閉じるボタンにaria-label="閉じる"が設定される
+      expect(A11yHelpers.hasAriaLabel(closeButton, "閉じる")).toBe(true);
     });
 
     it("閉じるボタンなしの場合はaria-labelも存在しない", () => {
@@ -217,15 +237,17 @@ describe("Toast", () => {
         <Toast title="ボタンなし" description="テスト" isCloseTrigger={false} />
       );
 
-      // Then: ボタンが存在しない
+      // When: ボタン要素を検索する
       const button = testContainer.getContainer().querySelector("button");
+
+      // Then: ボタンが存在しない
       expect(button).toBeNull();
     });
   });
 
   describe("Edge Cases", () => {
     it("空のtitleでもエラーなくレンダリングされる", () => {
-      // Given: 空のtitleでToastをレンダリングする
+      // Given/When: 空のtitleでToastをレンダリングする
       expect(() => {
         testContainer.render(<Toast title="" description="説明のみ" />);
       }).not.toThrow();
@@ -236,8 +258,11 @@ describe("Toast", () => {
       const longTitle = "あ".repeat(1000);
       testContainer.render(<Toast title={longTitle} description="説明" />);
 
+      // When: テキスト内容を確認する
+      const textContent = testContainer.getContainer().textContent;
+
       // Then: テキストが表示される
-      expect(testContainer.getContainer().textContent).toContain(longTitle);
+      expect(textContent).toContain(longTitle);
     });
 
     it("非常に長いdescriptionでもレンダリングされる", () => {
@@ -247,10 +272,11 @@ describe("Toast", () => {
         <Toast title="タイトル" description={longDescription} />
       );
 
+      // When: テキスト内容を確認する
+      const textContent = testContainer.getContainer().textContent;
+
       // Then: descriptionが表示される
-      expect(testContainer.getContainer().textContent).toContain(
-        longDescription
-      );
+      expect(textContent).toContain(longDescription);
     });
 
     it("複数のクラス名が適用できる", () => {
@@ -263,10 +289,12 @@ describe("Toast", () => {
         />
       );
 
-      // Then: カスタムクラスが適用される
+      // When: カスタムクラスを持つ要素を検索する
       const toastElement = testContainer
         .getContainer()
         .querySelector(".custom-class");
+
+      // Then: カスタムクラスが適用される
       expect(toastElement).not.toBeNull();
     });
 
@@ -274,16 +302,16 @@ describe("Toast", () => {
       // Given: titleなしのToastをレンダリングする
       testContainer.render(<Toast description="説明のみのトースト" />);
 
-      // Then: descriptionが表示される
-      expect(testContainer.getContainer().textContent).toContain(
-        "説明のみのトースト"
-      );
-
-      // Then: titleのp要素は存在しない（または空）
+      // When: テキスト内容とp要素を確認する
       const paragraphs = testContainer.getContainer().querySelectorAll("p");
       const hasTitle = Array.from(paragraphs).some(
         p =>
           p.className.includes("character-3-bold-pro") && p.textContent !== ""
+      );
+
+      // Then: descriptionが表示され、titleは存在しない
+      expect(testContainer.getContainer().textContent).toContain(
+        "説明のみのトースト"
       );
       expect(hasTitle).toBe(false);
     });
