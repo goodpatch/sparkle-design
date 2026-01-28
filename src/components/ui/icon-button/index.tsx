@@ -249,7 +249,7 @@ const iconButtonVariants = cva(
         theme: "neutral",
         isDisabled: true,
         className:
-          "disabled:bg-white disabled:text-neutral-200 disabled:border-neutral-100",
+          "disabled:bg-[var(--color-white-alpha-700)] disabled:text-neutral-200 disabled:border-neutral-100",
       },
       {
         variant: "outline",
@@ -268,7 +268,8 @@ const iconButtonVariants = cva(
         variant: "ghost",
         theme: "neutral",
         isDisabled: true,
-        className: "disabled:text-neutral-200",
+        className:
+          "disabled:bg-[var(--color-white-alpha-700)] disabled:text-neutral-200",
       },
       {
         variant: "ghost",
@@ -364,11 +365,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
     // アイコンのみのボタンには aria-label が必要（WCAG 1.1.1）
     // en: Icon-only buttons require aria-label (WCAG 1.1.1)
     if (process.env.NODE_ENV !== "production") {
-      if (
-        !asChild &&
-        !props["aria-label"] &&
-        !props["aria-labelledby"]
-      ) {
+      if (!asChild && !props["aria-label"] && !props["aria-labelledby"]) {
         console.warn(
           "[IconButton] アイコンのみのボタンには aria-label を指定してください（WCAG 1.1.1）。" +
             " / Icon-only buttons require aria-label (WCAG 1.1.1)."
