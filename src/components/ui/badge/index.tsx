@@ -119,20 +119,35 @@ function Badge({
   variant = "normal",
   isGapped = false,
   children,
+  role = "status",
   ...props
 }: BadgeProps) {
   // sm以下のサイズの場合は、文字を非表示にする
+  // en: Hide text for sizes sm and below
   if (size === "sm" || size === "xs") {
     isNumberVisible = false;
   }
 
   // childrenがない場合はisNumberVisibleがfalseの扱いにする
+  // en: Treat as isNumberVisible=false when children is absent
   if (!children) {
     isNumberVisible = false;
   }
 
+  // 視覚的テキストが非表示の場合、aria-label が必要（WCAG 1.1.1）
+  // en: When visible text is hidden, aria-label is required (WCAG 1.1.1)
+  if (process.env.NODE_ENV !== "production") {
+    if (!isNumberVisible && !props["aria-label"] && !props["aria-labelledby"]) {
+      console.warn(
+        "[Badge] 視覚的テキストが非表示の場合は aria-label を指定してください（WCAG 1.1.1）。" +
+          " / When visible text is hidden, please provide aria-label (WCAG 1.1.1)."
+      );
+    }
+  }
+
   return (
     <div
+      role={role}
       className={cn(
         badgeVariants({ isNumberVisible, size, variant, isGapped }),
         className

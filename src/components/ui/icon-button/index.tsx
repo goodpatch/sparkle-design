@@ -361,6 +361,21 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
     // disabled状態の管理（isDisabled、disabled、またはisLoadingがtrueの場合）
     const isIconButtonDisabled = isLoading || isDisabled || disabled;
 
+    // アイコンのみのボタンには aria-label が必要（WCAG 1.1.1）
+    // en: Icon-only buttons require aria-label (WCAG 1.1.1)
+    if (process.env.NODE_ENV !== "production") {
+      if (
+        !asChild &&
+        !props["aria-label"] &&
+        !props["aria-labelledby"]
+      ) {
+        console.warn(
+          "[IconButton] アイコンのみのボタンには aria-label を指定してください（WCAG 1.1.1）。" +
+            " / Icon-only buttons require aria-label (WCAG 1.1.1)."
+        );
+      }
+    }
+
     const Comp = asChild ? SlotPrimitive.Slot : "button";
 
     // アイコンのサイズをボタンサイズに合わせて設定
