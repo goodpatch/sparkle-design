@@ -81,8 +81,8 @@ export function Toast({
       )}
     >
       <div className="h-full flex flex-col justify-center gap-0 px-1 grow">
-        {title && <p className="character-3-bold-pro">{title}</p>}
-        <p className={cn("character-3-regular-pro")}>{description}</p>
+        {title && <p className="character-3-bold-pro min-h-8 flex items-center">{title}</p>}
+        <p className="character-3-regular-pro min-h-8 flex items-center">{description}</p>
       </div>
       {isCloseTrigger && (
         <IconButton
