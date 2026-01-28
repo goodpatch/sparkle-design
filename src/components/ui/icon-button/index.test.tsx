@@ -92,7 +92,9 @@ describe("IconButton", () => {
         );
         const button = testContainer.queryButton();
 
-        expect(StyleHelpers.hasClass(button, "bg-neutral-500")).toBe(true);
+        expect(
+          StyleHelpers.hasClass(button, "bg-[var(--color-black-alpha-600)]")
+        ).toBe(true);
         expect(StyleHelpers.hasClass(button, "text-white")).toBe(true);
         expect(StyleHelpers.hasClass(button, "border-neutral-600")).toBe(true);
       });
