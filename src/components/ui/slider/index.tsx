@@ -39,11 +39,14 @@ const sliderRangeVariants = cva("absolute h-full bg-primary-500", {
 
 const sliderThumbVariants = cva(
   [
-    "block rounded-full border border-neutral-500 bg-white shadow-raise cursor-pointer",
+    "relative block rounded-full border border-neutral-500 bg-white shadow-raise cursor-pointer",
     "ring-offset-background transition-colors hover:bg-neutral-100",
     "focus:outline-hidden focus:bg-primary-100 focus:border-primary-200",
     "focus:ring-2 focus:ring-[var(--color-ring-normal)] focus:ring-offset-2",
     "h-4 w-4",
+    // タッチターゲットを24x24px以上に拡張（WCAG 2.5.8）
+    // en: Expand touch target to 24x24px minimum (WCAG 2.5.8)
+    "before:absolute before:content-[''] before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:min-h-6 before:min-w-6",
   ].join(" "),
   {
     variants: {

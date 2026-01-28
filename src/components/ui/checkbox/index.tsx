@@ -235,6 +235,7 @@ function Checkbox({
       <CheckboxPrimitive.Root
         data-slot="checkbox"
         id={id}
+        aria-invalid={isInvalid || undefined}
         className={cn(
           checkboxItemVariants({ size, isDisabled: isCheckboxDisabled }),
           "group",
