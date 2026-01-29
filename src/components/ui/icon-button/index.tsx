@@ -242,7 +242,7 @@ const iconButtonVariants = cva(
         theme: "primary",
         isDisabled: true,
         className:
-          "disabled:bg-white disabled:text-primary-200 disabled:border-primary-100",
+          "disabled:bg-[var(--color-white-alpha-700)] disabled:text-primary-200 disabled:border-primary-100",
       },
       {
         variant: "outline",
@@ -256,13 +256,14 @@ const iconButtonVariants = cva(
         theme: "negative",
         isDisabled: true,
         className:
-          "disabled:bg-white disabled:text-negative-200 disabled:border-negative-100",
+          "disabled:bg-[var(--color-white-alpha-700)] disabled:text-negative-200 disabled:border-negative-100",
       },
       {
         variant: "ghost",
         theme: "primary",
         isDisabled: true,
-        className: "disabled:text-primary-200",
+        className:
+          "disabled:bg-[var(--color-white-alpha-700)] disabled:text-primary-200",
       },
       {
         variant: "ghost",
@@ -275,7 +276,8 @@ const iconButtonVariants = cva(
         variant: "ghost",
         theme: "negative",
         isDisabled: true,
-        className: "disabled:text-negative-200",
+        className:
+          "disabled:bg-[var(--color-white-alpha-700)] disabled:text-negative-200",
       },
     ],
     defaultVariants: {
