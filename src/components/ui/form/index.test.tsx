@@ -374,7 +374,7 @@ describe("Form", () => {
 
         React.useEffect(() => {
           form.trigger("email");
-        }, []);
+        }, [form]);
 
         return (
           <Form {...(form as any)}>
@@ -423,7 +423,7 @@ describe("Form", () => {
 
         React.useEffect(() => {
           form.trigger("email");
-        }, []);
+        }, [form]);
 
         return (
           <Form {...(form as any)}>
@@ -555,7 +555,7 @@ describe("Form", () => {
 
         React.useEffect(() => {
           form.trigger("email");
-        }, []);
+        }, [form]);
 
         return (
           <Form {...(form as any)}>
@@ -600,7 +600,7 @@ describe("Form", () => {
 
         React.useEffect(() => {
           form.trigger("email");
-        }, []);
+        }, [form]);
 
         return (
           <Form {...(form as any)}>
@@ -650,7 +650,7 @@ describe("Form", () => {
 
         React.useEffect(() => {
           form.trigger("email");
-        }, []);
+        }, [form]);
 
         return (
           <Form {...(form as any)}>

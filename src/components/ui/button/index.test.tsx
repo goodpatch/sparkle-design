@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
@@ -98,8 +102,10 @@ describe("Button", () => {
       const button = testContainer.queryButton();
 
       // Then: solid neutralバリアントのクラスが適用される
-      expect(StyleHelpers.hasClass(button, "border")).toBe(true);
-      expect(StyleHelpers.hasClass(button, "shadow-raise")).toBe(true);
+      expect(
+        StyleHelpers.hasClass(button, "bg-[var(--color-black-alpha-600)]")
+      ).toBe(true);
+      expect(StyleHelpers.hasClass(button, "text-white")).toBe(true);
     });
 
     it("applies outline variant classes", () => {
@@ -122,7 +128,8 @@ describe("Button", () => {
       const button = testContainer.queryButton();
 
       // Then: negativeテーマのクラスが適用される
-      expect(button.className).toContain("negative");
+      expect(StyleHelpers.hasClass(button, "bg-negative-500")).toBe(true);
+      expect(StyleHelpers.hasClass(button, "border-negative-600")).toBe(true);
     });
 
     it("applies ghost variant classes", () => {
@@ -236,6 +243,24 @@ describe("Button", () => {
 
       // Then: onKeyDownが呼ばれる（キーボードナビゲーションの基本機能確認）
       expect(handleKeyDown).toHaveBeenCalledTimes(1);
+    });
+
+    it("does not call onKeyDown when disabled", () => {
+      // Given: disabled状態でonKeyDownコールバック付きのButton
+      const handleKeyDown = vi.fn();
+      testContainer.render(
+        <Button onKeyDown={handleKeyDown} isDisabled>
+          Disabled Key Button
+        </Button>
+      );
+      const button = testContainer.queryButton();
+
+      // When: Enter/Spaceキーを押す
+      EventHelpers.keyDown(button, "Enter");
+      EventHelpers.keyDown(button, " ");
+
+      // Then: onKeyDownは呼ばれない
+      expect(handleKeyDown).not.toHaveBeenCalled();
     });
   });
 
@@ -483,6 +508,28 @@ describe("Button", () => {
           "[Button] onMouseDown/onPointerDown/onTouchStart are deprecated"
         )
       );
+      warnSpy.mockRestore();
+    });
+
+    it("warns and marks aria-disabled when asChild is disabled", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <Button asChild isDisabled>
+          <a href="/about">Disabled Link</a>
+        </Button>
+      );
+
+      // Then: 警告が出る
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("[Button] asChild + disabled/loading")
+      );
+
+      // Then: aria-disabled/data-disabled が付与される
+      const link = testContainer.getContainer().querySelector("a");
+      expect(link?.getAttribute("aria-disabled")).toBe("true");
+      expect(link?.getAttribute("data-disabled")).toBe("true");
+
       warnSpy.mockRestore();
     });
 

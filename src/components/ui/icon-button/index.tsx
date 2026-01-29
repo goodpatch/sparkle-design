@@ -72,9 +72,9 @@ const iconButtonVariants = cva(
         isLoading: false,
         isDisabled: false,
         className: [
-          "bg-neutral-500 text-white border-neutral-600",
-          "hover:bg-neutral-600 hover:border-neutral-700",
-          "active:bg-neutral-700 active:border-neutral-800",
+          "bg-[var(--color-black-alpha-600)] text-white border-neutral-600",
+          "hover:bg-[var(--color-black-alpha-700)] hover:border-neutral-700",
+          "active:bg-[var(--color-black-alpha-800)] active:border-neutral-800",
         ].join(" "),
       },
       {
@@ -82,7 +82,8 @@ const iconButtonVariants = cva(
         theme: "neutral",
         isLoading: true,
         isDisabled: false,
-        className: "bg-neutral-500 text-white border-neutral-600",
+        className:
+          "bg-[var(--color-black-alpha-600)] text-white border-neutral-600",
       },
 
       // Solid Negative バリアント
@@ -131,8 +132,8 @@ const iconButtonVariants = cva(
         isLoading: false,
         className: [
           "bg-white text-neutral-700 border-neutral-300",
-          "hover:bg-neutral-50",
-          "active:bg-neutral-100",
+          "hover:bg-[var(--color-black-alpha-50)]",
+          "active:bg-[var(--color-black-alpha-100)]",
         ].join(" "),
       },
       {
@@ -186,7 +187,8 @@ const iconButtonVariants = cva(
         theme: "neutral",
         isLoading: false,
         isDisabled: false,
-        className: "text-neutral-700 hover:bg-neutral-50 active:bg-neutral-100",
+        className:
+          "text-neutral-700 hover:bg-[var(--color-black-alpha-50)] active:bg-[var(--color-black-alpha-100)]",
       },
       {
         variant: "ghost",
@@ -226,7 +228,7 @@ const iconButtonVariants = cva(
         theme: "neutral",
         isDisabled: true,
         className:
-          "disabled:bg-neutral-200 disabled:text-white disabled:border-none",
+          "disabled:bg-[var(--color-black-alpha-200)] disabled:text-white disabled:border-none",
       },
       {
         variant: "solid",
@@ -240,39 +242,42 @@ const iconButtonVariants = cva(
         theme: "primary",
         isDisabled: true,
         className:
-          "disabled:bg-white disabled:text-primary-200 disabled:border-primary-100",
+          "disabled:bg-[var(--color-white-alpha-700)] disabled:text-primary-200 disabled:border-primary-100",
       },
       {
         variant: "outline",
         theme: "neutral",
         isDisabled: true,
         className:
-          "disabled:bg-white disabled:text-neutral-200 disabled:border-neutral-100",
+          "disabled:bg-[var(--color-white-alpha-700)] disabled:text-neutral-200 disabled:border-neutral-100",
       },
       {
         variant: "outline",
         theme: "negative",
         isDisabled: true,
         className:
-          "disabled:bg-white disabled:text-negative-200 disabled:border-negative-100",
+          "disabled:bg-[var(--color-white-alpha-700)] disabled:text-negative-200 disabled:border-negative-100",
       },
       {
         variant: "ghost",
         theme: "primary",
         isDisabled: true,
-        className: "disabled:text-primary-200",
+        className:
+          "disabled:bg-[var(--color-white-alpha-700)] disabled:text-primary-200",
       },
       {
         variant: "ghost",
         theme: "neutral",
         isDisabled: true,
-        className: "disabled:text-neutral-200",
+        className:
+          "disabled:bg-[var(--color-white-alpha-700)] disabled:text-neutral-200",
       },
       {
         variant: "ghost",
         theme: "negative",
         isDisabled: true,
-        className: "disabled:text-negative-200",
+        className:
+          "disabled:bg-[var(--color-white-alpha-700)] disabled:text-negative-200",
       },
     ],
     defaultVariants: {
@@ -362,11 +367,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
     // アイコンのみのボタンには aria-label が必要（WCAG 1.1.1）
     // en: Icon-only buttons require aria-label (WCAG 1.1.1)
     if (process.env.NODE_ENV !== "production") {
-      if (
-        !asChild &&
-        !props["aria-label"] &&
-        !props["aria-labelledby"]
-      ) {
+      if (!asChild && !props["aria-label"] && !props["aria-labelledby"]) {
         console.warn(
           "[IconButton] アイコンのみのボタンには aria-label を指定してください（WCAG 1.1.1）。" +
             " / Icon-only buttons require aria-label (WCAG 1.1.1)."
