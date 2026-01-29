@@ -300,7 +300,12 @@ describe("IconButton", () => {
       );
       const button = testContainer.queryButton();
 
-      expect(StyleHelpers.hasClass(button, "disabled:bg-white")).toBe(true);
+      expect(
+        StyleHelpers.hasClass(
+          button,
+          "disabled:bg-[var(--color-white-alpha-700)]"
+        )
+      ).toBe(true);
       expect(StyleHelpers.hasClass(button, "disabled:text-primary-200")).toBe(
         true
       );
@@ -315,6 +320,12 @@ describe("IconButton", () => {
       );
       const button = testContainer.queryButton();
 
+      expect(
+        StyleHelpers.hasClass(
+          button,
+          "disabled:bg-[var(--color-white-alpha-700)]"
+        )
+      ).toBe(true);
       expect(StyleHelpers.hasClass(button, "disabled:text-primary-200")).toBe(
         true
       );
