@@ -11,12 +11,21 @@ import { Toast } from "./index";
 
 figma.connect(
   Toast,
-  "https://www.figma.com/design/7alBZXZf65YgcII41TWT0r/Sparkle-Design?node-id=1266%3A13493",
+  "https://www.figma.com/design/7alBZXZf65YgcII41TWT0r/Sparkle-Design?node-id=1266%3A13444",
   {
     props: {
-      title: figma.string("title"),
+      // These props were automatically mapped based on your linked code:
+      title: figma.boolean("isTitle", {
+        true: figma.string("title"),
+        false: undefined,
+      }),
       description: figma.string("description"),
       isCloseTrigger: figma.boolean("isCloseTrigger"),
+      // No matching props could be found for these Figma properties:
+      // "isCloseTrigger": figma.boolean('isCloseTrigger'),
+      // "isTitle": figma.boolean('isTitle'),
+      // "title": figma.string('title'),
+      // "description": figma.string('description')
     },
     example: props => (
       <Toast
