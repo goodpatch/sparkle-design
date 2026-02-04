@@ -56,9 +56,15 @@ interface InlineMessageContextValue {
 const InlineMessageContext =
   React.createContext<InlineMessageContextValue | null>(null);
 
+type InlineMessageVariant = VariantProps<typeof inlineMessageVariants>;
 export interface InlineMessageProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof inlineMessageVariants> {
+    InlineMessageVariant {
+  /**
+   * メッセージのステータス
+   * en: Status of the message
+   */
+  status: InlineMessageVariant["status"];
   /**
    * 閉じる時のハンドラー
    * en: Handler when the message is dismissed
