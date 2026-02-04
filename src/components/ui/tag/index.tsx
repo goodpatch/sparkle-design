@@ -167,9 +167,7 @@ const Tag = React.forwardRef<HTMLDivElement, TagProps>(
         className={cn(tagVariants({ variant, size, status, className }))}
         {...props}
       >
-        <span className="min-w-0 truncate">
-          {children}
-        </span>
+        <span className="min-w-0 truncate">{children}</span>
       </div>
     );
   }
