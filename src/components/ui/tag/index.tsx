@@ -1,7 +1,9 @@
 /**
  * This file is part of Sparkle Design.
  * License: https://github.com/goodpatch/sparkle-design/blob/main/LICENSE
- * If you modify this file, add a "Modifications" note here.
+ *
+ * Modifications:
+ * - Added whitespace-nowrap for line-break prevention
  */
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -9,7 +11,7 @@ import { cn } from "@/lib/utils";
 
 // タグのスタイル定義
 const tagVariants = cva(
-  "inline-flex items-center justify-center rounded-notice text-center h-fit",
+  "inline-flex items-center justify-center rounded-notice text-center h-fit whitespace-nowrap",
   {
     variants: {
       variant: {

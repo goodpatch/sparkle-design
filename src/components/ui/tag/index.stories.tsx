@@ -138,3 +138,45 @@ export const Status: Story = {
     </div>
   ),
 };
+
+export const LineBreakPrevention: Story = {
+  render: args => (
+    <div className="flex flex-col gap-4">
+      <div>
+        <h3 className="text-sm font-bold mb-2">
+          改行禁則処理 (Line Break Prevention)
+        </h3>
+        <p className="text-sm text-neutral-600 mb-4">
+          タグは改行せずに表示されます。幅が狭い場合は省略記号を表示します。
+        </p>
+        <div className="flex gap-2 w-[400px]">
+          <Tag {...args}>Short</Tag>
+          <Tag {...args}>This is a longer tag text</Tag>
+          <Tag {...args}>
+            This is a very long tag text that should not wrap to multiple lines
+          </Tag>
+        </div>
+      </div>
+      <div>
+        <h3 className="text-sm font-bold mb-2">横並びレイアウト</h3>
+        <div className="flex flex-wrap gap-2">
+          <Tag {...args} status="info">
+            情報
+          </Tag>
+          <Tag {...args} status="success">
+            成功
+          </Tag>
+          <Tag {...args} status="warning">
+            警告
+          </Tag>
+          <Tag {...args} status="negative">
+            エラー
+          </Tag>
+          <Tag {...args} status="neutral">
+            処理中
+          </Tag>
+        </div>
+      </div>
+    </div>
+  ),
+};

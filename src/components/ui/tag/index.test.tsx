@@ -173,5 +173,18 @@ describe("Tag", () => {
       expect(screen.getByText("Complex")).toBeInTheDocument();
       expect(screen.getByText("Content")).toBeInTheDocument();
     });
+
+    it("prevents line breaks with whitespace-nowrap", () => {
+      // Given: 長いテキストを含むTag
+      render(<Tag>This is a very long tag text that should not wrap</Tag>);
+
+      // When: 要素を確認
+      const tag = screen.getByText(
+        "This is a very long tag text that should not wrap"
+      );
+
+      // Then: whitespace-nowrapクラスが適用される
+      expect(tag).toHaveClass("whitespace-nowrap");
+    });
   });
 });
