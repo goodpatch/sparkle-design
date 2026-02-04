@@ -63,4 +63,3 @@ node-compile-cache/
 
 # package manager lock files
 # pnpm-lock.yaml
-package-lock.json

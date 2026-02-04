@@ -1,10 +1,7 @@
 /**
  * This file is part of Sparkle Design.
  * License: https://github.com/goodpatch/sparkle-design/blob/main/LICENSE
- *
- * Modifications:
- * - Added whitespace-nowrap for line-break prevention
- * - Added truncate for text overflow with ellipsis
+ * If you modify this file, add a "Modifications" note here.
  */
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
