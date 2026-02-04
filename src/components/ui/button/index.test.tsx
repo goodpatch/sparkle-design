@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
@@ -98,8 +102,10 @@ describe("Button", () => {
       const button = testContainer.queryButton();
 
       // Then: solid neutralバリアントのクラスが適用される
-      expect(StyleHelpers.hasClass(button, "border")).toBe(true);
-      expect(StyleHelpers.hasClass(button, "shadow-raise")).toBe(true);
+      expect(
+        StyleHelpers.hasClass(button, "bg-[var(--color-black-alpha-600)]")
+      ).toBe(true);
+      expect(StyleHelpers.hasClass(button, "text-white")).toBe(true);
     });
 
     it("applies outline variant classes", () => {
@@ -122,7 +128,8 @@ describe("Button", () => {
       const button = testContainer.queryButton();
 
       // Then: negativeテーマのクラスが適用される
-      expect(button.className).toContain("negative");
+      expect(StyleHelpers.hasClass(button, "bg-negative-500")).toBe(true);
+      expect(StyleHelpers.hasClass(button, "border-negative-600")).toBe(true);
     });
 
     it("applies ghost variant classes", () => {
@@ -237,6 +244,24 @@ describe("Button", () => {
       // Then: onKeyDownが呼ばれる（キーボードナビゲーションの基本機能確認）
       expect(handleKeyDown).toHaveBeenCalledTimes(1);
     });
+
+    it("does not call onKeyDown when disabled", () => {
+      // Given: disabled状態でonKeyDownコールバック付きのButton
+      const handleKeyDown = vi.fn();
+      testContainer.render(
+        <Button onKeyDown={handleKeyDown} isDisabled>
+          Disabled Key Button
+        </Button>
+      );
+      const button = testContainer.queryButton();
+
+      // When: Enter/Spaceキーを押す
+      EventHelpers.keyDown(button, "Enter");
+      EventHelpers.keyDown(button, " ");
+
+      // Then: onKeyDownは呼ばれない
+      expect(handleKeyDown).not.toHaveBeenCalled();
+    });
   });
 
   describe("Disabled State", () => {
@@ -275,6 +300,15 @@ describe("Button", () => {
 
       // Then: loading indicatorが表示される
       expect(loadingIndicator).toBeTruthy();
+    });
+
+    it("sets aria-busy when isLoading", () => {
+      // Given: loading状態のButton
+      testContainer.render(<Button isLoading>Loading Button</Button>);
+      const button = testContainer.queryButton();
+
+      // Then: aria-busy が付与される
+      expect(button.getAttribute("aria-busy")).toBe("true");
     });
 
     it("is disabled when isLoading", () => {
@@ -434,13 +468,69 @@ describe("Button", () => {
   describe("Error Handling", () => {
     it("handles missing children gracefully", () => {
       // Given: 子要素なしのButton
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
       expect(() => {
         testContainer.render(<Button />);
       }).not.toThrow();
 
+      // Then: a11y上の警告を出す
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("[Button] Accessible name is missing")
+      );
+      warnSpy.mockRestore();
+
       // Then: 正常に描画される
       const button = testContainer.queryButton();
       expect(button).toBeTruthy();
+    });
+
+    it("does not warn when aria-label is provided even without children", () => {
+      // Given: aria-label 付きで子要素なしのButton
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      testContainer.render(<Button aria-label="Close" />);
+      testContainer.queryButton();
+
+      // Then: 警告は不要
+      expect(warnSpy).not.toHaveBeenCalled();
+      warnSpy.mockRestore();
+    });
+
+    it("warns when pointer-down style handlers are provided (deprecated for a11y)", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <Button onPointerDown={() => {}}>PointerDown Button</Button>
+      );
+      testContainer.queryButton();
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining(
+          "[Button] onMouseDown/onPointerDown/onTouchStart are deprecated"
+        )
+      );
+      warnSpy.mockRestore();
+    });
+
+    it("warns and marks aria-disabled when asChild is disabled", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <Button asChild isDisabled>
+          <a href="/about">Disabled Link</a>
+        </Button>
+      );
+
+      // Then: 警告が出る
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("[Button] asChild + disabled/loading")
+      );
+
+      // Then: aria-disabled/data-disabled が付与される
+      const link = testContainer.getContainer().querySelector("a");
+      expect(link?.getAttribute("aria-disabled")).toBe("true");
+      expect(link?.getAttribute("data-disabled")).toBe("true");
+
+      warnSpy.mockRestore();
     });
 
     it("handles rapid clicks gracefully", () => {

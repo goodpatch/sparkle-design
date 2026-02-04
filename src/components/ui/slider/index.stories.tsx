@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { cn } from "@/lib/utils";
+import { useState } from "react";
 import { Slider } from "./index";
 
 const meta: Meta<typeof Slider> = {
-  title: "Components/Slider",
+  title: "Form/Slider",
   component: Slider,
   parameters: {
     layout: "centered",
@@ -11,7 +11,6 @@ const meta: Meta<typeof Slider> = {
   tags: ["autodocs"],
   argTypes: {
     defaultValue: {
-      description: "スライダーの初期値",
       control: { type: "object" },
       table: {
         type: { summary: "number[]" },
@@ -19,7 +18,6 @@ const meta: Meta<typeof Slider> = {
       },
     },
     max: {
-      description: "スライダーの最大値",
       control: { type: "number" },
       table: {
         type: { summary: "number" },
@@ -27,7 +25,6 @@ const meta: Meta<typeof Slider> = {
       },
     },
     step: {
-      description: "スライダーの増減単位",
       control: { type: "number" },
       table: {
         type: { summary: "number" },
@@ -35,23 +32,13 @@ const meta: Meta<typeof Slider> = {
       },
     },
     disabled: {
-      description: "スライダーを無効にするかどうか",
       control: { type: "boolean" },
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
       },
     },
-    orientation: {
-      description: "スライダーの向き",
-      control: { type: "radio", options: ["horizontal", "vertical"] },
-      table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "horizontal" },
-      },
-    },
     className: {
-      description: "コンポーネントのスタイルをカスタマイズするためのクラス名",
       control: "text",
       table: {
         type: { summary: "string" },
@@ -82,6 +69,37 @@ export const Disabled: Story = {
     max: 100,
     step: 1,
     disabled: true,
+  },
+  render: ({ className, ...props }) => (
+    <div className="flex flex-col items-center justify-center w-[240px]">
+      <Slider {...props} />
+    </div>
+  ),
+};
+
+export const Controlled: Story = {
+  args: {
+    max: 100,
+    step: 1,
+  },
+  render: ({ className, ...props }) => {
+    const [value, setValue] = useState([50]);
+
+    return (
+      <div className="flex flex-col items-center justify-center w-[240px] gap-4">
+        <Slider {...props} value={value} onValueChange={setValue} />
+        <p className="text-sm text-gray-600">現在の値: {value[0]}</p>
+      </div>
+    );
+  },
+};
+
+export const WithUnit: Story = {
+  args: {
+    defaultValue: [25],
+    max: 100,
+    step: 1,
+    unit: "%",
   },
   render: ({ className, ...props }) => (
     <div className="flex flex-col items-center justify-center w-[240px]">

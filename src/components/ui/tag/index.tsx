@@ -1,10 +1,15 @@
+/**
+ * This file is part of Sparkle Design.
+ * License: https://github.com/goodpatch/sparkle-design/blob/main/LICENSE
+ * If you modify this file, add a "Modifications" note here.
+ */
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 // タグのスタイル定義
 const tagVariants = cva(
-  "inline-flex items-center justify-center rounded-notice text-center",
+  "inline-flex items-center justify-center rounded-notice text-center h-fit",
   {
     variants: {
       variant: {

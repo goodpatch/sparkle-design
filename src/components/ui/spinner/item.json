@@ -10,10 +10,5 @@
       "type": "registry:component"
     }
   ],
-  "registryDependencies": [
-    "https://sparkle-design.vercel.app/r/sparkle-font.json",
-    "https://sparkle-design.vercel.app/r/sparkle-color.json",
-    "https://sparkle-design.vercel.app/r/sparkle-style.json",
-    "https://sparkle-design.vercel.app/r/icon.json"
-  ]
+  "registryDependencies": ["https://sparkle-design.vercel.app/r/icon.json"]
 }

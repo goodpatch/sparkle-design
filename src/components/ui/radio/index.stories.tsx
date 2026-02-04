@@ -4,7 +4,7 @@ import { action } from "@storybook/addon-actions";
 import { Radio, RadioItem, RadioItemProps } from "./index";
 
 const meta: Meta<typeof Radio> = {
-  title: "Components/Radio",
+  title: "Form/Radio",
   component: Radio,
   subcomponents: { RadioItem },
   parameters: {

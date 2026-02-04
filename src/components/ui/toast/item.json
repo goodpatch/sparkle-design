@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toast",
+  "type": "registry:component",
+  "title": "Toast",
+  "description": "トーストはアクションの発生時にユーザーへフィードバックを行うために使用するコンポーネントです。",
+  "files": [
+    {
+      "path": "src/components/ui/toast/index.tsx",
+      "type": "registry:component"
+    }
+  ],
+  "dependencies": ["sonner"],
+  "registryDependencies": ["https://sparkle-design.vercel.app/r/button.json"]
+}

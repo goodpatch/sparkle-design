@@ -13,8 +13,17 @@ import {
 } from "./index";
 
 const meta: Meta<typeof Modal> = {
-  title: "Components/Modal",
+  title: "Overlay/Modal",
   component: Modal,
+  subcomponents: {
+    ModalContent,
+    ModalTrigger,
+    ModalTitle,
+    ModalBody,
+    ModalHeader,
+    ModalClose,
+    ModalFooter,
+  },
   parameters: {
     layout: "centered",
   },
@@ -185,6 +194,41 @@ export const FooterHidden: Story = {
           <ModalBody>
             <p>フッターが非表示のモーダルです。</p>
           </ModalBody>
+        </ModalContent>
+      </Modal>
+    );
+  },
+};
+
+export const EnabledOverlayClickToClose: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <Modal open={open} onOpenChange={setOpen}>
+        <ModalTrigger asChild>
+          <Button>オーバーレイクリックで閉じる</Button>
+        </ModalTrigger>
+        <ModalContent closeOnOverlayClick>
+          <ModalHeader>
+            <ModalTitle>タイトル</ModalTitle>
+            <ModalClose />
+          </ModalHeader>
+          <ModalBody>
+            <p>オーバーレイクリックで閉じるモーダルです。</p>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              size="sm"
+              theme="neutral"
+              variant="ghost"
+              onClick={() => setOpen(false)}
+            >
+              キャンセル
+            </Button>
+            <Button size="sm" onClick={() => setOpen(false)}>
+              保存
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     );

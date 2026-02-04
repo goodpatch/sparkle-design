@@ -1,3 +1,8 @@
+/**
+ * This file is part of Sparkle Design.
+ * License: https://github.com/goodpatch/sparkle-design/blob/main/LICENSE
+ * If you modify this file, add a "Modifications" note here.
+ */
 "use client";
 
 import * as React from "react";
@@ -230,6 +235,7 @@ function Checkbox({
       <CheckboxPrimitive.Root
         data-slot="checkbox"
         id={id}
+        aria-invalid={isInvalid || undefined}
         className={cn(
           checkboxItemVariants({ size, isDisabled: isCheckboxDisabled }),
           "group",

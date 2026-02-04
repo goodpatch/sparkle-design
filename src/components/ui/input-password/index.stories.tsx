@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { InputPassword } from "@/components/ui/input-password";
 
 const meta: Meta<typeof InputPassword> = {
-  title: "Components/InputPassword",
+  title: "Form/Input Password",
   component: InputPassword,
   tags: ["autodocs"],
   parameters: {
@@ -19,7 +19,6 @@ const meta: Meta<typeof InputPassword> = {
         type: "radio",
       },
       options: ["sm", "md", "lg"],
-      description: "入力フィールドのサイズを指定します",
       table: {
         defaultValue: { summary: "md" },
       },
@@ -28,7 +27,6 @@ const meta: Meta<typeof InputPassword> = {
       control: {
         type: "boolean",
       },
-      description: "エラー状態を指定します",
       table: {
         defaultValue: { summary: "false" },
       },
@@ -37,7 +35,6 @@ const meta: Meta<typeof InputPassword> = {
       control: {
         type: "boolean",
       },
-      description: "無効状態を指定します",
       table: {
         defaultValue: { summary: "false" },
       },
@@ -46,19 +43,16 @@ const meta: Meta<typeof InputPassword> = {
       control: {
         type: "text",
       },
-      description: "プレースホルダーテキスト",
     },
     defaultValue: {
       control: {
         type: "text",
       },
-      description: "デフォルト値",
     },
     className: {
       control: {
         type: "text",
       },
-      description: "カスタムCSSクラス",
     },
   },
 };

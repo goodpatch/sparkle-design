@@ -3,7 +3,7 @@
   "name": "modal",
   "type": "registry:component",
   "title": "Modal",
-  "description": "モーダルはメインコンテンツの上に表示され、ユーザーの注意を特定のタスクや情報に集中させるためのコンポーネントです。",
+  "description": "モーダルはコンテンツに重ねられたウィンドウを介して、ユーザーの注意を特定の情報に集中させるために使用するコンポーネントです。",
   "files": [
     {
       "path": "src/components/ui/modal/index.tsx",
@@ -11,10 +11,5 @@
     }
   ],
   "dependencies": ["radix-ui"],
-  "registryDependencies": [
-    "https://sparkle-design.vercel.app/r/icon.json",
-    "https://sparkle-design.vercel.app/r/sparkle-font.json",
-    "https://sparkle-design.vercel.app/r/sparkle-color.json",
-    "https://sparkle-design.vercel.app/r/sparkle-style.json"
-  ]
+  "registryDependencies": ["https://sparkle-design.vercel.app/r/icon.json"]
 }

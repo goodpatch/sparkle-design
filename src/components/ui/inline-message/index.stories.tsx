@@ -8,7 +8,7 @@ import {
 } from "./index";
 
 const meta: Meta<typeof InlineMessage> = {
-  title: "Components/InlineMessage",
+  title: "Feedback/Inline Message",
   component: InlineMessage,
   parameters: { layout: "centered" },
   tags: ["autodocs"],

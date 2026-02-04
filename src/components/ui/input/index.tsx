@@ -1,3 +1,8 @@
+/**
+ * This file is part of Sparkle Design.
+ * License: https://github.com/goodpatch/sparkle-design/blob/main/LICENSE
+ * If you modify this file, add a "Modifications" note here.
+ */
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
@@ -307,6 +312,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={mergedInputRef}
           disabled={isInputDisabled}
+          aria-invalid={isInvalid || undefined}
           className={cn(
             "w-full h-full bg-transparent border-none outline-hidden focus:outline-hidden",
             "text-text-high placeholder:text-text-placeholder px-2",

@@ -1,3 +1,9 @@
+/**
+ * This file is part of Sparkle Design.
+ * License: https://github.com/goodpatch/sparkle-design/blob/main/LICENSE
+ * If you modify this file, add a "Modifications" note here.
+ */
+import React from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -20,7 +26,7 @@ function Skeleton({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn("animate-pulse rounded-md bg-base-200", className)}
+      className={cn("animate-pulse rounded-notice bg-skeleton-fill", className)}
       {...props}
     />
   );

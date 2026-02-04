@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "overlay",
+  "type": "registry:component",
+  "title": "Overlay",
+  "description": "オーバーレイはシステムのモードが切り替わったことを伝えるために使用するコンポーネントです。",
+  "files": [
+    {
+      "path": "src/components/ui/overlay/index.tsx",
+      "type": "registry:component"
+    }
+  ],
+  "dependencies": [],
+  "registryDependencies": []
+}

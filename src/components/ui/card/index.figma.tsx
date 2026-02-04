@@ -19,18 +19,12 @@ figma.connect(
   Card,
   "https://www.figma.com/design/7alBZXZf65YgcII41TWT0r/Sparkle-Design?node-id=1274-60861&t=A1ymB6VaQrqwNcKU-4",
   {
-    props: {
-      /**
-       * カードタイトル
-       * en: Card title
-       */
-      title: figma.string("title"),
-    },
+    props: {},
     example: props => (
       <Card>
         <CardHeader>
           <CardTitle>
-            {props.title}
+            タイトル
             <CardDescription>Description</CardDescription>
           </CardTitle>
           <CardControl>Control</CardControl>
@@ -52,11 +46,6 @@ figma.connect(
   {
     props: {
       /**
-       * カードタイトル
-       * en: Card title
-       */
-      title: figma.string("title"),
-      /**
        * 無効化状態
        * en: Disabled state
        */
@@ -69,7 +58,7 @@ figma.connect(
       <ClickableCard isDisabled={props.isDisabled}>
         <CardHeader>
           <CardTitle>
-            {props.title}
+            タイトル
             <CardDescription>Description</CardDescription>
           </CardTitle>
           <CardControl>Control</CardControl>

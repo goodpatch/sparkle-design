@@ -1,21 +1,18 @@
-import { Meta } from '@storybook/blocks';
+import { Meta } from "@storybook/blocks";
 
-<Meta title="Docs/shadcn MCP" />
+<Meta title="Docs/MCP" />
 
-# shadcn MCP 設定方法
+# MCP 連携方法
 
-次の設定を使用して shadcn MCP サーバーを起動できます。
+次の設定を`components.json`に記述することで、shadcn MCP serverからSparkle Design for Reactを参照することが可能になります。<br />
+詳細な導入方法は[公式のドキュメント](https://ui.shadcn.com/docs/mcp)を参照してください。<br />
+en: You can reference Sparkle Design for React from the shadcn MCP server by adding the following configuration to your `components.json` file.<br />
+For detailed installation instructions, please refer to the [official documentation](https://ui.shadcn.com/docs/mcp).<br />
 
 ```json
 {
-  "mcpServers": {
-    "shadcn": {
-      "command": "npx",
-      "args": ["-y", "shadcn@canary", "registry:mcp"],
-      "env": {
-        "REGISTRY_URL": "https://sparkle-design.vercel.app/r/registry.json"
-      }
-    }
+  "registries": {
+    "@sparkle-design": "https://sparkle-design.vercel.app/r/{name}.json"
   }
 }
 ```

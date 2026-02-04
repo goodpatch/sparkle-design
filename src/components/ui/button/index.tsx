@@ -1,3 +1,8 @@
+/**
+ * This file is part of Sparkle Design.
+ * License: https://github.com/goodpatch/sparkle-design/blob/main/LICENSE
+ * If you modify this file, add a "Modifications" note here.
+ */
 import * as React from "react";
 import { Slot as SlotPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -8,7 +13,8 @@ import { Spinner } from "@/components/ui/spinner";
 
 const buttonVariants = cva(
   [
-    "inline-flex items-center justify-center gap-0.5 whitespace-nowrap rounded-action transition-colors",
+    // `relative` is required because we absolutely-position the loading spinner at the center.
+    "relative inline-flex items-center justify-center gap-0.5 whitespace-nowrap rounded-action transition-colors",
     "cursor-pointer disabled:cursor-not-allowed",
     "shrink-0 outline-none",
     "focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
@@ -66,14 +72,14 @@ const buttonVariants = cva(
         theme: "neutral",
         isLoading: false,
         className: [
-          "bg-neutral-500",
+          "bg-[var(--color-black-alpha-600)]",
           "text-white",
           "border-neutral-600",
-          "hover:bg-neutral-600",
+          "hover:bg-[var(--color-black-alpha-700)]",
           "hover:border-neutral-700",
-          "active:bg-neutral-700",
+          "active:bg-[var(--color-black-alpha-800)]",
           "active:border-neutral-800",
-          "disabled:bg-neutral-200",
+          "disabled:bg-[var(--color-black-alpha-200)]",
           "disabled:border-none",
         ].join(" "),
       },
@@ -82,7 +88,7 @@ const buttonVariants = cva(
         theme: "neutral",
         isLoading: true,
         className:
-          "disabled:bg-neutral-500 disabled:text-white disabled:border-neutral-600",
+          "disabled:bg-[var(--color-black-alpha-600)] disabled:text-white disabled:border-neutral-600",
       },
       // solid negative
       {
@@ -121,6 +127,7 @@ const buttonVariants = cva(
           "active:bg-primary-100",
           "active:border-primary-400",
           "active:text-primary-600",
+          "disabled:bg-[var(--color-white-alpha-700)]",
           "disabled:border-primary-100",
           "disabled:text-primary-200",
         ].join(" "),
@@ -141,9 +148,10 @@ const buttonVariants = cva(
           "bg-white",
           "text-neutral-700",
           "border-neutral-300",
-          "hover:bg-neutral-50",
-          "active:bg-neutral-100",
+          "hover:bg-[var(--color-black-alpha-50)]",
+          "active:bg-[var(--color-black-alpha-100)]",
           "active:border-neutral-300",
+          "disabled:bg-[var(--color-white-alpha-700)]",
           "disabled:border-neutral-100",
           "disabled:text-neutral-200",
         ].join(" "),
@@ -168,6 +176,7 @@ const buttonVariants = cva(
           "active:bg-negative-100",
           "active:border-negative-400",
           "active:text-negative-600",
+          "disabled:bg-[var(--color-white-alpha-700)]",
           "disabled:border-negative-100",
           "disabled:text-negative-200",
         ].join(" "),
@@ -189,6 +198,7 @@ const buttonVariants = cva(
           "hover:bg-primary-50",
           "active:bg-primary-100",
           "active:text-primary-600",
+          "disabled:bg-[var(--color-white-alpha-700)]",
           "disabled:text-primary-200",
         ].join(" "),
       },
@@ -205,8 +215,9 @@ const buttonVariants = cva(
         isLoading: false,
         className: [
           "text-neutral-700",
-          "hover:bg-neutral-50",
-          "active:bg-neutral-100",
+          "hover:bg-[var(--color-black-alpha-50)]",
+          "active:bg-[var(--color-black-alpha-100)]",
+          "disabled:bg-[var(--color-white-alpha-700)]",
           "disabled:text-neutral-200",
         ].join(" "),
       },
@@ -226,6 +237,7 @@ const buttonVariants = cva(
           "hover:bg-negative-50",
           "active:bg-negative-100",
           "active:text-negative-600",
+          "disabled:bg-[var(--color-white-alpha-700)]",
           "disabled:text-negative-200",
         ].join(" "),
       },
@@ -245,7 +257,10 @@ const buttonVariants = cva(
 );
 
 type ButtonVariantProps = VariantProps<typeof buttonVariants>;
-export interface ButtonProps extends React.ComponentProps<"button"> {
+type NativeButtonProps = React.ComponentPropsWithoutRef<"button">;
+
+export interface ButtonProps
+  extends Omit<NativeButtonProps, "onClick" | "onKeyDown"> {
   /**
    * ボタンのサイズバリエーション
    * en: Size variation of the button
@@ -286,6 +301,47 @@ export interface ButtonProps extends React.ComponentProps<"button"> {
    * en: Disables the button when set to true
    */
   isDisabled?: boolean;
+
+  /**
+   * onClick handler.
+   *
+   * We intentionally type this as HTMLElement because `asChild` can render non-button elements.
+   */
+  onClick?: React.MouseEventHandler<HTMLElement>;
+
+  /**
+   * onKeyDown handler.
+   *
+   * We intentionally type this as HTMLElement because `asChild` can render non-button elements.
+   */
+  onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
+
+  /**
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   */
+  onMouseDown?: React.MouseEventHandler<HTMLElement>;
+
+  /**
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   */
+  onPointerDown?: React.PointerEventHandler<HTMLElement>;
+
+  /**
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   */
+  onTouchStart?: React.TouchEventHandler<HTMLElement>;
 }
 
 /**
@@ -299,6 +355,13 @@ export interface ButtonProps extends React.ComponentProps<"button"> {
  * ```tsx
  * <Button variant="solid" size="md" theme="primary" prefixIcon="check">確定</Button>
  * ```
+ *
+ * **アクセシビリティ / Accessibility**
+ *
+ * - ボタンにはアクセシブルネームが必要です（通常は `children` のテキスト）。
+ *   アイコンのみの場合は `aria-label` / `aria-labelledby` を付与するか、可能なら `IconButton` を使用してください。
+ * - `isLoading` の場合でもアクセシブルネームは維持されます。
+ * - `asChild` を使う場合、子要素がボタン相当のセマンティクス（role/disabled/キーボード操作）を満たすようにしてください。
  *
  * @param {ButtonProps} props
  */
@@ -333,10 +396,67 @@ function Button({
     }
   };
 
+  const hasAccessibleNameProp =
+    ("aria-label" in props && Boolean(props["aria-label"])) ||
+    ("aria-labelledby" in props && Boolean(props["aria-labelledby"]));
+  const hasChildren = React.Children.count(children) > 0;
+
+  if (process.env.NODE_ENV !== "production") {
+    if (!hasChildren && !hasAccessibleNameProp) {
+      // Icon-only button should use IconButton, or provide aria-label/labelledby.
+      // Keep it as a warning (not an exception) to avoid breaking existing usage.
+      console.warn(
+        "[Button] Accessible name is missing. Provide children text, or set aria-label/aria-labelledby. For icon-only actions, consider using IconButton."
+      );
+    }
+    if (asChild && isButtonDisabled) {
+      console.warn(
+        "[Button] asChild + disabled/loading: the child element must handle disabled semantics (e.g., aria-disabled + preventing activation). Ensure the slotted element is button-like."
+      );
+    }
+    if (asChild && (prefixIcon || suffixIcon || isLoading)) {
+      console.warn(
+        "[Button] asChild mode does not support prefixIcon, suffixIcon, or isLoading. These props will be ignored."
+      );
+    }
+
+    if (props.onMouseDown || props.onPointerDown || props.onTouchStart) {
+      console.warn(
+        "[Button] onMouseDown/onPointerDown/onTouchStart are deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Prefer onClick (activation on release)."
+      );
+    }
+  }
+
+  const { onClick, onKeyDown, ...restProps } = props;
+
+  const handleClick: React.MouseEventHandler<HTMLElement> = event => {
+    if (isButtonDisabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    onClick?.(event);
+  };
+
+  const handleKeyDown: React.KeyboardEventHandler<HTMLElement> = event => {
+    if (isButtonDisabled) {
+      // Prevent activation keys when used with asChild (e.g., <a>).
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      return;
+    }
+    onKeyDown?.(event);
+  };
+
   return (
     <Comp
       data-slot="button"
-      disabled={isButtonDisabled}
+      aria-busy={isLoading || undefined}
+      aria-disabled={asChild && isButtonDisabled ? true : undefined}
+      data-disabled={asChild && isButtonDisabled ? "true" : undefined}
+      disabled={asChild ? undefined : isButtonDisabled}
       className={cn(
         buttonVariants({
           variant,
@@ -347,35 +467,41 @@ function Button({
         })
       )}
       type={asChild ? undefined : props.type || "button"}
-      {...props}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      {...restProps}
     >
-      {prefixIcon && (
-        <Icon
-          icon={prefixIcon}
-          size={getIconSize()}
-          className={cn({ "opacity-0": isLoading })}
-        />
-      )}
-
-      {isLoading ? (
-        <>
-          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-flex">
-            <Spinner size={getIconSize()} className="text-current" />
-          </span>
-          <span className="opacity-0" aria-hidden="true">
-            {children}
-          </span>
-        </>
+      {asChild ? (
+        children
       ) : (
-        <span className="px-1">{children}</span>
-      )}
+        <>
+          {prefixIcon && (
+            <Icon
+              icon={prefixIcon}
+              size={getIconSize()}
+              className={cn({ "opacity-0": isLoading })}
+            />
+          )}
 
-      {suffixIcon && (
-        <Icon
-          icon={suffixIcon}
-          size={getIconSize()}
-          className={cn({ "opacity-0": isLoading })}
-        />
+          {isLoading ? (
+            <>
+              <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-flex">
+                <Spinner size={getIconSize()} className="text-current" />
+              </span>
+              <span className="opacity-0">{children}</span>
+            </>
+          ) : (
+            <span className="px-1">{children}</span>
+          )}
+
+          {suffixIcon && (
+            <Icon
+              icon={suffixIcon}
+              size={getIconSize()}
+              className={cn({ "opacity-0": isLoading })}
+            />
+          )}
+        </>
       )}
     </Comp>
   );

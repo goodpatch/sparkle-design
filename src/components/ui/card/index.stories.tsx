@@ -22,7 +22,7 @@ interface ClickableCardStoryArgs extends CardStoryArgs {
 }
 
 const meta: Meta<CardStoryArgs> = {
-  title: "Components/Card",
+  title: "Data Display/Card",
   component: Card,
   subcomponents: {
     ClickableCard,
