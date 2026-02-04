@@ -147,7 +147,7 @@ export const LineBreakPrevention: Story = {
           改行禁則処理 (Line Break Prevention)
         </h3>
         <p className="text-sm text-neutral-600 mb-4">
-          タグは改行せずに表示されます。幅が狭い場合は省略記号を表示します。
+          タグは改行せずに1行で表示されます。
         </p>
         <div className="flex gap-2 w-[400px]">
           <Tag {...args}>Short</Tag>
