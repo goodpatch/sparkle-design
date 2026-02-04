@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 
 // ステータスごとのスタイル定義
 const inlineMessageVariants = cva(
-  "relative w-[448px] rounded-md border p-3 flex gap-2 items-start",
+  "relative w-[448px] max-w-full rounded-md border p-3 flex gap-2 items-start",
   {
     variants: {
       status: {
