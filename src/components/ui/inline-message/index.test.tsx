@@ -33,4 +33,16 @@ describe("InlineMessage", () => {
     );
     expect(screen.getByRole("button", { name: "閉じる" })).toBeInTheDocument();
   });
+
+  it("does not set aria-labelledby when no title is provided", () => {
+    render(
+      <InlineMessage status="info">
+        <InlineMessageDescription>説明のみ</InlineMessageDescription>
+      </InlineMessage>
+    );
+    const root = screen.getByRole("alert");
+    const desc = screen.getByText("説明のみ");
+    expect(root.hasAttribute("aria-labelledby")).toBe(false);
+    expect(root.getAttribute("aria-describedby")).toBe(desc.id);
+  });
 });
