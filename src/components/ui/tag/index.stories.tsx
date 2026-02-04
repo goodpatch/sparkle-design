@@ -144,10 +144,12 @@ export const LineBreakPrevention: Story = {
     <div className="flex flex-col gap-4">
       <div>
         <h3 className="text-sm font-bold mb-2">
-          改行禁則処理 (Line Break Prevention)
+          改行禁則処理 en: Line Break Prevention
         </h3>
         <p className="text-sm text-neutral-600 mb-4">
-          タグは改行せずに1行で表示されます。
+          タグは改行せずに1行で表示されます。長いテキストは省略記号で表示されます。
+          en: Tags are displayed in a single line without wrapping. Long text is
+          displayed with ellipsis.
         </p>
         <div className="flex gap-2 w-[400px]">
           <Tag {...args}>Short</Tag>
@@ -158,7 +160,9 @@ export const LineBreakPrevention: Story = {
         </div>
       </div>
       <div>
-        <h3 className="text-sm font-bold mb-2">横並びレイアウト</h3>
+        <h3 className="text-sm font-bold mb-2">
+          横並びレイアウト en: Horizontal Layout
+        </h3>
         <div className="flex flex-wrap gap-2">
           <Tag {...args} status="info">
             情報

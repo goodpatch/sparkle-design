@@ -186,5 +186,19 @@ describe("Tag", () => {
       // Then: whitespace-nowrapクラスが適用される
       expect(tag).toHaveClass("whitespace-nowrap");
     });
+
+    it("applies ellipsis styles for text overflow", () => {
+      // Given: 長いテキストを含むTag
+      render(<Tag>This is a very long tag text that should show ellipsis</Tag>);
+
+      // When: 要素を確認
+      const tag = screen.getByText(
+        "This is a very long tag text that should show ellipsis"
+      );
+
+      // Then: overflow-hiddenとtext-ellipsisクラスが適用される
+      expect(tag).toHaveClass("overflow-hidden");
+      expect(tag).toHaveClass("text-ellipsis");
+    });
   });
 });
