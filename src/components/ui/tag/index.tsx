@@ -4,7 +4,7 @@
  *
  * Modifications:
  * - Added whitespace-nowrap for line-break prevention
- * - Added overflow-hidden and text-overflow-ellipsis for text truncation
+ * - Added truncate for text overflow with ellipsis
  */
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 
 // タグのスタイル定義
 const tagVariants = cva(
-  "inline-flex items-center justify-center rounded-notice text-center h-fit whitespace-nowrap overflow-hidden text-ellipsis",
+  "inline-flex items-center justify-center rounded-notice text-center h-fit whitespace-nowrap truncate",
   {
     variants: {
       variant: {

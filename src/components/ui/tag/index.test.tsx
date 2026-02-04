@@ -196,9 +196,8 @@ describe("Tag", () => {
         "This is a very long tag text that should show ellipsis"
       );
 
-      // Then: overflow-hiddenとtext-ellipsisクラスが適用される
-      expect(tag).toHaveClass("overflow-hidden");
-      expect(tag).toHaveClass("text-ellipsis");
+      // Then: truncateクラスが適用される（overflow-hidden + text-overflow-ellipsis + whitespace-nowrapを含む）
+      expect(tag).toHaveClass("truncate");
     });
   });
 });
