@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 // タグのスタイル定義
 const tagVariants = cva(
-  "inline-flex items-center justify-center rounded-notice text-center h-fit whitespace-nowrap truncate",
+  "inline-flex items-center justify-center rounded-notice h-fit whitespace-nowrap truncate",
   {
     variants: {
       variant: {
