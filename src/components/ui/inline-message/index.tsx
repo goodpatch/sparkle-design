@@ -12,12 +12,12 @@ import { cn } from "@/lib/utils";
 
 // ステータスごとのスタイル定義
 const inlineMessageVariants = cva(
-  "relative w-full rounded-md border p-3 flex gap-2",
+  "relative w-[448px] rounded-md border p-3 flex gap-2 items-start",
   {
     variants: {
       status: {
         info: "bg-info-50 border-info-300",
-        warning: "bg-warning-50 border-warning-300",
+        warning: "bg-warning-50 border-warning-200",
         negative: "bg-negative-50 border-negative-300",
         success: "bg-success-50 border-success-300",
       },
@@ -38,10 +38,10 @@ const statusIcons = {
 
 // ステータスごとの色クラス
 const statusColorClasses = {
-  info: "text-info-500",
+  info: "text-info-400",
   warning: "text-warning-500",
-  negative: "text-negative-500",
-  success: "text-success-500",
+  negative: "text-negative-400",
+  success: "text-success-400",
 };
 
 // Context: 子コンポーネントが自分の存在を親に登録するための仕組み
@@ -53,7 +53,8 @@ interface InlineMessageContextValue {
   registerDesc: () => () => void;
 }
 
-const InlineMessageContext = React.createContext<InlineMessageContextValue | null>(null);
+const InlineMessageContext =
+  React.createContext<InlineMessageContextValue | null>(null);
 
 export interface InlineMessageProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -96,7 +97,14 @@ export interface InlineMessageProps
  */
 const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
   (
-    { className, status = "info", onClose, isCloseTrigger = true, children, ...props },
+    {
+      className,
+      status = "info",
+      onClose,
+      isCloseTrigger = true,
+      children,
+      ...props
+    },
     ref
   ) => {
     // 一意なIDを生成 / en: Generate unique IDs
@@ -146,7 +154,7 @@ const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
         >
           {/* ステータスアイコン */}
           <span
-            className="inline-flex w-8 h-8 items-center justify-center"
+            className="inline-flex p-1 items-center justify-center"
             aria-hidden="true"
           >
             <Icon
