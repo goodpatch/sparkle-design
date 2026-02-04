@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 // タグのスタイル定義
 const tagVariants = cva(
-  "inline-flex items-center justify-center rounded-notice text-center h-fit",
+  "inline-flex items-center justify-center rounded-notice h-fit min-w-0",
   {
     variants: {
       variant: {
@@ -167,7 +167,7 @@ const Tag = React.forwardRef<HTMLDivElement, TagProps>(
         className={cn(tagVariants({ variant, size, status, className }))}
         {...props}
       >
-        {children}
+        <span className="min-w-0 truncate">{children}</span>
       </div>
     );
   }

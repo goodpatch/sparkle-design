@@ -3,23 +3,28 @@ import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { Tag } from "./index";
 
+// ヘルパー: data-testidでラッパー要素を取得
+// en: Helper: get wrapper element by data-testid
+const renderTag = (props: React.ComponentProps<typeof Tag>) => {
+  const testId = `tag-${Math.random().toString(36).slice(2)}`;
+  render(<Tag data-testid={testId} {...props} />);
+  return screen.getByTestId(testId);
+};
+
 describe("Tag", () => {
   describe("Basic Rendering", () => {
     it("renders with default props", () => {
       // Given: デフォルトプロパティでTagをレンダリング
-      render(<Tag>Sample Tag</Tag>);
+      const tag = renderTag({ children: "Sample Tag" });
 
-      // When: 要素を確認
-      const tag = screen.getByText("Sample Tag");
-
-      // Then: 正常に描画される
+      // When/Then: 正常に描画され、基本クラスが適用される
       expect(tag).toBeInTheDocument();
       expect(tag).toHaveClass("inline-flex", "items-center", "justify-center");
     });
 
     it("renders with custom content", () => {
       // Given: カスタムコンテンツでTagをレンダリング
-      render(<Tag>Custom Content</Tag>);
+      renderTag({ children: "Custom Content" });
 
       // When: テキストを確認
       // Then: カスタムコンテンツが表示される
@@ -28,10 +33,7 @@ describe("Tag", () => {
 
     it("applies custom className", () => {
       // Given: カスタムクラス付きのTag
-      render(<Tag className="custom-class">Test</Tag>);
-
-      // When: 要素を確認
-      const tag = screen.getByText("Test");
+      const tag = renderTag({ children: "Test", className: "custom-class" });
 
       // Then: カスタムクラスが適用される
       expect(tag).toHaveClass("custom-class");
@@ -48,10 +50,7 @@ describe("Tag", () => {
     variants.forEach(({ variant, expected }) => {
       it(`applies ${variant} variant styles`, () => {
         // Given: 指定されたvariantのTag
-        render(<Tag variant={variant}>Test Tag</Tag>);
-
-        // When: 要素を確認
-        const tag = screen.getByText("Test Tag");
+        const tag = renderTag({ variant, children: "Test Tag" });
 
         // Then: 対応するスタイルが適用される
         expect(tag).toHaveClass(expected);
@@ -69,10 +68,7 @@ describe("Tag", () => {
     sizes.forEach(({ size, expected }) => {
       it(`applies ${size} size styles`, () => {
         // Given: 指定されたsizeのTag
-        render(<Tag size={size}>Test Tag</Tag>);
-
-        // When: 要素を確認
-        const tag = screen.getByText("Test Tag");
+        const tag = renderTag({ size, children: "Test Tag" });
 
         // Then: 対応するサイズスタイルが適用される
         expect(tag).toHaveClass(expected);
@@ -92,10 +88,7 @@ describe("Tag", () => {
     statuses.forEach(({ status, expected }) => {
       it(`applies ${status} status styles`, () => {
         // Given: 指定されたstatusのTag
-        render(<Tag status={status}>Test Tag</Tag>);
-
-        // When: 要素を確認
-        const tag = screen.getByText("Test Tag");
+        const tag = renderTag({ status, children: "Test Tag" });
 
         // Then: 対応するステータススタイルが適用される
         expect(tag.className).toContain(expected);
@@ -106,14 +99,13 @@ describe("Tag", () => {
   describe("Combined Props", () => {
     it("applies multiple props correctly", () => {
       // Given: 複数のプロパティを持つTag
-      render(
-        <Tag variant="outline" size="lg" status="info" className="custom">
-          Combined Props
-        </Tag>
-      );
-
-      // When: 要素を確認
-      const tag = screen.getByText("Combined Props");
+      const tag = renderTag({
+        variant: "outline",
+        size: "lg",
+        status: "info",
+        className: "custom",
+        children: "Combined Props",
+      });
 
       // Then: すべてのプロパティが適用される
       expect(tag).toHaveClass("border", "min-w-14", "custom");
@@ -124,14 +116,11 @@ describe("Tag", () => {
   describe("Accessibility", () => {
     it("supports ARIA attributes", () => {
       // Given: ARIA属性付きのTag
-      render(
-        <Tag aria-label="Information tag" role="status">
-          Info
-        </Tag>
-      );
-
-      // When: 要素を確認
-      const tag = screen.getByText("Info");
+      const tag = renderTag({
+        "aria-label": "Information tag",
+        role: "status",
+        children: "Info",
+      });
 
       // Then: ARIA属性が適用される
       expect(tag).toHaveAttribute("aria-label", "Information tag");
@@ -142,10 +131,7 @@ describe("Tag", () => {
   describe("Edge Cases", () => {
     it("handles empty content", () => {
       // Given: 空のコンテンツでTagをレンダリング
-      render(<Tag data-testid="empty-tag">{""}</Tag>);
-
-      // When: 要素を確認
-      const tag = screen.getByTestId("empty-tag");
+      const tag = renderTag({ children: "" });
 
       // Then: 正常に描画される
       expect(tag).toBeInTheDocument();
@@ -153,25 +139,36 @@ describe("Tag", () => {
 
     it("handles numeric content", () => {
       // Given: 数値コンテンツでTagをレンダリング
-      render(<Tag>{42}</Tag>);
+      renderTag({ children: 42 });
 
-      // When: 数値を確認
       // Then: 数値が正しく表示される
       expect(screen.getByText("42")).toBeInTheDocument();
     });
 
     it("handles React node content", () => {
       // Given: React要素を含むTag
-      render(
-        <Tag>
-          <span>Complex</span> Content
-        </Tag>
-      );
+      renderTag({
+        children: (
+          <>
+            <span>Complex</span> Content
+          </>
+        ),
+      });
 
-      // When: 要素を確認
       // Then: React要素が正しく表示される
       expect(screen.getByText("Complex")).toBeInTheDocument();
       expect(screen.getByText("Content")).toBeInTheDocument();
+    });
+
+    it("applies truncate styles for text overflow", () => {
+      // Given: 長いテキストを含むTag
+      const tag = renderTag({
+        children: "This is a very long tag text that should show ellipsis",
+      });
+
+      // Then: 内部のspan要素にtruncateクラスが適用される
+      const span = tag.querySelector("span");
+      expect(span).toHaveClass("truncate");
     });
   });
 });
