@@ -48,16 +48,6 @@ export interface InlineMessageProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof inlineMessageVariants> {
   /**
-   * タイトル（後方互換: childrenで <InlineMessageTitle/> を使うことを推奨）
-   * en: Title (backward compatibility: prefer using <InlineMessageTitle /> as child)
-   */
-  title?: string;
-  /**
-   * 説明文（後方互換: childrenで <InlineMessageDescription/> を使うことを推奨）
-   * en: Description (backward compatibility: prefer using <InlineMessageDescription /> as child)
-   */
-  description?: string;
-  /**
    * 閉じる時のハンドラー
    * en: Handler when the message is dismissed
    */
@@ -67,11 +57,6 @@ export interface InlineMessageProps
    * en: Whether to show close button (default: true)
    */
   isCloseTrigger?: boolean;
-  /**
-   * タイトルを表示するかどうか（デフォルト: true）
-   * en: Whether to display the title (default: true)
-   */
-  isTitle?: boolean;
   /**
    * 子要素
    * en: Child nodes
@@ -100,17 +85,7 @@ export interface InlineMessageProps
  */
 const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
   (
-    {
-      className,
-      status = "info",
-      onClose,
-      isCloseTrigger = true,
-      isTitle = true,
-      title,
-      description,
-      children,
-      ...props
-    },
+    { className, status = "info", onClose, isCloseTrigger = true, children, ...props },
     ref
   ) => {
     // ルート要素参照 / en: root element ref
@@ -123,42 +98,6 @@ const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
           (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
       },
       [ref]
-    );
-    // 子要素を正規化: 後方互換 props(title/description) を children に注入
-    const normalizedChildren = React.useMemo(() => {
-      const nodes: React.ReactNode[] = [];
-      let hasTitle = false;
-      let hasDescription = false;
-      React.Children.forEach(children, child => {
-        if (!React.isValidElement(child)) return nodes.push(child);
-        if (child.type === InlineMessageTitle) hasTitle = true;
-        if (child.type === InlineMessageDescription) hasDescription = true;
-        nodes.push(child);
-      });
-      if (title && !hasTitle) {
-        nodes.unshift(
-          <InlineMessageTitle key="_fallback_title">{title}</InlineMessageTitle>
-        );
-      }
-      if (description && !hasDescription) {
-        nodes.push(
-          <InlineMessageDescription key="_fallback_desc">
-            {description}
-          </InlineMessageDescription>
-        );
-      }
-      return nodes;
-    }, [children, title, description]);
-
-    // isTitle=false の場合に Title を除外
-    const processedChildren = React.useMemo(
-      () =>
-        normalizedChildren.map(child => {
-          if (!React.isValidElement(child)) return child;
-          if (!isTitle && child.type === InlineMessageTitle) return null;
-          return child;
-        }),
-      [normalizedChildren, isTitle]
     );
     // ステータスに対応するアイコン情報の取得
     const statusIcon = status ? statusIcons[status] : statusIcons.info;
@@ -192,7 +131,7 @@ const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
       } else {
         root.removeAttribute("aria-describedby");
       }
-    }, [processedChildren]);
+    }, [children]);
 
     return (
       <div
@@ -215,7 +154,7 @@ const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
         </span>
 
         {/* メッセージ本文 */}
-        <div className="flex flex-col flex-1 min-h-8">{processedChildren}</div>
+        <div className="flex flex-col flex-1 min-h-8">{children}</div>
 
         {/* 閉じるボタン（表示条件あり） */}
         {isCloseTrigger && onClose && (

@@ -23,43 +23,6 @@ describe("InlineMessage", () => {
     expect(root.getAttribute("aria-describedby")).toBe(desc.id);
   });
 
-  it("hides title when isTitle is false", () => {
-    render(
-      <InlineMessage status="info" isTitle={false}>
-        <InlineMessageTitle>隠れるタイトル</InlineMessageTitle>
-        <InlineMessageDescription>説明のみ</InlineMessageDescription>
-      </InlineMessage>
-    );
-    const root = screen.getByRole("alert");
-    expect(screen.queryByText("隠れるタイトル")).toBeNull();
-    expect(root.hasAttribute("aria-labelledby")).toBe(false);
-  });
-
-  it("injects fallback title/description props when children not supplied", () => {
-    render(
-      <InlineMessage status="info" title="PropsTitle" description="PropsDesc" />
-    );
-    expect(screen.getByText("PropsTitle")).toBeInTheDocument();
-    expect(screen.getByText("PropsDesc")).toBeInTheDocument();
-  });
-
-  it("does not duplicate fallback when children already provide title/description", () => {
-    render(
-      <InlineMessage
-        status="info"
-        title="FallbackShouldNotShow"
-        description="FallbackDesc"
-      >
-        <InlineMessageTitle>ChildTitle</InlineMessageTitle>
-        <InlineMessageDescription>ChildDesc</InlineMessageDescription>
-      </InlineMessage>
-    );
-    expect(screen.queryByText("FallbackShouldNotShow")).toBeNull();
-    expect(screen.queryByText("FallbackDesc")).toBeNull();
-    expect(screen.getByText("ChildTitle")).toBeInTheDocument();
-    expect(screen.getByText("ChildDesc")).toBeInTheDocument();
-  });
-
   it("renders close button when onClose & isCloseTrigger true", () => {
     const handler = () => {};
     render(

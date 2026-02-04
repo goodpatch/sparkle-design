@@ -16,32 +16,12 @@ const meta: Meta<typeof InlineMessage> = {
     status: {
       control: "select",
       options: ["info", "warning", "negative", "success"],
-      description: "メッセージの状態 / en: Message status",
-    },
-    isTitle: {
-      control: "boolean",
-      description:
-        "タイトルを表示するかどうか / en: Whether to display the title",
     },
     isCloseTrigger: {
       control: "boolean",
-      description:
-        "閉じるボタンを表示するかどうか / en: Whether to show close button",
-    },
-    title: {
-      control: "text",
-      description:
-        "後方互換用タイトル（children優先） / en: Fallback title (children has priority)",
-    },
-    description: {
-      control: "text",
-      description:
-        "後方互換用説明文（children優先） / en: Fallback description (children has priority)",
     },
     onClose: {
       action: "closed",
-      description:
-        "閉じる操作時のハンドラー / en: Handler when message is closed",
     },
   },
 };
@@ -51,30 +31,36 @@ export const Default: Story = {
   args: {
     status: "info",
     isCloseTrigger: true,
-    isTitle: true,
-    title: "タイトル",
-    description: "デスクリプション",
   },
   render: args => (
     <InlineMessage {...args}>
-      <InlineMessageTitle>{args.title}</InlineMessageTitle>
-      <InlineMessageDescription>{args.description}</InlineMessageDescription>
+      <InlineMessageTitle>タイトル</InlineMessageTitle>
+      <InlineMessageDescription>デスクリプション</InlineMessageDescription>
     </InlineMessage>
   ),
 };
 
 // Variant ショートカット（必要最小限）
-export const Info: Story = { args: { ...Default.args, status: "info" } };
-export const Warning: Story = { args: { ...Default.args, status: "warning" } };
+export const Info: Story = {
+  args: { ...Default.args, status: "info" },
+  render: Default.render,
+};
+export const Warning: Story = {
+  args: { ...Default.args, status: "warning" },
+  render: Default.render,
+};
 export const Negative: Story = {
   args: { ...Default.args, status: "negative" },
+  render: Default.render,
 };
-export const Success: Story = { args: { ...Default.args, status: "success" } };
+export const Success: Story = {
+  args: { ...Default.args, status: "success" },
+  render: Default.render,
+};
 
 export const WithoutTitle: Story = {
   render: args => (
     <InlineMessage {...args}>
-      <InlineMessageTitle>（このタイトルは非表示設定）</InlineMessageTitle>
       <InlineMessageDescription>
         タイトルなしのメッセージです。
       </InlineMessageDescription>
@@ -83,7 +69,6 @@ export const WithoutTitle: Story = {
   args: {
     status: "info",
     isCloseTrigger: true,
-    isTitle: false,
   },
 };
 
@@ -92,7 +77,6 @@ export const WithCloseButton: Story = {
   args: {
     status: "info",
     isCloseTrigger: true,
-    isTitle: true,
   },
   render: args => {
     const [isVisible, setIsVisible] = useState(true);
