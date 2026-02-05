@@ -82,3 +82,7 @@ pnpm test      # Component tests
   - `docs/ai-instructions/development.md` for development patterns
   - `docs/ai-instructions/comment-style.md` for code comments
   - `docs/ai-instructions/new-component.md` for component creation
+
+### AI Instruction File Updates
+- **Important**: After editing any file in `docs/ai-instructions/`, run `make ai-instructions` to sync changes to tool-specific locations
+- This ensures GitHub Copilot, Cursor, Claude Code, and Codex all receive the updated instructions
