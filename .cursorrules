@@ -1,0 +1,22 @@
+# Sparkle Design - Cursor Rules (Legacy Format)
+#
+# NOTE: This is the legacy format for backward compatibility.
+# New rules should be added to .cursor/rules/*.mdc
+#
+# For detailed instructions, see: docs/ai-instructions/
+
+## Project Overview
+This is a React component library built with Next.js, TypeScript, TailwindCSS, and CVA.
+
+## Key Rules
+1. Follow t_wada's testing best practices
+2. Use shared test helpers (TestContainer, EventHelpers, etc.)
+3. Write comments in Japanese first, then English with `en:` prefix
+4. Use CVA for component variants
+5. Run `pnpm lint && pnpm format` before commits
+
+## References
+- docs/ai-instructions/context.md - Project context
+- docs/ai-instructions/development.md - Development patterns
+- docs/ai-instructions/testing.md - Testing guidelines
+- docs/ai-instructions/comment-style.md - Comment standards

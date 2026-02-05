@@ -1,7 +1,3 @@
----
-applyTo: "**"
----
-
 # AI Development Guidelines for Sparkle Design
 
 ## Component Development Patterns
