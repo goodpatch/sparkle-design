@@ -112,9 +112,25 @@ fi
 
 - **ALWAYS** refer to `.github/instructions/testing.instructions.md` for comprehensive testing guidelines
 - Follow t_wada's testing best practices for all component tests
-- Use intermediate log files for test analysis: `npm run test:ai-analyze`
+- Use intermediate log files for test analysis: `pnpm test > test-output.log 2>&1`
 - Test actual CVA-generated TailwindCSS classes, not variant names
 - Handle jsdom limitations properly (keyboard navigation, portal components)
+
+### Test Fix Best Practices (from usage insights)
+- **Prefer shared test utilities**: When fixing tests, use existing shared test helpers (`TestContainer`, `EventHelpers`, `A11yHelpers`, `StyleHelpers` in `src/test/helpers.ts`) over one-off fixes or method overrides
+- **Check existing patterns first**: Before adding new test utilities or fixtures, verify if similar patterns already exist in the codebase
+- **Avoid quick patches**: Prefer reusable test infrastructure over temporary workarounds
+
+## Documentation Guidelines (from usage insights)
+
+### Output Location and Format
+- **Confirm before creating**: Before creating documentation files, verify the target directory and format matches existing patterns
+- **Accessibility reviews**: Place in `docs/pr/` directory with format `{component-name}-a11y-review.md`
+- **Check existing structure**: Use `ls docs/` or glob to discover established conventions before writing new docs
+
+### React Component Visual Testing
+- When implementing UI changes (animations, transitions, visual feedback), verify no flickering or janky behavior
+- Test edge cases for interactive components (hover states, focus states, loading states)
 
 ## AI Development
 

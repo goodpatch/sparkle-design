@@ -156,6 +156,26 @@ StyleHelpers.hasClasses(element, classNames)        // 複数クラスの確認
 StyleHelpers.getComputedStyleProperty(element, prop) // 計算済みスタイルの取得
 ```
 
+### Test Fix Best Practices (from usage insights)
+テスト修正時は以下のベストプラクティスに従う：
+
+1. **共有ヘルパーを優先する**: テストを修正する際は、一時的なワークアラウンドやメソッドオーバーライドではなく、上記の共有テストヘルパー（`TestContainer`, `EventHelpers`, `A11yHelpers`, `StyleHelpers`）を使用する
+2. **既存パターンを確認する**: 新しいテストユーティリティやフィクスチャを追加する前に、コードベースに同様のパターンが既に存在しないか確認する
+3. **再利用可能なインフラを好む**: 応急処置的な修正よりも、再利用可能なテストインフラを構築する
+
+❌ **Wrong** - 一時的なワークアラウンド
+```tsx
+// 特定のテストだけで使う一時的なモック
+const mockFunction = vi.fn().mockImplementation(() => 'test')
+```
+
+✅ **Correct** - 共有ヘルパーを使用
+```tsx
+// 共有ヘルパーを使用してイベントを発火
+EventHelpers.click(button)
+EventHelpers.change(input, 'new value')
+```
+
 ## Component-Specific Guidelines
 
 ### Regular Components (Button, Input, Badge, etc.)
