@@ -76,7 +76,7 @@ ClickableCard.displayName = "ClickableCard";
  * </Card>
  * ```
  *
- * @param props
+ * @param {React.HTMLAttributes<HTMLDivElement>} props
  */
 const Card = React.forwardRef<
   HTMLDivElement,

@@ -1,17 +1,33 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { screen } from "@testing-library/react";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { TestContainer } from "@/test/helpers";
 import { Tag } from "./index";
+
+let testContainer: TestContainer;
 
 // ヘルパー: data-testidでラッパー要素を取得
 // en: Helper: get wrapper element by data-testid
 const renderTag = (props: React.ComponentProps<typeof Tag>) => {
   const testId = `tag-${Math.random().toString(36).slice(2)}`;
-  render(<Tag data-testid={testId} {...props} />);
+  testContainer.render(<Tag data-testid={testId} {...props} />);
   return screen.getByTestId(testId);
 };
 
 describe("Tag", () => {
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
   describe("Basic Rendering", () => {
     it("renders with default props", () => {
       // Given: デフォルトプロパティでTagをレンダリング

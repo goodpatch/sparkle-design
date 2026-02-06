@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
  * <Skeleton className="h-4 w-[250px]" />
  * ```
  *
- * @param props
+ * @param {React.HTMLAttributes<HTMLDivElement>} props
  */
 function Skeleton({
   className,

@@ -124,7 +124,7 @@ const selectViewportVariants = cva("p-1", {
  * </Select>
  * ```
  *
- * @param props
+ * @param {React.ComponentProps<typeof SelectPrimitive.Root>} props
  */
 function Select({
   ...props

@@ -2,9 +2,10 @@
  * @jest-environment jsdom
  */
 
-import { describe, it, expect } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { screen, fireEvent } from "@testing-library/react";
 import React from "react";
+import { TestContainer } from "@/test/helpers";
 import { Button } from "../button";
 import {
   Dialog,
@@ -22,8 +23,10 @@ import {
  * テストヘルパー関数
  * en: Test helper functions
  */
+let testContainer: TestContainer;
+
 function setupDialog(ui?: React.ReactNode) {
-  return render(
+  return testContainer.render(
     ui ?? (
       <Dialog>
         <DialogTrigger asChild>
@@ -45,6 +48,15 @@ function setupDialog(ui?: React.ReactNode) {
 }
 
 describe("Dialog", () => {
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
   // Portal を利用するコンポーネントであり jsdom では制限があるため挙動を最小限スモークテスト
   // en: Limited smoke tests only due to jsdom constraints with portal-based components
 

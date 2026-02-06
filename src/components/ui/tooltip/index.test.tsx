@@ -1,7 +1,12 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { TestContainer } from "@/test/helpers";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./index";
 
 // Mock ResizeObserver
@@ -12,9 +17,20 @@ global.ResizeObserver = class {
 };
 
 describe("Tooltip", () => {
+  let testContainer: TestContainer;
+
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
   it("renders TooltipTrigger and TooltipContent correctly", async () => {
     // Given: TooltipTriggerとTooltipContentを含むTooltipコンポーネントがレンダリングされる
-    render(
+    testContainer.render(
       <Tooltip>
         <TooltipTrigger>Hover me</TooltipTrigger>
         <TooltipContent side="top">Tooltip Content</TooltipContent>
@@ -37,7 +53,7 @@ describe("Tooltip", () => {
 
   it("displays TooltipContent on hover", async () => {
     // Given: TooltipContentが含まれるTooltipコンポーネントがレンダリングされる
-    render(
+    testContainer.render(
       <Tooltip>
         <TooltipTrigger>Hover me</TooltipTrigger>
         <TooltipContent>Tooltip Content</TooltipContent>
@@ -58,7 +74,7 @@ describe("Tooltip", () => {
 
   it("renders with default side when no side is provided", async () => {
     // Given: TooltipContentにsideが指定されていない
-    render(
+    testContainer.render(
       <Tooltip>
         <TooltipTrigger>Hover me</TooltipTrigger>
         <TooltipContent>Tooltip Content</TooltipContent>
@@ -79,7 +95,7 @@ describe("Tooltip", () => {
 
   it("applies the correct side to TooltipContent", async () => {
     // Given: TooltipContentにside="right"が指定されている
-    render(
+    testContainer.render(
       <Tooltip>
         <TooltipTrigger>Hover me</TooltipTrigger>
         <TooltipContent side="right">Tooltip Content</TooltipContent>

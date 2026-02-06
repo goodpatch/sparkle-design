@@ -193,7 +193,7 @@ export interface RadioProps extends RadioPrimitiveProps {
  * </Radio>
  * ```
  *
- * @param props
+ * @param {RadioProps} props
  */
 function Radio({ className, ...props }: RadioProps) {
   return (

@@ -7,7 +7,6 @@
 # Sparkle Design for React
 
 [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
-![npm](https://img.shields.io/npm/v/@goodpatch/sparkle-design)
 [![ci](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml/badge.svg)](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml)
 
 
@@ -16,13 +15,15 @@ shadcn/ui をベースに、Goodpatch のデザインシステム「Sparkle Desi
 
 ## 特徴
 
-- 🔧 **柔軟性** ... shadcn/ui をベースに shadcn/ui registry に対応しているため、1コンポーネントから導入が可能です。npm パッケージとしても公開しているためプロジェクトごとに適した方法で導入していただくことが出来ます。
+- 🔧 **柔軟性** ... shadcn/ui をベースに shadcn/ui registry に対応しているため、1コンポーネントから導入が可能です。npm パッケージとしても公開予定のため、プロジェクトごとに適した方法で導入していただくことが出来ます。
 - ♿️ **アクセシビリティ** ... Sparkle Design はアクセシビリティを重視して設計されています。
 - 🎨 **カスタマイズ性** ... 専用CLIツールを利用し、Figmaファイルと同等のカスタマイズを適用することが出来ます。これによりSparkle Designをベースとしたデザインシステムのコードを素早く用意することが出来ます。
 
 ## 使用方法
 
 ### パッケージのインストール
+
+**注意**: npm での公開は準備中です。以下の手順は公開後の利用方法です。
 
 ```bash
 npm install sparkle-design
