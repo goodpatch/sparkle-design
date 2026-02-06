@@ -5,12 +5,12 @@
 import React from "react";
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { screen } from "@testing-library/react";
+import { TestContainer } from "@/test/helpers";
 import {
   InlineMessage,
   InlineMessageTitle,
   InlineMessageDescription,
 } from "./index";
-import { TestContainer } from "@/test/helpers";
 
 // InlineMessage コンポーネントの基本動作テスト / en: basic behavior tests
 describe("InlineMessage", () => {

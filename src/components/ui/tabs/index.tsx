@@ -90,9 +90,10 @@ const tabsTriggerVariants = cva(
 );
 
 type TabsTriggerVariants = VariantProps<typeof tabsTriggerVariants>;
-type TabsTriggerProps =
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> &
-    TabsTriggerVariants;
+type TabsTriggerProps = React.ComponentPropsWithoutRef<
+  typeof TabsPrimitive.Trigger
+> &
+  TabsTriggerVariants;
 
 const tabsListVariants = cva(
   [

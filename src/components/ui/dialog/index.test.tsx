@@ -5,6 +5,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { screen, fireEvent } from "@testing-library/react";
 import React from "react";
+import { TestContainer } from "@/test/helpers";
 import { Button } from "../button";
 import {
   Dialog,
@@ -17,7 +18,6 @@ import {
   DialogCancel,
   DialogAction,
 } from "./index";
-import { TestContainer } from "@/test/helpers";
 
 /**
  * テストヘルパー関数

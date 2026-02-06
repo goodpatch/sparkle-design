@@ -5,8 +5,8 @@
 import React from "react";
 import { screen } from "@testing-library/react";
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { Tag } from "./index";
 import { TestContainer } from "@/test/helpers";
+import { Tag } from "./index";
 
 let testContainer: TestContainer;
 

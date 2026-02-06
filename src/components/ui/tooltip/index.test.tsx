@@ -6,8 +6,8 @@ import React from "react";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { Tooltip, TooltipTrigger, TooltipContent } from "./index";
 import { TestContainer } from "@/test/helpers";
+import { Tooltip, TooltipTrigger, TooltipContent } from "./index";
 
 // Mock ResizeObserver
 global.ResizeObserver = class {
