@@ -36,7 +36,7 @@ import { Icon, IconProps } from "../icon";
  * </Dialog>
  * ```
  *
- * @param props
+ * @param {React.ComponentProps<typeof DialogPrimitive.Root>} props
  */
 function Dialog({
   ...props

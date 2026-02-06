@@ -60,7 +60,7 @@ function TooltipProvider({
  * </Tooltip>
  * ```
  *
- * @param props
+ * @param {React.ComponentProps<typeof TooltipPrimitive.Root>} props
  */
 function Tooltip({
   ...props

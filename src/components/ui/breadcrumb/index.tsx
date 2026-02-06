@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 import { Link } from "@/components/ui/link";
 
 /**
+ * **概要 / Overview**
+ *
  * - パンくずはユーザーが現在のページ階層を理解し、親の階層へ戻るためのナビゲーションとして機能するコンポーネントです。
  * - en: The Breadcrumb component helps users understand the current page hierarchy and navigate back to parent levels.
  *
@@ -51,8 +53,7 @@ export function Breadcrumb({
  * パンくずリスト（ol）
  * en: Breadcrumb list (ol)
  *
- * @param props ol要素のprops
- * en: Props for ol element
+ * @param {React.ComponentProps<"ol">} props
  */
 export function BreadcrumbList({
   className,
@@ -71,8 +72,7 @@ export function BreadcrumbList({
  * パンくずアイテム（li）
  * en: Breadcrumb item (li)
  *
- * @param props li要素のprops
- * en: Props for li element
+ * @param {React.ComponentProps<"li">} props
  */
 export function BreadcrumbItem({
   className,
@@ -91,8 +91,7 @@ export function BreadcrumbItem({
  * パンくずリンク
  * en: Breadcrumb link
  *
- * @param props Linkコンポーネントのprops
- * en: Props for Link component
+ * @param {React.ComponentProps<typeof Link>} props
  */
 export function BreadcrumbLink({
   className,
@@ -111,8 +110,7 @@ export function BreadcrumbLink({
  * パンくずの区切り（/など）
  * en: Breadcrumb separator (e.g. /)
  *
- * @param props span要素のprops
- * en: Props for span element
+ * @param {React.ComponentProps<"span">} props
  */
 export function BreadcrumbSeparator({
   className,
@@ -135,8 +133,7 @@ export function BreadcrumbSeparator({
  * 現在ページ表示用
  * en: Current page label (not a link)
  *
- * @param props span要素のprops
- * en: Props for span element
+ * @param {React.ComponentProps<"span">} props
  */
 export function BreadcrumbPage({
   className,

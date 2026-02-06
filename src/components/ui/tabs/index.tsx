@@ -90,6 +90,9 @@ const tabsTriggerVariants = cva(
 );
 
 type TabsTriggerVariants = VariantProps<typeof tabsTriggerVariants>;
+type TabsTriggerProps =
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> &
+    TabsTriggerVariants;
 
 const tabsListVariants = cva(
   [
@@ -112,8 +115,25 @@ const tabsListVariants = cva(
 type TabsListVariants = VariantProps<typeof tabsListVariants>;
 
 /**
+ * **概要 / Overview**
+ *
  * - タブはユーザーが扱う情報をシンプルに保つためのディスクロージャーとして使用するコンポーネントです。
  * - en: Tabs component is used as a disclosure to keep user-handled information simple.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <Tabs defaultValue="account">
+ *   <TabsList variant="solid">
+ *     <TabsTrigger value="account">Account</TabsTrigger>
+ *     <TabsTrigger value="password">Password</TabsTrigger>
+ *   </TabsList>
+ *   <TabsContent value="account">Account Content</TabsContent>
+ *   <TabsContent value="password">Password Content</TabsContent>
+ * </Tabs>
+ * ```
+ *
+ * @param {React.ComponentProps<typeof TabsPrimitive.Root>} props
  */
 function Tabs({
   className,
@@ -148,13 +168,11 @@ function TabsList({
  * タブトリガー（タブボタン）
  * en: Tab trigger (tab button)
  *
- * @param variant スタイルバリアント
- * en: Style variant
+ * @param {TabsTriggerProps} props
  */
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> &
-    TabsTriggerVariants
+  TabsTriggerProps
 >(({ className, variant, ...props }, ref) => {
   const contextVariant = useContext(TabsListVariantContext);
   const effectiveVariant: TabsVariantType = (variant ??

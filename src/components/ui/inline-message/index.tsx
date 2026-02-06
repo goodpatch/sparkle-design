@@ -205,7 +205,7 @@ InlineMessage.displayName = "InlineMessage";
  * <InlineMessageTitle>タイトル</InlineMessageTitle>
  * ```
  *
- * @param props
+ * @param {React.HTMLAttributes<HTMLSpanElement>} props
  */
 const InlineMessageTitle = React.forwardRef<
   HTMLSpanElement,
@@ -245,7 +245,7 @@ InlineMessageTitle.displayName = "InlineMessageTitle";
  * <InlineMessageDescription>詳細な説明文</InlineMessageDescription>
  * ```
  *
- * @param props
+ * @param {React.HTMLAttributes<HTMLParagraphElement>} props
  */
 const InlineMessageDescription = React.forwardRef<
   HTMLParagraphElement,
