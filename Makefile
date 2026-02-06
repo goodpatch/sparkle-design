@@ -45,6 +45,12 @@ new-component: ## Create a new component.
 	./scripts/setup.sh "$$name";
 	@echo "🤖 Component created successfully."
 
+.PHONY: ai-instructions
+ai-instructions: ## Sync AI instruction files from docs/ai-instructions/ to tool-specific locations.
+	@echo "🤖 Syncing AI instruction files..."
+	@./scripts/sync-ai-instructions.sh
+	@echo "🤖 AI instruction files synced successfully."
+
 .PHONY: help
 .DEFAULT_GOAL := help
 help: ## Display this help.

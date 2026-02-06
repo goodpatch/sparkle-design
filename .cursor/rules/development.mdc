@@ -1,5 +1,7 @@
 ---
-applyTo: "**"
+description: Development patterns for Sparkle Design
+globs: **/*.tsx,**/*.ts
+alwaysApply: false
 ---
 
 # AI Development Guidelines for Sparkle Design

@@ -1,7 +1,3 @@
----
-applyTo: "**/*.test.tsx"
----
-
 # Sparkle Design Component Testing Instructions
 
 ## Overview

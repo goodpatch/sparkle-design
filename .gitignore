@@ -43,8 +43,10 @@ next-env.d.ts
 
 *storybook.log
 
-# cursor
-.cursor
+# cursor (keep rules/ for version control)
+.cursor/*
+!.cursor/rules/
+!.cursor/skills
 
 # vscode
 # .vscode

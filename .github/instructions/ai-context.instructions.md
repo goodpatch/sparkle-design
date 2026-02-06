@@ -27,7 +27,7 @@ src/
 ├── lib/                    # Utility functions
 └── test/                   # Shared test helpers
 
-.github/instructions/       # AI guidance documents
+docs/ai-instructions/       # AI guidance documents (source)
 public/r/                   # Component registry JSON
 scripts/                    # Build and setup tools
 ```
@@ -76,7 +76,11 @@ pnpm test      # Component tests
 
 ## AI Assistance Guidelines
 - Refer to specific instruction files for detailed guidance:
-  - `.github/instructions/testing.instructions.md` for testing
-  - `.github/instructions/ai-development.instructions.md` for development patterns
-  - `.github/instructions/comment-style.instructions.md` for code comments
-  - `.github/instructions/new-component.instructions.md` for component creation
+  - `docs/ai-instructions/testing.md` for testing
+  - `docs/ai-instructions/development.md` for development patterns
+  - `docs/ai-instructions/comment-style.md` for code comments
+  - `docs/ai-instructions/new-component.md` for component creation
+
+### AI Instruction File Updates
+- **Important**: After editing any file in `docs/ai-instructions/`, run `make ai-instructions` to sync changes to tool-specific locations
+- This ensures GitHub Copilot, Cursor, Claude Code, and Codex all receive the updated instructions

@@ -1,5 +1,7 @@
 ---
-applyTo: "**/*.test.tsx"
+description: Testing guidelines following t_wada best practices
+globs: **/*.test.tsx
+alwaysApply: false
 ---
 
 # Sparkle Design Component Testing Instructions

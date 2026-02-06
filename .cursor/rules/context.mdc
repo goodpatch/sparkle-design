@@ -1,19 +1,7 @@
-# Repo guidelines
-
-This project is a Next.js + TypeScript component library using TailwindCSS, Storybook, and shadcn/ui patterns.
-
-## AI Instructions
-
-This repository uses a unified AI instruction system. Source files are in `docs/ai-instructions/`.
-
-**Primary References** (follow in order):
-1. `docs/ai-instructions/context.md` – Project context and overview
-2. `docs/ai-instructions/development.md` – Development patterns and practices
-3. `docs/ai-instructions/testing.md` – Comprehensive testing guidelines
-4. `docs/ai-instructions/comment-style.md` – Code comment standards
-5. `docs/ai-instructions/new-component.md` – Component creation process
-
-
+---
+description: Project context and overview
+globs: **
+alwaysApply: true
 ---
 
 # AI Assistant Configuration
@@ -98,6 +86,3 @@ pnpm test      # Component tests
 ### AI Instruction File Updates
 - **Important**: After editing any file in `docs/ai-instructions/`, run `make ai-instructions` to sync changes to tool-specific locations
 - This ensures GitHub Copilot, Cursor, Claude Code, and Codex all receive the updated instructions
-
----
-

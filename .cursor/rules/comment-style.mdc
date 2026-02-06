@@ -1,5 +1,7 @@
 ---
-applyTo: "**"
+description: Code comment style guidelines
+globs: **/*.tsx,**/*.ts
+alwaysApply: false
 ---
 
 # コメントスタイルガイドライン
