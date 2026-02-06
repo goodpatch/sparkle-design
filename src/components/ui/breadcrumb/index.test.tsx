@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react";
 import { describe, it, beforeEach, afterEach, expect } from "vitest";
 import { TestContainer } from "@/test/helpers";
