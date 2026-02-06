@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-
 import { Button } from "../button";
 import {
   InlineMessage,
@@ -8,83 +7,55 @@ import {
   InlineMessageDescription,
 } from "./index";
 
-const meta = {
+const meta: Meta<typeof InlineMessage> = {
   title: "Feedback/Inline Message",
   component: InlineMessage,
-  parameters: {
-    layout: "centered",
-  },
+  parameters: { layout: "centered" },
   tags: ["autodocs"],
   argTypes: {
     status: {
       control: "select",
       options: ["info", "warning", "negative", "success"],
     },
-    isCloseButtonVisible: {
+    isCloseTrigger: {
       control: "boolean",
     },
+    onClose: {
+      action: "closed",
+    },
   },
-} satisfies Meta<typeof InlineMessage>;
-
+};
 export default meta;
 type Story = StoryObj<typeof InlineMessage>;
-
-// 新しい形式でストーリーを定義
-
-export const Info: Story = {
-  render: args => (
-    <InlineMessage {...args}>
-      <InlineMessageTitle>お知らせタイトル</InlineMessageTitle>
-      <InlineMessageDescription>何かが起きました。</InlineMessageDescription>
-    </InlineMessage>
-  ),
+export const Default: Story = {
   args: {
     status: "info",
-    isCloseButtonVisible: true,
+    isCloseTrigger: true,
   },
+  render: args => (
+    <InlineMessage {...args}>
+      <InlineMessageTitle>タイトル</InlineMessageTitle>
+      <InlineMessageDescription>デスクリプション</InlineMessageDescription>
+    </InlineMessage>
+  ),
 };
 
+// Variant ショートカット（必要最小限）
+export const Info: Story = {
+  args: { ...Default.args, status: "info" },
+  render: Default.render,
+};
 export const Warning: Story = {
-  render: args => (
-    <InlineMessage {...args}>
-      <InlineMessageTitle>注意タイトル</InlineMessageTitle>
-      <InlineMessageDescription>
-        注意が必要な状況です。
-      </InlineMessageDescription>
-    </InlineMessage>
-  ),
-  args: {
-    status: "warning",
-    isCloseButtonVisible: true,
-  },
+  args: { ...Default.args, status: "warning" },
+  render: Default.render,
 };
-
 export const Negative: Story = {
-  render: args => (
-    <InlineMessage {...args}>
-      <InlineMessageTitle>エラータイトル</InlineMessageTitle>
-      <InlineMessageDescription>問題が発生しました。</InlineMessageDescription>
-    </InlineMessage>
-  ),
-  args: {
-    status: "negative",
-    isCloseButtonVisible: true,
-  },
+  args: { ...Default.args, status: "negative" },
+  render: Default.render,
 };
-
 export const Success: Story = {
-  render: args => (
-    <InlineMessage {...args}>
-      <InlineMessageTitle>成功タイトル</InlineMessageTitle>
-      <InlineMessageDescription>
-        正常に処理されました。
-      </InlineMessageDescription>
-    </InlineMessage>
-  ),
-  args: {
-    status: "success",
-    isCloseButtonVisible: true,
-  },
+  args: { ...Default.args, status: "success" },
+  render: Default.render,
 };
 
 export const WithoutTitle: Story = {
@@ -97,42 +68,40 @@ export const WithoutTitle: Story = {
   ),
   args: {
     status: "info",
-    isCloseButtonVisible: true,
-  },
-};
-
-export const WithoutDescription: Story = {
-  render: args => (
-    <InlineMessage {...args}>
-      <InlineMessageTitle>説明なしのタイトル</InlineMessageTitle>
-    </InlineMessage>
-  ),
-  args: {
-    status: "info",
-    isCloseButtonVisible: true,
+    isCloseTrigger: true,
   },
 };
 
 // 閉じるボタンの機能を示すための例
-export const WithCloseButton = () => {
-  const [isVisible, setIsVisible] = useState(true);
-
-  if (!isVisible) {
+export const WithCloseButton: Story = {
+  args: {
+    status: "info",
+    isCloseTrigger: true,
+  },
+  render: args => {
+    const [isVisible, setIsVisible] = useState(true);
+    if (!isVisible) {
+      return (
+        <Button variant="outline" onClick={() => setIsVisible(true)}>
+          メッセージを表示
+        </Button>
+      );
+    }
     return (
-      <Button variant="outline" onClick={() => setIsVisible(true)}>
-        メッセージを表示
-      </Button>
+      <div className="flex flex-col gap-4 w-full max-w-md">
+        <InlineMessage
+          {...args}
+          onClose={() => {
+            setIsVisible(false);
+            args.onClose?.();
+          }}
+        >
+          <InlineMessageTitle>閉じるボタンの機能</InlineMessageTitle>
+          <InlineMessageDescription>
+            このメッセージは閉じるボタンをクリックすると消えます。
+          </InlineMessageDescription>
+        </InlineMessage>
+      </div>
     );
-  }
-
-  return (
-    <div className="flex flex-col gap-4 w-full max-w-md">
-      <InlineMessage status="info" onClose={() => setIsVisible(false)}>
-        <InlineMessageTitle>閉じるボタンの機能</InlineMessageTitle>
-        <InlineMessageDescription>
-          このメッセージは閉じるボタンをクリックすると消えます。
-        </InlineMessageDescription>
-      </InlineMessage>
-    </div>
-  );
+  },
 };
