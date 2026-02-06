@@ -22,7 +22,7 @@ This repository uses a unified AI instruction system. Source files are in `docs/
 "Sparkle Design" is a React component library built with modern web technologies, providing consistent UI components for web applications.
 
 ## Technology Stack
-- **Framework**: Next.js 15.3.1 + React 18 + TypeScript
+- **Framework**: Next.js 15.3.8 + React 18 + TypeScript
 - **Styling**: TailwindCSS 4 + CVA (Class Variance Authority)
 - **Testing**: Vitest + Testing Library + jsdom
 - **Documentation**: Storybook
@@ -57,9 +57,10 @@ scripts/                    # Build and setup tools
 ## Key Configuration Files
 - **`package.json`**: Dependencies and scripts
 - **`tsconfig.json`**: TypeScript configuration
-- **`tailwind.config.js`**: TailwindCSS setup
+- **`postcss.config.mjs`**: TailwindCSS setup
 - **`vitest.config.ts`**: Testing configuration
 - **`components.json`**: Component library config
+- **`sparkle.config.json`**: Design token settings
 
 ## Coding Standards
 - **Comments**: Japanese first, then English with `en:` prefix
@@ -77,9 +78,9 @@ scripts/                    # Build and setup tools
 - **Reference**: `.github/copilot-commit-message-instructions.md`
 
 ### Branch Naming Convention
-- **Allowed characters**: English letters, digits, dots, hyphens, underscores only
-- **Pattern**: `feature/component-name`, `fix/issue-description`, etc.
-- **Example**: `feature/button-component`, `fix/test-warnings`
+- **Allowed characters**: English letters, digits, dots, hyphens, underscores, plus a single `/` used only as a separator between a category prefix and name
+- **Pattern**: `feature/component-name`, `fix/issue-description`, `chore/update-deps`, etc.
+- **Example**: `feature/button-component`, `chore/update-deps`
 
 ### Quality Checks (Required before commit)
 ```bash

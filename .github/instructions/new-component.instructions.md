@@ -12,7 +12,7 @@ applyTo: "**"
    - このスクリプトは、必要なファイルとディレクトリを自動的に生成します。
    - ただし、使えるコンポーネント名は shadcn/ui に存在するもののみになります。
 2. 生成されたディレクトリに移動します。
-   - 例: `cd src/components/MyNewComponent`
+   - 例: `cd src/components/ui/MyNewComponent`
 3. コンポーネントの説明を入力します。
 4. `README.md` の「コンポーネント対応状況」を最新の状態に更新します。
 

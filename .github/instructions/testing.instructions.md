@@ -117,7 +117,7 @@ describe('ComponentName', () => {
 各テストファイルで必須の設定：
 
 1. **JSDoc environment directive**: `/** @jest-environment jsdom */`
-2. **TestContainer setup/cleanup**: `beforeEach`/`afterEach`でのライフサイクル管理
+2. **TestContainer setup/cleanup**: コンポーネントをレンダリングするテストでは`beforeEach`/`afterEach`でのライフサイクル管理を行う（`it.todo`のみのファイルは省略可）
 3. **Helper imports**: 必要に応じて`StyleHelpers`, `EventHelpers`, `A11yHelpers`をimport
 
 ## Shared Test Helpers
@@ -187,7 +187,18 @@ EventHelpers.change(input, 'new value')
 - エッジケース
 
 ### Portal-based Components (Dialog, Modal, Select)
-Portal コンポーネントは jsdom での直接テストが困難のため、`it.todo` を使用：
+Portal コンポーネントは jsdom での直接テストが難しい場合があります。安定している場合は最小限のスモークテストを追加し、不安定な場合は`it.todo`で理由を残します。
+
+**スモークテスト例（安定時）**
+```tsx
+describe('DialogComponent', () => {
+  it('opens and closes via trigger', async () => {
+    // minimal smoke test
+  })
+})
+```
+
+**`it.todo` 例（不安定時）**
 ```tsx
 describe('DialogComponent', () => {
   // Portal-based components are challenging to test with jsdom
