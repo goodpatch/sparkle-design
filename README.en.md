@@ -7,7 +7,6 @@
 # Sparkle Design for React
 
 [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
-![npm](https://img.shields.io/npm/v/@goodpatch/sparkle-design)
 [![ci](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml/badge.svg)](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml)
 
 
@@ -16,13 +15,15 @@ It implements Goodpatch's "Sparkle Design" system on top of shadcn/ui.
 
 ## Features
 
-- 🔧 **Flexibility** ... Because it is based on shadcn/ui and compatible with the shadcn/ui registry, you can introduce components one by one. It is also published as an npm package, so you can integrate it in the way that best fits each project.
+- 🔧 **Flexibility** ... Because it is based on shadcn/ui and compatible with the shadcn/ui registry, you can introduce components one by one. It is also planned to be published as an npm package, so you can integrate it in the way that best fits each project.
 - ♿️ **Accessibility** ... Sparkle Design is engineered with accessibility as a primary consideration.
 - 🎨 **Customizability** ... A dedicated CLI tool lets you apply the same customizations found in the Figma files. This makes it easy to spin up code for design systems built on Sparkle Design.
 
 ## Usage
 
 ### Install the package
+
+**Note**: npm publishing is in preparation. The steps below describe how to use it after release.
 
 ```bash
 npm install sparkle-design

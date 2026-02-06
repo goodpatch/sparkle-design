@@ -17,7 +17,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/goodpatch/sparkle-ui"
+    "url": "https://github.com/goodpatch/sparkle-design"
   },
   "scripts": {
     "dev": "next dev",
