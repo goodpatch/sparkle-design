@@ -1,22 +1,6 @@
 ---
 name: add-sparkle-component
-description: Install Sparkle Design components from the registry. Use this skill when you need to add UI components (button, card, input, etc.) to a project that uses Sparkle Design. This skill automates package manager detection, configuration validation, component installation, and provides guidance for Storybook integration and troubleshooting.
-metadata:
-  version: "2.0.0"
-  parameters:
-    - name: component-name
-      description: Component name to install (e.g., button, card, input)
-      required: true
-      type: string
-  aliases:
-    - install-sparkle-component
-    - sparkle-add
-    - add-component
-  tags:
-    - sparkle-design
-    - component
-    - ui
-    - shadcn
+description: This skill should be used when adding, installing, or setting up Sparkle Design UI components from the registry. It applies when the user asks to "add a sparkle button component", "install sparkle-design card", "add @sparkle-design/input", "set up a new UI component from the sparkle registry", "Sparkle コンポーネントを追加", "sparkle-design のコンポーネントをインストール", or asks how to install Sparkle Design components. Automates package manager detection, configuration validation, component installation, and provides guidance for Storybook integration, CSS setup, and troubleshooting.
 ---
 
 # Sparkle Design Component Installation
@@ -27,7 +11,7 @@ Install Sparkle Design components from the registry with automated setup and val
 
 ### Automated Installation (Recommended)
 
-Use the automated script for hassle-free installation:
+Run the automated script for hassle-free installation:
 
 ```bash
 python scripts/install_component.py <component-name>
@@ -47,7 +31,7 @@ python scripts/install_component.py button
 
 ### Manual Installation
 
-If you prefer manual control:
+For manual control:
 
 ```bash
 # Auto-detect package manager and use appropriate command
@@ -60,7 +44,7 @@ npx shadcn@latest add @sparkle-design/<component-name>
 
 ## Prerequisites
 
-Before installing components, ensure your project has:
+Before installing components, ensure the project has:
 
 1. **Registry Configuration** - `components.json` with Sparkle Design registry
 2. **Sparkle Config** - `sparkle.config.json` (optional but recommended)
@@ -69,7 +53,7 @@ Before installing components, ensure your project has:
 
 ### Validate Configuration
 
-Check if your project is ready:
+Check if the project is ready:
 
 ```bash
 python scripts/validate_config.py
@@ -86,7 +70,7 @@ This verifies:
 
 ### 1. Detect Package Manager
 
-The skill automatically detects your package manager by checking lockfiles:
+The skill automatically detects the package manager by checking lockfiles:
 
 - `pnpm-lock.yaml` → **pnpm**
 - `yarn.lock` → **yarn**
@@ -128,50 +112,33 @@ python scripts/install_component.py <component-name>
 - TypeScript types generated
 - Related components installed if needed (Icon, Spinner, etc.)
 
-**Note:** The exact installation path is determined by the `aliases.ui` field in your `components.json` file.
+**Note:** The exact installation path is determined by the `aliases.ui` field in `components.json`.
 
 **Important:** CSS regeneration is **NOT needed** after installing components.
 
 ### 4. Verify CSS Imports (First Time Only)
 
-For first-time setup, verify CSS import structure. The validation script will check common locations for your project structure.
+For first-time setup, verify CSS import structure. The key principle: `sparkle-design.css` (SSoT) is imported by `globals.css`, which is imported by the root layout.
 
-**Typical Next.js App Router setup:**
-
-```tsx
-// <your-project>/app/globals.css or src/app/globals.css
-@import "tailwindcss";
-@import "./sparkle-design.css";
-
-// <your-project>/app/layout.tsx or src/app/layout.tsx
-import "./globals.css";
+```
+sparkle-design.css  ← SSoT (Single Source of Truth)
+      ↑ @import
+globals.css         ← Imports sparkle-design.css (Tailwind first, then Sparkle)
+      ↑ import
+layout.tsx          ← Application entry point
 ```
 
-**Typical Next.js Pages Router setup:**
+Run the validation script to check the structure automatically:
 
-```tsx
-// styles/globals.css or src/styles/globals.css
-@import "tailwindcss";
-@import "./sparkle-design.css";
-
-// pages/_app.tsx
-import "../styles/globals.css";  // Adjust path as needed
+```bash
+python scripts/validate_config.py
 ```
 
-**Storybook (adjust path to match your structure):**
-
-```js
-// .storybook/preview.js
-import "../src/app/globals.css";  // or "../app/globals.css" or "../styles/globals.css"
-```
-
-**Note:** The validation script automatically detects CSS files in common locations. Your project structure may vary.
-
-**For detailed CSS setup instructions**, see [references/css-structure.md](references/css-structure.md)
+**For detailed CSS setup instructions** (Next.js App/Pages Router, Vite, Storybook), see [references/css-structure.md](references/css-structure.md)
 
 ### 5. Create/Update Storybook Story
 
-Components use co-location pattern - stories live next to components. The exact path depends on your `components.json` configuration:
+Components use co-location pattern — stories live next to components. The exact path depends on `components.json` configuration:
 
 ```
 <ui-alias-path>/<component-name>/
@@ -186,63 +153,11 @@ src/components/ui/<component-name>/
 └── <component-name>.stories.tsx
 ```
 
-**Create new story:**
+**Create new story** with the standard pattern: `Meta` + `StoryObj`, `tags: ["autodocs"]`, `argTypes` for `variant`/`size`/`theme`.
 
-```tsx
-import type { Meta, StoryObj } from "@storybook/react";
-import { ComponentName } from "./";
+**Material Icons Note:** Use underscore-separated names (`arrow_forward`, not `arrow-forward`).
 
-const meta = {
-  title: "UI/ComponentName",
-  component: ComponentName,
-  parameters: {
-    layout: "centered",
-  },
-  tags: ["autodocs"],
-  argTypes: {
-    variant: {
-      control: "select",
-      options: ["solid", "outline", "ghost"],
-    },
-    size: {
-      control: "select",
-      options: ["sm", "md", "lg"],
-    },
-    theme: {
-      control: "select",
-      options: ["primary", "neutral", "negative"],
-    },
-  },
-} satisfies Meta<typeof ComponentName>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
-  args: {
-    children: "Example",
-  },
-};
-```
-
-**Material Icons Note:** Use underscore-separated names:
-
-```tsx
-// ✅ Correct
-export const WithIcons: Story = {
-  args: {
-    prefixIcon: "check",
-    suffixIcon: "arrow_forward", // ← underscore
-  },
-};
-
-// ❌ Wrong
-export const Wrong: Story = {
-  args: {
-    suffixIcon: "arrow-right", // ← hyphen doesn't work
-  },
-};
-```
+**For full story template and details**, see [references/sparkle-design-features.md](references/sparkle-design-features.md)
 
 ---
 
@@ -258,8 +173,8 @@ After installation, verify:
 - [ ] Component displays correctly: `<pm> storybook`
 
 **Note:**
-- `<pm>` means your package manager (npm/pnpm/yarn/bun)
-- Component path is determined by the `aliases.ui` field in your `components.json`
+- `<pm>` refers to the project's package manager (npm/pnpm/yarn/bun)
+- Component path is determined by the `aliases.ui` field in `components.json`
 
 ---
 
@@ -385,7 +300,7 @@ Sparkle Design components provide:
 
 ### Project Documentation
 
-Check your project's documentation for:
+Consult the project's documentation for:
 - Project-specific guidelines (e.g., AGENTS.md, CONTRIBUTING.md)
 - Component development conventions
 - Code style and patterns
@@ -403,37 +318,6 @@ Check your project's documentation for:
 5. **Run type checking** - Execute `<pm> lint` after installation
 6. **Test in Storybook** - Verify component works: `<pm> storybook`
 
-### Common Patterns
-
-**Full installation workflow:**
-
-```bash
-# 1. Validate configuration
-python scripts/validate_config.py
-
-# 2. Install component
-python scripts/install_component.py button
-
-# 3. Verify types
-pnpm lint
-
-# 4. Test in Storybook
-pnpm storybook
-```
-
-**Troubleshooting workflow:**
-
-```bash
-# 1. Detect package manager
-python scripts/detect_package_manager.py
-
-# 2. Validate configuration
-python scripts/validate_config.py
-
-# 3. Check detailed issues
-# Read references/troubleshooting.md for specific error
-```
-
 ### Progressive Disclosure
 
 Load references as needed:
@@ -445,6 +329,5 @@ Load references as needed:
 
 ---
 
-**Version**: 2.0.0
-**Last Updated**: 2026-01-07
-**Lines**: ~280 (reduced from 519)
+**Version**: 2.1.0
+**Last Updated**: 2026-02-12
