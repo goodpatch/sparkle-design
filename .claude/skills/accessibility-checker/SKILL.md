@@ -1,6 +1,6 @@
 ---
 name: accessibility-checker
-description: Run accessibility (a11y) reviews using a project checklist CSV and produce structured reports with pass/fail/NA/needs-review results, evidence, and actionable fixes. Use when reviewing UI components, Storybook stories, docs pages, or PRs for WCAG compliance.
+description: This skill should be used when the user asks to "check accessibility", "run a WCAG review", "perform an a11y audit", "generate an accessibility report", "validate the accessibility checklist", "アクセシビリティチェック", "WCAG準拠の確認", "a11yレビュー", or asks to review UI components, Storybook stories, pages, or PRs for WCAG compliance. Runs checklist-driven reviews producing structured pass/fail/NA/needs-review reports with evidence and actionable fixes.
 ---
 
 # Accessibility Checker
@@ -90,8 +90,8 @@ Apply minimal, safe code changes per component, then re-check affected items.
 ## Workflow
 
 For detailed workflow (including status updates), see:
-- **[docs/WORKFLOW.md](docs/WORKFLOW.md)** - Step-by-step procedures
-- **[docs/PROJECT_POLICY.md](docs/PROJECT_POLICY.md)** - Project-specific policies
+- **[references/workflow.md](references/workflow.md)** - Step-by-step procedures
+- **[references/project-policy.md](references/project-policy.md)** - Project-specific policies
 
 ### Quick Workflow Summary
 
@@ -125,21 +125,21 @@ For each checklist item:
 **Design-system guarantees** (per project policy): Mark **Pass** with evidence like:
 - "Design-system guaranteed (Figma). No code-level action required unless token deviation exists."
 
-**Do not claim** you ran tools/tests unless you actually did. If unverifiable, use **Needs review**.
+**Do not claim** tools or tests were executed unless they actually were. If unverifiable, use **Needs review**.
 
 #### Step 4: Generate Report
 
-Use templates from `templates/`:
+Use templates from `examples/`:
 
 ```bash
 # Component report
-cp templates/component-report.md reports/button-report.md
+cp examples/component-report.md reports/button-report.md
 
 # PR review summary
-cp templates/pr-review-summary.md reports/pr-123-summary.md
+cp examples/pr-review-summary.md reports/pr-123-summary.md
 
 # Status update
-cp templates/status-update.md reports/button-status.md
+cp examples/status-update.md reports/button-status.md
 ```
 
 **Report structure**:
@@ -173,7 +173,7 @@ For accident-prone APIs that frequently lead to WCAG violations, prefer **non-br
 - Prefer `onClick` (activation on release)
 - Implementation: Add `@deprecated` JSDoc + dev warnings; reduce Storybook exposure
 
-See [docs/PROJECT_POLICY.md](docs/PROJECT_POLICY.md) for details.
+See [references/project-policy.md](references/project-policy.md) for details.
 
 ---
 
@@ -189,7 +189,7 @@ python scripts/generate_report.py --checklist assets/checklist.csv
 python scripts/generate_report.py --component button --output reports/button.md
 
 # Use custom template
-python scripts/generate_report.py --template templates/component-report.md
+python scripts/generate_report.py --template examples/component-report.md
 ```
 
 ### Quick Component Check
@@ -235,13 +235,13 @@ Load references as needed during review.
 
 ---
 
-## Templates
+## Report Examples
 
-Report templates available in `templates/`:
+Report templates available in `examples/`:
 
-- **[component-report.md](templates/component-report.md)** - Detailed component review
-- **[pr-review-summary.md](templates/pr-review-summary.md)** - PR accessibility review
-- **[status-update.md](templates/status-update.md)** - README status updates
+- **[component-report.md](examples/component-report.md)** - Detailed component review
+- **[pr-review-summary.md](examples/pr-review-summary.md)** - PR accessibility review
+- **[status-update.md](examples/status-update.md)** - README status updates
 
 ---
 
@@ -315,13 +315,12 @@ python scripts/export_summary.py --reports reports/ --output summary.md
 - **`scripts/generate_report.py`**: Report generation automation
 - **`scripts/check_component.py`**: Quick static analysis
 - **`scripts/export_summary.py`**: Summary export for README updates
-- **`docs/WORKFLOW.md`**: Detailed operational procedures
-- **`docs/PROJECT_POLICY.md`**: Sparkle-design specific policies
+- **`references/workflow.md`**: Detailed operational procedures
+- **`references/project-policy.md`**: Sparkle-design specific policies
 - **`references/*.md`**: WCAG guides, violations, testing
-- **`templates/*.md`**: Report templates
+- **`examples/*.md`**: Report templates
 
 ---
 
-**Version**: 2.0.0
-**Last Updated**: 2026-01-07
-**Lines**: ~200 (reduced from 155, but with comprehensive resources)
+**Version**: 2.1.0
+**Last Updated**: 2026-02-12
