@@ -139,8 +139,9 @@ Check `sparkle-design-cli --help` for detailed usage.
 │  └─ lib/            # Shared utilities
 ├─ scripts/           # Various scripts
 ├─ public/r/          # Public registry JSON
+├─ docs/
+│  └─ ai-instructions/ # Development, testing, and AI guidelines (source)
 └─ .github/           # GitHub configuration
-   └─ instructions/   # Development, testing, and AI guidelines
 ```
 
 ### Build the package
@@ -161,7 +162,7 @@ pnpm storybook
 pnpm test
 ```
 
-Refer to `.github/instructions/testing.instructions.md` for testing guidelines.
+Refer to `docs/ai-instructions/testing.md` for testing guidelines.
 
 ### Code formatting
 
@@ -205,10 +206,10 @@ The Sparkle Design badge indicates that a component uses Sparkle Design. Add the
 
 ### Miscellaneous
 
-- Follow `.github/instructions/comment-style.instructions.md` for comment conventions.
+- Follow `docs/ai-instructions/comment-style.md` for comment conventions.
 - Follow `.github/copilot-commit-message-instructions.md` for commit message format.
 - Refer to `CHANGELOG.md` for release notes.
-- See the `.github/instructions/` directory for additional development, testing, and AI guidelines.
+- See the `docs/ai-instructions/` directory for additional development, testing, and AI guidelines.
 
 ## Component status
 
