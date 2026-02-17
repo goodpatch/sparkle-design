@@ -108,11 +108,12 @@ const handleKeyDown = (event: React.KeyboardEvent) => {
 ## Development Workflow
 
 ### Component Creation Process
-1. Run `./scripts/setup.sh <ComponentName>` for scaffolding
+1. Run `./scripts/setup.sh <component-name>` for scaffolding (also adds export to `src/index.ts`)
 2. Implement component with CVA variants
 3. Add comprehensive tests (refer to `docs/ai-instructions/testing.md`)
 4. Write Storybook stories for documentation
 5. Update component registry
+6. Update README component status table
 
 ### Code Quality Standards
 - **Comments**: Japanese first, then English (`en:` prefix)
