@@ -8,13 +8,13 @@ applyTo: "**"
 
 1. ターミナルで`./scripts/setup.sh <コンポーネント名>`を実行します。
    - `<コンポーネント名>`は、作成するコンポーネントの名前に置き換えてください。
-   - 例: `./scripts/setup.sh MyNewComponent`
-   - このスクリプトは、必要なファイルとディレクトリを自動的に生成します。
+   - 例: `./scripts/setup.sh my-new-component`
+   - このスクリプトは、必要なファイルとディレクトリを自動的に生成し、`src/index.ts` への export 追加も自動で行います。
    - ただし、使えるコンポーネント名は shadcn/ui に存在するもののみになります。
 2. 生成されたディレクトリに移動します。
-   - 例: `cd src/components/ui/MyNewComponent`
+   - 例: `cd src/components/ui/my-new-component`
 3. コンポーネントの説明を入力します。
-4. `README.md` の「コンポーネント対応状況」を最新の状態に更新します。
+4. `README.md` の「コンポーネント公開状況」を最新の状態に更新します。
 
 # 生成のルール
 

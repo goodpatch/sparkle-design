@@ -213,4 +213,4 @@ The Sparkle Design badge indicates that a component uses Sparkle Design. Add the
 
 ## Component status
 
-Please refer to the table on [README.md](./README.md#コンポーネント対応状況) for the current implementation status of components.
+Please refer to the table on [README.md](./README.md#コンポーネント公開状況) for the current implementation status of components.

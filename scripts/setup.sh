@@ -46,3 +46,14 @@ echo "{
     }
   ]
 }" > src/components/ui/$1/item.json
+
+# src/index.ts にexportを追加（アルファベット順を維持）
+EXPORT_LINE="export * from \"./components/ui/$1\";"
+if ! grep -qF "$EXPORT_LINE" src/index.ts; then
+  printf "%s\n" "$EXPORT_LINE" >> src/index.ts
+  TEMP_FILE="$(mktemp)"
+  grep -v '^export \* from "./components/ui/' src/index.ts > "$TEMP_FILE"
+  grep '^export \* from "./components/ui/' src/index.ts | sort >> "$TEMP_FILE"
+  mv "$TEMP_FILE" src/index.ts
+  echo "Added export to src/index.ts"
+fi
