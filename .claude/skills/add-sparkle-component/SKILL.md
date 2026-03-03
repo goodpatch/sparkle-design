@@ -120,7 +120,7 @@ python scripts/install_component.py <component-name>
 
 For first-time setup, verify CSS import structure. The key principle: `sparkle-design.css` (SSoT) is imported by `globals.css`, which is imported by the root layout.
 
-```
+```text
 sparkle-design.css  ← SSoT (Single Source of Truth)
       ↑ @import
 globals.css         ← Imports sparkle-design.css (Tailwind first, then Sparkle)
@@ -140,14 +140,14 @@ python scripts/validate_config.py
 
 Components use co-location pattern — stories live next to components. The exact path depends on `components.json` configuration:
 
-```
+```text
 <ui-alias-path>/<component-name>/
 ├── index.tsx                      # Component
 └── <component-name>.stories.tsx   # Story
 ```
 
 **Example with default configuration (`src/components/ui`):**
-```
+```text
 src/components/ui/<component-name>/
 ├── index.tsx
 └── <component-name>.stories.tsx

@@ -74,7 +74,12 @@ def format_markdown(summaries: list[dict]) -> str:
     ]
 
     for summary in summaries:
-        status = "✅" if summary["fail"] == 0 else "❌"
+        if summary["fail"] > 0:
+            status = "❌"
+        elif summary["needs_review"] > 0:
+            status = "⚠️"
+        else:
+            status = "✅"
         lines.append(
             f"| {summary['component']} | {summary['pass']} | {summary['fail']} | "
             f"{summary['na']} | {summary['needs_review']} | {status} |"

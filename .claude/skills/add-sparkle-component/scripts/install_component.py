@@ -74,6 +74,10 @@ def validate_components_json(project_path: Path) -> tuple[bool, str]:
     if "@sparkle-design" not in config["registries"]:
         return False, "@sparkle-design registry not configured in components.json"
 
+    registry_url = config["registries"].get("@sparkle-design", "")
+    if not registry_url or not registry_url.startswith(("http://", "https://")):
+        return False, f"Invalid @sparkle-design registry URL: {registry_url!r}"
+
     return True, ""
 
 
@@ -125,7 +129,7 @@ def get_package_manager_command(manager: str) -> list[str]:
     elif manager == "bun":
         return ["bunx"]
     else:  # npm
-        return ["npx"]
+        return ["npx", "--yes"]
 
 
 def install_component(
