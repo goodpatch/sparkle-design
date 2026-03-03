@@ -5,7 +5,7 @@ This document outlines the operational procedures (review → fix → verify →
 Related:
 
 - Main skill: `../SKILL.md`
-- Project policy: `./PROJECT_POLICY.md`
+- Project policy: `./project-policy.md`
 - Checklist: `../assets/checklist.csv`
 
 ---

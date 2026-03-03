@@ -71,8 +71,16 @@ def validate_components_json(project_path: Path) -> tuple[bool, str]:
     if "registries" not in config:
         return False, "'registries' field not found in components.json"
 
-    if "@sparkle-design" not in config["registries"]:
+    registries = config["registries"]
+    if not isinstance(registries, dict):
+        return False, f"'registries' should be an object, got {type(registries).__name__}"
+
+    if "@sparkle-design" not in registries:
         return False, "@sparkle-design registry not configured in components.json"
+
+    registry_url = registries.get("@sparkle-design", "")
+    if not isinstance(registry_url, str) or not registry_url.startswith(("http://", "https://")):
+        return False, f"Invalid @sparkle-design registry URL: {registry_url!r}"
 
     return True, ""
 
@@ -125,7 +133,7 @@ def get_package_manager_command(manager: str) -> list[str]:
     elif manager == "bun":
         return ["bunx"]
     else:  # npm
-        return ["npx"]
+        return ["npx", "--yes"]
 
 
 def install_component(

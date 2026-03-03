@@ -36,8 +36,10 @@ def check_file(file_path: Path, verbose: bool = False) -> list[dict]:
         return issues
 
     # Check 1: Icon-only buttons without aria-label
-    if re.search(r'<button[^>]*>\s*<\w+Icon', content):
-        if not re.search(r'aria-label=', content):
+    # en: Extract only the <button ...> opening tag to avoid matching child attributes
+    for match in re.finditer(r'(<button\b[^>]*>)\s*<\w+Icon', content):
+        button_tag = match.group(1)
+        if 'aria-label' not in button_tag and 'aria-labelledby' not in button_tag:
             issues.append({
                 "level": "warning",
                 "message": "Icon-only button may need aria-label",
@@ -45,19 +47,40 @@ def check_file(file_path: Path, verbose: bool = False) -> list[dict]:
             })
 
     # Check 2: onClick without onKeyDown for non-button elements
-    if re.search(r'<div[^>]*onClick=', content):
-        if not re.search(r'onKeyDown=', content):
+    # en: Use (?:(?!=>) .)* to avoid `=>` in arrow functions breaking the match
+    for match in re.finditer(r'<div\b([^>](?!=>))*onClick=', content):
+        # en: Find the full opening tag from match start
+        tag_end = content.find('>', match.start())
+        if tag_end == -1:
+            continue
+        tag_text = content[match.start():tag_end + 1]
+        has_keyboard = 'onKeyDown' in tag_text
+        if not has_keyboard:
             issues.append({
                 "level": "warning",
-                "message": "div with onClick should have keyboard support",
+                "message": "div with onClick should have keyboard support (onKeyDown)",
                 "file": file_path,
             })
 
     # Check 3: Input without label or aria-label
-    if re.search(r'<input[^>]*>', content):
-        has_label = re.search(r'<label', content)
-        has_aria_label = re.search(r'aria-label=', content)
-        if not (has_label or has_aria_label):
+    for match in re.finditer(r'<input\b[^>]*>', content):
+        tag_text = match.group()
+        has_aria = 'aria-label' in tag_text or 'aria-labelledby' in tag_text
+        has_id = re.search(r'id=["\']([^"\']+)["\']', tag_text)
+        has_label_for = False
+        if has_id:
+            escaped_id = re.escape(has_id.group(1))
+            has_label_for = bool(re.search(
+                rf'<label[^>]*htmlFor=["\']{ escaped_id }["\']', content
+            ))
+        has_wrapping_label = False
+        if not (has_aria or has_label_for):
+            # en: Check if input is wrapped by <label>
+            pos = match.start()
+            preceding = content[max(0, pos - 200):pos]
+            if '<label' in preceding and '</label>' not in preceding:
+                has_wrapping_label = True
+        if not (has_aria or has_label_for or has_wrapping_label):
             issues.append({
                 "level": "error",
                 "message": "Input should have associated label or aria-label",

@@ -121,6 +121,7 @@ def find_css_files(project_path: Path, css_pattern: str) -> list[Path]:
     common_locations = [
         "src/app",
         "src/styles",
+        "src",
         "styles",
         "app",
         "public/styles",
@@ -190,7 +191,7 @@ def check_css_imports(project_path: Path) -> tuple[bool, list[str]]:
         messages.append("⚠️  Main CSS file not found or doesn't import design system CSS")
         messages.append("   Expected filenames: globals.css, global.css, main.css, or styles.css")
 
-    return design_css_found, messages
+    return (design_css_found and globals_found), messages
 
 
 def main() -> int:
@@ -245,9 +246,12 @@ Examples:
     print()
 
     # Summary
-    if components_valid:
+    if components_valid and css_ok:
         print("✅ Configuration is valid! You can install Sparkle Design components.")
         return 0
+    elif components_valid and not css_ok:
+        print("⚠️  components.json is valid, but CSS setup has issues. Components may not render correctly.")
+        return 1
     else:
         print("❌ Configuration has issues. Please fix them before installing components.")
         return 1

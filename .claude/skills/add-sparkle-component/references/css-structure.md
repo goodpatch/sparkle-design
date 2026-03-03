@@ -29,7 +29,7 @@ Sparkle Design uses a layered CSS import structure where `sparkle-design.css` se
 
 ## CSS Import Hierarchy
 
-```
+```text
 sparkle-design.css  ← SSoT (Single Source of Truth)
       ↑
       │  @import

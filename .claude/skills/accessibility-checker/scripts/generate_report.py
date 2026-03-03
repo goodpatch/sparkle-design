@@ -94,12 +94,16 @@ def filter_component_items(items: list[dict[str, Any]], component: str | None) -
     if not component:
         return items
 
-    # For now, return all items. In practice, this could filter based on:
-    # - Component type (button, input, dialog, etc.)
-    # - Scope (単体可 vs 単体不可)
-    # This logic should be enhanced based on actual usage
+    component_lower = component.lower()
+    filtered = [
+        item for item in items
+        if component_lower in item.get("category", "").lower()
+        or component_lower in item.get("check", "").lower()
+        or component_lower in item.get("id", "").lower()
+        or component_lower in item.get("notes", "").lower()
+    ]
 
-    return items
+    return filtered
 
 
 def generate_report(

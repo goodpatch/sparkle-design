@@ -251,7 +251,7 @@ UI components and navigation must be operable.
 
 #### 2.1.4 Character Key Shortcuts (A)
 
-**What**: Single character shortcuts can be turned off or remapped
+**What**: Single-character shortcuts can be turned off or remapped
 
 **React Implementation**:
 ```tsx
@@ -433,9 +433,13 @@ Information and UI operation must be understandable.
 ```tsx
 // ❌ Bad - auto-navigates on selection
 <select onChange={(e) => navigate(e.target.value)}>
+  <option value="/">Home</option>
+</select>
 
 // ✅ Good - explicit action required
 <select onChange={(e) => setSelection(e.target.value)}>
+  <option value="/">Home</option>
+</select>
 <button onClick={() => navigate(selection)}>Go</button>
 ```
 

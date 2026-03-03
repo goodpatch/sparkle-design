@@ -93,6 +93,10 @@ def main() -> int:
         print(f"❌ Checklist not found: {path}")
         return 1
 
+    if not path.is_file():
+        print(f"❌ Not a file: {path}")
+        return 1
+
     try:
         with path.open(newline="", encoding="utf-8") as f:
             reader = csv.DictReader(f)
