@@ -36,10 +36,10 @@ def check_file(file_path: Path, verbose: bool = False) -> list[dict]:
         return issues
 
     # Check 1: Icon-only buttons without aria-label
-    for match in re.finditer(r'<button[^>]*>\s*<\w+Icon', content):
-        tag_start = content.rfind('<button', 0, match.end())
-        tag_text = content[tag_start:match.end()]
-        if 'aria-label' not in tag_text and 'aria-labelledby' not in tag_text:
+    # en: Extract only the <button ...> opening tag to avoid matching child attributes
+    for match in re.finditer(r'(<button\b[^>]*>)\s*<\w+Icon', content):
+        button_tag = match.group(1)
+        if 'aria-label' not in button_tag and 'aria-labelledby' not in button_tag:
             issues.append({
                 "level": "warning",
                 "message": "Icon-only button may need aria-label",
@@ -47,23 +47,32 @@ def check_file(file_path: Path, verbose: bool = False) -> list[dict]:
             })
 
     # Check 2: onClick without onKeyDown for non-button elements
-    for match in re.finditer(r'<div[^>]*onClick=[^>]*>', content):
-        tag_text = match.group()
-        if 'onKeyDown' not in tag_text and ('role=' not in tag_text or 'tabIndex' not in tag_text):
+    # en: Use (?:(?!=>) .)* to avoid `=>` in arrow functions breaking the match
+    for match in re.finditer(r'<div\b([^>](?!=>))*onClick=', content):
+        # en: Find the full opening tag from match start
+        tag_end = content.find('>', match.start())
+        if tag_end == -1:
+            continue
+        tag_text = content[match.start():tag_end + 1]
+        has_keyboard = 'onKeyDown' in tag_text
+        if not has_keyboard:
             issues.append({
                 "level": "warning",
-                "message": "div with onClick should have keyboard support",
+                "message": "div with onClick should have keyboard support (onKeyDown)",
                 "file": file_path,
             })
 
     # Check 3: Input without label or aria-label
-    for match in re.finditer(r'<input[^>]*>', content):
+    for match in re.finditer(r'<input\b[^>]*>', content):
         tag_text = match.group()
         has_aria = 'aria-label' in tag_text or 'aria-labelledby' in tag_text
-        has_id = re.search(r'id=["\']([^"\']+)', tag_text)
-        has_label_for = has_id and re.search(
-            rf'<label[^>]*htmlFor=["\']{ re.escape(has_id.group(1)) }', content
-        ) if has_id else False
+        has_id = re.search(r'id=["\']([^"\']+)["\']', tag_text)
+        has_label_for = False
+        if has_id:
+            escaped_id = re.escape(has_id.group(1))
+            has_label_for = bool(re.search(
+                rf'<label[^>]*htmlFor=["\']{ escaped_id }["\']', content
+            ))
         has_wrapping_label = False
         if not (has_aria or has_label_for):
             # en: Check if input is wrapped by <label>

@@ -97,11 +97,13 @@ def filter_component_items(items: list[dict[str, Any]], component: str | None) -
     component_lower = component.lower()
     filtered = [
         item for item in items
-        if component_lower in item.get("component", "").lower()
-        or component_lower in item.get("name", "").lower()
+        if component_lower in item.get("category", "").lower()
+        or component_lower in item.get("check", "").lower()
+        or component_lower in item.get("id", "").lower()
+        or component_lower in item.get("notes", "").lower()
     ]
 
-    return filtered if filtered else items
+    return filtered
 
 
 def generate_report(

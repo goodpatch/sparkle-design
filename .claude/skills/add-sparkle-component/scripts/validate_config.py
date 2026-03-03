@@ -246,9 +246,12 @@ Examples:
     print()
 
     # Summary
-    if components_valid:
+    if components_valid and css_ok:
         print("✅ Configuration is valid! You can install Sparkle Design components.")
         return 0
+    elif components_valid and not css_ok:
+        print("⚠️  components.json is valid, but CSS setup has issues. Components may not render correctly.")
+        return 1
     else:
         print("❌ Configuration has issues. Please fix them before installing components.")
         return 1
