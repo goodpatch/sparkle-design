@@ -102,9 +102,19 @@ export default App;
 @import "./sparkle-design.css";
 ```
 
-`sparkle-design-cli` v1.3.0 以降では、`pnpm build:css` 実行時に `@source` ディレクティブが自動的に `globals.css` に挿入されます。
+`sparkle-design-cli` v1.3.0 以降では、`sparkle.config.json` に `source-packages` を指定すると、`pnpm build:css` 実行時に `@source` ディレクティブが自動的に `globals.css` に挿入されます。**npm パッケージとして利用する場合は `source-packages` の指定が必須です。**
 
-追加の npm パッケージ（拡張リポジトリなど）のスキャンが必要な場合は、`sparkle.config.json` に `source-packages` を指定できます:
+```json
+{
+  "primary": "blue",
+  "font-pro": "BIZ UDPGothic",
+  "font-mono": "BIZ UDGothic",
+  "radius": "md",
+  "source-packages": []
+}
+```
+
+追加の npm パッケージ（拡張リポジトリなど）もスキャン対象にする場合は、配列にパッケージ名を追加します:
 
 ```json
 {
