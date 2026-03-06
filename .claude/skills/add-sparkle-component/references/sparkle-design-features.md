@@ -8,6 +8,7 @@ This document provides detailed information about Sparkle Design components, inc
 - [Styling System](#styling-system)
 - [Accessibility](#accessibility)
 - [Material Icons](#material-icons)
+- [Anti-patterns（やってはいけないパターン）](#anti-patternsやってはいけないパターン)
 - [Storybook Integration](#storybook-integration)
 
 ---
