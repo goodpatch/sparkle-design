@@ -22,6 +22,11 @@ export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
  * - スピナーはダウンロード、アップロードなどのシステムによる処理の進行状況を視覚的に提示するために使用するコンポーネントです。
  * - en: The Spinner component is used to visually present the progress of system processing such as downloads and uploads.
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - `size` にピクセル値（24, 32 など）を渡さないでください。スケール値（1-12）を使用してください。
+ * - en: Do not pass pixel values to `size`. Use scale values (1-12) instead.
+ *
  * **使用例 / Usage Example**
  *
  * ```tsx

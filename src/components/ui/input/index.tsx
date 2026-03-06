@@ -136,14 +136,30 @@ export interface InputProps
  * - インプットはテキストフィールドの形式でユーザーからの入力を取得するために使用するコンポーネントです。
  * - en: The Input component is used to capture user input in the form of a text field.
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - Input の横にアイコンボタンを手動で配置しないでください。`isTrigger` / `triggerIcon` props を使用してください。
+ * - en: Do not manually place an IconButton next to Input. Use `isTrigger` / `triggerIcon` props instead.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <Input isTrigger triggerIcon="search" triggerAriaLabel="検索" onIconButtonClick={handleSearch} />
+ *
+ * // ❌ Wrong - 手動配置
+ * <div className="flex">
+ *   <Input />
+ *   <IconButton icon="search" />
+ * </div>
+ * ```
+ *
  * **使用例 / Usage Example**
  *
  * ```tsx
  * <Input
  *   size="md"
  *   placeholder="テキストを入力"
- *   isIconButtonEnable
- *   iconButtonIcon="search"
+ *   isTrigger
+ *   triggerIcon="search"
  * />
  * ```
  *

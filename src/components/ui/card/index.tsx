@@ -93,6 +93,31 @@ const Card = React.forwardRef<
 ));
 Card.displayName = "Card";
 
+/**
+ * **アンチパターン / Anti-patterns**
+ *
+ * - CardHeader 内で手動の flex レイアウト（`<div className="flex justify-between">`）を使わないでください。
+ *   CardHeader は内部で flex レイアウトを適用済みです。アクションボタンは `CardControl` で囲んでください。
+ * - en: Do not use manual flex layout inside CardHeader. Use `CardControl` to wrap action buttons.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <CardHeader>
+ *   <CardTitle>タイトル</CardTitle>
+ *   <CardControl>
+ *     <Button>アクション</Button>
+ *   </CardControl>
+ * </CardHeader>
+ *
+ * // ❌ Wrong - 手動 flex を使わない
+ * <CardHeader>
+ *   <div className="flex justify-between">
+ *     <CardTitle>タイトル</CardTitle>
+ *     <Button>アクション</Button>
+ *   </div>
+ * </CardHeader>
+ * ```
+ */
 const CardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>

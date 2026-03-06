@@ -32,10 +32,23 @@ export interface LinkProps
  * - リンクはコンテンツがナビゲーションできることをユーザーに提示するために使用するコンポーネントです。
  * - en: The Link component is used to indicate to users that content is navigable.
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - 外部リンクアイコンを手動で追加しないでください。`isOpenInNew` prop が自動で `open_in_new` アイコンを表示します。
+ * - en: Do not manually add external link icons. The `isOpenInNew` prop automatically displays the `open_in_new` icon.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <Link href="https://example.com" isOpenInNew>外部リンク</Link>
+ *
+ * // ❌ Wrong - 手動アイコン
+ * <Link href="https://example.com">外部リンク <Icon icon="open_in_new" /></Link>
+ * ```
+ *
  * **使用例 / Usage Example**
  *
  * ```tsx
- * <Link href="https://example.com" isExternalLink>
+ * <Link href="https://example.com" isOpenInNew>
  *   外部サイトへのリンク
  * </Link>
  * ```
