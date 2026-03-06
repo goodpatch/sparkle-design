@@ -422,11 +422,11 @@
   --shadow-popout: var(--shadow-lg);
 }
 
-/* サブピクセルアンチエイリアス（Tailwind v4 デフォルトの antialiased を上書き） */
+/* フォントレンダリング */
 @layer base {
   *, ::before, ::after, ::backdrop {
-    -webkit-font-smoothing: auto;
-    -moz-osx-font-smoothing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
