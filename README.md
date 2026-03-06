@@ -90,6 +90,30 @@ export default App;
 
 両方のファイルをインポートすることで、Sparkle Design の全機能を利用できます。
 
+#### npm パッケージとして利用する場合
+
+`@goodpatch/sparkle-design` を npm パッケージとしてインストールして利用する場合、プロジェクトの `globals.css` に `@source` ディレクティブを追加して、TailwindCSS v4 がパッケージ内のユーティリティクラスを検出できるようにする必要があります。
+
+```css
+@import "tailwindcss";
+/* @goodpatch/sparkle-design のクラスをスキャン対象にする */
+@source "../node_modules/@goodpatch/sparkle-design/dist";
+/* Sparkle Design のカスタム定義（Tailwindの後にインポート） */
+@import "./sparkle-design.css";
+```
+
+`sparkle-design-cli` v1.3.0 以降では、`pnpm build:css` 実行時に `@source` ディレクティブが自動的に `globals.css` に挿入されます。
+
+追加の npm パッケージ（拡張リポジトリなど）のスキャンが必要な場合は、`sparkle.config.json` に `source-packages` を指定できます:
+
+```json
+{
+  "primary": "blue",
+  "radius": "md",
+  "source-packages": ["@scope/my-extension-design"]
+}
+```
+
 #### Sparkle Design CSS の生成
 
 以下のコマンドで `sparkle.config.json` の設定に基づいて、デザインシステムに準拠した CSS を生成します。<br />

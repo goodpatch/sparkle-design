@@ -104,7 +104,7 @@
   --color-gray-700: oklch(0.4053 0.0184 251.4);
   --color-gray-800: oklch(0.3378 0.0148 252.3);
   --color-gray-900: oklch(0.2785 0.0132 253);
-  /* 角丸変数 */
+/* 角丸変数 */
   --radius-none: 0; /* 0px */
   --radius-xs: 0.125rem; /* 2px */
   --radius-sm: 0.25rem; /* 4px */
@@ -117,9 +117,9 @@
 
   /* タイポグラフィ変数 */
   /* フォントファミリー */
-  --font-family-pro: "BIZ UDPGothic", sans-serif;
-  --font-family-mono: "BIZ UDGothic", monospace;
-  --font-family-icon: "Material Symbols Rounded";
+  --font-family-pro: 'BIZ UDPGothic', sans-serif;
+  --font-family-mono: 'BIZ UDGothic', monospace;
+  --font-family-icon: 'Material Symbols Rounded';
 
   /* フォントサイズ */
   --font-size-12: 0.75rem; /* 12px */
@@ -158,26 +158,142 @@
   /* フォントウェイト */
   --font-weight-char-normal: 400;
   --font-weight-char-bold: 700;
-  --font-weight-icon-fill-0: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
-  --font-weight-icon-fill-1: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24;
+  --font-weight-icon-fill-0: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+  --font-weight-icon-fill-1: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
 
   /* シャドウ */
   /* Primitive */
   --shadow-none: 0px 0px 0px 0px var(--color-black);
   --shadow-2xs: 0px 1px 0px 0px var(--color-black-alpha-50);
   --shadow-xs: 0px 1px 2px 0px var(--color-black-alpha-50);
-  --shadow-sm:
-    0px 1px 3px 0px var(--color-black-alpha-100),
-    0px 1px 2px -1px var(--color-black-alpha-100);
-  --shadow-md:
-    0px 4px 6px -1px var(--color-black-alpha-100),
-    0px 2px 4px -2px var(--color-black-alpha-100);
-  --shadow-lg:
-    0px 10px 15px -3px var(--color-black-alpha-100),
-    0px 4px 6px -4px var(--color-black-alpha-100);
+  --shadow-sm: 0px 1px 3px 0px var(--color-black-alpha-100), 0px 1px 2px -1px var(--color-black-alpha-100);
+  --shadow-md: 0px 4px 6px -1px var(--color-black-alpha-100), 0px 2px 4px -2px var(--color-black-alpha-100);
+  --shadow-lg: 0px 10px 15px -3px var(--color-black-alpha-100), 0px 4px 6px -4px var(--color-black-alpha-100);
 }
 
-/* セマンティクスのトークン定義 */
+/* セマンティックトークン - CSS変数としてランタイムで利用可能にする */
+:root {
+  /* セマンティクスカラー定義 */
+  --color-neutral-50: var(--color-gray-50);
+  --color-neutral-100: var(--color-gray-100);
+  --color-neutral-200: var(--color-gray-200);
+  --color-neutral-300: var(--color-gray-300);
+  --color-neutral-400: var(--color-gray-400);
+  --color-neutral-500: var(--color-gray-500);
+  --color-neutral-600: var(--color-gray-600);
+  --color-neutral-700: var(--color-gray-700);
+  --color-neutral-800: var(--color-gray-800);
+  --color-neutral-900: var(--color-gray-900);
+
+  /* プライマリカラーは設定可能 */
+  --color-primary-50: var(--color-blue-50);
+  --color-primary-100: var(--color-blue-100);
+  --color-primary-200: var(--color-blue-200);
+  --color-primary-300: var(--color-blue-300);
+  --color-primary-400: var(--color-blue-400);
+  --color-primary-500: var(--color-blue-500);
+  --color-primary-600: var(--color-blue-600);
+  --color-primary-700: var(--color-blue-700);
+  --color-primary-800: var(--color-blue-800);
+  --color-primary-900: var(--color-blue-900);
+
+  --color-secondary-50: var(--color-gray-50);
+  --color-secondary-100: var(--color-gray-100);
+  --color-secondary-200: var(--color-gray-200);
+  --color-secondary-300: var(--color-gray-300);
+  --color-secondary-400: var(--color-gray-400);
+  --color-secondary-500: var(--color-gray-500);
+  --color-secondary-600: var(--color-gray-600);
+  --color-secondary-700: var(--color-gray-700);
+  --color-secondary-800: var(--color-gray-800);
+  --color-secondary-900: var(--color-gray-900);
+
+  --color-info-50: var(--color-blue-50);
+  --color-info-100: var(--color-blue-100);
+  --color-info-200: var(--color-blue-200);
+  --color-info-300: var(--color-blue-300);
+  --color-info-400: var(--color-blue-400);
+  --color-info-500: var(--color-blue-500);
+  --color-info-600: var(--color-blue-600);
+  --color-info-700: var(--color-blue-700);
+  --color-info-800: var(--color-blue-800);
+  --color-info-900: var(--color-blue-900);
+
+  --color-success-50: var(--color-green-50);
+  --color-success-100: var(--color-green-100);
+  --color-success-200: var(--color-green-200);
+  --color-success-300: var(--color-green-300);
+  --color-success-400: var(--color-green-400);
+  --color-success-500: var(--color-green-500);
+  --color-success-600: var(--color-green-600);
+  --color-success-700: var(--color-green-700);
+  --color-success-800: var(--color-green-800);
+  --color-success-900: var(--color-green-900);
+
+  --color-warning-50: var(--color-yellow-50);
+  --color-warning-100: var(--color-yellow-100);
+  --color-warning-200: var(--color-yellow-200);
+  --color-warning-300: var(--color-yellow-300);
+  --color-warning-400: var(--color-yellow-400);
+  --color-warning-500: var(--color-yellow-500);
+  --color-warning-600: var(--color-yellow-600);
+  --color-warning-700: var(--color-yellow-700);
+  --color-warning-800: var(--color-yellow-800);
+  --color-warning-900: var(--color-yellow-900);
+
+  --color-negative-50: var(--color-red-50);
+  --color-negative-100: var(--color-red-100);
+  --color-negative-200: var(--color-red-200);
+  --color-negative-300: var(--color-red-300);
+  --color-negative-400: var(--color-red-400);
+  --color-negative-500: var(--color-red-500);
+  --color-negative-600: var(--color-red-600);
+  --color-negative-700: var(--color-red-700);
+  --color-negative-800: var(--color-red-800);
+  --color-negative-900: var(--color-red-900);
+
+  /* コンポーネントカラー定義 */
+  --color-divider-low: var(--color-neutral-100);
+  --color-divider-middle: var(--color-neutral-200);
+  --color-divider-high: var(--color-neutral-300);
+  --color-text-disabled: var(--color-neutral-300);
+  --color-text-placeholder: var(--color-neutral-500);
+  --color-text-low: var(--color-neutral-500);
+  --color-text-middle: var(--color-neutral-700);
+  --color-text-high: var(--color-neutral-900);
+  --color-skeleton-fill: var(--color-neutral-200);
+
+  /* ベースカラー（base） - gray と同等 */
+  --color-base-50: var(--color-gray-50);
+  --color-base-100: var(--color-gray-100);
+  --color-base-200: var(--color-gray-200);
+  --color-base-300: var(--color-gray-300);
+  --color-base-400: var(--color-gray-400);
+  --color-base-500: var(--color-gray-500);
+  --color-base-600: var(--color-gray-600);
+  --color-base-700: var(--color-gray-700);
+  --color-base-800: var(--color-gray-800);
+  --color-base-900: var(--color-gray-900);
+
+  /* 角丸 - デフォルト値は設定可能 */
+  --radius-divide: var(--radius-none);
+  --radius-minimum: var(--radius-xs);
+  --radius-notice: var(--radius-sm);
+  --radius-action: var(--radius-md);
+  --radius-halfModal: var(--radius-lg);
+  --radius-modal: var(--radius-xl);
+  --radius-round: var(--radius-full);
+
+  /* シャドウ */
+  --shadow-base: var(--shadow-none);
+  --shadow-flat: var(--shadow-2xs);
+  --shadow-raise: var(--shadow-xs);
+  --shadow-stick: var(--shadow-sm);
+  --shadow-float: var(--shadow-md);
+  --shadow-popout: var(--shadow-lg);
+}
+
+/* セマンティクスのトークン定義（Tailwind ユーティリティ生成用） */
 @theme inline {
   /* セマンティクスカラー定義 */
   --color-neutral-50: var(--color-gray-50);
