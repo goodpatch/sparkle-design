@@ -80,7 +80,8 @@ Location: `src/app/globals.css`
 @import "tailwindcss";
 
 /* npm パッケージとして利用する場合は @source が必要（sparkle-design-cli が自動挿入） */
-/* @source "../node_modules/@goodpatch/sparkle-design/dist"; */
+/* パスは globals.css の配置に応じて調整（例: src/app/ なら ../../node_modules/...） */
+/* @source "../../node_modules/@goodpatch/sparkle-design/dist"; */
 
 /* Import Sparkle Design CSS SECOND */
 @import "./sparkle-design.css";
