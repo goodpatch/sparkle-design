@@ -79,6 +79,10 @@ Location: `src/app/globals.css`
 /* Import Tailwind directives FIRST */
 @import "tailwindcss";
 
+/* npm パッケージとして利用する場合は @source が必要（sparkle-design-cli が自動挿入） */
+/* パスは globals.css の配置に応じて調整（例: src/app/ なら ../../node_modules/...） */
+/* @source "../../node_modules/@goodpatch/sparkle-design/dist"; */
+
 /* Import Sparkle Design CSS SECOND */
 @import "./sparkle-design.css";
 
@@ -91,6 +95,8 @@ Location: `src/app/globals.css`
 ```
 
 **Important:** Import order matters! Tailwind must come before Sparkle Design CSS.
+
+> npm パッケージとして `@goodpatch/sparkle-design` を利用する場合、`sparkle.config.json` に `"source-packages": []` を追加すると、`sparkle-design-cli` が `@source` ディレクティブを自動挿入する。
 
 ### 3. Import in Root Layout
 
@@ -330,9 +336,11 @@ bunx sparkle-design-cli
 The CLI will:
 
 1. Read `sparkle.config.json`
-2. Generate CSS custom properties
+2. Generate CSS custom properties (プリミティブ + セマンティック `:root` トークン)
 3. Write to `sparkle-design.css`
 4. Apply theme settings
+5. `globals.css` にフォント import を移動
+6. `source-packages` 指定時は `@source` ディレクティブを挿入
 
 ### After Regeneration
 

@@ -90,6 +90,45 @@ export default App;
 
 両方のファイルをインポートすることで、Sparkle Design の全機能を利用できます。
 
+#### npm パッケージとして利用する場合
+
+`@goodpatch/sparkle-design` を npm パッケージとしてインストールして利用する場合、プロジェクトの `globals.css` に `@source` ディレクティブを追加して、TailwindCSS v4 がパッケージ内のユーティリティクラスを検出できるようにする必要があります。
+
+```css
+@import "tailwindcss";
+/* @goodpatch/sparkle-design のクラスをスキャン対象にする */
+/* パスは globals.css の配置に応じて調整（src/app/globals.css なら ../../node_modules/...） */
+@source "../../node_modules/@goodpatch/sparkle-design/dist";
+/* Sparkle Design のカスタム定義（Tailwindの後にインポート） */
+@import "./sparkle-design.css";
+```
+
+> **注意**: `@source` の相対パスは `globals.css` の配置場所に依存します。上記は `src/app/globals.css` の場合の例です。
+
+`sparkle-design-cli` v1.3.0 以降では、`sparkle.config.json` に `source-packages` を指定すると、CLI 実行時に `@source` ディレクティブが自動的に `globals.css` に挿入されます。**npm パッケージとして利用する場合は `source-packages` の指定が必須です。**
+
+```json
+{
+  "primary": "blue",
+  "font-pro": "BIZ UDPGothic",
+  "font-mono": "BIZ UDGothic",
+  "radius": "md",
+  "source-packages": []
+}
+```
+
+追加の npm パッケージ（拡張リポジトリなど）もスキャン対象にする場合は、配列にパッケージ名を追加します:
+
+```json
+{
+  "primary": "blue",
+  "font-pro": "BIZ UDPGothic",
+  "font-mono": "BIZ UDGothic",
+  "radius": "md",
+  "source-packages": ["@scope/my-extension-design"]
+}
+```
+
 #### Sparkle Design CSS の生成
 
 以下のコマンドで `sparkle.config.json` の設定に基づいて、デザインシステムに準拠した CSS を生成します。<br />

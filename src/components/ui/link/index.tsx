@@ -5,7 +5,7 @@
  */
 import React from "react";
 import { cn } from "@/lib/utils";
-import { Icon } from "@/components/ui/icon";
+import { Icon, type IconSize } from "@/components/ui/icon";
 
 export interface LinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -53,9 +53,12 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
     // character-X-*-* のXの部分（サイズ）を取得
     const characterSizeMatch = className?.match(/character-(\d+)-/);
 
-    const characterSize = characterSizeMatch
+    const parsed = characterSizeMatch
       ? parseInt(characterSizeMatch[1], 10)
-      : 3; // デフォルトは3
+      : 3;
+    const characterSize = (
+      parsed >= 1 && parsed <= 12 ? parsed : 3
+    ) as IconSize;
 
     // character クラスの生成
     const characterSizeClass = hasCharacterClass

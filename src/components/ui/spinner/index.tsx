@@ -5,14 +5,15 @@
  */
 import React from "react";
 import { cn } from "@/lib/utils";
-import { Icon } from "@/components/ui/icon";
+import { Icon, type IconSize } from "@/components/ui/icon";
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**
-   * スピナーのサイズ
-   * en: Size of the spinner
+   * スピナーのサイズ（スケール値 1-12）
+   * en: Size of the spinner (scale value 1-12)
+   * @see IconSize
    */
-  size?: number;
+  size?: IconSize;
 }
 
 /**

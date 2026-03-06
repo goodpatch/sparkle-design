@@ -6,6 +6,27 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
+/**
+ * アイコンサイズのスケール値（1-12）
+ * en: Icon size scale values (1-12)
+ *
+ * | scale | px  |
+ * |-------|-----|
+ * | 1     | 12  |
+ * | 2     | 14  |
+ * | 3     | 16  |
+ * | 4     | 18  |
+ * | 5     | 20  |
+ * | 6     | 24  |
+ * | 7     | 28  |
+ * | 8     | 32  |
+ * | 9     | 36  |
+ * | 10    | 42  |
+ * | 11    | 48  |
+ * | 12    | 54  |
+ */
+export type IconSize = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+
 export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**
    * 表示するアイコン名
@@ -13,10 +34,11 @@ export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
    */
   icon: string;
   /**
-   * アイコンサイズ
-   * en: Size of the icon
+   * アイコンサイズ（スケール値 1-12）
+   * en: Size of the icon (scale value 1-12)
+   * @see IconSize
    */
-  size?: number;
+  size?: IconSize;
   /**
    * 塗りつぶしアイコンかどうか
    * en: Whether the icon is filled
