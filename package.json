@@ -1,6 +1,6 @@
 {
   "name": "@goodpatch/sparkle-design",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
     "access": "restricted"
@@ -39,7 +39,7 @@
     "build:registry:vercel": "bash scripts/build-registry-vercel.sh",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npx lightningcss --version || true",
-    "build:package": "rm -rf dist && tsc -p tsconfig.build.json",
+    "build:package": "rm -rf dist && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "format": "prettier --config ./.prettierrc -w \"**/*.{js,ts,tsx,css,md,json}\"",
     "format:check": "prettier --config ./.prettierrc --check \"**/*.{js,ts,tsx,css,md,json}\"",
     "lint:fix": "next lint --fix",
@@ -94,6 +94,7 @@
     "playwright": "^1.51.1",
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
+    "tsc-alias": "^1.8.16",
     "typescript": "^5",
     "vitest": "^3.0.9"
   },
