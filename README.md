@@ -109,6 +109,8 @@ export default App;
 ```json
 {
   "primary": "blue",
+  "font-pro": "BIZ UDPGothic",
+  "font-mono": "BIZ UDGothic",
   "radius": "md",
   "source-packages": ["@scope/my-extension-design"]
 }
