@@ -16,8 +16,9 @@
 
 ### 変更
 
-- `sparkle-design-cli` v1.3.x で CSS を再生成（セマンティック `:root` ブロック追加）
+- `sparkle-design-cli` v1.3.x で CSS を再生成（セマンティック `:root` ブロック追加、`subpixel-antialiased` 適用）
 - Button / Icon Button コンポーネントに `"use client"` ディレクティブを追加（Turbopack 互換性向上）
+- フォントレンダリングを `subpixel-antialiased` に変更（Tailwind v4 デフォルトの `antialiased` を上書き）
 
 ## [0.0.1] - 2025-12-12
 

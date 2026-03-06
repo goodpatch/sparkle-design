@@ -415,6 +415,14 @@
   --shadow-popout: var(--shadow-lg);
 }
 
+/* サブピクセルアンチエイリアス（Tailwind v4 デフォルトの antialiased を上書き） */
+@layer base {
+  *, ::before, ::after, ::backdrop {
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+  }
+}
+
 /* Figmaのテキストスタイル定義 */
 /* NOTE: v4の記法ではないがv3環境で使われても反映できるようにこちらの記法で記述 */
 @layer utilities {
