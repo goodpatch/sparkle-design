@@ -186,12 +186,15 @@ After installation, verify:
 
 ```json
 {
-  "primary": "blue",      // ← Color change
-  "font-mono": "Geist Mono",  // ← Font change
-  "font-pro": "Geist",        // ← Font change
-  "radius": "md"              // ← Radius change
+  "primary": "blue",
+  "font-mono": "Geist Mono",
+  "font-pro": "Geist",
+  "radius": "md",
+  "source-packages": []
 }
 ```
+
+> `source-packages` は npm パッケージとして利用する場合に必須。`@goodpatch/sparkle-design` の `@source` ディレクティブが `globals.css` に自動挿入される。
 
 **Regenerate CSS:**
 
