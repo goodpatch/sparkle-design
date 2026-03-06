@@ -153,6 +153,20 @@ function DialogDescription({
   );
 }
 
+/**
+ * **アンチパターン / Anti-patterns**
+ *
+ * - `DialogCancel` の children に `<Button>` を渡さないでください。内部で Button を描画します。
+ * - en: Do not pass `<Button>` as children — DialogCancel renders a Button internally.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <DialogCancel>キャンセル</DialogCancel>
+ *
+ * // ❌ Wrong - 二重ラップ
+ * <DialogCancel><Button>キャンセル</Button></DialogCancel>
+ * ```
+ */
 function DialogCancel({
   className,
   children,
@@ -167,6 +181,20 @@ function DialogCancel({
   );
 }
 
+/**
+ * **アンチパターン / Anti-patterns**
+ *
+ * - `DialogAction` の children に `<Button>` を渡さないでください。内部で Button を描画します。
+ * - en: Do not pass `<Button>` as children — DialogAction renders a Button internally.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <DialogAction>確定</DialogAction>
+ *
+ * // ❌ Wrong - 二重ラップ
+ * <DialogAction><Button>確定</Button></DialogAction>
+ * ```
+ */
 function DialogAction({
   className,
   children,

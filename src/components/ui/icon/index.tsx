@@ -52,6 +52,19 @@ export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
  * - アイコンはテキスト情報を視覚表現でユーザーに提示するために使用するコンポーネントです。
  * - en: The Icon component is used to present textual information to users through visual representation.
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - `size` にピクセル値（24, 32 など）を渡さないでください。スケール値（1-12）を使用してください。
+ * - en: Do not pass pixel values to `size`. Use scale values (1-12) instead.
+ *
+ * ```tsx
+ * // ✅ Correct - スケール値
+ * <Icon icon="settings" size={6} />   // 24px 相当
+ *
+ * // ❌ Wrong - ピクセル値
+ * <Icon icon="settings" size={24} />
+ * ```
+ *
  * **使用例 / Usage Example**
  *
  * ```tsx

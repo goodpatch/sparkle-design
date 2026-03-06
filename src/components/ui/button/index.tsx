@@ -358,6 +358,26 @@ export interface ButtonProps
  * <Button variant="solid" size="md" theme="primary" prefixIcon="check">確定</Button>
  * ```
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - `<Icon>` を children として渡さないでください。`prefixIcon` / `suffixIcon` props を使用してください。
+ *   en: Do not pass `<Icon>` as children. Use `prefixIcon` / `suffixIcon` props instead.
+ * - アイコンのみのボタンには `IconButton` を使用してください。
+ *   en: Use `IconButton` for icon-only buttons.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <Button prefixIcon="check">確定</Button>
+ *
+ * // ❌ Wrong - Icon を children に入れない
+ * <Button><Icon icon="check" /> 確定</Button>
+ *
+ * // ❌ Wrong - アイコンのみは IconButton を使う
+ * <Button><Icon icon="edit" /></Button>
+ * // ✅ Correct
+ * <IconButton icon="edit" aria-label="編集" />
+ * ```
+ *
  * **アクセシビリティ / Accessibility**
  *
  * - ボタンにはアクセシブルネームが必要です（通常は `children` のテキスト）。
