@@ -3,6 +3,8 @@
  * License: https://github.com/goodpatch/sparkle-design/blob/main/LICENSE
  * If you modify this file, add a "Modifications" note here.
  */
+"use client";
+
 import * as React from "react";
 import { Slot as SlotPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";

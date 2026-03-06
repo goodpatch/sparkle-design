@@ -15,7 +15,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -30,7 +30,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -45,7 +45,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -60,7 +60,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -75,7 +75,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -90,7 +90,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -105,7 +105,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -120,7 +120,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -135,7 +135,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -150,7 +150,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -165,7 +165,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -180,7 +180,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -195,7 +195,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -210,7 +210,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -225,7 +225,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -240,7 +240,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -255,7 +255,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -270,7 +270,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -285,7 +285,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -300,7 +300,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -315,7 +315,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -330,7 +330,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -345,7 +345,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -360,7 +360,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -375,7 +375,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -390,7 +390,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -405,7 +405,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -420,7 +420,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -435,7 +435,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -450,7 +450,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -465,7 +465,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -480,7 +480,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -495,7 +495,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -510,7 +510,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -525,7 +525,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -540,7 +540,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -555,7 +555,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -570,7 +570,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -585,7 +585,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -600,7 +600,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -615,7 +615,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -630,7 +630,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -645,7 +645,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -660,7 +660,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -675,7 +675,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -690,7 +690,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -705,7 +705,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -720,7 +720,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -735,7 +735,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -750,7 +750,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -765,7 +765,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -780,7 +780,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -795,7 +795,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -810,7 +810,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -825,7 +825,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -840,7 +840,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -855,7 +855,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -870,7 +870,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -885,7 +885,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -900,7 +900,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -915,7 +915,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -930,7 +930,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -945,7 +945,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -960,7 +960,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -975,7 +975,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -990,7 +990,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1005,7 +1005,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1020,7 +1020,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1035,7 +1035,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1050,7 +1050,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1065,7 +1065,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1080,7 +1080,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1095,7 +1095,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1110,7 +1110,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1125,7 +1125,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1140,7 +1140,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1155,7 +1155,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1170,7 +1170,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1185,7 +1185,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1200,7 +1200,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1215,7 +1215,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1230,7 +1230,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1245,7 +1245,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1260,7 +1260,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1275,7 +1275,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1290,7 +1290,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1305,7 +1305,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1320,7 +1320,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1335,7 +1335,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1350,7 +1350,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1365,7 +1365,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1380,7 +1380,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1395,7 +1395,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1410,7 +1410,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1425,7 +1425,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1440,7 +1440,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1455,7 +1455,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1470,7 +1470,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1485,7 +1485,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1500,7 +1500,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1515,7 +1515,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1530,7 +1530,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1545,7 +1545,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1560,7 +1560,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1575,7 +1575,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1590,7 +1590,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1605,7 +1605,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1620,7 +1620,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1635,7 +1635,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1650,7 +1650,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1665,7 +1665,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1680,7 +1680,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1695,7 +1695,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1710,7 +1710,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1725,7 +1725,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1740,7 +1740,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1755,7 +1755,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1770,7 +1770,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1785,7 +1785,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1800,7 +1800,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1815,7 +1815,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1830,7 +1830,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1845,7 +1845,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1860,7 +1860,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1875,7 +1875,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1890,7 +1890,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1905,7 +1905,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1920,7 +1920,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1935,7 +1935,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1950,7 +1950,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1965,7 +1965,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1980,7 +1980,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -1995,7 +1995,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2010,7 +2010,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2025,7 +2025,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2040,7 +2040,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2055,7 +2055,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2070,7 +2070,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2085,7 +2085,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2100,7 +2100,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2115,7 +2115,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2130,7 +2130,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2145,7 +2145,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2160,7 +2160,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2175,7 +2175,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2190,7 +2190,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2205,7 +2205,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2220,7 +2220,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2235,7 +2235,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2250,7 +2250,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2265,7 +2265,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2280,7 +2280,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2295,7 +2295,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2310,7 +2310,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2325,7 +2325,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2340,7 +2340,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2355,7 +2355,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2370,7 +2370,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2385,7 +2385,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2400,7 +2400,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2415,7 +2415,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2430,7 +2430,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2445,7 +2445,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2460,7 +2460,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2475,7 +2475,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2490,7 +2490,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2505,7 +2505,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2520,7 +2520,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2535,7 +2535,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2550,7 +2550,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2565,7 +2565,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2580,7 +2580,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2595,7 +2595,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2610,7 +2610,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2625,7 +2625,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2640,7 +2640,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2655,7 +2655,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2670,7 +2670,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2685,7 +2685,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2700,7 +2700,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2715,7 +2715,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2730,7 +2730,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2745,7 +2745,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2760,7 +2760,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2775,7 +2775,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2790,7 +2790,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2805,7 +2805,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2820,7 +2820,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2835,7 +2835,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2850,7 +2850,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2865,7 +2865,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2880,7 +2880,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2895,7 +2895,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2910,7 +2910,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2925,7 +2925,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2940,7 +2940,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2955,7 +2955,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2970,7 +2970,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -2985,7 +2985,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3000,7 +3000,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3015,7 +3015,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3030,7 +3030,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3045,7 +3045,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3060,7 +3060,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3075,7 +3075,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3090,7 +3090,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3105,7 +3105,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3120,7 +3120,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3135,7 +3135,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3150,7 +3150,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3165,7 +3165,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3180,7 +3180,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3195,7 +3195,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3210,7 +3210,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3225,7 +3225,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3240,7 +3240,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3255,7 +3255,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3270,7 +3270,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3285,7 +3285,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3300,7 +3300,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3315,7 +3315,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3330,7 +3330,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3345,7 +3345,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3360,7 +3360,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3375,7 +3375,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3390,7 +3390,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3405,7 +3405,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3420,7 +3420,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3435,7 +3435,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3450,7 +3450,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (
@@ -3465,7 +3465,7 @@ figma.connect(
   {
     props: {
       icon: figma.textContent("icon"),
-      size: 6,
+      size: 6 as const,
       fill: true,
     },
     example: props => (

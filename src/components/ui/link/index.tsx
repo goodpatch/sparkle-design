@@ -53,9 +53,11 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
     // character-X-*-* のXの部分（サイズ）を取得
     const characterSizeMatch = className?.match(/character-(\d+)-/);
 
-    const characterSize = characterSizeMatch
-      ? parseInt(characterSizeMatch[1], 10)
-      : 3; // デフォルトは3
+    const characterSize = (
+      characterSizeMatch
+        ? parseInt(characterSizeMatch[1], 10)
+        : 3
+    ) as import("@/components/ui/icon").IconSize;
 
     // character クラスの生成
     const characterSizeClass = hasCharacterClass

@@ -12,10 +12,12 @@
 - セマンティックトークンを `:root` に出力（CSS変数として `var()` で直接参照可能に）
 - README に npm パッケージ利用時の `@source` ディレクティブ設定方法を追記
 - `source-packages` オプションのドキュメントをスキルファイルに追加
+- Icon/Spinner の `size` prop に `IconSize` 型（1-12 の union 型）を導入し、無効なピクセル値の指定を型レベルで防止
 
 ### 変更
 
 - `sparkle-design-cli` v1.3.x で CSS を再生成（セマンティック `:root` ブロック追加）
+- Button / Icon Button コンポーネントに `"use client"` ディレクティブを追加（Turbopack 互換性向上）
 
 ## [0.0.1] - 2025-12-12
 
