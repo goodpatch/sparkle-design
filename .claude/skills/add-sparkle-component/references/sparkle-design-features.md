@@ -244,6 +244,36 @@ Sparkle Design uses Material Symbols for icons.
 
 **Full icon library:** https://fonts.google.com/icons
 
+### Icon Size Scale
+
+Icon / Spinner の `size` prop はスケール値（1-12）を受け取る。ピクセル値は渡さないこと。
+
+| scale | px  | 用途例 |
+|-------|-----|--------|
+| 1     | 12  | 極小 |
+| 2     | 14  | |
+| 3     | 16  | インラインアイコン |
+| 4     | 18  | ボタン sm |
+| 5     | 20  | ボタン md（デフォルト） |
+| 6     | 24  | ボタン lg |
+| 7     | 28  | サイドバーロゴ |
+| 8     | 32  | |
+| 9     | 36  | |
+| 10    | 42  | |
+| 11    | 48  | 大型アイコン |
+| 12    | 54  | |
+
+```tsx
+// Wrong - ピクセル値
+<Icon icon="settings" size={24} />
+
+// Correct - スケール値
+<Icon icon="settings" size={6} />
+
+// Button の prefixIcon/suffixIcon はサイズ自動設定（sm→4, md→5, lg→6）
+<Button prefixIcon="check">確定</Button>
+```
+
 ### Icon Customization
 
 Icons can be styled through component props or CSS:
@@ -400,6 +430,96 @@ Specify any installed font family:
   "font-pro": "Inter",
   "font-mono": "Fira Code"
 }
+```
+
+---
+
+## Anti-patterns（やってはいけないパターン）
+
+以下は頻繁に発生する誤用パターンです。コンポーネントが提供する専用 props・サブコンポーネントを使ってください。
+
+### Button: prefixIcon / suffixIcon を使う
+
+```tsx
+// ✅ Correct
+<Button prefixIcon="check">確定</Button>
+<Button suffixIcon="arrow_forward">次へ</Button>
+
+// ❌ Wrong - Icon を children に入れない（レイアウト崩れ・ローディング時に非表示にならない）
+<Button><Icon icon="check" /> 確定</Button>
+
+// ❌ Wrong - アイコンのみのボタンは IconButton を使う
+<Button><Icon icon="edit" /></Button>
+// ✅ Correct
+<IconButton icon="edit" aria-label="編集" />
+```
+
+> Button は size に応じてアイコンサイズを自動設定する（sm→4, md→5, lg→6）。isLoading 時にアイコンを自動で非表示にする。
+
+### CardHeader: CardControl を使う
+
+```tsx
+// ✅ Correct
+<CardHeader>
+  <CardTitle>タイトル</CardTitle>
+  <CardControl>
+    <Button>アクション</Button>
+  </CardControl>
+</CardHeader>
+
+// ❌ Wrong - 手動 flex を使わない（CardHeader は内部で flex justify-between を適用済み）
+<CardHeader>
+  <div className="flex justify-between">
+    <CardTitle>タイトル</CardTitle>
+    <Button>アクション</Button>
+  </div>
+</CardHeader>
+```
+
+### Icon / Spinner: スケール値（1-12）を使う
+
+```tsx
+// ✅ Correct - スケール値
+<Icon icon="settings" size={6} />   // 24px 相当
+
+// ❌ Wrong - ピクセル値は受け付けない
+<Icon icon="settings" size={24} />
+```
+
+> スケール対応表は上記「Icon Size Scale」セクション参照。
+
+### DialogCancel / DialogAction: Button で二重ラップしない
+
+```tsx
+// ✅ Correct - 文字列を渡すだけ（内部で Button を描画）
+<DialogCancel>キャンセル</DialogCancel>
+<DialogAction>確定</DialogAction>
+
+// ❌ Wrong - 二重ラップ
+<DialogCancel><Button>キャンセル</Button></DialogCancel>
+```
+
+### Input: 組み込みトリガーを使う
+
+```tsx
+// ✅ Correct
+<Input isTrigger triggerIcon="search" triggerAriaLabel="検索" onIconButtonClick={handleSearch} />
+
+// ❌ Wrong - 手動で IconButton を配置しない
+<div className="flex">
+  <Input />
+  <IconButton icon="search" aria-label="検索" />
+</div>
+```
+
+### Link: isOpenInNew を使う
+
+```tsx
+// ✅ Correct - 自動で open_in_new アイコンが表示される
+<Link href="https://example.com" isOpenInNew>外部リンク</Link>
+
+// ❌ Wrong - 手動でアイコンを追加しない
+<Link href="https://example.com">外部リンク <Icon icon="open_in_new" /></Link>
 ```
 
 ---

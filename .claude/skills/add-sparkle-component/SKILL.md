@@ -321,16 +321,30 @@ Consult the project's documentation for:
 5. **Run type checking** - Execute `<pm> lint` after installation
 6. **Test in Storybook** - Verify component works: `<pm> storybook`
 
+### Anti-pattern ガイドの浸透
+
+初回セットアップ時に、利用プロジェクトの `CODING-RULES.md` や `CLAUDE.md` に以下のアンチパターン要約を追記する:
+
+```markdown
+## Sparkle Design アンチパターン
+- Button にアイコンを渡すときは `prefixIcon`/`suffixIcon` props を使う（`<Icon>` を children に入れない）。アイコンのみは `IconButton`
+- CardHeader 内のアクションは `<CardControl>` で囲む（手動 flex 不要）
+- Icon/Spinner の `size` はスケール値 1-12（px 値は不可）
+- DialogCancel/DialogAction は内部で Button を描画する（`<Button>` で二重ラップしない）
+- Input のアイコンボタンは `isTrigger`/`triggerIcon` props を使う（手動で IconButton を配置しない）
+- Link の外部リンクアイコンは `isOpenInNew` prop を使う（手動で Icon を追加しない）
+```
+
 ### Progressive Disclosure
 
 Load references as needed:
 
 - **Always available**: This SKILL.md (core workflow)
 - **Load on error**: `references/troubleshooting.md`
-- **Load for details**: `references/sparkle-design-features.md`
+- **Load for details**: `references/sparkle-design-features.md` (includes Anti-patterns section)
 - **Load for CSS setup**: `references/css-structure.md`
 
 ---
 
-**Version**: 2.1.0
-**Last Updated**: 2026-02-12
+**Version**: 2.2.0
+**Last Updated**: 2026-03-06
