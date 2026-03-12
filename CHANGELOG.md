@@ -5,6 +5,21 @@
 
 ## [Unreleased]
 
+## [0.0.5] - 2026-03-12
+
+### 追加
+
+- README のサムネイル画像を絶対 URL に変更し、npm package 上でも参照切れしないよう調整
+
+### 変更
+
+- `sparkle-design-cli@1.3.6` を使うよう `build:css` / registry ビルドを更新
+
+### 修正
+
+- `sparkle-design-cli@1.3.6` で CSS を再生成し、Material Symbols import に `display=block` を反映
+- npm パッケージが CSS 同梱を前提としないよう、package metadata を CLI 利用前提の形へ整理
+
 ## [0.0.2] - 2026-03-06
 
 ### 追加

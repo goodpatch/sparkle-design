@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://sparkle-design.goodpatch.com/">
-    <img src="./docs/images/thumbnail.png" alt="Sparkle Design" width="1200">
+    <img src="https://raw.githubusercontent.com/goodpatch/sparkle-design/main/docs/images/thumbnail.png" alt="Sparkle Design" width="1200">
   </a>
 </p>
 
@@ -26,12 +26,14 @@ It implements Goodpatch's "Sparkle Design" system on top of shadcn/ui.
 **Note**: npm publishing is in preparation. The steps below describe how to use it after release.
 
 ```bash
-npm install sparkle-design
+npm install @goodpatch/sparkle-design
 # or
-pnpm add sparkle-design
+pnpm add @goodpatch/sparkle-design
 # or
-yarn add sparkle-design
+yarn add @goodpatch/sparkle-design
 ```
+
+> This package does not bundle CSS. Run `sparkle-design-cli` in the consuming app and use the generated `sparkle-design.css` / `globals.css` files there.
 
 ### Install individual components
 
@@ -60,11 +62,7 @@ pnpm dlx shadcn@latest add @sparkle-design/button
 
 ```tsx
 import React from "react";
-import { Button, Badge, Card } from "sparkle-design";
-
-// Import required styles
-import "sparkle-design/globals.css";
-import "sparkle-design/sparkle-design.css";
+import { Button, Badge, Card } from "@goodpatch/sparkle-design";
 
 function App() {
   return (
