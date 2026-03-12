@@ -145,23 +145,32 @@ export interface InputProps
  *
  * ```tsx
  * // ✅ Correct
- * <Input isTrigger triggerIcon="search" triggerAriaLabel="検索" onIconButtonClick={handleSearch} />
- * <div className="flex gap-2">
- *   <Input placeholder="検索..." />
- *   <Button size="md">検索</Button>
- * </div>
+ * <>
+ *   <Input
+ *     isTrigger
+ *     triggerIcon="search"
+ *     triggerAriaLabel="検索"
+ *     onIconButtonClick={() => {}}
+ *   />
+ *   <div className="flex gap-2">
+ *     <Input placeholder="検索..." />
+ *     <Button size="md">検索</Button>
+ *   </div>
+ * </>
  *
  * // ❌ Wrong - 手動配置
- * <div className="flex">
- *   <Input />
- *   <IconButton icon="search" />
- * </div>
+ * <>
+ *   <div className="flex">
+ *     <Input />
+ *     <IconButton icon="search" />
+ *   </div>
  *
  * // ❌ Wrong - 高さが揃わないサイズ不一致
- * <div className="flex gap-2">
- *   <Input placeholder="検索..." />
- *   <Button size="sm">検索</Button>
- * </div>
+ *   <div className="flex gap-2">
+ *     <Input placeholder="検索..." />
+ *     <Button size="sm">検索</Button>
+ *   </div>
+ * </>
  * ```
  *
  * **使用例 / Usage Example**

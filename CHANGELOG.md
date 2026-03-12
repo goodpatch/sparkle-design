@@ -15,7 +15,7 @@
 
 - `sparkle-design-cli@1.3.7` を使うよう `build:css` / registry ビルドを更新
 - Tabs の Storybook に `scrollable` オプションを追加
-- Badge / Tag の Storybook に使い分けガイドを追記
+- Badge / Tag などの Docs コメントと skill に anti-pattern ガイドを追加
 
 ### 修正
 

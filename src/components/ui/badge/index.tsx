@@ -111,8 +111,10 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
  *
  * ```tsx
  * // ✅ Correct
- * <Badge>3</Badge>
- * <Tag status="warning" variant="outline">未紐付け</Tag>
+ * <>
+ *   <Badge>3</Badge>
+ *   <Tag status="warning" variant="outline">未紐付け</Tag>
+ * </>
  *
  * // ❌ Wrong - ステータスラベルに Badge を使わない
  * <Badge>未紐付け</Badge>

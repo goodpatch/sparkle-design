@@ -166,8 +166,23 @@ const CardTitle = React.forwardRef<
 CardTitle.displayName = "CardTitle";
 
 /**
- * CardTitle 内の補足情報や件数表示に使用します。
- * en: Use this for supporting text or counts inside CardTitle.
+ * **概要 / Overview**
+ *
+ * - カードタイトル内の補足情報や件数表示に使用するコンポーネントです。
+ * - en: The CardDescription component is used for supporting text or counts inside CardTitle.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <CardTitle>
+ *   タイトル
+ *   <CardDescription className="character-3-regular-pro text-text-low">
+ *     全 12 件
+ *   </CardDescription>
+ * </CardTitle>
+ * ```
+ *
+ * @param {React.HTMLAttributes<HTMLDivElement>} props
  */
 const CardDescription = React.forwardRef<
   HTMLDivElement,

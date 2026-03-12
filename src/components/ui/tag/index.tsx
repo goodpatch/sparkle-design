@@ -158,8 +158,10 @@ export interface TagProps
  *
  * ```tsx
  * // ✅ Correct
- * <Tag status="success">完了</Tag>
- * <Badge>3</Badge>
+ * <>
+ *   <Tag status="success">完了</Tag>
+ *   <Badge>3</Badge>
+ * </>
  *
  * // ❌ Wrong - 件数表示に Tag を使わない
  * <Tag status="info">3件</Tag>
