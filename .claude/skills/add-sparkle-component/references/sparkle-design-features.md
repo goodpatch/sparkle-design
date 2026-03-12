@@ -446,7 +446,9 @@ Specify any installed font family:
 <CardHeader>
   <CardTitle>
     プロジェクト一覧
-    <CardDescription>全 12 件</CardDescription>
+    <CardDescription className="character-3-regular-pro text-text-low">
+      全 12 件
+    </CardDescription>
   </CardTitle>
 </CardHeader>
 
@@ -459,7 +461,7 @@ Specify any installed font family:
 </CardHeader>
 ```
 
-CardTitle 内の補足情報や件数は CardDescription を使う。
+CardTitle 内の補足情報や件数は CardDescription を使い、必要な typography / color token は `className` で明示する。
 
 ### Input / Select と横並びの Button はサイズを揃える
 
