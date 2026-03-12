@@ -178,13 +178,14 @@
     0px 4px 6px -4px var(--color-black-alpha-100);
 }
 
-/* セマンティックトークン - CSS変数としてランタイムで利用可能にする */
+/* ベーススタイル */
 @layer base {
   body {
     font-family: var(--font-family-pro);
   }
 }
 
+/* セマンティックトークン - CSS変数としてランタイムで利用可能にする */
 :root {
   /* セマンティクスカラー定義 */
   --color-neutral-50: var(--color-gray-50);
