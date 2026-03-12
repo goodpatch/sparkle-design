@@ -9,7 +9,7 @@ echo "🤖 Starting Vercel registry build..."
 
 # Step 1: cssを生成
 echo "🎨 Generate sparkle-design.css..."
-npx sparkle-design-cli@1.3.8
+npx --yes sparkle-design-cli@1.3.8
 
 # Step 2: registryのjsonに変換
 echo "🎨 Generate sparkle-design-theme.json..."
