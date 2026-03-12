@@ -494,6 +494,25 @@ Input / Select / Textarea のデフォルトサイズは `md`。横並びの But
 <Badge>未紐付け</Badge>
 ```
 
+### shadcn/ui 由来の class / token をそのまま使わない
+
+```tsx
+// ✅ Correct — Sparkle Design の typography / color token を使う
+<CardDescription className="character-3-regular-pro text-text-low">
+  全 12 件
+</CardDescription>
+
+// ❌ Wrong — shadcn/ui の既定 token や素の font utility を持ち込まない
+<CardDescription className="text-sm text-muted-foreground">
+  全 12 件
+</CardDescription>
+<CardDescription className="font-medium text-slate-500">
+  全 12 件
+</CardDescription>
+```
+
+shadcn/ui と混在するプロジェクトでも、Sparkle Design のコンポーネント内では `character-*` / `text-text-*` / Sparkle の color token を優先する。
+
 ### Button: prefixIcon / suffixIcon を使う
 
 ```tsx

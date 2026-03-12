@@ -169,6 +169,8 @@ After installation, verify:
 - [ ] CSS imports configured correctly (first time only)
 - [ ] Old duplicate files removed (if any)
 - [ ] Storybook story created/updated at the component location
+- [ ] shadcn/ui 既定の `text-muted-foreground` / `bg-background` / `font-medium` などを残していない
+- [ ] Typography / color は `character-*` / `text-text-*` など Sparkle Design token に置き換えた
 - [ ] No type errors: `<pm> lint`
 - [ ] Component displays correctly: `<pm> storybook`
 
@@ -221,6 +223,10 @@ pnpm dlx sparkle-design-cli
 **Styles not applying:**
 - Check CSS import order: Tailwind before Sparkle Design CSS
 - Verify `globals.css` imports `sparkle-design.css`
+
+**Looks slightly off when mixed with shadcn/ui:**
+- Replace shadcn/ui default classes like `text-muted-foreground`, `bg-background`, `border-border`, `font-medium` with Sparkle Design tokens
+- Prefer Sparkle typography classes (`character-*`) over ad-hoc `text-sm` / `leading-*` combinations inside Sparkle components
 - Run `pnpm dlx sparkle-design-cli` if config was changed
 
 **Component not found:**
