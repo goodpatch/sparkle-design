@@ -152,7 +152,7 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("character-4-bold-pro flex gap-2", className)}
+    className={cn("character-4-bold-pro flex items-center gap-2", className)}
     {...props}
   />
 ));

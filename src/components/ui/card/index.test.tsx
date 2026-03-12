@@ -351,6 +351,7 @@ describe("Card Components", () => {
       // Then: 適切なタイポグラフィスタイルが適用される
       expect(title.className).toContain("character-4-bold-pro");
       expect(title.className).toContain("flex");
+      expect(title.className).toContain("items-center");
       expect(title.className).toContain("gap-2");
       expect(title.textContent).toBe("Card Title");
     });
