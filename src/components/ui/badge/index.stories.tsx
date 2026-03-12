@@ -6,12 +6,6 @@ const meta: Meta<typeof Badge> = {
   component: Badge,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "Badge は通知数や件数など、特定の要素に数値情報を付与するときに使います。ステータス表示やラベル用途には Tag を使ってください。",
-      },
-    },
   },
   tags: ["autodocs"],
   argTypes: {

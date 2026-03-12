@@ -110,6 +110,33 @@ const selectViewportVariants = cva("p-1", {
  * - セレクトはオプショングループの中から値を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。
  * - en: The Select component is used to capture user input by selecting a value from a group of options.
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - `SelectTrigger` と横並びの Button は原則同じサイズにしてください。デフォルトの `SelectTrigger` に対しては `Button size="md"` を使ってください。
+ * - en: Keep Button size aligned when placing it next to `SelectTrigger`. Use `Button size="md"` with the default `SelectTrigger` size.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <div className="flex gap-2">
+ *   <Select>
+ *     <SelectTrigger size="md" className="w-60">
+ *       <SelectValue placeholder="選択してください" />
+ *     </SelectTrigger>
+ *   </Select>
+ *   <Button size="md">追加</Button>
+ * </div>
+ *
+ * // ❌ Wrong - 高さが揃わないサイズ不一致
+ * <div className="flex gap-2">
+ *   <Select>
+ *     <SelectTrigger size="md" className="w-60">
+ *       <SelectValue placeholder="選択してください" />
+ *     </SelectTrigger>
+ *   </Select>
+ *   <Button size="sm">追加</Button>
+ * </div>
+ * ```
+ *
  * **使用例 / Usage Example**
  *
  * ```tsx

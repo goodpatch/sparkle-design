@@ -140,15 +140,27 @@ export interface InputProps
  *
  * - Input の横にアイコンボタンを手動で配置しないでください。`isTrigger` / `triggerIcon` props を使用してください。
  * - en: Do not manually place an IconButton next to Input. Use `isTrigger` / `triggerIcon` props instead.
+ * - Input と横並びの Button は原則同じサイズにしてください。デフォルトの Input に対しては `Button size="md"` を使ってください。
+ * - en: Keep Button size aligned when placing it next to Input. Use `Button size="md"` with the default Input size.
  *
  * ```tsx
  * // ✅ Correct
  * <Input isTrigger triggerIcon="search" triggerAriaLabel="検索" onIconButtonClick={handleSearch} />
+ * <div className="flex gap-2">
+ *   <Input placeholder="検索..." />
+ *   <Button size="md">検索</Button>
+ * </div>
  *
  * // ❌ Wrong - 手動配置
  * <div className="flex">
  *   <Input />
  *   <IconButton icon="search" />
+ * </div>
+ *
+ * // ❌ Wrong - 高さが揃わないサイズ不一致
+ * <div className="flex gap-2">
+ *   <Input placeholder="検索..." />
+ *   <Button size="sm">検索</Button>
  * </div>
  * ```
  *
