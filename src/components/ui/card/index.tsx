@@ -68,7 +68,12 @@ ClickableCard.displayName = "ClickableCard";
  * ```tsx
  * <Card>
  *   <CardHeader>
- *     <CardTitle>タイトル</CardTitle>
+ *     <CardTitle>
+ *       タイトル
+ *       <CardDescription className="character-3-regular-pro text-text-low">
+ *         全 12 件
+ *       </CardDescription>
+ *     </CardTitle>
  *   </CardHeader>
  *   <CardContent>
  *     コンテンツの内容
@@ -107,7 +112,9 @@ Card.displayName = "Card";
  * <CardHeader>
  *   <CardTitle>
  *     タイトル
- *     <CardDescription>全 12 件</CardDescription>
+ *     <CardDescription className="character-3-regular-pro text-text-low">
+ *       全 12 件
+ *     </CardDescription>
  *   </CardTitle>
  *   <CardControl>
  *     <Button>アクション</Button>

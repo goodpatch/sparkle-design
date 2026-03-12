@@ -61,7 +61,7 @@ export const Default: Story = {
       <CardHeader>
         <CardTitle>
           {args.title}
-          <CardDescription>
+          <CardDescription className="character-3-regular-pro text-text-low">
             <div className="border border-dashed border-purple-300 text-purple-300">
               SLOT
             </div>
@@ -102,7 +102,7 @@ export const Clickable: ClickableStory = {
       <CardHeader>
         <CardTitle>
           {args.title}
-          <CardDescription>
+          <CardDescription className="character-3-regular-pro text-text-low">
             <div className="border border-dashed border-purple-300 text-purple-300">
               SLOT
             </div>
@@ -147,7 +147,7 @@ export const ClickableDisabled: ClickableStory = {
       <CardHeader>
         <CardTitle>
           {args.title}
-          <CardDescription>
+          <CardDescription className="character-3-regular-pro text-text-low">
             <div className="border border-dashed border-purple-300 text-purple-300">
               SLOT
             </div>
