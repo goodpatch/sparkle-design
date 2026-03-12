@@ -106,6 +106,25 @@ describe("Tabs", () => {
       expect(triggers[0].className).toContain("border-x");
       expect(triggers[1].className).toContain("border-x");
     });
+
+    it("scrollable=true のとき横スクロール用クラスが付与される", () => {
+      testContainer.render(
+        <Tabs defaultValue="tab1">
+          <TabsList variant="line" scrollable>
+            <TabsTrigger value="tab1">line</TabsTrigger>
+            <TabsTrigger value="tab2">line2</TabsTrigger>
+          </TabsList>
+        </Tabs>
+      );
+
+      const list = testContainer
+        .getContainer()
+        .querySelector('[data-slot="tabs-list"]');
+
+      expect(list?.className).toContain("overflow-x-auto");
+      expect(list?.className).toContain("max-w-full");
+      expect(list?.className).toContain("whitespace-nowrap");
+    });
   });
 
   describe("ユーザーインタラクション / User Interaction", () => {

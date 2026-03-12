@@ -25,7 +25,9 @@ figma.connect(
         <CardHeader>
           <CardTitle>
             タイトル
-            <CardDescription>Description</CardDescription>
+            <CardDescription className="character-3-regular-pro text-text-low">
+              Description
+            </CardDescription>
           </CardTitle>
           <CardControl>Control</CardControl>
         </CardHeader>
@@ -59,7 +61,9 @@ figma.connect(
         <CardHeader>
           <CardTitle>
             タイトル
-            <CardDescription>Description</CardDescription>
+            <CardDescription className="character-3-regular-pro text-text-low">
+              Description
+            </CardDescription>
           </CardTitle>
           <CardControl>Control</CardControl>
         </CardHeader>

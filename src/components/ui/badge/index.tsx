@@ -104,6 +104,22 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
  * - バッジは特定の要素に対して通知の数やタスクの数などの数値情報を付与するために使用するコンポーネントです。
  * - en: The Badge component is used to attach numerical information such as notification counts or task counts to specific elements.
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - ステータス表示や分類ラベルには `Badge` を使わず、`Tag` を使ってください。
+ * - en: Do not use `Badge` for status display or category labels. Use `Tag` instead.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <>
+ *   <Badge>3</Badge>
+ *   <Tag status="warning" variant="outline">未紐付け</Tag>
+ * </>
+ *
+ * // ❌ Wrong - ステータスラベルに Badge を使わない
+ * <Badge>未紐付け</Badge>
+ * ```
+ *
  * **使用例 / Usage Example**
  *
  * ```tsx

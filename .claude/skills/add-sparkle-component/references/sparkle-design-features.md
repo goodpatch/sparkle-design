@@ -439,6 +439,82 @@ Specify any installed font family:
 
 以下は頻繁に発生する誤用パターンです。コンポーネントが提供する専用 props・サブコンポーネントを使ってください。
 
+### CardTitle の補足テキストには CardDescription を使う
+
+```tsx
+// ✅ Correct
+<CardHeader>
+  <CardTitle>
+    プロジェクト一覧
+    <CardDescription className="character-3-regular-pro text-text-low">
+      全 12 件
+    </CardDescription>
+  </CardTitle>
+</CardHeader>
+
+// ❌ Wrong — CardTitle 内に span で補足を入れない
+<CardHeader>
+  <CardTitle>
+    プロジェクト一覧
+    <span className="text-sm text-neutral-500">(12件)</span>
+  </CardTitle>
+</CardHeader>
+```
+
+CardTitle 内の補足情報や件数は CardDescription を使い、必要な typography / color token は `className` で明示する。
+
+### Input / Select と横並びの Button はサイズを揃える
+
+```tsx
+// ✅ Correct — 同じサイズで統一
+<div className="flex gap-2">
+  <Input placeholder="検索..." />
+  <Button size="md">検索</Button>
+</div>
+
+// ❌ Wrong — サイズ不一致で高さが揃わない
+<div className="flex gap-2">
+  <Input placeholder="検索..." />
+  <Button size="sm">検索</Button>
+</div>
+```
+
+Input / Select / Textarea のデフォルトサイズは `md`。横並びの Button も原則 `md` に合わせる。テーブル内アクションなど独立した Button は `sm` でよい。
+
+### Badge と Tag を用途で使い分ける
+
+| コンポーネント | 用途 | 例 |
+| --- | --- | --- |
+| **Badge** | 特定の要素に**数値情報**を付与 | `<Badge>3</Badge>` |
+| **Tag** | 情報の**ラベリング / ステータス付与** | `<Tag status="success">完了</Tag>` |
+
+```tsx
+// ✅ Correct — ステータス表示には Tag を使う
+<Tag variant="outline" status="warning">未紐付け</Tag>
+
+// ❌ Wrong — Badge をステータスラベルに使わない
+<Badge>未紐付け</Badge>
+```
+
+### shadcn/ui 由来の class / token をそのまま使わない
+
+```tsx
+// ✅ Correct — Sparkle Design の typography / color token を使う
+<CardDescription className="character-3-regular-pro text-text-low">
+  全 12 件
+</CardDescription>
+
+// ❌ Wrong — shadcn/ui の既定 token や素の font utility を持ち込まない
+<CardDescription className="text-sm text-muted-foreground">
+  全 12 件
+</CardDescription>
+<CardDescription className="font-medium text-slate-500">
+  全 12 件
+</CardDescription>
+```
+
+shadcn/ui と混在するプロジェクトでも、Sparkle Design のコンポーネント内では `character-*` / `text-text-*` / Sparkle の color token を優先する。
+
 ### Button: prefixIcon / suffixIcon を使う
 
 ```tsx
