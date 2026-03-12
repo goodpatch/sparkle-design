@@ -23,10 +23,10 @@ figma.connect(
     example: props => (
       <Card>
         <CardHeader>
-          <div>
-            <CardTitle>タイトル</CardTitle>
+          <CardTitle>
+            タイトル
             <CardDescription>Description</CardDescription>
-          </div>
+          </CardTitle>
           <CardControl>Control</CardControl>
         </CardHeader>
         <CardContent>Content</CardContent>
@@ -57,10 +57,10 @@ figma.connect(
     example: props => (
       <ClickableCard isDisabled={props.isDisabled}>
         <CardHeader>
-          <div>
-            <CardTitle>タイトル</CardTitle>
+          <CardTitle>
+            タイトル
             <CardDescription>Description</CardDescription>
-          </div>
+          </CardTitle>
           <CardControl>Control</CardControl>
         </CardHeader>
         <CardContent>Content</CardContent>

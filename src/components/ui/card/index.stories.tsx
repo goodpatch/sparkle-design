@@ -59,14 +59,14 @@ export const Default: Story = {
   render: args => (
     <Card>
       <CardHeader>
-        <div>
-          <CardTitle>{args.title}</CardTitle>
+        <CardTitle>
+          {args.title}
           <CardDescription>
             <div className="border border-dashed border-purple-300 text-purple-300">
               SLOT
             </div>
           </CardDescription>
-        </div>
+        </CardTitle>
         <CardControl>
           <div className="border border-dashed border-purple-300 text-purple-300">
             SLOT
@@ -100,14 +100,14 @@ export const Clickable: ClickableStory = {
   render: args => (
     <ClickableCard onClick={args.onClick} isDisabled={args.isDisabled}>
       <CardHeader>
-        <div>
-          <CardTitle>{args.title}</CardTitle>
+        <CardTitle>
+          {args.title}
           <CardDescription>
             <div className="border border-dashed border-purple-300 text-purple-300">
               SLOT
             </div>
           </CardDescription>
-        </div>
+        </CardTitle>
         <CardControl>
           <div className="border border-dashed border-purple-300 text-purple-300">
             SLOT
@@ -145,14 +145,14 @@ export const ClickableDisabled: ClickableStory = {
   render: args => (
     <ClickableCard onClick={args.onClick} isDisabled={args.isDisabled}>
       <CardHeader>
-        <div>
-          <CardTitle>{args.title}</CardTitle>
+        <CardTitle>
+          {args.title}
           <CardDescription>
             <div className="border border-dashed border-purple-300 text-purple-300">
               SLOT
             </div>
           </CardDescription>
-        </div>
+        </CardTitle>
         <CardControl>
           <div className="border border-dashed border-purple-300 text-purple-300">
             SLOT
