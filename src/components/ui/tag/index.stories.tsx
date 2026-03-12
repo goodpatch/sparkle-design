@@ -6,6 +6,12 @@ const meta: Meta<typeof Tag> = {
   component: Tag,
   parameters: {
     layout: "centered",
+    docs: {
+      description: {
+        component:
+          "Tag はステータスや分類ラベルなど、情報を整理・識別するときに使います。通知数のような数値付与には Badge を使ってください。",
+      },
+    },
   },
   tags: ["autodocs"],
   argTypes: {

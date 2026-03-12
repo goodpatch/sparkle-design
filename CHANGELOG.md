@@ -14,12 +14,16 @@
 ### 変更
 
 - `sparkle-design-cli@1.3.7` を使うよう `build:css` / registry ビルドを更新
+- Tabs の Storybook に `scrollable` オプションを追加
+- Badge / Tag の Storybook に使い分けガイドを追記
 
 ### 修正
 
 - `sparkle-design-cli@1.3.6` で CSS を再生成し、Material Symbols import に `display=block` を反映
 - npm パッケージが CSS 同梱を前提としないよう、package metadata を CLI 利用前提の形へ整理
 - `sparkle-design-cli@1.3.7` で CSS を再生成し、`body` レベルの `font-family` ルールを追加
+- TabsList に `scrollable` を追加し、モバイルで横スクロール可能に改善
+- SelectItem のカーソルを `pointer` に修正
 
 ## [0.0.2] - 2026-03-06
 

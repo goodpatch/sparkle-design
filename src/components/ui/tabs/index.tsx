@@ -95,23 +95,26 @@ type TabsTriggerProps = React.ComponentPropsWithoutRef<
 > &
   TabsTriggerVariants;
 
-const tabsListVariants = cva(
-  [
-    "relative inline-flex w-fit items-center justify-center gap-2 overflow-visible",
-  ],
-  {
-    variants: {
-      variant: {
-        solid: "border-b-2 border-b-primary-500 rounded-none",
-        line: "border-b-2 border-b-neutral-200 rounded-none overflow-visible",
-        ghost: "",
-      },
+const tabsListVariants = cva(["relative inline-flex items-center"], {
+  variants: {
+    variant: {
+      solid: "border-b-2 border-b-primary-500 rounded-none",
+      line: "border-b-2 border-b-neutral-200 rounded-none overflow-visible",
+      ghost: "",
     },
-    defaultVariants: {
-      variant: "solid",
+    scrollable: {
+      true: [
+        "w-full max-w-full justify-start gap-2 overflow-x-auto overflow-y-visible",
+        "whitespace-nowrap overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+      ].join(" "),
+      false: "w-fit justify-center gap-2 overflow-visible",
     },
-  }
-);
+  },
+  defaultVariants: {
+    variant: "solid",
+    scrollable: false,
+  },
+});
 
 type TabsListVariants = VariantProps<typeof tabsListVariants>;
 
@@ -152,13 +155,14 @@ function Tabs({
 function TabsList({
   className,
   variant,
+  scrollable,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.List> & TabsListVariants) {
   return (
     <TabsListVariantContext.Provider value={variant ?? "solid"}>
       <TabsPrimitive.List
         data-slot="tabs-list"
-        className={cn(tabsListVariants({ variant }), className)}
+        className={cn(tabsListVariants({ variant, scrollable }), className)}
         {...props}
       />
     </TabsListVariantContext.Provider>

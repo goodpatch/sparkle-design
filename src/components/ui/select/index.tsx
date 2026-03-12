@@ -310,10 +310,10 @@ function SelectItem({
       data-slot="select-item"
       className={cn(
         [
-          "relative flex w-full cursor-default select-none items-center rounded-notice",
+          "relative flex w-full cursor-pointer select-none items-center rounded-notice",
           "py-1.5 pl-8 pr-2 text-sm",
           "character-1-regular-pro text-neutral-700",
-          "outline-none focus:bg-neutral-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+          "outline-none focus:bg-neutral-100 data-[disabled]:pointer-events-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
         ].join(" "),
         className
       )}

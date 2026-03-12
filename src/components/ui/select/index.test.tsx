@@ -2,9 +2,46 @@
  * @jest-environment jsdom
  */
 
-import { describe, it } from "vitest";
+import React from "react";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { TestContainer } from "@/test/helpers";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./index";
 
 describe("Select", () => {
+  let testContainer: TestContainer;
+
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
+  it("SelectItem はポインターカーソルを持つ", () => {
+    testContainer.render(
+      <Select open>
+        <SelectTrigger>
+          <SelectValue placeholder="選択してください" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="option1">Option 1</SelectItem>
+        </SelectContent>
+      </Select>
+    );
+
+    const item = document.querySelector('[data-slot="select-item"]');
+
+    expect(item?.className).toContain("cursor-pointer");
+  });
+
   // Portal-based components (Select dropdown) are challenging to test with jsdom
   // due to portal rendering behavior and DOM limitations.
   // These components require more complex setup and potentially headless browser testing.
