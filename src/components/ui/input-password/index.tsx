@@ -1,7 +1,6 @@
 /**
- * This file is part of Sparkle Design.
- * License: https://github.com/goodpatch/sparkle-design/blob/main/LICENSE
- * If you modify this file, add a "Modifications" note here.
+ * Copyright 2026 Goodpatch Inc.
+ * SPDX-License-Identifier: Apache-2.0
  */
 import * as React from "react";
 import { Input, type InputProps } from "@/components/ui/input";

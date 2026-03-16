@@ -15,7 +15,7 @@ It implements Goodpatch's "Sparkle Design" system on top of shadcn/ui.
 
 ## Features
 
-- 🔧 **Flexibility** ... Because it is based on shadcn/ui and compatible with the shadcn/ui registry, you can introduce components one by one. It is also planned to be published as an npm package, so you can integrate it in the way that best fits each project.
+- 🔧 **Flexibility** ... Because it is based on shadcn/ui and compatible with the shadcn/ui registry, you can introduce components one by one. It is also published as an npm package, so you can integrate it in the way that best fits each project.
 - ♿️ **Accessibility** ... Sparkle Design is engineered with accessibility as a primary consideration.
 - 🎨 **Customizability** ... A dedicated CLI tool lets you apply the same customizations found in the Figma files. This makes it easy to spin up code for design systems built on Sparkle Design.
 
@@ -23,7 +23,7 @@ It implements Goodpatch's "Sparkle Design" system on top of shadcn/ui.
 
 ### Install the package
 
-**Note**: npm publishing is in preparation. The steps below describe how to use it after release.
+The package is already published on npm. Install it with the steps below.
 
 ```bash
 npm install @goodpatch/sparkle-design
@@ -207,6 +207,7 @@ The Sparkle Design badge indicates that a component uses Sparkle Design. Add the
 - Follow `docs/ai-instructions/comment-style.md` for comment conventions.
 - Follow `.github/copilot-commit-message-instructions.md` for commit message format.
 - Refer to `CHANGELOG.md` for release notes.
+- If the public registry domain changes, run `pnpm update:public-domain -- --to https://new-domain.example.com --dry-run` to preview the impact, then rerun without `--dry-run` to apply the replacement.
 - See the `docs/ai-instructions/` directory for additional development, testing, and AI guidelines.
 
 ## Component status
