@@ -45,7 +45,8 @@
     "format:check": "prettier --config ./.prettierrc --check \"**/*.{js,ts,tsx,css,md,json}\"",
     "lint:fix": "next lint --fix",
     "lint:check": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "update:public-domain": "node scripts/update-public-domain.mjs"
   },
   "dependencies": {
     "@figma/code-connect": "^1.3.4",
