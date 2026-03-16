@@ -11,7 +11,7 @@
 
 
 React.js + TypeScript を用いたコンポーネントライブラリです。<br />
-shadcn/ui をベースに、Goodpatch のデザインシステム「Sparkle Design」を実装しています。
+shadcn/ui をベースに、グッドパッチのデザインシステム「Sparkle Design」を実装しています。
 
 ## 特徴
 
