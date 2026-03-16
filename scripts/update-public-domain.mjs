@@ -5,7 +5,18 @@ import path from "path";
 
 const ROOT = process.cwd();
 const DEFAULT_FROM = "https://sparkle-design.vercel.app";
-const TEXT_EXTENSIONS = new Set([".md", ".mdx", ".json", ".ts", ".tsx", ".js", ".jsx", ".sh"]);
+const TEXT_EXTENSIONS = new Set([
+  ".md",
+  ".mdx",
+  ".json",
+  ".ts",
+  ".tsx",
+  ".js",
+  ".jsx",
+  ".mjs",
+  ".cjs",
+  ".sh",
+]);
 const EXCLUDED_PARTS = new Set(["node_modules", "dist", ".next", "storybook-static"]);
 
 function usage() {
@@ -13,7 +24,39 @@ function usage() {
 }
 
 function normalize(url) {
-  return url.replace(/\/$/, "");
+  return url.trim().replace(/\/+$/, "");
+}
+
+function requireOptionValue(flag, value) {
+  if (!value || value.startsWith("-")) {
+    console.error(`Missing value for ${flag}`);
+    usage();
+    process.exit(1);
+  }
+  return value;
+}
+
+function validateUrl(flag, value) {
+  const normalized = normalize(value);
+  if (!normalized) {
+    console.error(`Invalid value for ${flag}`);
+    process.exit(1);
+  }
+
+  let parsed;
+  try {
+    parsed = new URL(normalized);
+  } catch {
+    console.error(`Invalid URL for ${flag}: ${value}`);
+    process.exit(1);
+  }
+
+  if (!["http:", "https:"].includes(parsed.protocol)) {
+    console.error(`Invalid protocol for ${flag}: ${parsed.protocol}`);
+    process.exit(1);
+  }
+
+  return normalized;
 }
 
 const args = process.argv.slice(2);
@@ -23,12 +66,16 @@ let dryRun = false;
 
 for (let i = 0; i < args.length; i += 1) {
   const arg = args[i];
-  if (arg === "--from") from = args[++i];
-  else if (arg === "--to") to = args[++i];
+  if (arg === "--from") from = requireOptionValue(arg, args[++i]);
+  else if (arg === "--to") to = requireOptionValue(arg, args[++i]);
   else if (arg === "--dry-run") dryRun = true;
   else if (arg === "--help" || arg === "-h") {
     usage();
     process.exit(0);
+  } else {
+    console.error(`Unknown option: ${arg}`);
+    usage();
+    process.exit(1);
   }
 }
 
@@ -37,8 +84,8 @@ if (!to) {
   process.exit(1);
 }
 
-from = normalize(from);
-to = normalize(to);
+from = validateUrl("--from", from);
+to = validateUrl("--to", to);
 
 const includeRoots = [
   "README.md",
