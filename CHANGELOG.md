@@ -5,6 +5,18 @@
 
 ## [Unreleased]
 
+## [0.0.6] - 2026-03-18
+
+### Changed
+
+- `sparkle-design-cli@1.3.9 generate` を使うよう `build:css` / registry ビルドを更新
+- Button 形式に揃えた anti-pattern JSDoc へ更新
+- anti-pattern reference を CLI の source-of-truth から同期する運用に変更
+
+### Docs
+
+- README の CLI 利用例を `generate` / `check` サブコマンド前提に更新
+
 ## [0.0.5] - 2026-03-12
 
 ### 追加

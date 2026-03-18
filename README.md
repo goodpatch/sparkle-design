@@ -130,7 +130,7 @@ export default App;
 #### Sparkle Design CSS の生成
 
 以下のコマンドで `sparkle.config.json` の設定に基づいて、デザインシステムに準拠した CSS を生成します。<br />
-このコマンドは内部的に `sparkle-design-cli` を実行し、プライマリカラー、フォント設定、角丸設定などのデザイントークンから `src/app/sparkle-design.css` ファイルを生成します。
+このコマンドは内部的に `sparkle-design-cli generate` を実行し、プライマリカラー、フォント設定、角丸設定などのデザイントークンから `src/app/sparkle-design.css` ファイルを生成します。
 
 ```bash
 pnpm build:css
@@ -148,17 +148,17 @@ pnpm build:css
 また、`sparkle-design-cli`を自分のプロジェクトで直接使用することも可能です。
 
 ```bash
-npx sparkle-design-cli
+npx sparkle-design-cli generate
 ```
 
 または、グローバルにインストールして使用することもできます。
 
 ```bash
 npm install -g sparkle-design-cli
-sparkle-design-cli
+sparkle-design-cli generate
 ```
 
-詳しい使い方は `sparkle-design-cli --help` で確認してください。
+詳しい使い方は `sparkle-design-cli generate --help` と `sparkle-design-cli check --help` で確認してください。
 
 ## 開発ガイド
 
