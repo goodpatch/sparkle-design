@@ -34,7 +34,7 @@ export interface LinkProps
  * **アンチパターン / Anti-patterns**
  *
  * - 外部リンクアイコンを手動で追加しないでください。`isOpenInNew` prop が自動で `open_in_new` アイコンを表示します。
- * - en: Do not manually add external link icons. The `isOpenInNew` prop automatically displays the `open_in_new` icon.
+ *   en: Do not manually add external link icons. The `isOpenInNew` prop automatically displays the `open_in_new` icon.
  *
  * ```tsx
  * // ✅ Correct
@@ -43,7 +43,7 @@ export interface LinkProps
  * // ❌ Wrong - 手動アイコン
  * <Link href="https://example.com">外部リンク <Icon icon="open_in_new" /></Link>
  * ```
- *
+
  * **使用例 / Usage Example**
  *
  * ```tsx
@@ -65,9 +65,7 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
     // character-X-*-* のXの部分（サイズ）を取得
     const characterSizeMatch = className?.match(/character-(\d+)-/);
 
-    const parsed = characterSizeMatch
-      ? parseInt(characterSizeMatch[1], 10)
-      : 3;
+    const parsed = characterSizeMatch ? parseInt(characterSizeMatch[1], 10) : 3;
     const characterSize = (
       parsed >= 1 && parsed <= 12 ? parsed : 3
     ) as IconSize;

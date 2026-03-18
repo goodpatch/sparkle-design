@@ -153,7 +153,7 @@ export interface TagProps
  * **アンチパターン / Anti-patterns**
  *
  * - 通知数や件数などの数値情報には `Tag` を使わず、`Badge` を使ってください。
- * - en: Do not use `Tag` for numeric information such as notification counts. Use `Badge` instead.
+ *   en: Do not use `Tag` for numeric information such as notification counts. Use `Badge` instead.
  *
  * ```tsx
  * // ✅ Correct
@@ -165,7 +165,7 @@ export interface TagProps
  * // ❌ Wrong - 件数表示に Tag を使わない
  * <Tag status="info">3件</Tag>
  * ```
- *
+
  * **使用例 / Usage Example**
  *
  * ```tsx

@@ -91,7 +91,7 @@ Import both files to take advantage of everything Sparkle Design offers.
 #### Generating Sparkle Design CSS
 
 Run the following command to generate CSS that complies with your design system based on the settings in `sparkle.config.json`.<br />
-Internally, this command runs `sparkle-design-cli` to build `src/app/sparkle-design.css` from design tokens such as the primary color, font settings, and border radii.
+Internally, this command runs `sparkle-design-cli generate` to build `src/app/sparkle-design.css` from design tokens such as the primary color, font settings, and border radii.
 
 ```bash
 pnpm build:css
@@ -109,17 +109,17 @@ You can export this configuration from [Sparkle Design Theme Settings](https://w
 You can also run `sparkle-design-cli` directly in your own project.
 
 ```bash
-npx sparkle-design-cli
+npx sparkle-design-cli generate
 ```
 
 Or install it globally and use it:
 
 ```bash
 npm install -g sparkle-design-cli
-sparkle-design-cli
+sparkle-design-cli generate
 ```
 
-Check `sparkle-design-cli --help` for detailed usage.
+Check `sparkle-design-cli generate --help` and `sparkle-design-cli check --help` for detailed usage.
 
 ## Development Guide
 

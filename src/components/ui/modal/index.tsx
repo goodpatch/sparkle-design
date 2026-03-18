@@ -15,6 +15,8 @@ import { IconButton } from "../icon-button";
  *
  * - モーダルはコンテンツに重ねられたウィンドウを介して、ユーザーの注意を特定の情報に集中させるために使用するコンポーネントです。
  * - en: The Modal component is used to focus user attention on specific information through a window overlaid on content.
+ * - 作成/編集フォームや詳細表示など、確認だけではない情報入力・閲覧に使います。
+ * - en: Use Modal for forms and detail views such as create/edit flows, not for simple action confirmation.
  *
  * **使用例 / Usage Example**
  *
@@ -36,6 +38,30 @@ import { IconButton } from "../icon-button";
  * </Modal>
  * ```
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - 作成/編集フォームや詳細表示など、確認だけではない情報入力・閲覧に使ってください。
+ *   en: Use Modal for forms and detail views such as create and edit flows, not for simple action confirmation.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <Modal>
+ *   <ModalContent size="md">
+ *     <ModalHeader>
+ *       <ModalTitle>ユーザー作成</ModalTitle>
+ *       <ModalClose />
+ *     </ModalHeader>
+ *     <ModalBody isSpace>
+ *       <Input />
+ *       <Select />
+ *     </ModalBody>
+ *     <ModalFooter>
+ *       <Button>作成</Button>
+ *     </ModalFooter>
+ *   </ModalContent>
+ * </Modal>
+ * ```
+
  * @param {React.ComponentProps<typeof DialogPrimitive.Root>} props
  */
 function Modal({

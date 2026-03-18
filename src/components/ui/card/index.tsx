@@ -100,11 +100,10 @@ Card.displayName = "Card";
 /**
  * **アンチパターン / Anti-patterns**
  *
- * - CardHeader 内で手動の flex レイアウト（`<div className="flex justify-between">`）を使わないでください。
- *   CardHeader は内部で flex レイアウトを適用済みです。アクションボタンは `CardControl` で囲んでください。
- * - en: Do not use manual flex layout inside CardHeader. Use `CardControl` to wrap action buttons.
+ * - CardHeader 内で手動の flex レイアウト（`<div className="flex justify-between">`）を使わないでください。CardHeader は内部で flex レイアウトを適用済みです。アクションボタンは `CardControl` で囲んでください。
+ *   en: Do not use manual flex layout inside CardHeader. CardHeader already applies flex layout internally. Wrap action buttons with `CardControl`.
  * - CardTitle の補足情報や件数は、`span` などを直書きせず `CardDescription` を使ってください。
- * - en: For supporting text or counts inside CardTitle, do not inline a `span`; use `CardDescription`.
+ *   en: For supporting text or counts inside CardTitle, do not inline a `span`; use `CardDescription`.
  *
  * ```tsx
  * // ✅ Correct
@@ -136,6 +135,7 @@ Card.displayName = "Card";
  *   </CardTitle>
  * </CardHeader>
  * ```
+
  */
 const CardHeader = React.forwardRef<
   HTMLDivElement,

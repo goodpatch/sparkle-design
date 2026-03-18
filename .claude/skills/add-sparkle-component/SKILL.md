@@ -325,21 +325,21 @@ Consult the project's documentation for:
 3. **Check lockfiles** - Detect package manager before running commands
 4. **Verify CSS setup** - On first installation, check CSS import structure
 5. **Run type checking** - Execute `<pm> lint` after installation
-6. **Test in Storybook** - Verify component works: `<pm> storybook`
+6. **Run project guard if available** - If the target project has `lint:sparkle`, run it before finishing
+7. **Test in Storybook** - Verify component works: `<pm> storybook`
 
 ### Anti-pattern ガイドの浸透
 
-初回セットアップ時に、利用プロジェクトの `CODING-RULES.md` や `CLAUDE.md` に以下のアンチパターン要約を追記する:
+初回セットアップ時に、利用プロジェクトの `CODING-RULES.md` や `CLAUDE.md` へ最低限以下を追記する:
 
 ```markdown
-## Sparkle Design アンチパターン
-- Button にアイコンを渡すときは `prefixIcon`/`suffixIcon` props を使う（`<Icon>` を children に入れない）。アイコンのみは `IconButton`
-- CardHeader 内のアクションは `<CardControl>` で囲む（手動 flex 不要）
-- Icon/Spinner の `size` はスケール値 1-12（px 値は不可）
-- DialogCancel/DialogAction は内部で Button を描画する（`<Button>` で二重ラップしない）
-- Input のアイコンボタンは `isTrigger`/`triggerIcon` props を使う（手動で IconButton を配置しない）
-- Link の外部リンクアイコンは `isOpenInNew` prop を使う（手動で Icon を追加しない）
+## Sparkle Design Guard
+- Sparkle Design を触った PR では `lint:sparkle` を実行する
+- `lint:sparkle` が未設定なら `npx --yes sparkle-design-cli check src --strict` を script 化する
+- 機械検出できない使い分けは Sparkle Design の docs / JSDoc を参照する
 ```
+
+`lint:sparkle` があるプロジェクトでは、個別のアンチパターンを毎回列挙するより先にコマンドを回す。詳細なルール説明が必要な場合だけ `references/sparkle-design-features.md` を読む。
 
 ### Progressive Disclosure
 
