@@ -325,7 +325,8 @@ Consult the project's documentation for:
 3. **Check lockfiles** - Detect package manager before running commands
 4. **Verify CSS setup** - On first installation, check CSS import structure
 5. **Run type checking** - Execute `<pm> lint` after installation
-6. **Test in Storybook** - Verify component works: `<pm> storybook`
+6. **Run project guard if available** - If the target project has `lint:sparkle`, run it before finishing
+7. **Test in Storybook** - Verify component works: `<pm> storybook`
 
 ### Anti-pattern ガイドの浸透
 
@@ -336,6 +337,7 @@ Consult the project's documentation for:
 - Button にアイコンを渡すときは `prefixIcon`/`suffixIcon` props を使う（`<Icon>` を children に入れない）。アイコンのみは `IconButton`
 - CardHeader 内のアクションは `<CardControl>` で囲む（手動 flex 不要）
 - Icon/Spinner の `size` はスケール値 1-12（px 値は不可）
+- Dialog は確認用途、Modal はフォーム入力・詳細表示に使い分ける
 - DialogCancel/DialogAction は内部で Button を描画する（`<Button>` で二重ラップしない）
 - Input のアイコンボタンは `isTrigger`/`triggerIcon` props を使う（手動で IconButton を配置しない）
 - Link の外部リンクアイコンは `isOpenInNew` prop を使う（手動で Icon を追加しない）
