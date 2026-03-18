@@ -139,9 +139,9 @@ export interface InputProps
  * **アンチパターン / Anti-patterns**
  *
  * - Input の横にアイコンボタンを手動で配置しないでください。`isTrigger` / `triggerIcon` props を使用してください。
- * - en: Do not manually place an IconButton next to Input. Use `isTrigger` / `triggerIcon` props instead.
+ *   en: Do not manually place an IconButton next to Input. Use `isTrigger` / `triggerIcon` props instead.
  * - Input と横並びの Button は原則同じサイズにしてください。デフォルトの Input に対しては `Button size="md"` を使ってください。
- * - en: Keep Button size aligned when placing it next to Input. Use `Button size="md"` with the default Input size.
+ *   en: Keep Button size aligned when placing it next to Input. Use `Button size="md"` with the default Input size.
  *
  * ```tsx
  * // ✅ Correct
@@ -159,20 +159,18 @@ export interface InputProps
  * </>
  *
  * // ❌ Wrong - 手動配置
- * <>
- *   <div className="flex">
- *     <Input />
- *     <IconButton icon="search" />
- *   </div>
+ * <div className="flex">
+ *   <Input />
+ *   <IconButton icon="search" aria-label="検索" />
+ * </div>
  *
- * // ❌ Wrong - 高さが揃わないサイズ不一致
- *   <div className="flex gap-2">
- *     <Input placeholder="検索..." />
- *     <Button size="sm">検索</Button>
- *   </div>
- * </>
+ * // ❌ Wrong - サイズ不一致
+ * <div className="flex gap-2">
+ *   <Input placeholder="検索..." />
+ *   <Button size="sm">検索</Button>
+ * </div>
  * ```
- *
+
  * **使用例 / Usage Example**
  *
  * ```tsx

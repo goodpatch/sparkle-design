@@ -113,7 +113,7 @@ const selectViewportVariants = cva("p-1", {
  * **アンチパターン / Anti-patterns**
  *
  * - `SelectTrigger` と横並びの Button は原則同じサイズにしてください。デフォルトの `SelectTrigger` に対しては `Button size="md"` を使ってください。
- * - en: Keep Button size aligned when placing it next to `SelectTrigger`. Use `Button size="md"` with the default `SelectTrigger` size.
+ *   en: Keep Button size aligned when placing it next to `SelectTrigger`. Use `Button size="md"` with the default `SelectTrigger` size.
  *
  * ```tsx
  * // ✅ Correct
@@ -136,7 +136,7 @@ const selectViewportVariants = cva("p-1", {
  *   <Button size="sm">追加</Button>
  * </div>
  * ```
- *
+
  * **使用例 / Usage Example**
  *
  * ```tsx

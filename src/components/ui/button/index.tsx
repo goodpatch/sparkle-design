@@ -377,7 +377,7 @@ export interface ButtonProps
  * // ✅ Correct
  * <IconButton icon="edit" aria-label="編集" />
  * ```
- *
+
  * **アクセシビリティ / Accessibility**
  *
  * - ボタンにはアクセシブルネームが必要です（通常は `children` のテキスト）。

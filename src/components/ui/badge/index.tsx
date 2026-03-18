@@ -107,7 +107,7 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
  * **アンチパターン / Anti-patterns**
  *
  * - ステータス表示や分類ラベルには `Badge` を使わず、`Tag` を使ってください。
- * - en: Do not use `Badge` for status display or category labels. Use `Tag` instead.
+ *   en: Do not use `Badge` for status display or category labels. Use `Tag` instead.
  *
  * ```tsx
  * // ✅ Correct
@@ -119,7 +119,7 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
  * // ❌ Wrong - ステータスラベルに Badge を使わない
  * <Badge>未紐付け</Badge>
  * ```
- *
+
  * **使用例 / Usage Example**
  *
  * ```tsx

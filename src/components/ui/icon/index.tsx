@@ -55,7 +55,7 @@ export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
  * **アンチパターン / Anti-patterns**
  *
  * - `size` にピクセル値（24, 32 など）を渡さないでください。スケール値（1-12）を使用してください。
- * - en: Do not pass pixel values to `size`. Use scale values (1-12) instead.
+ *   en: Do not pass pixel values to `size`. Use scale values (1-12) instead.
  *
  * ```tsx
  * // ✅ Correct - スケール値
@@ -64,7 +64,7 @@ export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
  * // ❌ Wrong - ピクセル値
  * <Icon icon="settings" size={24} />
  * ```
- *
+
  * **使用例 / Usage Example**
  *
  * ```tsx

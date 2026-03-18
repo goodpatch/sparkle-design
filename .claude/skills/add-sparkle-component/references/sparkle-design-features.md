@@ -461,7 +461,7 @@ Specify any installed font family:
 </CardHeader>
 ```
 
-CardTitle 内の補足情報や件数は CardDescription を使い、必要な typography / color token は `className` で明示する。
+CardTitle 内の補足情報や件数は CardDescription を使い、必要な typography / color token は className で明示する。
 
 ### Input / Select と横並びの Button はサイズを揃える
 
@@ -479,7 +479,7 @@ CardTitle 内の補足情報や件数は CardDescription を使い、必要な t
 </div>
 ```
 
-Input / Select / Textarea のデフォルトサイズは `md`。横並びの Button も原則 `md` に合わせる。テーブル内アクションなど独立した Button は `sm` でよい。
+Input / Select / Textarea のデフォルトサイズは md。横並びの Button も原則 md に合わせる。テーブル内アクションなど独立した Button は sm でよい。
 
 ### Badge と Tag を用途で使い分ける
 

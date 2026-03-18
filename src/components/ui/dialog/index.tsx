@@ -38,6 +38,35 @@ import { Icon, IconProps } from "../icon";
  * </Dialog>
  * ```
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - フォーム入力や詳細表示には使わず、削除確認や再試行確認などのアクション確認に使ってください。
+ *   en: Do not use Dialog for forms or detail views. Use it for action confirmations such as delete and retry flows.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <Dialog>
+ *   <DialogContent>
+ *     <DialogHeader>
+ *       <DialogTitle>削除確認</DialogTitle>
+ *       <DialogDescription>本当に削除しますか？</DialogDescription>
+ *     </DialogHeader>
+ *     <DialogFooter>
+ *       <DialogCancel>キャンセル</DialogCancel>
+ *       <DialogAction>削除</DialogAction>
+ *     </DialogFooter>
+ *   </DialogContent>
+ * </Dialog>
+ *
+ * // ❌ Wrong - フォーム入力に Dialog を使わない
+ * <Dialog>
+ *   <DialogContent>
+ *     <Input />
+ *     <Select />
+ *   </DialogContent>
+ * </Dialog>
+ * ```
+
  * @param {React.ComponentProps<typeof DialogPrimitive.Root>} props
  */
 function Dialog({
@@ -159,7 +188,7 @@ function DialogDescription({
  * **アンチパターン / Anti-patterns**
  *
  * - `DialogCancel` の children に `<Button>` を渡さないでください。内部で Button を描画します。
- * - en: Do not pass `<Button>` as children — DialogCancel renders a Button internally.
+ *   en: Do not pass `<Button>` as children. DialogCancel renders a Button internally.
  *
  * ```tsx
  * // ✅ Correct
@@ -168,6 +197,7 @@ function DialogDescription({
  * // ❌ Wrong - 二重ラップ
  * <DialogCancel><Button>キャンセル</Button></DialogCancel>
  * ```
+
  */
 function DialogCancel({
   className,
@@ -187,7 +217,7 @@ function DialogCancel({
  * **アンチパターン / Anti-patterns**
  *
  * - `DialogAction` の children に `<Button>` を渡さないでください。内部で Button を描画します。
- * - en: Do not pass `<Button>` as children — DialogAction renders a Button internally.
+ *   en: Do not pass `<Button>` as children. DialogAction renders a Button internally.
  *
  * ```tsx
  * // ✅ Correct
@@ -196,6 +226,7 @@ function DialogCancel({
  * // ❌ Wrong - 二重ラップ
  * <DialogAction><Button>確定</Button></DialogAction>
  * ```
+
  */
 function DialogAction({
   className,
