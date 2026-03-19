@@ -330,16 +330,9 @@ Consult the project's documentation for:
 
 ### Anti-pattern ガイドの浸透
 
-初回セットアップ時に、利用プロジェクトの `CODING-RULES.md` や `CLAUDE.md` へ最低限以下を追記する:
+初回セットアップ時は、対象プロジェクトで `sparkle-design-cli setup --assistant <claude|codex|cursor|generic>` を実行して guard を差し込む。これにより `lint:sparkle` / `lint:sparkle:json` と AI 向け指示ブロックが追加される。
 
-```markdown
-## Sparkle Design Guard
-- Sparkle Design を触った PR では `lint:sparkle` を実行する
-- `lint:sparkle` が未設定なら `npx --yes sparkle-design-cli check src --strict` を script 化する。AI が直接確認する場合は `npx --yes sparkle-design-cli check src --format json` を優先する
-- 機械検出できない使い分けは Sparkle Design の docs / JSDoc を参照する
-```
-
-`lint:sparkle` があるプロジェクトでは、個別のアンチパターンを毎回列挙するより先にコマンドを回す。AI は可能なら `--format json` で実行し、`findings` と `manualReviewReminders` の両方を確認する。詳細なルール説明が必要な場合だけ `references/sparkle-design-features.md` を読む。
+`lint:sparkle` があるプロジェクトでは、個別のアンチパターンを毎回列挙するより先にコマンドを回す。AI は可能なら `lint:sparkle:json` または `sparkle-design-cli check src --format json` を実行し、`findings` と `manualReviewReminders` の両方を確認する。詳細なルール説明が必要な場合だけ `references/sparkle-design-features.md` を読む。
 
 ### Progressive Disclosure
 
