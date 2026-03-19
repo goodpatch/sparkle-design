@@ -432,6 +432,9 @@ describe("Card Components", () => {
 
       // Then: コントロール要素が正常に描画される
       expect(control).toBeTruthy();
+      expect(control.className).toContain("flex");
+      expect(control.className).toContain("items-center");
+      expect(control.className).toContain("gap-2");
       expect(button).toBeTruthy();
       expect(button.textContent).toBe("Control Action");
     });

@@ -139,8 +139,10 @@ export interface InputProps
  *
  * - Input の横にアイコンボタンを手動で配置しないでください。`isTrigger` / `triggerIcon` props を使用してください。
  *   en: Do not manually place an IconButton next to Input. Use `isTrigger` / `triggerIcon` props instead.
- * - Input と横並びの Button は原則同じサイズにしてください。デフォルトの Input に対しては `Button size="md"` を使ってください。
- *   en: Keep Button size aligned when placing it next to Input. Use `Button size="md"` with the default Input size.
+ * - Input と横並びの Button は原則同じサイズにしてください。デフォルトの Input には `Button size="md"`、省スペース UI では `Input size="sm"` と `Button size="sm"` を使ってください。
+ *   en: Keep Button size aligned when placing it next to Input. Use `Button size="md"` with the default Input, or pair `Input size="sm"` with `Button size="sm"` in compact UIs.
+ * - 無効状態は `isDisabled` を優先して使ってください。HTML 標準の `disabled` も互換のため受け付けますが、Sparkle Design のコードでは `isDisabled` に統一します。
+ *   en: Prefer `isDisabled` for disabled state. The native `disabled` prop is still supported for compatibility, but Sparkle Design code should standardize on `isDisabled`.
  *
  * ```tsx
  * // ✅ Correct
@@ -155,6 +157,11 @@ export interface InputProps
  *     <Input placeholder="検索..." />
  *     <Button size="md">検索</Button>
  *   </div>
+ *   <div className="flex gap-2">
+ *     <Input size="sm" placeholder="メッセージ" />
+ *     <Button size="sm">送信</Button>
+ *   </div>
+ *   <Input isDisabled placeholder="無効状態" />
  * </>
  *
  * // ❌ Wrong - 手動配置

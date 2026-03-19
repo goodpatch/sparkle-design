@@ -201,7 +201,7 @@ After installation, verify:
 **Regenerate CSS:**
 
 ```bash
-pnpm dlx sparkle-design-cli
+pnpm dlx sparkle-design-cli generate generate
 ```
 
 ### When Regeneration is NOT Needed
@@ -227,7 +227,7 @@ pnpm dlx sparkle-design-cli
 **Looks slightly off when mixed with shadcn/ui:**
 - Replace shadcn/ui default classes like `text-muted-foreground`, `bg-background`, `border-border`, `font-medium` with Sparkle Design tokens
 - Prefer Sparkle typography classes (`character-*`) over ad-hoc `text-sm` / `leading-*` combinations inside Sparkle components
-- Run `pnpm dlx sparkle-design-cli` if config was changed
+- Run `pnpm dlx sparkle-design-cli generate generate` if config was changed
 
 **Component not found:**
 - Verify registry URL in `components.json`

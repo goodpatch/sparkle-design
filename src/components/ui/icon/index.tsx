@@ -53,15 +53,15 @@ export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
  *
  * **アンチパターン / Anti-patterns**
  *
- * - `size` にピクセル値（24, 32 など）を渡さないでください。スケール値（1-12）を使用してください。
- *   en: Do not pass pixel values to `size`. Use scale values (1-12) instead.
+ * - `material-symbols-rounded` を `span` に直書きせず、`Icon` を使ってください。
+ *   en: Use `Icon` instead of writing `material-symbols-rounded` directly on a span.
  *
  * ```tsx
- * // ✅ Correct - スケール値
- * <Icon icon="settings" size={6} />   // 24px 相当
+ * // ✅ Correct
+ * <Icon icon="content_copy" size={4} />
  *
- * // ❌ Wrong - ピクセル値
- * <Icon icon="settings" size={24} />
+ * // ❌ Wrong - className を直書きしない
+ * <span className="material-symbols-rounded text-sm">content_copy</span>
  * ```
 
  * **使用例 / Usage Example**

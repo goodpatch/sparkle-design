@@ -363,6 +363,8 @@ export interface ButtonProps
  *   en: Do not pass `<Icon>` as children. Use `prefixIcon` / `suffixIcon` props instead.
  * - アイコンのみのボタンには `IconButton` を使用してください。
  *   en: Use `IconButton` for icon-only buttons.
+ * - `asChild` 使用時は `prefixIcon` / `suffixIcon` / `isLoading` が反映されません。必要ならスロット先でアイコンやローディング表現を構成してください。
+ *   en: In `asChild` mode, `prefixIcon`, `suffixIcon`, and `isLoading` are ignored. Render icons and loading states inside the slotted child when needed.
  *
  * ```tsx
  * // ✅ Correct
@@ -371,10 +373,19 @@ export interface ButtonProps
  * // ❌ Wrong - Icon を children に入れない
  * <Button><Icon icon="check" /> 確定</Button>
  *
- * // ❌ Wrong - アイコンのみは IconButton を使う
- * <Button><Icon icon="edit" /></Button>
+ * // ❌ Wrong - children なしの Button + prefixIcon は IconButton に置き換える
+ * <Button prefixIcon="close" aria-label="閉じる" />
+ *
+ * // ❌ Wrong - asChild では prefixIcon は反映されない
+ * <Button asChild prefixIcon="add">
+ *   <Link href="/items/new">新規作成</Link>
+ * </Button>
+ *
  * // ✅ Correct
  * <IconButton icon="edit" aria-label="編集" />
+ * <Button asChild>
+ *   <Link href="/items/new">新規作成</Link>
+ * </Button>
  * ```
 
  * **アクセシビリティ / Accessibility**
