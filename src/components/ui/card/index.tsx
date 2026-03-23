@@ -104,6 +104,8 @@ Card.displayName = "Card";
  *   en: Do not use manual flex layout inside CardHeader. CardHeader already applies flex layout internally. Wrap action buttons with `CardControl`.
  * - CardTitle の補足情報や件数は、`span` などを直書きせず `CardDescription` を使ってください。
  *   en: For supporting text or counts inside CardTitle, do not inline a `span`; use `CardDescription`.
+ * - `CardDescription` はタイトルの補足テキスト用です。長い説明文は `CardContent` に配置してください。
+ *   en: Use `CardDescription` for short supporting text in CardTitle. Put long descriptive copy inside `CardContent`.
  *
  * ```tsx
  * // ✅ Correct
@@ -115,7 +117,8 @@ Card.displayName = "Card";
  *     </CardDescription>
  *   </CardTitle>
  *   <CardControl>
- *     <Button>アクション</Button>
+ *     <Button theme="neutral" variant="outline">キャンセル</Button>
+ *     <Button>保存</Button>
  *   </CardControl>
  * </CardHeader>
  *
@@ -123,7 +126,8 @@ Card.displayName = "Card";
  * <CardHeader>
  *   <div className="flex justify-between">
  *     <CardTitle>タイトル</CardTitle>
- *     <Button>アクション</Button>
+ *     <Button theme="neutral" variant="outline">キャンセル</Button>
+ *     <Button>保存</Button>
  *   </div>
  * </CardHeader>
  *
@@ -181,6 +185,31 @@ CardTitle.displayName = "CardTitle";
  * </CardTitle>
  * ```
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - `CardDescription` は CardTitle 内の短い補足テキスト用です。長い説明文は `CardContent` に配置してください。
+ *   en: `CardDescription` is for short supporting text inside CardTitle. Put long descriptive copy inside `CardContent`.
+ * - Typography や text color は用途に応じて className で明示してください。
+ *   en: Specify typography and text color explicitly with className based on the use case.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <CardTitle>
+ *   プロジェクト一覧
+ *   <CardDescription className="character-3-regular-pro text-text-low">
+ *     全 12 件
+ *   </CardDescription>
+ * </CardTitle>
+ *
+ * // ❌ Wrong - 長い説明文を CardTitle 内に入れない
+ * <CardTitle>
+ *   プロジェクト一覧
+ *   <CardDescription>
+ *     このカードはダッシュボードで重要な進捗と担当者の状態を表示します。
+ *   </CardDescription>
+ * </CardTitle>
+ * ```
+
  * @param {React.HTMLAttributes<HTMLDivElement>} props
  */
 const CardDescription = React.forwardRef<
@@ -191,11 +220,41 @@ const CardDescription = React.forwardRef<
 ));
 CardDescription.displayName = "CardDescription";
 
+/**
+ * **概要 / Overview**
+ *
+ * - CardHeader 右側のアクションをまとめるコンポーネントです。
+ * - en: CardControl groups right-side actions inside CardHeader.
+ *
+ * **使用例 / Usage Example**
+ *
+ * ```tsx
+ * <CardControl>
+ *   <Button theme="neutral" variant="outline">キャンセル</Button>
+ *   <Button>保存</Button>
+ * </CardControl>
+ * ```
+ *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - CardHeader の右側アクションは `CardControl` に集約してください。複数ボタンでも追加の layout class は不要です。
+ *   en: Place right-side actions in `CardControl`. No extra layout classes are needed even with multiple buttons.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <CardControl>
+ *   <Button theme="neutral" variant="outline">キャンセル</Button>
+ *   <Button>保存</Button>
+ * </CardControl>
+ * ```
+
+ * @param {React.HTMLAttributes<HTMLDivElement>} props
+ */
 const CardControl = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("", className)} {...props} />
+  <div ref={ref} className={cn("flex items-center gap-2", className)} {...props} />
 ));
 CardControl.displayName = "CardControl";
 

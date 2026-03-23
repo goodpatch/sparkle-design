@@ -5,6 +5,20 @@
 
 ## [Unreleased]
 
+## [0.0.7] - 2026-03-23
+
+### Changed
+
+- `sparkle-design-cli@1.3.10 generate` を使うよう `build:css` を更新
+- shared skill / reference docs の Sparkle CLI コマンド例を最新化
+- `CardControl` の docs 説明重複を整理
+
+### Docs
+
+- `setup` の実行例を `npx --yes` / `pnpm dlx` 併記へ更新
+- `generate` サブコマンド付きの CLI 例に統一
+
+
 ## [0.0.6] - 2026-03-18
 
 ### Changed

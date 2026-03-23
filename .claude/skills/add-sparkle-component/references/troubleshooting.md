@@ -88,13 +88,13 @@ import "../src/app/globals.css"; // ← Only import globals.css
 
 ```bash
 # Use the appropriate package manager
-pnpm dlx sparkle-design-cli
+pnpm dlx sparkle-design-cli generate
 # or
-npm exec sparkle-design-cli
+npm exec sparkle-design-cli generate
 # or
-yarn dlx sparkle-design-cli
+yarn dlx sparkle-design-cli generate
 # or
-bunx sparkle-design-cli
+bunx sparkle-design-cli generate
 ```
 
 **When to regenerate CSS:**

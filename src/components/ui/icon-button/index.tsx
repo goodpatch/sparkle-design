@@ -343,6 +343,20 @@ export interface IconButtonProps
  * <IconButton variant="solid" size="md" theme="primary" icon="edit" />
  * ```
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - アイコンだけのアクションでは `Button` + `prefixIcon` ではなく `IconButton` を使ってください。
+ *   en: Use `IconButton` for icon-only actions instead of `Button` with `prefixIcon`.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <IconButton icon="content_copy" aria-label="コピー" />
+ *
+ * // ❌ Wrong - Icon-only action を Button で表現しない
+ * <Button prefixIcon="content_copy" aria-label="コピー" />
+ * ```
+ *
+
  * @param {IconButtonProps} props
  */
 const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
