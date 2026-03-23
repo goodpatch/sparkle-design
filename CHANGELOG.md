@@ -5,6 +5,12 @@
 
 ## [Unreleased]
 
+### Changed
+
+- package build の ESM 互換性を改善
+  - `dist` を `.js` 出力 + 拡張子付き relative import へ変更し、Node.js ESM / Turbopack / Vitest で解決しやすい形に調整
+  - component 単位の subpath exports を追加し、client component を barrel export を経由せず import できるように改善
+
 ## [0.0.7] - 2026-03-23
 
 ### Changed

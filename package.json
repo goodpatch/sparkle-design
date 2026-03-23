@@ -107,6 +107,141 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.js"
+    },
+    "./badge": {
+      "types": "./dist/components/ui/badge/index.d.ts",
+      "import": "./dist/components/ui/badge/index.js",
+      "require": "./dist/components/ui/badge/index.js"
+    },
+    "./breadcrumb": {
+      "types": "./dist/components/ui/breadcrumb/index.d.ts",
+      "import": "./dist/components/ui/breadcrumb/index.js",
+      "require": "./dist/components/ui/breadcrumb/index.js"
+    },
+    "./button": {
+      "types": "./dist/components/ui/button/index.d.ts",
+      "import": "./dist/components/ui/button/index.js",
+      "require": "./dist/components/ui/button/index.js"
+    },
+    "./card": {
+      "types": "./dist/components/ui/card/index.d.ts",
+      "import": "./dist/components/ui/card/index.js",
+      "require": "./dist/components/ui/card/index.js"
+    },
+    "./checkbox": {
+      "types": "./dist/components/ui/checkbox/index.d.ts",
+      "import": "./dist/components/ui/checkbox/index.js",
+      "require": "./dist/components/ui/checkbox/index.js"
+    },
+    "./dialog": {
+      "types": "./dist/components/ui/dialog/index.d.ts",
+      "import": "./dist/components/ui/dialog/index.js",
+      "require": "./dist/components/ui/dialog/index.js"
+    },
+    "./divider": {
+      "types": "./dist/components/ui/divider/index.d.ts",
+      "import": "./dist/components/ui/divider/index.js",
+      "require": "./dist/components/ui/divider/index.js"
+    },
+    "./form": {
+      "types": "./dist/components/ui/form/index.d.ts",
+      "import": "./dist/components/ui/form/index.js",
+      "require": "./dist/components/ui/form/index.js"
+    },
+    "./icon": {
+      "types": "./dist/components/ui/icon/index.d.ts",
+      "import": "./dist/components/ui/icon/index.js",
+      "require": "./dist/components/ui/icon/index.js"
+    },
+    "./icon-button": {
+      "types": "./dist/components/ui/icon-button/index.d.ts",
+      "import": "./dist/components/ui/icon-button/index.js",
+      "require": "./dist/components/ui/icon-button/index.js"
+    },
+    "./inline-message": {
+      "types": "./dist/components/ui/inline-message/index.d.ts",
+      "import": "./dist/components/ui/inline-message/index.js",
+      "require": "./dist/components/ui/inline-message/index.js"
+    },
+    "./input": {
+      "types": "./dist/components/ui/input/index.d.ts",
+      "import": "./dist/components/ui/input/index.js",
+      "require": "./dist/components/ui/input/index.js"
+    },
+    "./input-password": {
+      "types": "./dist/components/ui/input-password/index.d.ts",
+      "import": "./dist/components/ui/input-password/index.js",
+      "require": "./dist/components/ui/input-password/index.js"
+    },
+    "./link": {
+      "types": "./dist/components/ui/link/index.d.ts",
+      "import": "./dist/components/ui/link/index.js",
+      "require": "./dist/components/ui/link/index.js"
+    },
+    "./modal": {
+      "types": "./dist/components/ui/modal/index.d.ts",
+      "import": "./dist/components/ui/modal/index.js",
+      "require": "./dist/components/ui/modal/index.js"
+    },
+    "./overlay": {
+      "types": "./dist/components/ui/overlay/index.d.ts",
+      "import": "./dist/components/ui/overlay/index.js",
+      "require": "./dist/components/ui/overlay/index.js"
+    },
+    "./radio": {
+      "types": "./dist/components/ui/radio/index.d.ts",
+      "import": "./dist/components/ui/radio/index.js",
+      "require": "./dist/components/ui/radio/index.js"
+    },
+    "./select": {
+      "types": "./dist/components/ui/select/index.d.ts",
+      "import": "./dist/components/ui/select/index.js",
+      "require": "./dist/components/ui/select/index.js"
+    },
+    "./skeleton": {
+      "types": "./dist/components/ui/skeleton/index.d.ts",
+      "import": "./dist/components/ui/skeleton/index.js",
+      "require": "./dist/components/ui/skeleton/index.js"
+    },
+    "./slider": {
+      "types": "./dist/components/ui/slider/index.d.ts",
+      "import": "./dist/components/ui/slider/index.js",
+      "require": "./dist/components/ui/slider/index.js"
+    },
+    "./spinner": {
+      "types": "./dist/components/ui/spinner/index.d.ts",
+      "import": "./dist/components/ui/spinner/index.js",
+      "require": "./dist/components/ui/spinner/index.js"
+    },
+    "./switch": {
+      "types": "./dist/components/ui/switch/index.d.ts",
+      "import": "./dist/components/ui/switch/index.js",
+      "require": "./dist/components/ui/switch/index.js"
+    },
+    "./tabs": {
+      "types": "./dist/components/ui/tabs/index.d.ts",
+      "import": "./dist/components/ui/tabs/index.js",
+      "require": "./dist/components/ui/tabs/index.js"
+    },
+    "./tag": {
+      "types": "./dist/components/ui/tag/index.d.ts",
+      "import": "./dist/components/ui/tag/index.js",
+      "require": "./dist/components/ui/tag/index.js"
+    },
+    "./textarea": {
+      "types": "./dist/components/ui/textarea/index.d.ts",
+      "import": "./dist/components/ui/textarea/index.js",
+      "require": "./dist/components/ui/textarea/index.js"
+    },
+    "./toast": {
+      "types": "./dist/components/ui/toast/index.d.ts",
+      "import": "./dist/components/ui/toast/index.js",
+      "require": "./dist/components/ui/toast/index.js"
+    },
+    "./tooltip": {
+      "types": "./dist/components/ui/tooltip/index.d.ts",
+      "import": "./dist/components/ui/tooltip/index.js",
+      "require": "./dist/components/ui/tooltip/index.js"
     }
   },
   "files": [
