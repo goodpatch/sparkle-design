@@ -324,13 +324,13 @@ Run the CLI tool with your package manager:
 pnpm dlx sparkle-design-cli generate
 
 # npm
-npm exec sparkle-design-cli
+npm exec sparkle-design-cli generate
 
 # yarn
-yarn dlx sparkle-design-cli
+yarn dlx sparkle-design-cli generate
 
 # bun
-bunx sparkle-design-cli
+bunx sparkle-design-cli generate
 ```
 
 The CLI will:

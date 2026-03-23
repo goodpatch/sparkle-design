@@ -407,7 +407,7 @@ Theme settings are managed in `sparkle.config.json`:
 After modifying `sparkle.config.json`, regenerate CSS:
 
 ```bash
-pnpm dlx sparkle-design-cli
+pnpm dlx sparkle-design-cli generate
 ```
 
 ### Custom Colors
@@ -495,8 +495,6 @@ Input / Select / Textarea のデフォルトサイズは md。横並びの Butto
 // ❌ Wrong — Badge をステータスラベルに使わない
 <Badge>未紐付け</Badge>
 ```
-
-`CardControl` は既定で `flex items-center gap-2` を持つ。複数アクションでも追加の layout class は不要。
 
 ### shadcn/ui 由来の class / token をそのまま使わない
 
