@@ -9,7 +9,7 @@
 
 ### Changed
 
-- `sparkle-design-cli@1.3.10 generate` を使うよう `build:css` を更新
+- `sparkle-design-cli@1.3.11 generate` を使うよう `build:css` を更新
 - shared skill / reference docs の Sparkle CLI コマンド例を最新化
 - `CardControl` の docs 説明重複を整理
 
