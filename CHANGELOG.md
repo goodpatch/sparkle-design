@@ -5,6 +5,8 @@
 
 ## [Unreleased]
 
+## [0.0.8] - 2026-03-23
+
 ### Changed
 
 - package build の ESM 互換性を改善
