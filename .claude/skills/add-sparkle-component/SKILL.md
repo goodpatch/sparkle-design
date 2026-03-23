@@ -201,7 +201,7 @@ After installation, verify:
 **Regenerate CSS:**
 
 ```bash
-pnpm dlx sparkle-design-cli generate generate
+pnpm dlx sparkle-design-cli generate
 ```
 
 ### When Regeneration is NOT Needed
@@ -227,7 +227,7 @@ pnpm dlx sparkle-design-cli generate generate
 **Looks slightly off when mixed with shadcn/ui:**
 - Replace shadcn/ui default classes like `text-muted-foreground`, `bg-background`, `border-border`, `font-medium` with Sparkle Design tokens
 - Prefer Sparkle typography classes (`character-*`) over ad-hoc `text-sm` / `leading-*` combinations inside Sparkle components
-- Run `pnpm dlx sparkle-design-cli generate generate` if config was changed
+- Run `pnpm dlx sparkle-design-cli generate` if config was changed
 
 **Component not found:**
 - Verify registry URL in `components.json`
@@ -330,7 +330,7 @@ Consult the project's documentation for:
 
 ### Anti-pattern ガイドの浸透
 
-初回セットアップ時は、対象プロジェクトで `sparkle-design-cli setup --assistant <claude|codex|cursor|generic>` を実行して guard を差し込む。これにより `lint:sparkle` / `lint:sparkle:json` と AI 向け指示ブロックが追加される。
+初回セットアップ時は、対象プロジェクトで `sparkle-design-cli setup --assistant <claude|codex|cursor|generic>` を実行して guard を差し込む。`--target` を省略した場合は `src` 系を自動検出し、既存の Sparkle 用 script は再実行で更新される。独自 script を上書きしたい場合だけ `--force-script-update` を使う。
 
 `lint:sparkle` があるプロジェクトでは、個別のアンチパターンを毎回列挙するより先にコマンドを回す。AI は可能なら `lint:sparkle:json` または `sparkle-design-cli check src --format json` を実行し、`findings` と `manualReviewReminders` の両方を確認する。詳細なルール説明が必要な場合だけ `references/sparkle-design-features.md` を読む。
 

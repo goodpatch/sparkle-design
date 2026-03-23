@@ -62,7 +62,7 @@ Location: `src/app/sparkle-design.css`
 Generate this file using:
 
 ```bash
-pnpm dlx sparkle-design-cli generate generate
+pnpm dlx sparkle-design-cli generate
 ```
 
 This file contains:
@@ -137,7 +137,7 @@ Location: `src/styles/sparkle-design.css` or `styles/sparkle-design.css`
 Generate using:
 
 ```bash
-pnpm dlx sparkle-design-cli generate generate
+pnpm dlx sparkle-design-cli generate
 ```
 
 ### 2. Create/Update `globals.css`
@@ -188,7 +188,7 @@ Location: `src/styles/sparkle-design.css`
 Generate using:
 
 ```bash
-pnpm dlx sparkle-design-cli generate generate
+pnpm dlx sparkle-design-cli generate
 ```
 
 ### 2. Create/Update `index.css`
@@ -321,7 +321,7 @@ Run the CLI tool with your package manager:
 
 ```bash
 # pnpm
-pnpm dlx sparkle-design-cli generate generate
+pnpm dlx sparkle-design-cli generate
 
 # npm
 npm exec sparkle-design-cli
