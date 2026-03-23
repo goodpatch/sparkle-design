@@ -6,13 +6,29 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "incremental": false,
-    "tsBuildInfoFile": null
+    "tsBuildInfoFile": null,
+    "jsx": "react-jsx"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "exclude": [
     "src/**/*.stories.tsx",
     "src/**/*.test.tsx",
     "src/**/*.test.ts",
     "src/app"
-  ]
+  ],
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "resolveFullExtension": ".js",
+    "fileExtensions": {
+      "inputGlob": "{js,jsx,mjs}",
+      "outputCheck": [
+        "js",
+        "jsx",
+        "mjs",
+        "d.ts"
+      ]
+    }
+  }
 }
