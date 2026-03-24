@@ -114,7 +114,12 @@ npx sparkle-design-cli generate
 
 # Check for anti-patterns
 npx sparkle-design-cli check src --strict
+
+# Set up AI assistant guard in your project
+npx sparkle-design-cli setup --assistant claude
 ```
+
+`setup` adds `lint:sparkle` scripts to the consuming project's `package.json` and injects a Sparkle Design quality check guide into AI assistant instruction files (`CLAUDE.md`, `AGENTS.md`, `.cursor/rules/`, etc.). See `sparkle-design-cli setup --help` for details.
 
 ## Development Guide
 

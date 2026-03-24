@@ -153,7 +153,12 @@ npx sparkle-design-cli generate
 
 # アンチパターンを検査
 npx sparkle-design-cli check src --strict
+
+# AI アシスタント向けの guard 設定を導入先プロジェクトに差し込む
+npx sparkle-design-cli setup --assistant claude
 ```
+
+`setup` は導入先の `package.json` に `lint:sparkle` スクリプトを追加し、AI アシスタント向けの指示ファイル（`CLAUDE.md` / `AGENTS.md` / `.cursor/rules/` 等）に Sparkle Design の品質チェックガイドを差し込みます。詳細は `sparkle-design-cli setup --help` を参照してください。
 
 ## 開発ガイド
 
