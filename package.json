@@ -33,7 +33,7 @@
     "test:cleanup": "rm -f test-output.log test-failures.log test-*.log",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build --output-dir public/storybook",
-    "build:css": "npx --yes sparkle-design-cli@1.3.11 generate",
+    "build:css": "npx --yes sparkle-design-cli generate",
     "build:registry": "shadcn build",
     "build:registry:full": "make registry",
     "build:registry:merge": "node scripts/merge-registry.mjs",
