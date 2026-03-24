@@ -5,6 +5,19 @@
 
 ## [Unreleased]
 
+## [0.0.9] - 2026-03-24
+
+### Changed
+
+- `react` / `react-dom` の依存バージョンを `^18 || ^19` に拡張
+  - React 19 を使用するプロジェクトで vitest 実行時に発生する JSX ランタイム混在エラーを解消
+
+### Docs
+
+- README に `sparkle-design-cli setup` コマンドの案内を追加
+- README の設定オプション一覧を簡潔化（詳細は `--help` に誘導）
+- `build:css` のバージョンピン留めを削除（常に最新版を使用）
+
 ## [0.0.8] - 2026-03-23
 
 ### Changed

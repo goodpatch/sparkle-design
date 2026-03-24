@@ -97,29 +97,29 @@ Internally, this command runs `sparkle-design-cli generate` to build `src/app/sp
 pnpm build:css
 ```
 
-Configuration options for `sparkle.config.json`:
+Core configuration options for `sparkle.config.json`:
 
 - `primary`: Primary color (blue, red, orange, etc.)
-- `font-pro`: Proportional font (Google Fonts name)
-- `font-mono`: Monospace font (Google Fonts name)
+- `font-pro`: Proportional font ([Google Fonts](https://fonts.google.com/) name)
+- `font-mono`: Monospace font ([Google Fonts](https://fonts.google.com/) name)
 - `radius`: Border radius preset (sm, md, lg, etc.)
 
-You can export this configuration from [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings).
+You can export this configuration from the [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) Figma plugin.
 
-You can also run `sparkle-design-cli` directly in your own project.
+For additional options (font weight customization, fallback chains, custom token CSS, etc.), see `sparkle-design-cli generate --help`.
 
 ```bash
+# Generate CSS
 npx sparkle-design-cli generate
+
+# Check for anti-patterns
+npx sparkle-design-cli check src --strict
+
+# Set up AI assistant guard in your project
+npx sparkle-design-cli setup --assistant claude
 ```
 
-Or install it globally and use it:
-
-```bash
-npm install -g sparkle-design-cli
-sparkle-design-cli generate
-```
-
-Check `sparkle-design-cli generate --help` and `sparkle-design-cli check --help` for detailed usage.
+`setup` adds `lint:sparkle` scripts to the consuming project's `package.json` and injects a Sparkle Design quality check guide into AI assistant instruction files (`CLAUDE.md`, `AGENTS.md`, `.cursor/rules/`, etc.). See `sparkle-design-cli setup --help` for details.
 
 ## Development Guide
 

@@ -136,29 +136,29 @@ export default App;
 pnpm build:css
 ```
 
-設定ファイル (`sparkle.config.json`) の内容：
+設定ファイル (`sparkle.config.json`) の基本設定：
 
 - `primary`: プライマリカラー（blue, red, orange など）
-- `font-pro`: プロポーショナルフォント（Google Fonts の名前）
-- `font-mono`: モノスペースフォント（Google Fonts の名前）
+- `font-pro`: プロポーショナルフォント（[Google Fonts](https://fonts.google.com/) の名前）
+- `font-mono`: モノスペースフォント（[Google Fonts](https://fonts.google.com/) の名前）
 - `radius`: 角丸設定（sm, md, lg など）
 
-設定ファイルは [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) から書き出すことができます。
+設定ファイルは [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) Figma プラグインから書き出すことができます。
 
-また、`sparkle-design-cli`を自分のプロジェクトで直接使用することも可能です。
+フォントウェイトのカスタマイズ、フォールバックチェーン、カスタムトークン CSS などの追加オプションについては `sparkle-design-cli generate --help` を参照してください。
 
 ```bash
+# CSS を生成
 npx sparkle-design-cli generate
+
+# アンチパターンを検査
+npx sparkle-design-cli check src --strict
+
+# AI アシスタント向けの guard 設定を導入先プロジェクトに差し込む
+npx sparkle-design-cli setup --assistant claude
 ```
 
-または、グローバルにインストールして使用することもできます。
-
-```bash
-npm install -g sparkle-design-cli
-sparkle-design-cli generate
-```
-
-詳しい使い方は `sparkle-design-cli generate --help` と `sparkle-design-cli check --help` で確認してください。
+`setup` は導入先の `package.json` に `lint:sparkle` スクリプトを追加し、AI アシスタント向けの指示ファイル（`CLAUDE.md` / `AGENTS.md` / `.cursor/rules/` 等）に Sparkle Design の品質チェックガイドを差し込みます。詳細は `sparkle-design-cli setup --help` を参照してください。
 
 ## 開発ガイド
 

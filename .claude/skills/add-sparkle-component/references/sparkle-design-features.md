@@ -433,6 +433,38 @@ Specify any installed font family:
 }
 ```
 
+配列を指定するとフォールバックチェーンになる（v1.4.0+）:
+
+```json
+{
+  "font-pro": ["Montserrat", "Noto Sans JP"],
+  "font-mono": "Roboto Mono"
+}
+```
+
+### Custom Font Weights (v1.4.0+)
+
+デフォルトは `[400, 700]`。追加ウェイトが必要な場合:
+
+```json
+{
+  "font-pro-weights": [400, 500, 600, 700],
+  "font-mono-weights": [400, 700]
+}
+```
+
+### Custom Tokens CSS (v1.4.0+)
+
+プロジェクト固有のトークン（Display, Heading, Body 等）は `sparkle-design.css` に直接追加せず、別ファイルに定義して `custom-css` で指定する:
+
+```json
+{
+  "custom-css": "./src/app/custom-tokens.css"
+}
+```
+
+CLI が `globals.css` に `@import` を自動挿入する。ファイルの中身は CLI が一切触らない。
+
 ---
 
 ## Anti-patterns（やってはいけないパターン）

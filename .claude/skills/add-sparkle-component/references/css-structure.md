@@ -305,8 +305,10 @@ Regenerate `sparkle-design.css` **only when** you modify `sparkle.config.json`:
 ✅ **Regenerate when you change:**
 
 - `primary` color
-- `font-mono` or `font-pro`
+- `font-mono` or `font-pro`（配列指定やウェイト変更を含む）
+- `font-pro-weights` or `font-mono-weights`
 - `radius` value
+- `custom-css` path
 
 ❌ **Do NOT regenerate when you:**
 
@@ -314,6 +316,7 @@ Regenerate `sparkle-design.css` **only when** you modify `sparkle.config.json`:
 - Delete a component
 - Modify component props
 - Update Storybook stories
+- Edit the `custom-css` file itself (CLI はその中身を触らない)
 
 ### How to Regenerate
 
@@ -339,8 +342,9 @@ The CLI will:
 2. Generate CSS custom properties (プリミティブ + セマンティック `:root` トークン)
 3. Write to `sparkle-design.css`
 4. Apply theme settings
-5. `globals.css` にフォント import を移動
+5. `globals.css` にフォント import を移動（`font-pro-weights` / `font-mono-weights` でウェイト指定可、配列指定でフォールバックチェーン対応）
 6. `source-packages` 指定時は `@source` ディレクティブを挿入
+7. `custom-css` 指定時はカスタムトークン CSS の `@import` を `globals.css` に挿入
 
 ### After Regeneration
 
