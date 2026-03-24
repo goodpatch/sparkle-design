@@ -8,6 +8,13 @@ CAMEL_NAME=$(echo "$1" | awk -F '-' '{ for(i=1; i<=NF; i++) {printf toupper(subs
 npx shadcn@latest add $1
 mkdir src/components/ui/$1
 mv src/components/ui/$1.tsx src/components/ui/$1/index.tsx
+
+# ファイル先頭に Copyright ヘッダーを挿入
+HEADER_FILE="$(mktemp)"
+printf '/**\n * Copyright 2026 Goodpatch Inc.\n * SPDX-License-Identifier: Apache-2.0\n */\n' > "$HEADER_FILE"
+cat "src/components/ui/$1/index.tsx" >> "$HEADER_FILE"
+mv "$HEADER_FILE" "src/components/ui/$1/index.tsx"
+
 touch src/components/ui/$1/index.stories.tsx
 echo "import type { Meta, StoryObj } from '@storybook/react';
 import { $CAMEL_NAME } from './index';
