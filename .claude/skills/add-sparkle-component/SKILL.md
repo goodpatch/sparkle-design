@@ -196,10 +196,10 @@ After installation, verify:
 }
 ```
 
-v1.4.0+ で追加のオプションが利用可能:
-- `font-pro-weights` / `font-mono-weights`: フォントウェイト配列（デフォルト: `[400, 700]`）
-- `font-pro` / `font-mono` に配列を指定するとフォールバックチェーン（例: `["Montserrat", "Noto Sans JP"]`）
+追加オプション:
+- `fonts`: フォントごとのウェイト制御とフォールバックチェーン（`fonts.pro` / `fonts.mono`）
 - `custom-css`: プロジェクト固有のカスタムトークン CSS ファイルパス
+- 詳細は `sparkle-design-cli generate --help` を参照
 
 > `source-packages` は npm パッケージとして利用する場合に必須。`@goodpatch/sparkle-design` の `@source` ディレクティブが `globals.css` に自動挿入される。
 

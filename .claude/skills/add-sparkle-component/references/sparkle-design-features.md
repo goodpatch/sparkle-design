@@ -433,25 +433,27 @@ Specify any installed font family:
 }
 ```
 
-配列を指定するとフォールバックチェーンになる（v1.4.0+）:
+### fonts セクション（詳細フォント設定）
+
+フォントごとにウェイトを個別指定したり、フォールバックチェーンを構成する場合は `fonts` セクションを使う。`fonts` がない場合は `font-pro` / `font-mono` + デフォルトウェイト `[400, 700]` が使われる。
 
 ```json
 {
-  "font-pro": ["Montserrat", "Noto Sans JP"],
-  "font-mono": "Roboto Mono"
+  "font-pro": "Montserrat",
+  "font-mono": "Roboto Mono",
+  "fonts": {
+    "pro": [
+      { "family": "Montserrat", "weights": [500, 600, 700] },
+      { "family": "Noto Sans JP", "weights": [400, 500, 600, 700] }
+    ],
+    "mono": [
+      { "family": "Roboto Mono", "weights": [400, 700] }
+    ]
+  }
 }
 ```
 
-### Custom Font Weights (v1.4.0+)
-
-デフォルトは `[400, 700]`。追加ウェイトが必要な場合:
-
-```json
-{
-  "font-pro-weights": [400, 500, 600, 700],
-  "font-mono-weights": [400, 700]
-}
-```
+同じフォントファミリーが pro と mono で重複する場合、ウェイトはマージされ import は 1 行に統合される。
 
 ### Custom Tokens CSS (v1.4.0+)
 
