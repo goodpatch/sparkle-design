@@ -195,11 +195,13 @@ After installation, verify:
 }
 ```
 
-プロジェクト固有の拡張は `extend` セクションにまとめる:
+プロジェクト固有の拡張は `extend` セクションにまとめる（v1.5.0+）:
 - `extend.fonts`: フォントごとのウェイト制御とフォールバックチェーン
 - `extend.source-packages`: `@source` ディレクティブの追加パッケージ（npm パッケージとして利用する場合に必須）
 - `extend.custom-css`: プロジェクト固有のカスタムトークン CSS ファイルパス
 - 詳細は `sparkle-design-cli generate --help` を参照
+
+> **legacy 設定との互換性**: v1.4.x 以前のプロジェクトではトップレベルに `source-packages` / `custom-css` を配置している場合があります。これらも引き続き動作しますが、`extend` セクションへの移行を推奨します。
 
 **Regenerate CSS:**
 
