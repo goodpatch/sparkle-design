@@ -306,9 +306,8 @@ Regenerate `sparkle-design.css` **only when** you modify `sparkle.config.json`:
 
 - `primary` color
 - `font-mono` or `font-pro`
-- `fonts` セクション（フォントごとのウェイト指定）
+- `extend` セクション（fonts, source-packages, custom-css）
 - `radius` value
-- `custom-css` path
 
 ❌ **Do NOT regenerate when you:**
 
@@ -342,9 +341,10 @@ The CLI will:
 2. Generate CSS custom properties (プリミティブ + セマンティック `:root` トークン)
 3. Write to `sparkle-design.css`
 4. Apply theme settings
-5. `globals.css` にフォント import を移動（`fonts` セクションでフォントごとのウェイト指定・フォールバックチェーン対応、同じファミリーのウェイトはマージ）
-6. `source-packages` 指定時は `@source` ディレクティブを挿入
-7. `custom-css` 指定時はカスタムトークン CSS の `@import` を `globals.css` に挿入
+5. `extend` セクションを解決（ファイル参照の場合は読み込み）
+6. `globals.css` にフォント import を移動（`extend.fonts` でフォントごとのウェイト指定対応、同じファミリーのウェイトはマージ）
+7. `extend.source-packages` 指定時は `@source` ディレクティブを挿入
+8. `extend.custom-css` 指定時はカスタムトークン CSS の `@import` を `globals.css` に挿入
 
 ### After Regeneration
 

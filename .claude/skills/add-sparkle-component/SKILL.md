@@ -196,9 +196,10 @@ After installation, verify:
 }
 ```
 
-追加オプション:
-- `fonts`: フォントごとのウェイト制御とフォールバックチェーン（`fonts.pro` / `fonts.mono`）
-- `custom-css`: プロジェクト固有のカスタムトークン CSS ファイルパス
+プロジェクト固有の拡張は `extend` セクションにまとめる:
+- `extend.fonts`: フォントごとのウェイト制御とフォールバックチェーン
+- `extend.source-packages`: `@source` ディレクティブの追加パッケージ
+- `extend.custom-css`: プロジェクト固有のカスタムトークン CSS ファイルパス
 - 詳細は `sparkle-design-cli generate --help` を参照
 
 > `source-packages` は npm パッケージとして利用する場合に必須。`@goodpatch/sparkle-design` の `@source` ディレクティブが `globals.css` に自動挿入される。
