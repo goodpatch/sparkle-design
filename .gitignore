@@ -69,3 +69,6 @@ node-compile-cache/
 
 # package manager lock files
 # pnpm-lock.yaml
+
+# private skills (local only)
+.claude/skills/motion-design-prompt/
