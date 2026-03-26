@@ -105,7 +105,6 @@ bunx sparkle-design-cli generate
 - Changed `font-mono` or `font-pro`
 - Changed `extend` セクション（fonts, source-packages, custom-css）
 - Changed `radius` value
-- Changed `custom-css` path
 
 ❌ **NOT required when:**
 

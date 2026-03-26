@@ -191,18 +191,15 @@ After installation, verify:
   "primary": "blue",
   "font-pro": "Geist",
   "font-mono": "Geist Mono",
-  "radius": "md",
-  "source-packages": []
+  "radius": "md"
 }
 ```
 
 プロジェクト固有の拡張は `extend` セクションにまとめる:
 - `extend.fonts`: フォントごとのウェイト制御とフォールバックチェーン
-- `extend.source-packages`: `@source` ディレクティブの追加パッケージ
+- `extend.source-packages`: `@source` ディレクティブの追加パッケージ（npm パッケージとして利用する場合に必須）
 - `extend.custom-css`: プロジェクト固有のカスタムトークン CSS ファイルパス
 - 詳細は `sparkle-design-cli generate --help` を参照
-
-> `source-packages` は npm パッケージとして利用する場合に必須。`@goodpatch/sparkle-design` の `@source` ディレクティブが `globals.css` に自動挿入される。
 
 **Regenerate CSS:**
 

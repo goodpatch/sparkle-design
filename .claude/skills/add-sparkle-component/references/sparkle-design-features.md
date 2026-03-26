@@ -395,12 +395,11 @@ Theme settings are managed in `sparkle.config.json`:
   "primary": "blue",
   "font-mono": "Geist Mono",
   "font-pro": "Geist",
-  "radius": "md",
-  "source-packages": []
+  "radius": "md"
 }
 ```
 
-> `source-packages` は npm パッケージとして利用する場合に必須。追加パッケージのスキャンが必要な場合は配列にパッケージ名を追加する。
+> npm パッケージとして利用する場合は `extend.source-packages` の指定が必須。詳細は `extend` セクションを参照。
 
 ### Generating CSS
 

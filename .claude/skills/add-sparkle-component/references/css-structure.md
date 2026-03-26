@@ -96,7 +96,7 @@ Location: `src/app/globals.css`
 
 **Important:** Import order matters! Tailwind must come before Sparkle Design CSS.
 
-> npm パッケージとして `@goodpatch/sparkle-design` を利用する場合、`sparkle.config.json` に `"source-packages": []` を追加すると、`sparkle-design-cli` が `@source` ディレクティブを自動挿入する。
+> npm パッケージとして `@goodpatch/sparkle-design` を利用する場合、`sparkle.config.json` の `extend.source-packages` を設定すると、`sparkle-design-cli` が `@source` ディレクティブを自動挿入する。
 
 ### 3. Import in Root Layout
 
