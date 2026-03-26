@@ -1,0 +1,23 @@
+{
+  "name": "sparkle-design",
+  "owner": {
+    "name": "Goodpatch Inc.",
+    "email": "sparkle-design@goodpatch.com"
+  },
+  "metadata": {
+    "description": "Sparkle Design の公開コンポーネントライブラリ用 Claude Code スキル。コンポーネント追加、アクセシビリティチェックを支援します。",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "sparkle-design-skills",
+      "description": "Sparkle Design 公開コンポーネントライブラリのスキル。add-sparkle-component、accessibility-checker を含む。",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        ".claude/skills/accessibility-checker",
+        ".claude/skills/add-sparkle-component"
+      ]
+    }
+  ]
+}
