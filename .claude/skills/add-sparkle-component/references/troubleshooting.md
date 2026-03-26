@@ -102,10 +102,9 @@ bunx sparkle-design-cli generate
 ✅ **Required when:**
 
 - Changed `primary` color in sparkle.config.json
-- Changed `font-mono` or `font-pro`（配列指定やウェイト変更を含む）
-- Changed `font-pro-weights` or `font-mono-weights`
+- Changed `font-mono` or `font-pro`
+- Changed `extend` セクション（fonts, source-packages, custom-css）
 - Changed `radius` value
-- Changed `custom-css` path
 
 ❌ **NOT required when:**
 
@@ -117,7 +116,7 @@ bunx sparkle-design-cli generate
 **Common pitfalls (v1.4.0+):**
 
 - `sparkle-design.css` にカスタムトークンを直接追加すると再生成で消える → `custom-css` で別ファイルに分離する
-- 再生成でフォントウェイト（500, 600 等）が消える → `font-pro-weights` でウェイトを明示する
+- 再生成でフォントウェイト（500, 600 等）が消える → `extend.fonts` でフォントごとにウェイトを明示する
 
 ---
 

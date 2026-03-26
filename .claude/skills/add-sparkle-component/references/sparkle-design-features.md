@@ -395,12 +395,11 @@ Theme settings are managed in `sparkle.config.json`:
   "primary": "blue",
   "font-mono": "Geist Mono",
   "font-pro": "Geist",
-  "radius": "md",
-  "source-packages": []
+  "radius": "md"
 }
 ```
 
-> `source-packages` は npm パッケージとして利用する場合に必須。追加パッケージのスキャンが必要な場合は配列にパッケージ名を追加する。
+> npm パッケージとして利用する場合は `extend.source-packages` の指定が必須。詳細は `extend` セクションを参照。
 
 ### Generating CSS
 
@@ -433,37 +432,32 @@ Specify any installed font family:
 }
 ```
 
-配列を指定するとフォールバックチェーンになる（v1.4.0+）:
+### extend セクション（拡張設定）
+
+プロジェクト固有の拡張（フォント詳細、パッケージスキャン、カスタム CSS）は `extend` セクションにまとめる。`extend` はオブジェクト直書き（推奨）またはファイルパス（例: `"./sparkle.extend.json"`）を指定可能。
 
 ```json
 {
-  "font-pro": ["Montserrat", "Noto Sans JP"],
-  "font-mono": "Roboto Mono"
+  "primary": "blue",
+  "font-pro": "Montserrat",
+  "font-mono": "Roboto Mono",
+  "radius": "md",
+  "extend": {
+    "fonts": {
+      "pro": [
+        { "family": "Montserrat", "weights": [500, 600, 700] },
+        { "family": "Noto Sans JP", "weights": [400, 500, 600, 700] }
+      ]
+    },
+    "source-packages": ["@goodpatch/sparkle-design-internal"],
+    "custom-css": "./src/app/custom-tokens.css"
+  }
 }
 ```
 
-### Custom Font Weights (v1.4.0+)
-
-デフォルトは `[400, 700]`。追加ウェイトが必要な場合:
-
-```json
-{
-  "font-pro-weights": [400, 500, 600, 700],
-  "font-mono-weights": [400, 700]
-}
-```
-
-### Custom Tokens CSS (v1.4.0+)
-
-プロジェクト固有のトークン（Display, Heading, Body 等）は `sparkle-design.css` に直接追加せず、別ファイルに定義して `custom-css` で指定する:
-
-```json
-{
-  "custom-css": "./src/app/custom-tokens.css"
-}
-```
-
-CLI が `globals.css` に `@import` を自動挿入する。ファイルの中身は CLI が一切触らない。
+- `extend.fonts` がない場合は `font-pro` / `font-mono` + デフォルトウェイト `[400, 700]` が使われる
+- 同じフォントファミリーが pro と mono で重複する場合、ウェイトはマージされ import は 1 行に統合
+- `extend.custom-css` で指定した CSS ファイルは `globals.css` に `@import` が自動挿入される。CLI はファイルの中身を一切触らない
 
 ---
 

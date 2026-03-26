@@ -96,7 +96,7 @@ Location: `src/app/globals.css`
 
 **Important:** Import order matters! Tailwind must come before Sparkle Design CSS.
 
-> npm パッケージとして `@goodpatch/sparkle-design` を利用する場合、`sparkle.config.json` に `"source-packages": []` を追加すると、`sparkle-design-cli` が `@source` ディレクティブを自動挿入する。
+> npm パッケージとして `@goodpatch/sparkle-design` を利用する場合、`sparkle.config.json` の `extend.source-packages` を設定すると、`sparkle-design-cli` が `@source` ディレクティブを自動挿入する。
 
 ### 3. Import in Root Layout
 
@@ -305,10 +305,9 @@ Regenerate `sparkle-design.css` **only when** you modify `sparkle.config.json`:
 ✅ **Regenerate when you change:**
 
 - `primary` color
-- `font-mono` or `font-pro`（配列指定やウェイト変更を含む）
-- `font-pro-weights` or `font-mono-weights`
+- `font-mono` or `font-pro`
+- `extend` セクション（fonts, source-packages, custom-css）
 - `radius` value
-- `custom-css` path
 
 ❌ **Do NOT regenerate when you:**
 
@@ -342,9 +341,10 @@ The CLI will:
 2. Generate CSS custom properties (プリミティブ + セマンティック `:root` トークン)
 3. Write to `sparkle-design.css`
 4. Apply theme settings
-5. `globals.css` にフォント import を移動（`font-pro-weights` / `font-mono-weights` でウェイト指定可、配列指定でフォールバックチェーン対応）
-6. `source-packages` 指定時は `@source` ディレクティブを挿入
-7. `custom-css` 指定時はカスタムトークン CSS の `@import` を `globals.css` に挿入
+5. `extend` セクションを解決（ファイル参照の場合は読み込み）
+6. `globals.css` にフォント import を移動（`extend.fonts` でフォントごとのウェイト指定対応、同じファミリーのウェイトはマージ）
+7. `extend.source-packages` 指定時は `@source` ディレクティブを挿入
+8. `extend.custom-css` 指定時はカスタムトークン CSS の `@import` を `globals.css` に挿入
 
 ### After Regeneration
 
