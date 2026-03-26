@@ -104,6 +104,7 @@ bunx sparkle-design-cli generate
 - Changed `primary` color in sparkle.config.json
 - Changed `font-mono` or `font-pro`
 - Changed `extend` セクション（fonts, source-packages, custom-css）
+- Changed legacy トップレベルキー（`source-packages`, `custom-css`）※ v1.4.x 以前の設定
 - Changed `radius` value
 
 ❌ **NOT required when:**
@@ -113,10 +114,10 @@ bunx sparkle-design-cli generate
 - Modified component props
 - Edited the `custom-css` file itself
 
-**Common pitfalls (v1.4.0+):**
+**Common pitfalls:**
 
-- `sparkle-design.css` にカスタムトークンを直接追加すると再生成で消える → `custom-css` で別ファイルに分離する
-- 再生成でフォントウェイト（500, 600 等）が消える → `extend.fonts` でフォントごとにウェイトを明示する
+- `sparkle-design.css` にカスタムトークンを直接追加すると再生成で消える → `extend.custom-css`（または legacy の `custom-css`）で別ファイルに分離する
+- 再生成でフォントウェイト（500, 600 等）が消える → `extend.fonts` でフォントごとにウェイトを明示する（legacy: `font-pro-weights` は v1.5.0 で削除済み）
 
 ---
 
