@@ -17,7 +17,7 @@ It implements [Goodpatch](https://goodpatch.com/)'s "Sparkle Design" system on t
 ## Features
 
 - 🔧 **Flexibility** ... Because it is based on shadcn/ui and compatible with the shadcn/ui registry, you can introduce components one by one. It is also published as an npm package, so you can integrate it in the way that best fits each project.
-- ♿️ **Accessibility** ... Built on [Radix UI](https://www.radix-ui.com/) with WCAG-compliant accessibility.
+- ♿️ **Accessibility** ... Sparkle Design is engineered with accessibility as a primary consideration.
 - 🎨 **Customizability** ... A dedicated CLI tool lets you apply the same customizations found in the Figma files. This makes it easy to spin up code for design systems built on Sparkle Design.
 - 🤖 **AI Friendly** ... Ships with skills and guard configurations for Claude Code, Cursor, and Codex. Maintain design system quality even during AI-assisted coding.
 
@@ -117,11 +117,10 @@ To configure manually, add the following to your project's `globals.css`:
 
 #### Generating Sparkle Design CSS
 
-Run the following command to generate CSS that complies with your design system based on the settings in `sparkle.config.json`.<br />
-Internally, this command runs `sparkle-design-cli generate` to build `src/app/sparkle-design.css` from design tokens such as the primary color, font settings, and border radii.
+Generate CSS that complies with your design system based on the settings in `sparkle.config.json`.
 
 ```bash
-pnpm build:css
+npx sparkle-design-cli generate
 ```
 
 Core configuration options for `sparkle.config.json`:
@@ -163,7 +162,6 @@ npx sparkle-design-cli setup --assistant claude
 │  ├─ components/     # React components
 │  └─ lib/            # Shared utilities
 ├─ scripts/           # Various scripts
-├─ public/r/          # Public registry JSON
 ├─ docs/
 │  └─ ai-instructions/ # Development, testing, and AI guidelines (source)
 └─ .github/           # GitHub configuration
