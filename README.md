@@ -8,43 +8,90 @@
 
 [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
 [![ci](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml/badge.svg)](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-
-React.js + TypeScript を用いたコンポーネントライブラリです。<br />
-shadcn/ui をベースに、グッドパッチのデザインシステム「Sparkle Design」を実装しています。
+React + TypeScript で構築されたコンポーネントライブラリです。
+[Goodpatch](https://goodpatch.com/) のデザインシステム「**Sparkle Design**」を実装しており、shadcn/ui のエコシステムと互換性があります。
 
 ## 特徴
 
-- 🔧 **柔軟性** ... shadcn/ui をベースに shadcn/ui registry に対応しているため、1コンポーネントから導入が可能です。npm パッケージとしても公開しているため、プロジェクトごとに適した方法で導入していただくことが出来ます。
-- ♿️ **アクセシビリティ** ... Sparkle Design はアクセシビリティを重視して設計されています。
-- 🎨 **カスタマイズ性** ... 専用CLIツールを利用し、Figmaファイルと同等のカスタマイズを適用することが出来ます。これによりSparkle Designをベースとしたデザインシステムのコードを素早く用意することが出来ます。
+- **柔軟な導入** — shadcn/ui registry に対応しているため 1 コンポーネントから導入可能。npm パッケージとしてまとめてインストールすることもできます。
+- **テーマカスタマイズ** — 専用 CLI でプライマリカラー・フォント・角丸を変更するだけで、デザインシステム全体に一貫したテーマを適用できます。[Figma プラグイン](https://www.figma.com/community/plugin/1443500367756891364)と連携し、デザインとコードのテーマを統一できます。
+- **アクセシビリティ** — [Radix UI](https://www.radix-ui.com/) をベースに WCAG 準拠のアクセシビリティを実装しています。
+- **AI フレンドリー** — Claude Code / Cursor / Codex 向けのスキルとガード設定を同梱。AI コーディングでもデザインシステムの品質を維持できます。
 
-## 使用方法
+## クイックスタート
 
-### パッケージのインストール
-
-npm パッケージとして公開済みです。以下の手順でインストールできます。
+### 1. インストール
 
 ```bash
 npm install @goodpatch/sparkle-design
-# または
-pnpm add @goodpatch/sparkle-design
-# または
-yarn add @goodpatch/sparkle-design
 ```
 
-> このパッケージには CSS は同梱されません。利用側で `sparkle-design-cli` を実行し、生成した `sparkle-design.css` / `globals.css` を自分のアプリに配置して利用してください。
-
-### 個別コンポーネントの導入
-
-Sparkle Design は shadcn/ui registry に対応しています。レジストリの URL は Storybook からコピーすることができます。<br />
-shadcn/ui registry の詳細な情報は [公式ドキュメント](https://ui.shadcn.com/docs/registry/getting-started) を参照してください。
+### 2. テーマ CSS を生成
 
 ```bash
-pnpm dlx shadcn@latest add [registry URL]
+# 設定ファイルを作成
+cat > sparkle.config.json << 'EOF'
+{
+  "primary": "blue",
+  "font-pro": "BIZ UDPGothic",
+  "font-mono": "BIZ UDGothic",
+  "radius": "md"
+}
+EOF
+
+# CSS を生成
+npx sparkle-design-cli generate
 ```
 
-また[Namespaces](https://ui.shadcn.com/docs/registry/namespace)を`components.json`に指定することで、コンポーネント名でのインストールも可能になります。
+`globals.css` をルートレイアウトで import してください。
+
+### 3. コンポーネントを使う
+
+```tsx
+import { Button, Card, CardHeader, CardTitle, CardContent } from "@goodpatch/sparkle-design";
+
+export function Example() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>はじめよう</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Button variant="solid" theme="primary" prefixIcon="rocket_launch">
+          スタート
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+> **Server Component で使う場合**: `"use client"` を含むコンポーネントは個別 import を推奨します。
+> 各コンポーネントの README に Server Component / Client Component の情報が記載されています。
+>
+> ```tsx
+> import { Button } from "@goodpatch/sparkle-design/button";
+> ```
+
+## 導入方法
+
+### npm パッケージ（推奨）
+
+```bash
+npm install @goodpatch/sparkle-design
+# pnpm add @goodpatch/sparkle-design
+# yarn add @goodpatch/sparkle-design
+```
+
+### shadcn/ui registry（個別コンポーネント）
+
+```bash
+npx shadcn@latest add https://sparkle-design.vercel.app/r/button.json
+```
+
+Namespace を設定すると、コンポーネント名でインストールできます。
 
 ```json
 {
@@ -55,253 +102,139 @@ pnpm dlx shadcn@latest add [registry URL]
 ```
 
 ```bash
-pnpm dlx shadcn@latest add @sparkle-design/button
+npx shadcn@latest add @sparkle-design/button
 ```
 
-### 基本的な使用例
+## テーマカスタマイズ
 
-```tsx
-import React from "react";
-import { Button, Badge, Card } from "@goodpatch/sparkle-design";
+`sparkle.config.json` でテーマを設定し、`sparkle-design-cli` で CSS を生成します。
 
-function App() {
-  return (
-    <div>
-      <Card>
-        <h1>Sparkle Design を使った例</h1>
-        <Badge variant="primary">新機能</Badge>
-        <Button variant="primary" size="md">
-          ボタンをクリック
-        </Button>
-      </Card>
-    </div>
-  );
-}
+### 基本設定
 
-export default App;
-```
+| フィールド | 説明 | 選択肢 |
+|---|---|---|
+| `primary` | プライマリカラー | `blue`, `red`, `orange`, `green`, `purple`, `pink`, `yellow` |
+| `font-pro` | プロポーショナルフォント | [Google Fonts](https://fonts.google.com/) の名前 |
+| `font-mono` | モノスペースフォント | [Google Fonts](https://fonts.google.com/) の名前 |
+| `radius` | 角丸 | `none`, `sm`, `md`, `lg`, `xl`, `full` |
 
-### スタイルファイルについて
+設定ファイルは [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364) Figma プラグインから書き出すこともできます。
 
-- **`globals.css`**: 基本的な Tailwind CSS とリセットスタイル
-- **`sparkle-design.css`**: Sparkle Design のデザイントークン（カラー、フォント、角丸、シャドウなど）
+### 拡張設定
 
-両方のファイルをインポートすることで、Sparkle Design の全機能を利用できます。
-
-#### npm パッケージとして利用する場合
-
-`@goodpatch/sparkle-design` を npm パッケージとしてインストールして利用する場合、プロジェクトの `globals.css` に `@source` ディレクティブを追加して、TailwindCSS v4 がパッケージ内のユーティリティクラスを検出できるようにする必要があります。
-
-```css
-@import "tailwindcss";
-/* @goodpatch/sparkle-design のクラスをスキャン対象にする */
-/* パスは globals.css の配置に応じて調整（src/app/globals.css なら ../../node_modules/...） */
-@source "../../node_modules/@goodpatch/sparkle-design/dist";
-/* Sparkle Design のカスタム定義（Tailwindの後にインポート） */
-@import "./sparkle-design.css";
-```
-
-> **注意**: `@source` の相対パスは `globals.css` の配置場所に依存します。上記は `src/app/globals.css` の場合の例です。
-
-`sparkle-design-cli` v1.3.0 以降では、`sparkle.config.json` に `source-packages` を指定すると、CLI 実行時に `@source` ディレクティブが自動的に `globals.css` に挿入されます。**npm パッケージとして利用する場合は `source-packages` の指定が必須です。**
+フォントウェイトの個別指定やカスタム CSS トークンの読み込みが可能です。
 
 ```json
 {
   "primary": "blue",
-  "font-pro": "BIZ UDPGothic",
-  "font-mono": "BIZ UDGothic",
+  "font-pro": "Montserrat",
+  "font-mono": "Roboto Mono",
   "radius": "md",
-  "source-packages": []
+  "extend": {
+    "fonts": {
+      "pro": [
+        { "family": "Montserrat", "weights": [400, 500, 600, 700] },
+        { "family": "Noto Sans JP", "weights": [400, 500, 600, 700] }
+      ]
+    },
+    "source-packages": [],
+    "custom-css": "./src/app/custom-tokens.css"
+  }
 }
 ```
 
-追加の npm パッケージ（拡張リポジトリなど）もスキャン対象にする場合は、配列にパッケージ名を追加します:
+詳細は `npx sparkle-design-cli generate --help` を参照してください。
 
-```json
-{
-  "primary": "blue",
-  "font-pro": "BIZ UDPGothic",
-  "font-mono": "BIZ UDGothic",
-  "radius": "md",
-  "source-packages": ["@scope/my-extension-design"]
-}
-```
+## CLI ツール
 
-#### Sparkle Design CSS の生成
-
-以下のコマンドで `sparkle.config.json` の設定に基づいて、デザインシステムに準拠した CSS を生成します。<br />
-このコマンドは内部的に `sparkle-design-cli generate` を実行し、プライマリカラー、フォント設定、角丸設定などのデザイントークンから `src/app/sparkle-design.css` ファイルを生成します。
+[sparkle-design-cli](https://www.npmjs.com/package/sparkle-design-cli) は 3 つのサブコマンドを提供します。
 
 ```bash
-pnpm build:css
-```
-
-設定ファイル (`sparkle.config.json`) の基本設定：
-
-- `primary`: プライマリカラー（blue, red, orange など）
-- `font-pro`: プロポーショナルフォント（[Google Fonts](https://fonts.google.com/) の名前）
-- `font-mono`: モノスペースフォント（[Google Fonts](https://fonts.google.com/) の名前）
-- `radius`: 角丸設定（sm, md, lg など）
-
-設定ファイルは [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) Figma プラグインから書き出すことができます。
-
-フォントウェイトのカスタマイズ、フォールバックチェーン、カスタムトークン CSS などの追加オプションについては `sparkle-design-cli generate --help` を参照してください。
-
-```bash
-# CSS を生成
+# テーマ CSS を生成
 npx sparkle-design-cli generate
 
-# アンチパターンを検査
+# アンチパターンを検査（13 種類を自動検出）
 npx sparkle-design-cli check src --strict
 
-# AI アシスタント向けの guard 設定を導入先プロジェクトに差し込む
+# AI アシスタント向けガード設定を導入
 npx sparkle-design-cli setup --assistant claude
 ```
 
-`setup` は導入先の `package.json` に `lint:sparkle` スクリプトを追加し、AI アシスタント向けの指示ファイル（`CLAUDE.md` / `AGENTS.md` / `.cursor/rules/` 等）に Sparkle Design の品質チェックガイドを差し込みます。詳細は `sparkle-design-cli setup --help` を参照してください。
+`setup` コマンドは Claude Code / Cursor / Codex / 汎用に対応しており、`package.json` に `lint:sparkle` スクリプトも追加します。
 
-## 開発ガイド
+## コンポーネント一覧
 
-### 開発環境
+| コンポーネント | 説明 |
+|---|---|
+| [Badge](src/components/ui/badge/) | 状態やカテゴリを示すラベル |
+| [Breadcrumb](src/components/ui/breadcrumb/) | ページ階層のナビゲーション |
+| [Button](src/components/ui/button/) | アクションのトリガー |
+| [Card](src/components/ui/card/) | コンテンツのグループ化 |
+| [Checkbox](src/components/ui/checkbox/) | 複数選択の入力 |
+| [Dialog](src/components/ui/dialog/) | アクション確認のモーダル |
+| [Divider](src/components/ui/divider/) | コンテンツの区切り線 |
+| [Form](src/components/ui/form/) | フォーム要素のラッパー |
+| [Icon](src/components/ui/icon/) | Material Symbols アイコン |
+| [IconButton](src/components/ui/icon-button/) | アイコンのみのボタン |
+| [InlineMessage](src/components/ui/inline-message/) | ページ内通知メッセージ |
+| [Input](src/components/ui/input/) | テキスト入力フィールド |
+| [InputPassword](src/components/ui/input-password/) | パスワード入力 |
+| [Link](src/components/ui/link/) | ナビゲーションリンク |
+| [Modal](src/components/ui/modal/) | 大型モーダル |
+| [Overlay](src/components/ui/overlay/) | 操作ブロック用オーバーレイ |
+| [Radio](src/components/ui/radio/) | 単一選択の入力 |
+| [Select](src/components/ui/select/) | ドロップダウン選択 |
+| [Skeleton](src/components/ui/skeleton/) | 読み込みプレースホルダ |
+| [Slider](src/components/ui/slider/) | 範囲選択のスライダー |
+| [Spinner](src/components/ui/spinner/) | 処理中インジケータ |
+| [Switch](src/components/ui/switch/) | オン/オフトグル |
+| [Tabs](src/components/ui/tabs/) | タブ切り替え |
+| [Tag](src/components/ui/tag/) | カテゴリ・ステータスのラベル |
+| [Textarea](src/components/ui/textarea/) | 複数行テキスト入力 |
+| [Toast](src/components/ui/toast/) | 一時的なフィードバック |
+| [Tooltip](src/components/ui/tooltip/) | ホバー時の補足情報 |
 
-- Node.js 22.14.0 以上
-- pnpm 10.12.4 以上
+各コンポーネントフォルダの README に使い方、Client/Server Component 情報、注意事項が記載されています。
 
-### ディレクトリ構成
+## 開発
 
-```
-├─ src/
-│  ├─ app/            # Sparkle Designのページとスタイルファイル
-│  ├─ components/     # React コンポーネント
-│  └─ lib/            # 共有ユーティリティ
-├─ scripts/           # 各種スクリプト
-├─ public/r/          # 公開用レジストリ JSON
-├─ docs/
-│  └─ ai-instructions/ # 開発・テスト・AI向けガイドライン（ソース）
-└─ .github/           # GitHub関連の設定ファイル
-```
+### 環境
 
-### Package のビルド
+- Node.js 22.14.0 以上（`.node-version` 参照）
+- pnpm 10 以上
+
+### コマンド
 
 ```bash
-pnpm build:package
+pnpm install          # 依存関係のインストール
+pnpm dev              # 開発サーバー
+pnpm storybook        # Storybook
+pnpm test             # テスト
+pnpm build:package    # パッケージビルド
+pnpm build:css        # テーマ CSS 生成
+pnpm lint             # ESLint
+pnpm format           # Prettier
+pnpm type-check       # TypeScript 型チェック
 ```
 
-### Storybook の起動
+### 新規コンポーネントの作成
 
 ```bash
-pnpm storybook
+./scripts/setup.sh <component-name>
 ```
 
-### テストの実行
+詳細は [CONTRIBUTING.md](CONTRIBUTING.md) と `docs/ai-instructions/` を参照してください。
 
-```bash
-pnpm test
-```
+## Sparkle Design バッジ
 
-テストガイドラインについては `docs/ai-instructions/testing.md` を参照してください。
-
-### コードフォーマット
-
-```bash
-# フォーマットチェック
-pnpm format:check
-
-# 自動フォーマット
-pnpm format
-
-# ESLint チェック (Next.js 経由)
-pnpm lint:check
-# または
-pnpm lint
-
-# ESLint 自動修正 (Next.js 経由)
-pnpm lint:fix
-
-# 型チェック
-pnpm type-check
-```
-
-**注意**: ESLintは`next lint`コマンドを使用しており、Next.jsプロジェクトに最適化された設定とルールが適用されます。
-
-### Makefile について
-
-Makefile では次のターゲットが定義されています。
-
-- `registry` ... レジストリの生成と公開ファイルへのコピー
-- `new-component` ... 対話形式で新規コンポーネントを作成
-
-`make help` で詳細は確認してください。
-
-### Sparkle Design バッジ
-
-Sparkle Design のバッジは、コンポーネントが Sparkle Design を使用していることを示します。README に次のように追加してください。
+Sparkle Design を使用していることを示すバッジを README に追加できます。
 
 ```markdown
 [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
 ```
 
-### その他
+## ライセンス
 
-- コメントの書き方は `docs/ai-instructions/comment-style.md` を参照してください。
-- コミットメッセージの形式は `.github/copilot-commit-message-instructions.md` のルールに従います。
-- 変更履歴は `CHANGELOG.md` を参照してください。
-- 公開用ドメインを切り替える場合は `pnpm update:public-domain -- --to https://new-domain.example.com --dry-run` で影響範囲を確認し、その後 `--dry-run` を外して一括更新できます。
-- その他開発・テスト・AI関連のガイドラインは `docs/ai-instructions/` ディレクトリを参照してください。
+[Apache License 2.0](LICENSE)
 
-## コンポーネント公開状況
-
-現在公開されているコンポーネントの一覧です。
-✅ 公開中
-❌ 非公開・開発前
-
-| コンポーネント      | 実装  | Storybook | レジストリ   | Figma Code Connect | A11y チェック |
-| ----------------- | ---- | --------- | ---------- | ------------------ | ------------- |
-| Avatar            | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Badge             | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Breadcrumb        | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Button            | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Calendar          | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Card              | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Checkbox          | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Dialog            | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Divider           | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Filter Chip       | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Form              | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Icon              | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Icon Button       | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Image             | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Inline Message    | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Input             | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Input Chip        | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Input Date        | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Input File        | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Input Number      | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Input Password    | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Input Search      | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Input Time        | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Link              | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| List              | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Menu              | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Modal             | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Overlay           | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Pagination        | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Popover           | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Radio             | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Segmented Control | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Select            | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Side Navigation   | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Skeleton          | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Slider            | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Slot              | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Spinner           | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Stack             | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Stepper           | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Switch            | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Table             | ❌   | ❌        | ❌         | ❌                 | ❌            |
-| Tabs              | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Tag               | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Textarea          | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Toast             | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Tooltip           | ✅   | ✅        | ✅         | ✅                 | ✅            |
-| Vertical Tabs     | ❌   | ❌        | ❌         | ❌                 | ❌            |
+Copyright 2026 [Goodpatch Inc.](https://goodpatch.com/)
