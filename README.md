@@ -12,12 +12,12 @@
 
 
 React.js + TypeScript を用いたコンポーネントライブラリです。<br />
-shadcn/ui をベースに、[Goodpatch](https://goodpatch.com/) のデザインシステム「Sparkle Design」を実装しています。
+shadcn/ui をベースに、[グッドパッチ](https://goodpatch.com/)のデザインシステム「Sparkle Design」を実装しています。
 
 ## 特徴
 
 - 🔧 **柔軟性** ... shadcn/ui をベースに shadcn/ui registry に対応しているため、1コンポーネントから導入が可能です。npm パッケージとしても公開しているため、プロジェクトごとに適した方法で導入していただくことが出来ます。
-- ♿️ **アクセシビリティ** ... [Radix UI](https://www.radix-ui.com/) をベースに WCAG 準拠のアクセシビリティを実装しています。
+- ♿️ **アクセシビリティ** ... Sparkle Design はアクセシビリティを重視して設計されています。
 - 🎨 **カスタマイズ性** ... 専用CLIツールを利用し、Figmaファイルと同等のカスタマイズを適用することが出来ます。これによりSparkle Designをベースとしたデザインシステムのコードを素早く用意することが出来ます。
 - 🤖 **AI フレンドリー** ... Claude Code / Cursor / Codex 向けのスキルとガード設定を同梱。AI コーディングでもデザインシステムの品質を維持できます。
 
@@ -117,11 +117,10 @@ export default App;
 
 #### Sparkle Design CSS の生成
 
-以下のコマンドで `sparkle.config.json` の設定に基づいて、デザインシステムに準拠した CSS を生成します。<br />
-このコマンドは内部的に `sparkle-design-cli generate` を実行し、プライマリカラー、フォント設定、角丸設定などのデザイントークンから `src/app/sparkle-design.css` ファイルを生成します。
+`sparkle.config.json` の設定に基づいて、デザインシステムに準拠した CSS を生成します。
 
 ```bash
-pnpm build:css
+npx sparkle-design-cli generate
 ```
 
 設定ファイル (`sparkle.config.json`) の基本設定：
@@ -163,7 +162,6 @@ npx sparkle-design-cli setup --assistant claude
 │  ├─ components/     # React コンポーネント
 │  └─ lib/            # 共有ユーティリティ
 ├─ scripts/           # 各種スクリプト
-├─ public/r/          # 公開用レジストリ JSON
 ├─ docs/
 │  └─ ai-instructions/ # 開発・テスト・AI向けガイドライン（ソース）
 └─ .github/           # GitHub関連の設定ファイル
