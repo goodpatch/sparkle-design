@@ -54,6 +54,36 @@ echo "{
   ]
 }" > src/components/ui/$1/item.json
 
+# README.md
+cat > "src/components/ui/$1/README.md" << ENDOFREADME
+# $CAMEL_NAME
+
+<!-- item.json の description をここに記載 -->
+
+> **TODO**: \`"use client"\` の有無に応じて Client Component / Server Component 互換の記述を更新してください。
+
+## インストール
+
+\`\`\`bash
+npx shadcn@latest add https://sparkle-design.vercel.app/r/$1.json
+\`\`\`
+
+または npm パッケージとして \`@goodpatch/sparkle-design\` をインストールしている場合はそのまま利用できます。
+
+## 使い方
+
+\`\`\`tsx
+import { $CAMEL_NAME } from "@goodpatch/sparkle-design";
+
+<$CAMEL_NAME />
+\`\`\`
+
+## 関連リンク
+
+- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-$1--docs)
+- [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/$1)
+ENDOFREADME
+
 # src/index.ts にexportを追加（アルファベット順を維持）
 EXPORT_LINE="export * from \"./components/ui/$1\";"
 if ! grep -qF "$EXPORT_LINE" src/index.ts; then
