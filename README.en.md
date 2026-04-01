@@ -181,7 +181,7 @@ npx sparkle-design-cli setup --assistant claude
 
 ### Directory structure
 
-```
+```text
 ├─ src/
 │  ├─ app/            # Sparkle Design pages and style files
 │  ├─ components/     # React components
