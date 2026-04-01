@@ -1,4 +1,8 @@
 /**
+ * Copyright 2026 Goodpatch Inc.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/**
  * SparkleHead - フォント読み込みコンポーネント
  *
  * sparkle-design-cli generate により sparkle.config.json から自動生成されます。
