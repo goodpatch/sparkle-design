@@ -18,7 +18,7 @@ This document provides detailed solutions for common issues when installing and 
 
 **Symptoms:**
 
-```
+```text
 Type '{ children: string; variant: "solid"; theme: string; }' is not assignable to type ...
 ```
 
@@ -50,7 +50,7 @@ Sparkle Design components use a directory-based structure where each component l
 
 The correct CSS import structure is:
 
-```
+```text
 sparkle-design.css  ← Source of Truth
       ↑
 globals.css         ← Imports sparkle-design.css
@@ -127,7 +127,7 @@ bunx sparkle-design-cli generate
 
 **Symptoms:**
 
-```
+```text
 Registry not found: @sparkle-design/<component-name>
 ```
 
@@ -189,7 +189,7 @@ Common component names:
 
 **Symptoms:**
 
-```
+```text
 command not found: pnpm
 ```
 
@@ -305,14 +305,14 @@ Path aliases should work automatically in Next.js if tsconfig.json is configured
 
 **Solution A:** Use co-location pattern (path depends on your `components.json` configuration)
 
-```
+```text
 <ui-alias-path>/<component-name>/
 ├── index.tsx                      # Component
 └── <component-name>.stories.tsx   # Story (same directory)
 ```
 
 Example with default configuration:
-```
+```text
 src/components/ui/<component-name>/
 ├── index.tsx
 └── <component-name>.stories.tsx

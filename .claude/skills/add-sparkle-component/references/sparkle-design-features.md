@@ -351,14 +351,14 @@ export const AllVariants: Story = {
 
 Stories are co-located with component files. The exact path depends on your `components.json` configuration:
 
-```
+```text
 <ui-alias-path>/<component-name>/
 ├── index.tsx                      # Component
 └── <component-name>.stories.tsx   # Story
 ```
 
 Example with default configuration (`src/components/ui`):
-```
+```text
 src/components/ui/<component-name>/
 ├── index.tsx
 └── <component-name>.stories.tsx

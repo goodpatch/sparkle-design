@@ -204,9 +204,7 @@ import { Icon } from "@goodpatch/sparkle-design";
 ```tsx
 import { IconButton } from "@goodpatch/sparkle-design";
 
-<IconButton aria-label="閉じる" variant="ghost">
-  <Icon>close</Icon>
-</IconButton>;
+<IconButton icon="close" aria-label="閉じる" variant="ghost" />;
 ```
 
 ---
@@ -456,13 +454,12 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
+  IconButton,
 } from "@goodpatch/sparkle-design";
 
 <Tooltip>
   <TooltipTrigger asChild>
-    <IconButton aria-label="設定">
-      <Icon>settings</Icon>
-    </IconButton>
+    <IconButton icon="settings" aria-label="設定" />
   </TooltipTrigger>
   <TooltipContent>設定を開く</TooltipContent>
 </Tooltip>;
