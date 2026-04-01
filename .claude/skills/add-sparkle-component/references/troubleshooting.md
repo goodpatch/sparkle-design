@@ -234,7 +234,7 @@ npx shadcn@latest add @sparkle-design/<component-name>
 
    # Better: Fix npm permissions
    # See: https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally
-```
+   ```
 
 3. **Corrupted cache**
    ```bash
@@ -242,7 +242,7 @@ npx shadcn@latest add @sparkle-design/<component-name>
    pnpm store prune  # for pnpm
    npm cache clean --force  # for npm
    yarn cache clean  # for yarn
-```
+   ```
 
 ---
 
@@ -383,7 +383,7 @@ If you're still experiencing problems after trying these solutions:
 
    ```bash
    python scripts/validate_config.py
-```
+   ```
 
 3. **Check for updates:**
 
@@ -391,7 +391,7 @@ If you're still experiencing problems after trying these solutions:
 
    ```bash
    pnpm dlx sparkle-design-cli --version
-```
+   ```
 
 4. **Look for similar issues:**
 
