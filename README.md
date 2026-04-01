@@ -145,7 +145,6 @@ export default function RootLayout({ children }) {
 ```
 
 > **Next.js App Router で `@next/next/no-head-element` が出る場合**: `next/core-web-vitals` を使用しているプロジェクトでは、`layout.tsx` に `<head>` を直接書くと lint エラーになることがあります。その場合は `eslint-disable` で該当行を除外するか、`next/font` による代替方法を検討してください。
-```
 
 > `SparkleHead` は `<link rel="preconnect">` と `<link rel="stylesheet">` でフォントを読み込みます。CSS の `@import` に比べてフォントの発見が早く、特にモバイル環境でのアイコン表示が改善されます。
 
@@ -182,7 +181,7 @@ npx sparkle-design-cli setup --assistant claude
 
 ### ディレクトリ構成
 
-```
+```text
 ├─ src/
 │  ├─ app/            # Sparkle Designのページとスタイルファイル
 │  ├─ components/     # React コンポーネント
