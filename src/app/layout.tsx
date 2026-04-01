@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SparkleHead } from "./SparkleHead";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,6 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <SparkleHead />
+      </head>
       <body>{children}</body>
     </html>
   );

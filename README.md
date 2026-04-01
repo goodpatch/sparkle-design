@@ -35,7 +35,7 @@ pnpm add @goodpatch/sparkle-design
 yarn add @goodpatch/sparkle-design
 ```
 
-> このパッケージには CSS は同梱されません。利用側で `sparkle-design-cli` を実行し、生成した `sparkle-design.css` / `globals.css` を自分のアプリに配置して利用してください。
+> このパッケージには CSS は同梱されません。利用側で `sparkle-design-cli generate` を実行し、生成された `sparkle-design.css` / `globals.css` / `SparkleHead.tsx` を自分のアプリに配置して利用してください。
 
 > **Server Component で使う場合**: `"use client"` を含むコンポーネントは個別 import を推奨します。各コンポーネントの [README](src/components/ui/) に Server Component / Client Component の情報が記載されています。
 >
@@ -115,13 +115,36 @@ export default App;
 
 > **注意**: `@source` の相対パスは `globals.css` の配置場所に依存します。上記は `src/app/globals.css` の場合の例です。
 
-#### Sparkle Design CSS の生成
+#### Sparkle Design CSS と SparkleHead の生成
 
-`sparkle.config.json` の設定に基づいて、デザインシステムに準拠した CSS を生成します。
+`sparkle.config.json` の設定に基づいて、デザインシステムに準拠した CSS とフォント読み込み用コンポーネントを生成します。
 
 ```bash
 npx sparkle-design-cli generate
 ```
+
+このコマンドは以下のファイルを生成します:
+- `sparkle-design.css` — デザイントークン CSS
+- `SparkleHead.tsx` — フォント読み込み用 React コンポーネント
+
+`SparkleHead` はルートレイアウトの `<head>` 内に配置してください:
+
+```tsx
+import { SparkleHead } from "./SparkleHead";
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <head>
+        <SparkleHead />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+> `SparkleHead` は `<link rel="preconnect">` と `<link rel="stylesheet">` でフォントを読み込みます。CSS の `@import` に比べてフォントの発見が早く、特にモバイル環境でのアイコン表示が改善されます。
 
 設定ファイル (`sparkle.config.json`) の基本設定：
 
