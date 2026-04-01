@@ -117,7 +117,7 @@ To configure manually, add the following to your project's `globals.css`:
 
 #### Generating Sparkle Design CSS and SparkleHead
 
-Generate design-system-compliant CSS and a font loading component based on `sparkle.config.json`.
+Generate design-system-compliant CSS and a font-loading component based on `sparkle.config.json`.
 
 ```bash
 npx sparkle-design-cli generate
@@ -145,6 +145,8 @@ export default function RootLayout({ children }) {
 ```
 
 > `SparkleHead` loads fonts via `<link rel="preconnect">` and `<link rel="stylesheet">`, enabling earlier font discovery compared to CSS `@import`. This improves icon rendering especially on mobile.
+
+> **`@next/next/no-head-element` in Next.js App Router**: If your project extends `next/core-web-vitals`, a `<head>` element in `layout.tsx` may trigger a lint error. In that case, use `eslint-disable` on the relevant line or consider alternative approaches with `next/font`.
 
 Core configuration options for `sparkle.config.json`:
 
