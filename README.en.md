@@ -35,7 +35,7 @@ pnpm add @goodpatch/sparkle-design
 yarn add @goodpatch/sparkle-design
 ```
 
-> This package does not bundle CSS. Run `sparkle-design-cli` in the consuming app and use the generated `sparkle-design.css` / `globals.css` files there.
+> This package does not bundle CSS. Run `sparkle-design-cli generate` in the consuming app and use the generated `sparkle-design.css` / `globals.css` / `SparkleHead.tsx` files there.
 
 > **Using with Server Components**: For components that contain `"use client"`, use subpath imports. Each component's [README](src/components/ui/) includes Server Component / Client Component information.
 >
@@ -115,13 +115,38 @@ To configure manually, add the following to your project's `globals.css`:
 
 > **Note**: The relative path for `@source` depends on where `globals.css` is located. The example above assumes `src/app/globals.css`.
 
-#### Generating Sparkle Design CSS
+#### Generating Sparkle Design CSS and SparkleHead
 
-Generate CSS that complies with your design system based on the settings in `sparkle.config.json`.
+Generate design-system-compliant CSS and a font-loading component based on `sparkle.config.json`.
 
 ```bash
 npx sparkle-design-cli generate
 ```
+
+This generates:
+- `sparkle-design.css` — Design token CSS
+- `SparkleHead.tsx` — Font loading React component
+
+Place `SparkleHead` in the `<head>` of your root layout:
+
+```tsx
+import { SparkleHead } from "./SparkleHead";
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <head>
+        <SparkleHead />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+> `SparkleHead` loads fonts via `<link rel="preconnect">` and `<link rel="stylesheet">`, enabling earlier font discovery compared to CSS `@import`. This improves icon rendering especially on mobile.
+
+> **`@next/next/no-head-element` in Next.js App Router**: If your project extends `next/core-web-vitals`, a `<head>` element in `layout.tsx` may trigger a lint error. In that case, use `eslint-disable` on the relevant line or consider alternative approaches with `next/font`.
 
 Core configuration options for `sparkle.config.json`:
 

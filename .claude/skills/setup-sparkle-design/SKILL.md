@@ -96,7 +96,25 @@ npx --yes sparkle-design-cli generate
 生成されるファイル（配置先はプロジェクト構成による。例: Next.js App Router では `src/app/`）:
 
 - `src/app/sparkle-design.css` -- デザイントークン（プリミティブ `:root` + セマンティック `:root` + `@theme inline`）
-- `src/app/globals.css` -- フォントインポート、`@source` ディレクティブ（`source-packages` 指定時）、`sparkle-design.css` の読み込みが追記される
+- `src/app/SparkleHead.tsx` -- フォント読み込み用 React コンポーネント（`<link>` タグで preconnect + Google Fonts を読み込む）
+- `src/app/globals.css` -- `@source` ディレクティブ（`source-packages` 指定時）、`sparkle-design.css` の読み込みが追記される
+
+`SparkleHead` はルートレイアウトの `<head>` 内に配置する:
+
+```tsx
+import { SparkleHead } from "./SparkleHead";
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <head>
+        <SparkleHead />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
 
 > **TailwindCSS v4 との互換性**: CLI が `globals.css` に `@source` ディレクティブを自動挿入するため、TailwindCSS v4 でも `node_modules` 内のクラスが正しく検出されます。追加パッケージがある場合は `extend.source-packages` 配列に追加してください。
 
