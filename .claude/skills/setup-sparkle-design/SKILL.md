@@ -97,7 +97,7 @@ npx --yes sparkle-design-cli generate
 
 - `src/app/sparkle-design.css` -- デザイントークン（プリミティブ `:root` + セマンティック `:root` + `@theme inline`）
 - `src/app/SparkleHead.tsx` -- フォント読み込み用 React コンポーネント（`<link>` タグで preconnect + Google Fonts を読み込む）
-- `src/app/globals.css` -- `@source` ディレクティブ（`source-packages` 指定時）、`sparkle-design.css` の読み込みが追記される
+- Tailwind エントリポイント CSS（`globals.css` 等） -- `@source` ディレクティブ、`sparkle-design.css` の読み込みが追記される。CLI が `@import "tailwindcss"` を含む CSS ファイルを自動検出する。`globals.css` 以外（Vite の `index.css` 等）にも対応。明示的に指定する場合は `extend.globals-path` か `--globals-path` オプションを使う
 
 `SparkleHead` はルートレイアウトの `<head>` 内に配置する:
 
@@ -116,9 +116,9 @@ export default function RootLayout({ children }) {
 }
 ```
 
-> **TailwindCSS v4 との互換性**: CLI が `globals.css` に `@source` ディレクティブを自動挿入するため、TailwindCSS v4 でも `node_modules` 内のクラスが正しく検出されます。追加パッケージがある場合は `extend.source-packages` 配列に追加してください。
+> **TailwindCSS v4 との互換性**: CLI が Tailwind エントリポイント CSS に `@source` ディレクティブを自動挿入するため、TailwindCSS v4 でも `node_modules` 内のクラスが正しく検出されます。追加パッケージがある場合は `extend.source-packages` 配列に追加してください。
 
-> `globals.css` がルートレイアウト（`src/app/layout.tsx` や `_app.tsx`）で import されていることを確認する。
+> Tailwind エントリポイント CSS がルートレイアウト（`src/app/layout.tsx` や `_app.tsx`）で import されていることを確認する。
 
 #### 拡張設定（extend）
 
