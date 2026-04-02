@@ -35,7 +35,7 @@ pnpm add @goodpatch/sparkle-design
 yarn add @goodpatch/sparkle-design
 ```
 
-> This package does not bundle CSS. Run `sparkle-design-cli generate` in the consuming app and use the generated `sparkle-design.css` / `globals.css` / `SparkleHead.tsx` files there.
+> This package does not bundle CSS. Run `sparkle-design-cli generate` in the consuming app and use the generated `sparkle-design.css` / `SparkleHead.tsx` files there. The CLI automatically inserts `@source` directives into your Tailwind entrypoint CSS (`globals.css`, `index.css`, etc.).
 
 > **Using with Server Components**: For components that contain `"use client"`, use subpath imports. Each component's [README](src/components/ui/) includes Server Component / Client Component information.
 >
@@ -91,29 +91,30 @@ export default App;
 
 ### About the style files
 
-- **`globals.css`**: Base Tailwind CSS and reset styles
+- **Tailwind entrypoint CSS** (`globals.css` / `index.css`, etc.): Base Tailwind CSS and reset styles
 - **`sparkle-design.css`**: Sparkle Design design tokens (color, typography, border radius, shadows, and more)
+- **`SparkleHead.tsx`**: Font-loading React component
 
-Import both files to take advantage of everything Sparkle Design offers.
+Import these files to take advantage of everything Sparkle Design offers.
 
 #### Using as an npm package
 
 When using `@goodpatch/sparkle-design` as an npm package, TailwindCSS v4 needs `@source` directives to detect utility classes inside the package.
 
-`sparkle-design-cli` automatically inserts `@source` directives into `globals.css` based on your `sparkle.config.json` settings.
+`sparkle-design-cli generate` auto-detects CSS files containing `@import "tailwindcss"` and inserts `@source` directives. This works with any filename (`globals.css`, `index.css`, etc.). If auto-detection fails, specify the path via `extend.globals-path` in `sparkle.config.json` or the `--globals-path` CLI option.
 
-To configure manually, add the following to your project's `globals.css`:
+To configure manually, add the following to your Tailwind entrypoint CSS:
 
 ```css
 @import "tailwindcss";
 /* Scan @goodpatch/sparkle-design classes */
-/* Adjust the path relative to globals.css (example for src/app/globals.css) */
+/* Adjust the path relative to the CSS file (example for src/app/globals.css) */
 @source "../../node_modules/@goodpatch/sparkle-design/dist";
 /* Sparkle Design custom definitions (import after Tailwind) */
 @import "./sparkle-design.css";
 ```
 
-> **Note**: The relative path for `@source` depends on where `globals.css` is located. The example above assumes `src/app/globals.css`.
+> **Note**: The relative path for `@source` depends on where your CSS file is located. The example above assumes `src/app/globals.css`.
 
 #### Generating Sparkle Design CSS and SparkleHead
 
