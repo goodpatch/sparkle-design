@@ -35,7 +35,7 @@ pnpm add @goodpatch/sparkle-design
 yarn add @goodpatch/sparkle-design
 ```
 
-> このパッケージには CSS は同梱されません。利用側で `sparkle-design-cli generate` を実行し、生成された `sparkle-design.css` / `globals.css` / `SparkleHead.tsx` を自分のアプリに配置して利用してください。
+> このパッケージには CSS は同梱されません。利用側で `sparkle-design-cli generate` を実行し、生成された `sparkle-design.css` / `SparkleHead.tsx` を自分のアプリに配置して利用してください。Tailwind エントリポイント CSS（`globals.css` 等）には `@source` ディレクティブが自動挿入されます。
 
 > **Server Component で使う場合**: `"use client"` を含むコンポーネントは個別 import を推奨します。各コンポーネントの [README](src/components/ui/) に Server Component / Client Component の情報が記載されています。
 >
@@ -91,29 +91,30 @@ export default App;
 
 ### スタイルファイルについて
 
-- **`globals.css`**: 基本的な Tailwind CSS とリセットスタイル
+- **Tailwind エントリポイント CSS**（`globals.css` / `index.css` 等）: 基本的な Tailwind CSS とリセットスタイル
 - **`sparkle-design.css`**: Sparkle Design のデザイントークン（カラー、フォント、角丸、シャドウなど）
+- **`SparkleHead.tsx`**: フォント読み込み用 React コンポーネント
 
-両方のファイルをインポートすることで、Sparkle Design の全機能を利用できます。
+これらのファイルをインポートすることで、Sparkle Design の全機能を利用できます。
 
 #### npm パッケージとして利用する場合
 
 `@goodpatch/sparkle-design` を npm パッケージとしてインストールして利用する場合、TailwindCSS v4 がパッケージ内のユーティリティクラスを検出できるよう `@source` ディレクティブが必要です。
 
-`sparkle-design-cli` で CSS を生成すると、`sparkle.config.json` の設定に基づいて `@source` ディレクティブが自動的に `globals.css` に挿入されます。
+`sparkle-design-cli generate` を実行すると、`@import "tailwindcss"` を含む CSS ファイルを自動検出し、`@source` ディレクティブを挿入します。`globals.css` 以外のファイル名（Vite の `index.css` 等）にも対応しています。自動検出がうまく動かない場合は `sparkle.config.json` の `extend.globals-path` か CLI の `--globals-path` オプションで明示的に指定できます。
 
-手動で設定する場合は、プロジェクトの `globals.css` に以下を追加してください:
+手動で設定する場合は、Tailwind エントリポイント CSS に以下を追加してください:
 
 ```css
 @import "tailwindcss";
 /* @goodpatch/sparkle-design のクラスをスキャン対象にする */
-/* パスは globals.css の配置に応じて調整（src/app/globals.css なら ../../node_modules/...） */
+/* パスは CSS ファイルの配置に応じて調整（src/app/globals.css なら ../../node_modules/...） */
 @source "../../node_modules/@goodpatch/sparkle-design/dist";
 /* Sparkle Design のカスタム定義（Tailwindの後にインポート） */
 @import "./sparkle-design.css";
 ```
 
-> **注意**: `@source` の相対パスは `globals.css` の配置場所に依存します。上記は `src/app/globals.css` の場合の例です。
+> **注意**: `@source` の相対パスは CSS ファイルの配置場所に依存します。上記は `src/app/globals.css` の場合の例です。
 
 #### Sparkle Design CSS と SparkleHead の生成
 
