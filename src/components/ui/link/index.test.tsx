@@ -580,4 +580,65 @@ describe("Link", () => {
       expect(lastLink).toBeDefined();
     });
   });
+
+  describe("asChild", () => {
+    it("renders child element as root when asChild is true", () => {
+      // Given: asChild で span を渡す
+      testContainer.render(
+        <Link asChild>
+          <span data-testid="custom-link">カスタムリンク</span>
+        </Link>,
+      );
+
+      // Then: span がルート要素になる
+      const customLink = testContainer.queryByTestId("custom-link");
+      expect(customLink).toBeDefined();
+      expect(customLink?.tagName).toBe("SPAN");
+      expect(customLink?.className).toContain("inline");
+      expect(customLink?.className).toContain("group");
+    });
+
+    it("passes className to child element when asChild is true", () => {
+      // Given: asChild + className
+      testContainer.render(
+        <Link asChild className="character-2-regular-pro">
+          <span data-testid="styled-link">テスト</span>
+        </Link>,
+      );
+
+      // Then: className が子要素に反映される
+      const styledLink = testContainer.queryByTestId("styled-link");
+      expect(styledLink?.className).toContain("character-2-regular-pro");
+    });
+
+    it("renders isOpenInNew icon when asChild is true", () => {
+      // Given: asChild + isOpenInNew
+      testContainer.render(
+        <Link asChild isOpenInNew>
+          <a href="https://example.com" data-testid="external-child">
+            外部リンク
+          </a>
+        </Link>,
+      );
+
+      // Then: open_in_new アイコンが表示される
+      const externalLink = testContainer.queryByTestId("external-child");
+      expect(externalLink).toBeDefined();
+      expect(externalLink?.innerHTML).toContain("open_in_new");
+    });
+
+    it("renders as normal <a> when asChild is false", () => {
+      // Given: asChild なし（デフォルト）
+      testContainer.render(
+        <Link href="/test" data-testid="normal-link">
+          通常リンク
+        </Link>,
+      );
+
+      // Then: <a> タグとしてレンダリング
+      const normalLink = testContainer.queryByTestId("normal-link");
+      expect(normalLink).toBeDefined();
+      expect(normalLink?.tagName).toBe("A");
+    });
+  });
 });
