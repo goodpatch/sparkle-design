@@ -43,6 +43,8 @@ export interface LinkProps
  *   en: Do not manually add external link icons. The `isOpenInNew` prop automatically displays the `open_in_new` icon.
  * - `asChild` 使用時は `isOpenInNew` のアイコンが自動付与されます。手動で追加しないでください。
  *   en: When using `asChild`, the `isOpenInNew` icon is still automatically added. Do not add it manually.
+ * - `asChild` の子要素は `<a>` または `next/link` 等のリンク要素を渡してください。`<span>` や `<div>` を渡すとアクセシビリティが損なわれます。
+ *   en: When using `asChild`, pass a link element (`<a>` or `next/link`, etc.) as the child. Passing `<span>` or `<div>` breaks accessibility.
  *
  * **使用例 / Usage Example**
  *
@@ -99,6 +101,20 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
       : `character-${characterSize}-regular-pro`;
 
     const linkClassName = cn("inline group", characterSizeClass, className);
+
+    if (
+      asChild &&
+      typeof process !== "undefined" &&
+      process.env.NODE_ENV !== "production" &&
+      React.isValidElement(children)
+    ) {
+      const childType = (children as React.ReactElement).type;
+      if (childType === "span" || childType === "div") {
+        console.warn(
+          "[Link] asChild の子要素にはリンク要素（<a> や next/link 等）を渡してください。<span> や <div> を渡すとアクセシビリティが損なわれます。",
+        );
+      }
+    }
 
     const linkContent = (
       <>
