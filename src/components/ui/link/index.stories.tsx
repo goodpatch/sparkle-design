@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import NextLink from "next/link";
 import React from "react";
 import { Link } from "./index";
 
@@ -45,7 +46,7 @@ export const ExternalLink: Story = {
 export const AsChild: Story = {
   render: () => (
     <Link asChild>
-      <a href="/">next/link 等に置き換え可能</a>
+      <NextLink href="/">next/link 等に置き換え可能</NextLink>
     </Link>
   ),
 };
