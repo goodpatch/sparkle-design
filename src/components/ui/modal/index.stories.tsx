@@ -234,3 +234,55 @@ export const EnabledOverlayClickToClose: Story = {
     );
   },
 };
+
+/**
+ * 開閉モーション（オーバーレイフェード＋パネル fade／zoom）の確認用。
+ * en: For verifying open/close motion (overlay fade + panel fade/zoom).
+ */
+export const MotionPreview: Story = {
+  parameters: {
+    layout: "fullscreen",
+    docs: {
+      description: {
+        story:
+          "全画面レイアウトでスクリムとパネルの動きを確認する。**開く**：トリガーボタン。**閉じる**：×／キャンセル／保存／Esc。オーバーレイクリックは既定で閉じない（仕様確認用）。オーバーレイはフェード（Open 180ms / Close 160ms）、コンテンツは opacity + translateY + scale（Open 240ms / delay 20ms、Close 200ms）で出入りする。\n\nen: Use fullscreen to judge scrim and panel motion. Trigger opens; close via ×, footer buttons, or Esc. Overlay fades (open 180ms, close 160ms). Content enters/leaves with opacity + translateY + scale (open 240ms with 20ms delay, close 200ms).",
+      },
+    },
+  },
+  render: () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <div className="flex min-h-screen items-center justify-center p-8">
+        <Modal open={open} onOpenChange={setOpen}>
+          <ModalTrigger asChild>
+            <Button>モーダルを開く（モーション確認）</Button>
+          </ModalTrigger>
+          <ModalContent>
+            <ModalHeader>
+              <ModalTitle>モーション確認</ModalTitle>
+              <ModalClose />
+            </ModalHeader>
+            <ModalBody>
+              <p className="text-pretty">
+                開閉を繰り返して、オーバーレイのフェードとパネルのスケール／不透明度の同期を確認してください。
+              </p>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                size="sm"
+                theme="neutral"
+                variant="ghost"
+                onClick={() => setOpen(false)}
+              >
+                キャンセル
+              </Button>
+              <Button size="sm" onClick={() => setOpen(false)}>
+                保存
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </div>
+    );
+  },
+};
