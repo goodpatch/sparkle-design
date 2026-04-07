@@ -26,7 +26,7 @@ export const Default: Story = {
   args: {
     children: "リンクテキスト",
     isOpenInNew: false,
-    href: "#",
+    href: "/",
   },
 };
 
@@ -34,7 +34,7 @@ export const ExternalLink: Story = {
   args: {
     children: "リンクテキスト",
     isOpenInNew: true,
-    href: "#",
+    href: "https://example.com",
   },
 };
 
@@ -45,7 +45,7 @@ export const ExternalLink: Story = {
 export const AsChild: Story = {
   render: () => (
     <Link asChild>
-      <a href="#">next/link 等に置き換え可能</a>
+      <a href="/">next/link 等に置き換え可能</a>
     </Link>
   ),
 };
@@ -71,6 +71,6 @@ export const CustomTypography: Story = {
   args: {
     children: "カスタムタイポグラフィ",
     className: "character-4-bold-pro",
-    href: "#",
+    href: "/",
   },
 };
