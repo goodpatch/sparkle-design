@@ -1,6 +1,15 @@
 ---
 name: add-sparkle-component
-description: This skill should be used when adding, installing, or setting up Sparkle Design UI components from the registry. It applies when the user asks to "add a sparkle button component", "install sparkle-design card", "add @sparkle-design/input", "set up a new UI component from the sparkle registry", "Sparkle コンポーネントを追加", "sparkle-design のコンポーネントをインストール", or asks how to install Sparkle Design components. Automates package manager detection, configuration validation, component installation, and provides guidance for Storybook integration, CSS setup, and troubleshooting.
+description: >
+  Sparkle Design の UI コンポーネントを shadcn registry 経由でプロジェクトに追加するスキル。
+  パッケージマネージャの自動検出、設定バリデーション、コンポーネントインストール、
+  Storybook 統合、CSS セットアップ、トラブルシューティングをカバーする。
+  「Sparkle コンポーネントを追加」「sparkle-design のコンポーネントをインストール」
+  「@sparkle-design のセットアップ」「コンポーネントをどう追加する」
+  「registry の設定」「components.json の設定」への言及で発動する。
+  English: "add a sparkle button", "install sparkle-design card",
+  "add @sparkle-design/input", "set up components from sparkle registry",
+  "how do I install components", "registry setup"
 ---
 
 # Sparkle Design Component Installation
@@ -320,6 +329,8 @@ Consult the project's documentation for:
 - Code style and patterns
 
 ---
+
+<!-- ========== AI アシスタント向け指示（ユーザーにそのまま見せない） ========== -->
 
 ## AI Assistant Notes
 

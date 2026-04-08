@@ -1,6 +1,15 @@
 ---
 name: accessibility-checker
-description: This skill should be used when the user asks to "check accessibility", "run a WCAG review", "perform an a11y audit", "generate an accessibility report", "validate the accessibility checklist", "アクセシビリティチェック", "WCAG準拠の確認", "a11yレビュー", or asks to review UI components, Storybook stories, pages, or PRs for WCAG compliance. Runs checklist-driven reviews producing structured pass/fail/NA/needs-review reports with evidence and actionable fixes.
+description: >
+  WCAG 準拠のアクセシビリティチェックをチェックリスト駆動で実行するスキル。
+  コンポーネント・ページ・PR に対して Pass/Fail/N/A/Needs Review の構造化レポートを
+  生成し、エビデンスと修正案を提示する。
+  「アクセシビリティチェック」「a11y チェック」「WCAG をチェック」「a11y レビュー」
+  「アクセシビリティ監査」「WCAG 準拠確認」「アクセシビリティレポート」への言及、
+  または PR やコンポーネントのアクセシビリティレビュー依頼で発動する。
+  English: "check accessibility", "a11y audit", "a11y check", "WCAG review",
+  "accessibility report", "screen reader test", "review for a11y",
+  "review this PR for accessibility", "axe audit"
 ---
 
 # Accessibility Checker
@@ -267,6 +276,8 @@ Report templates available in `examples/`:
 - **Verify assumptions**: Check actual code, don't assume
 
 ---
+
+<!-- ========== AI アシスタント向け指示（ユーザーにそのまま見せない） ========== -->
 
 ## AI Assistant Notes
 

@@ -1,0 +1,24 @@
+# Divider
+
+ディバイダーはコンテンツを視覚的に分離するための区切り線コンポーネントです。
+
+> **Server Component 互換**: このコンポーネントは Server Component からそのまま利用できます。
+
+## インストール
+
+```bash
+npx shadcn@latest add https://sparkle-design.vercel.app/r/divider.json
+```
+
+または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。
+
+## 使い方
+
+```tsx
+<Divider emphasis="middle" lineStyle="solid" direction="horizontal" />
+```
+
+## 関連リンク
+
+- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-divider--docs)
+- [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/divider)

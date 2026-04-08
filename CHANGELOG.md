@@ -5,6 +5,15 @@
 
 ## [Unreleased]
 
+## [0.0.10] - 2026-03-27
+
+### Added
+
+- **Link: `asChild` prop** — next/link や React Router の Link 等、任意のリンクコンポーネントをルート要素として使用可能に
+  - Radix Slot Primitive を使用（Button と同じパターン）
+  - `isOpenInNew` アイコンは asChild 使用時も自動付与
+  - 非リンク要素（`<span>` / `<div>`）を渡した場合の開発警告を追加
+
 ## [0.0.9] - 2026-03-24
 
 ### Changed

@@ -70,5 +70,8 @@ node-compile-cache/
 # package manager lock files
 # pnpm-lock.yaml
 
-# private skills (local only)
-.claude/skills/motion-design-prompt/
+# skills
+.claude/skills/*
+!.claude/skills/accessibility-checker/
+!.claude/skills/add-sparkle-component/
+!.claude/skills/setup-sparkle-design/

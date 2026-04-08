@@ -1,0 +1,28 @@
+# Checkbox
+
+チェックボックスは複数のオプショングループから複数の項目を選択する形式でユーザーからの入力を取得するために使用するコンポーネントです。
+
+> **Client Component**: このコンポーネントは `"use client"` を含みます。Server Component から使う場合は個別 import を推奨します。
+>
+> ```tsx
+> import { Checkbox } from "@goodpatch/sparkle-design/checkbox";
+> ```
+
+## インストール
+
+```bash
+npx shadcn@latest add https://sparkle-design.vercel.app/r/checkbox.json
+```
+
+または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。
+
+## 使い方
+
+```tsx
+<Checkbox size="md" label="利用規約に同意する" />
+```
+
+## 関連リンク
+
+- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-checkbox--docs)
+- [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/checkbox)

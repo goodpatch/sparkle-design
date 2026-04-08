@@ -8,16 +8,18 @@
 
 [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
 [![ci](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml/badge.svg)](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
 This is a component library built with React.js and TypeScript.<br />
-It implements Goodpatch's "Sparkle Design" system on top of shadcn/ui.
+It implements [Goodpatch](https://goodpatch.com/)'s "Sparkle Design" system on top of shadcn/ui.
 
 ## Features
 
 - 🔧 **Flexibility** ... Because it is based on shadcn/ui and compatible with the shadcn/ui registry, you can introduce components one by one. It is also published as an npm package, so you can integrate it in the way that best fits each project.
 - ♿️ **Accessibility** ... Sparkle Design is engineered with accessibility as a primary consideration.
 - 🎨 **Customizability** ... A dedicated CLI tool lets you apply the same customizations found in the Figma files. This makes it easy to spin up code for design systems built on Sparkle Design.
+- 🤖 **AI Friendly** ... Ships with skills and guard configurations for Claude Code, Cursor, and Codex. Maintain design system quality even during AI-assisted coding.
 
 ## Usage
 
@@ -33,7 +35,13 @@ pnpm add @goodpatch/sparkle-design
 yarn add @goodpatch/sparkle-design
 ```
 
-> This package does not bundle CSS. Run `sparkle-design-cli` in the consuming app and use the generated `sparkle-design.css` / `globals.css` files there.
+> This package does not bundle CSS. Run `sparkle-design-cli generate` in the consuming app and use the generated `sparkle-design.css` / `SparkleHead.tsx` files there. The CLI automatically inserts `@source` directives into your Tailwind entrypoint CSS (`globals.css`, `index.css`, etc.).
+
+> **Using with Server Components**: For components that contain `"use client"`, use subpath imports. Each component's [README](src/components/ui/) includes Server Component / Client Component information.
+>
+> ```tsx
+> import { Button } from "@goodpatch/sparkle-design/button";
+> ```
 
 ### Install individual components
 
@@ -83,30 +91,74 @@ export default App;
 
 ### About the style files
 
-- **`globals.css`**: Base Tailwind CSS and reset styles
+- **Tailwind entrypoint CSS** (`globals.css` / `index.css`, etc.): Base Tailwind CSS and reset styles
 - **`sparkle-design.css`**: Sparkle Design design tokens (color, typography, border radius, shadows, and more)
+- **`SparkleHead.tsx`**: Font-loading React component
 
-Import both files to take advantage of everything Sparkle Design offers.
+Import these files to take advantage of everything Sparkle Design offers.
 
-#### Generating Sparkle Design CSS
+#### Using as an npm package
 
-Run the following command to generate CSS that complies with your design system based on the settings in `sparkle.config.json`.<br />
-Internally, this command runs `sparkle-design-cli generate` to build `src/app/sparkle-design.css` from design tokens such as the primary color, font settings, and border radii.
+When using `@goodpatch/sparkle-design` as an npm package, TailwindCSS v4 needs `@source` directives to detect utility classes inside the package.
+
+`sparkle-design-cli generate` auto-detects CSS files containing `@import "tailwindcss"` and inserts `@source` directives. This works with any filename (`globals.css`, `index.css`, etc.). If auto-detection fails, specify the path via `extend.globals-path` in `sparkle.config.json` or the `--globals-path` CLI option.
+
+To configure manually, add the following to your Tailwind entrypoint CSS:
+
+```css
+@import "tailwindcss";
+/* Scan @goodpatch/sparkle-design classes */
+/* Adjust the path relative to the CSS file (example for src/app/globals.css) */
+@source "../../node_modules/@goodpatch/sparkle-design/dist";
+/* Sparkle Design custom definitions (import after Tailwind) */
+@import "./sparkle-design.css";
+```
+
+> **Note**: The relative path for `@source` depends on where your CSS file is located. The example above assumes `src/app/globals.css`.
+
+#### Generating Sparkle Design CSS and SparkleHead
+
+Generate design-system-compliant CSS and a font-loading component based on `sparkle.config.json`.
 
 ```bash
-pnpm build:css
+npx sparkle-design-cli generate
 ```
+
+This generates:
+- `sparkle-design.css` — Design token CSS
+- `SparkleHead.tsx` — Font loading React component
+
+Place `SparkleHead` in the `<head>` of your root layout:
+
+```tsx
+import { SparkleHead } from "./SparkleHead";
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <head>
+        <SparkleHead />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+> `SparkleHead` loads fonts via `<link rel="preconnect">` and `<link rel="stylesheet">`, enabling earlier font discovery compared to CSS `@import`. This improves icon rendering especially on mobile.
+
+> **`@next/next/no-head-element` in Next.js App Router**: If your project extends `next/core-web-vitals`, a `<head>` element in `layout.tsx` may trigger a lint error. In that case, use `eslint-disable` on the relevant line or consider alternative approaches with `next/font`.
 
 Core configuration options for `sparkle.config.json`:
 
-- `primary`: Primary color (blue, red, orange, etc.)
+- `primary`: Primary color (blue, red, orange, green, purple, pink, yellow)
 - `font-pro`: Proportional font ([Google Fonts](https://fonts.google.com/) name)
 - `font-mono`: Monospace font ([Google Fonts](https://fonts.google.com/) name)
-- `radius`: Border radius preset (sm, md, lg, etc.)
+- `radius`: Border radius preset (none, sm, md, lg, xl, full)
 
 You can export this configuration from the [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) Figma plugin.
 
-For additional options (font weight customization, fallback chains, custom token CSS, etc.), see `sparkle-design-cli generate --help`.
+Extended options (per-font weight customization, fallback chains, custom token CSS) can be configured in the `extend` section of `sparkle.config.json`. See `sparkle-design-cli generate --help` for details.
 
 ```bash
 # Generate CSS
@@ -126,17 +178,16 @@ npx sparkle-design-cli setup --assistant claude
 ### Development environment
 
 - Node.js 22.14.0 or later
-- pnpm 10.12.4 or later
+- pnpm 10 or later
 
 ### Directory structure
 
-```
+```text
 ├─ src/
 │  ├─ app/            # Sparkle Design pages and style files
 │  ├─ components/     # React components
 │  └─ lib/            # Shared utilities
 ├─ scripts/           # Various scripts
-├─ public/r/          # Public registry JSON
 ├─ docs/
 │  └─ ai-instructions/ # Development, testing, and AI guidelines (source)
 └─ .github/           # GitHub configuration
@@ -213,3 +264,9 @@ The Sparkle Design badge indicates that a component uses Sparkle Design. Add the
 ## Component status
 
 Please refer to the table on [README.md](./README.md#コンポーネント公開状況) for the current implementation status of components.
+
+## License
+
+[Apache License 2.0](LICENSE)
+
+Copyright 2026 [Goodpatch Inc.](https://goodpatch.com/)
