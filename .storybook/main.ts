@@ -1,6 +1,14 @@
 // Storybook のメイン設定ファイル
 // en: Main configuration for Storybook
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
 import type { StorybookConfig } from "@storybook/experimental-nextjs-vite";
+
+const dirname =
+  typeof __dirname !== "undefined"
+    ? __dirname
+    : path.dirname(fileURLToPath(import.meta.url));
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
@@ -31,6 +39,18 @@ const config: StorybookConfig = {
 
   typescript: {
     reactDocgen: "react-docgen-typescript",
+  },
+
+  // Vite のパスエイリアス設定
+  // en: Configure Vite path aliases to resolve @/ imports
+  viteFinal: async (config) => {
+    if (config.resolve) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        "@": path.resolve(dirname, "../src"),
+      };
+    }
+    return config;
   },
 };
 export default config;

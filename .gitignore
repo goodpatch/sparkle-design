@@ -52,6 +52,9 @@ next-env.d.ts
 !.cursor/rules/
 !.cursor/skills
 
+# claude skills (internal, not for version control)
+.claude/skills/
+
 # vscode
 # .vscode
 
