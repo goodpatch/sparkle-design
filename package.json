@@ -39,7 +39,6 @@
     "build:registry:merge": "node scripts/merge-registry.mjs",
     "build:registry:vercel": "bash scripts/build-registry-vercel.sh",
     "preinstall": "npx only-allow pnpm",
-    "postinstall": "npx lightningcss --version || true",
     "build:package": "rm -rf dist && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "format": "prettier --config ./.prettierrc -w \"**/*.{js,ts,tsx,css,md,json}\"",
     "format:check": "prettier --config ./.prettierrc --check \"**/*.{js,ts,tsx,css,md,json}\"",

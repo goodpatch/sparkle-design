@@ -127,7 +127,13 @@ function ModalOverlay({
     <DialogPrimitive.Overlay
       data-slot="modal-overlay"
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
+        [
+          "fixed inset-0 z-50 bg-black/50",
+          "data-[state=open]:animate-[sparkle-overlay-in_180ms_ease-out_0ms_both]",
+          "data-[state=closed]:animate-[sparkle-overlay-out_160ms_ease-in_0ms_both]",
+          "motion-reduce:data-[state=open]:animate-[sparkle-fade-in_120ms_ease-out_0ms_both]",
+          "motion-reduce:data-[state=closed]:animate-[sparkle-fade-out_120ms_ease-in_0ms_both]",
+        ].join(" "),
         className
       )}
       {...props}
@@ -199,18 +205,31 @@ function ModalContent({
   return (
     <ModalPortal data-slot="modal-portal">
       <ModalOverlay />
-      <DialogPrimitive.Content
-        data-slot="modal-content"
-        className={cn(
-          sizeClass,
-          "z-50 flex flex-col gap-0 w-full max-h-[calc(100vh-80px)] bg-white border-divider-low py-4 rounded-modal data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] shadow-lg duration-200",
-          className
-        )}
-        onInteractOutside={handleInteractOutside}
-        {...props}
+      <div
+        data-slot="modal-positioner"
+        className="fixed inset-0 z-50 flex items-center justify-center p-10 pointer-events-none"
       >
-        {children}
-      </DialogPrimitive.Content>
+        <DialogPrimitive.Content
+          data-slot="modal-content"
+          className={cn(
+            sizeClass,
+            [
+              "pointer-events-auto",
+              "flex flex-col gap-0 w-full max-h-[calc(100vh-80px)]",
+              "bg-white border-divider-low py-4 rounded-modal shadow-lg",
+              "data-[state=open]:animate-[sparkle-modal-in_240ms_cubic-bezier(0.16,1,0.3,1)_20ms_both]",
+              "data-[state=closed]:animate-[sparkle-modal-out_200ms_cubic-bezier(0.32,0,0.67,0)_0ms_both]",
+              "motion-reduce:data-[state=open]:animate-[sparkle-fade-in_120ms_ease-out_0ms_both]",
+              "motion-reduce:data-[state=closed]:animate-[sparkle-fade-out_120ms_ease-in_0ms_both]",
+            ].join(" "),
+            className
+          )}
+          onInteractOutside={handleInteractOutside}
+          {...props}
+        >
+          {children}
+        </DialogPrimitive.Content>
+      </div>
     </ModalPortal>
   );
 }

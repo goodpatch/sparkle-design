@@ -52,6 +52,10 @@ next-env.d.ts
 !.cursor/rules/
 !.cursor/skills
 
+# sparkle-design-internal をワークスペース内に置いた場合（スキルは .cursor/skills に同期）
+# en: Local clone of internal repo at repo root — avoid accidental commits
+/sparkle-design-internal/
+
 # vscode
 # .vscode
 
