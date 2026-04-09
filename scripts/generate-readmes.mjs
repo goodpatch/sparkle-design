@@ -175,6 +175,9 @@ function generateReadme(componentDir, componentName) {
   lines.push("## 関連リンク");
   lines.push("");
   lines.push(
+    `- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/${componentName})`
+  );
+  lines.push(
     `- [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-${componentName}--docs)`
   );
   lines.push(
