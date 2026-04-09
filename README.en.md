@@ -6,6 +6,7 @@
 
 # Sparkle Design for React
 
+[![npm version](https://img.shields.io/npm/v/@goodpatch/sparkle-design)](https://www.npmjs.com/package/@goodpatch/sparkle-design)
 [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
 [![ci](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml/badge.svg)](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
