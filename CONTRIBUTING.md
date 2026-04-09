@@ -5,7 +5,7 @@ Sparkle Design for React へのコントリビュートを歓迎します！
 ## セットアップ
 
 ```bash
-# Node.js のバージョンは .node-version に合わせてください
+# Node.js のバージョンは .node-version または .tool-versions に合わせてください
 pnpm install
 ```
 
