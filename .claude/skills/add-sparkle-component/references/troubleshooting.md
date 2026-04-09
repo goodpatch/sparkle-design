@@ -138,7 +138,7 @@ Registry not found: @sparkle-design/<component-name>
 ```json
 {
   "registries": {
-    "@sparkle-design": "https://sparkle-design.vercel.app/r/{name}.json"
+    "@sparkle-design": "https://sparkle-design.goodpatch.com/r/{name}.json"
   }
 }
 ```
@@ -169,7 +169,7 @@ pnpm dlx shadcn@latest add @sparkle-design/<component-name>
 
 **Solution C:** Verify component name
 
-Check available components at: https://sparkle-design.vercel.app/
+Check available components at: https://sparkle-design.goodpatch.com/
 
 Common component names:
 
@@ -397,7 +397,7 @@ If you're still experiencing problems after trying these solutions:
 
    Check if others have encountered the same problem:
 
-   - Sparkle Design documentation: https://sparkle-design.vercel.app/
+   - Sparkle Design documentation: https://sparkle-design.goodpatch.com/
    - shadcn/ui documentation: https://ui.shadcn.com/docs
 
 5. **Create a minimal reproduction:**

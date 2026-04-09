@@ -11,7 +11,7 @@
 ## インストール
 
 ```bash
-npx shadcn@latest add https://sparkle-design.vercel.app/r/dialog.json
+npx shadcn@latest add https://sparkle-design.goodpatch.com/r/dialog.json
 ```
 
 または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。
@@ -36,5 +36,5 @@ npx shadcn@latest add https://sparkle-design.vercel.app/r/dialog.json
 
 ## 関連リンク
 
-- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-dialog--docs)
+- [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-dialog--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/dialog)

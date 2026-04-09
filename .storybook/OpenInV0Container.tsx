@@ -15,7 +15,7 @@ const OpenInV0Container: FC<PropsWithChildren<DocsContainerProps>> = ({
 
   const componentName = title.split("/").pop() || "";
   const name = camelToKebab(componentName);
-  const registryUrl = `https://sparkle-design.vercel.app/r/${name}.json`;
+  const registryUrl = `https://sparkle-design.goodpatch.com/r/${name}.json`;
   const openUrl = `https://v0.dev/chat/api/open?url=${registryUrl}`;
   const [copied, setCopied] = useState(false);
 

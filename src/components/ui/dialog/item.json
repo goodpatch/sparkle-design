@@ -12,7 +12,7 @@
   ],
   "dependencies": ["radix-ui"],
   "registryDependencies": [
-    "https://sparkle-design.vercel.app/r/button.json",
-    "https://sparkle-design.vercel.app/r/icon.json"
+    "https://sparkle-design.goodpatch.com/r/button.json",
+    "https://sparkle-design.goodpatch.com/r/icon.json"
   ]
 }

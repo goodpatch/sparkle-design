@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://sparkle-design.goodpatch.com/">
-    <img src="https://sparkle-design.vercel.app/thumbnail.png" alt="Sparkle Design" width="1200">
+    <img src="https://sparkle-design.goodpatch.com/thumbnail.png" alt="Sparkle Design" width="1200">
   </a>
 </p>
 
@@ -57,7 +57,7 @@ pnpm dlx shadcn@latest add [registry URL]
 ```json
 {
   "registries": {
-    "@sparkle-design": "https://sparkle-design.vercel.app/r/{name}.json"
+    "@sparkle-design": "https://sparkle-design.goodpatch.com/r/{name}.json"
   }
 }
 ```

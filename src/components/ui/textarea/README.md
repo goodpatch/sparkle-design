@@ -7,7 +7,7 @@
 ## インストール
 
 ```bash
-npx shadcn@latest add https://sparkle-design.vercel.app/r/textarea.json
+npx shadcn@latest add https://sparkle-design.goodpatch.com/r/textarea.json
 ```
 
 または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。
@@ -20,5 +20,5 @@ npx shadcn@latest add https://sparkle-design.vercel.app/r/textarea.json
 
 ## 関連リンク
 
-- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-textarea--docs)
+- [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-textarea--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/textarea)

@@ -2,8 +2,8 @@
   "name": "@goodpatch/sparkle-design",
   "version": "0.0.10",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "restricted"
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "author": "Goodpatch Inc. <sparkle-design@goodpatch.com>",
   "type": "module",
@@ -20,6 +20,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/goodpatch/sparkle-design"
+  },
+  "homepage": "https://sparkle-design.goodpatch.com",
+  "bugs": {
+    "url": "https://github.com/goodpatch/sparkle-design/issues"
   },
   "scripts": {
     "dev": "next dev",

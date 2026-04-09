@@ -121,7 +121,7 @@ function generateReadme(componentDir, componentName) {
   lines.push("");
   lines.push("```bash");
   lines.push(
-    `npx shadcn@latest add https://sparkle-design.vercel.app/r/${componentName}.json`
+    `npx shadcn@latest add https://sparkle-design.goodpatch.com/r/${componentName}.json`
   );
   lines.push("```");
   lines.push("");
@@ -175,7 +175,7 @@ function generateReadme(componentDir, componentName) {
   lines.push("## 関連リンク");
   lines.push("");
   lines.push(
-    `- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-${componentName}--docs)`
+    `- [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-${componentName}--docs)`
   );
   lines.push(
     `- [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/${componentName})`

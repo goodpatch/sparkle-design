@@ -11,5 +11,5 @@
     }
   ],
   "dependencies": ["radix-ui"],
-  "registryDependencies": ["https://sparkle-design.vercel.app/r/link.json"]
+  "registryDependencies": ["https://sparkle-design.goodpatch.com/r/link.json"]
 }
