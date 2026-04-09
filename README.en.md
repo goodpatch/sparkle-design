@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://sparkle-design.goodpatch.com/">
-    <img src="https://sparkle-design.goodpatch.com/thumbnail.png" alt="Sparkle Design" width="1200">
+    <img src="https://raw.githubusercontent.com/goodpatch/sparkle-design/main/public/thumbnail.png" alt="Sparkle Design" width="1200">
   </a>
 </p>
 
