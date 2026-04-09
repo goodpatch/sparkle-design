@@ -83,7 +83,7 @@ We welcome contributions to Sparkle Design for React!
 
 ## Setup
 
-- Match the Node.js version to `.node-version`.
+- Match the Node.js version to `.node-version` or `.tool-versions`.
 - Install dependencies with `pnpm install`.
 
 ## Development Flow
