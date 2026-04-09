@@ -31,5 +31,6 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/tabs.json
 
 ## 関連リンク
 
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/tabs)
 - [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-tabs--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/tabs)

@@ -27,5 +27,6 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/tooltip.json
 
 ## 関連リンク
 
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/tooltip)
 - [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-tooltip--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/tooltip)

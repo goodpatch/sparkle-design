@@ -80,6 +80,7 @@ import { $CAMEL_NAME } from "@goodpatch/sparkle-design";
 
 ## 関連リンク
 
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/$1)
 - [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-$1--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/$1)
 ENDOFREADME

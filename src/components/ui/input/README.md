@@ -29,5 +29,6 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/input.json
 
 ## 関連リンク
 
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/input)
 - [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-input--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/input)

@@ -36,5 +36,6 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/dialog.json
 
 ## 関連リンク
 
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/dialog)
 - [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-dialog--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/dialog)

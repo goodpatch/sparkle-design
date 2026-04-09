@@ -32,5 +32,6 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/toast.json
 
 ## 関連リンク
 
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/toast)
 - [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-toast--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/toast)

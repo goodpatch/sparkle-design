@@ -24,5 +24,6 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/icon-button.json
 
 ## 関連リンク
 
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/icon-button)
 - [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-icon-button--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/icon-button)

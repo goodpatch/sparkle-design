@@ -29,5 +29,6 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/button.json
 
 ## 関連リンク
 
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/button)
 - [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-button--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/button)

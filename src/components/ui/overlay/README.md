@@ -24,5 +24,6 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/overlay.json
 
 ## 関連リンク
 
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/overlay)
 - [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-overlay--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/overlay)

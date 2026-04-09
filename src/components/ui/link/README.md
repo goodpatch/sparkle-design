@@ -22,5 +22,6 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/link.json
 
 ## 関連リンク
 
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/link)
 - [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-link--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/link)

@@ -20,5 +20,6 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/spinner.json
 
 ## 関連リンク
 
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/spinner)
 - [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-spinner--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/spinner)
