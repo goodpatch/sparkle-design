@@ -14,14 +14,14 @@ English | **[日本語](./README.md)**
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
-This is a component library built with React.js and TypeScript.<br />
+A React component library built with TypeScript.<br />
 It implements [Goodpatch](https://goodpatch.com/)'s "Sparkle Design" system on top of shadcn/ui.
 
 ## Features
 
-- 🔧 **Flexibility** ... Because it is based on shadcn/ui and compatible with the shadcn/ui registry, you can introduce components one by one. It is also published as an npm package, so you can integrate it in the way that best fits each project.
-- ♿️ **Accessibility** ... Sparkle Design is engineered with accessibility as a primary consideration.
-- 🎨 **Customizability** ... A dedicated CLI tool lets you apply the same customizations found in the Figma files. This makes it easy to spin up code for design systems built on Sparkle Design.
+- 🔧 **Flexibility** ... Built on shadcn/ui and compatible with the shadcn/ui registry, so you can install components one at a time. Also available as an npm package for full-library integration — choose whichever approach suits your project.
+- ♿️ **Accessibility** ... Built with accessibility as a first-class concern.
+- 🎨 **Customizability** ... A dedicated CLI tool lets you apply the same customizations found in the Figma files. This makes it easy to scaffold projects built on Sparkle Design.
 - 🤖 **AI Friendly** ... Ships with skills and guard configurations for Claude Code, Cursor, and Codex. Maintain design system quality even during AI-assisted coding.
 
 ## Usage
@@ -243,8 +243,8 @@ pnpm type-check
 
 The Makefile defines the following targets:
 
-- `registry` ... Generate the registry and copy files to the public directory
-- `new-component` ... Interactive flow for creating a new component
+- `registry` — Generate the registry and copy files to the public directory
+- `new-component` — Interactive flow for creating a new component
 
 Run `make help` for details.
 
