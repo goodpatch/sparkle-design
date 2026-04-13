@@ -1,11 +1,14 @@
 <p align="center">
   <a href="https://sparkle-design.goodpatch.com/">
-    <img src="https://sparkle-design.vercel.app/thumbnail.png" alt="Sparkle Design" width="1200">
+    <img src="https://raw.githubusercontent.com/goodpatch/sparkle-design/main/public/thumbnail.png" alt="Sparkle Design" width="1200">
   </a>
 </p>
 
 # Sparkle Design for React
 
+**[English](./README.en.md)** | 日本語
+
+[![npm version](https://img.shields.io/npm/v/@goodpatch/sparkle-design)](https://www.npmjs.com/package/@goodpatch/sparkle-design)
 [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
 [![ci](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml/badge.svg)](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -57,7 +60,7 @@ pnpm dlx shadcn@latest add [registry URL]
 ```json
 {
   "registries": {
-    "@sparkle-design": "https://sparkle-design.vercel.app/r/{name}.json"
+    "@sparkle-design": "https://sparkle-design.goodpatch.com/r/{name}.json"
   }
 }
 ```

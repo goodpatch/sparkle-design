@@ -7,7 +7,7 @@
 ## インストール
 
 ```bash
-npx shadcn@latest add https://sparkle-design.vercel.app/r/spinner.json
+npx shadcn@latest add https://sparkle-design.goodpatch.com/r/spinner.json
 ```
 
 または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。
@@ -20,5 +20,6 @@ npx shadcn@latest add https://sparkle-design.vercel.app/r/spinner.json
 
 ## 関連リンク
 
-- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-spinner--docs)
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/spinner)
+- [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-spinner--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/spinner)

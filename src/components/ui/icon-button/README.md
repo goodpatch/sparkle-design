@@ -11,7 +11,7 @@
 ## インストール
 
 ```bash
-npx shadcn@latest add https://sparkle-design.vercel.app/r/icon-button.json
+npx shadcn@latest add https://sparkle-design.goodpatch.com/r/icon-button.json
 ```
 
 または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。
@@ -24,5 +24,6 @@ npx shadcn@latest add https://sparkle-design.vercel.app/r/icon-button.json
 
 ## 関連リンク
 
-- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-icon-button--docs)
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/icon-button)
+- [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-icon-button--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/icon-button)

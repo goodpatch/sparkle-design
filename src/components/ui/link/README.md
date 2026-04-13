@@ -7,7 +7,7 @@
 ## インストール
 
 ```bash
-npx shadcn@latest add https://sparkle-design.vercel.app/r/link.json
+npx shadcn@latest add https://sparkle-design.goodpatch.com/r/link.json
 ```
 
 または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。
@@ -22,5 +22,6 @@ npx shadcn@latest add https://sparkle-design.vercel.app/r/link.json
 
 ## 関連リンク
 
-- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-link--docs)
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/link)
+- [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-link--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/link)
