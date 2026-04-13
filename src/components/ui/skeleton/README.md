@@ -10,7 +10,7 @@
 npx shadcn@latest add https://sparkle-design.goodpatch.com/r/skeleton.json
 ```
 
-または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。
+または npm パッケージとして `sparkle-design` をインストールしている場合はそのまま利用できます。
 
 ## 使い方
 

@@ -68,12 +68,12 @@ cat > "src/components/ui/$1/README.md" << ENDOFREADME
 npx shadcn@latest add https://sparkle-design.goodpatch.com/r/$1.json
 \`\`\`
 
-または npm パッケージとして \`@goodpatch/sparkle-design\` をインストールしている場合はそのまま利用できます。
+または npm パッケージとして \`sparkle-design\` をインストールしている場合はそのまま利用できます。
 
 ## 使い方
 
 \`\`\`tsx
-import { $CAMEL_NAME } from "@goodpatch/sparkle-design";
+import { $CAMEL_NAME } from "sparkle-design";
 
 <$CAMEL_NAME />
 \`\`\`

@@ -4,7 +4,7 @@
 
 UI コンポーネントは以下の優先順位で選択する:
 
-1. **Sparkle Design コンポーネント**（`@goodpatch/sparkle-design`）
+1. **Sparkle Design コンポーネント**（`sparkle-design`）
 2. **shadcn/ui コンポーネント**（Sparkle Design が提供していないもののみ）
 3. **独自実装**（上記で対応できない場合のみ）
 
@@ -56,7 +56,7 @@ npx --yes sparkle-design-cli check src --format json
    import { Button } from "@/components/ui/button";
 
    // After
-   import { Button } from "@goodpatch/sparkle-design";
+   import { Button } from "sparkle-design";
    ```
 
 2. **shadcn/ui 既定トークンを Sparkle Design トークンに置き換え**

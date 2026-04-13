@@ -5,7 +5,7 @@
 > **Client Component**: このコンポーネントは `"use client"` を含みます。Server Component から使う場合は個別 import を推奨します。
 >
 > ```tsx
-> import { Checkbox } from "@goodpatch/sparkle-design/checkbox";
+> import { Checkbox } from "sparkle-design/checkbox";
 > ```
 
 ## インストール
@@ -14,7 +14,7 @@
 npx shadcn@latest add https://sparkle-design.goodpatch.com/r/checkbox.json
 ```
 
-または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。
+または npm パッケージとして `sparkle-design` をインストールしている場合はそのまま利用できます。
 
 ## 使い方
 
