@@ -2,6 +2,7 @@
 // en: Main configuration for Storybook
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { mergeConfig } from "vite";
 import type { StorybookConfig } from "@storybook/nextjs-vite";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -20,12 +21,13 @@ const config: StorybookConfig = {
   framework: "@storybook/nextjs-vite",
 
   async viteFinal(config) {
-    config.resolve = config.resolve || {};
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "@": path.resolve(__dirname, "../src"),
-    };
-    return config;
+    return mergeConfig(config, {
+      resolve: {
+        alias: {
+          "@": path.resolve(__dirname, "../src"),
+        },
+      },
+    });
   },
 
   // Storybook を `public/storybook` に出力する際は `public` からのコピーで
