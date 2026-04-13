@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, useState } from "react";
-import { DocsContainer, DocsContainerProps } from "@storybook/blocks";
+import { DocsContainer, DocsContainerProps } from "@storybook/addon-docs/blocks";
 import { Button } from "../src/components/ui/button";
 
 const OpenInV0Container: FC<PropsWithChildren<DocsContainerProps>> = ({

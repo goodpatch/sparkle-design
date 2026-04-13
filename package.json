@@ -70,16 +70,12 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^3.2.6",
-    "@storybook/addon-a11y": "^8.6.18",
-    "@storybook/addon-actions": "^8.6.18",
-    "@storybook/addon-essentials": "^8.6.18",
-    "@storybook/addon-onboarding": "^8.6.14",
-    "@storybook/blocks": "^8.6.18",
-    "@storybook/experimental-addon-test": "^8.6.18",
-    "@storybook/experimental-nextjs-vite": "^8.6.18",
-    "@storybook/react": "^8.6.18",
-    "@storybook/test": "^8.6.18",
+    "@chromatic-com/storybook": "^5.1.1",
+    "@storybook/addon-a11y": "^10.3.5",
+    "@storybook/addon-docs": "^10.3.5",
+    "@storybook/addon-onboarding": "^10.3.5",
+    "@storybook/addon-vitest": "^10.3.5",
+    "@storybook/nextjs-vite": "^10.3.5",
     "@tailwindcss/postcss": "^4.1.7",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -94,21 +90,16 @@
     "eslint-config-next": "15.3.1",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-storybook": "^0.12.0",
+    "eslint-plugin-storybook": "^10.3.5",
     "next": "15.5.15",
     "playwright": "^1.51.1",
     "prettier": "^3.6.2",
-    "storybook": "^8.6.18",
+    "storybook": "^10.3.5",
     "tailwindcss": "^4",
     "tsc-alias": "^1.8.16",
     "typescript": "^5",
-    "vite-plugin-storybook-nextjs": "^3.2.4",
+    "vite": "6.3.5",
     "vitest": "^3.0.9"
-  },
-  "pnpm": {
-    "overrides": {
-      "vite-plugin-storybook-nextjs": "^3.2.4"
-    }
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

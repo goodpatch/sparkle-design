@@ -1,5 +1,5 @@
 import { beforeAll } from "vitest";
-import { setProjectAnnotations } from "@storybook/experimental-nextjs-vite";
+import { setProjectAnnotations } from "@storybook/nextjs-vite";
 import * as projectAnnotations from "./preview";
 
 // テスト実行時に正しい設定を適用する重要なステップです。
