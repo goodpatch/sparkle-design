@@ -24,11 +24,9 @@ It implements [Goodpatch](https://goodpatch.com/)'s "Sparkle Design" system on t
 - 🎨 **Customizability** ... A dedicated CLI tool lets you apply the same customizations found in the Figma files. This makes it easy to spin up code for design systems built on Sparkle Design.
 - 🤖 **AI Friendly** ... Ships with skills and guard configurations for Claude Code, Cursor, and Codex. Maintain design system quality even during AI-assisted coding.
 
-## Usage
+## Quick Start
 
-### Install the package
-
-The package is already published on npm. Install it with the steps below.
+### 1. Install the package
 
 ```bash
 npm install sparkle-design
@@ -38,38 +36,34 @@ pnpm add sparkle-design
 yarn add sparkle-design
 ```
 
-> This package does not bundle CSS. Run `sparkle-design-cli generate` in the consuming app and use the generated `sparkle-design.css` / `SparkleHead.tsx` files there. The CLI automatically inserts `@source` directives into your Tailwind entrypoint CSS (`globals.css`, `index.css`, etc.).
+### 2. Generate styles
 
-> **Using with Server Components**: For components that contain `"use client"`, use subpath imports. Each component's [README](src/components/ui/) includes Server Component / Client Component information.
->
-> ```tsx
-> import { Button } from "sparkle-design/button";
-> ```
-
-### Install individual components
-
-Sparkle Design works with the shadcn/ui registry. You can copy the registry URL from Storybook.<br />
-Refer to the [official documentation](https://ui.shadcn.com/docs/registry/getting-started) for details on the shadcn/ui registry.
+Generate design token CSS and a font-loading component.
 
 ```bash
-pnpm dlx shadcn@latest add [registry URL]
+npx sparkle-design-cli generate
 ```
 
-You can also specify [namespaces](https://ui.shadcn.com/docs/registry/namespace) in `components.json` to install components by name.
+Place the generated `SparkleHead` in the `<head>` of your root layout.
 
-```json
-{
-  "registries": {
-    "@sparkle-design": "https://sparkle-design.goodpatch.com/r/{name}.json"
-  }
+```tsx
+import { SparkleHead } from "./SparkleHead";
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <head>
+        <SparkleHead />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
 }
 ```
 
-```bash
-pnpm dlx shadcn@latest add @sparkle-design/button
-```
+Customize primary color, fonts, border radius, and more via `sparkle.config.json`. You can export the configuration from the [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) Figma plugin. See `sparkle-design-cli generate --help` for details.
 
-### Basic example
+### 3. Use components
 
 ```tsx
 import React from "react";
@@ -92,96 +86,38 @@ function App() {
 export default App;
 ```
 
-### About the style files
+> **Using with Server Components**: For components that contain `"use client"`, use subpath imports. Each component's [README](src/components/ui/) includes Server Component / Client Component information.
+>
+> ```tsx
+> import { Button } from "sparkle-design/button";
+> ```
 
-- **Tailwind entrypoint CSS** (`globals.css` / `index.css`, etc.): Base Tailwind CSS and reset styles
-- **`sparkle-design.css`**: Sparkle Design design tokens (color, typography, border radius, shadows, and more)
-- **`SparkleHead.tsx`**: Font-loading React component
+## Install individual components
 
-Import these files to take advantage of everything Sparkle Design offers.
-
-#### Using as an npm package
-
-When using `sparkle-design` as an npm package, TailwindCSS v4 needs `@source` directives to detect utility classes inside the package.
-
-`sparkle-design-cli generate` auto-detects CSS files containing `@import "tailwindcss"` and inserts `@source` directives. This works with any filename (`globals.css`, `index.css`, etc.). If auto-detection fails, specify the path via `extend.globals-path` in `sparkle.config.json` or the `--globals-path` CLI option.
-
-To configure manually, add the following to your Tailwind entrypoint CSS:
-
-```css
-@import "tailwindcss";
-/* Scan sparkle-design classes */
-/* Adjust the path relative to the CSS file (example for src/app/globals.css) */
-@source "../../node_modules/sparkle-design/dist";
-/* Sparkle Design custom definitions (import after Tailwind) */
-@import "./sparkle-design.css";
-```
-
-> **Note**: The relative path for `@source` depends on where your CSS file is located. The example above assumes `src/app/globals.css`.
-
-#### Generating Sparkle Design CSS and SparkleHead
-
-Generate design-system-compliant CSS and a font-loading component based on `sparkle.config.json`.
+Sparkle Design works with the shadcn/ui registry. You can copy the registry URL from Storybook.<br />
+Refer to the [official documentation](https://ui.shadcn.com/docs/registry/getting-started) for details on the shadcn/ui registry.
 
 ```bash
-npx sparkle-design-cli generate
+pnpm dlx shadcn@latest add [registry URL]
 ```
 
-This generates:
-- `sparkle-design.css` — Design token CSS
-- `SparkleHead.tsx` — Font loading React component
+You can also specify [namespaces](https://ui.shadcn.com/docs/registry/namespace) in `components.json` to install components by name.
 
-Place `SparkleHead` in the `<head>` of your root layout:
-
-```tsx
-import { SparkleHead } from "./SparkleHead";
-
-export default function RootLayout({ children }) {
-  return (
-    <html>
-      <head>
-        <SparkleHead />
-      </head>
-      <body>{children}</body>
-    </html>
-  );
+```json
+{
+  "registries": {
+    "@sparkle-design": "https://sparkle-design.goodpatch.com/r/{name}.json"
+  }
 }
 ```
 
-> `SparkleHead` loads fonts via `<link rel="preconnect">` and `<link rel="stylesheet">`, enabling earlier font discovery compared to CSS `@import`. This improves icon rendering especially on mobile.
-
-> **`@next/next/no-head-element` in Next.js App Router**: If your project extends `next/core-web-vitals`, a `<head>` element in `layout.tsx` may trigger a lint error. In that case, use `eslint-disable` on the relevant line or consider alternative approaches with `next/font`.
-
-Core configuration options for `sparkle.config.json`:
-
-- `primary`: Primary color (blue, red, orange, green, purple, pink, yellow)
-- `font-pro`: Proportional font ([Google Fonts](https://fonts.google.com/) name)
-- `font-mono`: Monospace font ([Google Fonts](https://fonts.google.com/) name)
-- `radius`: Border radius preset (none, sm, md, lg, xl, full)
-
-You can export this configuration from the [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) Figma plugin.
-
-Extended options (per-font weight customization, fallback chains, custom token CSS) can be configured in the `extend` section of `sparkle.config.json`. See `sparkle-design-cli generate --help` for details.
-
 ```bash
-# Generate CSS
-npx sparkle-design-cli generate
-
-# Check for anti-patterns
-npx sparkle-design-cli check src --strict
-
-# Set up AI assistant guard in your project
-npx sparkle-design-cli setup --assistant claude
+pnpm dlx shadcn@latest add @sparkle-design/button
 ```
-
-`setup` adds `lint:sparkle` scripts to the consuming project's `package.json` and injects a Sparkle Design quality check guide into AI assistant instruction files (`CLAUDE.md`, `AGENTS.md`, `.cursor/rules/`, etc.). See `sparkle-design-cli setup --help` for details.
 
 ## Development Guide
 
-### Development environment
-
-- Node.js 22.14.0 or later
-- pnpm 10 or later
+For environment setup, component creation, testing, and contribution guidelines, see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ### Directory structure
 
@@ -196,58 +132,6 @@ npx sparkle-design-cli setup --assistant claude
 └─ .github/           # GitHub configuration
 ```
 
-### Build the package
-
-```bash
-pnpm build:package
-```
-
-### Start Storybook
-
-```bash
-pnpm storybook
-```
-
-### Run tests
-
-```bash
-pnpm test
-```
-
-Refer to `docs/ai-instructions/testing.md` for testing guidelines.
-
-### Code formatting
-
-```bash
-# Check formatting
-pnpm format:check
-
-# Format automatically
-pnpm format
-
-# ESLint check (via Next.js)
-pnpm lint:check
-# or
-pnpm lint
-
-# ESLint auto-fix (via Next.js)
-pnpm lint:fix
-
-# Type check
-pnpm type-check
-```
-
-**Note**: ESLint uses the `next lint` command, applying rules optimized for Next.js projects.
-
-### About the Makefile
-
-The Makefile defines the following targets:
-
-- `registry` ... Generate the registry and copy files to the public directory
-- `new-component` ... Interactive flow for creating a new component
-
-Run `make help` for details.
-
 ### Sparkle Design badge
 
 The Sparkle Design badge indicates that a component uses Sparkle Design. Add the following snippet to your README:
@@ -255,14 +139,6 @@ The Sparkle Design badge indicates that a component uses Sparkle Design. Add the
 ```markdown
 [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
 ```
-
-### Miscellaneous
-
-- Follow `docs/ai-instructions/comment-style.md` for comment conventions.
-- Follow `.github/copilot-commit-message-instructions.md` for commit message format.
-- Refer to `CHANGELOG.md` for release notes.
-- If the public registry domain changes, run `pnpm update:public-domain -- --to https://new-domain.example.com --dry-run` to preview the impact, then rerun without `--dry-run` to apply the replacement.
-- See the `docs/ai-instructions/` directory for additional development, testing, and AI guidelines.
 
 ## Component status
 
