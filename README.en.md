@@ -38,7 +38,18 @@ yarn add sparkle-design
 
 ### 2. Generate styles
 
-Generate design token CSS and a font-loading component.
+First, create `sparkle.config.json` in your project root. You can export it from the [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) Figma plugin, or write it manually using the example below.
+
+```json
+{
+  "primary": "blue",
+  "font-pro": "BIZ UDPGothic",
+  "font-mono": "BIZ UDGothic",
+  "radius": "md"
+}
+```
+
+Then generate design token CSS and a font-loading component.
 
 ```bash
 npx sparkle-design-cli generate
@@ -61,7 +72,7 @@ export default function RootLayout({ children }) {
 }
 ```
 
-Customize primary color, fonts, border radius, and more via `sparkle.config.json`. You can export the configuration from the [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) Figma plugin. See `sparkle-design-cli generate --help` for details.
+Customize primary color, fonts, border radius, and more via `sparkle.config.json`. See `sparkle-design-cli generate --help` for details.
 
 ### 3. Use components
 

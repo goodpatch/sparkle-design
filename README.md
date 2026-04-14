@@ -38,7 +38,18 @@ yarn add sparkle-design
 
 ### 2. スタイルの生成
 
-デザイントークン CSS とフォント読み込みコンポーネントを生成します。
+まず `sparkle.config.json` をプロジェクトルートに用意します。[Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) Figma プラグインから書き出すか、以下を参考に直接記述してください。
+
+```json
+{
+  "primary": "blue",
+  "font-pro": "BIZ UDPGothic",
+  "font-mono": "BIZ UDGothic",
+  "radius": "md"
+}
+```
+
+設定が用意できたら、デザイントークン CSS とフォント読み込みコンポーネントを生成します。
 
 ```bash
 npx sparkle-design-cli generate
@@ -61,7 +72,7 @@ export default function RootLayout({ children }) {
 }
 ```
 
-`sparkle.config.json` でプライマリカラー・フォント・角丸などをカスタマイズできます。[Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) Figma プラグインから設定を書き出すことも可能です。詳細は `sparkle-design-cli generate --help` を参照してください。
+`sparkle.config.json` でプライマリカラー・フォント・角丸などをカスタマイズできます。詳細は `sparkle-design-cli generate --help` を参照してください。
 
 ### 3. コンポーネントの使用
 
