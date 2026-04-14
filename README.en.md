@@ -26,36 +26,23 @@ It implements [Goodpatch](https://goodpatch.com/)'s "Sparkle Design" system on t
 
 ## Quick Start
 
-### 1. Install the package
+### 1. Set up
+
+In an existing Next.js / Vite project, a single command completes the integration:
 
 ```bash
-npm install sparkle-design
-# or
-pnpm add sparkle-design
-# or
-yarn add sparkle-design
+npx --yes sparkle-design-cli setup --assistant claude
 ```
 
-### 2. Generate styles
+This automatically:
 
-First, create `sparkle.config.json` in your project root. You can export it from the [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) Figma plugin, or write it manually using the example below.
+1. Detects your package manager (pnpm / npm / yarn / bun)
+2. Adds `sparkle-design` to dependencies and `tailwindcss` + `@tailwindcss/postcss` to devDependencies
+3. Generates `sparkle.config.json` / `postcss.config.mjs` / `globals.css` if missing
+4. Adds a Sparkle Design guard block and `lint:sparkle` script to `CLAUDE.md`
+5. Generates `sparkle-design.css` and `SparkleHead.tsx`
 
-```json
-{
-  "primary": "blue",
-  "font-pro": "BIZ UDPGothic",
-  "font-mono": "BIZ UDGothic",
-  "radius": "md"
-}
-```
-
-Then generate design token CSS and a font-loading component.
-
-```bash
-npx sparkle-design-cli generate
-```
-
-> If you are using TailwindCSS v4, this command auto-detects your Tailwind entrypoint CSS (`globals.css`, `index.css`, etc.) and inserts `@source` directives so Tailwind can scan classes inside the `sparkle-design` package.
+`--assistant` accepts `claude` / `cursor` / `codex` / `generic`. Existing files are never overwritten.
 
 Place the generated `SparkleHead` in the `<head>` of your root layout.
 
@@ -76,9 +63,9 @@ export default function RootLayout({ children }) {
 
 > **`@next/next/no-head-element` in Next.js App Router**: If your project extends `next/core-web-vitals`, placing a `<head>` element directly in `layout.tsx` may trigger a lint error. Add `// eslint-disable-next-line @next/next/no-head-element` to suppress it, or consider using `next/font` as an alternative.
 
-Customize primary color, fonts, border radius, and more via `sparkle.config.json`. See `sparkle-design-cli generate --help` for details.
+Customize primary color, fonts, border radius, and more via `sparkle.config.json`. To tweak settings inside Figma, the [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) plugin is available. See `sparkle-design-cli generate --help` for details.
 
-### 3. Use components
+### 2. Use components
 
 ```tsx
 import React from "react";
@@ -107,26 +94,23 @@ export default App;
 > import { Button } from "sparkle-design/button";
 > ```
 
-### 4. Set up AI guard (optional)
+### 3. Update settings and check for anti-patterns
 
-If you use AI coding assistants such as Claude Code, Cursor, or Codex, install the anti-pattern guard to maintain Sparkle Design quality.
+After editing `sparkle.config.json`, regenerate the CSS:
 
 ```bash
-# For Claude Code
-npx sparkle-design-cli setup --assistant claude
-
-# For Cursor
-npx sparkle-design-cli setup --assistant cursor
-
-# For Codex
-npx sparkle-design-cli setup --assistant codex
+npx sparkle-design-cli generate
 ```
 
-The `setup` command appends guard rules to each AI tool's configuration file and adds a `lint:sparkle` script to your `package.json`. Run the check command after making Sparkle Design-related changes to detect anti-patterns.
+After making Sparkle Design-related code changes, check for anti-patterns:
 
 ```bash
 npx sparkle-design-cli check src
 ```
+
+### Manual installation (advanced)
+
+If you prefer a step-by-step installation without CLI setup, see the [CLI documentation](https://github.com/goodpatch/sparkle-design-cli#readme).
 
 ## Install individual components
 
