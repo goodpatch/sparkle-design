@@ -55,6 +55,8 @@ Then generate design token CSS and a font-loading component.
 npx sparkle-design-cli generate
 ```
 
+> If you are using TailwindCSS v4, this command auto-detects your Tailwind entrypoint CSS (`globals.css`, `index.css`, etc.) and inserts `@source` directives so Tailwind can scan classes inside the `sparkle-design` package.
+
 Place the generated `SparkleHead` in the `<head>` of your root layout.
 
 ```tsx
@@ -71,6 +73,8 @@ export default function RootLayout({ children }) {
   );
 }
 ```
+
+> **`@next/next/no-head-element` in Next.js App Router**: If your project extends `next/core-web-vitals`, placing a `<head>` element directly in `layout.tsx` may trigger a lint error. Add `// eslint-disable-next-line @next/next/no-head-element` to suppress it, or consider using `next/font` as an alternative.
 
 Customize primary color, fonts, border radius, and more via `sparkle.config.json`. See `sparkle-design-cli generate --help` for details.
 

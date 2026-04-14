@@ -55,6 +55,8 @@ yarn add sparkle-design
 npx sparkle-design-cli generate
 ```
 
+> TailwindCSS v4 を使用している場合、このコマンドは `globals.css` / `index.css` などの Tailwind エントリポイント CSS を自動検出し、`sparkle-design` のクラスを認識させる `@source` ディレクティブを自動挿入します。
+
 生成された `SparkleHead` をルートレイアウトの `<head>` に配置してください。
 
 ```tsx
@@ -71,6 +73,8 @@ export default function RootLayout({ children }) {
   );
 }
 ```
+
+> **Next.js App Router で `@next/next/no-head-element` が出る場合**: `next/core-web-vitals` を使用しているプロジェクトでは、`layout.tsx` に `<head>` を直接書くと lint エラーになることがあります。該当行に `// eslint-disable-next-line @next/next/no-head-element` を追加するか、`next/font` による代替方法を検討してください。
 
 `sparkle.config.json` でプライマリカラー・フォント・角丸などをカスタマイズできます。詳細は `sparkle-design-cli generate --help` を参照してください。
 
