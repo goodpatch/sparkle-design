@@ -129,8 +129,8 @@ function ModalOverlay({
       className={cn(
         [
           "fixed inset-0 z-50 bg-black/50",
-          "data-[state=open]:animate-[sparkle-overlay-in_180ms_ease-out_0ms_both]",
-          "data-[state=closed]:animate-[sparkle-overlay-out_160ms_ease-in_0ms_both]",
+          "data-[state=open]:animate-[sparkle-overlay-in_150ms_ease-out_0ms_both]",
+          "data-[state=closed]:animate-[sparkle-overlay-out_200ms_ease-in_0ms_both]",
           "motion-reduce:data-[state=open]:animate-[sparkle-fade-in_120ms_ease-out_0ms_both]",
           "motion-reduce:data-[state=closed]:animate-[sparkle-fade-out_120ms_ease-in_0ms_both]",
         ].join(" "),

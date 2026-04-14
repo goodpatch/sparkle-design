@@ -245,7 +245,7 @@ export const MotionPreview: Story = {
     docs: {
       description: {
         story:
-          "全画面レイアウトでスクリムとパネルの動きを確認する。**開く**：トリガーボタン。**閉じる**：×／キャンセル／保存／Esc。オーバーレイクリックは既定で閉じない（仕様確認用）。オーバーレイはフェード（Open 180ms / Close 160ms）、コンテンツは opacity + translateY + scale（Open 240ms / delay 20ms、Close 200ms）で出入りする。\n\nen: Use fullscreen to judge scrim and panel motion. Trigger opens; close via ×, footer buttons, or Esc. Overlay fades (open 180ms, close 160ms). Content enters/leaves with opacity + translateY + scale (open 240ms with 20ms delay, close 200ms).",
+          "全画面レイアウトでスクリムとパネルの動きを確認する。**開く**：トリガーボタン。**閉じる**：×／キャンセル／保存／Esc。オーバーレイクリックは既定で閉じない（仕様確認用）。オーバーレイはフェード（Open 150ms / Close 200ms）、コンテンツは opacity + translateY + scale（Open 240ms / delay 20ms、Close 200ms）で出入りする。Close 時はオーバーレイとコンテンツが同時（各 200ms）に退場し、背景が先に見えてしまう状態を防ぐ。\n\nen: Use fullscreen to judge scrim and panel motion. Trigger opens; close via ×, footer buttons, or Esc. Overlay fades (open 150ms, close 200ms). Content enters/leaves with opacity + translateY + scale (open 240ms with 20ms delay, close 200ms). On close, both overlay and content exit simultaneously at 200ms so the background never shows prematurely.",
       },
     },
   },
