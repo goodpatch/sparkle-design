@@ -103,6 +103,27 @@ export default App;
 > import { Button } from "sparkle-design/button";
 > ```
 
+### 4. AI ガードの設定（オプション）
+
+Claude Code / Cursor / Codex などの AI コーディングアシスタントを使う場合、アンチパターンガードを導入することで Sparkle Design の設計品質を維持できます。
+
+```bash
+# Claude Code 向け
+npx sparkle-design-cli setup --assistant claude
+
+# Cursor 向け
+npx sparkle-design-cli setup --assistant cursor
+
+# Codex 向け
+npx sparkle-design-cli setup --assistant codex
+```
+
+`setup` コマンドは各 AI ツールの設定ファイルにガードルールを追記し、`package.json` に `lint:sparkle` スクリプトを追加します。Sparkle Design に関する変更後はこのコマンドでアンチパターンを検出できます。
+
+```bash
+npx sparkle-design-cli check src
+```
+
 ## 個別コンポーネントの導入
 
 Sparkle Design は shadcn/ui registry に対応しています。レジストリの URL は Storybook からコピーすることができます。<br />

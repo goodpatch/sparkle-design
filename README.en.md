@@ -103,6 +103,27 @@ export default App;
 > import { Button } from "sparkle-design/button";
 > ```
 
+### 4. Set up AI guard (optional)
+
+If you use AI coding assistants such as Claude Code, Cursor, or Codex, install the anti-pattern guard to maintain Sparkle Design quality.
+
+```bash
+# For Claude Code
+npx sparkle-design-cli setup --assistant claude
+
+# For Cursor
+npx sparkle-design-cli setup --assistant cursor
+
+# For Codex
+npx sparkle-design-cli setup --assistant codex
+```
+
+The `setup` command appends guard rules to each AI tool's configuration file and adds a `lint:sparkle` script to your `package.json`. Run the check command after making Sparkle Design-related changes to detect anti-patterns.
+
+```bash
+npx sparkle-design-cli check src
+```
+
 ## Install individual components
 
 Sparkle Design works with the shadcn/ui registry. You can copy the registry URL from Storybook.<br />
