@@ -10,5 +10,5 @@
       "type": "registry:component"
     }
   ],
-  "registryDependencies": ["https://sparkle-design.vercel.app/r/icon.json"]
+  "registryDependencies": ["https://sparkle-design.goodpatch.com/r/icon.json"]
 }

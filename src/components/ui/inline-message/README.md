@@ -7,10 +7,10 @@
 ## インストール
 
 ```bash
-npx shadcn@latest add https://sparkle-design.vercel.app/r/inline-message.json
+npx shadcn@latest add https://sparkle-design.goodpatch.com/r/inline-message.json
 ```
 
-または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。
+または npm パッケージとして `sparkle-design` をインストールしている場合はそのまま利用できます。
 
 ## 使い方
 
@@ -25,5 +25,6 @@ npx shadcn@latest add https://sparkle-design.vercel.app/r/inline-message.json
 
 ## 関連リンク
 
-- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-inline-message--docs)
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/inline-message)
+- [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-inline-message--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/inline-message)

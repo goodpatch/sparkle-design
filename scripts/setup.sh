@@ -65,22 +65,23 @@ cat > "src/components/ui/$1/README.md" << ENDOFREADME
 ## インストール
 
 \`\`\`bash
-npx shadcn@latest add https://sparkle-design.vercel.app/r/$1.json
+npx shadcn@latest add https://sparkle-design.goodpatch.com/r/$1.json
 \`\`\`
 
-または npm パッケージとして \`@goodpatch/sparkle-design\` をインストールしている場合はそのまま利用できます。
+または npm パッケージとして \`sparkle-design\` をインストールしている場合はそのまま利用できます。
 
 ## 使い方
 
 \`\`\`tsx
-import { $CAMEL_NAME } from "@goodpatch/sparkle-design";
+import { $CAMEL_NAME } from "sparkle-design";
 
 <$CAMEL_NAME />
 \`\`\`
 
 ## 関連リンク
 
-- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-$1--docs)
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/$1)
+- [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-$1--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/$1)
 ENDOFREADME
 

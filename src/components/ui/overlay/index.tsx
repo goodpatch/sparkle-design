@@ -31,7 +31,15 @@ const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
         ref={ref}
         data-slot="overlay"
         className={cn(
-          "fixed inset-0 bg-[var(--color-black-alpha-300)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0",
+          [
+            "fixed inset-0 bg-[var(--color-black-alpha-300)]",
+            "data-[state=open]:animate-in data-[state=open]:fade-in-0",
+            "data-[state=open]:duration-150 data-[state=open]:ease-out",
+            "data-[state=closed]:animate-out data-[state=closed]:fade-out-0",
+            "data-[state=closed]:duration-200 data-[state=closed]:ease-in",
+            "motion-reduce:data-[state=open]:duration-120 motion-reduce:data-[state=open]:ease-out",
+            "motion-reduce:data-[state=closed]:duration-120 motion-reduce:data-[state=closed]:ease-in",
+          ].join(" "),
           className
         )}
         {...props}

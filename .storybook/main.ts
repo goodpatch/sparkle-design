@@ -1,22 +1,33 @@
 // Storybook のメイン設定ファイル
 // en: Main configuration for Storybook
-import type { StorybookConfig } from "@storybook/experimental-nextjs-vite";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { mergeConfig } from "vite";
+import type { StorybookConfig } from "@storybook/nextjs-vite";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
 
   addons: [
-    "@storybook/addon-actions",
-    "@storybook/addon-essentials",
-    "@storybook/addon-onboarding",
     "@chromatic-com/storybook",
-    "@storybook/experimental-addon-test",
+    "@storybook/addon-vitest",
     "@storybook/addon-a11y",
+    "@storybook/addon-docs",
+    "@storybook/addon-onboarding",
   ],
 
-  framework: {
-    name: "@storybook/experimental-nextjs-vite",
-    options: {},
+  framework: "@storybook/nextjs-vite",
+
+  async viteFinal(config) {
+    return mergeConfig(config, {
+      resolve: {
+        alias: {
+          "@": path.resolve(__dirname, "../src"),
+        },
+      },
+    });
   },
 
   // Storybook を `public/storybook` に出力する際は `public` からのコピーで

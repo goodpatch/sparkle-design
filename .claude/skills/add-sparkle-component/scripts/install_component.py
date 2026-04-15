@@ -253,7 +253,7 @@ Examples:
         print(f"❌ Configuration error: {error_msg}\n", file=sys.stderr)
         print("💡 Tip: Make sure components.json has the @sparkle-design registry configured:")
         print('   "registries": {')
-        print('     "@sparkle-design": "https://sparkle-design.vercel.app/r/{name}.json"')
+        print('     "@sparkle-design": "https://sparkle-design.goodpatch.com/r/{name}.json"')
         print("   }")
         return 1
 
