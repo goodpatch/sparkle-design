@@ -13,7 +13,7 @@
 4. コンポーネントフォルダの `README.md` を更新します。
    - `item.json` の description を記載する
    - `"use client"` の有無に応じて Client Component / Server Component 互換の記述を更新する
-   - Client Component の場合は個別 import パス（`@goodpatch/sparkle-design/<component-name>`）を記載する
+   - Client Component の場合は個別 import パス（`sparkle-design/<component-name>`）を記載する
    - 実装完了後に `node scripts/generate-readmes.mjs` で再生成することもできます
 5. ルートの `README.md` の「コンポーネント公開状況」を最新の状態に更新します。
 

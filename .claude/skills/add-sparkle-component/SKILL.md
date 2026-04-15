@@ -100,7 +100,7 @@ Ensure `components.json` contains the Sparkle Design registry:
 ```json
 {
   "registries": {
-    "@sparkle-design": "https://sparkle-design.vercel.app/r/{name}.json"
+    "@sparkle-design": "https://sparkle-design.goodpatch.com/r/{name}.json"
   }
 }
 ```
@@ -316,7 +316,7 @@ Sparkle Design components provide:
 
 ### Official Documentation
 
-- [Sparkle Design](https://sparkle-design.vercel.app/)
+- [Sparkle Design](https://sparkle-design.goodpatch.com/)
 - [shadcn/ui CLI](https://ui.shadcn.com/docs/cli)
 - [Tailwind CSS](https://tailwindcss.com/docs)
 - [Radix UI](https://www.radix-ui.com/)

@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, useState } from "react";
-import { DocsContainer, DocsContainerProps } from "@storybook/blocks";
+import { DocsContainer, DocsContainerProps } from "@storybook/addon-docs/blocks";
 import { Button } from "../src/components/ui/button";
 
 const OpenInV0Container: FC<PropsWithChildren<DocsContainerProps>> = ({
@@ -15,8 +15,8 @@ const OpenInV0Container: FC<PropsWithChildren<DocsContainerProps>> = ({
 
   const componentName = title.split("/").pop() || "";
   const name = camelToKebab(componentName);
-  const registryUrl = `https://sparkle-design.vercel.app/r/${name}.json`;
-  const openUrl = `https://v0.dev/chat/api/open?url=${registryUrl}`;
+  const registryUrl = `https://sparkle-design.goodpatch.com/r/${name}.json`;
+  const openUrl = `https://v0.dev/chat/api/open?url=${encodeURIComponent(registryUrl)}`;
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {

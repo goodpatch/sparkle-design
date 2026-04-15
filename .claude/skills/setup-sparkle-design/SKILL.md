@@ -1,7 +1,7 @@
 ---
 name: setup-sparkle-design
 description: >
-  @goodpatch/sparkle-design（React コンポーネントライブラリ）の導入・セットアップ・
+  sparkle-design（React コンポーネントライブラリ）の導入・セットアップ・
   テーマカスタマイズ・コンポーネント選択を支援するスキル。
   npm インストール、sparkle-design-cli による CSS 生成、sparkle.config.json のテーマ設定、
   アンチパターンガードの導入までをカバーする。
@@ -19,9 +19,9 @@ description: >
 
 # Skill: setup-sparkle-design
 
-プロジェクトに `@goodpatch/sparkle-design` を npm パッケージとして導入し、コンポーネントを利用できる状態にするためのスキル。
+プロジェクトに `sparkle-design` を npm パッケージとして導入し、コンポーネントを利用できる状態にするためのスキル。
 
-> **社内版との違い**: 社内版 `@goodpatch/sparkle-design-internal` を導入する場合は `install-sparkle-design` スキルを使ってください。こちらは公開版 `@goodpatch/sparkle-design` 用です。
+> **社内版との違い**: 社内版 `@goodpatch/sparkle-design-internal` を導入する場合は `install-sparkle-design` スキルを使ってください。こちらは公開版 `sparkle-design` 用です。
 
 ---
 
@@ -62,16 +62,16 @@ description: >
 
 ```bash
 # npm
-npm install @goodpatch/sparkle-design
+npm install sparkle-design
 
 # pnpm
-pnpm add @goodpatch/sparkle-design
+pnpm add sparkle-design
 
 # yarn
-yarn add @goodpatch/sparkle-design
+yarn add sparkle-design
 ```
 
-> **認証不要**: `@goodpatch/sparkle-design` は npmjs.com で公開されているため、`.npmrc` の設定やトークンは不要です。
+> **認証不要**: `sparkle-design` は npmjs.com で公開されているため、`.npmrc` の設定やトークンは不要です。
 
 ### Step 2: CSS セットアップ
 
@@ -157,7 +157,7 @@ export default function RootLayout({ children }) {
 ### Step 3: コンポーネントを使う
 
 ```tsx
-import { Button, Card, Input } from "@goodpatch/sparkle-design";
+import { Button, Card, Input } from "sparkle-design";
 
 export function MyPage() {
   return (

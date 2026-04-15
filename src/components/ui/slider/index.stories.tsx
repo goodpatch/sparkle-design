@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
 import { Slider } from "./index";
 
@@ -92,6 +92,32 @@ export const Controlled: Story = {
       </div>
     );
   },
+};
+
+/**
+ * Thumb のスケールモーション確認用。
+ * en: For verifying thumb scale motion on hover and drag.
+ */
+export const MotionPreview: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "thumb を hover・ドラッグして動きを確認する。数値はアニメーションなし（ドラッグ中のノイズを防ぐため静止）。\n\n**hover**：scale(1)→scale(1.2)、150ms ease-out。\n**drag 中**：scale(1.2)→scale(1.3)、80ms ease-out。\n**release**：scale(1.3)→scale(1)、200ms cubic-bezier(0.16,1,0.3,1)（spring 系で弾んで戻る）。\n\nen: Hover or drag the thumb to verify motion. Value indicator has no animation (stays still to avoid distraction during drag). Hover: scale(1)→scale(1.2), 150ms ease-out. Drag: scale(1.2)→scale(1.3), 80ms ease-out. Release: scale(1.3)→scale(1), 200ms cubic-bezier(0.16,1,0.3,1).",
+      },
+    },
+  },
+  args: {
+    defaultValue: [40],
+    max: 100,
+    step: 1,
+    unit: "%",
+  },
+  render: ({ className, ...props }) => (
+    <div className="flex flex-col items-center justify-center w-[320px]">
+      <Slider {...props} />
+    </div>
+  ),
 };
 
 export const WithUnit: Story = {

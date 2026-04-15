@@ -19,15 +19,15 @@
 
 ```bash
 # 現在のバージョンと最新バージョンを比較
-npm view @goodpatch/sparkle-design version
+npm view sparkle-design version
 
 # package.json の現在のバージョンを確認
-grep '"@goodpatch/sparkle-design"' package.json
+grep '"sparkle-design"' package.json
 
 # アップデート（パッケージマネージャに合わせる）
-pnpm update @goodpatch/sparkle-design
+pnpm update sparkle-design
 # または
-npm update @goodpatch/sparkle-design
+npm update sparkle-design
 ```
 
 ユーザーにアップデート内容（現在のバージョン -> 最新バージョン）を見せてから実行する。

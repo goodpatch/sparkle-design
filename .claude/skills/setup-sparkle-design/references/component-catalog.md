@@ -1,6 +1,6 @@
 # Component Catalog
 
-`@goodpatch/sparkle-design` が提供する全 27 コンポーネントのリファレンス。
+`sparkle-design` が提供する全 27 コンポーネントのリファレンス。
 
 ## 目次
 
@@ -13,7 +13,7 @@ badge | breadcrumb | button | card | checkbox | dialog | divider | form | icon |
 ## import 例
 
 ```tsx
-import { Button, Card, Input, cn } from "@goodpatch/sparkle-design";
+import { Button, Card, Input, cn } from "sparkle-design";
 ```
 
 ---
@@ -25,7 +25,7 @@ import { Button, Card, Input, cn } from "@goodpatch/sparkle-design";
 `clsx` + `tailwind-merge` を組み合わせたクラス名結合ユーティリティ。
 
 ```tsx
-import { cn } from "@goodpatch/sparkle-design";
+import { cn } from "sparkle-design";
 
 cn("px-4 py-2", isActive && "bg-blue-500", className);
 ```
@@ -42,7 +42,7 @@ cn("px-4 py-2", isActive && "bg-blue-500", className);
 - **使いどころ**: 未読件数、ステータス表示、カテゴリタグ
 
 ```tsx
-import { Badge } from "@goodpatch/sparkle-design";
+import { Badge } from "sparkle-design";
 
 <Badge variant="destructive">3</Badge>;
 ```
@@ -62,7 +62,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbSeparator,
-} from "@goodpatch/sparkle-design";
+} from "sparkle-design";
 ```
 
 ---
@@ -77,7 +77,7 @@ import {
 - **注意**: アイコンだけのアクションは `Button` + `prefixIcon` ではなく `IconButton` を使う。`asChild` では `prefixIcon` / `suffixIcon` / `isLoading` は反映されない
 
 ```tsx
-import { Button } from "@goodpatch/sparkle-design";
+import { Button } from "sparkle-design";
 
 <Button variant="default" size="lg">保存する</Button>
 <Button variant="destructive">削除</Button>
@@ -102,7 +102,7 @@ import {
   CardControl,
   CardContent,
   CardFooter,
-} from "@goodpatch/sparkle-design";
+} from "sparkle-design";
 ```
 
 ---
@@ -115,7 +115,7 @@ import {
 - **使いどころ**: 複数選択フィルタ、同意確認
 
 ```tsx
-import { Checkbox } from "@goodpatch/sparkle-design";
+import { Checkbox } from "sparkle-design";
 ```
 
 ---
@@ -135,7 +135,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogFooter,
-} from "@goodpatch/sparkle-design";
+} from "sparkle-design";
 ```
 
 ---
@@ -149,7 +149,7 @@ import {
 - **使いどころ**: セクション区切り、リストアイテム間の区切り
 
 ```tsx
-import { Divider } from "@goodpatch/sparkle-design";
+import { Divider } from "sparkle-design";
 
 <Divider emphasis="low" lineStyle="solid" />;
 ```
@@ -171,7 +171,7 @@ import {
   FormLabel,
   FormControl,
   FormErrorMessage,
-} from "@goodpatch/sparkle-design";
+} from "sparkle-design";
 ```
 
 ---
@@ -185,7 +185,7 @@ Material Symbols Rounded アイコンを表示。
 - **注意**: `material-symbols-rounded` を `span` に直書きせず `Icon` を使う
 
 ```tsx
-import { Icon } from "@goodpatch/sparkle-design";
+import { Icon } from "sparkle-design";
 
 <Icon>home</Icon>
 <Icon size={6} fill={1}>favorite</Icon>
@@ -202,7 +202,7 @@ import { Icon } from "@goodpatch/sparkle-design";
 - **使いどころ**: ツールバー、閉じるボタン、編集ボタン。アクセシビリティのため `aria-label` を必ず付与する
 
 ```tsx
-import { IconButton } from "@goodpatch/sparkle-design";
+import { IconButton } from "sparkle-design";
 
 <IconButton icon="close" aria-label="閉じる" variant="ghost" />;
 ```
@@ -223,7 +223,7 @@ import {
   InlineMessage,
   InlineMessageTitle,
   InlineMessageDescription,
-} from "@goodpatch/sparkle-design";
+} from "sparkle-design";
 
 <InlineMessage status="negative">
   <InlineMessageTitle>エラーが発生しました</InlineMessageTitle>
@@ -245,7 +245,7 @@ import {
 - **注意**: disabled 系は `isDisabled` を優先する
 
 ```tsx
-import { Input } from "@goodpatch/sparkle-design";
+import { Input } from "sparkle-design";
 
 <Input placeholder="検索..." />;
 <Input isTrigger triggerIcon="search" triggerAriaLabel="検索" onIconButtonClick={handleSearch} />;
@@ -258,7 +258,7 @@ import { Input } from "@goodpatch/sparkle-design";
 パスワード入力フィールド。表示/非表示のトグルボタン付き。
 
 ```tsx
-import { InputPassword } from "@goodpatch/sparkle-design";
+import { InputPassword } from "sparkle-design";
 
 <InputPassword placeholder="パスワードを入力" />;
 ```
@@ -274,7 +274,7 @@ import { InputPassword } from "@goodpatch/sparkle-design";
 - **button との違い**: ページ遷移には `link`、アクション実行には `button`
 
 ```tsx
-import { Link } from "@goodpatch/sparkle-design";
+import { Link } from "sparkle-design";
 
 <Link href="/about">詳細を見る</Link>;
 <Link href="https://example.com" isOpenInNew>外部リンク</Link>;
@@ -291,7 +291,7 @@ import { Link } from "@goodpatch/sparkle-design";
 - **dialog との違い**: `modal` は `Dialog` ベースの汎用オーバーレイ。フォーム入力や詳細表示はこちらを使う
 
 ```tsx
-import { Modal } from "@goodpatch/sparkle-design";
+import { Modal } from "sparkle-design";
 ```
 
 ---
@@ -301,7 +301,7 @@ import { Modal } from "@goodpatch/sparkle-design";
 システムモードの変更（ローディング中など）を示す半透明オーバーレイ。
 
 ```tsx
-import { Overlay } from "@goodpatch/sparkle-design";
+import { Overlay } from "sparkle-design";
 ```
 
 ---
@@ -314,7 +314,7 @@ import { Overlay } from "@goodpatch/sparkle-design";
 - **使いどころ**: 排他的な単一選択（配送方法、プラン選択など）
 
 ```tsx
-import { Radio, RadioItem } from "@goodpatch/sparkle-design";
+import { Radio, RadioItem } from "sparkle-design";
 ```
 
 ---
@@ -332,7 +332,7 @@ import {
   SelectTrigger,
   SelectContent,
   SelectItem,
-} from "@goodpatch/sparkle-design";
+} from "sparkle-design";
 ```
 
 ---
@@ -342,7 +342,7 @@ import {
 コンテンツ読み込み中のアニメーションプレースホルダ。
 
 ```tsx
-import { Skeleton } from "@goodpatch/sparkle-design";
+import { Skeleton } from "sparkle-design";
 
 <Skeleton className="h-4 w-48" />;
 ```
@@ -354,7 +354,7 @@ import { Skeleton } from "@goodpatch/sparkle-design";
 指定範囲内の値をスライダーで選択。
 
 ```tsx
-import { Slider } from "@goodpatch/sparkle-design";
+import { Slider } from "sparkle-design";
 
 <Slider min={0} max={100} step={1} />;
 ```
@@ -366,7 +366,7 @@ import { Slider } from "@goodpatch/sparkle-design";
 処理の進行中を視覚的に示すインジケータ。
 
 ```tsx
-import { Spinner } from "@goodpatch/sparkle-design";
+import { Spinner } from "sparkle-design";
 
 <Spinner />;
 ```
@@ -380,7 +380,7 @@ import { Spinner } from "@goodpatch/sparkle-design";
 - **sizes**: `sm` / `md` / `lg`
 
 ```tsx
-import { Switch } from "@goodpatch/sparkle-design";
+import { Switch } from "sparkle-design";
 
 <Switch size="md" />;
 ```
@@ -399,7 +399,7 @@ import {
   TabsList,
   TabsTrigger,
   TabsContent,
-} from "@goodpatch/sparkle-design";
+} from "sparkle-design";
 ```
 
 ---
@@ -411,7 +411,7 @@ import {
 - **badge との違い**: `tag` はカテゴリ・属性の表現。`badge` は数値や通知数
 
 ```tsx
-import { Tag } from "@goodpatch/sparkle-design";
+import { Tag } from "sparkle-design";
 
 <Tag>デザイン</Tag>;
 ```
@@ -423,7 +423,7 @@ import { Tag } from "@goodpatch/sparkle-design";
 複数行のテキスト入力フィールド。
 
 ```tsx
-import { Textarea } from "@goodpatch/sparkle-design";
+import { Textarea } from "sparkle-design";
 
 <Textarea placeholder="詳細を入力してください" rows={4} />;
 ```
@@ -437,7 +437,7 @@ import { Textarea } from "@goodpatch/sparkle-design";
 - **inline-message との違い**: `toast` は自動消去される一時表示。ページ固定通知は `inline-message`
 
 ```tsx
-import { useToast } from "@goodpatch/sparkle-design";
+import { useToast } from "sparkle-design";
 
 const { toast } = useToast();
 toast({ title: "保存しました", variant: "success" });
@@ -455,7 +455,7 @@ import {
   TooltipTrigger,
   TooltipContent,
   IconButton,
-} from "@goodpatch/sparkle-design";
+} from "sparkle-design";
 
 <Tooltip>
   <TooltipTrigger asChild>

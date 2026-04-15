@@ -1,4 +1,4 @@
-import type { Preview } from "@storybook/react";
+import type { Preview } from "@storybook/nextjs-vite";
 import "../src/app/globals.css";
 import OpenInV0Container from "./OpenInV0Container";
 

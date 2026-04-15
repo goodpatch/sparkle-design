@@ -22,7 +22,7 @@ from pathlib import Path
 from typing import Any
 
 
-REQUIRED_REGISTRY_URL = "https://sparkle-design.vercel.app/r/{name}.json"
+REQUIRED_REGISTRY_URL = "https://sparkle-design.goodpatch.com/r/{name}.json"
 
 
 def check_components_json(project_path: Path) -> tuple[bool, list[str]]:

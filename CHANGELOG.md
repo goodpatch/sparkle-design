@@ -5,6 +5,15 @@
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-04-13
+
+### Changed
+
+- **OSS 公開リリース** 🎉
+- npm レジストリを GitHub Packages → npmjs.org に移行
+- ドメインを `sparkle-design.goodpatch.com` に統一
+- CODE_OF_CONDUCT / SECURITY.md を追加
+
 ## [0.0.10] - 2026-03-27
 
 ### Added

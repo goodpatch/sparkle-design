@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./index";
 import type { TabsListVariants } from "./index";
 

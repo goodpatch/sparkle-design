@@ -7,10 +7,10 @@
 ## インストール
 
 ```bash
-npx shadcn@latest add https://sparkle-design.vercel.app/r/icon.json
+npx shadcn@latest add https://sparkle-design.goodpatch.com/r/icon.json
 ```
 
-または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。
+または npm パッケージとして `sparkle-design` をインストールしている場合はそのまま利用できます。
 
 ## 使い方
 
@@ -20,5 +20,6 @@ npx shadcn@latest add https://sparkle-design.vercel.app/r/icon.json
 
 ## 関連リンク
 
-- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-icon--docs)
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/icon)
+- [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-icon--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/icon)

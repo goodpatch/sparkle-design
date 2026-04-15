@@ -1,11 +1,14 @@
 <p align="center">
   <a href="https://sparkle-design.goodpatch.com/">
-    <img src="https://sparkle-design.vercel.app/thumbnail.png" alt="Sparkle Design" width="1200">
+    <img src="https://raw.githubusercontent.com/goodpatch/sparkle-design/main/public/thumbnail.png" alt="Sparkle Design" width="1200">
   </a>
 </p>
 
 # Sparkle Design for React
 
+English | **[日本語](./README.md)**
+
+[![npm version](https://img.shields.io/npm/v/sparkle-design)](https://www.npmjs.com/package/sparkle-design)
 [![Sparkle Design](https://img.shields.io/badge/made%20with-Sparkle%20Design-0969DA)](https://sparkle-design.goodpatch.com/)
 [![ci](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml/badge.svg)](https://github.com/goodpatch/sparkle-design/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -28,11 +31,11 @@ It implements [Goodpatch](https://goodpatch.com/)'s "Sparkle Design" system on t
 The package is already published on npm. Install it with the steps below.
 
 ```bash
-npm install @goodpatch/sparkle-design
+npm install sparkle-design
 # or
-pnpm add @goodpatch/sparkle-design
+pnpm add sparkle-design
 # or
-yarn add @goodpatch/sparkle-design
+yarn add sparkle-design
 ```
 
 > This package does not bundle CSS. Run `sparkle-design-cli generate` in the consuming app and use the generated `sparkle-design.css` / `SparkleHead.tsx` files there. The CLI automatically inserts `@source` directives into your Tailwind entrypoint CSS (`globals.css`, `index.css`, etc.).
@@ -40,7 +43,7 @@ yarn add @goodpatch/sparkle-design
 > **Using with Server Components**: For components that contain `"use client"`, use subpath imports. Each component's [README](src/components/ui/) includes Server Component / Client Component information.
 >
 > ```tsx
-> import { Button } from "@goodpatch/sparkle-design/button";
+> import { Button } from "sparkle-design/button";
 > ```
 
 ### Install individual components
@@ -57,7 +60,7 @@ You can also specify [namespaces](https://ui.shadcn.com/docs/registry/namespace)
 ```json
 {
   "registries": {
-    "@sparkle-design": "https://sparkle-design.vercel.app/r/{name}.json"
+    "@sparkle-design": "https://sparkle-design.goodpatch.com/r/{name}.json"
   }
 }
 ```
@@ -70,7 +73,7 @@ pnpm dlx shadcn@latest add @sparkle-design/button
 
 ```tsx
 import React from "react";
-import { Button, Badge, Card } from "@goodpatch/sparkle-design";
+import { Button, Badge, Card } from "sparkle-design";
 
 function App() {
   return (
@@ -99,7 +102,7 @@ Import these files to take advantage of everything Sparkle Design offers.
 
 #### Using as an npm package
 
-When using `@goodpatch/sparkle-design` as an npm package, TailwindCSS v4 needs `@source` directives to detect utility classes inside the package.
+When using `sparkle-design` as an npm package, TailwindCSS v4 needs `@source` directives to detect utility classes inside the package.
 
 `sparkle-design-cli generate` auto-detects CSS files containing `@import "tailwindcss"` and inserts `@source` directives. This works with any filename (`globals.css`, `index.css`, etc.). If auto-detection fails, specify the path via `extend.globals-path` in `sparkle.config.json` or the `--globals-path` CLI option.
 
@@ -107,9 +110,9 @@ To configure manually, add the following to your Tailwind entrypoint CSS:
 
 ```css
 @import "tailwindcss";
-/* Scan @goodpatch/sparkle-design classes */
+/* Scan sparkle-design classes */
 /* Adjust the path relative to the CSS file (example for src/app/globals.css) */
-@source "../../node_modules/@goodpatch/sparkle-design/dist";
+@source "../../node_modules/sparkle-design/dist";
 /* Sparkle Design custom definitions (import after Tailwind) */
 @import "./sparkle-design.css";
 ```
