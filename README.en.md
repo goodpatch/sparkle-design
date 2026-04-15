@@ -44,6 +44,20 @@ This automatically:
 
 `--assistant` accepts `claude` / `cursor` / `codex` / `generic`. Existing files are never overwritten.
 
+#### Installing via Claude Code Skill
+
+If you use Claude Code, you can also install the Sparkle Design skills to have the assistant walk you through setup.
+
+```bash
+# Add the Sparkle Design skills marketplace
+npx --yes @anthropic-ai/claude-code marketplace add goodpatch/sparkle-design
+
+# Install the setup-sparkle-design skill
+npx --yes @anthropic-ai/claude-code plugin install sparkle-design-skills@sparkle-design
+```
+
+After installation, asking Claude Code to "install Sparkle Design" triggers the `setup-sparkle-design` skill, which inspects the project and guides you through only the missing steps. The same marketplace also ships `add-sparkle-component` (add components) and `accessibility-checker` (accessibility checks).
+
 Place the generated `SparkleHead` in the `<head>` of your root layout.
 
 ```tsx

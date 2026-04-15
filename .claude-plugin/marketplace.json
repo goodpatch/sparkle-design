@@ -5,18 +5,19 @@
     "email": "sparkle-design@goodpatch.com"
   },
   "metadata": {
-    "description": "Sparkle Design の公開コンポーネントライブラリ用 Claude Code スキル。コンポーネント追加、アクセシビリティチェックを支援します。",
-    "version": "1.0.0"
+    "description": "Sparkle Design の公開コンポーネントライブラリ用 Claude Code スキル。導入セットアップ、コンポーネント追加、アクセシビリティチェックを支援します。",
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "sparkle-design-skills",
-      "description": "Sparkle Design 公開コンポーネントライブラリのスキル。add-sparkle-component、accessibility-checker を含む。",
+      "description": "Sparkle Design 公開コンポーネントライブラリのスキル。setup-sparkle-design、add-sparkle-component、accessibility-checker を含む。",
       "source": "./",
       "strict": false,
       "skills": [
         ".claude/skills/accessibility-checker",
-        ".claude/skills/add-sparkle-component"
+        ".claude/skills/add-sparkle-component",
+        ".claude/skills/setup-sparkle-design"
       ]
     }
   ]
