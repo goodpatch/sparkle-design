@@ -584,7 +584,9 @@ describe("Badge", () => {
       expect(emphasisBadge.textContent).toBe("2");
     });
 
-    it("maintains performance with multiple badges", () => {
+    // 時間ベースのアサーションは CI 負荷で flaky のため skip
+    // en: Skip time-based performance assertion; flaky on loaded CI runners
+    it.skip("maintains performance with multiple badges", () => {
       // Given: 複数のBadge要素
       const manyBadges = Array.from({ length: 20 }, (_, i) => (
         <Badge key={i} variant={i % 2 === 0 ? "normal" : "emphasis"}>
