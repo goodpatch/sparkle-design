@@ -44,21 +44,7 @@ npx --yes sparkle-design-cli setup --assistant claude
 
 `--assistant` は `claude` / `cursor` / `codex` / `generic` から選択できます。既存ファイルは上書きされません。
 
-#### AI エージェントに Skill として導入する場合
-
-Claude Code / Codex / Cursor などの AI エージェントを利用している場合は、[Vercel の skills CLI](https://github.com/vercel-labs/skills) で Sparkle Design のスキルセットを導入し、会話から誘導してもらうこともできます。
-
-```bash
-# setup-sparkle-design スキルだけを導入
-npx skills add goodpatch/sparkle-design -s setup-sparkle-design
-
-# 全スキル（setup / add-component / accessibility-checker）を導入
-npx skills add goodpatch/sparkle-design --all
-```
-
-導入後、AI エージェントに「Sparkle Design を導入して」と依頼すると `setup-sparkle-design` スキルが発動し、プロジェクト状態に合わせて不足ステップだけ案内してくれます。`-a claude-code` / `-a codex` などで対象エージェントを指定することもできます。
-
-生成された `SparkleHead` をルートレイアウトの `<head>` に配置してください。
+セットアップが完了したら、生成された `SparkleHead` をルートレイアウトの `<head>` に配置してください。
 
 ```tsx
 import { SparkleHead } from "./SparkleHead";
@@ -78,6 +64,20 @@ export default function RootLayout({ children }) {
 > **Next.js App Router で `@next/next/no-head-element` が出る場合**: `next/core-web-vitals` を使用しているプロジェクトでは、`layout.tsx` に `<head>` を直接書くと lint エラーになることがあります。該当行に `// eslint-disable-next-line @next/next/no-head-element` を追加するか、`next/font` による代替方法を検討してください。
 
 `sparkle.config.json` でプライマリカラー・フォント・角丸などをカスタマイズできます。Figma 上で設定を調整したい場合は [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) プラグインを利用できます。詳細は `sparkle-design-cli generate --help` を参照してください。
+
+#### AI エージェントに Skill として導入する場合（任意）
+
+Claude Code / Codex / Cursor などの AI エージェントを使っている場合は、[Vercel の skills CLI](https://github.com/vercel-labs/skills) 経由で Sparkle Design のスキルセットを導入しておくと、会話から誘導してもらうこともできます。
+
+```bash
+# setup-sparkle-design スキルだけを導入
+npx skills add goodpatch/sparkle-design -s setup-sparkle-design
+
+# 全スキル（setup / add-component / accessibility-checker）を導入
+npx skills add goodpatch/sparkle-design --all
+```
+
+導入後に「Sparkle Design を導入して」と依頼すると `setup-sparkle-design` スキルが発動し、プロジェクト状態に合わせて不足ステップだけ案内してくれます。`-a claude-code` / `-a codex` などで対象エージェントを指定することもできます。
 
 ### 2. コンポーネントの使用
 

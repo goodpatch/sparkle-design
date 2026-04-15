@@ -44,21 +44,7 @@ This automatically:
 
 `--assistant` accepts `claude` / `cursor` / `codex` / `generic`. Existing files are never overwritten.
 
-#### Installing as an AI Agent Skill
-
-If you use an AI agent such as Claude Code, Codex, or Cursor, you can install the Sparkle Design skills with [Vercel's skills CLI](https://github.com/vercel-labs/skills) to have the agent walk you through setup.
-
-```bash
-# Install only the setup-sparkle-design skill
-npx skills add goodpatch/sparkle-design -s setup-sparkle-design
-
-# Install all skills (setup / add-component / accessibility-checker)
-npx skills add goodpatch/sparkle-design --all
-```
-
-After installation, asking the agent to "install Sparkle Design" triggers the `setup-sparkle-design` skill, which inspects the project and guides you through only the missing steps. Use `-a claude-code` / `-a codex` etc. to target a specific agent.
-
-Place the generated `SparkleHead` in the `<head>` of your root layout.
+Once the setup is complete, place the generated `SparkleHead` in the `<head>` of your root layout.
 
 ```tsx
 import { SparkleHead } from "./SparkleHead";
@@ -78,6 +64,20 @@ export default function RootLayout({ children }) {
 > **`@next/next/no-head-element` in Next.js App Router**: If your project extends `next/core-web-vitals`, placing a `<head>` element directly in `layout.tsx` may trigger a lint error. Add `// eslint-disable-next-line @next/next/no-head-element` to suppress it, or consider using `next/font` as an alternative.
 
 Customize primary color, fonts, border radius, and more via `sparkle.config.json`. To tweak settings inside Figma, the [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) plugin is available. See `sparkle-design-cli generate --help` for details.
+
+#### Installing as an AI Agent Skill (optional)
+
+If you use an AI agent such as Claude Code, Codex, or Cursor, you can also install the Sparkle Design skills with [Vercel's skills CLI](https://github.com/vercel-labs/skills) to have the agent walk you through setup.
+
+```bash
+# Install only the setup-sparkle-design skill
+npx skills add goodpatch/sparkle-design -s setup-sparkle-design
+
+# Install all skills (setup / add-component / accessibility-checker)
+npx skills add goodpatch/sparkle-design --all
+```
+
+After installation, asking the agent to "install Sparkle Design" triggers the `setup-sparkle-design` skill, which inspects the project and guides you through only the missing steps. Use `-a claude-code` / `-a codex` etc. to target a specific agent.
 
 ### 2. Use components
 
