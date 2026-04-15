@@ -44,19 +44,19 @@ npx --yes sparkle-design-cli setup --assistant claude
 
 `--assistant` は `claude` / `cursor` / `codex` / `generic` から選択できます。既存ファイルは上書きされません。
 
-#### Claude Code Skill から導入する場合
+#### AI エージェントに Skill として導入する場合
 
-Claude Code を利用している場合は、Sparkle Design のスキルセットを導入して会話から誘導してもらうこともできます。
+Claude Code / Codex / Cursor などの AI エージェントを利用している場合は、[Vercel の skills CLI](https://github.com/vercel-labs/skills) で Sparkle Design のスキルセットを導入し、会話から誘導してもらうこともできます。
 
 ```bash
-# Claude Code の skills marketplace を追加
-npx --yes @anthropic-ai/claude-code marketplace add goodpatch/sparkle-design
+# setup-sparkle-design スキルだけを導入
+npx skills add goodpatch/sparkle-design -s setup-sparkle-design
 
-# setup-sparkle-design スキルをインストール
-npx --yes @anthropic-ai/claude-code plugin install sparkle-design-skills@sparkle-design
+# 全スキル（setup / add-component / accessibility-checker）を導入
+npx skills add goodpatch/sparkle-design --all
 ```
 
-導入後、Claude Code に「Sparkle Design を導入して」と依頼すると `setup-sparkle-design` スキルが発動し、プロジェクト状態に合わせて不足ステップだけ案内してくれます。同じマーケットプレイスから `add-sparkle-component`（コンポーネント追加）、`accessibility-checker`（アクセシビリティチェック）も利用できます。
+導入後、AI エージェントに「Sparkle Design を導入して」と依頼すると `setup-sparkle-design` スキルが発動し、プロジェクト状態に合わせて不足ステップだけ案内してくれます。`-a claude-code` / `-a codex` などで対象エージェントを指定することもできます。
 
 生成された `SparkleHead` をルートレイアウトの `<head>` に配置してください。
 

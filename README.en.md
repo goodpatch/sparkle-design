@@ -44,19 +44,19 @@ This automatically:
 
 `--assistant` accepts `claude` / `cursor` / `codex` / `generic`. Existing files are never overwritten.
 
-#### Installing via Claude Code Skill
+#### Installing as an AI Agent Skill
 
-If you use Claude Code, you can also install the Sparkle Design skills to have the assistant walk you through setup.
+If you use an AI agent such as Claude Code, Codex, or Cursor, you can install the Sparkle Design skills with [Vercel's skills CLI](https://github.com/vercel-labs/skills) to have the agent walk you through setup.
 
 ```bash
-# Add the Sparkle Design skills marketplace
-npx --yes @anthropic-ai/claude-code marketplace add goodpatch/sparkle-design
+# Install only the setup-sparkle-design skill
+npx skills add goodpatch/sparkle-design -s setup-sparkle-design
 
-# Install the setup-sparkle-design skill
-npx --yes @anthropic-ai/claude-code plugin install sparkle-design-skills@sparkle-design
+# Install all skills (setup / add-component / accessibility-checker)
+npx skills add goodpatch/sparkle-design --all
 ```
 
-After installation, asking Claude Code to "install Sparkle Design" triggers the `setup-sparkle-design` skill, which inspects the project and guides you through only the missing steps. The same marketplace also ships `add-sparkle-component` (add components) and `accessibility-checker` (accessibility checks).
+After installation, asking the agent to "install Sparkle Design" triggers the `setup-sparkle-design` skill, which inspects the project and guides you through only the missing steps. Use `-a claude-code` / `-a codex` etc. to target a specific agent.
 
 Place the generated `SparkleHead` in the `<head>` of your root layout.
 
