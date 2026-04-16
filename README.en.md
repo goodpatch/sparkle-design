@@ -38,7 +38,7 @@ This automatically:
 
 1. Detects your package manager (pnpm / npm / yarn / bun)
 2. Adds `sparkle-design` to dependencies and `tailwindcss` + `@tailwindcss/postcss` to devDependencies
-3. Generates `sparkle.config.json` / `postcss.config.mjs` / `globals.css` if missing
+3. Generates `sparkle.config.json` / `postcss.config.mjs` / Tailwind entry CSS (Next.js: `globals.css`, Vite: `index.css`) if missing
 4. Adds a Sparkle Design guard block and `lint:sparkle` script to `CLAUDE.md`
 5. Generates `sparkle-design.css` and `SparkleHead.tsx`
 
