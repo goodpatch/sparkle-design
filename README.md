@@ -65,6 +65,16 @@ export default function RootLayout({ children }) {
 
 `sparkle.config.json` でプライマリカラー・フォント・角丸などをカスタマイズできます。Figma 上で設定を調整したい場合は [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) プラグインを利用できます。詳細は `sparkle-design-cli generate --help` を参照してください。
 
+> **⚠️ TailwindCSS v4 で npm package として使う場合の注意:** TailwindCSS v4 は `node_modules` 内のユーティリティクラスを自動スキャンしません。そのため `sparkle-design` を npm package として使うときは、エントリ CSS に以下のような `@source` ディレクティブが必要です（`sparkle-design-cli setup` / `generate` が自動挿入します）。
+>
+> ```css
+> @import "tailwindcss";
+> @source "../../node_modules/sparkle-design/dist";
+> @import "./sparkle-design.css";
+> ```
+>
+> 社内版（`@goodpatch/sparkle-design-internal`）や独自のデザインシステムパッケージを併用する場合は、`sparkle.config.json` の `extend.source-packages` にパッケージ名を追加すると、同じく `@source` が自動挿入されます。v2.0.5 以降の `setup` は `extend.source-packages` を含むデフォルト設定を生成するため、追加パッケージが無い限り手動編集は不要です。
+
 #### AI エージェントに Skill として導入する場合（任意）
 
 Claude Code / Codex / Cursor などの AI エージェントを使っている場合は、[Vercel の skills CLI](https://github.com/vercel-labs/skills) 経由で Sparkle Design のスキルセットを導入しておくと、会話から誘導してもらうこともできます。
