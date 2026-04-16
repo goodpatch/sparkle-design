@@ -65,6 +65,16 @@ export default function RootLayout({ children }) {
 
 Customize primary color, fonts, border radius, and more via `sparkle.config.json`. To tweak settings inside Figma, the [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) plugin is available. See `sparkle-design-cli generate --help` for details.
 
+> **⚠️ Note for TailwindCSS v4 when using sparkle-design as an npm package:** TailwindCSS v4 does not automatically scan utility classes inside `node_modules`. When consuming `sparkle-design` as an npm package, your entry CSS needs an `@source` directive like the one below (`sparkle-design-cli setup` / `generate` inserts it automatically):
+>
+> ```css
+> @import "tailwindcss";
+> @source "../../node_modules/sparkle-design/dist";
+> @import "./sparkle-design.css";
+> ```
+>
+> If you also consume `@goodpatch/sparkle-design-internal` or another design system package, add the package names to `extend.source-packages` in `sparkle.config.json`; the CLI will insert `@source` directives for them too. From `sparkle-design-cli` v2.0.5 onward, `setup` scaffolds a config with `extend.source-packages` so no manual edit is needed unless you want to add extra packages.
+
 #### Installing as an AI Agent Skill (optional)
 
 If you use an AI agent such as Claude Code, Codex, or Cursor, you can also install the Sparkle Design skills with [Vercel's skills CLI](https://github.com/vercel-labs/skills) to have the agent walk you through setup.
