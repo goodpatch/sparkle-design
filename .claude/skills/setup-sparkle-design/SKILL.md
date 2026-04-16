@@ -35,7 +35,7 @@ description: >
 
    - パッケージマネージャを特定（`package.json` や lockfile から）
    - `sparkle.config.json` の有無を確認
-   - `globals.css` の場所と内容を確認
+   - Tailwind エントリ CSS（`globals.css` / `index.css` 等）の場所と内容を確認
 
 2. **不足しているステップのみ案内する**
 
@@ -66,7 +66,7 @@ npx --yes sparkle-design-cli setup --assistant claude
 
 1. **パッケージマネージャー検出** -- pnpm / yarn / bun / npm を lockfile から自動判定
 2. **パッケージインストール** -- `sparkle-design` を dependencies、`tailwindcss` + `@tailwindcss/postcss` を devDependencies に追加（既に入っていればスキップ）
-3. **初期ファイル生成** -- `sparkle.config.json` / `postcss.config.mjs` / `globals.css` が無ければ作成（既存ファイルは保持）
+3. **初期ファイル生成** -- `sparkle.config.json` / `postcss.config.mjs` / Tailwind エントリ CSS（Next.js: `globals.css`、Vite: `index.css`）が無ければ作成（既存ファイルは保持）
 4. **AI ガード設定** -- `CLAUDE.md` に Sparkle Design Guard ブロックと `lint:sparkle` スクリプトを追加
 5. **`generate` 実行** -- `sparkle-design.css` と `SparkleHead.tsx` を生成
 

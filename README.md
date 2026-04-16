@@ -38,7 +38,7 @@ npx --yes sparkle-design-cli setup --assistant claude
 
 1. パッケージマネージャー（pnpm / npm / yarn / bun）を自動検出
 2. `sparkle-design` を dependencies、`tailwindcss` + `@tailwindcss/postcss` を devDependencies に追加
-3. `sparkle.config.json` / `postcss.config.mjs` / `globals.css` を必要に応じて生成
+3. `sparkle.config.json` / `postcss.config.mjs` / Tailwind エントリ CSS（Next.js: `globals.css`、Vite: `index.css`）を必要に応じて生成
 4. `CLAUDE.md` に Sparkle Design ガードブロックと `lint:sparkle` スクリプトを追加
 5. `sparkle-design.css` と `SparkleHead.tsx` を生成
 
