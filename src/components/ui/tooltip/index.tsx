@@ -99,10 +99,10 @@ function TooltipContent({
         side={side}
         sideOffset={sideOffset}
         className={cn(
-          "bg-neutral-900 shadow-float animate-in fade-in-0 zoom-in-95",
-          "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
-          "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2",
-          "data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+          "bg-neutral-900 shadow-float animate-in fade-in-0 zoom-in-90 duration-250 tooltip-ease-in",
+          "data-[side=top]:slide-in-from-bottom-1 data-[side=bottom]:slide-in-from-top-1",
+          "data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1",
+          "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-90 data-[state=closed]:duration-[120ms] data-[state=closed]:tooltip-ease-out",
           "z-50 w-fit origin-[--radix-tooltip-content-transform-origin] rounded-notice",
           "px-2 py-1 character-2-regular-pro text-white",
           className
