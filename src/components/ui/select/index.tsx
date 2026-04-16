@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 
 const selectTriggerVariants = cva(
   [
-    "flex items-center justify-between w-full rounded-action border bg-white text-text-high transition-colors",
+    "group flex items-center justify-between w-full rounded-action border bg-white text-text-high transition-colors",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
     "overflow-hidden whitespace-nowrap",
   ].join(" "),
@@ -228,7 +228,7 @@ function SelectTrigger({
           icon="arrow_drop_down"
           className={cn(
             selectIconVariants({ size, isDisabled: disabled }),
-            "shrink-0"
+            "shrink-0 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-data-[state=open]:rotate-180 motion-reduce:transition-none"
           )}
         />
       </SelectPrimitive.Icon>
