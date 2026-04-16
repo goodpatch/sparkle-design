@@ -65,7 +65,7 @@ export default function RootLayout({ children }) {
 
 Customize primary color, fonts, border radius, and more via `sparkle.config.json`. To tweak settings inside Figma, the [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) plugin is available. See `sparkle-design-cli generate --help` for details.
 
-> **⚠️ Note for TailwindCSS v4 when using sparkle-design as an npm package:** TailwindCSS v4 does not automatically scan utility classes inside `node_modules`. When consuming `sparkle-design` as an npm package, your entry CSS needs an `@source` directive like the one below (`sparkle-design-cli setup` / `generate` inserts it automatically):
+> **⚠️ Note for TailwindCSS v4 when using sparkle-design as an npm package:** TailwindCSS v4 does not automatically scan utility classes inside `node_modules`. When consuming `sparkle-design` as an npm package, your entry CSS needs an `@source` directive like the one below:
 >
 > ```css
 > @import "tailwindcss";
@@ -73,7 +73,7 @@ Customize primary color, fonts, border radius, and more via `sparkle.config.json
 > @import "./sparkle-design.css";
 > ```
 >
-> If you also consume `@goodpatch/sparkle-design-internal` or another design system package, add the package names to `extend.source-packages` in `sparkle.config.json`; the CLI will insert `@source` directives for them too. From `sparkle-design-cli` v2.0.5 onward, `setup` scaffolds a config with `extend.source-packages` so no manual edit is needed unless you want to add extra packages.
+> From `sparkle-design-cli` v2.0.6 onward, `generate` / `setup` **auto-scans your `package.json`** (dependencies / devDependencies) and automatically inserts the matching `@source` directives when it detects `sparkle-design` or `@goodpatch/sparkle-design-internal`. No manual config is required. If you want to include additional design system packages, add them to `extend.source-packages` in `sparkle.config.json`; the detected packages and your explicit list will be merged.
 
 #### Installing as an AI Agent Skill (optional)
 

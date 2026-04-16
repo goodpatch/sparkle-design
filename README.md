@@ -65,7 +65,7 @@ export default function RootLayout({ children }) {
 
 `sparkle.config.json` でプライマリカラー・フォント・角丸などをカスタマイズできます。Figma 上で設定を調整したい場合は [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364/sparkle-design-theme-settings) プラグインを利用できます。詳細は `sparkle-design-cli generate --help` を参照してください。
 
-> **⚠️ TailwindCSS v4 で npm package として使う場合の注意:** TailwindCSS v4 は `node_modules` 内のユーティリティクラスを自動スキャンしません。そのため `sparkle-design` を npm package として使うときは、エントリ CSS に以下のような `@source` ディレクティブが必要です（`sparkle-design-cli setup` / `generate` が自動挿入します）。
+> **⚠️ TailwindCSS v4 で npm package として使う場合の注意:** TailwindCSS v4 は `node_modules` 内のユーティリティクラスを自動スキャンしないため、`sparkle-design` を npm package として使うときはエントリ CSS に以下のような `@source` ディレクティブが必要です。
 >
 > ```css
 > @import "tailwindcss";
@@ -73,7 +73,7 @@ export default function RootLayout({ children }) {
 > @import "./sparkle-design.css";
 > ```
 >
-> 社内版（`@goodpatch/sparkle-design-internal`）や独自のデザインシステムパッケージを併用する場合は、`sparkle.config.json` の `extend.source-packages` にパッケージ名を追加すると、同じく `@source` が自動挿入されます。v2.0.5 以降の `setup` は `extend.source-packages` を含むデフォルト設定を生成するため、追加パッケージが無い限り手動編集は不要です。
+> `sparkle-design-cli` v2.0.6 以降は、`generate` / `setup` 実行時に **`package.json` の dependencies / devDependencies を自動スキャン** し、`sparkle-design` や `@goodpatch/sparkle-design-internal` が含まれていれば該当する `@source` を自動挿入します。`sparkle.config.json` 側で何も設定しなくても動きます。独自のデザインシステムパッケージを併用したい場合のみ `extend.source-packages` に追記すると、自動検出分と合算されます。
 
 #### AI エージェントに Skill として導入する場合（任意）
 
