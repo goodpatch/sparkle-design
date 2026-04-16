@@ -1,7 +1,7 @@
 ---
 name: setup-sparkle-design
 description: >
-  @goodpatch/sparkle-design（React コンポーネントライブラリ）の導入・セットアップ・
+  sparkle-design（React コンポーネントライブラリ）の導入・セットアップ・
   テーマカスタマイズ・コンポーネント選択を支援するスキル。
   npm インストール、sparkle-design-cli による CSS 生成、sparkle.config.json のテーマ設定、
   アンチパターンガードの導入までをカバーする。
@@ -19,9 +19,9 @@ description: >
 
 # Skill: setup-sparkle-design
 
-プロジェクトに `@goodpatch/sparkle-design` を npm パッケージとして導入し、コンポーネントを利用できる状態にするためのスキル。
+プロジェクトに `sparkle-design` を npm パッケージとして導入し、コンポーネントを利用できる状態にするためのスキル。
 
-> **社内版との違い**: 社内版 `@goodpatch/sparkle-design-internal` を導入する場合は `install-sparkle-design` スキルを使ってください。こちらは公開版 `@goodpatch/sparkle-design` 用です。
+> **社内版との違い**: 社内版 `@goodpatch/sparkle-design-internal` を導入する場合は `install-sparkle-design` スキルを使ってください。こちらは公開版 `sparkle-design` 用です。
 
 ---
 
@@ -35,7 +35,7 @@ description: >
 
    - パッケージマネージャを特定（`package.json` や lockfile から）
    - `sparkle.config.json` の有無を確認
-   - `globals.css` の場所と内容を確認
+   - Tailwind エントリ CSS（`globals.css` / `index.css` 等）の場所と内容を確認
 
 2. **不足しているステップのみ案内する**
 
@@ -56,50 +56,34 @@ description: >
 
 ---
 
-## Quick Start（3 ステップ）
-
-### Step 1: パッケージをインストール
+## Quick Start（1 コマンド）
 
 ```bash
-# npm
-npm install @goodpatch/sparkle-design
-
-# pnpm
-pnpm add @goodpatch/sparkle-design
-
-# yarn
-yarn add @goodpatch/sparkle-design
+npx --yes sparkle-design-cli setup --assistant claude
 ```
 
-> **認証不要**: `@goodpatch/sparkle-design` は npmjs.com で公開されているため、`.npmrc` の設定やトークンは不要です。
+このコマンド 1 つで以下が全て実行される:
 
-### Step 2: CSS セットアップ
+1. **パッケージマネージャー検出** -- pnpm / yarn / bun / npm を lockfile から自動判定
+2. **パッケージインストール** -- `sparkle-design` を dependencies、`tailwindcss` + `@tailwindcss/postcss` を devDependencies に追加（既に入っていればスキップ）
+3. **初期ファイル生成** -- `sparkle.config.json` / `postcss.config.mjs` / Tailwind エントリ CSS（Next.js: `globals.css`、Vite: `index.css`）が無ければ作成（既存ファイルは保持）
+4. **AI ガード設定** -- `CLAUDE.md` に Sparkle Design Guard ブロックと `lint:sparkle` スクリプトを追加
+5. **`generate` 実行** -- `sparkle-design.css` と `SparkleHead.tsx` を生成
 
-CSS は npm パッケージの dist には含まれていない。`sparkle-design-cli` でプロジェクトに CSS を生成する（CLI にテンプレートが埋め込まれている）。
+`--assistant` は `claude` / `cursor` / `codex` / `generic` から選択可能。部分的に実行したい場合は `--skip-install` / `--skip-scaffold` / `--skip-generate` を使う。
 
-```bash
-# sparkle.config.json を作成（未作成の場合）
-# フォントウェイトやカスタム CSS が必要な場合は extend セクションを使う（sparkle-design-cli generate --help 参照）
-cat > sparkle.config.json << 'EOF'
-{
-  "primary": "blue",
-  "font-pro": "BIZ UDPGothic",
-  "font-mono": "BIZ UDGothic",
-  "radius": "md"
-}
-EOF
+### 生成されるファイル
 
-# CSS を生成
-npx --yes sparkle-design-cli generate
-```
-
-生成されるファイル（配置先はプロジェクト構成による。例: Next.js App Router では `src/app/`）:
-
+- `sparkle.config.json` -- デザインテーマ設定（初期値: blue / Inter / JetBrains Mono / md）
+- `postcss.config.mjs` -- PostCSS 設定（`@tailwindcss/postcss` プラグインを有効化）
+- `src/app/globals.css` or `src/globals.css` -- Tailwind エントリポイント CSS（`@source` 含む）
 - `src/app/sparkle-design.css` -- デザイントークン（プリミティブ `:root` + セマンティック `:root` + `@theme inline`）
-- `src/app/SparkleHead.tsx` -- フォント読み込み用 React コンポーネント（`<link>` タグで preconnect + Google Fonts を読み込む）
-- Tailwind エントリポイント CSS（`globals.css` 等） -- `@source` ディレクティブ、`sparkle-design.css` の読み込みが追記される。CLI が `@import "tailwindcss"` を含む CSS ファイルを自動検出する。`globals.css` 以外（Vite の `index.css` 等）にも対応。明示的に指定する場合は `extend.globals-path` か `--globals-path` オプションを使う
+- `src/app/SparkleHead.tsx` -- フォント読み込み用 React コンポーネント
+- `CLAUDE.md` -- AI ガードブロック（`<!-- sparkle-design-cli:setup:start -->` で囲まれた部分）
 
-`SparkleHead` はルートレイアウトの `<head>` 内に配置する:
+### SparkleHead の配置
+
+生成された `SparkleHead` をルートレイアウトの `<head>` 内に配置する:
 
 ```tsx
 import { SparkleHead } from "./SparkleHead";
@@ -119,6 +103,14 @@ export default function RootLayout({ children }) {
 > **TailwindCSS v4 との互換性**: CLI が Tailwind エントリポイント CSS に `@source` ディレクティブを自動挿入するため、TailwindCSS v4 でも `node_modules` 内のクラスが正しく検出されます。追加パッケージがある場合は `extend.source-packages` 配列に追加してください。
 
 > Tailwind エントリポイント CSS がルートレイアウト（`src/app/layout.tsx` や `_app.tsx`）で import されていることを確認する。
+
+### テーマをカスタマイズする
+
+`sparkle.config.json` を編集した後、再生成する:
+
+```bash
+npx sparkle-design-cli generate
+```
 
 #### 拡張設定（extend）
 
@@ -157,7 +149,7 @@ export default function RootLayout({ children }) {
 ### Step 3: コンポーネントを使う
 
 ```tsx
-import { Button, Card, Input } from "@goodpatch/sparkle-design";
+import { Button, Card, Input } from "sparkle-design";
 
 export function MyPage() {
   return (
@@ -188,27 +180,22 @@ export function MyPage() {
 
 ---
 
-## AI ガード設定
+## 部分的な setup 実行
 
-初回セットアップ時に、AI アシスタント向けのアンチパターンガードを導入する:
+フルセットアップではなく特定のステップだけ実行したい場合:
 
 ```bash
-# Claude Code 向け（CLAUDE.md にガードルールを追記）
-npx --yes sparkle-design-cli setup --assistant claude
+# 既存プロジェクトに AI ガードだけ追加する（パッケージ導入・ファイル生成・generate をスキップ）
+npx --yes sparkle-design-cli setup --assistant claude --skip-install --skip-scaffold --skip-generate
 
-# Cursor 向け
-npx --yes sparkle-design-cli setup --assistant cursor
+# パッケージは別途インストール済みで、scaffold と generate だけやりたい
+npx --yes sparkle-design-cli setup --assistant claude --skip-install
 
-# Codex 向け
-npx --yes sparkle-design-cli setup --assistant codex
-
-# 汎用（SPARKLE-DESIGN-AI.md を生成）
-npx --yes sparkle-design-cli setup --assistant generic
+# Cursor の rules ファイルだけ追加
+npx --yes sparkle-design-cli setup --assistant cursor --skip-install --skip-scaffold --skip-generate
 ```
 
-`--dry-run` で変更内容のプレビュー、`--target <path>` で対象ディレクトリの明示指定が可能。
-
-`setup` は `package.json` に `lint:sparkle` / `lint:sparkle:json` スクリプトも追加する。
+`--dry-run` で変更内容のプレビュー、`--target <path>` で lint 対象ディレクトリの明示指定が可能。
 
 ### アンチパターン検査
 

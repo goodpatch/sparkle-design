@@ -5,16 +5,16 @@
 > **Client Component**: このコンポーネントは `"use client"` を含みます。Server Component から使う場合は個別 import を推奨します。
 >
 > ```tsx
-> import { Modal } from "@goodpatch/sparkle-design/modal";
+> import { Modal } from "sparkle-design/modal";
 > ```
 
 ## インストール
 
 ```bash
-npx shadcn@latest add https://sparkle-design.vercel.app/r/modal.json
+npx shadcn@latest add https://sparkle-design.goodpatch.com/r/modal.json
 ```
 
-または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。
+または npm パッケージとして `sparkle-design` をインストールしている場合はそのまま利用できます。
 
 ## 使い方
 
@@ -42,5 +42,6 @@ npx shadcn@latest add https://sparkle-design.vercel.app/r/modal.json
 
 ## 関連リンク
 
-- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-modal--docs)
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/modal)
+- [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-modal--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/modal)

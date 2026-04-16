@@ -16,8 +16,8 @@
   ],
   "dependencies": ["react-hook-form", "radix-ui"],
   "registryDependencies": [
-    "https://sparkle-design.vercel.app/r/tag.json",
-    "https://sparkle-design.vercel.app/r/icon.json",
-    "https://sparkle-design.vercel.app/r/tooltip.json"
+    "https://sparkle-design.goodpatch.com/r/tag.json",
+    "https://sparkle-design.goodpatch.com/r/icon.json",
+    "https://sparkle-design.goodpatch.com/r/tooltip.json"
   ]
 }

@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 
 const ROOT = process.cwd();
-const DEFAULT_FROM = "https://sparkle-design.vercel.app";
+const DEFAULT_FROM = "https://sparkle-design.goodpatch.com";
 const TEXT_EXTENSIONS = new Set([
   ".md",
   ".mdx",
@@ -20,7 +20,7 @@ const TEXT_EXTENSIONS = new Set([
 const EXCLUDED_PARTS = new Set(["node_modules", "dist", ".next", "storybook-static"]);
 
 function usage() {
-  console.log("Usage: node scripts/update-public-domain.mjs --to https://your-domain.example.com [--from https://sparkle-design.vercel.app] [--dry-run]");
+  console.log("Usage: node scripts/update-public-domain.mjs --to https://your-domain.example.com [--from https://sparkle-design.goodpatch.com] [--dry-run]");
 }
 
 function normalize(url) {

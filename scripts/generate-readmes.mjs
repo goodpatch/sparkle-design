@@ -107,7 +107,7 @@ function generateReadme(componentDir, componentName) {
     lines.push(">");
     lines.push("> ```tsx");
     lines.push(
-      `> import { ${pascalName} } from "@goodpatch/sparkle-design/${componentName}";`
+      `> import { ${pascalName} } from "sparkle-design/${componentName}";`
     );
     lines.push("> ```");
   } else {
@@ -121,12 +121,12 @@ function generateReadme(componentDir, componentName) {
   lines.push("");
   lines.push("```bash");
   lines.push(
-    `npx shadcn@latest add https://sparkle-design.vercel.app/r/${componentName}.json`
+    `npx shadcn@latest add https://sparkle-design.goodpatch.com/r/${componentName}.json`
   );
   lines.push("```");
   lines.push("");
   lines.push(
-    "または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。"
+    "または npm パッケージとして `sparkle-design` をインストールしている場合はそのまま利用できます。"
   );
   lines.push("");
 
@@ -143,18 +143,18 @@ function generateReadme(componentDir, componentName) {
         `// Server Component から使う場合は個別 import`
       );
       lines.push(
-        `import { ${pascalName} } from "@goodpatch/sparkle-design/${componentName}";`
+        `import { ${pascalName} } from "sparkle-design/${componentName}";`
       );
       lines.push("");
       lines.push(
         `// Client Component 内ではバレル import も可`
       );
       lines.push(
-        `import { ${pascalName} } from "@goodpatch/sparkle-design";`
+        `import { ${pascalName} } from "sparkle-design";`
       );
     } else {
       lines.push(
-        `import { ${pascalName} } from "@goodpatch/sparkle-design";`
+        `import { ${pascalName} } from "sparkle-design";`
       );
     }
     lines.push("");
@@ -175,7 +175,10 @@ function generateReadme(componentDir, componentName) {
   lines.push("## 関連リンク");
   lines.push("");
   lines.push(
-    `- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-${componentName}--docs)`
+    `- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/${componentName})`
+  );
+  lines.push(
+    `- [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-${componentName}--docs)`
   );
   lines.push(
     `- [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/${componentName})`

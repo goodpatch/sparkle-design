@@ -11,5 +11,5 @@
     }
   ],
   "dependencies": ["sonner"],
-  "registryDependencies": ["https://sparkle-design.vercel.app/r/button.json"]
+  "registryDependencies": ["https://sparkle-design.goodpatch.com/r/button.json"]
 }

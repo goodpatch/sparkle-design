@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Icon } from "./index";
 
 const meta: Meta<typeof Icon> = {

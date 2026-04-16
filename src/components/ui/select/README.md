@@ -5,16 +5,16 @@
 > **Client Component**: このコンポーネントは `"use client"` を含みます。Server Component から使う場合は個別 import を推奨します。
 >
 > ```tsx
-> import { Select } from "@goodpatch/sparkle-design/select";
+> import { Select } from "sparkle-design/select";
 > ```
 
 ## インストール
 
 ```bash
-npx shadcn@latest add https://sparkle-design.vercel.app/r/select.json
+npx shadcn@latest add https://sparkle-design.goodpatch.com/r/select.json
 ```
 
-または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。
+または npm パッケージとして `sparkle-design` をインストールしている場合はそのまま利用できます。
 
 ## 使い方
 
@@ -32,5 +32,6 @@ npx shadcn@latest add https://sparkle-design.vercel.app/r/select.json
 
 ## 関連リンク
 
-- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-select--docs)
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/select)
+- [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-select--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/select)

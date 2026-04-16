@@ -5,16 +5,16 @@
 > **Client Component**: このコンポーネントは `"use client"` を含みます。Server Component から使う場合は個別 import を推奨します。
 >
 > ```tsx
-> import { Dialog } from "@goodpatch/sparkle-design/dialog";
+> import { Dialog } from "sparkle-design/dialog";
 > ```
 
 ## インストール
 
 ```bash
-npx shadcn@latest add https://sparkle-design.vercel.app/r/dialog.json
+npx shadcn@latest add https://sparkle-design.goodpatch.com/r/dialog.json
 ```
 
-または npm パッケージとして `@goodpatch/sparkle-design` をインストールしている場合はそのまま利用できます。
+または npm パッケージとして `sparkle-design` をインストールしている場合はそのまま利用できます。
 
 ## 使い方
 
@@ -36,5 +36,6 @@ npx shadcn@latest add https://sparkle-design.vercel.app/r/dialog.json
 
 ## 関連リンク
 
-- [Storybook](https://sparkle-design.vercel.app/storybook/index.html?path=/docs/components-dialog--docs)
+- [ガイドライン](https://sparkle-design.goodpatch.com/guidelines/components/dialog)
+- [Storybook](https://sparkle-design.goodpatch.com/storybook/index.html?path=/docs/components-dialog--docs)
 - [ソースコード](https://github.com/goodpatch/sparkle-design/tree/main/src/components/ui/dialog)

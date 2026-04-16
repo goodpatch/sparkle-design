@@ -9,10 +9,10 @@ import path from "path";
 const ROOT = process.cwd();
 const BASE_DIR = path.resolve(ROOT, "src/components/ui");
 const OLD_URLS = new Set([
-  "https://sparkle-design.vercel.app/r/sparkle-font.json",
-  "https://sparkle-design.vercel.app/r/sparkle-color.json",
-  "https://sparkle-design.vercel.app/r/sparkle-style.json",
-  "https://sparkle-design.vercel.app/r/sparkle-design-theme.json",
+  "https://sparkle-design.goodpatch.com/r/sparkle-font.json",
+  "https://sparkle-design.goodpatch.com/r/sparkle-color.json",
+  "https://sparkle-design.goodpatch.com/r/sparkle-style.json",
+  "https://sparkle-design.goodpatch.com/r/sparkle-design-theme.json",
 ]);
 
 function* walk(dir) {
