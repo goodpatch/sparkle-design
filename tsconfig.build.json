@@ -16,6 +16,7 @@
     "src/**/*.stories.tsx",
     "src/**/*.test.tsx",
     "src/**/*.test.ts",
+    "src/**/*.figma.tsx",
     "src/app"
   ],
   "tsc-alias": {
