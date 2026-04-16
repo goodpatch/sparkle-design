@@ -75,6 +75,54 @@ export const Scrollable: TabsListVariantStory = {
   ),
 };
 
+/**
+ * コンテンツ切り替え fade-in と line インジケータースライドの確認用。
+ * en: For verifying content fade-in and line indicator slide motion.
+ */
+export const MotionPreview: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "タブを切り替えてモーションを確認する。上段：solid / ghost（コンテンツ fade-in のみ）。下段：line（コンテンツ fade-in + インジケータースライド）。\n\n**コンテンツ**：opacity(0)+translateY(6px)→opacity(1)+translateY(0)、200ms ease-out。\n**line インジケーター**：アクティブタブの位置・幅に追従してスライド、250ms cubic-bezier(0.16,1,0.3,1)。\n\nen: Switch tabs to verify motion. Top: solid/ghost (content fade-in only). Bottom: line (content fade-in + indicator slide). Content: opacity(0)+translateY(6px)→(1)+0, 200ms ease-out. Line indicator: slides to active tab position/width, 250ms cubic-bezier(0.16,1,0.3,1).",
+      },
+    },
+  },
+  render: () => (
+    <div className="flex flex-col gap-10 w-[400px]">
+      {/* solid */}
+      <div className="flex flex-col gap-1">
+        <p className="text-xs text-neutral-500 font-medium">solid</p>
+        <Tabs defaultValue="a">
+          <TabsList variant="solid">
+            <TabsTrigger value="a">アカウント</TabsTrigger>
+            <TabsTrigger value="b">通知</TabsTrigger>
+            <TabsTrigger value="c">セキュリティ</TabsTrigger>
+          </TabsList>
+          <TabsContent value="a"><p className="py-4 character-3-regular-pro text-text-medium">アカウント設定の内容がここに入ります。</p></TabsContent>
+          <TabsContent value="b"><p className="py-4 character-3-regular-pro text-text-medium">通知設定の内容がここに入ります。</p></TabsContent>
+          <TabsContent value="c"><p className="py-4 character-3-regular-pro text-text-medium">セキュリティ設定の内容がここに入ります。</p></TabsContent>
+        </Tabs>
+      </div>
+
+      {/* line */}
+      <div className="flex flex-col gap-1">
+        <p className="text-xs text-neutral-500 font-medium">line — インジケータースライド確認</p>
+        <Tabs defaultValue="x">
+          <TabsList variant="line">
+            <TabsTrigger value="x">アカウント</TabsTrigger>
+            <TabsTrigger value="y">通知</TabsTrigger>
+            <TabsTrigger value="z">セキュリティ</TabsTrigger>
+          </TabsList>
+          <TabsContent value="x"><p className="py-4 character-3-regular-pro text-text-medium">アカウント設定の内容がここに入ります。</p></TabsContent>
+          <TabsContent value="y"><p className="py-4 character-3-regular-pro text-text-medium">通知設定の内容がここに入ります。</p></TabsContent>
+          <TabsContent value="z"><p className="py-4 character-3-regular-pro text-text-medium">セキュリティ設定の内容がここに入ります。</p></TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  ),
+};
+
 export const Solid: Story = {
   render: args => (
     <Tabs defaultValue="tab1" {...args}>
