@@ -1,5 +1,13 @@
 packages: []
 minimumReleaseAge: 2880
+# Security patch 適用のため公開直後でもインストールを許可するパッケージ。
+# en: Packages whose security-patched releases we allow to install before the
+#     minimumReleaseAge window elapses.
+minimumReleaseAgeExclude:
+  - hono
+  - yaml
+  - '@eslint/plugin-kit'
+  - brace-expansion
 onlyBuiltDependencies:
   - '@bundled-es-modules/glob'
   - '@tailwindcss/oxide'
