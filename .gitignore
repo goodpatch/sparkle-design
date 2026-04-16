@@ -69,3 +69,9 @@ node-compile-cache/
 
 # package manager lock files
 # pnpm-lock.yaml
+
+# skills
+.claude/skills/*
+!.claude/skills/accessibility-checker/
+!.claude/skills/add-sparkle-component/
+!.claude/skills/setup-sparkle-design/
