@@ -73,7 +73,7 @@ Customize primary color, fonts, border radius, and more via `sparkle.config.json
 > @import "./sparkle-design.css";
 > ```
 >
-> From `sparkle-design-cli` v2.0.6 onward, `generate` / `setup` **auto-scans your `package.json`** (dependencies / devDependencies) and automatically inserts the matching `@source` directives when it detects `sparkle-design` or `@goodpatch/sparkle-design-internal`. No manual config is required. If you want to include additional design system packages, add them to `extend.source-packages` in `sparkle.config.json`; the detected packages and your explicit list will be merged.
+> From `sparkle-design-cli` v2.0.6 onward, `generate` / `setup` **auto-scans your `package.json`** (dependencies / devDependencies) and automatically inserts the matching `@source` directive when it detects `sparkle-design`. No manual config is required. If you want to include additional design system packages, add them to `extend.source-packages` in `sparkle.config.json`; the detected packages and your explicit list will be merged.
 
 #### Installing as an AI Agent Skill (optional)
 
