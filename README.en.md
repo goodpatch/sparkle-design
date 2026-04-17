@@ -134,7 +134,7 @@ npx sparkle-design-cli check src
 
 ### Manual installation (advanced)
 
-If you prefer a step-by-step installation without CLI setup, see the [CLI documentation](https://github.com/goodpatch/sparkle-design-cli#readme).
+If you prefer a step-by-step installation without CLI setup, run `npx --yes sparkle-design-cli --help` / `npx --yes sparkle-design-cli generate --help` / `npx --yes sparkle-design-cli setup --help` to see the usage of each subcommand. See also the [sparkle-design-cli page on npm](https://www.npmjs.com/package/sparkle-design-cli).
 
 ## Install individual components
 

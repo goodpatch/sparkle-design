@@ -134,7 +134,7 @@ npx sparkle-design-cli check src
 
 ### 手動インストール（高度な利用）
 
-CLI setup を使わずに段階的に導入したい場合は、[CLI ドキュメント](https://github.com/goodpatch/sparkle-design-cli#readme) を参照してください。
+CLI setup を使わずに段階的に導入したい場合は、`npx --yes sparkle-design-cli --help` / `npx --yes sparkle-design-cli generate --help` / `npx --yes sparkle-design-cli setup --help` で各サブコマンドの使い方を確認できます。npm ページは [sparkle-design-cli on npm](https://www.npmjs.com/package/sparkle-design-cli) を参照してください。
 
 ## 個別コンポーネントの導入
 
