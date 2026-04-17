@@ -1,18 +1,16 @@
 ---
 name: setup-sparkle-design
 description: >
-  sparkle-design（React コンポーネントライブラリ）の導入・セットアップ・
-  テーマカスタマイズ・コンポーネント選択を支援するスキル。
-  npm インストール、sparkle-design-cli による CSS 生成、sparkle.config.json のテーマ設定、
-  アンチパターンガードの導入までをカバーする。
-  「Sparkle Design」「sparkle-design」「デザインシステム」「コンポーネントライブラリ」
-  への言及、またはプライマリカラー・フォント・角丸などのテーマカスタマイズの相談、
-  「どのコンポーネントを使えばいい」といったコンポーネント選択の質問で発動すること。
-  sparkle.config.json への言及も発動トリガーとする。
+  **未導入プロジェクト向け**の sparkle-design 初期導入・セットアップを支援するスキル。
+  npm インストール、sparkle-design-cli による初回 CSS 生成、sparkle.config.json の新規作成、
+  アンチパターンガードの導入、コンポーネント選択ガイドまでをカバーする。
+  **導入済みプロジェクトでテーマ（primary / font / radius）を変えたい場合は
+  `change-sparkle-config` スキルを使うこと** — この setup スキルは初期セットアップ専用。
+  「Sparkle Design を導入」「sparkle-design をインストール」「デザインシステムをセットアップ」
+  「コンポーネントライブラリを追加」「どのコンポーネントを使えばいい」で発動する。
   日本語: "Sparkle Designを導入", "sparkle-designをインストール",
   "sparkle-designをセットアップ", "コンポーネントライブラリを追加",
-  "デザインシステムをセットアップ", "どのコンポーネントを使えばいい",
-  "テーマをカスタマイズしたい", "プライマリカラーを変えたい"
+  "デザインシステムをセットアップ", "どのコンポーネントを使えばいい"
   English: "install sparkle-design", "add sparkle design",
   "set up sparkle design", "which component should I use"
 ---
