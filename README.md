@@ -73,7 +73,7 @@ export default function RootLayout({ children }) {
 > @import "./sparkle-design.css";
 > ```
 >
-> `sparkle-design-cli` v2.0.6 以降は、`generate` / `setup` 実行時に **`package.json` の dependencies / devDependencies を自動スキャン** し、`sparkle-design` や `@goodpatch/sparkle-design-internal` が含まれていれば該当する `@source` を自動挿入します。`sparkle.config.json` 側で何も設定しなくても動きます。独自のデザインシステムパッケージを併用したい場合のみ `extend.source-packages` に追記すると、自動検出分と合算されます。
+> `sparkle-design-cli` v2.0.6 以降は、`generate` / `setup` 実行時に **`package.json` の dependencies / devDependencies を自動スキャン** し、`sparkle-design` が含まれていれば該当する `@source` を自動挿入します。`sparkle.config.json` 側で何も設定しなくても動きます。独自のデザインシステムパッケージを併用したい場合のみ `extend.source-packages` に追記すると、自動検出分と合算されます。
 
 #### AI エージェントに Skill として導入する場合（任意）
 
