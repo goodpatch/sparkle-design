@@ -7,11 +7,21 @@
 **SKILL.md の許可リストと同一**。reference 単独参照でも自己完結できるよう再掲する:
 
 - **primary**: `blue` / `red` / `orange` / `green` / `purple` / `pink` / `yellow`
-- **radius**: `none` / `sm` / `md` / `lg` / `xl` / `full`
+- **radius**: `none` / `xs` / `sm` / `md` / `lg` / `xl` / `2xl` / `3xl`
 - **font-pro**（proportional 用途 OK なもの）: `BIZ UDPGothic` / `Noto Sans JP` / `IBM Plex Sans JP` / `Inter` / `Roboto` / `Lato` / `Open Sans` / `Montserrat` / `Hiragino Sans`
 - **font-mono**（monospace 用途 OK なもの）: `BIZ UDGothic` / `Noto Sans JP` / `IBM Plex Sans JP` / `Inter` / `Roboto Mono` / `Lato` / `Open Sans` / `Montserrat` / `Hiragino Sans`
 
 > ❌ `BIZ UDPGothic` / `Roboto` を `font-mono` に使わない。❌ `BIZ UDGothic` / `Roboto Mono` を `font-pro` に使わない。
+>
+> ❌ `radius: "full"` は入力キーとして存在しない（`sparkle-variables/radius.csv` の `name` 列に無く、`round` 列の semantic 出力にのみ現れる）。使わない。最大の丸みが欲しいときは `3xl`。
+
+## Source of Truth
+
+この reference 内の許可リストは以下のファイルを権威ソースとしている。Figma プラグイン側で追加があった場合はこの reference と SKILL.md の許可リストを手動更新すること（現状 CI による同期機構は無い）:
+
+- **radius**: `sparkle-variables/radius.csv` の `name` 列
+- **fonts**: `sparkle-variables/fontdata.csv`（`proportion` 列が `pro` / `mono` / `both` の区分）
+- **colors**: `sparkle-variables/colors.json` の primary 系キー
 
 ## マッピング表
 
@@ -20,7 +30,7 @@
 | 項目 | 値 | 理由 |
 |---|---|---|
 | primary | `yellow` / `pink` / `orange` | 明度・彩度が高く陽気な印象 |
-| radius | `xl` / `full` | 丸みを強めると遊び心が出る |
+| radius | `xl` / `2xl` | 丸みを強めると遊び心が出る（最大まで寄せたいなら `3xl`） |
 | font-pro | `Montserrat` / `Noto Sans JP` | 太さのコントラストがはっきりして明朗 |
 | font-mono | `Roboto Mono` | 中立でポップさを邪魔しない |
 
