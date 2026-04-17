@@ -69,3 +69,14 @@ node-compile-cache/
 
 # package manager lock files
 # pnpm-lock.yaml
+
+# skills — animation ブランチで追加される allowlist パターンと揃えておくことで
+# 両ブランチの merge 競合を避ける。共有スキルに追加があるたび allowlist も更新する。
+# en: Match the allowlist introduced on the `animation` branch so that merging
+# either branch first does not create a conflict. When a new shared skill is
+# added, update this allowlist as well.
+.claude/skills/*
+!.claude/skills/accessibility-checker/
+!.claude/skills/add-sparkle-component/
+!.claude/skills/change-sparkle-config/
+!.claude/skills/setup-sparkle-design/
