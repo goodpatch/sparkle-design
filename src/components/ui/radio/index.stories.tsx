@@ -129,6 +129,30 @@ export const Disabled: Story = {
   ),
 };
 
+/**
+ * 選択モーション（ドット出現 + 押下フィードバック）の確認用。
+ * en: For verifying selection motion (dot appearance + press feedback).
+ */
+export const MotionPreview: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "クリックを繰り返してモーションを確認する。**ドット出現**：scale(0)→scale(1) + opacity(0)→opacity(1)、150ms cubic-bezier(0.16,1,0.3,1)。**押下フィードバック**：scale(1)→scale(0.9)→scale(1)、押下 80ms ease-in / 戻り 120ms ease-out。\n\nen: Click repeatedly to verify motion. **Dot appearance**: scale(0)→scale(1) + opacity(0)→opacity(1), 150ms cubic-bezier(0.16,1,0.3,1). **Press feedback**: scale(1)→scale(0.9)→scale(1), press 80ms ease-in / return 120ms ease-out.",
+      },
+    },
+  },
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <Radio defaultValue="">
+        <RadioItem value="a" id="motion1" size="sm" label="Small — クリックして確認" />
+        <RadioItem value="b" id="motion2" size="md" label="Medium — クリックして確認" />
+        <RadioItem value="c" id="motion3" size="lg" label="Large — クリックして確認" />
+      </Radio>
+    </div>
+  ),
+};
+
 export const DisabledAndInvalid: Story = {
   render: args => (
     <Radio {...args} defaultValue="comfortable">
