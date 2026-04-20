@@ -1,18 +1,17 @@
 ---
 name: change-sparkle-config
+license: Apache-2.0
 description: >
-  **導入済みの sparkle-design プロジェクト**で、ユーザーが目指したい「雰囲気」や「トーン」を
+  **導入済みの sparkle-design プロジェクト**で、ユーザーが目指したい「雰囲気」を
   自然言語で伝えたら、`sparkle.config.json` の primary / font-pro / font-mono / radius を
-  書き換えて `sparkle-design-cli generate` まで実行するスキル。選択肢は Sparkle Design
-  Theme Settings Figma プラグインが扱える範囲（primary 7 色 / radius 8 段階 / fonts 11 種）
-  に揃えているので、Figma 側と CLI 側の見た目がずれません。**未導入プロジェクトの初期
-  セットアップは `setup-sparkle-design` の役割なのでそちらを使うこと。**
+  書き換えて `sparkle-design-cli generate` まで実行するスキル。選択肢は Theme Settings
+  Figma プラグインが扱える範囲（primary 7 色 / radius 8 段階 / fonts 11 種）に揃えて
+  おり、Figma と CLI の見た目がずれません。**未導入プロジェクトの初期セットアップは
+  `setup-sparkle-design` を使うこと。**
   「雰囲気を変えたい」「もっとポップに」「ビジネスライクに」「高級感を出したい」
-  「やさしい印象」「ミニマルに」「primary カラーを変えたい」「角丸をもっと丸く」
-  「フォントを変えたい」「テーマを提案して」「sparkle.config.json を書き換えて」
-  などで発動する。English: "change the vibe", "make it more playful",
-  "make it more business-like", "adjust the theme", "change primary color",
-  "change fonts", "update sparkle.config.json".
+  「primary を変えたい」「角丸をもっと丸く」「フォントを変えたい」「テーマを提案して」
+  で発動。English: "change the vibe", "make it more playful",
+  "make it more business-like", "adjust the theme", "change primary color".
 ---
 
 # Skill: change-sparkle-config

@@ -1,5 +1,6 @@
 ---
 name: accessibility-checker
+license: Apache-2.0
 description: >
   WCAG 準拠のアクセシビリティチェックをチェックリスト駆動で実行するスキル。
   コンポーネント・ページ・PR に対して Pass/Fail/N/A/Needs Review の構造化レポートを

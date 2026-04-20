@@ -1,16 +1,14 @@
 ---
 name: setup-sparkle-design
+license: Apache-2.0
 description: >
   **未導入プロジェクト向け**の sparkle-design 初期導入・セットアップを支援するスキル。
-  npm インストール、sparkle-design-cli による初回 CSS 生成、sparkle.config.json の新規作成、
-  アンチパターンガードの導入、コンポーネント選択ガイドまでをカバーする。
+  npm インストール、sparkle-design-cli による初回 CSS 生成、sparkle.config.json の
+  新規作成、アンチパターンガードの導入、コンポーネント選択ガイドまでをカバー。
   **導入済みプロジェクトでテーマ（primary / font / radius）を変えたい場合は
-  `change-sparkle-config` スキルを使うこと** — この setup スキルは初期セットアップ専用。
+  `change-sparkle-config` スキルを使うこと** — この setup スキルは初期導入専用。
   「Sparkle Design を導入」「sparkle-design をインストール」「デザインシステムをセットアップ」
-  「コンポーネントライブラリを追加」「どのコンポーネントを使えばいい」で発動する。
-  日本語: "Sparkle Designを導入", "sparkle-designをインストール",
-  "sparkle-designをセットアップ", "コンポーネントライブラリを追加",
-  "デザインシステムをセットアップ", "どのコンポーネントを使えばいい"
+  「コンポーネントライブラリを追加」「どのコンポーネントを使えばいい」で発動。
   English: "install sparkle-design", "add sparkle design",
   "set up sparkle design", "which component should I use"
 ---
