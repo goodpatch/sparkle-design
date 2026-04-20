@@ -77,7 +77,7 @@ Customize primary color, fonts, border radius, and more via `sparkle.config.json
 
 #### Installing as an AI Agent Skill (optional)
 
-If you use an AI agent such as Claude Code, Copilot, Cursor, Codex, or Gemini CLI, you can install the Sparkle Design skills through the [official `gh skill` command](https://github.blog/changelog/2026-04-16-manage-agent-skills-with-github-cli/) (requires gh CLI v2.90+), which lets the agent guide you through setup.
+If you use an AI agent such as Claude Code, GitHub Copilot, Cursor, Codex, Gemini CLI, or Antigravity, you can install the Sparkle Design skills through the [official `gh skill` command](https://github.blog/changelog/2026-04-16-manage-agent-skills-with-github-cli/) (requires gh CLI v2.90+), which lets the agent guide you through setup.
 
 ```bash
 # Install only the setup-sparkle-design skill (recommended)
@@ -90,7 +90,7 @@ gh skill install goodpatch/sparkle-design --agent claude-code
 gh skill preview goodpatch/sparkle-design setup-sparkle-design
 ```
 
-After installation, asking the agent to "install Sparkle Design" triggers the `setup-sparkle-design` skill, which inspects the project and guides you through only the missing steps. Use `--agent claude-code` / `--agent copilot` / `--agent cursor` / `--agent codex` / `--agent gemini-cli` to target a specific agent.
+After installation, asking the agent to "install Sparkle Design" triggers the `setup-sparkle-design` skill, which inspects the project and guides you through only the missing steps. Use `--agent claude-code` / `--agent github-copilot` / `--agent cursor` / `--agent codex` / `--agent gemini` / `--agent antigravity` to target a specific agent (the default for non-interactive runs is `github-copilot`).
 
 > **Fallback if gh CLI is not available**: The same skills are also published via [Vercel's skills CLI](https://github.com/vercel-labs/skills):
 >
