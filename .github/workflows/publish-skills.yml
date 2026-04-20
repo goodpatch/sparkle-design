@@ -1,0 +1,72 @@
+name: Publish Skills
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "リリースタグ（省略時は skill-v<YYYYMMDD-HHMM> UTC で自動生成）"
+        required: false
+        default: ""
+
+concurrency:
+  group: publish-skills
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify gh CLI supports skill subcommand
+        run: |
+          gh --version | head -n 1
+          if ! gh help | grep -q '^  skill:'; then
+            echo "::error::gh skill subcommand not available (requires gh CLI v2.90+)"
+            exit 1
+          fi
+
+      - name: Resolve release tag
+        id: tag
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          if [ -n "$INPUT_TAG" ]; then
+            TAG="$INPUT_TAG"
+          else
+            TS=$(date -u +%Y%m%d-%H%M%S)
+            TAG="skill-v${TS}"
+          fi
+          # prefix + 許可文字のみ: 改行・制御文字混入による GITHUB_OUTPUT インジェクションを防ぐ
+          case "$TAG" in
+            skill-v[0-9A-Za-z._-]*) ;;
+            *)
+              echo "::error::tag must match ^skill-v[0-9A-Za-z._-]+$ (got: $TAG)"
+              exit 1
+              ;;
+          esac
+          case "$TAG" in
+            *[!0-9A-Za-z.v_-]*)
+              echo "::error::tag contains disallowed characters (got: $TAG)"
+              exit 1
+              ;;
+          esac
+          printf 'tag=%s\n' "$TAG" >> "$GITHUB_OUTPUT"
+          echo "Resolved tag: $TAG"
+
+      - name: Dry-run validation
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: .claude
+        run: gh skill publish --dry-run
+
+      - name: Publish skills
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ steps.tag.outputs.tag }}
+        working-directory: .claude
+        run: gh skill publish --tag "$RELEASE_TAG"
