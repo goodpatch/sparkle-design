@@ -1,5 +1,6 @@
 ---
 name: add-sparkle-component
+license: Apache-2.0
 description: >
   Sparkle Design の UI コンポーネントを shadcn registry 経由でプロジェクトに追加するスキル。
   パッケージマネージャの自動検出、設定バリデーション、コンポーネントインストール、
