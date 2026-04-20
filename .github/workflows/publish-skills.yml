@@ -22,13 +22,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Verify gh CLI version
-        run: gh --version | head -n 1
-
-      - name: Install gh skill extension
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh extension install github/gh-skill
+      - name: Verify gh CLI supports skill subcommand
+        run: |
+          gh --version | head -n 1
+          if ! gh help | grep -q '^  skill:'; then
+            echo "::error::gh skill subcommand not available (requires gh CLI v2.90+)"
+            exit 1
+          fi
 
       - name: Resolve release tag
         id: tag
