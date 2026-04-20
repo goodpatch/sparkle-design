@@ -22,11 +22,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Verify gh CLI supports skill subcommand
+      - name: Ensure gh CLI >= 2.90 (skill subcommand available)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh --version | head -n 1
+          if gh help | grep -q '^  skill:'; then
+            echo "gh skill subcommand already available"
+            exit 0
+          fi
+          echo "Installing latest gh CLI from cli/cli releases"
+          LATEST=$(gh api repos/cli/cli/releases/latest --jq .tag_name | sed 's/^v//')
+          TARBALL="gh_${LATEST}_linux_amd64.tar.gz"
+          curl -sSL -o "/tmp/${TARBALL}" "https://github.com/cli/cli/releases/download/v${LATEST}/${TARBALL}"
+          tar -xzf "/tmp/${TARBALL}" -C /tmp
+          sudo install -m 0755 "/tmp/gh_${LATEST}_linux_amd64/bin/gh" /usr/local/bin/gh
+          hash -r
+          gh --version | head -n 1
           if ! gh help | grep -q '^  skill:'; then
-            echo "::error::gh skill subcommand not available (requires gh CLI v2.90+)"
+            echo "::error::gh skill subcommand still not available after upgrade"
             exit 1
           fi
 
