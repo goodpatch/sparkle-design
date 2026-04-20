@@ -38,17 +38,24 @@ jobs:
           if [ -n "$INPUT_TAG" ]; then
             TAG="$INPUT_TAG"
           else
-            TS=$(date -u +%Y%m%d-%H%M)
+            TS=$(date -u +%Y%m%d-%H%M%S)
             TAG="skill-v${TS}"
           fi
+          # prefix + 許可文字のみ: 改行・制御文字混入による GITHUB_OUTPUT インジェクションを防ぐ
           case "$TAG" in
-            skill-v*) ;;
+            skill-v[0-9A-Za-z._-]*) ;;
             *)
-              echo "::error::tag must start with 'skill-v' (got: $TAG)"
+              echo "::error::tag must match ^skill-v[0-9A-Za-z._-]+$ (got: $TAG)"
               exit 1
               ;;
           esac
-          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          case "$TAG" in
+            *[!0-9A-Za-z.v_-]*)
+              echo "::error::tag contains disallowed characters (got: $TAG)"
+              exit 1
+              ;;
+          esac
+          printf 'tag=%s\n' "$TAG" >> "$GITHUB_OUTPUT"
           echo "Resolved tag: $TAG"
 
       - name: Dry-run validation
