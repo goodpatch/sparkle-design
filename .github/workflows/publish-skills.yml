@@ -1,0 +1,65 @@
+name: Publish Skills
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "リリースタグ（省略時は skill-v<YYYYMMDD-HHMM> UTC で自動生成）"
+        required: false
+        default: ""
+
+concurrency:
+  group: publish-skills
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify gh CLI version
+        run: gh --version | head -n 1
+
+      - name: Install gh skill extension
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh extension install github/gh-skill
+
+      - name: Resolve release tag
+        id: tag
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          if [ -n "$INPUT_TAG" ]; then
+            TAG="$INPUT_TAG"
+          else
+            TS=$(date -u +%Y%m%d-%H%M)
+            TAG="skill-v${TS}"
+          fi
+          case "$TAG" in
+            skill-v*) ;;
+            *)
+              echo "::error::tag must start with 'skill-v' (got: $TAG)"
+              exit 1
+              ;;
+          esac
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "Resolved tag: $TAG"
+
+      - name: Dry-run validation
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: .claude
+        run: gh skill publish --dry-run
+
+      - name: Publish skills
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ steps.tag.outputs.tag }}
+        working-directory: .claude
+        run: gh skill publish --tag "$RELEASE_TAG"
