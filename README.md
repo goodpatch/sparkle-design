@@ -77,17 +77,27 @@ export default function RootLayout({ children }) {
 
 #### AI エージェントに Skill として導入する場合（任意）
 
-Claude Code / Codex / Cursor などの AI エージェントを使っている場合は、[Vercel の skills CLI](https://github.com/vercel-labs/skills) 経由で Sparkle Design のスキルセットを導入しておくと、会話から誘導してもらうこともできます。
+Claude Code / Copilot / Cursor / Codex / Gemini CLI などの AI エージェントを使っている場合は、[GitHub 公式の `gh skill` コマンド](https://github.blog/changelog/2026-04-16-manage-agent-skills-with-github-cli/)（gh CLI v2.90 以上）経由で Sparkle Design のスキルセットを導入しておくと、会話から誘導してもらえます。
 
 ```bash
-# setup-sparkle-design スキルだけを導入
-npx skills add goodpatch/sparkle-design -s setup-sparkle-design
+# setup-sparkle-design スキルだけを導入（推奨）
+gh skill install goodpatch/sparkle-design setup-sparkle-design --agent claude-code
 
-# 全スキル（setup / add-component / accessibility-checker）を導入
-npx skills add goodpatch/sparkle-design --all
+# 対話モードで複数スキルをまとめて選択（setup / add-component / accessibility-checker / change-sparkle-config）
+gh skill install goodpatch/sparkle-design --agent claude-code
+
+# インストール前に内容を検査したい場合
+gh skill preview goodpatch/sparkle-design setup-sparkle-design
 ```
 
-導入後に「Sparkle Design を導入して」と依頼すると `setup-sparkle-design` スキルが発動し、プロジェクト状態に合わせて不足ステップだけ案内してくれます。`-a claude-code` / `-a codex` などで対象エージェントを指定することもできます。
+導入後に「Sparkle Design を導入して」と依頼すると `setup-sparkle-design` スキルが発動し、プロジェクト状態に合わせて不足ステップだけ案内してくれます。`--agent` には `claude-code` / `copilot` / `cursor` / `codex` / `gemini-cli` などを指定できます。
+
+> **gh CLI が手元に無い場合の fallback**: [Vercel の skills CLI](https://github.com/vercel-labs/skills) でも同じスキルを配布しています:
+>
+> ```bash
+> npx skills add goodpatch/sparkle-design -s setup-sparkle-design
+> npx skills add goodpatch/sparkle-design --all
+> ```
 
 ### 2. コンポーネントの使用
 
