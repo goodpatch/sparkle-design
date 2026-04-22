@@ -63,19 +63,22 @@ npx --yes sparkle-design-cli setup --assistant claude
 1. **パッケージマネージャー検出** -- pnpm / yarn / bun / npm を lockfile から自動判定
 2. **パッケージインストール** -- `sparkle-design` を dependencies、`tailwindcss` + `@tailwindcss/postcss` を devDependencies に追加（既に入っていればスキップ）
 3. **初期ファイル生成** -- `sparkle.config.json` / `postcss.config.mjs` / Tailwind エントリ CSS（Next.js: `globals.css`、Vite: `index.css`）が無ければ作成（既存ファイルは保持）
-4. **AI ガード設定** -- `CLAUDE.md` に Sparkle Design Guard ブロックと `lint:sparkle` スクリプトを追加
-5. **`generate` 実行** -- `sparkle-design.css` と `SparkleHead.tsx` を生成
+4. **AI ガード設定** -- `CLAUDE.md` に Sparkle Design Guard ブロックと `lint:sparkle` スクリプトを追加（既存 `AGENTS.md` があれば併用書き込み）
+5. **Stop hook 自動設定** -- `--assistant` に応じて `.claude/settings.json` / `.cursor/hooks.json` / `.codex/hooks.json` に `lint:sparkle --strict || exit 2` の Stop hook を投入。findings があれば応答終了をブロックする
+6. **`generate` 実行** -- `sparkle-design.css` と `SparkleHead.tsx` を生成（Vite プロジェクトは `index.html` の `<head>` に font `<link>` の managed block も自動注入）
 
-`--assistant` は `claude` / `cursor` / `codex` / `generic` から選択可能。部分的に実行したい場合は `--skip-install` / `--skip-scaffold` / `--skip-generate` を使う。
+`--assistant` は `claude` / `cursor` / `codex` / `generic` から選択可能。部分的に実行したい場合は `--skip-install` / `--skip-scaffold` / `--skip-generate` を使う。CI では `--strict` を付けて silent failure を exit 1 に昇格できる。
 
 ### 生成されるファイル
 
-- `sparkle.config.json` -- デザインテーマ設定（初期値: blue / Inter / JetBrains Mono / md）
+- `sparkle.config.json` -- デザインテーマ設定（初期値: blue / BIZ UDPGothic / BIZ UDGothic / md）
 - `postcss.config.mjs` -- PostCSS 設定（`@tailwindcss/postcss` プラグインを有効化）
-- `src/app/globals.css` or `src/globals.css` -- Tailwind エントリポイント CSS（`@source` 含む）
+- `src/app/globals.css` / `src/globals.css` / `src/index.css` -- Tailwind エントリポイント CSS（プロジェクト構成から自動判定。`@import "tailwindcss";` 不在時は canonical な import を自動 prepend）
 - `src/app/sparkle-design.css` -- デザイントークン（プリミティブ `:root` + セマンティック `:root` + `@theme inline`）
-- `src/app/SparkleHead.tsx` -- フォント読み込み用 React コンポーネント
-- `CLAUDE.md` -- AI ガードブロック（`<!-- sparkle-design-cli:setup:start -->` で囲まれた部分）
+- `src/app/SparkleHead.tsx` -- フォント読み込み用 React コンポーネント（Next.js 等のレイアウト用）
+- `index.html`（Vite のみ） -- `<head>` 内に `<!-- sparkle-design-cli:fonts:start --> ... end -->` の managed block で font `<link>` を upsert
+- `CLAUDE.md` / `AGENTS.md`（後者は既存があるときのみ） -- AI ガードブロック（`<!-- sparkle-design-cli:setup:start -->` で囲まれた部分）
+- `.claude/settings.json` / `.cursor/hooks.json` / `.codex/hooks.json` -- assistant 別の Stop hook（`--assistant claude` / `cursor` / `codex` 時にそれぞれ生成）
 
 ### SparkleHead の配置
 

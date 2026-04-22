@@ -39,8 +39,9 @@ This automatically:
 1. Detects your package manager (pnpm / npm / yarn / bun)
 2. Adds `sparkle-design` to dependencies and `tailwindcss` + `@tailwindcss/postcss` to devDependencies
 3. Generates `sparkle.config.json` / `postcss.config.mjs` / Tailwind entry CSS (Next.js: `globals.css`, Vite: `index.css`) if missing
-4. Adds a Sparkle Design guard block and `lint:sparkle` script to `CLAUDE.md`
-5. Generates `sparkle-design.css` and `SparkleHead.tsx`
+4. Writes the Sparkle Design guard block + `lint:sparkle` script to `CLAUDE.md` (and to `AGENTS.md` too when one already exists)
+5. Installs an assistant-specific Stop hook into `.claude/settings.json` / `.cursor/hooks.json` / `.codex/hooks.json` (`lint:sparkle --strict || exit 2`) so findings block the agent from finishing the turn
+6. Generates `sparkle-design.css` and `SparkleHead.tsx` (and for Vite projects, also injects a managed font `<link>` block into `index.html`'s `<head>`)
 
 `--assistant` accepts `claude` / `cursor` / `codex` / `generic`. Existing files are never overwritten.
 
@@ -73,7 +74,7 @@ Customize primary color, fonts, border radius, and more via `sparkle.config.json
 > @import "./sparkle-design.css";
 > ```
 >
-> From `sparkle-design-cli` v2.0.6 onward, `generate` / `setup` **auto-scans your `package.json`** (dependencies / devDependencies) and automatically inserts the matching `@source` directive when it detects `sparkle-design`. No manual config is required. If you want to include additional design system packages, add them to `extend.source-packages` in `sparkle.config.json`; the detected packages and your explicit list will be merged.
+> `sparkle-design-cli` **auto-scans your `package.json`** (dependencies / devDependencies) on `generate` / `setup` and automatically inserts the matching `@source` directive when it detects `sparkle-design`. No manual config is required. If you want to include additional design system packages, add them to `extend.source-packages` in `sparkle.config.json`; the detected packages and your explicit list will be merged. When an existing entry CSS lacks `@import "tailwindcss";` (e.g. straight from `create-vite`), the CLI auto-prepends the canonical import before continuing the patch, and the order of `@import` / `@source` is normalized to comply with the CSS spec, so both Vite and Next.js layouts reach a fully working state in a single setup run.
 
 #### Installing as an AI Agent Skill (optional)
 

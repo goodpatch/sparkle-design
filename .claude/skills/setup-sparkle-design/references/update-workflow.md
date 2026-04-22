@@ -70,8 +70,13 @@ npx --yes sparkle-design-cli check src --format json
 
 # findings と manualReviewReminders を確認
 # findings があれば修正を提案
-# manualReviewReminders はユーザーに確認を促す
+# manualReviewReminders はユーザーに確認を促す（各 reminder ID を最終 reply で
+# echo + 1 行コメントで判定を示す形が推奨）
 ```
+
+`character-*` に対応する token が無いサイズ等、ルールの自動判定を例外扱い
+したい場合は対象行に `// sparkle-disable-line <rule-id>` を付けて opt-out
+できる（使いすぎないこと、design を本当に壊すケースのみ）。
 
 型チェックとテストも実行して、アップデートで壊れた箇所がないか確認:
 
