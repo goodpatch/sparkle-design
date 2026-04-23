@@ -39,8 +39,9 @@ npx --yes sparkle-design-cli setup --assistant claude
 1. パッケージマネージャー（pnpm / npm / yarn / bun）を自動検出
 2. `sparkle-design` を dependencies、`tailwindcss` + `@tailwindcss/postcss` を devDependencies に追加
 3. `sparkle.config.json` / `postcss.config.mjs` / Tailwind エントリ CSS（Next.js: `globals.css`、Vite: `index.css`）を必要に応じて生成
-4. `CLAUDE.md` に Sparkle Design ガードブロックと `lint:sparkle` スクリプトを追加
-5. `sparkle-design.css` と `SparkleHead.tsx` を生成
+4. `CLAUDE.md` / `AGENTS.md`（既存があれば併用書き込み）に Sparkle Design ガードブロックと `lint:sparkle` スクリプトを追加
+5. `--assistant` に応じて `.claude/settings.json` / `.cursor/hooks.json` / `.codex/hooks.json` の Stop hook を自動設定（`lint:sparkle --strict || exit 2` で findings があれば応答終了をブロック）
+6. `sparkle-design.css` と `SparkleHead.tsx` を生成（Vite プロジェクトでは `index.html` の `<head>` 内に font `<link>` の managed block も自動注入）
 
 `--assistant` は `claude` / `cursor` / `codex` / `generic` から選択できます。既存ファイルは上書きされません。
 
@@ -73,7 +74,7 @@ export default function RootLayout({ children }) {
 > @import "./sparkle-design.css";
 > ```
 >
-> `sparkle-design-cli` v2.0.6 以降は、`generate` / `setup` 実行時に **`package.json` の dependencies / devDependencies を自動スキャン** し、`sparkle-design` が含まれていれば該当する `@source` を自動挿入します。`sparkle.config.json` 側で何も設定しなくても動きます。独自のデザインシステムパッケージを併用したい場合のみ `extend.source-packages` に追記すると、自動検出分と合算されます。
+> `sparkle-design-cli` は `generate` / `setup` 実行時に **`package.json` の dependencies / devDependencies を自動スキャン** し、`sparkle-design` が含まれていれば該当する `@source` を自動挿入します。`sparkle.config.json` 側で何も設定しなくても動きます。独自のデザインシステムパッケージを併用したい場合のみ `extend.source-packages` に追記すると、自動検出分と合算されます。`@import "tailwindcss";` が無い既存プロジェクト（`create-vite` 直後など）には canonical な `@import` を自動 prepend し、`@import` と `@source` の順序も CSS 仕様に従って整列するため、Vite / Next.js のどちらのレイアウトでもセットアップ 1 回で動く状態に到達できます。
 
 #### AI エージェントに Skill として導入する場合（任意）
 
