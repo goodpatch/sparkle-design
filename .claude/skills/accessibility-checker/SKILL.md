@@ -139,18 +139,17 @@ For each checklist item:
 
 #### Step 4: Generate Report
 
-**出力場所（必須）**: 全 a11y レビューレポートは **`docs/pr/<component>-a11y-review.md`** に書きます。
+**出力場所（必須）**: a11y レビューレポートは **対象リポジトリの `docs/pr/<component>-a11y-review.md`** に書き出します。
 
-- これは sparkle-design / sparkle-design-internal 等で共通の規約です（`docs/pr/` 配下に既存レポート多数あり）
-- ファイル名は kebab-case + `-a11y-review.md` サフィックス
-- スキル内の `reports/` ディレクトリや `docs/a11y-reports/` 等の独自パスは使わない
-- `examples/` の template はあくまで雛形なので、コピー先は必ず `docs/pr/` にする
+- ここで言う `docs/pr/` は **対象リポジトリ（リポジトリのルート）配下** の `docs/pr/` ディレクトリを指します
+- スキル内部の `reports/` や `examples/` ではない（あくまで template 置き場であり成果物の保存先ではない）
+- 同様に `docs/a11y-reports/` 等の独自パスも使わない
+- ファイル名は kebab-case + `-a11y-review.md` サフィックス（例: `button-a11y-review.md`、`segmented-control-a11y-review.md`）
+- 同名レポートが既にあれば上書き更新する（更新履歴は git log で追える）
 
 ```bash
-# 正しい例
-cp examples/component-report.md docs/pr/button-a11y-review.md
-
-# 既存レポートがある場合は置き換える（更新履歴は git log で追える）
+# 正しい例（対象リポジトリのルートで実行することを想定）
+cp .claude/skills/accessibility-checker/examples/component-report.md docs/pr/button-a11y-review.md
 ```
 
 **Report structure**:
