@@ -139,24 +139,31 @@ For each checklist item:
 
 #### Step 4: Generate Report
 
-Use templates from `examples/`:
+**出力場所（必須）**: 全 a11y レビューレポートは **`docs/pr/<component>-a11y-review.md`** に書きます。
+
+- これは sparkle-design / sparkle-design-internal 等で共通の規約です（`docs/pr/` 配下に既存レポート多数あり）
+- ファイル名は kebab-case + `-a11y-review.md` サフィックス
+- スキル内の `reports/` ディレクトリや `docs/a11y-reports/` 等の独自パスは使わない
+- `examples/` の template はあくまで雛形なので、コピー先は必ず `docs/pr/` にする
 
 ```bash
-# Component report
-cp examples/component-report.md reports/button-report.md
+# 正しい例
+cp examples/component-report.md docs/pr/button-a11y-review.md
 
-# PR review summary
-cp examples/pr-review-summary.md reports/pr-123-summary.md
-
-# Status update
-cp examples/status-update.md reports/button-status.md
+# 既存レポートがある場合は置き換える（更新履歴は git log で追える）
 ```
 
 **Report structure**:
-1. **Summary**: Totals (Pass/Fail/N/A/Needs review), top risks
-2. **Findings table**: ID, Category, Level, Check, Result, Evidence, Fix
-3. **Action list**: Tasks grouped by area (components, docs, tests, tooling)
-4. **Follow-ups**: Open questions, missing context, verification steps
+1. **対象 / Target**: コンポーネント名 + 関連ファイル + レビュー契機
+2. **参照したチェックリスト / 方針**: checklist パス + project policy + 使っている primitive（Radix 等）が自動提供する ARIA
+3. **チェック結果**: ID / 項目 / Level / 確認ポイント / Result / Evidence / Fix の 7 列テーブル（全 31 項目）
+4. **Summary**: Pass / Fail / Needs review / N/A の件数
+5. **対応内容**: Fail / Needs review への対処方針
+6. **Regression 確認**（refactor 後のレビューの場合）: 変更前後の挙動差分
+7. **テスト / 検証**: 関連テスト件数と内容
+8. **フォローアップ候補**: 後続で確認したい事項
+
+既存レポート（`docs/pr/tabs-a11y-review.md` 等）の構造に揃える。
 
 ---
 
@@ -195,8 +202,8 @@ See [references/project-policy.md](references/project-policy.md) for details.
 # Full report from checklist
 python scripts/generate_report.py --checklist assets/checklist.csv
 
-# Component-specific report
-python scripts/generate_report.py --component button --output reports/button.md
+# Component-specific report — 出力先は必ず docs/pr/<component>-a11y-review.md
+python scripts/generate_report.py --component button --output docs/pr/button-a11y-review.md
 
 # Use custom template
 python scripts/generate_report.py --template examples/component-report.md
@@ -217,11 +224,11 @@ python scripts/check_component.py src/components/ui/button/index.tsx --verbose
 ### Export Summary
 
 ```bash
-# Export from reports directory
-python scripts/export_summary.py --reports reports/
+# Export from docs/pr/ where reports live
+python scripts/export_summary.py --reports docs/pr/
 
 # Export to file
-python scripts/export_summary.py --reports reports/ --output summary.md
+python scripts/export_summary.py --reports docs/pr/ --output summary.md
 ```
 
 ### Validate Checklist
@@ -302,13 +309,13 @@ python scripts/validate_checklist_csv.py
 # 2. Quick automated check
 python scripts/check_component.py src/components/ui/button/
 
-# 3. Generate structured report
-python scripts/generate_report.py --component button --output reports/button.md
+# 3. Generate structured report — 出力先は必ず docs/pr/<component>-a11y-review.md
+python scripts/generate_report.py --component button --output docs/pr/button-a11y-review.md
 
 # 4. AI reviews each item, updates report with findings
 
 # 5. Export summary for README
-python scripts/export_summary.py --reports reports/ --output summary.md
+python scripts/export_summary.py --reports docs/pr/ --output summary.md
 ```
 
 ### Progressive Disclosure
