@@ -51,7 +51,12 @@ def parse_report(report_path: Path) -> dict:
     if na_match:
         summary["na"] = int(na_match.group(1))
 
-    needs_review_match = re.search(r'\|\s*\*\*Needs Review\*\*\s*\|\s*(\d+)', content)
+    # Match both `Needs review` (existing reports) and `Needs Review` (older
+    # template) for back-compat. Existing docs/pr/*-a11y-review.md uses
+    # lowercase 'r'.
+    needs_review_match = re.search(
+        r'\|\s*\*\*Needs [Rr]eview\*\*\s*\|\s*(\d+)', content
+    )
     if needs_review_match:
         summary["needs_review"] = int(needs_review_match.group(1))
 
