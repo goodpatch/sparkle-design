@@ -155,7 +155,7 @@ cp .claude/skills/accessibility-checker/examples/component-report.md docs/pr/but
 **Report structure**:
 1. **対象 / Target**: コンポーネント名 + 関連ファイル + レビュー契機
 2. **参照したチェックリスト / 方針**: checklist パス + project policy + 使っている primitive（Radix 等）が自動提供する ARIA
-3. **チェック結果**: ID / 項目 / Level / 確認ポイント / Result / Evidence / Fix の 7 列テーブル（全 31 項目）
+3. **チェック結果**: ID / 項目 / Level / 確認ポイント / Result / Evidence / Fix / Notes の 7 列テーブル（全 31 項目）。列名は既存レポート（`docs/pr/tabs-a11y-review.md` 等）に合わせて `Fix / Notes`
 4. **Summary**: Pass / Fail / Needs review / N/A の件数
 5. **対応内容**: Fail / Needs review への対処方針
 6. **Regression 確認**（refactor 後のレビューの場合）: 変更前後の挙動差分
