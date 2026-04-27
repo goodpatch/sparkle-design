@@ -127,7 +127,15 @@ function ModalOverlay({
     <DialogPrimitive.Overlay
       data-slot="modal-overlay"
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
+        [
+          "fixed inset-0 z-50 bg-black/50",
+          "data-[state=open]:animate-in data-[state=open]:fade-in-0",
+          "data-[state=open]:duration-150 data-[state=open]:ease-out",
+          "data-[state=closed]:animate-out data-[state=closed]:fade-out-0",
+          "data-[state=closed]:duration-200 data-[state=closed]:ease-in",
+          "motion-reduce:data-[state=open]:duration-120 motion-reduce:data-[state=open]:ease-out",
+          "motion-reduce:data-[state=closed]:duration-120 motion-reduce:data-[state=closed]:ease-in",
+        ].join(" "),
         className
       )}
       {...props}
@@ -203,7 +211,16 @@ function ModalContent({
         data-slot="modal-content"
         className={cn(
           sizeClass,
-          "z-50 flex flex-col gap-0 w-full max-h-[calc(100vh-80px)] bg-white border-divider-low py-4 rounded-modal data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] shadow-lg duration-200",
+          [
+            "z-50 flex flex-col gap-0 w-full max-h-[calc(100vh-80px)] bg-white border-divider-low py-4 rounded-modal",
+            "fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] shadow-lg",
+            "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
+            "data-[state=open]:duration-[240ms] data-[state=open]:delay-[20ms] data-[state=open]:ease-[cubic-bezier(0.16,1,0.3,1)]",
+            "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
+            "data-[state=closed]:duration-200 data-[state=closed]:delay-0 data-[state=closed]:ease-[cubic-bezier(0.32,0,0.67,0)]",
+            "motion-reduce:data-[state=open]:duration-120 motion-reduce:data-[state=open]:delay-0",
+            "motion-reduce:data-[state=closed]:duration-120",
+          ].join(" "),
           className
         )}
         onInteractOutside={handleInteractOutside}
