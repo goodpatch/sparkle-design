@@ -19,9 +19,10 @@ export class TestContainer {
   }
 
   cleanup(): void {
-    if (this.root) {
+    const root = this.root;
+    if (root) {
       act(() => {
-        this.root!.unmount();
+        root.unmount();
       });
       this.root = null;
     }
@@ -32,11 +33,12 @@ export class TestContainer {
   }
 
   render(element: React.ReactElement): void {
-    if (!this.root) {
+    const root = this.root;
+    if (!root) {
       throw new Error("Container not set up. Call setup() first.");
     }
     act(() => {
-      this.root!.render(element);
+      root.render(element);
     });
   }
 
@@ -192,6 +194,9 @@ export const AsyncHelpers = {
   ): Promise<void> {
     return new Promise((resolve, reject) => {
       const startTime = Date.now();
+      // タイムアウト時に最後に起きたエラーを含めて reject するため保持する
+      // en: Keep the last thrown error so we can surface it on timeout.
+      let lastError: unknown;
 
       const check = (): void => {
         try {
@@ -201,11 +206,16 @@ export const AsyncHelpers = {
             return;
           }
         } catch (error) {
-          // Continue checking
+          lastError = error;
         }
 
         if (Date.now() - startTime >= timeout) {
-          reject(new Error(`Timeout after ${timeout}ms`));
+          const message = lastError
+            ? `Timeout after ${timeout}ms (last error: ${
+                lastError instanceof Error ? lastError.message : String(lastError)
+              })`
+            : `Timeout after ${timeout}ms`;
+          reject(new Error(message));
           return;
         }
 
