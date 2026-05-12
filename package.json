@@ -91,7 +91,7 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-storybook": "^10.3.5",
-    "next": "15.5.15",
+    "next": "15.5.18",
     "playwright": "^1.51.1",
     "prettier": "^3.6.2",
     "storybook": "^10.3.5",
