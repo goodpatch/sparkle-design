@@ -11,6 +11,7 @@ description: >
   English: "add a sparkle button", "install sparkle-design card",
   "add @sparkle-design/input", "set up components from sparkle registry",
   "how do I install components", "registry setup"
+user-invocable: true
 ---
 
 # Sparkle Design Component Installation
