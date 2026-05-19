@@ -1,6 +1,6 @@
 {
   "name": "sparkle-design",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
@@ -273,6 +273,11 @@
       "types": "./dist/components/ui/tooltip/index.d.ts",
       "import": "./dist/components/ui/tooltip/index.js",
       "require": "./dist/components/ui/tooltip/index.js"
+    },
+    "./hooks": {
+      "types": "./dist/hooks/index.d.ts",
+      "import": "./dist/hooks/index.js",
+      "require": "./dist/hooks/index.js"
     }
   },
   "files": [
