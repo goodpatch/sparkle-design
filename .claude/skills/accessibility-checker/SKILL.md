@@ -11,6 +11,7 @@ description: >
   English: "check accessibility", "a11y audit", "a11y check", "WCAG review",
   "accessibility report", "screen reader test", "review for a11y",
   "review this PR for accessibility", "axe audit"
+user-invocable: true
 ---
 
 # Accessibility Checker

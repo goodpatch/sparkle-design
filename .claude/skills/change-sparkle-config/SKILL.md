@@ -12,6 +12,7 @@ description: >
   「primary を変えたい」「角丸をもっと丸く」「フォントを変えたい」「テーマを提案して」
   で発動。English: "change the vibe", "make it more playful",
   "make it more business-like", "adjust the theme", "change primary color".
+user-invocable: true
 ---
 
 # Skill: change-sparkle-config

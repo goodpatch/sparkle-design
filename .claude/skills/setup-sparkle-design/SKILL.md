@@ -11,6 +11,7 @@ description: >
   「コンポーネントライブラリを追加」「どのコンポーネントを使えばいい」で発動。
   English: "install sparkle-design", "add sparkle design",
   "set up sparkle design", "which component should I use"
+user-invocable: true
 ---
 
 # Skill: setup-sparkle-design
