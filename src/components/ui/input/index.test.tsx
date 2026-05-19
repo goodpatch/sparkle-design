@@ -419,4 +419,103 @@ describe("Input", () => {
       expect(input.type).toBe("email");
     });
   });
+
+  describe("triggerProps forwarding", () => {
+    it("forwards aria-* attributes to the trigger button", () => {
+      // Given: ARIA 属性を triggerProps で渡した Input
+      testContainer.render(
+        <Input
+          isTrigger
+          triggerIcon="calendar_today"
+          triggerAriaLabel="日付を選択"
+          triggerProps={{
+            "aria-haspopup": "dialog",
+            "aria-expanded": true,
+            "aria-controls": "popover-id",
+          }}
+        />
+      );
+
+      // When: ボタンを参照
+      const button = testContainer.queryButton();
+
+      // Then: ARIA 属性が DOM に反映される（後付け不要）
+      expect(button.getAttribute("aria-haspopup")).toBe("dialog");
+      expect(button.getAttribute("aria-expanded")).toBe("true");
+      expect(button.getAttribute("aria-controls")).toBe("popover-id");
+      expect(button.getAttribute("aria-label")).toBe("日付を選択");
+    });
+
+    it("triggerAriaLabel takes precedence over triggerProps['aria-label']", () => {
+      // Given: aria-label が双方で指定された Input
+      testContainer.render(
+        <Input
+          isTrigger
+          triggerAriaLabel="from triggerAriaLabel"
+          triggerProps={{ "aria-label": "from triggerProps" }}
+        />
+      );
+
+      // Then: 専用 prop が優先される
+      const button = testContainer.queryButton();
+      expect(button.getAttribute("aria-label")).toBe("from triggerAriaLabel");
+    });
+
+    it("onIconButtonClick takes precedence over triggerProps.onClick", () => {
+      // Given: onClick が双方で指定された Input
+      const dedicated = vi.fn();
+      const fromProps = vi.fn();
+      testContainer.render(
+        <Input
+          isTrigger
+          triggerAriaLabel="trigger"
+          onIconButtonClick={dedicated}
+          triggerProps={{ onClick: fromProps }}
+        />
+      );
+
+      // When: ボタンをクリック
+      const button = testContainer.queryButton();
+      EventHelpers.click(button);
+
+      // Then: 専用 prop が呼ばれ、triggerProps.onClick は呼ばれない
+      expect(dedicated).toHaveBeenCalledTimes(1);
+      expect(fromProps).not.toHaveBeenCalled();
+    });
+
+    it("falls back to triggerProps.onClick when onIconButtonClick is not provided", () => {
+      // Given: 専用 onIconButtonClick を渡さず triggerProps.onClick のみ
+      const fromProps = vi.fn();
+      testContainer.render(
+        <Input
+          isTrigger
+          triggerAriaLabel="trigger"
+          triggerProps={{ onClick: fromProps }}
+        />
+      );
+
+      // When: ボタンをクリック
+      const button = testContainer.queryButton();
+      EventHelpers.click(button);
+
+      // Then: triggerProps.onClick が呼ばれる
+      expect(fromProps).toHaveBeenCalledTimes(1);
+    });
+
+    it("forwards non-ARIA HTML attributes via triggerProps", () => {
+      // Given: 任意の HTML 属性を triggerProps で渡した Input
+      testContainer.render(
+        <Input
+          isTrigger
+          triggerAriaLabel="trigger"
+          triggerProps={{ id: "my-trigger", "data-testid": "trigger-btn" }}
+        />
+      );
+
+      // Then: 属性が DOM に反映される
+      const button = testContainer.queryButton();
+      expect(button.id).toBe("my-trigger");
+      expect(button.getAttribute("data-testid")).toBe("trigger-btn");
+    });
+  });
 });

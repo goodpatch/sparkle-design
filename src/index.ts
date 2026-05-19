@@ -25,3 +25,4 @@ export * from "./components/ui/tag";
 export * from "./components/ui/textarea";
 export * from "./components/ui/toast";
 export * from "./components/ui/tooltip";
+export * from "./hooks";
