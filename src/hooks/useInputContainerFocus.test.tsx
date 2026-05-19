@@ -25,7 +25,12 @@ const Harness: React.FC<HarnessProps> = ({ isDisabled, withExclude }) => {
     excludeRefs,
   });
   return (
-    <div data-testid="container" onClick={handleContainerClick}>
+    <div
+      data-testid="container"
+      onClick={handleContainerClick}
+      role="presentation"
+      tabIndex={-1}
+    >
       <input ref={inputRef} data-testid="input" />
       <button ref={buttonRef} data-testid="button" type="button">
         btn
