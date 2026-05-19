@@ -23,12 +23,12 @@ export function useMergeRefs<T>(
   ...refs: Array<React.Ref<T> | undefined>
 ): React.RefCallback<T> {
   return React.useCallback(
-    (value: T) => {
+    (value: T | null) => {
       refs.forEach(ref => {
         if (typeof ref === "function") {
           ref(value);
         } else if (ref != null) {
-          (ref as React.MutableRefObject<T>).current = value;
+          (ref as React.MutableRefObject<T | null>).current = value;
         }
       });
     },

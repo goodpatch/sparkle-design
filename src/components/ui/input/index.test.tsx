@@ -545,8 +545,8 @@ describe("Input", () => {
       expect(button.disabled).toBe(false);
 
       // And: ボタンにフォーカス・ブラーしても triggerProps のハンドラは呼ばれない
-      button.focus();
-      button.blur();
+      EventHelpers.focus(button);
+      EventHelpers.blur(button);
       expect(handlerOnFocus).not.toHaveBeenCalled();
       expect(handlerOnBlur).not.toHaveBeenCalled();
     });
