@@ -397,20 +397,23 @@ export interface ButtonProps
  *
  * @param {ButtonProps} props
  */
-function Button({
-  className,
-  variant,
-  size,
-  theme,
-  isLoading = false,
-  isDisabled = false,
-  asChild = false,
-  disabled,
-  prefixIcon,
-  suffixIcon,
-  children,
-  ...props
-}: ButtonProps) {
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  {
+    className,
+    variant,
+    size,
+    theme,
+    isLoading = false,
+    isDisabled = false,
+    asChild = false,
+    disabled,
+    prefixIcon,
+    suffixIcon,
+    children,
+    ...props
+  },
+  ref
+) {
   const Comp = asChild ? SlotPrimitive.Slot : "button";
 
   // disabled状態の管理（isDisabled、disabled、またはisLoadingがtrueの場合）
@@ -484,6 +487,7 @@ function Button({
 
   return (
     <Comp
+      ref={ref}
       data-slot="button"
       aria-busy={isLoading || undefined}
       aria-disabled={asChild && isButtonDisabled ? true : undefined}
@@ -537,7 +541,7 @@ function Button({
       )}
     </Comp>
   );
-}
+});
 
 Button.displayName = "Button";
 
