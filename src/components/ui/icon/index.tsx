@@ -26,7 +26,7 @@ import { cn } from "@/lib/utils";
  */
 export type IconSize = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
-export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
+export interface IconProps extends React.ComponentProps<"span"> {
   /**
    * 表示するアイコン名
    * en: Name of the icon to display
@@ -72,27 +72,32 @@ export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
  *
  * @param {IconProps} props
  */
-export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
-  ({ className, icon, size = 3, fill = false, ...props }, ref) => {
-    // 既存のclassNameにicon-X-fill-0の形式が含まれているかチェック
-    const hasIconTypographyClass = className?.match(/icon-\d+-fill-\d+/);
+export function Icon({
+  className,
+  icon,
+  size = 3,
+  fill = false,
+  ref,
+  ...props
+}: IconProps) {
+  // 既存のclassNameにicon-X-fill-0の形式が含まれているかチェック
+  const hasIconTypographyClass = className?.match(/icon-\d+-fill-\d+/);
 
-    // サイズクラスの生成（既存のサイズクラスがない場合のみ）
-    const fillValue = fill ? 1 : 0;
-    const iconTypographyClass = hasIconTypographyClass
-      ? ""
-      : `icon-${size}-fill-${fillValue}`;
+  // サイズクラスの生成（既存のサイズクラスがない場合のみ）
+  const fillValue = fill ? 1 : 0;
+  const iconTypographyClass = hasIconTypographyClass
+    ? ""
+    : `icon-${size}-fill-${fillValue}`;
 
-    return (
-      <span
-        ref={ref}
-        className={cn(iconTypographyClass, "select-none", className)}
-        aria-hidden="true"
-        {...props}
-      >
-        {icon}
-      </span>
-    );
-  }
-);
+  return (
+    <span
+      ref={ref}
+      className={cn(iconTypographyClass, "select-none", className)}
+      aria-hidden="true"
+      {...props}
+    >
+      {icon}
+    </span>
+  );
+}
 Icon.displayName = "Icon";

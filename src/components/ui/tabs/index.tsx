@@ -89,9 +89,7 @@ const tabsTriggerVariants = cva(
 );
 
 type TabsTriggerVariants = VariantProps<typeof tabsTriggerVariants>;
-type TabsTriggerProps = React.ComponentPropsWithoutRef<
-  typeof TabsPrimitive.Trigger
-> &
+type TabsTriggerProps = React.ComponentProps<typeof TabsPrimitive.Trigger> &
   TabsTriggerVariants;
 
 const tabsListVariants = cva(["relative inline-flex items-center"], {
@@ -174,10 +172,7 @@ function TabsList({
  *
  * @param {TabsTriggerProps} props
  */
-const TabsTrigger = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Trigger>,
-  TabsTriggerProps
->(({ className, variant, ...props }, ref) => {
+function TabsTrigger({ className, variant, ref, ...props }: TabsTriggerProps) {
   const contextVariant = useContext(TabsListVariantContext);
   const effectiveVariant: TabsVariantType = (variant ??
     contextVariant ??
@@ -193,7 +188,7 @@ const TabsTrigger = React.forwardRef<
       {...props}
     />
   );
-});
+}
 TabsTrigger.displayName = "TabsTrigger";
 
 /**

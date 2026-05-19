@@ -6,8 +6,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-export interface ClickableCardProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ClickableCardProps extends React.ComponentProps<"button"> {
   /**
    * クリック時の処理
    * en: Click handler function
@@ -36,8 +35,14 @@ export interface ClickableCardProps
  *
  * @param {ClickableCardProps} props
  */
-const ClickableCard = React.forwardRef<HTMLButtonElement, ClickableCardProps>(
-  ({ className, isDisabled, onClick, ...props }, ref) => (
+function ClickableCard({
+  className,
+  isDisabled,
+  onClick,
+  ref,
+  ...props
+}: ClickableCardProps) {
+  return (
     <button
       ref={ref}
       className={cn(
@@ -52,8 +57,8 @@ const ClickableCard = React.forwardRef<HTMLButtonElement, ClickableCardProps>(
       type="button"
       {...props}
     />
-  )
-);
+  );
+}
 ClickableCard.displayName = "ClickableCard";
 
 /**
@@ -80,21 +85,20 @@ ClickableCard.displayName = "ClickableCard";
  * </Card>
  * ```
  *
- * @param {React.HTMLAttributes<HTMLDivElement>} props
+ * @param {React.ComponentProps<"div">} props
  */
-const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "rounded-minimum border border-divider-middle bg-white text-text-middle py-4",
-      className
-    )}
-    {...props}
-  />
-));
+function Card({ className, ref, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "rounded-minimum border border-divider-middle bg-white text-text-middle py-4",
+        className
+      )}
+      {...props}
+    />
+  );
+}
 Card.displayName = "Card";
 
 /**
@@ -141,31 +145,29 @@ Card.displayName = "Card";
  * ```
 
  */
-const CardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "flex flex-row gap-2 justify-between px-6 py-2 items-center",
-      className
-    )}
-    {...props}
-  />
-));
+function CardHeader({ className, ref, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "flex flex-row gap-2 justify-between px-6 py-2 items-center",
+        className
+      )}
+      {...props}
+    />
+  );
+}
 CardHeader.displayName = "CardHeader";
 
-const CardTitle = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("character-4-bold-pro flex items-center gap-2", className)}
-    {...props}
-  />
-));
+function CardTitle({ className, ref, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      ref={ref}
+      className={cn("character-4-bold-pro flex items-center gap-2", className)}
+      {...props}
+    />
+  );
+}
 CardTitle.displayName = "CardTitle";
 
 /**
@@ -210,14 +212,15 @@ CardTitle.displayName = "CardTitle";
  * </CardTitle>
  * ```
 
- * @param {React.HTMLAttributes<HTMLDivElement>} props
+ * @param {React.ComponentProps<"div">} props
  */
-const CardDescription = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("", className)} {...props} />
-));
+function CardDescription({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<"div">) {
+  return <div ref={ref} className={cn("", className)} {...props} />;
+}
 CardDescription.displayName = "CardDescription";
 
 /**
@@ -248,17 +251,24 @@ CardDescription.displayName = "CardDescription";
  * </CardControl>
  * ```
 
- * @param {React.HTMLAttributes<HTMLDivElement>} props
+ * @param {React.ComponentProps<"div">} props
  */
-const CardControl = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex items-center gap-2", className)} {...props} />
-));
+function CardControl({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      ref={ref}
+      className={cn("flex items-center gap-2", className)}
+      {...props}
+    />
+  );
+}
 CardControl.displayName = "CardControl";
 
-export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CardContentProps extends React.ComponentProps<"div"> {
   /**
    * スペースを入れるかどうか
    * en: Whether to add spacing
@@ -266,27 +276,31 @@ export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {
   isSpace?: boolean;
 }
 
-const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
-  ({ className, isSpace = true, ...props }, ref) => (
+function CardContent({
+  className,
+  isSpace = true,
+  ref,
+  ...props
+}: CardContentProps) {
+  return (
     <div
       ref={ref}
       className={cn(isSpace ? "px-6 py-2" : "", className)}
       {...props}
     />
-  )
-);
+  );
+}
 CardContent.displayName = "CardContent";
 
-const CardFooter = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex items-center justify-end px-6 py-2", className)}
-    {...props}
-  />
-));
+function CardFooter({ className, ref, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      ref={ref}
+      className={cn("flex items-center justify-end px-6 py-2", className)}
+      {...props}
+    />
+  );
+}
 CardFooter.displayName = "CardFooter";
 
 export {

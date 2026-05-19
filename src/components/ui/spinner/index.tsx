@@ -6,7 +6,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { Icon, type IconSize } from "@/components/ui/icon";
 
-export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
+export interface SpinnerProps extends React.ComponentProps<"span"> {
   /**
    * スピナーのサイズ（スケール値 1-12）
    * en: Size of the spinner (scale value 1-12)
@@ -42,25 +42,23 @@ export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
  *
  * @param {SpinnerProps} props
  */
-export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
-  ({ className, size, ...props }, ref) => {
-    return (
-      <span
-        ref={ref}
-        className={cn("inline-flex items-center justify-center")}
-        role="status"
-        aria-label="読み込み中"
-        data-testid="loading-spinner"
-        {...props}
-      >
-        <Icon
-          icon="progress_activity"
-          size={size}
-          className={cn("animate-spin text-text-low", className)}
-        />
-      </span>
-    );
-  }
-);
+export function Spinner({ className, size, ref, ...props }: SpinnerProps) {
+  return (
+    <span
+      ref={ref}
+      className={cn("inline-flex items-center justify-center")}
+      role="status"
+      aria-label="読み込み中"
+      data-testid="loading-spinner"
+      {...props}
+    >
+      <Icon
+        icon="progress_activity"
+        size={size}
+        className={cn("animate-spin text-text-low", className)}
+      />
+    </span>
+  );
+}
 
 Spinner.displayName = "Spinner";
