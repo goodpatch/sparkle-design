@@ -258,7 +258,7 @@ const buttonVariants = cva(
 );
 
 type ButtonVariantProps = VariantProps<typeof buttonVariants>;
-type NativeButtonProps = React.ComponentPropsWithoutRef<"button">;
+type NativeButtonProps = React.ComponentProps<"button">;
 
 export interface ButtonProps
   extends Omit<NativeButtonProps, "onClick" | "onKeyDown"> {
@@ -408,6 +408,7 @@ function Button({
   disabled,
   prefixIcon,
   suffixIcon,
+  ref,
   children,
   ...props
 }: ButtonProps) {
@@ -484,6 +485,7 @@ function Button({
 
   return (
     <Comp
+      ref={ref}
       data-slot="button"
       aria-busy={isLoading || undefined}
       aria-disabled={asChild && isButtonDisabled ? true : undefined}
