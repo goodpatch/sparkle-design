@@ -517,5 +517,38 @@ describe("Input", () => {
       expect(button.id).toBe("my-trigger");
       expect(button.getAttribute("data-testid")).toBe("trigger-btn");
     });
+
+    it("does not forward focus/blur/type/disabled — Input controls them", () => {
+      // Given: Input が内部制御する属性を triggerProps で上書きしようとした Input
+      // en: Pin the documented behavior — these props are silently overridden by Input.
+      const handlerOnFocus = vi.fn();
+      const handlerOnBlur = vi.fn();
+      testContainer.render(
+        <Input
+          isTrigger
+          triggerAriaLabel="trigger"
+          triggerProps={{
+            onFocus: handlerOnFocus,
+            onBlur: handlerOnBlur,
+            type: "submit",
+            disabled: true,
+          }}
+        />
+      );
+
+      // When: ボタンを参照
+      const button = testContainer.queryButton();
+
+      // Then: type は internal の "button" が優先される / disabled は internal の
+      // isInputDisabled (false) が優先される
+      expect(button.type).toBe("button");
+      expect(button.disabled).toBe(false);
+
+      // And: ボタンにフォーカス・ブラーしても triggerProps のハンドラは呼ばれない
+      button.focus();
+      button.blur();
+      expect(handlerOnFocus).not.toHaveBeenCalled();
+      expect(handlerOnBlur).not.toHaveBeenCalled();
+    });
   });
 });

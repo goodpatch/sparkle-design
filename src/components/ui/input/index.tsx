@@ -115,12 +115,21 @@ export interface InputProps
    * トリガーボタンへフォワードする HTML / ARIA 属性。`isTrigger` が true のときのみ有効。
    * `aria-haspopup` / `aria-expanded` / `aria-controls` のように、Popover や Date Picker と
    * 連携する際に必要な属性を宣言的に渡すために使用する。
-   * 既存の専用 props（`triggerAriaLabel` / `onIconButtonClick`）が優先される。
+   *
+   * 以下の属性は Input が内部で制御するため、`triggerProps` で渡しても無視される:
+   * `ref` / `onFocus` / `onBlur` / `type` / `disabled` / `aria-label`（`triggerAriaLabel` が優先）
+   * / `onClick`（`onIconButtonClick` が指定された場合のみ優先。未指定なら `triggerProps.onClick`
+   * が使われる）。アイコンボタン自体の見た目（`icon` / `theme` / `variant` / `size`）も同様に
+   * Input 側で固定される。
    *
    * en: HTML / ARIA attributes forwarded to the trigger button. Only applied when
    *     `isTrigger` is true. Use for attributes like `aria-haspopup`,
    *     `aria-expanded`, `aria-controls` when integrating with Popover or Date Picker.
-   *     Dedicated props (`triggerAriaLabel`, `onIconButtonClick`) take precedence.
+   *     The following are controlled by Input and dropped if passed via
+   *     `triggerProps`: `ref`, `onFocus`, `onBlur`, `type`, `disabled`, `aria-label`
+   *     (the dedicated `triggerAriaLabel` wins), and the visual props
+   *     `icon` / `theme` / `variant` / `size`. `onClick` is overridden only when
+   *     `onIconButtonClick` is provided; otherwise `triggerProps.onClick` is used.
    */
   triggerProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
 }
