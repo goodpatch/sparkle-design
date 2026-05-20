@@ -2,24 +2,24 @@
 name: release-sparkle-design
 license: Apache-2.0
 description: >
-  sparkle-design / sparkle-design-internal の新バージョンをリリースするための手順スキル。
-  package.json の version bump、CHANGELOG.md 更新、リリース PR 作成、PR マージ後の
+  sparkle-design（公開 npm パッケージ）の新バージョンをリリースするための手順スキル。
+  package.json の version bump、CHANGELOG.md の更新、リリース PR 作成、PR マージ後の
   git tag 作成・push、GitHub Release 作成、npm publish までを一連の手順で実行する。
   CHANGELOG 更新漏れと GitHub Release 作成漏れを防ぐためのチェックリストを含む。
-  「リリースしたい」「新バージョンを切る」「v1.0.x をリリース」「sparkle-design をリリース」
-  「sparkle-design-internal をリリース」「CHANGELOG を更新」で発動。
-  English: "release sparkle-design", "cut a new version", "publish a release",
-  "bump version".
+  「sparkle-design をリリース」「sparkle-design の新バージョンを切る」「v1.0.x をリリース」
+  「sparkle-design の CHANGELOG を更新」で発動。
+  English: "release sparkle-design", "cut a new sparkle-design version",
+  "publish sparkle-design", "bump sparkle-design version".
 user-invocable: true
 ---
 
 # Skill: release-sparkle-design
 
-`sparkle-design` または `sparkle-design-internal` の新バージョンをリリースするための手順スキル。
+`sparkle-design`（公開 npm パッケージ）の新バージョンをリリースするための手順スキル。
 
 **このスキルが解決する問題**:
 
-- 過去に v1.0.1 / v1.0.2 / v1.0.3 で CHANGELOG.md 更新が漏れた（v1.0.3 では GitHub Release 自体も作られていなかった）
+- 過去に v1.0.1 / v1.0.2 / v1.0.3 で CHANGELOG.md 更新が漏れた（v1.0.3 では GitHub Release と git tag も未作成）
 - リリース手順がドキュメント化されておらず、各リリースで作業者が手探りになっていた
 - このスキルはチェックリストとして機能し、リリース漏れをゼロにする
 
@@ -31,18 +31,17 @@ user-invocable: true
 
 ### 実行方針
 
-1. **ユーザーに対象リポジトリとリリース種別を確認**
+1. **ユーザーにリリース種別を確認**
 
-   - リポジトリ: `sparkle-design`（公開）／ `sparkle-design-internal`（社内）
-   - リリース種別: `patch` / `minor` / `major`（semver）
-   - 未リリースの過去バージョンがある場合（タグ・Release 未作成）は同時に追補するか確認
+   - `patch`（バグ修正 / 依存更新 / 内部リファクタ）/ `minor`（後方互換のある機能追加）/ `major`（破壊的変更）
+   - タグ・Release 未作成の過去バージョンがある場合は同時に追補するか確認
 
-2. **対象リポジトリで作業する**
+2. **`sparkle-design` リポジトリのルートで作業する**
 
-   - sparkle ワークスペース内で作業している場合、必ず対象リポジトリのディレクトリに `cd` してから git 操作・テスト・編集を行う
-   - ワークスペースルートは git リポジトリではないので注意
+   - 編集・テスト・git 操作はすべて `sparkle-design` のチェックアウトディレクトリで実行
+   - worktree を使う場合は `.claude/worktrees/<name>` 配下で作業
 
-3. **以下のチェックリストを順に実行**
+3. **以下のチェックリストを順に実行する**
 
 ---
 
@@ -50,11 +49,11 @@ user-invocable: true
 
 ### 事前確認
 
-- [ ] 対象リポジトリの `main` が最新に pull できているか
+- [ ] `main` を最新に pull できているか
 - [ ] CI が main で全部 green か（`gh run list --branch main --limit 5`）
 - [ ] `git tag --list --sort=-v:refname | head` で最新タグを確認
 - [ ] `gh release list --limit 10` で最新 GitHub Release を確認
-- [ ] **タグと Release のバージョンが package.json の `version` と一致しているか** ← ここが乖離していたら過去リリースの追補が必要
+- [ ] **タグ / Release / `package.json` の `version` が三つ揃っているか** ← 乖離していたら過去分の追補が必要
 - [ ] `git log <最新タグ>..origin/main --oneline` で、未リリース commit があるか確認
 
 ### 過去リリース追補（漏れがある場合）
@@ -65,7 +64,7 @@ user-invocable: true
 - [ ] そのコミットに対して `git tag vX.Y.Z <SHA>` でタグを作成
 - [ ] `git push origin vX.Y.Z` でタグを push
 - [ ] `gh release create vX.Y.Z --title "vX.Y.Z" --notes "..."` で Release を作成
-  - notes は CHANGELOG.md の該当セクションをコピペ、もしくは `--generate-notes` で自動生成
+  - notes は CHANGELOG.md の該当セクションをコピペするのが確実
 
 ### 新バージョンの準備（リリース PR 作成）
 
@@ -78,10 +77,10 @@ user-invocable: true
     - PR タイトルの emoji prefix から大まかに分類できる: ✨ → Added, ♻️ → Changed, 🐛 → Fixed, 🔒 → Security
     - `chore(deps)` / `dependabot` は `### Dependencies` セクションにまとめる
   - [ ] **CHANGELOG にも未反映の過去バージョンがある場合は同時に追補する**
-- [ ] `pnpm install` で lockfile を更新（version 変更は通常 lockfile には影響しないが念のため）
+- [ ] `pnpm install` で lockfile が壊れていないか確認
 - [ ] テスト: `pnpm test` で全部 pass を確認
 - [ ] 型チェック: `pnpm type-check`（or `npx tsc --noEmit`）
-- [ ] lint / format: `pnpm lint && pnpm format:check`
+- [ ] format: `pnpm format:check`（必要なら `pnpm format`）
 - [ ] コミット作成（メッセージ規約: 日本語 + emoji prefix）
   - 例: `🔖 chore: release vX.Y.Z`
   - 本文に主要変更点を箇条書きで（CHANGELOG からの抜粋でよい）
@@ -92,7 +91,7 @@ user-invocable: true
 - [ ] レビュー受領（CodeRabbit / Codex / 人間レビュアー）
 - [ ] 全 CI green を確認（`gh pr checks <PR番号>`）
 - [ ] **通常マージ（`--merge`）でマージ**。スカッシュは禁止（コミットが消えるとリリース履歴が辿れない）
-- [ ] sparkle-design は admin 権限が必要な場合あり: `gh pr merge <PR番号> --merge --admin`
+- [ ] base branch protection があるため、必要なら admin マージ: `gh pr merge <PR番号> --merge --admin`
 
 ### マージ後: タグ・Release・publish
 
@@ -104,28 +103,18 @@ user-invocable: true
   git push origin vX.Y.Z
   ```
 - [ ] **GitHub Release 作成**:
+  CHANGELOG.md のセクションを `--notes` で直接渡すのが確実:
   ```bash
-  gh release create vX.Y.Z \
-    --title "vX.Y.Z" \
-    --notes-from-tag
+  gh release create vX.Y.Z --title "vX.Y.Z" --notes "$(awk '/^## \[X\.Y\.Z\]/,/^## \[/' CHANGELOG.md | sed '$d')"
   ```
-  または CHANGELOG.md のセクションを `--notes` で直接渡す:
+  もしくは手動で `gh release create vX.Y.Z` を実行し、ブラウザで notes を貼る。
+- [ ] **npm publish** — GitHub Actions ワークフローを実行:
   ```bash
-  gh release create vX.Y.Z --title "vX.Y.Z" --notes "$(cat <<'EOF'
-  ## Added
-  ...（CHANGELOG.md の当該バージョンセクションをコピペ）
-  EOF
-  )"
+  gh workflow run "Publish to npm" --ref vX.Y.Z
   ```
-- [ ] **npm publish**:
-  - `sparkle-design`（npmjs.org 公開）: `gh workflow run "Publish to npm" --ref vX.Y.Z`
-  - `sparkle-design-internal`（GitHub Packages）: `gh workflow run "Publish to GitHub Packages" --ref vX.Y.Z`
 - [ ] 公開確認:
-  - `sparkle-design`: <https://www.npmjs.com/package/sparkle-design> の versions に X.Y.Z が出ているか
-  - `sparkle-design-internal`: <https://github.com/goodpatch/sparkle-design-internal/packages> で確認
-- [ ] consumer 側を更新（任意）:
-  - `sparkle-design-internal` の devDep `@goodpatch/sparkle-design` のバージョンを bump
-  - `sparkle-design-docs` の sync
+  - <https://www.npmjs.com/package/sparkle-design> の versions に X.Y.Z が出ているか
+  - `npm view sparkle-design version` で確認
 
 ### 完了報告
 
@@ -138,7 +127,7 @@ user-invocable: true
 
 - **patch (`x.y.Z`)**: バグ修正、ドキュメント修正、依存更新、内部リファクタ（public API 不変）
 - **minor (`x.Y.0`)**: 後方互換のある新機能追加、新コンポーネント追加、新 props 追加
-- **major (`X.0.0`)**: 後方互換を破る変更（peer dep の React バージョン縛り変更、props 削除、コンポーネント削除など）
+- **major (`X.0.0`)**: 後方互換を破る変更（peer dep のメジャー縛り変更、props 削除、コンポーネント削除など）
 
 迷ったらユーザーに確認する。
 
@@ -156,11 +145,11 @@ user-invocable: true
 `git log <最古の未反映タグ>..HEAD --oneline` で範囲を取って、各バージョンの section を遡って書き戻す。
 GitHub Release の本文がある場合はそれを CHANGELOG にコピーすれば早い。
 
-### npm publish が失敗する場合
+### npm publish ワークフローが失敗する場合
 
 - `pnpm-lock.yaml` の整合性が崩れていないか確認（`pnpm install --frozen-lockfile` を試す）
-- `pnpm.overrides` は pnpm 10+ では `pnpm-workspace.yaml` に書く必要がある（package.json では読まれない）
-- `NPM_TOKEN` / GitHub Packages 用 token の有効期限切れも疑う
+- `pnpm.overrides` を package.json に書いていると pnpm 10+ では読まれない場合がある。`pnpm-workspace.yaml` 側の `overrides:` フィールドへの移行を検討
+- `NPM_TOKEN` の有効期限切れも疑う（リポジトリ Secrets を確認）
 
 ### マージ後のローカル checkout が worktree と衝突する
 
@@ -173,4 +162,4 @@ worktree を `git worktree remove` で先に消すか、PR マージ自体は Gi
 
 - [Keep a Changelog](https://keepachangelog.com/ja/1.1.0/) — CHANGELOG.md の書式
 - [Semantic Versioning](https://semver.org/lang/ja/) — semver
-- sparkle ワークスペースの `CLAUDE.md` のリリース手順節も参照
+- `sparkle-design` の `CLAUDE.md` / `docs/ai-instructions/` の規約も参照
