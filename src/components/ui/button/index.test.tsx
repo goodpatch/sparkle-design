@@ -587,4 +587,30 @@ describe("Button", () => {
       // 実際のブラウザ環境やE2Eテストでのテストが推奨されます
     });
   });
+
+  describe("Ref Forwarding", () => {
+    it("forwards ref to the button element", () => {
+      // Given: ref を渡した Button
+      const ref = React.createRef<HTMLButtonElement>();
+      testContainer.render(<Button ref={ref}>Click me</Button>);
+
+      // Then: ref.current が DOM の button 要素に紐づく
+      expect(ref.current).toBeInstanceOf(HTMLButtonElement);
+      expect(ref.current?.tagName).toBe("BUTTON");
+    });
+
+    it("forwards ref to the slotted anchor element via asChild", () => {
+      // Given: asChild で <a> を子に持つ Button に ref を渡す
+      const ref = React.createRef<HTMLAnchorElement>();
+      testContainer.render(
+        <Button asChild ref={ref}>
+          <a href="/about">About</a>
+        </Button>
+      );
+
+      // Then: Slot 経由で ref が <a> 要素に届く
+      expect(ref.current).toBeInstanceOf(HTMLAnchorElement);
+      expect(ref.current?.tagName).toBe("A");
+    });
+  });
 });
