@@ -5,6 +5,62 @@
 
 ## [Unreleased]
 
+## [1.0.4] - 2026-05-19
+
+### Added
+
+- **Button: `React.forwardRef` 対応** (#275, closes #270)
+  - Radix `Trigger asChild`（Popover 等）から Button に直接 `ref` を渡せるように
+  - `asChild` で `<a>` 等の非 button 要素を slot するケースに対応するため、ref 型は `HTMLElement` で広く受ける
+  - ref forwarding テスト（通常 button / asChild + a）を新規追加
+
+### Changed
+
+- 共有スキルの frontmatter に `user-invocable: true` を追加 (#271)
+- Input フォロー修正: `useMergeRefs` の型整理と a11y lint エラー解消 (#272)
+
+### Dependencies
+
+- `next` 15.5.15 → 15.5.18 (#267)
+- `brace-expansion` 5.0.5 → 5.0.6 (#269)
+- `postcss` 8.4.31 → 8.5.14 (#273)
+
+## [1.0.3] - 2026-05-19
+
+### Added
+
+- **Input まわりの再利用フックを named export** (#263)
+  - `useInputContainerFocus` / `useMergeRefs` を public API として公開
+- **`Input.triggerProps` による ARIA / HTML 属性フォワード** (#268)
+  - 内部のトリガーボタンに ARIA / HTML 属性を渡せるように
+
+### Notes
+
+- 後方互換は維持
+
+## [1.0.2] - 2026-04-17
+
+### Changed
+
+- README から `@goodpatch/sparkle-design-internal` の言及を削除 (#252)
+- v1.0.1 直後のドキュメント修正を npm に反映するためのパッチリリース
+
+## [1.0.1] - 2026-04-16
+
+### Security
+
+- `pnpm.overrides` に追加: `hono ^4.12.14` / `yaml ^2.8.3` / `@eslint/plugin-kit ^0.3.4` / `brace-expansion ^1.1.13`（`<1.1.13` の range）
+- `pnpm audit` 残件クリア（prod / dev とも 0）
+
+### Changed
+
+- `@figma/code-connect` を `dependencies` → `devDependencies` に移動
+  - consumer の `node_modules` から `lodash` を含む Figma Code Connect のツリーが消える
+- `dist` から `*.figma.{js,d.ts}` を除外しパッケージサイズを縮小
+- TailwindCSS v4 + npm package 利用時の `@source` 自動検知に関する README 注記を CLI v2.0.6 ベースに更新
+- `globals.css` 前提表記を「Tailwind エントリ CSS（`globals.css` / `index.css`）」に整理
+- Material Symbols の woff2 を URL 軸縮小で 60〜75% 削減（CLI v2.0.1 の変更を反映）
+
 ## [1.0.0] - 2026-04-13
 
 ### Changed
