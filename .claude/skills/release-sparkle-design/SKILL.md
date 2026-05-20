@@ -39,7 +39,7 @@ user-invocable: true
 2. **`sparkle-design` リポジトリのルートで作業する**
 
    - 編集・テスト・git 操作はすべて `sparkle-design` のチェックアウトディレクトリで実行
-   - worktree を使う場合は `.claude/worktrees/<name>` 配下で作業
+   - 並列作業を分離したい場合は git worktree を使ってもよい（既存運用では `.claude/worktrees/<name>` 配下に置く慣例）。worktree を使わずに `chore/release-X.Y.Z` ブランチを直接切る運用でも可
 
 3. **以下のチェックリストを順に実行する**
 
@@ -96,22 +96,27 @@ user-invocable: true
 ### マージ後: タグ・Release・publish
 
 - [ ] `git fetch origin main && git checkout main && git pull` で最新化
-- [ ] リリースコミットの SHA を確認: `git log --oneline -3`
-- [ ] **タグ作成 + push**:
+- [ ] **リリースコミットの SHA を `git log --oneline | grep release | head -1` で必ず特定**
+- [ ] **タグはリリースコミットの SHA を明示して打つ**（HEAD に打つと main が進んだ場合に誤タグ → publish 漏れ・誤 publish の温床）:
   ```bash
-  git tag vX.Y.Z
+  RELEASE_SHA=$(git log --oneline | grep "release vX.Y.Z" | head -1 | awk '{print $1}')
+  git tag vX.Y.Z "$RELEASE_SHA"
   git push origin vX.Y.Z
   ```
 - [ ] **GitHub Release 作成**:
   CHANGELOG.md のセクションを `--notes` で直接渡すのが確実:
   ```bash
-  gh release create vX.Y.Z --title "vX.Y.Z" --notes "$(awk '/^## \[X\.Y\.Z\]/,/^## \[/' CHANGELOG.md | sed '$d')"
+  awk '/^## \[X\.Y\.Z\]/{flag=1;next} /^## \[/{flag=0} flag' CHANGELOG.md > /tmp/notes.md
+  gh release create vX.Y.Z --title "vX.Y.Z" --notes-file /tmp/notes.md
   ```
-  もしくは手動で `gh release create vX.Y.Z` を実行し、ブラウザで notes を貼る。
-- [ ] **npm publish** — GitHub Actions ワークフローを実行:
+- [ ] **npm publish** — GitHub Actions ワークフローを実行。**tag ref で実行する**ことで、main が進んでも正しいリリースコミットの内容が publish される:
   ```bash
   gh workflow run "Publish to npm" --ref vX.Y.Z
   ```
+  - workflow が `npm error code E404 'pkg@X.Y.Z' is not in this registry` で失敗する場合は **NPM_TOKEN の期限切れ**（auth 失敗が 404 として返る npm registry 仕様）
+  - workflow が `npm error code EOTP` で失敗する場合は、**トークン種別が 2FA バイパス対応していない**。次のいずれかで作り直し:
+    - Classic Token: タイプを **Automation** で発行
+    - Granular Access Token: 作成時に **「Bypass 2FA when publishing」を有効** にする
 - [ ] 公開確認:
   - <https://www.npmjs.com/package/sparkle-design> の versions に X.Y.Z が出ているか
   - `npm view sparkle-design version` で確認
@@ -148,8 +153,9 @@ GitHub Release の本文がある場合はそれを CHANGELOG にコピーすれ
 ### npm publish ワークフローが失敗する場合
 
 - `pnpm-lock.yaml` の整合性が崩れていないか確認（`pnpm install --frozen-lockfile` を試す）
-- `pnpm.overrides` を package.json に書いていると pnpm 10+ では読まれない場合がある。`pnpm-workspace.yaml` 側の `overrides:` フィールドへの移行を検討
-- `NPM_TOKEN` の有効期限切れも疑う（リポジトリ Secrets を確認）
+- `pnpm.overrides` は本リポジトリでは `package.json` の `pnpm.overrides` に置く運用（CI が使う pnpm のバージョンで読まれることを確認済み）。ローカルの pnpm バージョンが大幅に違うと挙動差で lockfile が書き換わることがあるので、ローカルで pnpm install するときは lockfile の差分（特に `overrides:` セクション）を確認すること
+- 認証エラーは npm 仕様で 404 として返ることが多い。`NPM_TOKEN` の有効期限切れや権限不足を最初に疑う
+- 2FA OTP を要求された場合（`npm error code EOTP`）はトークン種別が automation 対応していない。Classic Token なら Automation 型、Granular Access Token なら「Bypass 2FA when publishing」を有効にしたものを発行
 
 ### マージ後のローカル checkout が worktree と衝突する
 

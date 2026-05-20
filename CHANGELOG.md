@@ -29,9 +29,9 @@
 
 ### Added
 
-- **Input まわりの再利用フックを named export** (#263)
+- **Input まわりの再利用フックを named export** (#272, closes #263)
   - `useInputContainerFocus` / `useMergeRefs` を public API として公開
-- **`Input.triggerProps` による ARIA / HTML 属性フォワード** (#268)
+- **`Input.triggerProps` による ARIA / HTML 属性フォワード** (#272, closes #268)
   - 内部のトリガーボタンに ARIA / HTML 属性を渡せるように
 
 ### Notes
