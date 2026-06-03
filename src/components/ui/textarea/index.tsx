@@ -15,7 +15,9 @@ import { cn } from "@/lib/utils";
  */
 const textareaVariants = cva(
   // ベーススタイル
-  "flex w-full rounded-action border bg-white px-3 py-1 ring-offset-background placeholder:text-base-400 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2 resize",
+  // フォーカスリング色は isInvalid バリアントで指定（通常=青／エラー=negative）。
+  // en: Focus ring color is set in the isInvalid variant (blue normally / negative on error).
+  "flex w-full rounded-action border bg-white px-3 py-1 ring-offset-background placeholder:text-base-400 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 resize",
   {
     variants: {
       // サイズバリアント（sm, md, lg）
@@ -26,9 +28,9 @@ const textareaVariants = cva(
       },
       // エラー状態のバリアント
       isInvalid: {
-        true: "border-negative-500 hover:border-negative-600 focus-visible:border-negative-600",
+        true: "border-negative-500 hover:border-negative-600 focus-visible:border-negative-600 focus-visible:ring-negative-500",
         false:
-          "border-neutral-500 hover:border-neutral-600 focus-visible:border-neutral-600",
+          "border-neutral-500 hover:border-neutral-600 focus-visible:border-neutral-600 focus-visible:ring-[var(--color-ring-normal)]",
       },
       // 無効状態のバリアント
       isDisabled: {

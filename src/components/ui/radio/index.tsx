@@ -54,7 +54,9 @@ const radioItemVariants = cva(
 const radioIndicatorVariants = cva(
   [
     "flex items-center justify-center rounded-full border border-2 transition-colors",
-    "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-[var(--color-ring-normal)] [.group:focus-visible_&]:ring-offset-2",
+    // フォーカスリング色は isInvalid バリアントで指定（通常=青／エラー=negative）。
+    // en: Focus ring color is set in the isInvalid variant (blue normally / negative on error).
+    "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-offset-2",
   ].join(" "),
   {
     variants: {
@@ -64,8 +66,8 @@ const radioIndicatorVariants = cva(
         lg: "h-6 w-6",
       },
       isInvalid: {
-        true: "border-negative-500 [.group[data-state=checked]_&]:border-negative-500",
-        false: "border-neutral-500",
+        true: "border-negative-500 [.group:focus-visible_&]:ring-negative-500 [.group[data-state=checked]_&]:border-negative-500",
+        false: "border-neutral-500 [.group:focus-visible_&]:ring-[var(--color-ring-normal)]",
       },
       isDisabled: {
         true: "",

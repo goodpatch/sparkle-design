@@ -14,7 +14,9 @@ import { cn } from "@/lib/utils";
 const selectTriggerVariants = cva(
   [
     "flex items-center justify-between w-full rounded-action border bg-white text-text-high transition-colors",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
+    // フォーカスリング色は isInvalid バリアントで指定（通常=青／エラー=negative）。
+    // en: Focus ring color is set in the isInvalid variant (blue normally / negative on error).
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
     "overflow-hidden whitespace-nowrap",
   ].join(" "),
   {
@@ -25,9 +27,9 @@ const selectTriggerVariants = cva(
         lg: "h-12 py-1 pl-4 pr-2 gap-2 character-4-regular-pro",
       },
       isInvalid: {
-        true: "bg-white border-negative-500 hover:border-negative-600 data-[state=open]:border-negative-600",
+        true: "bg-white border-negative-500 hover:border-negative-600 data-[state=open]:border-negative-600 focus-visible:ring-negative-500",
         false:
-          "border-neutral-500 hover:border-neutral-600 data-[state=open]:border-neutral-600",
+          "border-neutral-500 hover:border-neutral-600 data-[state=open]:border-neutral-600 focus-visible:ring-[var(--color-ring-normal)]",
       },
       isDisabled: {
         true: "cursor-not-allowed bg-neutral-50 border-neutral-200 hover:border-neutral-200 text-text-disabled",

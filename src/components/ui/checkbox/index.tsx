@@ -37,7 +37,9 @@ const checkboxItemVariants = cva(
 const checkboxRootVariants = cva(
   [
     "rounded-xs border-2 transition-colors",
-    "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-[var(--color-ring-normal)] [.group:focus-visible_&]:ring-offset-2",
+    // フォーカスリング色は isInvalid バリアントで指定（通常=青／エラー=negative）。
+    // en: Focus ring color is set in the isInvalid variant (blue normally / negative on error).
+    "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-offset-2",
   ].join(" "),
   {
     variants: {
@@ -49,11 +51,13 @@ const checkboxRootVariants = cva(
       isInvalid: {
         true: [
           "border-negative-500",
+          "[.group:focus-visible_&]:ring-negative-500",
           "[.group[data-state=checked]_&]:bg-negative-500 [.group[data-state=checked]_&]:border-none",
           "[.group[data-state=indeterminate]_&]:bg-negative-500 [.group[data-state=indeterminate]_&]:border-none",
         ].join(" "),
         false: [
           "border-neutral-500",
+          "[.group:focus-visible_&]:ring-[var(--color-ring-normal)]",
           "[.group[data-state=checked]_&]:bg-primary-500 [.group[data-state=checked]_&]:border-none",
           "[.group[data-state=indeterminate]_&]:bg-primary-500 [.group[data-state=indeterminate]_&]:border-none",
         ].join(" "),

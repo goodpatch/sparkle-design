@@ -29,11 +29,23 @@ const inputVariants = cva(
         false: "",
       },
       isFocused: {
-        true: "ring-2 ring-[var(--color-ring-normal)] ring-offset-2 outline-hidden",
+        true: "ring-2 ring-offset-2 outline-hidden",
         false: "",
       },
     },
     compoundVariants: [
+      // フォーカスリング色。通常は青、エラー時は枠線と同じ negative に揃える。
+      // en: Focus ring color. Blue normally; on error it matches the negative border.
+      {
+        isFocused: true,
+        isInvalid: false,
+        className: "ring-[var(--color-ring-normal)]",
+      },
+      {
+        isFocused: true,
+        isInvalid: true,
+        className: "ring-negative-500",
+      },
       // 通常状態
       {
         isInvalid: false,

@@ -266,6 +266,28 @@ describe("Input", () => {
       // Then: invalid状態のクラスが保持される（実際のCVAクラス名）
       expect(container?.className).toContain("border-negative-500");
     });
+
+    it("uses the negative focus ring on error (isInvalid + isFocused)", () => {
+      // Given: エラー状態でフォーカスされた Input
+      testContainer.render(<Input isInvalid isFocused />);
+      const container = testContainer.getContainer().firstElementChild;
+
+      // Then: フォーカスリングは negative 色になり、通常の青リングは付かない
+      expect(container?.className).toContain("ring-negative-500");
+      expect(container?.className).not.toContain(
+        "ring-[var(--color-ring-normal)]"
+      );
+    });
+
+    it("uses the normal focus ring when valid (isFocused only)", () => {
+      // Given: 通常状態でフォーカスされた Input
+      testContainer.render(<Input isFocused />);
+      const container = testContainer.getContainer().firstElementChild;
+
+      // Then: フォーカスリングは通常の青色になり、negative リングは付かない
+      expect(container?.className).toContain("ring-[var(--color-ring-normal)]");
+      expect(container?.className).not.toContain("ring-negative-500");
+    });
   });
 
   describe("Accessibility", () => {
