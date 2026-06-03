@@ -184,6 +184,19 @@ Components include appropriate ARIA attributes:
 - Logical tab order
 - Skip links for navigation
 
+#### Focus ring color (form components)
+
+Form components (`input`, `textarea`, `select`, `checkbox`, `radio`, …) drive the
+focus ring color from their error state — do **not** hardcode the blue ring on the
+error path:
+
+- Normal state → `ring-[var(--color-ring-normal)]` (blue)
+- Error state (`isInvalid`) → `ring-negative-500`, matching the negative border
+
+Define the ring color in the `isInvalid` variant (`false` → ring-normal, `true` →
+ring-negative-500) rather than in the base class, so only one ring color ever
+applies. `switch` has no error state, so it keeps the normal ring only.
+
 ### Color Contrast
 
 All color combinations meet WCAG 2.1 Level AA standards:
