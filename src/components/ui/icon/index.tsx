@@ -86,7 +86,15 @@ export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
     return (
       <span
         ref={ref}
-        className={cn(iconTypographyClass, "select-none", className)}
+        // font-medium: アイコンの weight は 500 で統一。親要素（Button の bold 等）から
+        // font-weight が継承されると疑似ボールド（faux bold）で太く描画されるため明示する。
+        // en: Icons are unified at weight 500. Set font-weight explicitly so an inherited
+        // font-weight (e.g. bold Button labels) does not trigger faux-bold rendering.
+        className={cn(
+          iconTypographyClass,
+          "select-none font-medium",
+          className
+        )}
         aria-hidden="true"
         {...props}
       >
