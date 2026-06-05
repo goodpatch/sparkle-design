@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import { defineConfig } from "vitest/config";
 
+import { playwright } from "@vitest/browser-playwright";
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 
 const dirname =
@@ -34,8 +35,11 @@ export default defineConfig({
           browser: {
             enabled: true,
             headless: true,
-            name: "chromium",
-            provider: "playwright",
+            // Vitest 4 から provider はパッケージからの import、ブラウザは instances で指定する
+            // en: Since Vitest 4, the provider is imported from a package and browsers are
+            //     configured via `instances`.
+            provider: playwright(),
+            instances: [{ browser: "chromium" }],
           },
           setupFiles: [".storybook/vitest.setup.ts"],
         },
