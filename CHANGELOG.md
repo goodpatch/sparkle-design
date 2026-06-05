@@ -5,6 +5,24 @@
 
 ## [Unreleased]
 
+## [1.0.5] - 2026-06-05
+
+### Fixed
+
+- **Icon: font-weight を 500 に固定し親要素からの継承を防止** (#281, closes goodpatch/sparkle-design-internal#198)
+  - Button の bold ラベル等から `font-weight: 700` が継承され、アイコンが疑似ボールド（faux bold）で太く描画される問題を修正
+  - `Icon` の span に `font-medium` を明示付与（`className` からの上書きは引き続き可能）
+
+### Changed
+
+- release skill とリリース記録のレビュー指摘を反映 (#277)
+
+### Dependencies
+
+- `vitest` 3.2.3 → 4.1.0 (#279)
+  - Vitest 4 の browser provider API へ移行（`@vitest/browser` → `@vitest/browser-playwright`、`browser.name` → `browser.instances`）
+  - `@vitest/coverage-v8` を ^4.1.0 に更新
+
 ## [1.0.4] - 2026-05-19
 
 ### Added
