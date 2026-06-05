@@ -159,6 +159,7 @@
   /* フォントウェイト */
   --font-weight-char-normal: 400;
   --font-weight-char-bold: 700;
+  --font-weight-icon: 500;
   --font-weight-icon-fill-0: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
   --font-weight-icon-fill-1: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
 
@@ -781,6 +782,7 @@
     /* アイコンスタイル */
     font-family: var(--font-family-icon);
     font-size: var(--font-size-12);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -789,6 +791,7 @@
   .icon-1-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-12);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -797,6 +800,7 @@
   .icon-2-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-14);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -805,6 +809,7 @@
   .icon-2-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-14);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -813,6 +818,7 @@
   .icon-3-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-16);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -821,6 +827,7 @@
   .icon-3-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-16);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -829,6 +836,7 @@
   .icon-4-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-18);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -837,6 +845,7 @@
   .icon-4-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-18);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -845,6 +854,7 @@
   .icon-5-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-20);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -853,6 +863,7 @@
   .icon-5-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-20);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -861,6 +872,7 @@
   .icon-6-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-24);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -869,6 +881,7 @@
   .icon-6-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-24);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -877,6 +890,7 @@
   .icon-7-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-28);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -885,6 +899,7 @@
   .icon-7-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-28);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -893,6 +908,7 @@
   .icon-8-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-32);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -901,6 +917,7 @@
   .icon-8-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-32);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -909,6 +926,7 @@
   .icon-9-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-36);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -917,6 +935,7 @@
   .icon-9-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-36);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -925,6 +944,7 @@
   .icon-10-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-42);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -933,6 +953,7 @@
   .icon-10-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-42);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -941,6 +962,7 @@
   .icon-11-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-48);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -949,6 +971,7 @@
   .icon-11-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-48);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -957,6 +980,7 @@
   .icon-12-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-54);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -965,6 +989,7 @@
   .icon-12-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-54);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
