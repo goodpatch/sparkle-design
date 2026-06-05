@@ -22,7 +22,7 @@ This repository uses a unified AI instruction system. Source files are in `docs/
 "Sparkle Design" is a React component library built with modern web technologies, providing consistent UI components for web applications.
 
 ## Technology Stack
-- **Framework**: Next.js 15.3.8 + React 18 + TypeScript
+- **Framework**: Next.js 15.5.18 + React 18 + TypeScript
 - **Styling**: TailwindCSS 4 + CVA (Class Variance Authority)
 - **Testing**: Vitest + Testing Library + jsdom
 - **Documentation**: Storybook
