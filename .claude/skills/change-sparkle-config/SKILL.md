@@ -7,7 +7,7 @@ description: >
   書き換えて `sparkle-design-cli generate` まで実行するスキル。選択肢は Theme Settings
   Figma プラグインが扱える範囲（primary 7 色 / radius 8 段階 / fonts 11 種）に揃えて
   おり、Figma と CLI の見た目がずれません。**未導入プロジェクトの初期セットアップは
-  `setup-sparkle-design` を使うこと。**
+  `setup-sparkle-design`（internal 環境では `install-sparkle-design`）を使うこと。**
   「雰囲気を変えたい」「もっとポップに」「ビジネスライクに」「高級感を出したい」
   「primary を変えたい」「角丸をもっと丸く」「フォントを変えたい」「テーマを提案して」
   で発動。English: "change the vibe", "make it more playful",
@@ -21,7 +21,7 @@ user-invocable: true
 
 **前提**:
 
-- プロジェクトに既に `sparkle-design` / `sparkle-design-cli` が導入済み（未導入の場合は `setup-sparkle-design` スキルを先に使うよう案内する）
+- プロジェクトに既に `sparkle-design` / `sparkle-design-cli` が導入済み（未導入の場合は `setup-sparkle-design` スキル — internal 環境なら `install-sparkle-design` スキル — を先に使うよう案内する）
 - 書き換え可能な項目は **Sparkle Design Theme Settings Figma プラグインが扱える範囲と同一**（後述の reference 参照）
 
 ---
@@ -33,7 +33,7 @@ user-invocable: true
 ### 実行方針
 
 1. **前提チェック**
-   - カレントディレクトリに `sparkle.config.json` があるか確認。無ければ **未導入状態**。その場合は「**新規導入 + カスタムテーマ**は `setup-sparkle-design` スキルが担当する（setup 実行時に `sparkle.config.json` を編集しておけば同じテーマで導入できる）」と案内し、setup にバトンパスして中断する。
+   - カレントディレクトリに `sparkle.config.json` があるか確認。無ければ **未導入状態**。その場合は「**新規導入 + カスタムテーマ**は `setup-sparkle-design` スキル（internal 環境では `install-sparkle-design` スキル）が担当する（setup 実行時に `sparkle.config.json` を編集しておけば同じテーマで導入できる）」と案内し、setup にバトンパスして中断する。
    - `package.json` の `dependencies` / `devDependencies` に `sparkle-design` が含まれるか確認（pnpm workspace 等で hoist されているケースに備え、`node_modules` のパスチェックは避ける）。未導入なら setup を案内して中断。
 2. **現在値を読み取り（元ファイルをスナップショット保存）**
    - `sparkle.config.json` の元バイト列をそのままメモリに保持（後の rollback 用）。
