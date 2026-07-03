@@ -23,7 +23,6 @@ docs/ai-instructions/
 |--------|-------------|------|
 | OpenAI Codex | `AGENTS.md` | ルートレベルの指示ファイル |
 | Claude Code | `CLAUDE.md` | AGENTS.mdへのシンボリックリンク |
-| GitHub Copilot | `.github/copilot-instructions.md` | メイン指示ファイル |
 | GitHub Copilot | `.github/instructions/*.instructions.md` | スコープ付き指示ファイル |
 | Cursor | `.cursor/rules/*.mdc` | スコープ付きルールファイル |
 | Cursor | `.cursorrules` | レガシー形式（互換性用） |
