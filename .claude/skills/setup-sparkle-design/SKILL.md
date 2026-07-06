@@ -180,7 +180,7 @@ export function MyPage() {
 
 設定ファイルは [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364) Figma プラグインからも書き出せる。
 
-役割・テナントごとに複数の固定配色バリアントを 1 デプロイで切り替えたい場合は、単一の `sparkle.config.json` では対応できない。sparkle-design-cli の README「複数のテーマ配色を1デプロイでサポートしたい場合」（config を分割して複数回 `generate` する方式）を参照。
+役割・テナントごとに複数の固定配色バリアントを 1 デプロイで切り替えたい場合は、単一の `sparkle.config.json` では対応できない。sparkle-design-cli の README「複数のテーマ配色を 1 デプロイでサポートしたい場合」（config を分割して複数回 `generate` する方式）を参照。
 
 ---
 
