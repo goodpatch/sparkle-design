@@ -44,6 +44,7 @@ user-invocable: true
 | ドキュメント | いつ参照するか |
 |---|---|
 | この SKILL.md | 導入・基本設定（常に利用可能） |
+| `references/config-reference.md` | primary/radius の選択肢確認・複数テーマ運用の相談時 |
 | `references/update-workflow.md` | アップデートが求められたとき |
 | `references/component-catalog.md` | コンポーネント選択の相談時 |
 | `references/component-selection.md` | コンポーネント置き換え・統一の依頼時 |
@@ -167,14 +168,7 @@ export function MyPage() {
 
 ## sparkle.config.json リファレンス
 
-### 基本設定（Figma プラグインで出力可能）
-
-| フィールド | 説明 | 選択肢 |
-|---|---|---|
-| `primary` | プライマリカラー | `blue`, `red`, `orange`, `green`, `purple`, `pink`, `yellow` |
-| `font-pro` | プロポーショナルフォント | Google Fonts の名前 |
-| `font-mono` | モノスペースフォント | Google Fonts の名前 |
-| `radius` | 角丸設定 | `none`, `sm`, `md`, `lg`, `xl`, `full` |
+`primary` / `radius` の選択肢一覧・必須および型検証の挙動・複数テーマ運用したい場合の案内は `references/config-reference.md` を参照。
 
 設定ファイルは [Sparkle Design Theme Settings](https://www.figma.com/community/plugin/1443500367756891364) Figma プラグインからも書き出せる。
 
@@ -253,6 +247,7 @@ Load references as needed:
 - **Load on error**: `references/troubleshooting.md`
 - **Load for component selection**: `references/component-catalog.md`, `references/component-selection.md`
 - **Load for update**: `references/update-workflow.md`
+- **Load for config field details / multi-theme setups**: `references/config-reference.md`
 
 ---
 
