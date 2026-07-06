@@ -35,6 +35,7 @@ user-invocable: true
 1. **前提チェック**
    - カレントディレクトリに `sparkle.config.json` があるか確認。無ければ **未導入状態**。その場合は「**新規導入 + カスタムテーマ**は `setup-sparkle-design` スキル（internal 環境では `install-sparkle-design` スキル）が担当する（setup 実行時に `sparkle.config.json` を編集しておけば同じテーマで導入できる）」と案内し、setup にバトンパスして中断する。
    - `package.json` の `dependencies` / `devDependencies` に `sparkle-design` が含まれるか確認（pnpm workspace 等で hoist されているケースに備え、`node_modules` のパスチェックは避ける）。未導入なら setup を案内して中断。
+   - ユーザーの要望が「役割・テナント・画面ごとに複数の固定配色バリアントを 1 デプロイで切り替えたい」という趣旨（例:「管理画面と一般ユーザー画面で色を変えたい」「テナントごとに配色を出し分けたい」）なら **このスキルの範囲外**。本スキルは単一の `sparkle.config.json` を書き換えるだけなので複数バリアントの同時提供には対応できない。sparkle-design-cli の README「複数のテーマ配色を1デプロイでサポートしたい場合」（config を分割して複数回 `generate` する方式を推奨、単一 CSS + 属性スコープでの Tailwind クラス上書きは非推奨）を案内し、中断する。
 2. **現在値を読み取り（元ファイルをスナップショット保存）**
    - `sparkle.config.json` の元バイト列をそのままメモリに保持（後の rollback 用）。
    - `JSON.parse` で解釈し、現在の `primary` / `font-pro` / `font-mono` / `radius` / `extend.*` とそれ以外のユーザー独自キーを把握。
@@ -54,7 +55,7 @@ user-invocable: true
    - 「この内容で書き換えて generate しますか？」と **1 回だけ** 尋ねる。OK なら 6 へ、調整要望なら 3 に戻る。
 6. **書き込み前バリデーション（絶対実行）**
    - 提案する 4 値の各々について、**書き込み直前に** SKILL.md の「許可リスト」と照合する。
-     - primary が許可リスト外 → 書き込み中断、別案を考え直す
+     - primary が許可リスト外 → 書き込み中断。ユーザーが 7 色のいずれかで妥協できるなら別案を考え直す。ユーザーが **7 色に無い特定のブランドカラー** を明確に指定している場合は、別案を考え直さず「`primary` は 7 色までしか選べないため、そのブランドカラーを使うには `extend.custom-css` で `--color-primary-*` と `--color-gray-*`（50〜900、gray も必ずセットで）を丸ごと定義する方式が必要（sparkle-design-cli README 参照）」と案内する。これは 4 キーの単純書き換えの範囲外なので本スキルでは実行せず、必要なら手動対応をユーザーに委ねる
      - font-pro / font-mono が許可リスト外、または pro/mono 可否に反する用途 → 書き込み中断
      - radius が許可リスト外 → 書き込み中断
    - このチェックをスキップしない。ステップ 3 のマッピングが保証にはならない。
