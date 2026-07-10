@@ -21,26 +21,39 @@ function sortObjectKeys(obj) {
 }
 
 /**
- * ブロック抽出ヘルパー: 指定トークン直後の {} をパース
- * en: Extracts the brace block following a token (e.g. :root, @theme inline)
+ * `token` に一致する {} ブロックをすべて抽出する。sparkle-design.css には
+ * `:root { ... }` が2つある（プリミティブブロックと、実行時に参照できる
+ * セマンティックトークンブロック）ため、両方を集める必要がある。
+ * en: Extract every brace block matching `token`. sparkle-design.css
+ * declares two `:root { ... }` blocks (a primitive block and a
+ * semantic-token block meant to be usable at runtime), both of which need
+ * to be collected here.
  */
-function extractBraceBlock(source, token) {
-  const start = source.indexOf(token);
-  if (start === -1) return null;
-  const open = source.indexOf("{", start);
-  if (open === -1) return null;
-  let depth = 0;
-  for (let i = open; i < source.length; i++) {
-    if (source[i] === "{") depth++;
-    else if (source[i] === "}") {
-      depth--;
-      if (depth === 0) {
-        // return inner content (without braces)
-        return source.slice(open + 1, i);
+function extractAllBraceBlocks(source, token) {
+  const blocks = [];
+  let searchFrom = 0;
+  while (true) {
+    const start = source.indexOf(token, searchFrom);
+    if (start === -1) break;
+    const open = source.indexOf("{", start);
+    if (open === -1) break;
+    let depth = 0;
+    let end = -1;
+    for (let i = open; i < source.length; i++) {
+      if (source[i] === "{") depth++;
+      else if (source[i] === "}") {
+        depth--;
+        if (depth === 0) {
+          end = i;
+          break;
+        }
       }
     }
+    if (end === -1) break; // unbalanced
+    blocks.push(source.slice(open + 1, end));
+    searchFrom = end + 1;
   }
-  return null;
+  return blocks;
 }
 
 /**
@@ -139,15 +152,31 @@ function buildTheme() {
   const importRules = parseImports(noComments);
 
   // 2) :root variables
-  const rootBlock = extractBraceBlock(noComments, ":root");
-  const rootVars = rootBlock ? parseDeclarations(rootBlock) : {};
-
-  // 3) @theme inline variables (same treatment as vars)
-  const themeInlineBlock = extractBraceBlock(noComments, "@theme inline");
-  const themeVars = themeInlineBlock ? parseDeclarations(themeInlineBlock) : {};
-
-  // Merge vars (semantic overrides primitive)
-  const cssVarsTheme = { ...rootVars, ...themeVars };
+  // sparkle-design.css には `:root { ... }` が2つある
+  // （プリミティブトークンブロックと、実行時に参照できるセマンティックトークン
+  // ブロック）。どちらも実際に解決可能な値（リテラル、または他の :root 変数への
+  // 参照）を持つため、両方をマージしてレジストリの cssVars に使う。
+  //
+  // `@theme inline` は意図的にここでは使わない: sparkle-design-cli 2.4.1+ の
+  // `@theme inline` は各セマンティック宣言が同名変数へ自己参照する
+  // （例: `--color-primary-500: var(--color-primary-500)`）設計になっており、
+  // これは Tailwind の compiled utility class 生成のためだけの仕組みで、
+  // レジストリ消費者へそのまま渡すと解決不能な循環参照になってしまう
+  // （goodpatch/sparkle-design#289 のレビュー指摘）。
+  // en: sparkle-design.css declares two `:root { ... }` blocks (primitive
+  // tokens, and semantic tokens meant to be usable at runtime). Both resolve
+  // to real values (literals or references to other :root vars), so merge
+  // both for the registry's cssVars.
+  // `@theme inline` is intentionally NOT used here: as of sparkle-design-cli
+  // 2.4.1+, every `@theme inline` declaration self-references its own
+  // semantic variable name (e.g. `--color-primary-500: var(--color-primary-500)`)
+  // — a Tailwind-compiler-only construct — which would become an unresolvable
+  // circular reference if handed to registry consumers as-is.
+  const rootBlocks = extractAllBraceBlocks(noComments, ":root");
+  const cssVarsTheme = rootBlocks.reduce(
+    (acc, block) => ({ ...acc, ...parseDeclarations(block) }),
+    {}
+  );
 
   // 4) @utility blocks -> css
   const utilities = parseUtilities(noComments);
@@ -190,4 +219,3 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 }
 
 export default buildTheme;
-
