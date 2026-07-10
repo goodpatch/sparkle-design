@@ -309,18 +309,12 @@
 }
 
 /* セマンティクスのトークン定義（Tailwind ユーティリティ生成用） */
-/* NOTE (issue #229): 各宣言は上の「セマンティックトークン」:root ブロックにある
-   同名変数を自己参照している（例: --color-primary-500: var(--color-primary-500)）。
-   プリミティブへ直接参照させない（例: var(--color-blue-500) にしない）のが
-   重要な設計判断で、Tailwind v4 は @theme inline の宣言右辺をそのまま utility class
-   に埋め込む（インライン化する）ため、直接参照だと bg-primary-500 等の compiled
-   utility が最初からプリミティブ変数（--color-blue-500 等）だけを参照し、
-   同名のセマンティック変数（--color-primary-500）は一切参照されなくなる。
-   この状態では、`:root` / `[data-attr]` セレクタでセマンティック変数だけを
-   ランタイム上書きしても utility class の見た目は変わらない
-   （generate --scope が解決しようとしていた issue #229 の問題そのもの）。
-   自己参照にしておけば、compiled utility は常にセマンティック変数名を参照し続け、
-   別セレクタでその変数を上書きするだけでランタイムに追従する。 */
+/* NOTE: 各宣言は上の「セマンティックトークン」:root ブロックにある同名変数を
+   自己参照している（例: --color-primary-500: var(--color-primary-500)）。
+   プリミティブへの直接参照にしない意図的な設計。Tailwind v4 は @theme inline
+   の宣言右辺を compiled utility class にそのまま埋め込むため、直接参照だと
+   セマンティック変数が一切参照されなくなり、別セレクタでのランタイム上書きが
+   compiled utility に効かなくなる。 */
 @theme inline {
   /* セマンティクスカラー定義 */
   --color-neutral-50: var(--color-neutral-50);
