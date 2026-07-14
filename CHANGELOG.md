@@ -5,6 +5,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- `Publish to npm` workflow に npm publish 後の git tag 付け・GitHub Release 自動作成ステップを追加（v1.0.6 で GitHub Release 作成が漏れていたため。`sparkle-design-cli` / `sparkle-design-internal` の publish.yml と同じ方式）
+
 ## [1.0.6] - 2026-07-14
 
 ### Fixed
