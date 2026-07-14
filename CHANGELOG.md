@@ -5,6 +5,18 @@
 
 ## [Unreleased]
 
+## [1.0.6] - 2026-07-14
+
+### Fixed
+
+- `build-sparkle-design-theme.mjs` が `@theme inline` の自己参照で壊れる問題を修正（`sparkle-design-cli` 2.4.1+ の生成物形式変更に追従）(#290)
+
+### Changed
+
+- `sparkle-design-cli` 2.4.2 で `sparkle-design.css` を再生成 (#289)
+- `change-sparkle-config` / `setup-sparkle-design` スキルに複数テーマ運用とカスタムブランドカラーの案内を追加 (#287)
+- `change-sparkle-config` スキルに `generate --scope` による単一バンドルランタイム切替の案内を追加 (#288)
+
 ## [1.0.5] - 2026-06-05
 
 ### Fixed
