@@ -75,6 +75,13 @@ pnpm format    # Prettier formatting
 pnpm test      # Component tests
 ```
 
+### Git Safety Rules
+- **Never amend + force-push**: address review feedback and mistakes with new commits
+- **No direct push to `main`**: always go through a PR (admin merge required)
+- **PR merges use normal merge (`--merge`)**: never squash-merge (squashing loses commits)
+- **Update the lockfile whenever `package.json` changes**: CI runs `pnpm install --frozen-lockfile` and will fail otherwise
+- **Use the pinned toolchain**: Node.js 22.14.0 / pnpm 10.12.4 (see `.tool-versions`; newer pnpm majors can rewrite the lockfile)
+
 ## AI Assistance Guidelines
 - Refer to specific instruction files for detailed guidance:
   - `docs/ai-instructions/testing.md` for testing

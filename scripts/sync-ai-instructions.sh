@@ -148,6 +148,10 @@ if [ -f "$SOURCE_DIR/comment-style.md" ]; then
     generate_cursor "$SOURCE_DIR/comment-style.md" "comment-style" "Code comment style guidelines" "**/*.tsx,**/*.ts" "false"
 fi
 
+if [ -f "$SOURCE_DIR/new-component.md" ]; then
+    generate_cursor "$SOURCE_DIR/new-component.md" "new-component" "Component creation process for Sparkle Design" "**" "false"
+fi
+
 # OpenAI Codex / Claude Code用ファイル生成
 generate_agents_md
 

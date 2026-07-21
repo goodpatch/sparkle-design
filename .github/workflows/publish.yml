@@ -7,7 +7,13 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      # git tag の push と `gh release create` に contents: write が必要。
+      # 従来は手動タグ付け運用だったが、v1.0.6 で GitHub Release 作成が漏れたため
+      # 自動化する（sparkle-design-cli / sparkle-design-internal の publish.yml と同じ対応）。
+      # en: `contents: write` is required to push the release tag and create the
+      # GitHub Release. Manual tagging was missed for v1.0.6, so this mirrors
+      # sparkle-design-cli / sparkle-design-internal's automation.
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -27,3 +33,57 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Tag commit and create GitHub Release
+        # npm publish が成功した直後に同じ commit に `vX.Y.Z` tag を打ち、
+        # CHANGELOG.md の `## [X.Y.Z]` セクションを release notes として
+        # GitHub Release を自動作成する。手動 tag 漏れを防ぐための後段処理。
+        # en: Tag the commit and create a matching GitHub Release after a
+        # successful npm publish, using the CHANGELOG section as notes.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          VERSION=$(node -p "require('./package.json').version")
+          TAG="v${VERSION}"
+
+          if git rev-parse --verify "refs/tags/${TAG}" >/dev/null 2>&1; then
+            echo "tag ${TAG} already exists locally — skipping git tag push"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git tag "${TAG}"
+            git push origin "${TAG}"
+          fi
+
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            echo "release ${TAG} already exists — leaving notes untouched"
+            exit 0
+          fi
+
+          NOTES_FILE="$(mktemp)"
+          node scripts/extract-changelog-section.mjs "${VERSION}" > "${NOTES_FILE}"
+          if [ ! -s "${NOTES_FILE}" ]; then
+            # CHANGELOG に該当セクションが無いとき。release は作るが
+            # 内容は fallback note にして、抜け漏れを後で人間が拾えるよう
+            # warn を出す。
+            # en: No CHANGELOG entry — emit a fallback note and warn so a
+            # follow-up PR can fix CHANGELOG without blocking publish.
+            echo "::warning::CHANGELOG.md に [${VERSION}] セクションが見つかりません。fallback note で release を作成します。"
+            printf 'Release %s\n\nCHANGELOG.md にこのバージョン用のセクションがありません。後追いで CHANGELOG を更新してから本 release notes も編集してください。\n' "${VERSION}" > "${NOTES_FILE}"
+          fi
+
+          gh release create "${TAG}" \
+            --title "${TAG}" \
+            --notes-file "${NOTES_FILE}"
+
+      - name: Summary
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          {
+            echo "### Published"
+            echo ""
+            echo "- package: \`sparkle-design\`"
+            echo "- version: \`$VERSION\`"
+            echo "- GitHub Release: [v${VERSION}](https://github.com/${{ github.repository }}/releases/tag/v${VERSION})"
+          } >> "$GITHUB_STEP_SUMMARY"
