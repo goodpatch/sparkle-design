@@ -105,7 +105,8 @@
     "overrides": {
       "lodash": "^4.17.23",
       "path-to-regexp": "^8.4.0",
-      "brace-expansion@>=2.0.0 <2.0.3": "^2.0.3",
+      "brace-expansion@>=2.0.0 <2.1.2": "^2.1.2",
+      "brace-expansion@>=3.0.0 <5.0.7": "^5.0.7",
       "picomatch": "^4.0.4",
       "flatted": "^3.4.2",
       "undici": "^6.27.0",
@@ -119,7 +120,7 @@
       "@modelcontextprotocol/sdk": "^1.26.0",
       "@isaacs/brace-expansion": "^5.0.1",
       "diff@>=5.0.0 <5.2.2": "^5.2.2",
-      "body-parser@>=2.2.0 <2.2.1": "^2.2.1",
+      "body-parser@>=2.2.0 <2.3.0": "^2.3.0",
       "glob@>=10.2.0 <10.5.0": "^10.5.0",
       "glob@>=11.0.0 <11.1.0": "^11.1.0",
       "js-yaml@>=4.0.0 <4.2.0": "^4.2.0",
@@ -128,10 +129,11 @@
       "hono": "^4.12.25",
       "yaml@>=2.0.0 <2.8.3": "^2.8.3",
       "@eslint/plugin-kit": "^0.3.4",
-      "brace-expansion@<1.1.13": "^1.1.13",
+      "brace-expansion@<1.1.16": "^1.1.16",
       "postcss@<8.5.10": "^8.5.10",
       "ip-address": "^10.1.1",
-      "@babel/core@<=7.29.0": "^7.29.6"
+      "@babel/core@<=7.29.0": "^7.29.6",
+      "ws@>=8.0.0 <8.21.0": "^8.21.0"
     }
   },
   "main": "./dist/index.js",
