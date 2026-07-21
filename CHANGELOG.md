@@ -5,6 +5,14 @@
 
 ## [Unreleased]
 
+## [1.0.7] - 2026-07-21
+
+### Security
+
+- Dependabot が検知した devDependencies 経由の脆弱性を `pnpm.overrides` の引き上げで解消 (#293, #294)
+  - `vite` を 6.4.2 → 6.4.3 に更新 (#285)
+  - `js-yaml` / `undici` / `tar` / `form-data` / `hono` / `qs` / `postcss` / `ip-address` / `@babel/core` / `ws` / `brace-expansion` / `body-parser` の override を最新の patched version まで引き上げ
+
 ### Changed
 
 - `Publish to npm` workflow に npm publish 後の git tag 付け・GitHub Release 自動作成ステップを追加（v1.0.6 で GitHub Release 作成が漏れていたため。`sparkle-design-cli` / `sparkle-design-internal` の publish.yml と同じ方式）
