@@ -29,6 +29,17 @@ user-invocable: true
 
 ## AI アシスタントへの指示
 
+> **🛑 不可逆操作の扱い（このスキルで最優先のルール）**
+>
+> 🛑 が付いた項目（PR マージ / タグ push / GitHub Release 作成 / npm publish）は、
+> **ユーザーが名指しで指示したときだけ**実行する。「リリースして」という最初の依頼は、
+> マージ・publish までの事前承認ではない。**リストに並んでいることは実行してよい理由にならない。**
+> 🛑 の手前まで進んだら停止し、状況（PR 番号 / CI 状態 / 次のコマンド）を報告して指示を待つ。
+>
+> これらは `scripts/hooks/irreversible-ops-guard.sh`（PreToolUse hook）が実際にブロックする。
+> ブロックされたら、ユーザーの指示を得たうえで `SPARKLE_CONFIRM=1` を先頭に付けて再実行する。
+> **hook が無い環境（Claude Code 以外のエージェント）でも、上のルールは同じように適用する。**
+
 ### 実行方針
 
 1. **ユーザーにリリース種別を確認**
@@ -42,6 +53,9 @@ user-invocable: true
    - 並列作業を分離したい場合は git worktree を使ってもよい（既存運用では `.claude/worktrees/<name>` 配下に置く慣例）。worktree を使わずに `chore/release-X.Y.Z` ブランチを直接切る運用でも可
 
 3. **以下のチェックリストを順に実行する**
+
+   - ただし 🛑 が付いた項目に到達したら、そこで停止してユーザーの明示的な指示を待つ
+     （上の「不可逆操作の扱い」を参照）。停止せずに走り切ってはならない
 
 ---
 
@@ -61,10 +75,14 @@ user-invocable: true
 タグ未作成・Release 未作成のバージョンがある場合は **新バージョンを切る前に** 必ず追補する。
 
 - [ ] 該当バージョンのリリースコミット（`🔖 chore: release vX.Y.Z` 等）の SHA を特定: `git log --all --oneline | grep release`
-- [ ] そのコミットに対して `git tag vX.Y.Z <SHA>` でタグを作成
-- [ ] `git push origin vX.Y.Z` でタグを push
-- [ ] `gh release create vX.Y.Z --title "vX.Y.Z" --notes "..."` で Release を作成
+- [ ] そのコミットに対して `git tag vX.Y.Z <SHA>` でタグを作成（ローカルタグまでは自走してよい）
+- [ ] 🛑 `git push origin vX.Y.Z` でタグを push
+- [ ] 🛑 `gh release create vX.Y.Z --title "vX.Y.Z" --notes "..."` で Release を作成
   - notes は CHANGELOG.md の該当セクションをコピペするのが確実
+
+> 🛑 **ここで停止する。** 追補対象のバージョンと、打とうとしているタグ / SHA の対応表を提示し、
+> ユーザーの承認を得てから push・Release 作成を実行する。タグの push は取り消しが面倒で、
+> 誤ったコミットに打つと publish 対象がずれる。
 
 ### 新バージョンの準備（リリース PR 作成）
 
@@ -88,31 +106,56 @@ user-invocable: true
 
 ### リリース PR レビュー・マージ
 
+> 🛑 **AI はここで必ず停止する。PR 作成までがこのスキルの自走範囲。**
+> PR の URL・変更差分の要約・CI の状態を報告して**ユーザーの応答を待つ**。
+> **AI によるセルフレビュー（`/code-review` 等）は人間のレビューの代替にならない。**
+> publish の前段であるマージは、後戻りが難しい操作の入口なので、必ず人が差分を見る。
+
 - [ ] レビュー受領（CodeRabbit / Codex / 人間レビュアー）
 - [ ] 全 CI green を確認（`gh pr checks <PR番号>`）
-- [ ] **通常マージ（`--merge`）でマージ**。スカッシュは禁止（コミットが消えるとリリース履歴が辿れない）
-- [ ] base branch protection があるため、必要なら admin マージ: `gh pr merge <PR番号> --merge --admin`
+- [ ] 🛑 **通常マージ（`--merge`）でマージ**。スカッシュは禁止（コミットが消えるとリリース履歴が辿れない）
+- [ ] 🛑 base branch protection があるため、必要なら admin マージ: `gh pr merge <PR番号> --merge --admin`
+  - `--admin` は保護ブランチのレビュー要件を迂回する。**ユーザーが admin マージを明示的に求めたときだけ**使う。
+    「protection で弾かれたから `--admin` を付け直す」を AI の判断でやらない
 
 ### マージ後: タグ・Release・publish
+
+> 🛑 **マージが済んだからといって、AI の判断で続けて publish まで走らない。**
+> 「タグを打って publish して」と明示的に指示されてから着手し、実行前に
+> 置き換えた実際の値（`X.Y.Z` / `RELEASE_SHA`）を提示して確認を取る。
 
 - [ ] `git fetch origin main && git checkout main && git pull` で最新化
 - [ ] **リリースコミットの SHA を `git log --oneline | grep release | head -1` で必ず特定**
 - [ ] **タグはリリースコミットの SHA を明示して打つ**（HEAD に打つと main が進んだ場合に誤タグ → publish 漏れ・誤 publish の温床）:
   ```bash
-  RELEASE_SHA=$(git log --oneline | grep "release vX.Y.Z" | head -1 | awk '{print $1}')
+  # 候補が 1 件であることを確認してからタグを打つ（別バージョンを掴むと誤 publish になる）
+  CANDIDATES=$(git log --format='%H %s' | grep -F "release vX.Y.Z")
+  echo "$CANDIDATES"
+  [ "$(echo "$CANDIDATES" | wc -l)" -eq 1 ] || { echo "候補が 1 件ではない。手で SHA を特定すること" >&2; exit 1; }
+  RELEASE_SHA=$(echo "$CANDIDATES" | awk '{print $1}')
+  git show --no-patch --oneline "$RELEASE_SHA"   # 対象コミットを目視確認する
   git tag vX.Y.Z "$RELEASE_SHA"
+  ```
+- [ ] 🛑 タグを push する（打った SHA とコミットメッセージを提示して確認後）:
+  ```bash
   git push origin vX.Y.Z
   ```
-- [ ] **GitHub Release 作成**:
+- [ ] 🛑 **GitHub Release 作成**:
   CHANGELOG.md のセクションを `--notes` で直接渡すのが確実:
   ```bash
   awk '/^## \[X\.Y\.Z\]/{flag=1;next} /^## \[/{flag=0} flag' CHANGELOG.md > /tmp/notes.md
+  # 見出しの誤記や CHANGELOG 未反映だと空になる。空の Release を作らない
+  [ -s /tmp/notes.md ] || { echo "CHANGELOG から vX.Y.Z のセクションを抽出できなかった" >&2; exit 1; }
+  cat /tmp/notes.md   # 内容を目視確認してから作成する
   gh release create vX.Y.Z --title "vX.Y.Z" --notes-file /tmp/notes.md
   ```
-- [ ] **npm publish** — GitHub Actions ワークフローを実行。**tag ref で実行する**ことで、main が進んでも正しいリリースコミットの内容が publish される:
+- [ ] 🛑 **npm publish** — GitHub Actions ワークフローを実行。**tag ref で実行する**ことで、main が進んでも正しいリリースコミットの内容が publish される:
   ```bash
   gh workflow run "Publish to npm" --ref vX.Y.Z
   ```
+  - **publish は取り消せない。** npm の unpublish は公開 72 時間以内かつ依存されていない場合のみで、
+    実質的な回復手段は「新しいパッチバージョンを出す」しかない。実行前に必ずユーザーの明示的な
+    指示を得る（`--ref` に渡すタグ名も読み上げて確認する）
   - workflow が `npm error code E404 'pkg@X.Y.Z' is not in this registry` で失敗する場合は **NPM_TOKEN の期限切れ**（auth 失敗が 404 として返る npm registry 仕様）
   - workflow が `npm error code EOTP` で失敗する場合は、**トークン種別が 2FA バイパス対応していない**。次のいずれかで作り直し:
     - Classic Token: タイプを **Automation** で発行

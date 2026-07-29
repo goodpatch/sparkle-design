@@ -96,6 +96,26 @@ Review each component/story, focusing on applicability and evidence collection.
 
 Apply minimal, safe code changes per component, then re-check affected items.
 
+> **🛑 Fix は既定の動作ではない（このスキルで最優先のルール）**
+>
+> このスキルの既定の成果物は **レポート生成（"Generate Report" / `workflow.md` の "3. Review"）まで**。
+> コードの書き換え（`workflow.md` の "4. Fixes"）は以下を満たしたときだけ行う。
+>
+> ※ ステップ番号は SKILL.md の Quick Workflow（1〜4）と `workflow.md`（1〜7）で振り方が異なる。
+> 停止位置は番号ではなく**名前**で判断すること。
+>
+> - ユーザーが「直して」「修正して」と**明示的に依頼した**場合に限る。
+>   「a11y チェックして」「レビューして」という依頼は**修正の承認ではない**
+> - 修正に入る前に、**Fail / Needs review の一覧を提示し、どれを直すかユーザーに選んでもらう**。
+>   「見つかったので全部直しておきました」をやらない
+> - 一度に触るのは**選ばれた対象のスコープ内だけ**。レビュー中に視界に入った別コンポーネントや
+>   別ファイルの問題は、直さずレポートの「フォローアップ候補」に積む
+> - Fail の指摘が正しくても、修正が公開 API の変更（props の削除・リネーム・挙動変更）を伴う場合は
+>   実装せず提案に留める（`Deprecate Risky APIs Progressively` の方針を参照）
+>
+> English: Reporting is the default deliverable. Only modify code when the user explicitly asks for
+> fixes, and only within the scope they approved — never fix everything you found on your own initiative.
+
 ---
 
 ## Workflow
