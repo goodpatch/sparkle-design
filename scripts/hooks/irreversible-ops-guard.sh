@@ -23,7 +23,7 @@ input="$(cat)"
 # ワークフロー名は `"Publish to npm"` のように大文字を含むため大小文字を無視する。
 shopt -s nocasematch
 case "$input" in
-  *publish* | *merge* | *push* | *release* | *deprecate*) ;;
+  *publish* | *merge* | *push* | *release* | *deprecate* | *"gh repo"*) ;;
   *)
     shopt -u nocasematch
     exit 0
@@ -128,6 +128,9 @@ while IFS= read -r segment; do
         "pr merge") op="gh pr merge (PR のマージ)" ;;
         "release create") op="gh release create (GitHub Release の作成)" ;;
         "release delete") op="gh release delete (GitHub Release の削除)" ;;
+        "repo create") op="gh repo create (GitHub リポジトリの作成)" ;;
+        "repo delete") op="gh repo delete (GitHub リポジトリの削除)" ;;
+        "repo archive") op="gh repo archive (GitHub リポジトリのアーカイブ)" ;;
         "workflow run")
           # publish 系ワークフローだけを対象にする (CI の再実行などは素通し)
           shopt -s nocasematch

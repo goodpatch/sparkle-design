@@ -80,7 +80,8 @@ pnpm test      # Component tests
 
 ### Irreversible Operations Are Blocked by a Hook
 `scripts/hooks/irreversible-ops-guard.sh` (a PreToolUse hook wired in `.claude/settings.json`) blocks
-`npm publish`, `gh pr merge`, `gh release create/delete`, publish workflows, tag pushes, and force pushes.
+`npm publish`, `gh pr merge`, `gh release create/delete`, `gh repo create/delete/archive`,
+publish workflows, tag pushes, and force pushes.
 
 - These run **only when the user names the operation**. A broad "release it" / "go ahead" is not approval.
 - Once instructed, re-run with `SPARKLE_CONFIRM=1` in front. Adding that prefix without an instruction defeats the guard.
