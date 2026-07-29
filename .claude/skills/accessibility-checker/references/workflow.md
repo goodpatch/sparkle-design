@@ -59,6 +59,10 @@ For each checklist item, record how it was verified:
 
 ## 4. Fixes (Minimal Changes + Non-Breaking Improvements)
 
+> 🛑 **This step only runs when the user explicitly asked for fixes and approved the scope.**
+> See "3. Fix" in `SKILL.md`. If they only asked for a review, stop after step 3 (Report)
+> and list the proposed fixes instead of applying them.
+
 - Prioritize fixes that don't break compatibility
 - For "accident-prone APIs," prefer **gradual deprecation** over removal (see `PROJECT_POLICY.md` for details)
 
