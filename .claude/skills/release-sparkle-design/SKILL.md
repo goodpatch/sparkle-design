@@ -128,7 +128,12 @@ user-invocable: true
 - [ ] **リリースコミットの SHA を `git log --oneline | grep release | head -1` で必ず特定**
 - [ ] **タグはリリースコミットの SHA を明示して打つ**（HEAD に打つと main が進んだ場合に誤タグ → publish 漏れ・誤 publish の温床）:
   ```bash
-  RELEASE_SHA=$(git log --oneline | grep "release vX.Y.Z" | head -1 | awk '{print $1}')
+  # 候補が 1 件であることを確認してからタグを打つ（別バージョンを掴むと誤 publish になる）
+  CANDIDATES=$(git log --format='%H %s' | grep -F "release vX.Y.Z")
+  echo "$CANDIDATES"
+  [ "$(echo "$CANDIDATES" | wc -l)" -eq 1 ] || { echo "候補が 1 件ではない。手で SHA を特定すること" >&2; exit 1; }
+  RELEASE_SHA=$(echo "$CANDIDATES" | awk '{print $1}')
+  git show --no-patch --oneline "$RELEASE_SHA"   # 対象コミットを目視確認する
   git tag vX.Y.Z "$RELEASE_SHA"
   ```
 - [ ] 🛑 タグを push する（打った SHA とコミットメッセージを提示して確認後）:
@@ -139,6 +144,9 @@ user-invocable: true
   CHANGELOG.md のセクションを `--notes` で直接渡すのが確実:
   ```bash
   awk '/^## \[X\.Y\.Z\]/{flag=1;next} /^## \[/{flag=0} flag' CHANGELOG.md > /tmp/notes.md
+  # 見出しの誤記や CHANGELOG 未反映だと空になる。空の Release を作らない
+  [ -s /tmp/notes.md ] || { echo "CHANGELOG から vX.Y.Z のセクションを抽出できなかった" >&2; exit 1; }
+  cat /tmp/notes.md   # 内容を目視確認してから作成する
   gh release create vX.Y.Z --title "vX.Y.Z" --notes-file /tmp/notes.md
   ```
 - [ ] 🛑 **npm publish** — GitHub Actions ワークフローを実行。**tag ref で実行する**ことで、main が進んでも正しいリリースコミットの内容が publish される:

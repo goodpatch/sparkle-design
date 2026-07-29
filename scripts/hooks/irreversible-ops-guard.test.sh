@@ -23,7 +23,10 @@ run_case() {
   env -u SPARKLE_CONFIRM bash "$hook" >/dev/null 2>&1 <<<"$payload"
   actual_exit=$?
 
-  local actual="pass"
+  # exit 0 / 2 以外は hook 側の実行時エラー。pass 扱いにすると
+  # 「動いていないのに緑」になるので、明示的に不一致として扱う。
+  local actual="error(exit=$actual_exit)"
+  [ "$actual_exit" -eq 0 ] && actual="pass"
   [ "$actual_exit" -eq 2 ] && actual="block"
 
   if [ "$actual" = "$expected" ]; then
@@ -128,6 +131,20 @@ run_case pass 'git log --oneline | grep release'
 run_case pass 'SPARKLE_CONFIRM=1 npm publish'
 run_case pass 'SPARKLE_CONFIRM=1 gh workflow run "Publish to npm" --ref v1.0.8'
 run_case pass 'SPARKLE_CONFIRM=1 gh pr merge 297 --merge --admin'
+
+# 継承した環境変数ではバイパスできないこと (CodeRabbit レビュー指摘)。
+# `export SPARKLE_CONFIRM=1` が一度でも走るとセッション中ずっとガードが
+# 外れる、という状態にしないための回帰テスト。
+echo "== 環境変数の継承ではバイパスできないこと =="
+inherited_exit=0
+SPARKLE_CONFIRM=1 bash "$hook" >/dev/null 2>&1 \
+  <<<"$(jq -nc '{tool_input: {command: "npm publish"}, cwd: "/tmp"}')" || inherited_exit=$?
+if [ "$inherited_exit" -eq 2 ]; then
+  pass=$((pass + 1))
+else
+  fail=$((fail + 1))
+  echo "  ✗ 継承した SPARKLE_CONFIRM=1 でブロックが外れた (exit=$inherited_exit)"
+fi
 
 echo ""
 echo "pass=$pass fail=$fail"

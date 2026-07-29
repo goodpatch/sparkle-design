@@ -295,16 +295,21 @@ export function inspectSegment(segment) {
   return null;
 }
 
-/** @returns {{op: string, segment: string} | null} */
-export function inspectCommand(command, env = process.env, depth = 0) {
-  if (env.SPARKLE_CONFIRM === "1") return null;
+/**
+ * 承認は **そのコマンドの先頭に書かれた `SPARKLE_CONFIRM=1`** だけを見る。
+ * 継承されたプロセス環境変数は意図的に無視する。`export SPARKLE_CONFIRM=1` を
+ * 一度実行するとセッション中ずっとガードが外れてしまい、
+ * 「1 操作ごとにユーザーの指示を得る」という設計が崩れるため。
+ * @returns {{op: string, segment: string} | null}
+ */
+export function inspectCommand(command, depth = 0) {
   if (depth > 3) return null; // `bash -c` の入れ子が病的に深い入力への保険
   for (const segment of splitSegments(command)) {
     const result = inspectSegment(segment);
     if (!result) continue;
     if ("confirmed" in result) continue;
     if ("nested" in result) {
-      const nested = inspectCommand(result.nested, env, depth + 1);
+      const nested = inspectCommand(result.nested, depth + 1);
       if (nested) return nested;
       continue;
     }

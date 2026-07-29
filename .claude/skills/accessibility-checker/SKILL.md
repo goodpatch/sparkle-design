@@ -98,7 +98,11 @@ Apply minimal, safe code changes per component, then re-check affected items.
 
 > **🛑 Fix は既定の動作ではない（このスキルで最優先のルール）**
 >
-> このスキルの既定の成果物は **レポート（Step 4）まで**。コードの書き換えは以下を満たしたときだけ行う。
+> このスキルの既定の成果物は **レポート生成（"Generate Report" / `workflow.md` の "3. Review"）まで**。
+> コードの書き換え（`workflow.md` の "4. Fixes"）は以下を満たしたときだけ行う。
+>
+> ※ ステップ番号は SKILL.md の Quick Workflow（1〜4）と `workflow.md`（1〜7）で振り方が異なる。
+> 停止位置は番号ではなく**名前**で判断すること。
 >
 > - ユーザーが「直して」「修正して」と**明示的に依頼した**場合に限る。
 >   「a11y チェックして」「レビューして」という依頼は**修正の承認ではない**
