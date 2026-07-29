@@ -17,6 +17,11 @@
 #
 # SPARKLE_CONFIRM=1 は「ユーザーがこの操作を名指しで指示した」ことの表明であり、
 # AI が自分の判断で付け足してよいものではない。
+#
+# 限界: これはサンドボックスではなく「うっかり最後まで走り切る」のを止める仕掛け。
+# 下の「値を取るオプション」に載っていない未知のオプションをサブコマンドの前に
+# 挟まれると検知をすり抜ける。想定する相手は敵対者ではなく、手順どおりに動く
+# エージェント自身なので、実在するコマンド形をカバーすることを優先している。
 set -uo pipefail
 
 input="$(cat)"
@@ -94,13 +99,19 @@ while IFS= read -r segment; do
 
   cmd="$1"
   shift
-  # `git -C <path> push` のように、サブコマンドの前に来るオプションを読み飛ばす
+  # `git -C <path> push` / `pnpm -F <pkg> publish` のように、サブコマンドの前に来る
+  # オプションを読み飛ばす。**値を取るオプションは値ごと**読み飛ばさないと、
+  # 値の方をサブコマンドと誤認して検知をすり抜ける (pnpm -F pkg publish など)。
   while [ "$#" -gt 0 ]; do
     case "$1" in
-      -C | -c | --git-dir | --work-tree | -R | --repo)
+      # 値を取るオプション (git / gh / パッケージマネージャ)
+      -C | -c | --git-dir | --work-tree | --namespace | --exec-path | \
+        -R | --repo | --hostname | \
+        -w | --workspace | -F | --filter | --dir | --prefix | --registry)
         shift
         [ "$#" -gt 0 ] && shift
         ;;
+      # `--filter=ui` のように = で値を含む形と、値を取らないオプション
       -*) shift ;;
       *) break ;;
     esac
