@@ -59,12 +59,6 @@ importers:
       radix-ui:
         specifier: ^1.4.2
         version: 1.4.2(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      react:
-        specifier: ^19
-        version: 19.2.8
-      react-dom:
-        specifier: ^19
-        version: 19.2.8(react@19.2.8)
       react-hook-form:
         specifier: ^7.63.0
         version: 7.63.0(react@19.2.8)
@@ -159,6 +153,12 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
+      react:
+        specifier: ^19
+        version: 19.2.8
+      react-dom:
+        specifier: ^19
+        version: 19.2.8(react@19.2.8)
       storybook:
         specifier: ^10.3.5
         version: 10.3.5(@testing-library/dom@10.4.0)(prettier@3.6.2)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
