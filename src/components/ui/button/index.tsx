@@ -258,10 +258,17 @@ const buttonVariants = cva(
 );
 
 type ButtonVariantProps = VariantProps<typeof buttonVariants>;
-type NativeButtonProps = React.ComponentPropsWithoutRef<"button">;
+type NativeButtonProps = React.ComponentProps<"button">;
 
 export interface ButtonProps
-  extends Omit<NativeButtonProps, "onClick" | "onKeyDown"> {
+  extends Omit<NativeButtonProps, "onClick" | "onKeyDown" | "ref"> {
+  /**
+   * ルート要素への ref。`asChild` で `<a>` 等を差し込むケースを受け入れるため
+   * `HTMLButtonElement` ではなく `HTMLElement` で広く受ける
+   * en: Ref to the root element. Typed as `HTMLElement` (not `HTMLButtonElement`)
+   * so `asChild` targets such as `<a>` are accepted.
+   */
+  ref?: React.Ref<HTMLElement>;
   /**
    * ボタンのサイズバリエーション
    * en: Size variation of the button
@@ -397,23 +404,21 @@ export interface ButtonProps
  *
  * @param {ButtonProps} props
  */
-const Button = React.forwardRef<HTMLElement, ButtonProps>(function Button(
-  {
-    className,
-    variant,
-    size,
-    theme,
-    isLoading = false,
-    isDisabled = false,
-    asChild = false,
-    disabled,
-    prefixIcon,
-    suffixIcon,
-    children,
-    ...props
-  },
-  ref
-) {
+function Button({
+  className,
+  variant,
+  size,
+  theme,
+  isLoading = false,
+  isDisabled = false,
+  asChild = false,
+  disabled,
+  prefixIcon,
+  suffixIcon,
+  ref,
+  children,
+  ...props
+}: ButtonProps) {
   const Comp = asChild ? SlotPrimitive.Slot : "button";
 
   // disabled状態の管理（isDisabled、disabled、またはisLoadingがtrueの場合）
@@ -544,7 +549,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(function Button(
       )}
     </Comp>
   );
-});
+}
 
 Button.displayName = "Button";
 

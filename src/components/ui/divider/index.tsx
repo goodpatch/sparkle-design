@@ -45,7 +45,7 @@ const dividerVariants = cva("shrink-0", {
 });
 
 export interface DividerProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends React.ComponentProps<"div">,
     VariantProps<typeof dividerVariants> {
   /**
    * ディバイダーの強調度（low、middle、high）
@@ -78,24 +78,29 @@ export interface DividerProps
  *
  * @param {DividerProps} props
  */
-const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
-  ({ className, emphasis, lineStyle, direction, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          dividerVariants({
-            emphasis,
-            lineStyle,
-            direction,
-            className,
-          })
-        )}
-        {...props}
-      />
-    );
-  }
-);
+function Divider({
+  className,
+  emphasis,
+  lineStyle,
+  direction,
+  ref,
+  ...props
+}: DividerProps) {
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        dividerVariants({
+          emphasis,
+          lineStyle,
+          direction,
+          className,
+        })
+      )}
+      {...props}
+    />
+  );
+}
 
 Divider.displayName = "Divider";
 

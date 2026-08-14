@@ -135,7 +135,7 @@ const tagVariants = cva(
 );
 
 export interface TagProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends React.ComponentProps<"div">,
     VariantProps<typeof tagVariants> {
   /**
    * タグのラベルテキスト
@@ -174,19 +174,25 @@ export interface TagProps
  *
  * @param {TagProps} props
  */
-const Tag = React.forwardRef<HTMLDivElement, TagProps>(
-  ({ className, variant, size, status, children, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className={cn(tagVariants({ variant, size, status, className }))}
-        {...props}
-      >
-        <span className="min-w-0 truncate">{children}</span>
-      </div>
-    );
-  }
-);
+function Tag({
+  className,
+  variant,
+  size,
+  status,
+  children,
+  ref,
+  ...props
+}: TagProps) {
+  return (
+    <div
+      ref={ref}
+      className={cn(tagVariants({ variant, size, status, className }))}
+      {...props}
+    >
+      <span className="min-w-0 truncate">{children}</span>
+    </div>
+  );
+}
 
 Tag.displayName = "Tag";
 

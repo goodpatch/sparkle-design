@@ -57,7 +57,7 @@ const InlineMessageContext =
 
 type InlineMessageVariant = VariantProps<typeof inlineMessageVariants>;
 export interface InlineMessageProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends React.ComponentProps<"div">,
     InlineMessageVariant {
   /**
    * メッセージのステータス
@@ -100,96 +100,92 @@ export interface InlineMessageProps
  *
  * @param {InlineMessageProps} props
  */
-const InlineMessage = React.forwardRef<HTMLDivElement, InlineMessageProps>(
-  (
-    {
-      className,
-      status = "info",
-      onClose,
-      isCloseTrigger = true,
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    // 一意なIDを生成 / en: Generate unique IDs
-    const baseId = React.useId();
-    const titleId = `${baseId}-title`;
-    const descId = `${baseId}-desc`;
+function InlineMessage({
+  className,
+  status = "info",
+  onClose,
+  isCloseTrigger = true,
+  children,
+  ref,
+  ...props
+}: InlineMessageProps) {
+  // 一意なIDを生成 / en: Generate unique IDs
+  const baseId = React.useId();
+  const titleId = `${baseId}-title`;
+  const descId = `${baseId}-desc`;
 
-    // 子コンポーネントの登録状態 / en: Registration state of child components
-    const [hasTitle, setHasTitle] = React.useState(false);
-    const [hasDesc, setHasDesc] = React.useState(false);
+  // 子コンポーネントの登録状態 / en: Registration state of child components
+  const [hasTitle, setHasTitle] = React.useState(false);
+  const [hasDesc, setHasDesc] = React.useState(false);
 
-    // 子コンポーネントが自分を登録するコールバック
-    // en: Callbacks for child components to register themselves
-    const registerTitle = React.useCallback(() => {
-      setHasTitle(true);
-      return () => setHasTitle(false);
-    }, []);
+  // 子コンポーネントが自分を登録するコールバック
+  // en: Callbacks for child components to register themselves
+  const registerTitle = React.useCallback(() => {
+    setHasTitle(true);
+    return () => setHasTitle(false);
+  }, []);
 
-    const registerDesc = React.useCallback(() => {
-      setHasDesc(true);
-      return () => setHasDesc(false);
-    }, []);
+  const registerDesc = React.useCallback(() => {
+    setHasDesc(true);
+    return () => setHasDesc(false);
+  }, []);
 
-    // Context値をメモ化 / en: Memoize context value
-    const contextValue = React.useMemo<InlineMessageContextValue>(
-      () => ({ titleId, descId, registerTitle, registerDesc }),
-      [titleId, descId, registerTitle, registerDesc]
-    );
+  // Context値をメモ化 / en: Memoize context value
+  const contextValue = React.useMemo<InlineMessageContextValue>(
+    () => ({ titleId, descId, registerTitle, registerDesc }),
+    [titleId, descId, registerTitle, registerDesc]
+  );
 
-    // ステータスに対応するアイコン情報の取得
-    const statusIcon = status ? statusIcons[status] : statusIcons.info;
+  // ステータスに対応するアイコン情報の取得
+  const statusIcon = status ? statusIcons[status] : statusIcons.info;
 
-    // ステータスに対応する色クラスの取得
-    const colorClass = status
-      ? statusColorClasses[status]
-      : statusColorClasses.info;
+  // ステータスに対応する色クラスの取得
+  const colorClass = status
+    ? statusColorClasses[status]
+    : statusColorClasses.info;
 
-    return (
-      <InlineMessageContext.Provider value={contextValue}>
-        <div
-          ref={ref}
-          role="alert"
-          aria-labelledby={hasTitle ? titleId : undefined}
-          aria-describedby={hasDesc ? descId : undefined}
-          className={cn(inlineMessageVariants({ status }), className)}
-          {...props}
+  return (
+    <InlineMessageContext.Provider value={contextValue}>
+      <div
+        ref={ref}
+        role="alert"
+        aria-labelledby={hasTitle ? titleId : undefined}
+        aria-describedby={hasDesc ? descId : undefined}
+        className={cn(inlineMessageVariants({ status }), className)}
+        {...props}
+      >
+        {/* ステータスアイコン */}
+        <span
+          className="inline-flex p-1 items-center justify-center"
+          aria-hidden="true"
         >
-          {/* ステータスアイコン */}
-          <span
-            className="inline-flex p-1 items-center justify-center"
-            aria-hidden="true"
-          >
-            <Icon
-              icon={statusIcon}
-              size={6}
-              fill={false}
-              className={cn(colorClass)}
-            />
-          </span>
+          <Icon
+            icon={statusIcon}
+            size={6}
+            fill={false}
+            className={cn(colorClass)}
+          />
+        </span>
 
-          {/* メッセージ本文 */}
-          <div className="flex flex-col flex-1 min-h-8">{children}</div>
+        {/* メッセージ本文 */}
+        <div className="flex flex-col flex-1 min-h-8">{children}</div>
 
-          {/* 閉じるボタン（表示条件あり） */}
-          {isCloseTrigger && onClose && (
-            <IconButton
-              icon="close"
-              size="sm"
-              variant="ghost"
-              theme="neutral"
-              onClick={onClose}
-              aria-label="閉じる"
-              className="shrink-0"
-            />
-          )}
-        </div>
-      </InlineMessageContext.Provider>
-    );
-  }
-);
+        {/* 閉じるボタン（表示条件あり） */}
+        {isCloseTrigger && onClose && (
+          <IconButton
+            icon="close"
+            size="sm"
+            variant="ghost"
+            theme="neutral"
+            onClick={onClose}
+            aria-label="閉じる"
+            className="shrink-0"
+          />
+        )}
+      </div>
+    </InlineMessageContext.Provider>
+  );
+}
 InlineMessage.displayName = "InlineMessage";
 
 /**
@@ -206,10 +202,11 @@ InlineMessage.displayName = "InlineMessage";
  *
  * @param {React.HTMLAttributes<HTMLSpanElement>} props
  */
-const InlineMessageTitle = React.forwardRef<
-  HTMLSpanElement,
-  React.HTMLAttributes<HTMLSpanElement>
->(({ className, ...props }, ref) => {
+function InlineMessageTitle({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<"span">) {
   const context = React.useContext(InlineMessageContext);
 
   // マウント時に親へ登録、アンマウント時に解除
@@ -229,7 +226,7 @@ const InlineMessageTitle = React.forwardRef<
       />
     </div>
   );
-});
+}
 InlineMessageTitle.displayName = "InlineMessageTitle";
 
 /**
@@ -246,10 +243,11 @@ InlineMessageTitle.displayName = "InlineMessageTitle";
  *
  * @param {React.HTMLAttributes<HTMLParagraphElement>} props
  */
-const InlineMessageDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => {
+function InlineMessageDescription({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<"p">) {
   const context = React.useContext(InlineMessageContext);
 
   // マウント時に親へ登録、アンマウント時に解除
@@ -269,7 +267,7 @@ const InlineMessageDescription = React.forwardRef<
       />
     </div>
   );
-});
+}
 InlineMessageDescription.displayName = "InlineMessageDescription";
 
 export { InlineMessage, InlineMessageTitle, InlineMessageDescription };

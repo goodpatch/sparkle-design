@@ -7,8 +7,7 @@ import { Slot as SlotPrimitive } from "radix-ui";
 import { cn } from "@/lib/utils";
 import { Icon, type IconSize } from "@/components/ui/icon";
 
-export interface LinkProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface LinkProps extends React.ComponentProps<"a"> {
   /**
    * 新しいウィンドウやタブで開くかどうか
    * en: Whether to open the link in a new window or tab
@@ -71,78 +70,74 @@ export interface LinkProps
  *
  * @param {LinkProps} props
  */
-export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  (
-    {
-      isOpenInNew: isExternalLink = false,
-      asChild = false,
-      children,
-      className = "",
-      ...props
-    },
-    ref,
-  ) => {
-    // character-*-*-* クラスがあるかチェック
-    const hasCharacterClass = className?.includes("character-");
+export function Link({
+  isOpenInNew: isExternalLink = false,
+  asChild = false,
+  children,
+  className = "",
+  ref,
+  ...props
+}: LinkProps) {
+  // character-*-*-* クラスがあるかチェック
+  const hasCharacterClass = className?.includes("character-");
 
-    // character-X-*-* のXの部分（サイズ）を取得
-    const characterSizeMatch = className?.match(/character-(\d+)-/);
+  // character-X-*-* のXの部分（サイズ）を取得
+  const characterSizeMatch = className?.match(/character-(\d+)-/);
 
-    const parsed = characterSizeMatch
-      ? parseInt(characterSizeMatch[1], 10)
-      : 3;
-    const characterSize = (
-      parsed >= 1 && parsed <= 12 ? parsed : 3
-    ) as IconSize;
+  const parsed = characterSizeMatch ? parseInt(characterSizeMatch[1], 10) : 3;
+  const characterSize = (parsed >= 1 && parsed <= 12 ? parsed : 3) as IconSize;
 
-    // character クラスの生成
-    const characterSizeClass = hasCharacterClass
-      ? "" // 外部で指定されている場合は付与しない
-      : `character-${characterSize}-regular-pro`;
+  // character クラスの生成
+  const characterSizeClass = hasCharacterClass
+    ? "" // 外部で指定されている場合は付与しない
+    : `character-${characterSize}-regular-pro`;
 
-    const linkClassName = cn("inline group", characterSizeClass, className);
+  const linkClassName = cn("inline group", characterSizeClass, className);
 
-    if (
-      asChild &&
-      typeof process !== "undefined" &&
-      process.env.NODE_ENV !== "production" &&
-      React.isValidElement(children)
-    ) {
-      const childType = (children as React.ReactElement).type;
-      if (childType === "span" || childType === "div") {
-        console.warn(
-          "[Link] asChild の子要素にはリンク要素（<a> や next/link 等）を渡してください。<span> や <div> を渡すとアクセシビリティが損なわれます。",
-        );
-      }
+  if (
+    asChild &&
+    typeof process !== "undefined" &&
+    process.env.NODE_ENV !== "production" &&
+    React.isValidElement(children)
+  ) {
+    const childType = (children as React.ReactElement).type;
+    if (childType === "span" || childType === "div") {
+      console.warn(
+        "[Link] asChild の子要素にはリンク要素（<a> や next/link 等）を渡してください。<span> や <div> を渡すとアクセシビリティが損なわれます。"
+      );
     }
+  }
 
-    const linkContent = (
-      <>
-        <span className="transition-colors text-info-500 group-hover:text-info-600 underline decoration-current underline-offset-2">
-          {children}
-        </span>
-        {isExternalLink && (
-          <Icon
-            icon="open_in_new"
-            size={characterSize}
-            className="ml-1 align-middle inline-block text-info-500 group-hover:text-info-600"
-          />
-        )}
-      </>
-    );
+  const linkContent = (
+    <>
+      <span className="transition-colors text-info-500 group-hover:text-info-600 underline decoration-current underline-offset-2">
+        {children}
+      </span>
+      {isExternalLink && (
+        <Icon
+          icon="open_in_new"
+          size={characterSize}
+          className="ml-1 align-middle inline-block text-info-500 group-hover:text-info-600"
+        />
+      )}
+    </>
+  );
 
-    if (asChild) {
-      return (
-        <SlotPrimitive.Slot ref={ref} className={linkClassName} {...props}>
-          {React.isValidElement(children) ? (
-            React.cloneElement(
+  if (asChild) {
+    return (
+      <SlotPrimitive.Slot ref={ref} className={linkClassName} {...props}>
+        {React.isValidElement(children)
+          ? React.cloneElement(
               children as React.ReactElement<Record<string, unknown>>,
               {},
               <>
                 <span className="transition-colors text-info-500 group-hover:text-info-600 underline decoration-current underline-offset-2">
                   {
-                    (children as React.ReactElement<{ children?: React.ReactNode }>)
-                      .props.children
+                    (
+                      children as React.ReactElement<{
+                        children?: React.ReactNode;
+                      }>
+                    ).props.children
                   }
                 </span>
                 {isExternalLink && (
@@ -152,21 +147,18 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
                     className="ml-1 align-middle inline-block text-info-500 group-hover:text-info-600"
                   />
                 )}
-              </>,
+              </>
             )
-          ) : (
-            linkContent
-          )}
-        </SlotPrimitive.Slot>
-      );
-    }
-
-    return (
-      <a ref={ref} className={linkClassName} {...props}>
-        {linkContent}
-      </a>
+          : linkContent}
+      </SlotPrimitive.Slot>
     );
-  },
-);
+  }
+
+  return (
+    <a ref={ref} className={linkClassName} {...props}>
+      {linkContent}
+    </a>
+  );
+}
 
 Link.displayName = "Link";

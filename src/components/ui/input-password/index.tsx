@@ -32,31 +32,29 @@ export interface InputPasswordProps
  *
  * @param {InputPasswordProps} props
  */
-const InputPassword = React.forwardRef<HTMLInputElement, InputPasswordProps>(
-  (props, ref) => {
-    // パスワードの表示状態を管理
-    const [isVisibility, setIsVisibility] = React.useState(false);
+function InputPassword({ ref, ...props }: InputPasswordProps) {
+  // パスワードの表示状態を管理
+  const [isVisibility, setIsVisibility] = React.useState(false);
 
-    // パスワード表示切り替えハンドラー
-    const handleTogglePasswordVisibility = React.useCallback(() => {
-      setIsVisibility(prev => !prev);
-    }, []);
+  // パスワード表示切り替えハンドラー
+  const handleTogglePasswordVisibility = React.useCallback(() => {
+    setIsVisibility(prev => !prev);
+  }, []);
 
-    return (
-      <Input
-        ref={ref}
-        type={isVisibility ? "text" : "password"}
-        triggerIcon={isVisibility ? "visibility_off" : "visibility"}
-        triggerAriaLabel={
-          isVisibility ? "パスワードを隠す" : "パスワードを表示する"
-        }
-        isTrigger={true}
-        onIconButtonClick={handleTogglePasswordVisibility}
-        {...props}
-      />
-    );
-  }
-);
+  return (
+    <Input
+      ref={ref}
+      type={isVisibility ? "text" : "password"}
+      triggerIcon={isVisibility ? "visibility_off" : "visibility"}
+      triggerAriaLabel={
+        isVisibility ? "パスワードを隠す" : "パスワードを表示する"
+      }
+      isTrigger={true}
+      onIconButtonClick={handleTogglePasswordVisibility}
+      {...props}
+    />
+  );
+}
 
 InputPassword.displayName = "InputPassword";
 

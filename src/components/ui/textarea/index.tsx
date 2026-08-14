@@ -66,7 +66,7 @@ const textareaVariants = cva(
  * 標準のTextarea属性に加えてバリアントプロパティを拡張
  */
 export interface TextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+  extends React.ComponentProps<"textarea">,
     VariantProps<typeof textareaVariants> {
   /**
    * エラー状態かどうか
@@ -94,29 +94,35 @@ export interface TextareaProps
  *
  * @param {TextareaProps} props
  */
-const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, isInvalid, size, isDisabled, disabled, ...props }, ref) => {
-    // 後方互換性のため、isDisabledが優先、次にdisabledを使用
-    const isTextareaDisabled = isDisabled ?? disabled;
+function Textarea({
+  className,
+  isInvalid,
+  size,
+  isDisabled,
+  disabled,
+  ref,
+  ...props
+}: TextareaProps) {
+  // 後方互換性のため、isDisabledが優先、次にdisabledを使用
+  const isTextareaDisabled = isDisabled ?? disabled;
 
-    return (
-      <textarea
-        aria-invalid={isInvalid || undefined}
-        className={cn(
-          textareaVariants({
-            size,
-            isInvalid,
-            isDisabled: isTextareaDisabled,
-          }),
-          className
-        )}
-        disabled={isTextareaDisabled}
-        ref={ref}
-        {...props}
-      />
-    );
-  }
-);
+  return (
+    <textarea
+      aria-invalid={isInvalid || undefined}
+      className={cn(
+        textareaVariants({
+          size,
+          isInvalid,
+          isDisabled: isTextareaDisabled,
+        }),
+        className
+      )}
+      disabled={isTextareaDisabled}
+      ref={ref}
+      {...props}
+    />
+  );
+}
 
 Textarea.displayName = "Textarea";
 

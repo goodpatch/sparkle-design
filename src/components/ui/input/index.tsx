@@ -70,7 +70,7 @@ const inputVariants = cva(
 
 type InputVariantProps = VariantProps<typeof inputVariants>;
 export interface InputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
+  extends Omit<React.ComponentProps<"input">, "size"> {
   /**
    * Inputサイズ指定
    * en: Input size specification
@@ -207,197 +207,193 @@ export interface InputProps
  *
  * @param {InputProps} props
  */
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      className,
-      size,
-      isInvalid = false,
-      isDisabled = false,
-      isTrigger = false,
-      triggerIcon = "edit",
-      triggerAriaLabel,
-      onIconButtonClick,
-      triggerProps,
-      disabled,
-      defaultValue,
-      value,
-      onChange,
-      onBlur,
-      onFocus,
-      ...props
+function Input({
+  className,
+  size,
+  isInvalid = false,
+  isDisabled = false,
+  isTrigger = false,
+  triggerIcon = "edit",
+  triggerAriaLabel,
+  onIconButtonClick,
+  triggerProps,
+  disabled,
+  defaultValue,
+  value,
+  onChange,
+  onBlur,
+  onFocus,
+  ref,
+  ...props
+}: InputProps) {
+  // Refs
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const mergedInputRef = useMergeRefs(inputRef, ref);
+
+  // 状態管理
+  const [isInputFocused, setIsInputFocused] = React.useState(false);
+  const [isIconButtonFocused, setIsIconButtonFocused] = React.useState(false);
+
+  // HTML標準のdisabled属性とisDisabledプロパティを組み合わせた実際の無効状態
+  const isInputDisabled = Boolean(isDisabled || disabled);
+
+  // 入力値が変更されたときの処理
+  const handleChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (isInputDisabled) return;
+      onChange?.(e);
     },
-    ref
-  ) => {
-    // Refs
-    const containerRef = React.useRef<HTMLDivElement>(null);
-    const buttonRef = React.useRef<HTMLButtonElement>(null);
-    const inputRef = React.useRef<HTMLInputElement>(null);
-    const mergedInputRef = useMergeRefs(inputRef, ref);
+    [onChange, isInputDisabled]
+  );
 
-    // 状態管理
-    const [isInputFocused, setIsInputFocused] = React.useState(false);
-    const [isIconButtonFocused, setIsIconButtonFocused] = React.useState(false);
-
-    // HTML標準のdisabled属性とisDisabledプロパティを組み合わせた実際の無効状態
-    const isInputDisabled = Boolean(isDisabled || disabled);
-
-    // 入力値が変更されたときの処理
-    const handleChange = React.useCallback(
-      (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (isInputDisabled) return;
-        onChange?.(e);
-      },
-      [onChange, isInputDisabled]
-    );
-
-    // Input要素のフォーカス処理
-    const handleInputFocus = React.useCallback(
-      (e: React.FocusEvent<HTMLInputElement>) => {
-        if (isInputDisabled) return;
-        setIsInputFocused(true);
-        onFocus?.(e);
-      },
-      [isInputDisabled, onFocus]
-    );
-
-    const handleInputBlur = React.useCallback(
-      (e: React.FocusEvent<HTMLInputElement>) => {
-        // ボタンにフォーカスが移った場合は、入力欄のフォーカスは解除しない
-        if (buttonRef.current !== e.relatedTarget) {
-          setIsInputFocused(false);
-        }
-        onBlur?.(e);
-      },
-      [onBlur]
-    );
-
-    // ボタンのフォーカス処理
-    const handleIconButtonFocus = React.useCallback(() => {
+  // Input要素のフォーカス処理
+  const handleInputFocus = React.useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
       if (isInputDisabled) return;
-      setIsIconButtonFocused(true);
-      setIsInputFocused(false);
-    }, [isInputDisabled]);
+      setIsInputFocused(true);
+      onFocus?.(e);
+    },
+    [isInputDisabled, onFocus]
+  );
 
-    const handleIconButtonBlur = React.useCallback(
-      (e: React.FocusEvent<HTMLButtonElement>) => {
-        // 入力欄にフォーカスが移った場合は、ボタンのフォーカスは解除しない
-        if (inputRef.current !== e.relatedTarget) {
-          setIsIconButtonFocused(false);
-        }
-      },
-      []
-    );
-
-    // コンテナクリック時にインプットへフォーカスを移すハンドラ（ボタン上のクリックは除外）
-    const excludeRefs = React.useMemo(() => [buttonRef], []);
-    const handleContainerClick = useInputContainerFocus({
-      targetRef: inputRef,
-      isDisabled: isInputDisabled,
-      excludeRefs,
-    });
-
-    // 外部クリックでフォーカスを解除するためのハンドラ
-    React.useEffect(() => {
-      // 無効状態の場合はイベントリスナーを追加しない
-      if (isInputDisabled) return;
-
-      const handleOutsideClick = (e: MouseEvent) => {
-        // コンポーネント外のクリックを検出
-        if (
-          containerRef.current &&
-          !containerRef.current.contains(e.target as Node)
-        ) {
-          setIsInputFocused(false);
-          setIsIconButtonFocused(false);
-        }
-      };
-
-      // イベントリスナーを追加
-      document.addEventListener("mousedown", handleOutsideClick);
-
-      // クリーンアップ関数
-      return () => {
-        document.removeEventListener("mousedown", handleOutsideClick);
-      };
-    }, [isInputDisabled]);
-
-    // ボタンサイズの計算
-    const iconButtonSize = React.useMemo(() => {
-      switch (size) {
-        case "sm":
-          return "xs";
-        case "lg":
-          return "md";
-        default:
-          return "sm";
+  const handleInputBlur = React.useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
+      // ボタンにフォーカスが移った場合は、入力欄のフォーカスは解除しない
+      if (buttonRef.current !== e.relatedTarget) {
+        setIsInputFocused(false);
       }
-    }, [size]);
+      onBlur?.(e);
+    },
+    [onBlur]
+  );
 
-    return (
-      <div
-        ref={containerRef}
+  // ボタンのフォーカス処理
+  const handleIconButtonFocus = React.useCallback(() => {
+    if (isInputDisabled) return;
+    setIsIconButtonFocused(true);
+    setIsInputFocused(false);
+  }, [isInputDisabled]);
+
+  const handleIconButtonBlur = React.useCallback(
+    (e: React.FocusEvent<HTMLButtonElement>) => {
+      // 入力欄にフォーカスが移った場合は、ボタンのフォーカスは解除しない
+      if (inputRef.current !== e.relatedTarget) {
+        setIsIconButtonFocused(false);
+      }
+    },
+    []
+  );
+
+  // コンテナクリック時にインプットへフォーカスを移すハンドラ（ボタン上のクリックは除外）
+  const excludeRefs = React.useMemo(() => [buttonRef], []);
+  const handleContainerClick = useInputContainerFocus({
+    targetRef: inputRef,
+    isDisabled: isInputDisabled,
+    excludeRefs,
+  });
+
+  // 外部クリックでフォーカスを解除するためのハンドラ
+  React.useEffect(() => {
+    // 無効状態の場合はイベントリスナーを追加しない
+    if (isInputDisabled) return;
+
+    const handleOutsideClick = (e: MouseEvent) => {
+      // コンポーネント外のクリックを検出
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
+        setIsInputFocused(false);
+        setIsIconButtonFocused(false);
+      }
+    };
+
+    // イベントリスナーを追加
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    // クリーンアップ関数
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isInputDisabled]);
+
+  // ボタンサイズの計算
+  const iconButtonSize = React.useMemo(() => {
+    switch (size) {
+      case "sm":
+        return "xs";
+      case "lg":
+        return "md";
+      default:
+        return "sm";
+    }
+  }, [size]);
+
+  return (
+    <div
+      ref={containerRef}
+      className={cn(
+        inputVariants({
+          size,
+          isInvalid,
+          isDisabled: isInputDisabled,
+          isFocused: isInputFocused && !isIconButtonFocused,
+          className,
+        }),
+        !isInputDisabled && "cursor-text" // 入力可能な場合はテキストカーソルを表示
+      )}
+      // NOTE: not supportエラーがLintで出るためコメントアウト
+      // aria-disabled={isInputDisabled}
+      // aria-invalid={isInvalid === null ? undefined : isInvalid}
+      onClick={handleContainerClick}
+      role="presentation"
+      tabIndex={-1}
+    >
+      <input
+        ref={mergedInputRef}
+        disabled={isInputDisabled}
+        aria-invalid={isInvalid || undefined}
         className={cn(
-          inputVariants({
-            size,
-            isInvalid,
-            isDisabled: isInputDisabled,
-            isFocused: isInputFocused && !isIconButtonFocused,
-            className,
-          }),
-          !isInputDisabled && "cursor-text" // 入力可能な場合はテキストカーソルを表示
+          "w-full h-full bg-transparent border-none outline-hidden focus:outline-hidden",
+          "text-text-high placeholder:text-text-placeholder px-2",
+          isInputDisabled &&
+            "cursor-not-allowed text-neutral-400 placeholder:text-text-disabled"
         )}
-        // NOTE: not supportエラーがLintで出るためコメントアウト
-        // aria-disabled={isInputDisabled}
-        // aria-invalid={isInvalid === null ? undefined : isInvalid}
-        onClick={handleContainerClick}
-        role="presentation"
-        tabIndex={-1}
-      >
-        <input
-          ref={mergedInputRef}
-          disabled={isInputDisabled}
-          aria-invalid={isInvalid || undefined}
-          className={cn(
-            "w-full h-full bg-transparent border-none outline-hidden focus:outline-hidden",
-            "text-text-high placeholder:text-text-placeholder px-2",
-            isInputDisabled &&
-              "cursor-not-allowed text-neutral-400 placeholder:text-text-disabled"
-          )}
-          onChange={handleChange}
-          onFocus={handleInputFocus}
-          onBlur={handleInputBlur}
-          defaultValue={defaultValue}
-          value={value}
-          aria-disabled={isInputDisabled}
-          {...props}
-        />
+        onChange={handleChange}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
+        defaultValue={defaultValue}
+        value={value}
+        aria-disabled={isInputDisabled}
+        {...props}
+      />
 
-        {isTrigger && (
-          <IconButton
-            // triggerProps を先に展開し、専用 props (triggerAriaLabel / onIconButtonClick)
-            // と内部制御プロパティで上書きする
-            // en: Spread triggerProps first, then let dedicated props and internal
-            //     control props override them
-            {...triggerProps}
-            ref={buttonRef}
-            icon={triggerIcon}
-            theme="neutral"
-            variant="ghost"
-            size={iconButtonSize}
-            onClick={onIconButtonClick ?? triggerProps?.onClick}
-            isDisabled={isInputDisabled}
-            disabled={isInputDisabled}
-            type="button" // フォーム内でデフォルトのsubmit動作を防ぐ
-            aria-label={triggerAriaLabel ?? triggerProps?.["aria-label"]}
-            onFocus={handleIconButtonFocus}
-            onBlur={handleIconButtonBlur}
-          />
-        )}
-      </div>
-    );
-  }
-);
+      {isTrigger && (
+        <IconButton
+          // triggerProps を先に展開し、専用 props (triggerAriaLabel / onIconButtonClick)
+          // と内部制御プロパティで上書きする
+          // en: Spread triggerProps first, then let dedicated props and internal
+          //     control props override them
+          {...triggerProps}
+          ref={buttonRef}
+          icon={triggerIcon}
+          theme="neutral"
+          variant="ghost"
+          size={iconButtonSize}
+          onClick={onIconButtonClick ?? triggerProps?.onClick}
+          isDisabled={isInputDisabled}
+          disabled={isInputDisabled}
+          type="button" // フォーム内でデフォルトのsubmit動作を防ぐ
+          aria-label={triggerAriaLabel ?? triggerProps?.["aria-label"]}
+          onFocus={handleIconButtonFocus}
+          onBlur={handleIconButtonBlur}
+        />
+      )}
+    </div>
+  );
+}
 
 Input.displayName = "Input";
 

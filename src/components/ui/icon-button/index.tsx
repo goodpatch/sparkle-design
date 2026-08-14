@@ -292,8 +292,7 @@ const iconButtonVariants = cva(
 );
 
 type IconButtonVariants = VariantProps<typeof iconButtonVariants>;
-export interface IconButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface IconButtonProps extends React.ComponentProps<"button"> {
   /**
    * アイコンボタンのバリエーション
    * en: Variation of the icon button
@@ -359,81 +358,77 @@ export interface IconButtonProps
 
  * @param {IconButtonProps} props
  */
-const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  (
-    {
-      className,
-      variant,
-      size,
-      theme,
-      isLoading = false,
-      isDisabled = false,
-      asChild = false,
-      disabled,
-      icon,
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    // disabled状態の管理（isDisabled、disabled、またはisLoadingがtrueの場合）
-    const isIconButtonDisabled = isLoading || isDisabled || disabled;
+function IconButton({
+  className,
+  variant,
+  size,
+  theme,
+  isLoading = false,
+  isDisabled = false,
+  asChild = false,
+  disabled,
+  icon,
+  ref,
+  children,
+  ...props
+}: IconButtonProps) {
+  // disabled状態の管理（isDisabled、disabled、またはisLoadingがtrueの場合）
+  const isIconButtonDisabled = isLoading || isDisabled || disabled;
 
-    // アイコンのみのボタンには aria-label が必要（WCAG 1.1.1）
-    // en: Icon-only buttons require aria-label (WCAG 1.1.1)
-    if (process.env.NODE_ENV !== "production") {
-      if (!asChild && !props["aria-label"] && !props["aria-labelledby"]) {
-        console.warn(
-          "[IconButton] アイコンのみのボタンには aria-label を指定してください（WCAG 1.1.1）。" +
-            " / Icon-only buttons require aria-label (WCAG 1.1.1)."
-        );
-      }
+  // アイコンのみのボタンには aria-label が必要（WCAG 1.1.1）
+  // en: Icon-only buttons require aria-label (WCAG 1.1.1)
+  if (process.env.NODE_ENV !== "production") {
+    if (!asChild && !props["aria-label"] && !props["aria-labelledby"]) {
+      console.warn(
+        "[IconButton] アイコンのみのボタンには aria-label を指定してください（WCAG 1.1.1）。" +
+          " / Icon-only buttons require aria-label (WCAG 1.1.1)."
+      );
     }
-
-    const Comp = asChild ? SlotPrimitive.Slot : "button";
-
-    // アイコンのサイズをボタンサイズに合わせて設定
-    const getIconSize = () => {
-      switch (size) {
-        case "xs":
-          return 3;
-        case "sm":
-          return 5;
-        case "lg":
-          return 7;
-        default:
-          return 6;
-      }
-    };
-
-    return (
-      <Comp
-        type="button"
-        className={cn(
-          iconButtonVariants({
-            variant,
-            size,
-            theme,
-            isLoading,
-            isDisabled,
-            className,
-          })
-        )}
-        ref={ref}
-        disabled={isIconButtonDisabled}
-        {...props}
-      >
-        {isLoading ? (
-          <>
-            <Spinner size={getIconSize()} className="text-current" />
-          </>
-        ) : (
-          <Icon icon={icon} size={getIconSize()} />
-        )}
-      </Comp>
-    );
   }
-);
+
+  const Comp = asChild ? SlotPrimitive.Slot : "button";
+
+  // アイコンのサイズをボタンサイズに合わせて設定
+  const getIconSize = () => {
+    switch (size) {
+      case "xs":
+        return 3;
+      case "sm":
+        return 5;
+      case "lg":
+        return 7;
+      default:
+        return 6;
+    }
+  };
+
+  return (
+    <Comp
+      ref={ref}
+      type="button"
+      className={cn(
+        iconButtonVariants({
+          variant,
+          size,
+          theme,
+          isLoading,
+          isDisabled,
+          className,
+        })
+      )}
+      disabled={isIconButtonDisabled}
+      {...props}
+    >
+      {isLoading ? (
+        <>
+          <Spinner size={getIconSize()} className="text-current" />
+        </>
+      ) : (
+        <Icon icon={icon} size={getIconSize()} />
+      )}
+    </Comp>
+  );
+}
 
 IconButton.displayName = "IconButton";
 
