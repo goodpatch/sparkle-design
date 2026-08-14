@@ -7,9 +7,11 @@ description: >
   書き換えて `sparkle-design-cli generate` まで実行するスキル。選択肢は Theme Settings
   Figma プラグインが扱える範囲（primary 7 色 / radius 8 段階 / fonts 11 種）に揃えて
   おり、Figma と CLI の見た目がずれません。**未導入プロジェクトの初期セットアップは
-  `setup-sparkle-design` を使うこと。**
+  `setup-sparkle-design`（internal 環境では `install-sparkle-design`）を使うこと。**
   「雰囲気を変えたい」「もっとポップに」「ビジネスライクに」「高級感を出したい」
   「primary を変えたい」「角丸をもっと丸く」「フォントを変えたい」「テーマを提案して」
+  「テナントごとに配色を変えたい」「役割ごとに色を出し分けたい」（後者2つは複数
+  バリアント要望として範囲外に誘導するために発動）
   で発動。English: "change the vibe", "make it more playful",
   "make it more business-like", "adjust the theme", "change primary color".
 user-invocable: true
@@ -21,7 +23,7 @@ user-invocable: true
 
 **前提**:
 
-- プロジェクトに既に `sparkle-design` / `sparkle-design-cli` が導入済み（未導入の場合は `setup-sparkle-design` スキルを先に使うよう案内する）
+- プロジェクトに既に `sparkle-design` / `sparkle-design-cli` が導入済み（未導入の場合は `setup-sparkle-design` スキル — internal 環境なら `install-sparkle-design` スキル — を先に使うよう案内する）
 - 書き換え可能な項目は **Sparkle Design Theme Settings Figma プラグインが扱える範囲と同一**（後述の reference 参照）
 
 ---
@@ -33,8 +35,13 @@ user-invocable: true
 ### 実行方針
 
 1. **前提チェック**
-   - カレントディレクトリに `sparkle.config.json` があるか確認。無ければ **未導入状態**。その場合は「**新規導入 + カスタムテーマ**は `setup-sparkle-design` スキルが担当する（setup 実行時に `sparkle.config.json` を編集しておけば同じテーマで導入できる）」と案内し、setup にバトンパスして中断する。
+   - カレントディレクトリに `sparkle.config.json` があるか確認。無ければ **未導入状態**。その場合は「**新規導入 + カスタムテーマ**は `setup-sparkle-design` スキル（internal 環境では `install-sparkle-design` スキル）が担当する（setup 実行時に `sparkle.config.json` を編集しておけば同じテーマで導入できる）」と案内し、setup にバトンパスして中断する。
    - `package.json` の `dependencies` / `devDependencies` に `sparkle-design` が含まれるか確認（pnpm workspace 等で hoist されているケースに備え、`node_modules` のパスチェックは避ける）。未導入なら setup を案内して中断。
+   - ユーザーの要望が「役割・テナント・画面ごとに複数の固定配色バリアントを 1 デプロイで切り替えたい」という趣旨（例:「管理画面と一般ユーザー画面で色を変えたい」「テナントごとに配色を出し分けたい」）なら **このスキルの範囲外**。本スキルは単一の `sparkle.config.json` を書き換えるだけなので複数バリアントの同時提供には対応できない。中断する前に、どちらのケースかだけ 1 回短く確認する（「管理画面と一般ユーザー画面は別々のページ／レイアウトですか？それとも同じ画面内で属性の切り替えだけで見た目を変えたいですか？」）:
+     - **画面（ビルド）ごとにバリアントが固定される**（レイアウト単位で読み込む CSS を出し分けられる）→ sparkle-design-cli README の「複数のテーマ配色を 1 デプロイでサポートしたい場合」の **ケース A**（config を分割して複数回 `generate`。生成した複数 CSS を同時 import してはいけない）を案内する
+     - **単一バンドル内でランタイムに切り替えたい**（`data-*` 属性の付け外しだけで切り替え、ページ遷移や再ビルドを伴わない）→ 同 README の **ケース B**（`generate --scope` で、ベースの通常 `generate` 出力とセマンティックトークンだけをスコープしたリテラル値の差分 CSS を同時 import する。sparkle-design-cli `2.4.0` 以降が必要）を案内する
+     - 単一 CSS + 属性スコープでの Tailwind クラス上書きは（どちらのケースでも）非推奨
+     いずれの場合も本スキルはここで中断する（実際の config 分割・`--scope` 実行はユーザー自身か別の作業に委ねる）。
 2. **現在値を読み取り（元ファイルをスナップショット保存）**
    - `sparkle.config.json` の元バイト列をそのままメモリに保持（後の rollback 用）。
    - `JSON.parse` で解釈し、現在の `primary` / `font-pro` / `font-mono` / `radius` / `extend.*` とそれ以外のユーザー独自キーを把握。
@@ -54,7 +61,9 @@ user-invocable: true
    - 「この内容で書き換えて generate しますか？」と **1 回だけ** 尋ねる。OK なら 6 へ、調整要望なら 3 に戻る。
 6. **書き込み前バリデーション（絶対実行）**
    - 提案する 4 値の各々について、**書き込み直前に** SKILL.md の「許可リスト」と照合する。
-     - primary が許可リスト外 → 書き込み中断、別案を考え直す
+     - primary が許可リスト外 → **書き込み中断**。**本スキルは `extend.custom-css` を自分で編集・生成しない**（4 キーの単純書き換えの範囲外）。中断した上で次のいずれかを行う:
+       - ユーザーが 7 色のいずれかで妥協できるなら、別案を考え直して 3 に戻る。
+       - ユーザーが **7 色に無い特定のブランドカラー** を明確に指定している場合は、別案を考え直さず「`primary` は 7 色までしか選べないため、そのブランドカラーを使うには `extend.custom-css` で `--color-primary-*` と `--color-gray-*`（50〜900、gray も必ずセットで）を丸ごと定義する方式が必要（sparkle-design-cli README 参照）」と案内し、手動対応をユーザーに委ねる。
      - font-pro / font-mono が許可リスト外、または pro/mono 可否に反する用途 → 書き込み中断
      - radius が許可リスト外 → 書き込み中断
    - このチェックをスキップしない。ステップ 3 のマッピングが保証にはならない。
@@ -82,13 +91,13 @@ user-invocable: true
 
 #### primary（7 色）
 
-`blue` / `red` / `orange` / `green` / `purple` / `pink` / `yellow`
+`blue` / `red` / `orange` / `yellow` / `purple` / `green` / `pink`
 
 #### radius（8 段階）
 
 `none` / `xs` / `sm` / `md` / `lg` / `xl` / `2xl` / `3xl`
 
-> ⚠️ `full` は `sparkle-variables/radius.csv` に **入力キーとして存在しない**（`round` 列の semantic 出力にのみ現れる）。`radius: "full"` と書いても CLI の radiusMapping は未ヒットで置換がスキップされ silent に壊れる。丸みを最大化したい場合は `3xl` を使う。
+> ⚠️ `full` は `sparkle-variables/radius.csv` に **入力キーとして存在しない**（`round` 列の semantic 出力にのみ現れる）。`radius: "full"` や上記以外の値は `generate` 実行時にエラーで停止する（型検証あり）。丸みを最大化したい場合は `3xl` を使う。
 
 #### font-pro / font-mono（11 種、用途制限あり）
 

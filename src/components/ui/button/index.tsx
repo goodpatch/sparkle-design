@@ -261,7 +261,14 @@ type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 type NativeButtonProps = React.ComponentProps<"button">;
 
 export interface ButtonProps
-  extends Omit<NativeButtonProps, "onClick" | "onKeyDown"> {
+  extends Omit<NativeButtonProps, "onClick" | "onKeyDown" | "ref"> {
+  /**
+   * ルート要素への ref。`asChild` で `<a>` 等を差し込むケースを受け入れるため
+   * `HTMLButtonElement` ではなく `HTMLElement` で広く受ける
+   * en: Ref to the root element. Typed as `HTMLElement` (not `HTMLButtonElement`)
+   * so `asChild` targets such as `<a>` are accepted.
+   */
+  ref?: React.Ref<HTMLElement>;
   /**
    * ボタンのサイズバリエーション
    * en: Size variation of the button
@@ -485,7 +492,10 @@ function Button({
 
   return (
     <Comp
-      ref={ref}
+      // asChild ケースで <a> 等を受け入れるため公開 API は HTMLElement で広く受けるが、
+      // 内部の Comp は <button> 固定の union が含まれるためここで narrow する。
+      // en: Public ref is HTMLElement (covers asChild targets); inner Comp's button branch needs narrowing.
+      ref={ref as React.Ref<HTMLButtonElement>}
       data-slot="button"
       aria-busy={isLoading || undefined}
       aria-disabled={asChild && isButtonDisabled ? true : undefined}

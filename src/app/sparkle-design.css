@@ -159,6 +159,7 @@
   /* フォントウェイト */
   --font-weight-char-normal: 400;
   --font-weight-char-bold: 700;
+  --font-weight-icon: 500;
   --font-weight-icon-fill-0: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
   --font-weight-icon-fill-1: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
 
@@ -308,125 +309,131 @@
 }
 
 /* セマンティクスのトークン定義（Tailwind ユーティリティ生成用） */
+/* NOTE: 各宣言は上の「セマンティックトークン」:root ブロックにある同名変数を
+   自己参照している（例: --color-primary-500: var(--color-primary-500)）。
+   プリミティブへの直接参照にしない意図的な設計。Tailwind v4 は @theme inline
+   の宣言右辺を compiled utility class にそのまま埋め込むため、直接参照だと
+   セマンティック変数が一切参照されなくなり、別セレクタでのランタイム上書きが
+   compiled utility に効かなくなる。 */
 @theme inline {
   /* セマンティクスカラー定義 */
-  --color-neutral-50: var(--color-gray-50);
-  --color-neutral-100: var(--color-gray-100);
-  --color-neutral-200: var(--color-gray-200);
-  --color-neutral-300: var(--color-gray-300);
-  --color-neutral-400: var(--color-gray-400);
-  --color-neutral-500: var(--color-gray-500);
-  --color-neutral-600: var(--color-gray-600);
-  --color-neutral-700: var(--color-gray-700);
-  --color-neutral-800: var(--color-gray-800);
-  --color-neutral-900: var(--color-gray-900);
+  --color-neutral-50: var(--color-neutral-50);
+  --color-neutral-100: var(--color-neutral-100);
+  --color-neutral-200: var(--color-neutral-200);
+  --color-neutral-300: var(--color-neutral-300);
+  --color-neutral-400: var(--color-neutral-400);
+  --color-neutral-500: var(--color-neutral-500);
+  --color-neutral-600: var(--color-neutral-600);
+  --color-neutral-700: var(--color-neutral-700);
+  --color-neutral-800: var(--color-neutral-800);
+  --color-neutral-900: var(--color-neutral-900);
 
   /* プライマリカラーは設定可能 */
-  --color-primary-50: var(--color-blue-50);
-  --color-primary-100: var(--color-blue-100);
-  --color-primary-200: var(--color-blue-200);
-  --color-primary-300: var(--color-blue-300);
-  --color-primary-400: var(--color-blue-400);
-  --color-primary-500: var(--color-blue-500);
-  --color-primary-600: var(--color-blue-600);
-  --color-primary-700: var(--color-blue-700);
-  --color-primary-800: var(--color-blue-800);
-  --color-primary-900: var(--color-blue-900);
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: var(--color-primary-900);
 
-  --color-secondary-50: var(--color-gray-50);
-  --color-secondary-100: var(--color-gray-100);
-  --color-secondary-200: var(--color-gray-200);
-  --color-secondary-300: var(--color-gray-300);
-  --color-secondary-400: var(--color-gray-400);
-  --color-secondary-500: var(--color-gray-500);
-  --color-secondary-600: var(--color-gray-600);
-  --color-secondary-700: var(--color-gray-700);
-  --color-secondary-800: var(--color-gray-800);
-  --color-secondary-900: var(--color-gray-900);
+  --color-secondary-50: var(--color-secondary-50);
+  --color-secondary-100: var(--color-secondary-100);
+  --color-secondary-200: var(--color-secondary-200);
+  --color-secondary-300: var(--color-secondary-300);
+  --color-secondary-400: var(--color-secondary-400);
+  --color-secondary-500: var(--color-secondary-500);
+  --color-secondary-600: var(--color-secondary-600);
+  --color-secondary-700: var(--color-secondary-700);
+  --color-secondary-800: var(--color-secondary-800);
+  --color-secondary-900: var(--color-secondary-900);
 
-  --color-info-50: var(--color-blue-50);
-  --color-info-100: var(--color-blue-100);
-  --color-info-200: var(--color-blue-200);
-  --color-info-300: var(--color-blue-300);
-  --color-info-400: var(--color-blue-400);
-  --color-info-500: var(--color-blue-500);
-  --color-info-600: var(--color-blue-600);
-  --color-info-700: var(--color-blue-700);
-  --color-info-800: var(--color-blue-800);
-  --color-info-900: var(--color-blue-900);
+  --color-info-50: var(--color-info-50);
+  --color-info-100: var(--color-info-100);
+  --color-info-200: var(--color-info-200);
+  --color-info-300: var(--color-info-300);
+  --color-info-400: var(--color-info-400);
+  --color-info-500: var(--color-info-500);
+  --color-info-600: var(--color-info-600);
+  --color-info-700: var(--color-info-700);
+  --color-info-800: var(--color-info-800);
+  --color-info-900: var(--color-info-900);
 
-  --color-success-50: var(--color-green-50);
-  --color-success-100: var(--color-green-100);
-  --color-success-200: var(--color-green-200);
-  --color-success-300: var(--color-green-300);
-  --color-success-400: var(--color-green-400);
-  --color-success-500: var(--color-green-500);
-  --color-success-600: var(--color-green-600);
-  --color-success-700: var(--color-green-700);
-  --color-success-800: var(--color-green-800);
-  --color-success-900: var(--color-green-900);
+  --color-success-50: var(--color-success-50);
+  --color-success-100: var(--color-success-100);
+  --color-success-200: var(--color-success-200);
+  --color-success-300: var(--color-success-300);
+  --color-success-400: var(--color-success-400);
+  --color-success-500: var(--color-success-500);
+  --color-success-600: var(--color-success-600);
+  --color-success-700: var(--color-success-700);
+  --color-success-800: var(--color-success-800);
+  --color-success-900: var(--color-success-900);
 
-  --color-warning-50: var(--color-yellow-50);
-  --color-warning-100: var(--color-yellow-100);
-  --color-warning-200: var(--color-yellow-200);
-  --color-warning-300: var(--color-yellow-300);
-  --color-warning-400: var(--color-yellow-400);
-  --color-warning-500: var(--color-yellow-500);
-  --color-warning-600: var(--color-yellow-600);
-  --color-warning-700: var(--color-yellow-700);
-  --color-warning-800: var(--color-yellow-800);
-  --color-warning-900: var(--color-yellow-900);
+  --color-warning-50: var(--color-warning-50);
+  --color-warning-100: var(--color-warning-100);
+  --color-warning-200: var(--color-warning-200);
+  --color-warning-300: var(--color-warning-300);
+  --color-warning-400: var(--color-warning-400);
+  --color-warning-500: var(--color-warning-500);
+  --color-warning-600: var(--color-warning-600);
+  --color-warning-700: var(--color-warning-700);
+  --color-warning-800: var(--color-warning-800);
+  --color-warning-900: var(--color-warning-900);
 
-  --color-negative-50: var(--color-red-50);
-  --color-negative-100: var(--color-red-100);
-  --color-negative-200: var(--color-red-200);
-  --color-negative-300: var(--color-red-300);
-  --color-negative-400: var(--color-red-400);
-  --color-negative-500: var(--color-red-500);
-  --color-negative-600: var(--color-red-600);
-  --color-negative-700: var(--color-red-700);
-  --color-negative-800: var(--color-red-800);
-  --color-negative-900: var(--color-red-900);
+  --color-negative-50: var(--color-negative-50);
+  --color-negative-100: var(--color-negative-100);
+  --color-negative-200: var(--color-negative-200);
+  --color-negative-300: var(--color-negative-300);
+  --color-negative-400: var(--color-negative-400);
+  --color-negative-500: var(--color-negative-500);
+  --color-negative-600: var(--color-negative-600);
+  --color-negative-700: var(--color-negative-700);
+  --color-negative-800: var(--color-negative-800);
+  --color-negative-900: var(--color-negative-900);
 
   /* コンポーネントカラー定義 */
-  --color-divider-low: var(--color-neutral-100);
-  --color-divider-middle: var(--color-neutral-200);
-  --color-divider-high: var(--color-neutral-300);
-  --color-text-disabled: var(--color-neutral-300);
-  --color-text-placeholder: var(--color-neutral-500);
-  --color-text-low: var(--color-neutral-500);
-  --color-text-middle: var(--color-neutral-700);
-  --color-text-high: var(--color-neutral-900);
-  --color-skeleton-fill: var(--color-neutral-200);
+  --color-divider-low: var(--color-divider-low);
+  --color-divider-middle: var(--color-divider-middle);
+  --color-divider-high: var(--color-divider-high);
+  --color-text-disabled: var(--color-text-disabled);
+  --color-text-placeholder: var(--color-text-placeholder);
+  --color-text-low: var(--color-text-low);
+  --color-text-middle: var(--color-text-middle);
+  --color-text-high: var(--color-text-high);
+  --color-skeleton-fill: var(--color-skeleton-fill);
 
   /* ベースカラー（base） - gray と同等 */
-  --color-base-50: var(--color-gray-50);
-  --color-base-100: var(--color-gray-100);
-  --color-base-200: var(--color-gray-200);
-  --color-base-300: var(--color-gray-300);
-  --color-base-400: var(--color-gray-400);
-  --color-base-500: var(--color-gray-500);
-  --color-base-600: var(--color-gray-600);
-  --color-base-700: var(--color-gray-700);
-  --color-base-800: var(--color-gray-800);
-  --color-base-900: var(--color-gray-900);
+  --color-base-50: var(--color-base-50);
+  --color-base-100: var(--color-base-100);
+  --color-base-200: var(--color-base-200);
+  --color-base-300: var(--color-base-300);
+  --color-base-400: var(--color-base-400);
+  --color-base-500: var(--color-base-500);
+  --color-base-600: var(--color-base-600);
+  --color-base-700: var(--color-base-700);
+  --color-base-800: var(--color-base-800);
+  --color-base-900: var(--color-base-900);
 
   /* 角丸 - デフォルト値は設定可能 */
-  --radius-divide: var(--radius-none);
-  --radius-minimum: var(--radius-xs);
-  --radius-notice: var(--radius-sm);
-  --radius-action: var(--radius-md);
-  --radius-halfModal: var(--radius-lg);
-  --radius-modal: var(--radius-xl);
-  --radius-round: var(--radius-full);
+  --radius-divide: var(--radius-divide);
+  --radius-minimum: var(--radius-minimum);
+  --radius-notice: var(--radius-notice);
+  --radius-action: var(--radius-action);
+  --radius-halfModal: var(--radius-halfModal);
+  --radius-modal: var(--radius-modal);
+  --radius-round: var(--radius-round);
 
   /* シャドウ */
-  --shadow-base: var(--shadow-none);
-  --shadow-flat: var(--shadow-2xs);
-  --shadow-raise: var(--shadow-xs);
-  --shadow-stick: var(--shadow-sm);
-  --shadow-float: var(--shadow-md);
-  --shadow-popout: var(--shadow-lg);
+  --shadow-base: var(--shadow-base);
+  --shadow-flat: var(--shadow-flat);
+  --shadow-raise: var(--shadow-raise);
+  --shadow-stick: var(--shadow-stick);
+  --shadow-float: var(--shadow-float);
+  --shadow-popout: var(--shadow-popout);
 }
 
 /* フォントレンダリング */
@@ -781,6 +788,7 @@
     /* アイコンスタイル */
     font-family: var(--font-family-icon);
     font-size: var(--font-size-12);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -789,6 +797,7 @@
   .icon-1-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-12);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -797,6 +806,7 @@
   .icon-2-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-14);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -805,6 +815,7 @@
   .icon-2-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-14);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -813,6 +824,7 @@
   .icon-3-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-16);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -821,6 +833,7 @@
   .icon-3-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-16);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -829,6 +842,7 @@
   .icon-4-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-18);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -837,6 +851,7 @@
   .icon-4-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-18);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -845,6 +860,7 @@
   .icon-5-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-20);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -853,6 +869,7 @@
   .icon-5-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-20);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -861,6 +878,7 @@
   .icon-6-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-24);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -869,6 +887,7 @@
   .icon-6-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-24);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -877,6 +896,7 @@
   .icon-7-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-28);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -885,6 +905,7 @@
   .icon-7-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-28);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -893,6 +914,7 @@
   .icon-8-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-32);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -901,6 +923,7 @@
   .icon-8-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-32);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -909,6 +932,7 @@
   .icon-9-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-36);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -917,6 +941,7 @@
   .icon-9-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-36);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -925,6 +950,7 @@
   .icon-10-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-42);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -933,6 +959,7 @@
   .icon-10-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-42);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -941,6 +968,7 @@
   .icon-11-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-48);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -949,6 +977,7 @@
   .icon-11-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-48);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -957,6 +986,7 @@
   .icon-12-fill-0 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-54);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);
@@ -965,6 +995,7 @@
   .icon-12-fill-1 {
     font-family: var(--font-family-icon);
     font-size: var(--font-size-54);
+    font-weight: var(--font-weight-icon);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
     letter-spacing: var(--letter-spacing-normal);

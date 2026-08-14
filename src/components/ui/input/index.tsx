@@ -7,6 +7,8 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 import { IconButton } from "@/components/ui/icon-button";
+import { useMergeRefs } from "@/hooks/useMergeRefs";
+import { useInputContainerFocus } from "@/hooks/useInputContainerFocus";
 
 // 入力フィールドのスタイル定義
 const inputVariants = cva(
@@ -66,24 +68,6 @@ const inputVariants = cva(
   }
 );
 
-// 複数のrefをマージするユーティリティ関数
-function useMergeRefs<T>(
-  ...refs: Array<React.Ref<T> | undefined>
-): React.RefCallback<T> {
-  return React.useCallback(
-    (value: T) => {
-      refs.forEach(ref => {
-        if (typeof ref === "function") {
-          ref(value);
-        } else if (ref != null) {
-          (ref as React.MutableRefObject<T>).current = value;
-        }
-      });
-    },
-    [refs]
-  );
-}
-
 type InputVariantProps = VariantProps<typeof inputVariants>;
 export interface InputProps
   extends Omit<React.ComponentProps<"input">, "size"> {
@@ -127,6 +111,27 @@ export interface InputProps
    * en: Callback function for icon button click
    */
   onIconButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  /**
+   * トリガーボタンへフォワードする HTML / ARIA 属性。`isTrigger` が true のときのみ有効。
+   * `aria-haspopup` / `aria-expanded` / `aria-controls` のように、Popover や Date Picker と
+   * 連携する際に必要な属性を宣言的に渡すために使用する。
+   *
+   * 以下の属性は Input が内部で制御するため、`triggerProps` で渡しても無視される:
+   * `ref` / `onFocus` / `onBlur` / `type` / `disabled` / `aria-label`（`triggerAriaLabel` が優先）
+   * / `onClick`（`onIconButtonClick` が指定された場合のみ優先。未指定なら `triggerProps.onClick`
+   * が使われる）。アイコンボタン自体の見た目（`icon` / `theme` / `variant` / `size`）も同様に
+   * Input 側で固定される。
+   *
+   * en: HTML / ARIA attributes forwarded to the trigger button. Only applied when
+   *     `isTrigger` is true. Use for attributes like `aria-haspopup`,
+   *     `aria-expanded`, `aria-controls` when integrating with Popover or Date Picker.
+   *     The following are controlled by Input and dropped if passed via
+   *     `triggerProps`: `ref`, `onFocus`, `onBlur`, `type`, `disabled`, `aria-label`
+   *     (the dedicated `triggerAriaLabel` wins), and the visual props
+   *     `icon` / `theme` / `variant` / `size`. `onClick` is overridden only when
+   *     `onIconButtonClick` is provided; otherwise `triggerProps.onClick` is used.
+   */
+  triggerProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
 }
 
 /**
@@ -186,6 +191,18 @@ export interface InputProps
  *   isTrigger
  *   triggerIcon="search"
  * />
+ *
+ * // Popover / Date Picker 連携時は triggerProps で ARIA を宣言的に渡す
+ * <Input
+ *   isTrigger
+ *   triggerIcon="calendar_today"
+ *   triggerAriaLabel="日付を選択"
+ *   triggerProps={{
+ *     "aria-haspopup": "dialog",
+ *     "aria-expanded": open,
+ *     "aria-controls": "date-picker-popover",
+ *   }}
+ * />
  * ```
  *
  * @param {InputProps} props
@@ -199,6 +216,7 @@ function Input({
   triggerIcon = "edit",
   triggerAriaLabel,
   onIconButtonClick,
+  triggerProps,
   disabled,
   defaultValue,
   value,
@@ -268,27 +286,13 @@ function Input({
     []
   );
 
-  // コンテナクリック時にインプットにフォーカスを当てる
-  const handleContainerClick = React.useCallback(
-    (e: React.MouseEvent) => {
-      if (isInputDisabled) return;
-
-      // アイコンボタン上でのクリックを除外
-      if (
-        buttonRef.current &&
-        (buttonRef.current === e.target ||
-          buttonRef.current.contains(e.target as Node))
-      ) {
-        return;
-      }
-
-      // 入力要素が無効でなければフォーカスを当てる
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    },
-    [isInputDisabled]
-  );
+  // コンテナクリック時にインプットへフォーカスを移すハンドラ（ボタン上のクリックは除外）
+  const excludeRefs = React.useMemo(() => [buttonRef], []);
+  const handleContainerClick = useInputContainerFocus({
+    targetRef: inputRef,
+    isDisabled: isInputDisabled,
+    excludeRefs,
+  });
 
   // 外部クリックでフォーカスを解除するためのハンドラ
   React.useEffect(() => {
@@ -368,16 +372,21 @@ function Input({
 
       {isTrigger && (
         <IconButton
+          // triggerProps を先に展開し、専用 props (triggerAriaLabel / onIconButtonClick)
+          // と内部制御プロパティで上書きする
+          // en: Spread triggerProps first, then let dedicated props and internal
+          //     control props override them
+          {...triggerProps}
           ref={buttonRef}
           icon={triggerIcon}
           theme="neutral"
           variant="ghost"
           size={iconButtonSize}
-          onClick={onIconButtonClick}
+          onClick={onIconButtonClick ?? triggerProps?.onClick}
           isDisabled={isInputDisabled}
           disabled={isInputDisabled}
           type="button" // フォーム内でデフォルトのsubmit動作を防ぐ
-          aria-label={triggerAriaLabel}
+          aria-label={triggerAriaLabel ?? triggerProps?.["aria-label"]}
           onFocus={handleIconButtonFocus}
           onBlur={handleIconButtonBlur}
         />

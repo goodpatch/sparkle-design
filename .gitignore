@@ -79,4 +79,5 @@ node-compile-cache/
 !.claude/skills/accessibility-checker/
 !.claude/skills/add-sparkle-component/
 !.claude/skills/change-sparkle-config/
+!.claude/skills/release-sparkle-design/
 !.claude/skills/setup-sparkle-design/

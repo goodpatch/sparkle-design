@@ -5,6 +5,104 @@
 
 ## [Unreleased]
 
+## [1.0.7] - 2026-07-21
+
+### Security
+
+- Dependabot が検知した devDependencies 経由の脆弱性を `pnpm.overrides` の引き上げで解消 (#293, #294)
+  - `vite` を 6.4.2 → 6.4.3 に更新 (#285)
+  - `js-yaml` / `undici` / `tar` / `form-data` / `hono` / `qs` / `postcss` / `ip-address` / `@babel/core` / `ws` / `brace-expansion` / `body-parser` の override を最新の patched version まで引き上げ
+
+### Changed
+
+- `Publish to npm` workflow に npm publish 後の git tag 付け・GitHub Release 自動作成ステップを追加（v1.0.6 で GitHub Release 作成が漏れていたため。`sparkle-design-cli` / `sparkle-design-internal` の publish.yml と同じ方式）
+
+## [1.0.6] - 2026-07-14
+
+### Fixed
+
+- `build-sparkle-design-theme.mjs` が `@theme inline` の自己参照で壊れる問題を修正（`sparkle-design-cli` 2.4.1+ の生成物形式変更に追従）(#290)
+
+### Changed
+
+- `sparkle-design-cli` 2.4.2 で `sparkle-design.css` を再生成 (#289)
+- `change-sparkle-config` / `setup-sparkle-design` スキルに複数テーマ運用とカスタムブランドカラーの案内を追加 (#287)
+- `change-sparkle-config` スキルに `generate --scope` による単一バンドルランタイム切替の案内を追加 (#288)
+
+## [1.0.5] - 2026-06-05
+
+### Fixed
+
+- **Icon: font-weight を 500 に固定し親要素からの継承を防止** (#281, closes goodpatch/sparkle-design-internal#198)
+  - Button の bold ラベル等から `font-weight: 700` が継承され、アイコンが疑似ボールド（faux bold）で太く描画される問題を修正
+  - `Icon` の span に `font-medium` を明示付与（`className` からの上書きは引き続き可能）
+
+### Changed
+
+- release skill とリリース記録のレビュー指摘を反映 (#277)
+
+### Dependencies
+
+- `vitest` 3.2.3 → 4.1.0 (#279)
+  - Vitest 4 の browser provider API へ移行（`@vitest/browser` → `@vitest/browser-playwright`、`browser.name` → `browser.instances`）
+  - `@vitest/coverage-v8` を ^4.1.0 に更新
+
+## [1.0.4] - 2026-05-19
+
+### Added
+
+- **Button: `React.forwardRef` 対応** (#275, closes #270)
+  - Radix `Trigger asChild`（Popover 等）から Button に直接 `ref` を渡せるように
+  - `asChild` で `<a>` 等の非 button 要素を slot するケースに対応するため、ref 型は `HTMLElement` で広く受ける
+  - ref forwarding テスト（通常 button / asChild + a）を新規追加
+
+### Changed
+
+- 共有スキルの frontmatter に `user-invocable: true` を追加 (#271)
+- Input フォロー修正: `useMergeRefs` の型整理と a11y lint エラー解消 (#272)
+
+### Dependencies
+
+- `next` 15.5.15 → 15.5.18 (#267)
+- `brace-expansion` 5.0.5 → 5.0.6 (#269)
+- `postcss` 8.4.31 → 8.5.14 (#273)
+
+## [1.0.3] - 2026-05-19
+
+### Added
+
+- **Input まわりの再利用フックを named export** (#272, closes #263)
+  - `useInputContainerFocus` / `useMergeRefs` を public API として公開
+- **`Input.triggerProps` による ARIA / HTML 属性フォワード** (#272, closes #268)
+  - 内部のトリガーボタンに ARIA / HTML 属性を渡せるように
+
+### Notes
+
+- 後方互換は維持
+
+## [1.0.2] - 2026-04-17
+
+### Changed
+
+- README から `@goodpatch/sparkle-design-internal` の言及を削除 (#252)
+- v1.0.1 直後のドキュメント修正を npm に反映するためのパッチリリース
+
+## [1.0.1] - 2026-04-16
+
+### Security
+
+- `pnpm.overrides` に追加: `hono ^4.12.14` / `yaml ^2.8.3` / `@eslint/plugin-kit ^0.3.4` / `brace-expansion ^1.1.13`（`<1.1.13` の range）
+- `pnpm audit` 残件クリア（prod / dev とも 0）
+
+### Changed
+
+- `@figma/code-connect` を `dependencies` → `devDependencies` に移動
+  - consumer の `node_modules` から `lodash` を含む Figma Code Connect のツリーが消える
+- `dist` から `*.figma.{js,d.ts}` を除外しパッケージサイズを縮小
+- TailwindCSS v4 + npm package 利用時の `@source` 自動検知に関する README 注記を CLI v2.0.6 ベースに更新
+- `globals.css` 前提表記を「Tailwind エントリ CSS（`globals.css` / `index.css`）」に整理
+- Material Symbols の woff2 を URL 軸縮小で 60〜75% 削減（CLI v2.0.1 の変更を反映）
+
 ## [1.0.0] - 2026-04-13
 
 ### Changed

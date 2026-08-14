@@ -22,7 +22,7 @@ This repository uses a unified AI instruction system. Source files are in `docs/
 "Sparkle Design" is a React component library built with modern web technologies, providing consistent UI components for web applications.
 
 ## Technology Stack
-- **Framework**: Next.js 15.3.8 + React 18 + TypeScript
+- **Framework**: Next.js 15.5.18 + React 18 + TypeScript
 - **Styling**: TailwindCSS 4 + CVA (Class Variance Authority)
 - **Testing**: Vitest + Testing Library + jsdom
 - **Documentation**: Storybook
@@ -88,6 +88,28 @@ pnpm lint      # ESLint checks
 pnpm format    # Prettier formatting
 pnpm test      # Component tests
 ```
+
+### Git Safety Rules
+- **Never amend + force-push**: address review feedback and mistakes with new commits
+- **No direct push to `main`**: always go through a PR (admin merge required)
+- **PR merges use normal merge (`--merge`)**: never squash-merge (squashing loses commits)
+- **Update the lockfile whenever `package.json` changes**: CI runs `pnpm install --frozen-lockfile` and will fail otherwise
+- **Use the pinned toolchain**: Node.js 22.14.0 / pnpm 10.12.4 (see `.tool-versions`; newer pnpm majors can rewrite the lockfile)
+
+### Irreversible Operations Are Blocked by a Hook
+`scripts/hooks/irreversible-ops-guard.sh` (a PreToolUse hook wired in `.claude/settings.json`) blocks:
+
+- `npm/pnpm/yarn/bun publish` (an enabled `--dry-run` passes), `unpublish`, `deprecate`
+- `gh pr merge`, `gh release create/delete`, `gh repo create/delete/archive`, publish workflows
+- Release tag pushes, `--tags`, force pushes (including a `+` refspec), and remote ref deletion (`--delete` / `:ref`)
+
+It also looks inside command substitutions (`$(...)`) and `bash -c "..."`, so those are not a way around it.
+
+- These run **only when the user names the operation**. A broad "release it" / "go ahead" is not approval.
+- Once instructed, re-run with `SPARKLE_CONFIRM=1` **in front of that command**. Adding that prefix without an instruction defeats the guard.
+- An inherited/exported `SPARKLE_CONFIRM=1` is deliberately ignored — approval is per command, not per session.
+- Agents without hook support must follow the same rule — the hook is a backstop, not the rule itself.
+- Tests: `pnpm test:hooks`
 
 ## AI Assistance Guidelines
 - Refer to specific instruction files for detailed guidance:

@@ -133,6 +133,37 @@ describe("Icon", () => {
     });
   });
 
+  describe("フォントウェイト / Font Weight", () => {
+    it("font-medium が常に付与される（weight 500 統一）", () => {
+      // Given: 基本的なIcon
+      // en: Given a basic Icon
+      testContainer.render(<Icon icon="check" />);
+
+      // When: aria-hiddenなspan要素を取得
+      // en: When selecting the aria-hidden span element
+      const span = testContainer.querySelector("span[aria-hidden='true']");
+
+      // Then: 親の font-weight 継承（疑似ボールド）を防ぐ font-medium が付与される
+      // en: Then font-medium is applied to prevent inherited font-weight (faux bold)
+      expect(StyleHelpers.hasClass(span, "font-medium")).toBe(true);
+    });
+
+    it("className で font-weight を上書きできる", () => {
+      // Given: font-bold を className で指定
+      // en: Given font-bold provided via className
+      testContainer.render(<Icon icon="check" className="font-bold" />);
+
+      // When: aria-hiddenなspan要素を取得
+      // en: When selecting the aria-hidden span element
+      const span = testContainer.querySelector("span[aria-hidden='true']");
+
+      // Then: tailwind-merge により font-bold が優先される
+      // en: Then font-bold wins via tailwind-merge
+      expect(StyleHelpers.hasClass(span, "font-bold")).toBe(true);
+      expect(StyleHelpers.hasClass(span, "font-medium")).toBe(false);
+    });
+  });
+
   describe("HTMLAttributes / Props", () => {
     it("id や data 属性、style が反映される", () => {
       // Given
