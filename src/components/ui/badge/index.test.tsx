@@ -394,9 +394,7 @@ describe("Badge", () => {
       // Then: フォーカススタイルが適用される
       expect(badge.className).toContain("focus:outline-hidden");
       expect(badge.className).toContain("focus:ring-2");
-      expect(badge.className).toContain(
-        "focus:ring-[var(--color-ring-normal)]"
-      );
+      expect(badge.className).toContain("focus:ring-border-ring");
       expect(badge.className).toContain("focus:ring-offset-2");
     });
   });

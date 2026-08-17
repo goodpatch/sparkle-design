@@ -266,7 +266,7 @@ describe("Slider", () => {
       }
       if (valueIndicator) {
         expect(
-          StyleHelpers.hasClass(valueIndicator, "text-text-disabled")
+          StyleHelpers.hasClass(valueIndicator, "text-text-neutral-disabled")
         ).toBe(true);
       }
     });
@@ -466,7 +466,7 @@ describe("Slider", () => {
       }
       if (thumb) {
         expect(StyleHelpers.hasClass(thumb, "rounded-full")).toBe(true);
-        expect(StyleHelpers.hasClass(thumb, "bg-white")).toBe(true);
+        expect(StyleHelpers.hasClass(thumb, "bg-surface-base-0")).toBe(true);
       }
     });
 

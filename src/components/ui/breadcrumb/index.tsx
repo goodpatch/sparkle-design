@@ -144,7 +144,7 @@ export function BreadcrumbPage({
       aria-disabled="true"
       aria-current="page"
       className={cn(
-        "character-3-regular-pro text-text-high cursor-default",
+        "character-3-regular-pro text-text-neutral-high cursor-default",
         className
       )}
       {...props}

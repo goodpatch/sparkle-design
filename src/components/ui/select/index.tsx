@@ -13,8 +13,8 @@ import { cn } from "@/lib/utils";
 
 const selectTriggerVariants = cva(
   [
-    "flex items-center justify-between w-full rounded-action border bg-white text-text-high transition-colors",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
+    "flex items-center justify-between w-full rounded-action border bg-surface-base-0 text-text-neutral-high transition-colors",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2",
     "overflow-hidden whitespace-nowrap",
   ].join(" "),
   {
@@ -25,12 +25,12 @@ const selectTriggerVariants = cva(
         lg: "h-12 py-1 pl-4 pr-2 gap-2 character-4-regular-pro",
       },
       isInvalid: {
-        true: "bg-white border-negative-500 hover:border-negative-600 data-[state=open]:border-negative-600",
+        true: "bg-surface-base-0 border-negative-500 hover:border-negative-600 data-[state=open]:border-negative-600",
         false:
           "border-neutral-500 hover:border-neutral-600 data-[state=open]:border-neutral-600",
       },
       isDisabled: {
-        true: "cursor-not-allowed bg-neutral-50 border-neutral-200 hover:border-neutral-200 text-text-disabled",
+        true: "cursor-not-allowed bg-neutral-50 border-neutral-200 hover:border-neutral-200 text-text-neutral-disabled",
         false: "cursor-pointer",
       },
     },
@@ -57,7 +57,7 @@ const selectIconVariants = cva("", {
       lg: "icon-7-fill-0",
     },
     isDisabled: {
-      true: "text-text-disabled",
+      true: "text-text-neutral-disabled",
       false: "text-neutral-700",
     },
   },
@@ -69,7 +69,7 @@ const selectIconVariants = cva("", {
 
 const selectContentVariants = cva(
   [
-    "bg-white text-text-high",
+    "bg-surface-base-0 text-text-neutral-high",
     "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
     "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
     "relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-action border shadow-float",
@@ -78,7 +78,7 @@ const selectContentVariants = cva(
     variants: {
       position: {
         popper:
-          "bg-white data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+          "bg-surface-base-0 data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
         item: "",
         "item-aligned": "",
       },
@@ -296,7 +296,7 @@ function SelectLabel({
     <SelectPrimitive.Label
       data-slot="select-label"
       className={cn(
-        "px-2 py-1.5 character-1-bold-pro text-text-high",
+        "px-2 py-1.5 character-1-bold-pro text-text-neutral-high",
         className
       )}
       {...props}

@@ -279,7 +279,7 @@ describe("Form", () => {
         .querySelector('[data-slot="form-description"]');
 
       // Then: 正しいスタイリングクラスが適用される
-      expect(helperMessage?.className).toContain("text-text-low");
+      expect(helperMessage?.className).toContain("text-text-neutral-low");
       expect(helperMessage?.className).toContain("character-2-regular-pro");
     });
 

@@ -46,10 +46,10 @@ function ClickableCard({
     <button
       ref={ref}
       className={cn(
-        "rounded-action border border-divider-middle bg-white shadow-raise text-text-middle py-4 cursor-pointer hover:bg-neutral-50",
-        "transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
+        "rounded-action border border-border-neutral-middle bg-surface-base-0 shadow-raise text-text-neutral-middle py-4 cursor-pointer hover:bg-neutral-50",
+        "transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2",
         "active:bg-neutral-50 active:shadow-float active:border-primary-400",
-        "disabled:cursor-not-allowed disabled:bg-white disabled:border-secondary-100 disabled:text-secondary-200 disabled:shadow-flat",
+        "disabled:cursor-not-allowed disabled:bg-surface-base-0 disabled:border-secondary-100 disabled:text-secondary-200 disabled:shadow-flat",
         className
       )}
       onClick={onClick}
@@ -74,7 +74,7 @@ ClickableCard.displayName = "ClickableCard";
  *   <CardHeader>
  *     <CardTitle>
  *       タイトル
- *       <CardDescription className="character-3-regular-pro text-text-low">
+ *       <CardDescription className="character-3-regular-pro text-text-neutral-low">
  *         全 12 件
  *       </CardDescription>
  *     </CardTitle>
@@ -92,7 +92,7 @@ function Card({ className, ref, ...props }: React.ComponentProps<"div">) {
     <div
       ref={ref}
       className={cn(
-        "rounded-minimum border border-divider-middle bg-white text-text-middle py-4",
+        "rounded-minimum border border-border-neutral-middle bg-surface-base-0 text-text-neutral-middle py-4",
         className
       )}
       {...props}
@@ -116,7 +116,7 @@ Card.displayName = "Card";
  * <CardHeader>
  *   <CardTitle>
  *     タイトル
- *     <CardDescription className="character-3-regular-pro text-text-low">
+ *     <CardDescription className="character-3-regular-pro text-text-neutral-low">
  *       全 12 件
  *     </CardDescription>
  *   </CardTitle>
@@ -181,7 +181,7 @@ CardTitle.displayName = "CardTitle";
  * ```tsx
  * <CardTitle>
  *   タイトル
- *   <CardDescription className="character-3-regular-pro text-text-low">
+ *   <CardDescription className="character-3-regular-pro text-text-neutral-low">
  *     全 12 件
  *   </CardDescription>
  * </CardTitle>
@@ -198,7 +198,7 @@ CardTitle.displayName = "CardTitle";
  * // ✅ Correct
  * <CardTitle>
  *   プロジェクト一覧
- *   <CardDescription className="character-3-regular-pro text-text-low">
+ *   <CardDescription className="character-3-regular-pro text-text-neutral-low">
  *     全 12 件
  *   </CardDescription>
  * </CardTitle>

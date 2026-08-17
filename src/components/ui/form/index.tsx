@@ -245,7 +245,11 @@ function FormHeader({
       {helpText && (
         <Tooltip>
           <TooltipTrigger className="flex items-center">
-            <Icon icon="help" size={5} className="cursor-help text-text-low" />
+            <Icon
+              icon="help"
+              size={5}
+              className="cursor-help text-text-neutral-low"
+            />
           </TooltipTrigger>
           <TooltipContent>{helpText}</TooltipContent>
         </Tooltip>
@@ -308,7 +312,7 @@ function FormHelperMessage({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="form-description"
       id={formDescriptionId}
-      className={cn("text-text-low character-2-regular-pro", className)}
+      className={cn("text-text-neutral-low character-2-regular-pro", className)}
       {...props}
     />
   );

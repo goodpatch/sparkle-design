@@ -221,7 +221,7 @@ function InlineMessageTitle({
       <span
         ref={ref}
         id={context?.titleId}
-        className={cn("character-3-bold-pro text-text-high", className)}
+        className={cn("character-3-bold-pro text-text-neutral-high", className)}
         {...props}
       />
     </div>
@@ -262,7 +262,10 @@ function InlineMessageDescription({
       <p
         ref={ref}
         id={context?.descId}
-        className={cn("character-3-regular-pro text-text-middle", className)}
+        className={cn(
+          "character-3-regular-pro text-text-neutral-middle",
+          className
+        )}
         {...props}
       />
     </div>

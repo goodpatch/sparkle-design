@@ -25,18 +25,18 @@ import {
 const CARD_BASE_CLASSES = [
   "rounded-minimum",
   "border",
-  "border-divider-middle",
-  "bg-white",
-  "text-text-middle",
+  "border-border-neutral-middle",
+  "bg-surface-base-0",
+  "text-text-neutral-middle",
   "py-4",
 ] as const;
 const CLICKABLE_CARD_BASE_CLASSES = [
   "rounded-action",
   "border",
-  "border-divider-middle",
-  "bg-white",
+  "border-border-neutral-middle",
+  "bg-surface-base-0",
   "shadow-raise",
-  "text-text-middle",
+  "text-text-neutral-middle",
   "py-4",
   "cursor-pointer",
   "hover:bg-neutral-50",
@@ -52,13 +52,13 @@ const CLICKABLE_CARD_INTERACTION_CLASSES = [
 const CLICKABLE_CARD_FOCUS_CLASSES = [
   "focus-visible:outline-hidden",
   "focus-visible:ring-2",
-  "focus-visible:ring-[var(--color-ring-normal)]",
+  "focus-visible:ring-border-ring",
   "focus-visible:ring-offset-2",
 ] as const;
 
 const CLICKABLE_CARD_DISABLED_CLASSES = [
   "disabled:cursor-not-allowed",
-  "disabled:bg-white",
+  "disabled:bg-surface-base-0",
   "disabled:border-secondary-100",
   "disabled:text-secondary-200",
   "disabled:shadow-flat",

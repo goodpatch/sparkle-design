@@ -25,7 +25,10 @@ function Skeleton({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn("animate-pulse rounded-notice bg-skeleton-fill", className)}
+      className={cn(
+        "animate-pulse rounded-notice bg-surface-base-200",
+        className
+      )}
       {...props}
     />
   );

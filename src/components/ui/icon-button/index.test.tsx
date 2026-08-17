@@ -118,7 +118,7 @@ describe("IconButton", () => {
         );
         const button = testContainer.queryButton();
 
-        expect(StyleHelpers.hasClass(button, "bg-white")).toBe(true);
+        expect(StyleHelpers.hasClass(button, "bg-surface-base-0")).toBe(true);
         expect(StyleHelpers.hasClass(button, "text-primary-500")).toBe(true);
         expect(StyleHelpers.hasClass(button, "border-primary-300")).toBe(true);
       });
@@ -129,7 +129,7 @@ describe("IconButton", () => {
         );
         const button = testContainer.queryButton();
 
-        expect(StyleHelpers.hasClass(button, "bg-white")).toBe(true);
+        expect(StyleHelpers.hasClass(button, "bg-surface-base-0")).toBe(true);
         expect(StyleHelpers.hasClass(button, "text-neutral-700")).toBe(true);
         expect(StyleHelpers.hasClass(button, "border-neutral-300")).toBe(true);
       });
@@ -140,7 +140,7 @@ describe("IconButton", () => {
         );
         const button = testContainer.queryButton();
 
-        expect(StyleHelpers.hasClass(button, "bg-white")).toBe(true);
+        expect(StyleHelpers.hasClass(button, "bg-surface-base-0")).toBe(true);
         expect(StyleHelpers.hasClass(button, "text-negative-500")).toBe(true);
         expect(StyleHelpers.hasClass(button, "border-negative-300")).toBe(true);
       });

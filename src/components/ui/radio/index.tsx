@@ -17,7 +17,7 @@ const labelVariants = cva("cursor-pointer", {
       lg: "character-4-regular-pro",
     },
     isDisabled: {
-      true: "text-text-disabled cursor-not-allowed",
+      true: "text-text-neutral-disabled cursor-not-allowed",
       false: "text-text-medium",
     },
   },
@@ -54,7 +54,7 @@ const radioItemVariants = cva(
 const radioIndicatorVariants = cva(
   [
     "flex items-center justify-center rounded-full border border-2 transition-colors",
-    "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-[var(--color-ring-normal)] [.group:focus-visible_&]:ring-offset-2",
+    "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-border-ring [.group:focus-visible_&]:ring-offset-2",
   ].join(" "),
   {
     variants: {
@@ -150,7 +150,7 @@ const radioIndicatorDotVariants = cva(
   }
 );
 
-const radioIndicatorDotInnerVariants = cva("rounded-full bg-white", {
+const radioIndicatorDotInnerVariants = cva("rounded-full bg-surface-base-0", {
   variants: {
     size: {
       sm: "h-2 w-2",

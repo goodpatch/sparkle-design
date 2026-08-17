@@ -13,7 +13,7 @@ import { cva, VariantProps } from "class-variance-authority";
 const switchVariants = cva(
   [
     "relative peer inline-flex shrink-0 cursor-pointer items-center rounded-full border transition-colors",
-    "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+    "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
     "data-[state=unchecked]:bg-neutral-500 data-[state=unchecked]:border-neutral-600 data-[state=unchecked]:hover:bg-neutral-600 data-[state=unchecked]:hover:border-neutral-700",
     "data-[state=checked]:bg-primary-500 data-[state=checked]:border-primary-600 data-[state=checked]:hover:bg-primary-600 data-[state=checked]:hover:border-primary-700",
     "disabled:cursor-not-allowed disabled:data-[state=unchecked]:bg-neutral-100 disabled:data-[state=unchecked]:border-transparent disabled:data-[state=checked]:bg-primary-200 disabled:data-[state=checked]:border-transparent",
@@ -35,7 +35,7 @@ const switchVariants = cva(
 );
 
 const thumbVariants = cva(
-  "pointer-events-none block rounded-full bg-white shadow-raise ring-0 transition-transform bg-white",
+  "pointer-events-none block rounded-full bg-surface-base-0 shadow-raise ring-0 transition-transform bg-surface-base-0",
   {
     variants: {
       size: {
