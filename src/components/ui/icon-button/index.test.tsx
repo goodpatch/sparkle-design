@@ -55,6 +55,7 @@ describe("IconButton", () => {
       ).toBe(true);
       expect(StyleHelpers.hasClass(button, "text-object-inverse")).toBe(true);
       // Figma 刷新で solid の枠線は削除された
+      // en: The border on solid was removed in the Figma refresh.
       expect(StyleHelpers.hasClass(button, "border")).toBe(false);
     });
 
@@ -324,6 +325,7 @@ describe("IconButton", () => {
         StyleHelpers.hasClass(button, "disabled:text-object-inverse")
       ).toBe(true);
       // Figma 刷新で solid の枠線が消えたため disabled:border-none も不要になった
+      // en: disabled:border-none is no longer needed because the solid border is gone.
       expect(StyleHelpers.hasClass(button, "border")).toBe(false);
     });
 

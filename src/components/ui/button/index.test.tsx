@@ -70,6 +70,7 @@ describe("Button", () => {
       const button = testContainer.queryButton();
 
       // Then: solidバリアントのクラスが適用される（Figma 刷新で枠線は削除された）
+      // en: The solid variant classes are applied (the border was removed in the Figma refresh).
       expect(StyleHelpers.hasClass(button, "border")).toBe(false);
       expect(StyleHelpers.hasClass(button, "shadow-base")).toBe(true);
     });
