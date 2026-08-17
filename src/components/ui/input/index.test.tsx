@@ -255,7 +255,9 @@ describe("Input", () => {
       const container = testContainer.getContainer().firstElementChild;
 
       // Then: invalid状態のクラスが適用される（実際のCVAクラス名）
-      expect(container?.className).toContain("border-negative-500");
+      expect(container?.className).toContain(
+        "border-border-negative-extra-high-enabled"
+      );
     });
 
     it("maintains invalid state with icon button", () => {
@@ -264,7 +266,9 @@ describe("Input", () => {
       const container = testContainer.getContainer().firstElementChild;
 
       // Then: invalid状態のクラスが保持される（実際のCVAクラス名）
-      expect(container?.className).toContain("border-negative-500");
+      expect(container?.className).toContain(
+        "border-border-negative-extra-high-enabled"
+      );
     });
   });
 

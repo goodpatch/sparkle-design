@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
  */
 const textareaVariants = cva(
   // ベーススタイル
-  "flex w-full rounded-action border bg-surface-base-0 px-3 py-1 ring-offset-background placeholder:text-base-400 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2 resize",
+  "flex w-full rounded-action border bg-surface-base-0 px-3 py-1 ring-offset-background placeholder:text-text-neutral-low focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2 resize",
   {
     variants: {
       // サイズバリアント（sm, md, lg）
@@ -26,14 +26,14 @@ const textareaVariants = cva(
       },
       // エラー状態のバリアント
       isInvalid: {
-        true: "border-negative-500 hover:border-negative-600 focus-visible:border-negative-600",
+        true: "border-border-negative-extra-high-enabled hover:border-border-negative-extra-high-hover focus-visible:border-border-negative-extra-high-hover",
         false:
-          "border-neutral-500 hover:border-neutral-600 focus-visible:border-neutral-600",
+          "border-border-neutral-extra-high-enabled hover:border-border-neutral-extra-high-hover focus-visible:border-border-neutral-extra-high-hover",
       },
       // 無効状態のバリアント
       isDisabled: {
         false: "",
-        true: "cursor-not-allowed text-base-300 placeholder:text-base-300 focus-visible:ring-0",
+        true: "cursor-not-allowed text-text-neutral-disabled placeholder:text-text-neutral-disabled focus-visible:ring-0",
       },
     },
     // 複合バリアント（複数の状態の組み合わせ）
@@ -43,13 +43,14 @@ const textareaVariants = cva(
         isInvalid: true,
         isDisabled: true,
         className:
-          "bg-neutral-50 border-negative-200 hover:border-negative-200",
+          "bg-surface-neutral-middle-disabled border-border-negative-extra-high-disabled hover:border-border-negative-extra-high-disabled",
       },
       // 無効状態かつ通常状態の場合
       {
         isInvalid: false,
         isDisabled: true,
-        className: "bg-neutral-50 border-neutral-200 hover:border-neutral-200",
+        className:
+          "bg-surface-neutral-middle-disabled border-border-neutral-extra-high-disabled hover:border-border-neutral-extra-high-disabled",
       },
     ],
     // デフォルト値

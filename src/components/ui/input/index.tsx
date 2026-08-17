@@ -21,8 +21,8 @@ const inputVariants = cva(
         lg: "h-12 character-4-regular-pro",
       },
       isInvalid: {
-        true: "border-negative-500",
-        false: "border-neutral-500",
+        true: "border-border-negative-extra-high-enabled",
+        false: "border-border-neutral-extra-high-enabled",
       },
       isDisabled: {
         true: "cursor-not-allowed",
@@ -38,26 +38,29 @@ const inputVariants = cva(
       {
         isInvalid: false,
         isDisabled: false,
-        className: "border-neutral-500 hover:border-neutral-600",
+        className:
+          "border-border-neutral-extra-high-enabled hover:border-border-neutral-extra-high-hover",
       },
       // エラー状態
       {
         isInvalid: true,
         isDisabled: false,
         className:
-          "border-negative-500 hover:border-negative-600 bg-surface-base-0",
+          "border-border-negative-extra-high-enabled hover:border-border-negative-extra-high-hover bg-surface-base-0",
       },
       // 無効状態
       {
         isInvalid: false,
         isDisabled: true,
-        className: "border-neutral-200 bg-neutral-50",
+        className:
+          "border-border-neutral-extra-high-disabled bg-surface-neutral-middle-disabled",
       },
       // エラー+無効状態
       {
         isInvalid: true,
         isDisabled: true,
-        className: "border-negative-200 bg-neutral-50",
+        className:
+          "border-border-negative-extra-high-disabled bg-surface-neutral-middle-disabled",
       },
     ],
     defaultVariants: {
@@ -360,7 +363,7 @@ function Input({
           "w-full h-full bg-transparent border-none outline-hidden focus:outline-hidden",
           "text-text-neutral-high placeholder:text-text-neutral-low px-2",
           isInputDisabled &&
-            "cursor-not-allowed text-neutral-400 placeholder:text-text-neutral-disabled"
+            "cursor-not-allowed text-text-neutral-disabled placeholder:text-text-neutral-disabled"
         )}
         onChange={handleChange}
         onFocus={handleInputFocus}

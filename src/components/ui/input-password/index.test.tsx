@@ -246,7 +246,9 @@ describe("InputPassword", () => {
       const container = testContainer.getContainer().firstElementChild;
 
       // Then: invalid状態のクラスが適用されている（実際のCVAクラス名）
-      expect(container?.className).toContain("border-negative-500");
+      expect(container?.className).toContain(
+        "border-border-negative-extra-high-enabled"
+      );
     });
 
     it("maintains invalid state styling when visibility is toggled", () => {
@@ -259,7 +261,9 @@ describe("InputPassword", () => {
       EventHelpers.click(button);
 
       // Then: invalid状態のスタイリングが維持される（実際のCVAクラス名）
-      expect(container?.className).toContain("border-negative-500");
+      expect(container?.className).toContain(
+        "border-border-negative-extra-high-enabled"
+      );
     });
   });
 

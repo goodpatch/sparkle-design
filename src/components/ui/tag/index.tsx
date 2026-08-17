@@ -35,31 +35,31 @@ const tagVariants = cva(
       {
         variant: "solid",
         status: "neutral",
-        className: "bg-neutral-500 text-white",
+        className: "bg-object-neutral-middle text-text-inverse",
       },
       // info + solid
       {
         variant: "solid",
         status: "info",
-        className: "bg-primary-500 text-white",
+        className: "bg-object-info text-text-inverse",
       },
       // success + solid
       {
         variant: "solid",
         status: "success",
-        className: "bg-success-500 text-white",
+        className: "bg-object-success text-text-inverse",
       },
       // warning + solid
       {
         variant: "solid",
         status: "warning",
-        className: "bg-warning-500 text-white",
+        className: "bg-object-warning text-text-inverse",
       },
       // negative + solid
       {
         variant: "solid",
         status: "negative",
-        className: "bg-negative-500 text-white",
+        className: "bg-object-negative-enabled text-text-inverse",
       },
 
       // === OUTLINE バリアント ===
@@ -67,31 +67,33 @@ const tagVariants = cva(
       {
         variant: "outline",
         status: "neutral",
-        className: "border-neutral-500 text-neutral-500 bg-surface-base-0",
+        className:
+          "border-object-neutral-middle text-text-neutral-middle bg-surface-base-0",
       },
       // info + outline
       {
         variant: "outline",
         status: "info",
-        className: "border-primary-500 text-primary-500 bg-surface-base-0",
+        className: "border-object-info text-text-info bg-surface-base-0",
       },
       // success + outline
       {
         variant: "outline",
         status: "success",
-        className: "border-success-500 text-success-500 bg-surface-base-0",
+        className: "border-object-success text-text-success bg-surface-base-0",
       },
       // warning + outline
       {
         variant: "outline",
         status: "warning",
-        className: "border-warning-500 text-warning-500 bg-surface-base-0",
+        className: "border-object-warning text-text-warning bg-surface-base-0",
       },
       // negative + outline
       {
         variant: "outline",
         status: "negative",
-        className: "border-negative-500 text-negative-500 bg-surface-base-0",
+        className:
+          "border-object-negative-enabled text-text-negative-enabled bg-surface-base-0",
       },
 
       // === SUBTLE バリアント ===
@@ -99,31 +101,32 @@ const tagVariants = cva(
       {
         variant: "subtle",
         status: "neutral",
-        className: "bg-neutral-100 text-neutral-600",
+        className: "bg-surface-neutral-middle-enabled text-text-neutral-middle",
       },
       // info + subtle
       {
         variant: "subtle",
         status: "info",
-        className: "bg-primary-100 text-primary-600",
+        className: "bg-surface-info-low text-text-info",
       },
       // success + subtle
       {
         variant: "subtle",
         status: "success",
-        className: "bg-success-100 text-success-600",
+        className: "bg-surface-success-low text-text-success",
       },
       // warning + subtle
       {
         variant: "subtle",
         status: "warning",
-        className: "bg-warning-100 text-warning-600",
+        className: "bg-surface-warning-low text-text-warning",
       },
       // negative + subtle
       {
         variant: "subtle",
         status: "negative",
-        className: "bg-negative-100 text-negative-600",
+        className:
+          "bg-surface-negative-middle-enabled text-text-negative-enabled",
       },
     ],
     defaultVariants: {
