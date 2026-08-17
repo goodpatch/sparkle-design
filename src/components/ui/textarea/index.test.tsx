@@ -82,7 +82,9 @@ describe("Textarea", () => {
       testContainer.render(<Textarea isInvalid />);
       const el = testContainer.querySelector<HTMLTextAreaElement>("textarea");
       // THEN: エラークラス
-      expect(el.className).toContain("border-negative-500");
+      expect(el.className).toContain(
+        "border-border-negative-extra-high-enabled"
+      );
     });
   });
 

@@ -58,9 +58,12 @@ describe("Tag", () => {
 
   describe("Variant Styling", () => {
     const variants = [
-      { variant: "solid" as const, expected: "bg-neutral-500" },
+      { variant: "solid" as const, expected: "bg-object-neutral-middle" },
       { variant: "outline" as const, expected: "bg-surface-base-0" },
-      { variant: "subtle" as const, expected: "bg-neutral-100" },
+      {
+        variant: "subtle" as const,
+        expected: "bg-surface-neutral-middle-enabled",
+      },
     ];
 
     variants.forEach(({ variant, expected }) => {
@@ -94,11 +97,11 @@ describe("Tag", () => {
 
   describe("Status Variants", () => {
     const statuses = [
-      { status: "neutral" as const, expected: "bg-neutral-500" },
-      { status: "info" as const, expected: "bg-primary-500" },
-      { status: "success" as const, expected: "bg-success-500" },
-      { status: "warning" as const, expected: "bg-warning-500" },
-      { status: "negative" as const, expected: "bg-negative-500" },
+      { status: "neutral" as const, expected: "bg-object-neutral-middle" },
+      { status: "info" as const, expected: "bg-object-info" },
+      { status: "success" as const, expected: "bg-object-success" },
+      { status: "warning" as const, expected: "bg-object-warning" },
+      { status: "negative" as const, expected: "bg-object-negative-enabled" },
     ];
 
     statuses.forEach(({ status, expected }) => {
@@ -125,7 +128,7 @@ describe("Tag", () => {
 
       // Then: すべてのプロパティが適用される
       expect(tag).toHaveClass("border", "min-w-14", "custom");
-      expect(tag.className).toContain("border-primary-500");
+      expect(tag.className).toContain("border-object-info");
     });
   });
 
