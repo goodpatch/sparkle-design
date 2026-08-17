@@ -1,76 +1,76 @@
 /* Primitive Tokens */
 :root {
   /* 色 */
-  --color-blue-50: oklch(0.9632 0.0217 230.5);
-  --color-blue-100: oklch(0.9293 0.0407 233.3);
-  --color-blue-200: oklch(0.8417 0.0872 240.9);
-  --color-blue-300: oklch(0.7469 0.1366 248.5);
-  --color-blue-400: oklch(0.6418 0.1951 255);
-  --color-blue-500: oklch(0.5399 0.1906 257.5);
-  --color-blue-600: oklch(0.4509 0.1641 258.2);
-  --color-blue-700: oklch(0.379 0.1412 258.7);
-  --color-blue-800: oklch(0.321 0.1084 259.1);
-  --color-blue-900: oklch(0.2635 0.1022 259);
-  --color-red-50: oklch(0.9798 0.0098 25.1);
-  --color-red-100: oklch(0.9427 0.0286 20.3);
-  --color-red-200: oklch(0.8541 0.0791 20.8);
-  --color-red-300: oklch(0.7463 0.1536 21);
-  --color-red-400: oklch(0.6568 0.217 24.4);
-  --color-red-500: oklch(0.5517 0.2051 24.5);
-  --color-red-600: oklch(0.4591 0.1777 21.9);
-  --color-red-700: oklch(0.387 0.1507 20.8);
-  --color-red-800: oklch(0.3233 0.1296 18.4);
-  --color-red-900: oklch(0.2649 0.1059 14.7);
-  --color-orange-50: oklch(0.9659 0.022 63.2);
-  --color-orange-100: oklch(0.9066 0.0635 63.8);
-  --color-orange-200: oklch(0.8344 0.1125 59.7);
-  --color-orange-300: oklch(0.7534 0.1573 52.4);
-  --color-orange-400: oklch(0.6653 0.1638 48.8);
-  --color-orange-500: oklch(0.5572 0.1601 44.7);
-  --color-orange-600: oklch(0.4657 0.1371 43.3);
-  --color-orange-700: oklch(0.3953 0.1146 44.2);
-  --color-orange-800: oklch(0.3339 0.0949 45.4);
-  --color-orange-900: oklch(0.2774 0.0809 43.8);
-  --color-yellow-50: oklch(0.9846 0.0329 99.5);
-  --color-yellow-100: oklch(0.9465 0.0678 92.7);
-  --color-yellow-200: oklch(0.8849 0.1243 89.1);
-  --color-yellow-300: oklch(0.8111 0.166 86.4);
-  --color-yellow-400: oklch(0.6925 0.1442 78.3);
-  --color-yellow-500: oklch(0.5542 0.1169 75);
-  --color-yellow-600: oklch(0.4665 0.1009 70.2);
-  --color-yellow-700: oklch(0.3937 0.0852 68.9);
-  --color-yellow-800: oklch(0.3298 0.0722 68.3);
-  --color-yellow-900: oklch(0.2803 0.0602 71.5);
-  --color-purple-50: oklch(0.9661 0.0246 317.7);
-  --color-purple-100: oklch(0.9105 0.0565 308.3);
-  --color-purple-200: oklch(0.8362 0.1012 304.5);
-  --color-purple-300: oklch(0.7564 0.1508 302);
-  --color-purple-400: oklch(0.669 0.1902 297.4);
-  --color-purple-500: oklch(0.5631 0.2069 295);
-  --color-purple-600: oklch(0.4743 0.1908 293.8);
-  --color-purple-700: oklch(0.4024 0.1668 293.9);
-  --color-purple-800: oklch(0.3397 0.143 292.9);
-  --color-purple-900: oklch(0.2834 0.1259 291.7);
-  --color-green-50: oklch(0.9787 0.024 151.2);
-  --color-green-100: oklch(0.9311 0.0733 151.4);
-  --color-green-200: oklch(0.8119 0.154 150.1);
-  --color-green-300: oklch(0.7257 0.1643 149.5);
-  --color-green-400: oklch(0.6343 0.162 148.4);
-  --color-green-500: oklch(0.5244 0.1401 148);
-  --color-green-600: oklch(0.4391 0.1179 148.1);
-  --color-green-700: oklch(0.3741 0.1042 148.5);
-  --color-green-800: oklch(0.3144 0.0881 149.3);
-  --color-green-900: oklch(0.26 0.0698 151.1);
-  --color-pink-50: oklch(0.967 0.0201 345.7);
-  --color-pink-100: oklch(0.9112 0.058 344.3);
-  --color-pink-200: oklch(0.8395 0.1106 345.7);
-  --color-pink-300: oklch(0.7647 0.1734 346.9);
-  --color-pink-400: oklch(0.6759 0.1953 347.5);
-  --color-pink-500: oklch(0.5655 0.1871 348);
-  --color-pink-600: oklch(0.4767 0.1641 347.1);
-  --color-pink-700: oklch(0.4013 0.1343 346);
-  --color-pink-800: oklch(0.3423 0.1236 344.8);
-  --color-pink-900: oklch(0.2827 0.1157 345.2);
+  --color-blue-50: oklch(0.9756 0.011 243.7);
+  --color-blue-100: oklch(0.924 0.036 245.6);
+  --color-blue-200: oklch(0.8456 0.075 249.3);
+  --color-blue-300: oklch(0.7735 0.1108 251.3);
+  --color-blue-400: oklch(0.6947 0.1527 252.3);
+  --color-blue-500: oklch(0.6187 0.1947 255.8);
+  --color-blue-600: oklch(0.5522 0.2059 258.7);
+  --color-blue-700: oklch(0.491 0.1695 257.6);
+  --color-blue-800: oklch(0.4203 0.1526 258.4);
+  --color-blue-900: oklch(0.345 0.1206 257.7);
+  --color-red-50: oklch(0.9669 0.0162 17.4);
+  --color-red-100: oklch(0.9341 0.0332 20);
+  --color-red-200: oklch(0.8521 0.0804 20.8);
+  --color-red-300: oklch(0.7524 0.1318 22.4);
+  --color-red-400: oklch(0.689 0.1654 24.5);
+  --color-red-500: oklch(0.6363 0.1813 25.6);
+  --color-red-600: oklch(0.5656 0.1869 27.3);
+  --color-red-700: oklch(0.499 0.1804 28.1);
+  --color-red-800: oklch(0.4145 0.144 27.3);
+  --color-red-900: oklch(0.332 0.1112 26.8);
+  --color-orange-50: oklch(0.978 0.0109 54.5);
+  --color-orange-100: oklch(0.9335 0.0323 55.4);
+  --color-orange-200: oklch(0.8786 0.0648 56.9);
+  --color-orange-300: oklch(0.8033 0.1044 55.6);
+  --color-orange-400: oklch(0.7577 0.1302 53.7);
+  --color-orange-500: oklch(0.7003 0.1453 53.3);
+  --color-orange-600: oklch(0.6361 0.1549 49.3);
+  --color-orange-700: oklch(0.5693 0.1477 48);
+  --color-orange-800: oklch(0.4231 0.1098 48);
+  --color-orange-900: oklch(0.308 0.0756 49.8);
+  --color-yellow-50: oklch(0.9883 0.0211 101);
+  --color-yellow-100: oklch(0.9716 0.0472 99.4);
+  --color-yellow-200: oklch(0.9496 0.0725 99.1);
+  --color-yellow-300: oklch(0.9023 0.1178 98.3);
+  --color-yellow-400: oklch(0.8645 0.1451 96.6);
+  --color-yellow-500: oklch(0.8249 0.1668 93.6);
+  --color-yellow-600: oklch(0.7054 0.1427 92);
+  --color-yellow-700: oklch(0.5601 0.1107 92.9);
+  --color-yellow-800: oklch(0.4256 0.0834 93.5);
+  --color-yellow-900: oklch(0.2894 0.0561 92.4);
+  --color-purple-50: oklch(0.965 0.0177 300.1);
+  --color-purple-100: oklch(0.9291 0.039 301.9);
+  --color-purple-200: oklch(0.8572 0.0778 300.6);
+  --color-purple-300: oklch(0.7742 0.1251 299.3);
+  --color-purple-400: oklch(0.6983 0.165 297.8);
+  --color-purple-500: oklch(0.6176 0.1829 297);
+  --color-purple-600: oklch(0.5383 0.1976 294.9);
+  --color-purple-700: oklch(0.4669 0.1764 294.7);
+  --color-purple-800: oklch(0.4084 0.1504 294.6);
+  --color-purple-900: oklch(0.3177 0.1113 296.2);
+  --color-green-50: oklch(0.9705 0.0165 162.8);
+  --color-green-100: oklch(0.9362 0.0412 160.9);
+  --color-green-200: oklch(0.8859 0.073 161.1);
+  --color-green-300: oklch(0.8312 0.117 158.3);
+  --color-green-400: oklch(0.7699 0.1498 156);
+  --color-green-500: oklch(0.6997 0.1644 154.5);
+  --color-green-600: oklch(0.6268 0.1457 154.7);
+  --color-green-700: oklch(0.5306 0.1225 154.9);
+  --color-green-800: oklch(0.4368 0.098 155.2);
+  --color-green-900: oklch(0.3305 0.0715 155.5);
+  --color-pink-50: oklch(0.9717 0.0149 338.9);
+  --color-pink-100: oklch(0.9321 0.0345 342.2);
+  --color-pink-200: oklch(0.8663 0.0721 341.3);
+  --color-pink-300: oklch(0.7954 0.1121 343.2);
+  --color-pink-400: oklch(0.712 0.1648 345.2);
+  --color-pink-500: oklch(0.6357 0.2123 348);
+  --color-pink-600: oklch(0.5729 0.2198 350.5);
+  --color-pink-700: oklch(0.4825 0.1565 347.7);
+  --color-pink-800: oklch(0.4198 0.135 347.8);
+  --color-pink-900: oklch(0.3277 0.0997 347.6);
   --color-black: oklch(0 0 0);
   --color-white: oklch(1 0 0);
   --color-black-alpha-50: oklch(0 0 0 / 0.051);
@@ -80,9 +80,9 @@
   --color-black-alpha-400: oklch(0 0 0 / 0.4);
   --color-black-alpha-500: oklch(0 0 0 / 0.502);
   --color-black-alpha-600: oklch(0 0 0 / 0.6);
-  --color-black-alpha-700: oklch(0 0 0 / 0.702);
+  --color-black-alpha-700: oklch(0 0 0 / 0.698);
   --color-black-alpha-800: oklch(0 0 0 / 0.8);
-  --color-black-alpha-900: oklch(0 0 0 / 0.902);
+  --color-black-alpha-900: oklch(0 0 0 / 0.898);
   --color-white-alpha-50: oklch(1 0 0 / 0.051);
   --color-white-alpha-100: oklch(1 0 0 / 0.102);
   --color-white-alpha-200: oklch(1 0 0 / 0.2);
@@ -90,20 +90,20 @@
   --color-white-alpha-400: oklch(1 0 0 / 0.4);
   --color-white-alpha-500: oklch(1 0 0 / 0.502);
   --color-white-alpha-600: oklch(1 0 0 / 0.6);
-  --color-white-alpha-700: oklch(1 0 0 / 0.702);
+  --color-white-alpha-700: oklch(1 0 0 / 0.698);
   --color-white-alpha-800: oklch(1 0 0 / 0.8);
-  --color-white-alpha-900: oklch(1 0 0 / 0.902);
-  --color-ring-normal: oklch(0.5478 0.1896 257);
-  --color-gray-50: oklch(0.9782 0.0034 247.9);
-  --color-gray-100: oklch(0.9472 0.0069 247.9);
-  --color-gray-200: oklch(0.8758 0.0123 248);
-  --color-gray-300: oklch(0.7783 0.0163 248);
-  --color-gray-400: oklch(0.6658 0.0181 250.9);
-  --color-gray-500: oklch(0.5651 0.0189 251);
-  --color-gray-600: oklch(0.4849 0.0196 251);
-  --color-gray-700: oklch(0.4053 0.0184 251.4);
-  --color-gray-800: oklch(0.3378 0.0148 252.3);
-  --color-gray-900: oklch(0.2785 0.0132 253);
+  --color-white-alpha-900: oklch(1 0 0 / 0.898);
+  --color-ring-normal: oklch(0.491 0.1695 257.6);
+  --color-gray-50: oklch(0.9689 0.0025 228.8);
+  --color-gray-100: oklch(0.9291 0.0069 247.9);
+  --color-gray-200: oklch(0.8893 0.0099 252.8);
+  --color-gray-300: oklch(0.8073 0.0184 253.4);
+  --color-gray-400: oklch(0.7402 0.0237 254.4);
+  --color-gray-500: oklch(0.6669 0.0306 251.6);
+  --color-gray-600: oklch(0.5665 0.0254 248.3);
+  --color-gray-700: oklch(0.4489 0.02 251.1);
+  --color-gray-800: oklch(0.3753 0.0152 248.2);
+  --color-gray-900: oklch(0.2983 0.0115 248.2);
 
   /* 角丸変数 */
   --radius-none: 0; /* 0px */
@@ -165,18 +165,38 @@
 
   /* シャドウ */
   /* Primitive */
+  /* Figma の Box Shadow Primitives（⬢ Effects ページ）と 1:1 対応する。
+     各段は「近距離で締める層」と「遠距離で広げる層」の 2 層構成で、
+     alpha は 2xs〜md が 5%（--color-black-alpha-50）、lg 以上は
+     1 層目のみ 10%（--color-black-alpha-100）に上がる。
+     en: Mirrors Figma's Box Shadow primitives 1:1. Each step is a
+     two-layer shadow (a tight layer plus a diffuse one). Alpha is 5%
+     through `md`; from `lg` up the tight layer steps to 10%. */
   --shadow-none: 0px 0px 0px 0px var(--color-black);
-  --shadow-2xs: 0px 1px 0px 0px var(--color-black-alpha-50);
-  --shadow-xs: 0px 1px 2px 0px var(--color-black-alpha-50);
+  --shadow-2xs:
+    0px 1.7px 2.4px 0px var(--color-black-alpha-50),
+    0px 0.8px 5.5px 0px var(--color-black-alpha-50);
+  --shadow-xs:
+    0px 3.4px 4.7px 0px var(--color-black-alpha-50),
+    0px 1.7px 11px 0px var(--color-black-alpha-50);
   --shadow-sm:
-    0px 1px 3px 0px var(--color-black-alpha-100),
-    0px 1px 2px -1px var(--color-black-alpha-100);
+    0px 6.7px 9.4px 0px var(--color-black-alpha-50),
+    0px 2.5px 17px 0px var(--color-black-alpha-50);
   --shadow-md:
-    0px 4px 6px -1px var(--color-black-alpha-100),
-    0px 2px 4px -2px var(--color-black-alpha-100);
+    0px 6.7px 9.4px 0px var(--color-black-alpha-50),
+    0px 3.4px 22px 0px var(--color-black-alpha-50);
   --shadow-lg:
-    0px 10px 15px -3px var(--color-black-alpha-100),
-    0px 4px 6px -4px var(--color-black-alpha-100);
+    0px 10px 14px 0px var(--color-black-alpha-100),
+    0px 5px 33px 0px var(--color-black-alpha-50);
+  --shadow-xl:
+    0px 13.5px 19px 0px var(--color-black-alpha-100),
+    0px 6.7px 44px 0px var(--color-black-alpha-50);
+  --shadow-2xl:
+    0px 17px 24px 0px var(--color-black-alpha-100),
+    0px 8px 55px 0px var(--color-black-alpha-50);
+  --shadow-3xl:
+    0px 22px 31px 0px var(--color-black-alpha-100),
+    0px 11px 72px 0px var(--color-black-alpha-50);
 }
 
 /* ベーススタイル */
@@ -290,14 +310,566 @@
   --color-base-800: var(--color-gray-800);
   --color-base-900: var(--color-gray-900);
 
+  /* ------------------------------------------------------------------
+     用途別セマンティックカラー（Figma `Colors: Semantics` と 1:1 対応）
+
+     Figma のパス（例: surface/primary/high/enabled）をそのまま
+     `--color-surface-primary-high-enabled` に写している。Figma の
+     アノテーションが指示する移行先をそのまま変数名として引ける。
+
+     軸: 用途（surface = 背景 / border = 枠線 / object = アイコン等 /
+     text = 文字）× 意味（neutral / primary / negative / info / success /
+     warning / accent / inverse）× 強度（extra-high / high / middle / low）
+     × 状態（enabled / hover / active / disabled）。
+     **状態をトークン名に内包する**のが旧セマンティック層との最大の違い。
+
+     `primary` 系は sparkle.config.json の primary 設定に追従させるため
+     blue を経由する。`info` / `success` / `warning` はステータス色
+     なので primary 設定に関わらず固定色相を参照する（旧 --color-info-* と
+     同じ扱い）。
+
+     en: 1:1 mirror of Figma's `Colors: Semantics`. The Figma path becomes
+     the variable name verbatim, so an annotation's migration target can be
+     used as-is. Unlike the legacy semantic layer, interaction state is part
+     of the token name. `primary` follows the configured primary color;
+     status hues (info/success/warning) stay fixed.
+     ------------------------------------------------------------------ */
+
+  /* surface — 背景 */
+  --color-surface-base-0: var(--color-white);
+  --color-surface-base-100: var(--color-gray-100);
+  --color-surface-base-200: var(--color-gray-200);
+
+  --color-surface-neutral-high-enabled: var(--color-gray-600);
+  --color-surface-neutral-high-hover: var(--color-gray-700);
+  --color-surface-neutral-high-active: var(--color-gray-800);
+  --color-surface-neutral-high-disabled: var(--color-gray-200);
+  --color-surface-neutral-middle-enabled: var(--color-gray-50);
+  --color-surface-neutral-middle-hover: var(--color-gray-100);
+  --color-surface-neutral-middle-active: var(--color-gray-200);
+  --color-surface-neutral-middle-disabled: var(--color-gray-50);
+  --color-surface-neutral-low-hover: var(--color-black-alpha-50);
+  --color-surface-neutral-low-active: var(--color-black-alpha-100);
+  --color-surface-neutral-low-disabled: var(--color-white-alpha-700);
+
+  --color-surface-primary-high-enabled: var(--color-blue-600);
+  --color-surface-primary-high-hover: var(--color-blue-700);
+  --color-surface-primary-high-active: var(--color-blue-800);
+  --color-surface-primary-high-disabled: var(--color-blue-200);
+  --color-surface-primary-middle-enabled: var(--color-blue-50);
+  --color-surface-primary-middle-hover: var(--color-blue-100);
+  --color-surface-primary-middle-active: var(--color-blue-200);
+  --color-surface-primary-middle-disabled: var(--color-blue-50);
+  /* NOTE: surface/{primary,negative}/low/{hover,active} の 4 つは Figma でも
+     エイリアスではなく実値（#1d83f714 / #1d83f72e / #e4534e14 / #e4534e2e）。
+     これは「不透明なプリミティブのどれか」ではなく **primary(negative) を
+     敷いた透明色**であり、単色トークンのエイリアスでは表現できないため。
+     ベース色は blue/500(#1d83f7) / red/500(#e4534e) と完全一致しており、
+     アルファは 0x14 = 7.84% / 0x2e = 18.04%。意図どおりのティントとして
+     color-mix で表現し、primary 設定に追従させる。
+     en: The only literal (non-alias) values in Figma — tints of
+     primary/negative that an alias cannot express. Their base colors match
+     blue/500 and red/500 exactly; alpha is 0x14 (7.84%) and 0x2e (18.04%).
+     Modeled as color-mix so they follow the configured primary. */
+  --color-surface-primary-low-hover: color-mix(in srgb, var(--color-blue-500) 8%, transparent);
+  --color-surface-primary-low-active: color-mix(in srgb, var(--color-blue-500) 18%, transparent);
+  --color-surface-primary-low-disabled: var(--color-white-alpha-700);
+
+  --color-surface-negative-high-enabled: var(--color-red-600);
+  --color-surface-negative-high-hover: var(--color-red-700);
+  --color-surface-negative-high-active: var(--color-red-800);
+  --color-surface-negative-high-disabled: var(--color-red-200);
+  --color-surface-negative-middle-enabled: var(--color-red-50);
+  --color-surface-negative-middle-hover: var(--color-red-100);
+  --color-surface-negative-middle-active: var(--color-red-200);
+  --color-surface-negative-middle-disabled: var(--color-red-50);
+  --color-surface-negative-low-hover: color-mix(in srgb, var(--color-red-500) 8%, transparent);
+  --color-surface-negative-low-active: color-mix(in srgb, var(--color-red-500) 18%, transparent);
+  --color-surface-negative-low-disabled: var(--color-white-alpha-700);
+
+  --color-surface-info-high: var(--color-blue-500);
+  --color-surface-info-middle: var(--color-blue-100);
+  --color-surface-info-low: var(--color-blue-50);
+  --color-surface-success-high: var(--color-green-500);
+  --color-surface-success-middle: var(--color-green-100);
+  --color-surface-success-low: var(--color-green-50);
+  --color-surface-warning-high: var(--color-yellow-600);
+  --color-surface-warning-middle: var(--color-yellow-100);
+  --color-surface-warning-low: var(--color-yellow-50);
+
+  --color-surface-accent-1: var(--color-purple-600);
+  --color-surface-accent-2: var(--color-orange-700);
+  --color-surface-accent-3: var(--color-pink-600);
+
+  --color-surface-inverse: var(--color-gray-900);
+  --color-surface-overlay: var(--color-black-alpha-300);
+
+  /* border — 枠線 */
+  --color-border-neutral-extra-high-enabled: var(--color-gray-500);
+  --color-border-neutral-extra-high-hover: var(--color-gray-600);
+  --color-border-neutral-extra-high-disabled: var(--color-gray-200);
+  --color-border-neutral-high: var(--color-gray-300);
+  --color-border-neutral-middle: var(--color-gray-200);
+  --color-border-neutral-low: var(--color-gray-100);
+
+  --color-border-primary-extra-high: var(--color-blue-500);
+  --color-border-primary-high: var(--color-blue-300);
+  --color-border-primary-low: var(--color-blue-100);
+
+  --color-border-negative-extra-high-enabled: var(--color-red-500);
+  --color-border-negative-extra-high-hover: var(--color-red-600);
+  --color-border-negative-extra-high-disabled: var(--color-red-200);
+  --color-border-negative-high: var(--color-red-300);
+  --color-border-negative-low: var(--color-red-100);
+
+  --color-border-info: var(--color-blue-300);
+  --color-border-success: var(--color-green-300);
+  --color-border-warning: var(--color-yellow-300);
+  /* Figma の定義どおり blue/700 固定（primary 設定には追従しない）。
+     旧 --color-ring-normal の移行先。
+     en: Fixed to blue/700 exactly as defined in Figma — it does not follow
+     the configured primary color. Migration target of --color-ring-normal. */
+  --color-border-ring: var(--color-blue-700);
+
+  /* object — アイコン等の図形 */
+  --color-object-neutral-high: var(--color-gray-900);
+  --color-object-neutral-middle: var(--color-gray-700);
+  --color-object-neutral-low: var(--color-gray-500);
+  --color-object-neutral-disabled: var(--color-gray-300);
+
+  --color-object-primary-enabled: var(--color-blue-600);
+  --color-object-primary-hover: var(--color-blue-700);
+  --color-object-primary-active: var(--color-blue-800);
+  --color-object-primary-disabled: var(--color-blue-200);
+
+  --color-object-negative-enabled: var(--color-red-600);
+  --color-object-negative-hover: var(--color-red-700);
+  --color-object-negative-active: var(--color-red-800);
+  --color-object-negative-disabled: var(--color-red-200);
+
+  --color-object-info: var(--color-blue-600);
+  --color-object-success: var(--color-green-700);
+  --color-object-warning: var(--color-yellow-700);
+  --color-object-inverse: var(--color-white);
+
+  /* text — 文字 */
+  --color-text-neutral-high: var(--color-gray-900);
+  --color-text-neutral-middle: var(--color-gray-700);
+  --color-text-neutral-low: var(--color-gray-500);
+  --color-text-neutral-disabled: var(--color-gray-300);
+
+  --color-text-primary-enabled: var(--color-blue-600);
+  --color-text-primary-hover: var(--color-blue-700);
+  --color-text-primary-active: var(--color-blue-800);
+  --color-text-primary-disabled: var(--color-blue-200);
+
+  --color-text-negative-enabled: var(--color-red-600);
+  --color-text-negative-hover: var(--color-red-700);
+  --color-text-negative-active: var(--color-red-800);
+  --color-text-negative-disabled: var(--color-red-200);
+
+  --color-text-info: var(--color-blue-600);
+  --color-text-success: var(--color-green-700);
+  --color-text-warning: var(--color-yellow-700);
+  --color-text-inverse: var(--color-white);
+
+  /* ------------------------------------------------------------------
+     タイポグラフィのセマンティックトークン（Figma `Typography: Semantics` と 1:1 対応）
+
+     Figma のパス（例: character/1/regular-pro/font-size）をそのまま
+     `--character-1-regular-pro-font-size` に写している。下の @layer utilities
+     にある 72 クラス（character 48 + icon 24）は、この変数を参照する形に
+     揃えてあるので、値の定義箇所はここ 1 箇所だけになる。
+
+     en: 1:1 mirror of Figma's `Typography: Semantics`. The 72 utility
+     classes below consume these variables, so each value is declared once.
+     ------------------------------------------------------------------ */
+  --character-1-regular-pro-font-family: var(--font-family-pro);
+  --character-1-regular-pro-font-size: var(--font-size-12);
+  --character-1-regular-pro-font-weight: var(--font-weight-char-normal);
+  --character-1-regular-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-1-regular-pro-line-height: var(--line-height-20);
+  --character-1-regular-mono-font-family: var(--font-family-mono);
+  --character-1-regular-mono-font-size: var(--font-size-12);
+  --character-1-regular-mono-font-weight: var(--font-weight-char-normal);
+  --character-1-regular-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-1-regular-mono-line-height: var(--line-height-20);
+  --character-1-bold-pro-font-family: var(--font-family-pro);
+  --character-1-bold-pro-font-size: var(--font-size-12);
+  --character-1-bold-pro-font-weight: var(--font-weight-char-bold);
+  --character-1-bold-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-1-bold-pro-line-height: var(--line-height-20);
+  --character-1-bold-mono-font-family: var(--font-family-mono);
+  --character-1-bold-mono-font-size: var(--font-size-12);
+  --character-1-bold-mono-font-weight: var(--font-weight-char-bold);
+  --character-1-bold-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-1-bold-mono-line-height: var(--line-height-20);
+  --character-2-regular-pro-font-family: var(--font-family-pro);
+  --character-2-regular-pro-font-size: var(--font-size-14);
+  --character-2-regular-pro-font-weight: var(--font-weight-char-normal);
+  --character-2-regular-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-2-regular-pro-line-height: var(--line-height-24);
+  --character-2-regular-mono-font-family: var(--font-family-mono);
+  --character-2-regular-mono-font-size: var(--font-size-14);
+  --character-2-regular-mono-font-weight: var(--font-weight-char-normal);
+  --character-2-regular-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-2-regular-mono-line-height: var(--line-height-24);
+  --character-2-bold-pro-font-family: var(--font-family-pro);
+  --character-2-bold-pro-font-size: var(--font-size-14);
+  --character-2-bold-pro-font-weight: var(--font-weight-char-bold);
+  --character-2-bold-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-2-bold-pro-line-height: var(--line-height-24);
+  --character-2-bold-mono-font-family: var(--font-family-mono);
+  --character-2-bold-mono-font-size: var(--font-size-14);
+  --character-2-bold-mono-font-weight: var(--font-weight-char-bold);
+  --character-2-bold-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-2-bold-mono-line-height: var(--line-height-24);
+  --character-3-regular-pro-font-family: var(--font-family-pro);
+  --character-3-regular-pro-font-size: var(--font-size-16);
+  --character-3-regular-pro-font-weight: var(--font-weight-char-normal);
+  --character-3-regular-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-3-regular-pro-line-height: var(--line-height-24);
+  --character-3-regular-mono-font-family: var(--font-family-mono);
+  --character-3-regular-mono-font-size: var(--font-size-16);
+  --character-3-regular-mono-font-weight: var(--font-weight-char-normal);
+  --character-3-regular-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-3-regular-mono-line-height: var(--line-height-24);
+  --character-3-bold-pro-font-family: var(--font-family-pro);
+  --character-3-bold-pro-font-size: var(--font-size-16);
+  --character-3-bold-pro-font-weight: var(--font-weight-char-bold);
+  --character-3-bold-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-3-bold-pro-line-height: var(--line-height-24);
+  --character-3-bold-mono-font-family: var(--font-family-mono);
+  --character-3-bold-mono-font-size: var(--font-size-16);
+  --character-3-bold-mono-font-weight: var(--font-weight-char-bold);
+  --character-3-bold-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-3-bold-mono-line-height: var(--line-height-24);
+  --character-4-regular-pro-font-family: var(--font-family-pro);
+  --character-4-regular-pro-font-size: var(--font-size-18);
+  --character-4-regular-pro-font-weight: var(--font-weight-char-normal);
+  --character-4-regular-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-4-regular-pro-line-height: var(--line-height-28);
+  --character-4-regular-mono-font-family: var(--font-family-mono);
+  --character-4-regular-mono-font-size: var(--font-size-18);
+  --character-4-regular-mono-font-weight: var(--font-weight-char-normal);
+  --character-4-regular-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-4-regular-mono-line-height: var(--line-height-28);
+  --character-4-bold-pro-font-family: var(--font-family-pro);
+  --character-4-bold-pro-font-size: var(--font-size-18);
+  --character-4-bold-pro-font-weight: var(--font-weight-char-bold);
+  --character-4-bold-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-4-bold-pro-line-height: var(--line-height-28);
+  --character-4-bold-mono-font-family: var(--font-family-mono);
+  --character-4-bold-mono-font-size: var(--font-size-18);
+  --character-4-bold-mono-font-weight: var(--font-weight-char-bold);
+  --character-4-bold-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-4-bold-mono-line-height: var(--line-height-28);
+  --character-5-regular-pro-font-family: var(--font-family-pro);
+  --character-5-regular-pro-font-size: var(--font-size-20);
+  --character-5-regular-pro-font-weight: var(--font-weight-char-normal);
+  --character-5-regular-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-5-regular-pro-line-height: var(--line-height-32);
+  --character-5-regular-mono-font-family: var(--font-family-mono);
+  --character-5-regular-mono-font-size: var(--font-size-20);
+  --character-5-regular-mono-font-weight: var(--font-weight-char-normal);
+  --character-5-regular-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-5-regular-mono-line-height: var(--line-height-32);
+  --character-5-bold-pro-font-family: var(--font-family-pro);
+  --character-5-bold-pro-font-size: var(--font-size-20);
+  --character-5-bold-pro-font-weight: var(--font-weight-char-bold);
+  --character-5-bold-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-5-bold-pro-line-height: var(--line-height-32);
+  --character-5-bold-mono-font-family: var(--font-family-mono);
+  --character-5-bold-mono-font-size: var(--font-size-20);
+  --character-5-bold-mono-font-weight: var(--font-weight-char-bold);
+  --character-5-bold-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-5-bold-mono-line-height: var(--line-height-32);
+  --character-6-regular-pro-font-family: var(--font-family-pro);
+  --character-6-regular-pro-font-size: var(--font-size-24);
+  --character-6-regular-pro-font-weight: var(--font-weight-char-normal);
+  --character-6-regular-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-6-regular-pro-line-height: var(--line-height-36);
+  --character-6-regular-mono-font-family: var(--font-family-mono);
+  --character-6-regular-mono-font-size: var(--font-size-24);
+  --character-6-regular-mono-font-weight: var(--font-weight-char-normal);
+  --character-6-regular-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-6-regular-mono-line-height: var(--line-height-36);
+  --character-6-bold-pro-font-family: var(--font-family-pro);
+  --character-6-bold-pro-font-size: var(--font-size-24);
+  --character-6-bold-pro-font-weight: var(--font-weight-char-bold);
+  --character-6-bold-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-6-bold-pro-line-height: var(--line-height-36);
+  --character-6-bold-mono-font-family: var(--font-family-mono);
+  --character-6-bold-mono-font-size: var(--font-size-24);
+  --character-6-bold-mono-font-weight: var(--font-weight-char-bold);
+  --character-6-bold-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-6-bold-mono-line-height: var(--line-height-36);
+  --character-7-regular-pro-font-family: var(--font-family-pro);
+  --character-7-regular-pro-font-size: var(--font-size-28);
+  --character-7-regular-pro-font-weight: var(--font-weight-char-normal);
+  --character-7-regular-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-7-regular-pro-line-height: var(--line-height-44);
+  --character-7-regular-mono-font-family: var(--font-family-mono);
+  --character-7-regular-mono-font-size: var(--font-size-28);
+  --character-7-regular-mono-font-weight: var(--font-weight-char-normal);
+  --character-7-regular-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-7-regular-mono-line-height: var(--line-height-44);
+  --character-7-bold-pro-font-family: var(--font-family-pro);
+  --character-7-bold-pro-font-size: var(--font-size-28);
+  --character-7-bold-pro-font-weight: var(--font-weight-char-bold);
+  --character-7-bold-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-7-bold-pro-line-height: var(--line-height-44);
+  --character-7-bold-mono-font-family: var(--font-family-mono);
+  --character-7-bold-mono-font-size: var(--font-size-28);
+  --character-7-bold-mono-font-weight: var(--font-weight-char-bold);
+  --character-7-bold-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-7-bold-mono-line-height: var(--line-height-44);
+  --character-8-regular-pro-font-family: var(--font-family-pro);
+  --character-8-regular-pro-font-size: var(--font-size-32);
+  --character-8-regular-pro-font-weight: var(--font-weight-char-normal);
+  --character-8-regular-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-8-regular-pro-line-height: var(--line-height-48);
+  --character-8-regular-mono-font-family: var(--font-family-mono);
+  --character-8-regular-mono-font-size: var(--font-size-32);
+  --character-8-regular-mono-font-weight: var(--font-weight-char-normal);
+  --character-8-regular-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-8-regular-mono-line-height: var(--line-height-48);
+  --character-8-bold-pro-font-family: var(--font-family-pro);
+  --character-8-bold-pro-font-size: var(--font-size-32);
+  --character-8-bold-pro-font-weight: var(--font-weight-char-bold);
+  --character-8-bold-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-8-bold-pro-line-height: var(--line-height-48);
+  --character-8-bold-mono-font-family: var(--font-family-mono);
+  --character-8-bold-mono-font-size: var(--font-size-32);
+  --character-8-bold-mono-font-weight: var(--font-weight-char-bold);
+  --character-8-bold-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-8-bold-mono-line-height: var(--line-height-48);
+  --character-9-regular-pro-font-family: var(--font-family-pro);
+  --character-9-regular-pro-font-size: var(--font-size-36);
+  --character-9-regular-pro-font-weight: var(--font-weight-char-normal);
+  --character-9-regular-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-9-regular-pro-line-height: var(--line-height-56);
+  --character-9-regular-mono-font-family: var(--font-family-mono);
+  --character-9-regular-mono-font-size: var(--font-size-36);
+  --character-9-regular-mono-font-weight: var(--font-weight-char-normal);
+  --character-9-regular-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-9-regular-mono-line-height: var(--line-height-56);
+  --character-9-bold-pro-font-family: var(--font-family-pro);
+  --character-9-bold-pro-font-size: var(--font-size-36);
+  --character-9-bold-pro-font-weight: var(--font-weight-char-bold);
+  --character-9-bold-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-9-bold-pro-line-height: var(--line-height-56);
+  --character-9-bold-mono-font-family: var(--font-family-mono);
+  --character-9-bold-mono-font-size: var(--font-size-36);
+  --character-9-bold-mono-font-weight: var(--font-weight-char-bold);
+  --character-9-bold-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-9-bold-mono-line-height: var(--line-height-56);
+  --character-10-regular-pro-font-family: var(--font-family-pro);
+  --character-10-regular-pro-font-size: var(--font-size-42);
+  --character-10-regular-pro-font-weight: var(--font-weight-char-normal);
+  --character-10-regular-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-10-regular-pro-line-height: var(--line-height-64);
+  --character-10-regular-mono-font-family: var(--font-family-mono);
+  --character-10-regular-mono-font-size: var(--font-size-42);
+  --character-10-regular-mono-font-weight: var(--font-weight-char-normal);
+  --character-10-regular-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-10-regular-mono-line-height: var(--line-height-64);
+  --character-10-bold-pro-font-family: var(--font-family-pro);
+  --character-10-bold-pro-font-size: var(--font-size-42);
+  --character-10-bold-pro-font-weight: var(--font-weight-char-bold);
+  --character-10-bold-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-10-bold-pro-line-height: var(--line-height-64);
+  --character-10-bold-mono-font-family: var(--font-family-mono);
+  --character-10-bold-mono-font-size: var(--font-size-42);
+  --character-10-bold-mono-font-weight: var(--font-weight-char-bold);
+  --character-10-bold-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-10-bold-mono-line-height: var(--line-height-64);
+  --character-11-regular-pro-font-family: var(--font-family-pro);
+  --character-11-regular-pro-font-size: var(--font-size-48);
+  --character-11-regular-pro-font-weight: var(--font-weight-char-normal);
+  --character-11-regular-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-11-regular-pro-line-height: var(--line-height-72);
+  --character-11-regular-mono-font-family: var(--font-family-mono);
+  --character-11-regular-mono-font-size: var(--font-size-48);
+  --character-11-regular-mono-font-weight: var(--font-weight-char-normal);
+  --character-11-regular-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-11-regular-mono-line-height: var(--line-height-72);
+  --character-11-bold-pro-font-family: var(--font-family-pro);
+  --character-11-bold-pro-font-size: var(--font-size-48);
+  --character-11-bold-pro-font-weight: var(--font-weight-char-bold);
+  --character-11-bold-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-11-bold-pro-line-height: var(--line-height-72);
+  --character-11-bold-mono-font-family: var(--font-family-mono);
+  --character-11-bold-mono-font-size: var(--font-size-48);
+  --character-11-bold-mono-font-weight: var(--font-weight-char-bold);
+  --character-11-bold-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-11-bold-mono-line-height: var(--line-height-72);
+  --character-12-regular-pro-font-family: var(--font-family-pro);
+  --character-12-regular-pro-font-size: var(--font-size-54);
+  --character-12-regular-pro-font-weight: var(--font-weight-char-normal);
+  --character-12-regular-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-12-regular-pro-line-height: var(--line-height-84);
+  --character-12-regular-mono-font-family: var(--font-family-mono);
+  --character-12-regular-mono-font-size: var(--font-size-54);
+  --character-12-regular-mono-font-weight: var(--font-weight-char-normal);
+  --character-12-regular-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-12-regular-mono-line-height: var(--line-height-84);
+  --character-12-bold-pro-font-family: var(--font-family-pro);
+  --character-12-bold-pro-font-size: var(--font-size-54);
+  --character-12-bold-pro-font-weight: var(--font-weight-char-bold);
+  --character-12-bold-pro-letter-spacing: var(--letter-spacing-wider);
+  --character-12-bold-pro-line-height: var(--line-height-84);
+  --character-12-bold-mono-font-family: var(--font-family-mono);
+  --character-12-bold-mono-font-size: var(--font-size-54);
+  --character-12-bold-mono-font-weight: var(--font-weight-char-bold);
+  --character-12-bold-mono-letter-spacing: var(--letter-spacing-wider);
+  --character-12-bold-mono-line-height: var(--line-height-84);
+  --icon-1-fill-0-font-family: var(--font-family-icon);
+  --icon-1-fill-0-font-size: var(--font-size-12);
+  --icon-1-fill-0-font-weight: var(--font-weight-icon);
+  --icon-1-fill-0-letter-spacing: var(--letter-spacing-normal);
+  --icon-1-fill-0-line-height: var(--line-height-leading-none);
+  --icon-1-fill-1-font-family: var(--font-family-icon);
+  --icon-1-fill-1-font-size: var(--font-size-12);
+  --icon-1-fill-1-font-weight: var(--font-weight-icon);
+  --icon-1-fill-1-letter-spacing: var(--letter-spacing-normal);
+  --icon-1-fill-1-line-height: var(--line-height-leading-none);
+  --icon-2-fill-0-font-family: var(--font-family-icon);
+  --icon-2-fill-0-font-size: var(--font-size-14);
+  --icon-2-fill-0-font-weight: var(--font-weight-icon);
+  --icon-2-fill-0-letter-spacing: var(--letter-spacing-normal);
+  --icon-2-fill-0-line-height: var(--line-height-leading-none);
+  --icon-2-fill-1-font-family: var(--font-family-icon);
+  --icon-2-fill-1-font-size: var(--font-size-14);
+  --icon-2-fill-1-font-weight: var(--font-weight-icon);
+  --icon-2-fill-1-letter-spacing: var(--letter-spacing-normal);
+  --icon-2-fill-1-line-height: var(--line-height-leading-none);
+  --icon-3-fill-0-font-family: var(--font-family-icon);
+  --icon-3-fill-0-font-size: var(--font-size-16);
+  --icon-3-fill-0-font-weight: var(--font-weight-icon);
+  --icon-3-fill-0-letter-spacing: var(--letter-spacing-normal);
+  --icon-3-fill-0-line-height: var(--line-height-leading-none);
+  --icon-3-fill-1-font-family: var(--font-family-icon);
+  --icon-3-fill-1-font-size: var(--font-size-16);
+  --icon-3-fill-1-font-weight: var(--font-weight-icon);
+  --icon-3-fill-1-letter-spacing: var(--letter-spacing-normal);
+  --icon-3-fill-1-line-height: var(--line-height-leading-none);
+  --icon-4-fill-0-font-family: var(--font-family-icon);
+  --icon-4-fill-0-font-size: var(--font-size-18);
+  --icon-4-fill-0-font-weight: var(--font-weight-icon);
+  --icon-4-fill-0-letter-spacing: var(--letter-spacing-normal);
+  --icon-4-fill-0-line-height: var(--line-height-leading-none);
+  --icon-4-fill-1-font-family: var(--font-family-icon);
+  --icon-4-fill-1-font-size: var(--font-size-18);
+  --icon-4-fill-1-font-weight: var(--font-weight-icon);
+  --icon-4-fill-1-letter-spacing: var(--letter-spacing-normal);
+  --icon-4-fill-1-line-height: var(--line-height-leading-none);
+  --icon-5-fill-0-font-family: var(--font-family-icon);
+  --icon-5-fill-0-font-size: var(--font-size-20);
+  --icon-5-fill-0-font-weight: var(--font-weight-icon);
+  --icon-5-fill-0-letter-spacing: var(--letter-spacing-normal);
+  --icon-5-fill-0-line-height: var(--line-height-leading-none);
+  --icon-5-fill-1-font-family: var(--font-family-icon);
+  --icon-5-fill-1-font-size: var(--font-size-20);
+  --icon-5-fill-1-font-weight: var(--font-weight-icon);
+  --icon-5-fill-1-letter-spacing: var(--letter-spacing-normal);
+  --icon-5-fill-1-line-height: var(--line-height-leading-none);
+  --icon-6-fill-0-font-family: var(--font-family-icon);
+  --icon-6-fill-0-font-size: var(--font-size-24);
+  --icon-6-fill-0-font-weight: var(--font-weight-icon);
+  --icon-6-fill-0-letter-spacing: var(--letter-spacing-normal);
+  --icon-6-fill-0-line-height: var(--line-height-leading-none);
+  --icon-6-fill-1-font-family: var(--font-family-icon);
+  --icon-6-fill-1-font-size: var(--font-size-24);
+  --icon-6-fill-1-font-weight: var(--font-weight-icon);
+  --icon-6-fill-1-letter-spacing: var(--letter-spacing-normal);
+  --icon-6-fill-1-line-height: var(--line-height-leading-none);
+  --icon-7-fill-0-font-family: var(--font-family-icon);
+  --icon-7-fill-0-font-size: var(--font-size-28);
+  --icon-7-fill-0-font-weight: var(--font-weight-icon);
+  --icon-7-fill-0-letter-spacing: var(--letter-spacing-normal);
+  --icon-7-fill-0-line-height: var(--line-height-leading-none);
+  --icon-7-fill-1-font-family: var(--font-family-icon);
+  --icon-7-fill-1-font-size: var(--font-size-28);
+  --icon-7-fill-1-font-weight: var(--font-weight-icon);
+  --icon-7-fill-1-letter-spacing: var(--letter-spacing-normal);
+  --icon-7-fill-1-line-height: var(--line-height-leading-none);
+  --icon-8-fill-0-font-family: var(--font-family-icon);
+  --icon-8-fill-0-font-size: var(--font-size-32);
+  --icon-8-fill-0-font-weight: var(--font-weight-icon);
+  --icon-8-fill-0-letter-spacing: var(--letter-spacing-normal);
+  --icon-8-fill-0-line-height: var(--line-height-leading-none);
+  --icon-8-fill-1-font-family: var(--font-family-icon);
+  --icon-8-fill-1-font-size: var(--font-size-32);
+  --icon-8-fill-1-font-weight: var(--font-weight-icon);
+  --icon-8-fill-1-letter-spacing: var(--letter-spacing-normal);
+  --icon-8-fill-1-line-height: var(--line-height-leading-none);
+  --icon-9-fill-0-font-family: var(--font-family-icon);
+  --icon-9-fill-0-font-size: var(--font-size-36);
+  --icon-9-fill-0-font-weight: var(--font-weight-icon);
+  --icon-9-fill-0-letter-spacing: var(--letter-spacing-normal);
+  --icon-9-fill-0-line-height: var(--line-height-leading-none);
+  --icon-9-fill-1-font-family: var(--font-family-icon);
+  --icon-9-fill-1-font-size: var(--font-size-36);
+  --icon-9-fill-1-font-weight: var(--font-weight-icon);
+  --icon-9-fill-1-letter-spacing: var(--letter-spacing-normal);
+  --icon-9-fill-1-line-height: var(--line-height-leading-none);
+  --icon-10-fill-0-font-family: var(--font-family-icon);
+  --icon-10-fill-0-font-size: var(--font-size-42);
+  --icon-10-fill-0-font-weight: var(--font-weight-icon);
+  --icon-10-fill-0-letter-spacing: var(--letter-spacing-normal);
+  --icon-10-fill-0-line-height: var(--line-height-leading-none);
+  --icon-10-fill-1-font-family: var(--font-family-icon);
+  --icon-10-fill-1-font-size: var(--font-size-42);
+  --icon-10-fill-1-font-weight: var(--font-weight-icon);
+  --icon-10-fill-1-letter-spacing: var(--letter-spacing-normal);
+  --icon-10-fill-1-line-height: var(--line-height-leading-none);
+  --icon-11-fill-0-font-family: var(--font-family-icon);
+  --icon-11-fill-0-font-size: var(--font-size-48);
+  --icon-11-fill-0-font-weight: var(--font-weight-icon);
+  --icon-11-fill-0-letter-spacing: var(--letter-spacing-normal);
+  --icon-11-fill-0-line-height: var(--line-height-leading-none);
+  --icon-11-fill-1-font-family: var(--font-family-icon);
+  --icon-11-fill-1-font-size: var(--font-size-48);
+  --icon-11-fill-1-font-weight: var(--font-weight-icon);
+  --icon-11-fill-1-letter-spacing: var(--letter-spacing-normal);
+  --icon-11-fill-1-line-height: var(--line-height-leading-none);
+  --icon-12-fill-0-font-family: var(--font-family-icon);
+  --icon-12-fill-0-font-size: var(--font-size-54);
+  --icon-12-fill-0-font-weight: var(--font-weight-icon);
+  --icon-12-fill-0-letter-spacing: var(--letter-spacing-normal);
+  --icon-12-fill-0-line-height: var(--line-height-leading-none);
+  --icon-12-fill-1-font-family: var(--font-family-icon);
+  --icon-12-fill-1-font-size: var(--font-size-54);
+  --icon-12-fill-1-font-weight: var(--font-weight-icon);
+  --icon-12-fill-1-letter-spacing: var(--letter-spacing-normal);
+  --icon-12-fill-1-line-height: var(--line-height-leading-none);
+
   /* 角丸 - デフォルト値は設定可能 */
+  /* NOTE: ここに書かれた var(--radius-*) は「置換前のデフォルト値」で、
+     実際の値は sparkle-design-cli の processTemplate が radius.csv の
+     選択プロファイル行で上書きする（`round` のみ置換対象外）。
+     そのため radius.csv の列名とここの変数名は必ず同時に変更すること
+     （CSV だけ変えると置換が効かず、旧名の変数が残る）。
+     en: These defaults are overwritten at generate time by the CLI using
+     the selected radius.csv profile row (`round` is excluded). Rename the
+     CSV column and the variable here together, or the substitution misses. */
   --radius-divide: var(--radius-none);
   --radius-minimum: var(--radius-xs);
   --radius-notice: var(--radius-sm);
   --radius-action: var(--radius-md);
-  --radius-halfModal: var(--radius-lg);
+  --radius-container: var(--radius-lg);
   --radius-modal: var(--radius-xl);
   --radius-round: var(--radius-full);
+
+  /* @deprecated --radius-halfModal は beta 期間の後方互換エイリアス。
+     `halfModal` は Figma で `container` にリネームされた。beta 終了時に削除する。
+     radius.csv に列を持たない（＝プロファイルの値を流し込まない）意図的な
+     エイリアスであることを、scripts/validate-tokens.mjs がこの @deprecated
+     コメントの変数名から読み取る。
+     en: Intentional back-compat alias with no radius.csv column. The validator
+     recognises it by the variable name in this @deprecated comment. */
+  --radius-halfModal: var(--radius-container);
 
   /* シャドウ */
   --shadow-base: var(--shadow-none);
@@ -306,6 +878,54 @@
   --shadow-stick: var(--shadow-sm);
   --shadow-float: var(--shadow-md);
   --shadow-popout: var(--shadow-lg);
+}
+
+/* 最大幅 — Figma の `Sizing: Primitives`（`max-width/xs` 〜 `max-width/7xl` の 11 件） */
+/* NOTE: ここだけ `@theme inline` でも プレーンな `:root` でもなく **`@theme static`**
+   に実値を書く。他のトークンと形が違うのは、`--container-*` が Tailwind v4 で
+   2 種類の使われ方をするため。
+
+   - `max-w-*` / `w-*` / `min-w-*` → `var(--container-*)` に展開される
+   - `@sm:` / `@xl:` などの container query バリアント →
+     `@container (width >= 36rem)` のように **実値がベタ書きされる**
+
+   後者は CSS の仕様上 `var()` を書けない。そのため:
+
+   - プレーンな `:root` に書くと、`max-w-*` は追従するが container query の
+     条件は Tailwind のデフォルトのまま**黙って据え置かれる**
+   - `@theme inline` に自己参照（`var(--container-xl)`）で書くと、条件に var() を
+     置けないため **`@xl:` ユーティリティ自体が生成されなくなる**（さらに悪い）
+
+   `@theme` に実値を書いた場合だけ両方が追従する。tailwindcss 4 を実際に
+   コンパイルして 3 通りとも確認済み。
+   だから `@theme inline` の自己参照（issue #229 の設計）をここに適用しないこと。
+
+   さらに `static` を付けるのは、素の `@theme` だと**使われていない変数が
+   出力から消える**ため（tree-shaking）。他のトークンはプレーンな `:root` に
+   あるので常に参照できるが、`@theme` だけ「`max-w-6xl` を書いていない
+   プロジェクトでは `var(--container-6xl)` が解決しない」という差が出てしまう。
+   `@theme static` なら 11 件すべてが必ず出力される。
+
+   Tailwind の `--container-3xs` / `--container-2xs` は Figma に対応する変数が
+   ないため意図的に定義しない（＝Tailwind のデフォルトのまま残る）。
+   en: Must be `@theme` with literal values. Container-query variants inline the
+   value into `@container (width >= …)`, where `var()` is invalid — a plain
+   `:root` silently keeps Tailwind's defaults for those, and the `@theme inline`
+   self-reference makes the variants disappear entirely. `static` prevents
+   tree-shaking, so all 11 stay available to hand-written CSS the way every
+   other token in this file is. Verified by compiling tailwindcss 4. */
+@theme static {
+  --container-xs: 20rem; /* 320px */
+  --container-sm: 24rem; /* 384px */
+  --container-md: 28rem; /* 448px */
+  --container-lg: 32rem; /* 512px */
+  --container-xl: 36rem; /* 576px */
+  --container-2xl: 42rem; /* 672px */
+  --container-3xl: 48rem; /* 768px */
+  --container-4xl: 56rem; /* 896px */
+  --container-5xl: 64rem; /* 1024px */
+  --container-6xl: 72rem; /* 1152px */
+  --container-7xl: 80rem; /* 1280px */
 }
 
 /* セマンティクスのトークン定義（Tailwind ユーティリティ生成用） */
@@ -418,14 +1038,128 @@
   --color-base-800: var(--color-base-800);
   --color-base-900: var(--color-base-900);
 
+  /* 用途別セマンティックカラー（Figma `Colors: Semantics` と 1:1 対応）。
+     上の :root ブロックと同名変数の自己参照にする理由は、このブロック
+     冒頭の NOTE (issue #229) を参照。 */
+
+  /* surface — 背景 */
+  --color-surface-base-0: var(--color-surface-base-0);
+  --color-surface-base-100: var(--color-surface-base-100);
+  --color-surface-base-200: var(--color-surface-base-200);
+  --color-surface-neutral-high-enabled: var(--color-surface-neutral-high-enabled);
+  --color-surface-neutral-high-hover: var(--color-surface-neutral-high-hover);
+  --color-surface-neutral-high-active: var(--color-surface-neutral-high-active);
+  --color-surface-neutral-high-disabled: var(--color-surface-neutral-high-disabled);
+  --color-surface-neutral-middle-enabled: var(--color-surface-neutral-middle-enabled);
+  --color-surface-neutral-middle-hover: var(--color-surface-neutral-middle-hover);
+  --color-surface-neutral-middle-active: var(--color-surface-neutral-middle-active);
+  --color-surface-neutral-middle-disabled: var(--color-surface-neutral-middle-disabled);
+  --color-surface-neutral-low-hover: var(--color-surface-neutral-low-hover);
+  --color-surface-neutral-low-active: var(--color-surface-neutral-low-active);
+  --color-surface-neutral-low-disabled: var(--color-surface-neutral-low-disabled);
+  --color-surface-primary-high-enabled: var(--color-surface-primary-high-enabled);
+  --color-surface-primary-high-hover: var(--color-surface-primary-high-hover);
+  --color-surface-primary-high-active: var(--color-surface-primary-high-active);
+  --color-surface-primary-high-disabled: var(--color-surface-primary-high-disabled);
+  --color-surface-primary-middle-enabled: var(--color-surface-primary-middle-enabled);
+  --color-surface-primary-middle-hover: var(--color-surface-primary-middle-hover);
+  --color-surface-primary-middle-active: var(--color-surface-primary-middle-active);
+  --color-surface-primary-middle-disabled: var(--color-surface-primary-middle-disabled);
+  --color-surface-primary-low-hover: var(--color-surface-primary-low-hover);
+  --color-surface-primary-low-active: var(--color-surface-primary-low-active);
+  --color-surface-primary-low-disabled: var(--color-surface-primary-low-disabled);
+  --color-surface-negative-high-enabled: var(--color-surface-negative-high-enabled);
+  --color-surface-negative-high-hover: var(--color-surface-negative-high-hover);
+  --color-surface-negative-high-active: var(--color-surface-negative-high-active);
+  --color-surface-negative-high-disabled: var(--color-surface-negative-high-disabled);
+  --color-surface-negative-middle-enabled: var(--color-surface-negative-middle-enabled);
+  --color-surface-negative-middle-hover: var(--color-surface-negative-middle-hover);
+  --color-surface-negative-middle-active: var(--color-surface-negative-middle-active);
+  --color-surface-negative-middle-disabled: var(--color-surface-negative-middle-disabled);
+  --color-surface-negative-low-hover: var(--color-surface-negative-low-hover);
+  --color-surface-negative-low-active: var(--color-surface-negative-low-active);
+  --color-surface-negative-low-disabled: var(--color-surface-negative-low-disabled);
+  --color-surface-info-high: var(--color-surface-info-high);
+  --color-surface-info-middle: var(--color-surface-info-middle);
+  --color-surface-info-low: var(--color-surface-info-low);
+  --color-surface-success-high: var(--color-surface-success-high);
+  --color-surface-success-middle: var(--color-surface-success-middle);
+  --color-surface-success-low: var(--color-surface-success-low);
+  --color-surface-warning-high: var(--color-surface-warning-high);
+  --color-surface-warning-middle: var(--color-surface-warning-middle);
+  --color-surface-warning-low: var(--color-surface-warning-low);
+  --color-surface-accent-1: var(--color-surface-accent-1);
+  --color-surface-accent-2: var(--color-surface-accent-2);
+  --color-surface-accent-3: var(--color-surface-accent-3);
+  --color-surface-inverse: var(--color-surface-inverse);
+  --color-surface-overlay: var(--color-surface-overlay);
+
+  /* border — 枠線 */
+  --color-border-neutral-extra-high-enabled: var(--color-border-neutral-extra-high-enabled);
+  --color-border-neutral-extra-high-hover: var(--color-border-neutral-extra-high-hover);
+  --color-border-neutral-extra-high-disabled: var(--color-border-neutral-extra-high-disabled);
+  --color-border-neutral-high: var(--color-border-neutral-high);
+  --color-border-neutral-middle: var(--color-border-neutral-middle);
+  --color-border-neutral-low: var(--color-border-neutral-low);
+  --color-border-primary-extra-high: var(--color-border-primary-extra-high);
+  --color-border-primary-high: var(--color-border-primary-high);
+  --color-border-primary-low: var(--color-border-primary-low);
+  --color-border-negative-extra-high-enabled: var(--color-border-negative-extra-high-enabled);
+  --color-border-negative-extra-high-hover: var(--color-border-negative-extra-high-hover);
+  --color-border-negative-extra-high-disabled: var(--color-border-negative-extra-high-disabled);
+  --color-border-negative-high: var(--color-border-negative-high);
+  --color-border-negative-low: var(--color-border-negative-low);
+  --color-border-info: var(--color-border-info);
+  --color-border-success: var(--color-border-success);
+  --color-border-warning: var(--color-border-warning);
+  --color-border-ring: var(--color-border-ring);
+
+  /* object — アイコン等の図形 */
+  --color-object-neutral-high: var(--color-object-neutral-high);
+  --color-object-neutral-middle: var(--color-object-neutral-middle);
+  --color-object-neutral-low: var(--color-object-neutral-low);
+  --color-object-neutral-disabled: var(--color-object-neutral-disabled);
+  --color-object-primary-enabled: var(--color-object-primary-enabled);
+  --color-object-primary-hover: var(--color-object-primary-hover);
+  --color-object-primary-active: var(--color-object-primary-active);
+  --color-object-primary-disabled: var(--color-object-primary-disabled);
+  --color-object-negative-enabled: var(--color-object-negative-enabled);
+  --color-object-negative-hover: var(--color-object-negative-hover);
+  --color-object-negative-active: var(--color-object-negative-active);
+  --color-object-negative-disabled: var(--color-object-negative-disabled);
+  --color-object-info: var(--color-object-info);
+  --color-object-success: var(--color-object-success);
+  --color-object-warning: var(--color-object-warning);
+  --color-object-inverse: var(--color-object-inverse);
+
+  /* text — 文字 */
+  --color-text-neutral-high: var(--color-text-neutral-high);
+  --color-text-neutral-middle: var(--color-text-neutral-middle);
+  --color-text-neutral-low: var(--color-text-neutral-low);
+  --color-text-neutral-disabled: var(--color-text-neutral-disabled);
+  --color-text-primary-enabled: var(--color-text-primary-enabled);
+  --color-text-primary-hover: var(--color-text-primary-hover);
+  --color-text-primary-active: var(--color-text-primary-active);
+  --color-text-primary-disabled: var(--color-text-primary-disabled);
+  --color-text-negative-enabled: var(--color-text-negative-enabled);
+  --color-text-negative-hover: var(--color-text-negative-hover);
+  --color-text-negative-active: var(--color-text-negative-active);
+  --color-text-negative-disabled: var(--color-text-negative-disabled);
+  --color-text-info: var(--color-text-info);
+  --color-text-success: var(--color-text-success);
+  --color-text-warning: var(--color-text-warning);
+  --color-text-inverse: var(--color-text-inverse);
+
   /* 角丸 - デフォルト値は設定可能 */
   --radius-divide: var(--radius-divide);
   --radius-minimum: var(--radius-minimum);
   --radius-notice: var(--radius-notice);
   --radius-action: var(--radius-action);
-  --radius-halfModal: var(--radius-halfModal);
+  --radius-container: var(--radius-container);
   --radius-modal: var(--radius-modal);
   --radius-round: var(--radius-round);
+  /* @deprecated beta 期間の後方互換エイリアス（`halfModal` → `container`）。 */
+  --radius-halfModal: var(--radius-halfModal);
 
   /* シャドウ */
   --shadow-base: var(--shadow-base);
@@ -449,556 +1183,556 @@
 @layer utilities {
   .character-1-regular-pro {
     /* Character テキストスタイル */
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-12);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-20);
+    font-family: var(--character-1-regular-pro-font-family);
+    font-size: var(--character-1-regular-pro-font-size);
+    font-weight: var(--character-1-regular-pro-font-weight);
+    letter-spacing: var(--character-1-regular-pro-letter-spacing);
+    line-height: var(--character-1-regular-pro-line-height);
   }
   .character-1-regular-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-12);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-20);
+    font-family: var(--character-1-regular-mono-font-family);
+    font-size: var(--character-1-regular-mono-font-size);
+    font-weight: var(--character-1-regular-mono-font-weight);
+    letter-spacing: var(--character-1-regular-mono-letter-spacing);
+    line-height: var(--character-1-regular-mono-line-height);
   }
   .character-1-bold-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-12);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-20);
+    font-family: var(--character-1-bold-pro-font-family);
+    font-size: var(--character-1-bold-pro-font-size);
+    font-weight: var(--character-1-bold-pro-font-weight);
+    letter-spacing: var(--character-1-bold-pro-letter-spacing);
+    line-height: var(--character-1-bold-pro-line-height);
   }
   .character-1-bold-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-12);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-20);
+    font-family: var(--character-1-bold-mono-font-family);
+    font-size: var(--character-1-bold-mono-font-size);
+    font-weight: var(--character-1-bold-mono-font-weight);
+    letter-spacing: var(--character-1-bold-mono-letter-spacing);
+    line-height: var(--character-1-bold-mono-line-height);
   }
   .character-2-regular-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-14);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-24);
+    font-family: var(--character-2-regular-pro-font-family);
+    font-size: var(--character-2-regular-pro-font-size);
+    font-weight: var(--character-2-regular-pro-font-weight);
+    letter-spacing: var(--character-2-regular-pro-letter-spacing);
+    line-height: var(--character-2-regular-pro-line-height);
   }
   .character-2-regular-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-14);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-24);
+    font-family: var(--character-2-regular-mono-font-family);
+    font-size: var(--character-2-regular-mono-font-size);
+    font-weight: var(--character-2-regular-mono-font-weight);
+    letter-spacing: var(--character-2-regular-mono-letter-spacing);
+    line-height: var(--character-2-regular-mono-line-height);
   }
   .character-2-bold-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-14);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-24);
+    font-family: var(--character-2-bold-pro-font-family);
+    font-size: var(--character-2-bold-pro-font-size);
+    font-weight: var(--character-2-bold-pro-font-weight);
+    letter-spacing: var(--character-2-bold-pro-letter-spacing);
+    line-height: var(--character-2-bold-pro-line-height);
   }
   .character-2-bold-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-14);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-24);
+    font-family: var(--character-2-bold-mono-font-family);
+    font-size: var(--character-2-bold-mono-font-size);
+    font-weight: var(--character-2-bold-mono-font-weight);
+    letter-spacing: var(--character-2-bold-mono-letter-spacing);
+    line-height: var(--character-2-bold-mono-line-height);
   }
   .character-3-regular-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-16);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-24);
+    font-family: var(--character-3-regular-pro-font-family);
+    font-size: var(--character-3-regular-pro-font-size);
+    font-weight: var(--character-3-regular-pro-font-weight);
+    letter-spacing: var(--character-3-regular-pro-letter-spacing);
+    line-height: var(--character-3-regular-pro-line-height);
   }
   .character-3-regular-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-16);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-24);
+    font-family: var(--character-3-regular-mono-font-family);
+    font-size: var(--character-3-regular-mono-font-size);
+    font-weight: var(--character-3-regular-mono-font-weight);
+    letter-spacing: var(--character-3-regular-mono-letter-spacing);
+    line-height: var(--character-3-regular-mono-line-height);
   }
   .character-3-bold-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-16);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-24);
+    font-family: var(--character-3-bold-pro-font-family);
+    font-size: var(--character-3-bold-pro-font-size);
+    font-weight: var(--character-3-bold-pro-font-weight);
+    letter-spacing: var(--character-3-bold-pro-letter-spacing);
+    line-height: var(--character-3-bold-pro-line-height);
   }
   .character-3-bold-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-16);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-24);
+    font-family: var(--character-3-bold-mono-font-family);
+    font-size: var(--character-3-bold-mono-font-size);
+    font-weight: var(--character-3-bold-mono-font-weight);
+    letter-spacing: var(--character-3-bold-mono-letter-spacing);
+    line-height: var(--character-3-bold-mono-line-height);
   }
   .character-4-regular-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-18);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-28);
+    font-family: var(--character-4-regular-pro-font-family);
+    font-size: var(--character-4-regular-pro-font-size);
+    font-weight: var(--character-4-regular-pro-font-weight);
+    letter-spacing: var(--character-4-regular-pro-letter-spacing);
+    line-height: var(--character-4-regular-pro-line-height);
   }
   .character-4-regular-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-18);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-32);
+    font-family: var(--character-4-regular-mono-font-family);
+    font-size: var(--character-4-regular-mono-font-size);
+    font-weight: var(--character-4-regular-mono-font-weight);
+    letter-spacing: var(--character-4-regular-mono-letter-spacing);
+    line-height: var(--character-4-regular-mono-line-height);
   }
   .character-4-bold-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-18);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-28);
+    font-family: var(--character-4-bold-pro-font-family);
+    font-size: var(--character-4-bold-pro-font-size);
+    font-weight: var(--character-4-bold-pro-font-weight);
+    letter-spacing: var(--character-4-bold-pro-letter-spacing);
+    line-height: var(--character-4-bold-pro-line-height);
   }
   .character-4-bold-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-18);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-28);
+    font-family: var(--character-4-bold-mono-font-family);
+    font-size: var(--character-4-bold-mono-font-size);
+    font-weight: var(--character-4-bold-mono-font-weight);
+    letter-spacing: var(--character-4-bold-mono-letter-spacing);
+    line-height: var(--character-4-bold-mono-line-height);
   }
   .character-5-regular-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-20);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-28);
+    font-family: var(--character-5-regular-pro-font-family);
+    font-size: var(--character-5-regular-pro-font-size);
+    font-weight: var(--character-5-regular-pro-font-weight);
+    letter-spacing: var(--character-5-regular-pro-letter-spacing);
+    line-height: var(--character-5-regular-pro-line-height);
   }
   .character-5-regular-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-20);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-32);
+    font-family: var(--character-5-regular-mono-font-family);
+    font-size: var(--character-5-regular-mono-font-size);
+    font-weight: var(--character-5-regular-mono-font-weight);
+    letter-spacing: var(--character-5-regular-mono-letter-spacing);
+    line-height: var(--character-5-regular-mono-line-height);
   }
   .character-5-bold-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-20);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-32);
+    font-family: var(--character-5-bold-pro-font-family);
+    font-size: var(--character-5-bold-pro-font-size);
+    font-weight: var(--character-5-bold-pro-font-weight);
+    letter-spacing: var(--character-5-bold-pro-letter-spacing);
+    line-height: var(--character-5-bold-pro-line-height);
   }
   .character-5-bold-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-20);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-32);
+    font-family: var(--character-5-bold-mono-font-family);
+    font-size: var(--character-5-bold-mono-font-size);
+    font-weight: var(--character-5-bold-mono-font-weight);
+    letter-spacing: var(--character-5-bold-mono-letter-spacing);
+    line-height: var(--character-5-bold-mono-line-height);
   }
   .character-6-regular-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-24);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-36);
+    font-family: var(--character-6-regular-pro-font-family);
+    font-size: var(--character-6-regular-pro-font-size);
+    font-weight: var(--character-6-regular-pro-font-weight);
+    letter-spacing: var(--character-6-regular-pro-letter-spacing);
+    line-height: var(--character-6-regular-pro-line-height);
   }
   .character-6-regular-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-24);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-36);
+    font-family: var(--character-6-regular-mono-font-family);
+    font-size: var(--character-6-regular-mono-font-size);
+    font-weight: var(--character-6-regular-mono-font-weight);
+    letter-spacing: var(--character-6-regular-mono-letter-spacing);
+    line-height: var(--character-6-regular-mono-line-height);
   }
   .character-6-bold-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-24);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-36);
+    font-family: var(--character-6-bold-pro-font-family);
+    font-size: var(--character-6-bold-pro-font-size);
+    font-weight: var(--character-6-bold-pro-font-weight);
+    letter-spacing: var(--character-6-bold-pro-letter-spacing);
+    line-height: var(--character-6-bold-pro-line-height);
   }
   .character-6-bold-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-24);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-36);
+    font-family: var(--character-6-bold-mono-font-family);
+    font-size: var(--character-6-bold-mono-font-size);
+    font-weight: var(--character-6-bold-mono-font-weight);
+    letter-spacing: var(--character-6-bold-mono-letter-spacing);
+    line-height: var(--character-6-bold-mono-line-height);
   }
   .character-7-regular-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-28);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-44);
+    font-family: var(--character-7-regular-pro-font-family);
+    font-size: var(--character-7-regular-pro-font-size);
+    font-weight: var(--character-7-regular-pro-font-weight);
+    letter-spacing: var(--character-7-regular-pro-letter-spacing);
+    line-height: var(--character-7-regular-pro-line-height);
   }
   .character-7-regular-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-28);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-44);
+    font-family: var(--character-7-regular-mono-font-family);
+    font-size: var(--character-7-regular-mono-font-size);
+    font-weight: var(--character-7-regular-mono-font-weight);
+    letter-spacing: var(--character-7-regular-mono-letter-spacing);
+    line-height: var(--character-7-regular-mono-line-height);
   }
   .character-7-bold-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-28);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-44);
+    font-family: var(--character-7-bold-pro-font-family);
+    font-size: var(--character-7-bold-pro-font-size);
+    font-weight: var(--character-7-bold-pro-font-weight);
+    letter-spacing: var(--character-7-bold-pro-letter-spacing);
+    line-height: var(--character-7-bold-pro-line-height);
   }
   .character-7-bold-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-28);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-44);
+    font-family: var(--character-7-bold-mono-font-family);
+    font-size: var(--character-7-bold-mono-font-size);
+    font-weight: var(--character-7-bold-mono-font-weight);
+    letter-spacing: var(--character-7-bold-mono-letter-spacing);
+    line-height: var(--character-7-bold-mono-line-height);
   }
   .character-8-regular-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-32);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-48);
+    font-family: var(--character-8-regular-pro-font-family);
+    font-size: var(--character-8-regular-pro-font-size);
+    font-weight: var(--character-8-regular-pro-font-weight);
+    letter-spacing: var(--character-8-regular-pro-letter-spacing);
+    line-height: var(--character-8-regular-pro-line-height);
   }
   .character-8-regular-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-32);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-48);
+    font-family: var(--character-8-regular-mono-font-family);
+    font-size: var(--character-8-regular-mono-font-size);
+    font-weight: var(--character-8-regular-mono-font-weight);
+    letter-spacing: var(--character-8-regular-mono-letter-spacing);
+    line-height: var(--character-8-regular-mono-line-height);
   }
   .character-8-bold-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-32);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-48);
+    font-family: var(--character-8-bold-pro-font-family);
+    font-size: var(--character-8-bold-pro-font-size);
+    font-weight: var(--character-8-bold-pro-font-weight);
+    letter-spacing: var(--character-8-bold-pro-letter-spacing);
+    line-height: var(--character-8-bold-pro-line-height);
   }
   .character-8-bold-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-32);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-48);
+    font-family: var(--character-8-bold-mono-font-family);
+    font-size: var(--character-8-bold-mono-font-size);
+    font-weight: var(--character-8-bold-mono-font-weight);
+    letter-spacing: var(--character-8-bold-mono-letter-spacing);
+    line-height: var(--character-8-bold-mono-line-height);
   }
   .character-9-regular-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-36);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-56);
+    font-family: var(--character-9-regular-pro-font-family);
+    font-size: var(--character-9-regular-pro-font-size);
+    font-weight: var(--character-9-regular-pro-font-weight);
+    letter-spacing: var(--character-9-regular-pro-letter-spacing);
+    line-height: var(--character-9-regular-pro-line-height);
   }
   .character-9-regular-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-36);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-56);
+    font-family: var(--character-9-regular-mono-font-family);
+    font-size: var(--character-9-regular-mono-font-size);
+    font-weight: var(--character-9-regular-mono-font-weight);
+    letter-spacing: var(--character-9-regular-mono-letter-spacing);
+    line-height: var(--character-9-regular-mono-line-height);
   }
   .character-9-bold-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-36);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-56);
+    font-family: var(--character-9-bold-pro-font-family);
+    font-size: var(--character-9-bold-pro-font-size);
+    font-weight: var(--character-9-bold-pro-font-weight);
+    letter-spacing: var(--character-9-bold-pro-letter-spacing);
+    line-height: var(--character-9-bold-pro-line-height);
   }
   .character-9-bold-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-36);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-56);
+    font-family: var(--character-9-bold-mono-font-family);
+    font-size: var(--character-9-bold-mono-font-size);
+    font-weight: var(--character-9-bold-mono-font-weight);
+    letter-spacing: var(--character-9-bold-mono-letter-spacing);
+    line-height: var(--character-9-bold-mono-line-height);
   }
   .character-10-regular-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-42);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-64);
+    font-family: var(--character-10-regular-pro-font-family);
+    font-size: var(--character-10-regular-pro-font-size);
+    font-weight: var(--character-10-regular-pro-font-weight);
+    letter-spacing: var(--character-10-regular-pro-letter-spacing);
+    line-height: var(--character-10-regular-pro-line-height);
   }
   .character-10-regular-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-42);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-64);
+    font-family: var(--character-10-regular-mono-font-family);
+    font-size: var(--character-10-regular-mono-font-size);
+    font-weight: var(--character-10-regular-mono-font-weight);
+    letter-spacing: var(--character-10-regular-mono-letter-spacing);
+    line-height: var(--character-10-regular-mono-line-height);
   }
   .character-10-bold-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-42);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-64);
+    font-family: var(--character-10-bold-pro-font-family);
+    font-size: var(--character-10-bold-pro-font-size);
+    font-weight: var(--character-10-bold-pro-font-weight);
+    letter-spacing: var(--character-10-bold-pro-letter-spacing);
+    line-height: var(--character-10-bold-pro-line-height);
   }
   .character-10-bold-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-42);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-64);
+    font-family: var(--character-10-bold-mono-font-family);
+    font-size: var(--character-10-bold-mono-font-size);
+    font-weight: var(--character-10-bold-mono-font-weight);
+    letter-spacing: var(--character-10-bold-mono-letter-spacing);
+    line-height: var(--character-10-bold-mono-line-height);
   }
   .character-11-regular-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-48);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-72);
+    font-family: var(--character-11-regular-pro-font-family);
+    font-size: var(--character-11-regular-pro-font-size);
+    font-weight: var(--character-11-regular-pro-font-weight);
+    letter-spacing: var(--character-11-regular-pro-letter-spacing);
+    line-height: var(--character-11-regular-pro-line-height);
   }
   .character-11-regular-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-48);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-72);
+    font-family: var(--character-11-regular-mono-font-family);
+    font-size: var(--character-11-regular-mono-font-size);
+    font-weight: var(--character-11-regular-mono-font-weight);
+    letter-spacing: var(--character-11-regular-mono-letter-spacing);
+    line-height: var(--character-11-regular-mono-line-height);
   }
   .character-11-bold-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-48);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-72);
+    font-family: var(--character-11-bold-pro-font-family);
+    font-size: var(--character-11-bold-pro-font-size);
+    font-weight: var(--character-11-bold-pro-font-weight);
+    letter-spacing: var(--character-11-bold-pro-letter-spacing);
+    line-height: var(--character-11-bold-pro-line-height);
   }
   .character-11-bold-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-48);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-72);
+    font-family: var(--character-11-bold-mono-font-family);
+    font-size: var(--character-11-bold-mono-font-size);
+    font-weight: var(--character-11-bold-mono-font-weight);
+    letter-spacing: var(--character-11-bold-mono-letter-spacing);
+    line-height: var(--character-11-bold-mono-line-height);
   }
   .character-12-regular-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-54);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-84);
+    font-family: var(--character-12-regular-pro-font-family);
+    font-size: var(--character-12-regular-pro-font-size);
+    font-weight: var(--character-12-regular-pro-font-weight);
+    letter-spacing: var(--character-12-regular-pro-letter-spacing);
+    line-height: var(--character-12-regular-pro-line-height);
   }
   .character-12-regular-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-54);
-    font-weight: var(--font-weight-char-normal);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-84);
+    font-family: var(--character-12-regular-mono-font-family);
+    font-size: var(--character-12-regular-mono-font-size);
+    font-weight: var(--character-12-regular-mono-font-weight);
+    letter-spacing: var(--character-12-regular-mono-letter-spacing);
+    line-height: var(--character-12-regular-mono-line-height);
   }
   .character-12-bold-pro {
-    font-family: var(--font-family-pro);
-    font-size: var(--font-size-54);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-84);
+    font-family: var(--character-12-bold-pro-font-family);
+    font-size: var(--character-12-bold-pro-font-size);
+    font-weight: var(--character-12-bold-pro-font-weight);
+    letter-spacing: var(--character-12-bold-pro-letter-spacing);
+    line-height: var(--character-12-bold-pro-line-height);
   }
   .character-12-bold-mono {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-54);
-    font-weight: var(--font-weight-char-bold);
-    letter-spacing: var(--letter-spacing-wider);
-    line-height: var(--line-height-84);
+    font-family: var(--character-12-bold-mono-font-family);
+    font-size: var(--character-12-bold-mono-font-size);
+    font-weight: var(--character-12-bold-mono-font-weight);
+    letter-spacing: var(--character-12-bold-mono-letter-spacing);
+    line-height: var(--character-12-bold-mono-line-height);
   }
   .icon-1-fill-0 {
     /* アイコンスタイル */
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-12);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-1-fill-0-font-family);
+    font-size: var(--icon-1-fill-0-font-size);
+    font-weight: var(--icon-1-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-1-fill-0-letter-spacing);
+    line-height: var(--icon-1-fill-0-line-height);
   }
   .icon-1-fill-1 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-12);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-1-fill-1-font-family);
+    font-size: var(--icon-1-fill-1-font-size);
+    font-weight: var(--icon-1-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-1-fill-1-letter-spacing);
+    line-height: var(--icon-1-fill-1-line-height);
   }
   .icon-2-fill-0 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-14);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-2-fill-0-font-family);
+    font-size: var(--icon-2-fill-0-font-size);
+    font-weight: var(--icon-2-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-2-fill-0-letter-spacing);
+    line-height: var(--icon-2-fill-0-line-height);
   }
   .icon-2-fill-1 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-14);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-2-fill-1-font-family);
+    font-size: var(--icon-2-fill-1-font-size);
+    font-weight: var(--icon-2-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-2-fill-1-letter-spacing);
+    line-height: var(--icon-2-fill-1-line-height);
   }
   .icon-3-fill-0 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-16);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-3-fill-0-font-family);
+    font-size: var(--icon-3-fill-0-font-size);
+    font-weight: var(--icon-3-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-3-fill-0-letter-spacing);
+    line-height: var(--icon-3-fill-0-line-height);
   }
   .icon-3-fill-1 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-16);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-3-fill-1-font-family);
+    font-size: var(--icon-3-fill-1-font-size);
+    font-weight: var(--icon-3-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-3-fill-1-letter-spacing);
+    line-height: var(--icon-3-fill-1-line-height);
   }
   .icon-4-fill-0 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-18);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-4-fill-0-font-family);
+    font-size: var(--icon-4-fill-0-font-size);
+    font-weight: var(--icon-4-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-4-fill-0-letter-spacing);
+    line-height: var(--icon-4-fill-0-line-height);
   }
   .icon-4-fill-1 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-18);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-4-fill-1-font-family);
+    font-size: var(--icon-4-fill-1-font-size);
+    font-weight: var(--icon-4-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-4-fill-1-letter-spacing);
+    line-height: var(--icon-4-fill-1-line-height);
   }
   .icon-5-fill-0 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-20);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-5-fill-0-font-family);
+    font-size: var(--icon-5-fill-0-font-size);
+    font-weight: var(--icon-5-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-5-fill-0-letter-spacing);
+    line-height: var(--icon-5-fill-0-line-height);
   }
   .icon-5-fill-1 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-20);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-5-fill-1-font-family);
+    font-size: var(--icon-5-fill-1-font-size);
+    font-weight: var(--icon-5-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-5-fill-1-letter-spacing);
+    line-height: var(--icon-5-fill-1-line-height);
   }
   .icon-6-fill-0 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-24);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-6-fill-0-font-family);
+    font-size: var(--icon-6-fill-0-font-size);
+    font-weight: var(--icon-6-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-6-fill-0-letter-spacing);
+    line-height: var(--icon-6-fill-0-line-height);
   }
   .icon-6-fill-1 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-24);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-6-fill-1-font-family);
+    font-size: var(--icon-6-fill-1-font-size);
+    font-weight: var(--icon-6-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-6-fill-1-letter-spacing);
+    line-height: var(--icon-6-fill-1-line-height);
   }
   .icon-7-fill-0 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-28);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-7-fill-0-font-family);
+    font-size: var(--icon-7-fill-0-font-size);
+    font-weight: var(--icon-7-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-7-fill-0-letter-spacing);
+    line-height: var(--icon-7-fill-0-line-height);
   }
   .icon-7-fill-1 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-28);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-7-fill-1-font-family);
+    font-size: var(--icon-7-fill-1-font-size);
+    font-weight: var(--icon-7-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-7-fill-1-letter-spacing);
+    line-height: var(--icon-7-fill-1-line-height);
   }
   .icon-8-fill-0 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-32);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-8-fill-0-font-family);
+    font-size: var(--icon-8-fill-0-font-size);
+    font-weight: var(--icon-8-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-8-fill-0-letter-spacing);
+    line-height: var(--icon-8-fill-0-line-height);
   }
   .icon-8-fill-1 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-32);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-8-fill-1-font-family);
+    font-size: var(--icon-8-fill-1-font-size);
+    font-weight: var(--icon-8-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-8-fill-1-letter-spacing);
+    line-height: var(--icon-8-fill-1-line-height);
   }
   .icon-9-fill-0 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-36);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-9-fill-0-font-family);
+    font-size: var(--icon-9-fill-0-font-size);
+    font-weight: var(--icon-9-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-9-fill-0-letter-spacing);
+    line-height: var(--icon-9-fill-0-line-height);
   }
   .icon-9-fill-1 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-36);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-9-fill-1-font-family);
+    font-size: var(--icon-9-fill-1-font-size);
+    font-weight: var(--icon-9-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-9-fill-1-letter-spacing);
+    line-height: var(--icon-9-fill-1-line-height);
   }
   .icon-10-fill-0 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-42);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-10-fill-0-font-family);
+    font-size: var(--icon-10-fill-0-font-size);
+    font-weight: var(--icon-10-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-10-fill-0-letter-spacing);
+    line-height: var(--icon-10-fill-0-line-height);
   }
   .icon-10-fill-1 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-42);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-10-fill-1-font-family);
+    font-size: var(--icon-10-fill-1-font-size);
+    font-weight: var(--icon-10-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-10-fill-1-letter-spacing);
+    line-height: var(--icon-10-fill-1-line-height);
   }
   .icon-11-fill-0 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-48);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-11-fill-0-font-family);
+    font-size: var(--icon-11-fill-0-font-size);
+    font-weight: var(--icon-11-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-11-fill-0-letter-spacing);
+    line-height: var(--icon-11-fill-0-line-height);
   }
   .icon-11-fill-1 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-48);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-11-fill-1-font-family);
+    font-size: var(--icon-11-fill-1-font-size);
+    font-weight: var(--icon-11-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-11-fill-1-letter-spacing);
+    line-height: var(--icon-11-fill-1-line-height);
   }
   .icon-12-fill-0 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-54);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-12-fill-0-font-family);
+    font-size: var(--icon-12-fill-0-font-size);
+    font-weight: var(--icon-12-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-12-fill-0-letter-spacing);
+    line-height: var(--icon-12-fill-0-line-height);
   }
   .icon-12-fill-1 {
-    font-family: var(--font-family-icon);
-    font-size: var(--font-size-54);
-    font-weight: var(--font-weight-icon);
+    font-family: var(--icon-12-fill-1-font-family);
+    font-size: var(--icon-12-fill-1-font-size);
+    font-weight: var(--icon-12-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
     font-display: optional;
-    letter-spacing: var(--letter-spacing-normal);
-    line-height: var(--line-height-leading-none);
+    letter-spacing: var(--icon-12-fill-1-letter-spacing);
+    line-height: var(--icon-12-fill-1-line-height);
   }
 }
