@@ -50,9 +50,12 @@ describe("IconButton", () => {
       // Default: variant="solid", size="md", theme="primary"
       expect(StyleHelpers.hasClass(button, "w-10")).toBe(true);
       expect(StyleHelpers.hasClass(button, "h-10")).toBe(true);
-      expect(StyleHelpers.hasClass(button, "bg-primary-500")).toBe(true);
-      expect(StyleHelpers.hasClass(button, "text-white")).toBe(true);
-      expect(StyleHelpers.hasClass(button, "border-primary-600")).toBe(true);
+      expect(
+        StyleHelpers.hasClass(button, "bg-surface-primary-high-enabled")
+      ).toBe(true);
+      expect(StyleHelpers.hasClass(button, "text-object-inverse")).toBe(true);
+      // Figma 刷新で solid の枠線は削除された
+      expect(StyleHelpers.hasClass(button, "border")).toBe(false);
     });
 
     it("forwards custom className", () => {
@@ -81,9 +84,11 @@ describe("IconButton", () => {
         );
         const button = testContainer.queryButton();
 
-        expect(StyleHelpers.hasClass(button, "bg-primary-500")).toBe(true);
-        expect(StyleHelpers.hasClass(button, "text-white")).toBe(true);
-        expect(StyleHelpers.hasClass(button, "border-primary-600")).toBe(true);
+        expect(
+          StyleHelpers.hasClass(button, "bg-surface-primary-high-enabled")
+        ).toBe(true);
+        expect(StyleHelpers.hasClass(button, "text-object-inverse")).toBe(true);
+        expect(StyleHelpers.hasClass(button, "border")).toBe(false);
       });
 
       it("applies solid neutral classes", () => {
@@ -93,10 +98,10 @@ describe("IconButton", () => {
         const button = testContainer.queryButton();
 
         expect(
-          StyleHelpers.hasClass(button, "bg-[var(--color-black-alpha-600)]")
+          StyleHelpers.hasClass(button, "bg-surface-neutral-high-enabled")
         ).toBe(true);
-        expect(StyleHelpers.hasClass(button, "text-white")).toBe(true);
-        expect(StyleHelpers.hasClass(button, "border-neutral-600")).toBe(true);
+        expect(StyleHelpers.hasClass(button, "text-object-inverse")).toBe(true);
+        expect(StyleHelpers.hasClass(button, "border")).toBe(false);
       });
 
       it("applies solid negative classes", () => {
@@ -105,9 +110,11 @@ describe("IconButton", () => {
         );
         const button = testContainer.queryButton();
 
-        expect(StyleHelpers.hasClass(button, "bg-negative-500")).toBe(true);
-        expect(StyleHelpers.hasClass(button, "text-white")).toBe(true);
-        expect(StyleHelpers.hasClass(button, "border-negative-600")).toBe(true);
+        expect(
+          StyleHelpers.hasClass(button, "bg-surface-negative-high-enabled")
+        ).toBe(true);
+        expect(StyleHelpers.hasClass(button, "text-object-inverse")).toBe(true);
+        expect(StyleHelpers.hasClass(button, "border")).toBe(false);
       });
     });
 
@@ -119,8 +126,12 @@ describe("IconButton", () => {
         const button = testContainer.queryButton();
 
         expect(StyleHelpers.hasClass(button, "bg-surface-base-0")).toBe(true);
-        expect(StyleHelpers.hasClass(button, "text-primary-500")).toBe(true);
-        expect(StyleHelpers.hasClass(button, "border-primary-300")).toBe(true);
+        expect(
+          StyleHelpers.hasClass(button, "text-object-primary-enabled")
+        ).toBe(true);
+        expect(
+          StyleHelpers.hasClass(button, "border-border-primary-high")
+        ).toBe(true);
       });
 
       it("applies outline neutral classes", () => {
@@ -130,8 +141,12 @@ describe("IconButton", () => {
         const button = testContainer.queryButton();
 
         expect(StyleHelpers.hasClass(button, "bg-surface-base-0")).toBe(true);
-        expect(StyleHelpers.hasClass(button, "text-neutral-700")).toBe(true);
-        expect(StyleHelpers.hasClass(button, "border-neutral-300")).toBe(true);
+        expect(
+          StyleHelpers.hasClass(button, "text-object-neutral-middle")
+        ).toBe(true);
+        expect(
+          StyleHelpers.hasClass(button, "border-border-neutral-high")
+        ).toBe(true);
       });
 
       it("applies outline negative classes", () => {
@@ -141,8 +156,12 @@ describe("IconButton", () => {
         const button = testContainer.queryButton();
 
         expect(StyleHelpers.hasClass(button, "bg-surface-base-0")).toBe(true);
-        expect(StyleHelpers.hasClass(button, "text-negative-500")).toBe(true);
-        expect(StyleHelpers.hasClass(button, "border-negative-300")).toBe(true);
+        expect(
+          StyleHelpers.hasClass(button, "text-object-negative-enabled")
+        ).toBe(true);
+        expect(
+          StyleHelpers.hasClass(button, "border-border-negative-high")
+        ).toBe(true);
       });
     });
 
@@ -153,9 +172,13 @@ describe("IconButton", () => {
         );
         const button = testContainer.queryButton();
 
-        expect(StyleHelpers.hasClass(button, "text-primary-500")).toBe(true);
+        expect(
+          StyleHelpers.hasClass(button, "text-object-primary-enabled")
+        ).toBe(true);
         // Ghost variant doesn't have background or border by default
-        expect(StyleHelpers.hasClass(button, "bg-primary-500")).toBe(false);
+        expect(
+          StyleHelpers.hasClass(button, "bg-surface-primary-high-enabled")
+        ).toBe(false);
       });
 
       it("applies ghost neutral classes", () => {
@@ -164,7 +187,9 @@ describe("IconButton", () => {
         );
         const button = testContainer.queryButton();
 
-        expect(StyleHelpers.hasClass(button, "text-neutral-700")).toBe(true);
+        expect(
+          StyleHelpers.hasClass(button, "text-object-neutral-middle")
+        ).toBe(true);
       });
 
       it("applies ghost negative classes", () => {
@@ -173,7 +198,9 @@ describe("IconButton", () => {
         );
         const button = testContainer.queryButton();
 
-        expect(StyleHelpers.hasClass(button, "text-negative-500")).toBe(true);
+        expect(
+          StyleHelpers.hasClass(button, "text-object-negative-enabled")
+        ).toBe(true);
       });
     });
   });
@@ -287,11 +314,17 @@ describe("IconButton", () => {
       );
       const button = testContainer.queryButton();
 
-      expect(StyleHelpers.hasClass(button, "disabled:bg-primary-200")).toBe(
-        true
-      );
-      expect(StyleHelpers.hasClass(button, "disabled:text-white")).toBe(true);
-      expect(StyleHelpers.hasClass(button, "disabled:border-none")).toBe(true);
+      expect(
+        StyleHelpers.hasClass(
+          button,
+          "disabled:bg-surface-primary-high-disabled"
+        )
+      ).toBe(true);
+      expect(
+        StyleHelpers.hasClass(button, "disabled:text-object-inverse")
+      ).toBe(true);
+      // Figma 刷新で solid の枠線が消えたため disabled:border-none も不要になった
+      expect(StyleHelpers.hasClass(button, "border")).toBe(false);
     });
 
     it("applies disabled styling for outline variant", () => {
@@ -303,15 +336,15 @@ describe("IconButton", () => {
       expect(
         StyleHelpers.hasClass(
           button,
-          "disabled:bg-[var(--color-white-alpha-700)]"
+          "disabled:bg-surface-primary-low-disabled"
         )
       ).toBe(true);
-      expect(StyleHelpers.hasClass(button, "disabled:text-primary-200")).toBe(
-        true
-      );
-      expect(StyleHelpers.hasClass(button, "disabled:border-primary-100")).toBe(
-        true
-      );
+      expect(
+        StyleHelpers.hasClass(button, "disabled:text-object-primary-disabled")
+      ).toBe(true);
+      expect(
+        StyleHelpers.hasClass(button, "disabled:border-border-primary-low")
+      ).toBe(true);
     });
 
     it("applies disabled styling for ghost variant", () => {
@@ -323,12 +356,12 @@ describe("IconButton", () => {
       expect(
         StyleHelpers.hasClass(
           button,
-          "disabled:bg-[var(--color-white-alpha-700)]"
+          "disabled:bg-surface-primary-low-disabled"
         )
       ).toBe(true);
-      expect(StyleHelpers.hasClass(button, "disabled:text-primary-200")).toBe(
-        true
-      );
+      expect(
+        StyleHelpers.hasClass(button, "disabled:text-object-primary-disabled")
+      ).toBe(true);
     });
 
     it("does not trigger click events when disabled", () => {

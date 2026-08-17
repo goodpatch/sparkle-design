@@ -69,9 +69,9 @@ describe("Button", () => {
       // When: クラス名を確認
       const button = testContainer.queryButton();
 
-      // Then: solidバリアントのクラスが適用される
-      expect(StyleHelpers.hasClass(button, "border")).toBe(true);
-      expect(StyleHelpers.hasClass(button, "shadow-raise")).toBe(true);
+      // Then: solidバリアントのクラスが適用される（Figma 刷新で枠線は削除された）
+      expect(StyleHelpers.hasClass(button, "border")).toBe(false);
+      expect(StyleHelpers.hasClass(button, "shadow-base")).toBe(true);
     });
 
     it("applies solid primary variant classes", () => {
@@ -86,8 +86,10 @@ describe("Button", () => {
       const button = testContainer.queryButton();
 
       // Then: solid primaryバリアントのクラスが適用される
-      expect(StyleHelpers.hasClass(button, "bg-primary-500")).toBe(true);
-      expect(StyleHelpers.hasClass(button, "text-white")).toBe(true);
+      expect(
+        StyleHelpers.hasClass(button, "bg-surface-primary-high-enabled")
+      ).toBe(true);
+      expect(StyleHelpers.hasClass(button, "text-text-inverse")).toBe(true);
     });
 
     it("applies solid neutral variant classes", () => {
@@ -103,9 +105,9 @@ describe("Button", () => {
 
       // Then: solid neutralバリアントのクラスが適用される
       expect(
-        StyleHelpers.hasClass(button, "bg-[var(--color-black-alpha-600)]")
+        StyleHelpers.hasClass(button, "bg-surface-neutral-high-enabled")
       ).toBe(true);
-      expect(StyleHelpers.hasClass(button, "text-white")).toBe(true);
+      expect(StyleHelpers.hasClass(button, "text-text-inverse")).toBe(true);
     });
 
     it("applies outline variant classes", () => {
@@ -117,7 +119,7 @@ describe("Button", () => {
 
       // Then: outlineバリアントのクラスが適用される
       expect(StyleHelpers.hasClass(button, "border")).toBe(true);
-      expect(StyleHelpers.hasClass(button, "shadow-raise")).toBe(true);
+      expect(StyleHelpers.hasClass(button, "shadow-base")).toBe(true);
     });
 
     it("applies negative theme classes", () => {
@@ -128,8 +130,10 @@ describe("Button", () => {
       const button = testContainer.queryButton();
 
       // Then: negativeテーマのクラスが適用される
-      expect(StyleHelpers.hasClass(button, "bg-negative-500")).toBe(true);
-      expect(StyleHelpers.hasClass(button, "border-negative-600")).toBe(true);
+      expect(
+        StyleHelpers.hasClass(button, "bg-surface-negative-high-enabled")
+      ).toBe(true);
+      expect(StyleHelpers.hasClass(button, "text-text-inverse")).toBe(true);
     });
 
     it("applies ghost variant classes", () => {
