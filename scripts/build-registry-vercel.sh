@@ -8,8 +8,12 @@ set -e  # エラーが発生したら停止
 echo "🤖 Starting Vercel registry build..."
 
 # Step 1: cssを生成
+# package.json の build:css に委譲する。ここで CLI のバージョンを直接指定すると、
+# build:css 側とチャネルがずれて Vercel だけ旧トークンで再生成されてしまう
+# en: Delegate to build:css. Pinning a CLI version here would diverge from
+# build:css and regenerate stale tokens on Vercel only.
 echo "🎨 Generate sparkle-design.css..."
-npx --yes sparkle-design-cli@2.2.2 generate
+pnpm build:css
 
 # Step 2: registryのjsonに変換
 echo "🎨 Generate sparkle-design-theme.json..."
