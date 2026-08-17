@@ -279,7 +279,7 @@ describe("Form", () => {
         .querySelector('[data-slot="form-description"]');
 
       // Then: 正しいスタイリングクラスが適用される
-      expect(helperMessage?.className).toContain("text-text-neutral-low");
+      expect(helperMessage?.className).toContain("text-text-neutral-middle");
       expect(helperMessage?.className).toContain("character-2-regular-pro");
     });
 
@@ -408,7 +408,7 @@ describe("Form", () => {
 
       // Then: エラースタイリングが適用される
       if (errorMessage) {
-        expect(errorMessage.className).toContain("text-negative-500");
+        expect(errorMessage.className).toContain("text-text-negative-enabled");
         expect(errorMessage.className).toContain("character-1-regular-pro");
       }
     });

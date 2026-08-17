@@ -312,7 +312,10 @@ function FormHelperMessage({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="form-description"
       id={formDescriptionId}
-      className={cn("text-text-neutral-low character-2-regular-pro", className)}
+      className={cn(
+        "text-text-neutral-middle character-2-regular-pro",
+        className
+      )}
       {...props}
     />
   );
@@ -343,7 +346,7 @@ function FormErrorMessage({ className, ...props }: React.ComponentProps<"p">) {
       data-slot="form-message"
       id={formMessageId}
       className={cn(
-        "flex gap-1 items-center text-negative-500 character-1-regular-pro",
+        "flex gap-1 items-center text-text-negative-enabled character-1-regular-pro",
         className
       )}
       {...props}

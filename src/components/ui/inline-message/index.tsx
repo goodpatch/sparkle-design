@@ -11,14 +11,15 @@ import { cn } from "@/lib/utils";
 
 // ステータスごとのスタイル定義
 const inlineMessageVariants = cva(
-  "relative w-[448px] max-w-full rounded-md border p-3 flex gap-2 items-start",
+  "relative w-[448px] max-w-full rounded-notice border p-3 flex gap-2 items-start",
   {
     variants: {
       status: {
-        info: "bg-info-50 border-info-300",
-        warning: "bg-warning-50 border-warning-200",
-        negative: "bg-negative-50 border-negative-300",
-        success: "bg-success-50 border-success-300",
+        info: "bg-surface-info-low border-border-info",
+        warning: "bg-surface-warning-low border-border-warning",
+        negative:
+          "bg-surface-negative-middle-enabled border-border-negative-high",
+        success: "bg-surface-success-low border-border-success",
       },
     },
     defaultVariants: {
@@ -37,10 +38,10 @@ const statusIcons = {
 
 // ステータスごとの色クラス
 const statusColorClasses = {
-  info: "text-info-400",
-  warning: "text-warning-500",
-  negative: "text-negative-400",
-  success: "text-success-400",
+  info: "text-object-info",
+  warning: "text-object-warning",
+  negative: "text-object-negative-enabled",
+  success: "text-object-success",
 };
 
 // Context: 子コンポーネントが自分の存在を親に登録するための仕組み

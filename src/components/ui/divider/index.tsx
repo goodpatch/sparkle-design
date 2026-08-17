@@ -10,9 +10,9 @@ import { cn } from "@/lib/utils";
 const dividerVariants = cva("shrink-0", {
   variants: {
     emphasis: {
-      low: "border-base-100 bg-base-100",
-      middle: "border-base-200 bg-base-200",
-      high: "border-base-300 bg-base-300",
+      low: "border-border-neutral-low bg-border-neutral-low",
+      middle: "border-border-neutral-middle bg-border-neutral-middle",
+      high: "border-border-neutral-high bg-border-neutral-high",
     },
     lineStyle: {
       solid: "",

@@ -60,8 +60,8 @@ describe("Link", () => {
       expect(link.className).toContain("inline");
       expect(link.className).toContain("group");
       expect(link.className).toContain("character-3-regular-pro");
-      expect(span.className).toContain("text-info-500");
-      expect(span.className).toContain("group-hover:text-info-600");
+      expect(span.className).toContain("text-text-primary-enabled");
+      expect(span.className).toContain("group-hover:text-text-primary-hover");
     });
   });
 
@@ -126,8 +126,10 @@ describe("Link", () => {
       expect(icon!.className).toContain("ml-1");
       expect(icon!.className).toContain("align-middle");
       expect(icon!.className).toContain("inline-block");
-      expect(icon!.className).toContain("text-info-500");
-      expect(icon!.className).toContain("group-hover:text-info-600");
+      expect(icon!.className).toContain("text-object-primary-enabled");
+      expect(icon!.className).toContain(
+        "group-hover:text-object-primary-hover"
+      );
     });
 
     it("does not show open in new icon when isOpenInNew is false", () => {
@@ -589,7 +591,7 @@ describe("Link", () => {
       testContainer.render(
         <Link asChild>
           <span data-testid="custom-link">カスタムリンク</span>
-        </Link>,
+        </Link>
       );
 
       // Then: span がルート要素になる
@@ -605,7 +607,7 @@ describe("Link", () => {
       testContainer.render(
         <Link asChild className="character-2-regular-pro">
           <span data-testid="styled-link">テスト</span>
-        </Link>,
+        </Link>
       );
 
       // Then: className が子要素に反映される
@@ -620,7 +622,7 @@ describe("Link", () => {
           <a href="https://example.com" data-testid="external-child">
             外部リンク
           </a>
-        </Link>,
+        </Link>
       );
 
       // Then: open_in_new アイコンが表示される
@@ -634,7 +636,7 @@ describe("Link", () => {
       testContainer.render(
         <Link href="/test" data-testid="normal-link">
           通常リンク
-        </Link>,
+        </Link>
       );
 
       // Then: <a> タグとしてレンダリング

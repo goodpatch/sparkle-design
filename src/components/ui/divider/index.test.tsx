@@ -14,15 +14,18 @@ import { Divider, type DividerProps } from "./index";
 const EMPHASIS_TEST_CASES = [
   {
     emphasis: "low" as const,
-    expectedClasses: ["border-base-100", "bg-base-100"],
+    expectedClasses: ["border-border-neutral-low", "bg-border-neutral-low"],
   },
   {
     emphasis: "middle" as const,
-    expectedClasses: ["border-base-200", "bg-base-200"],
+    expectedClasses: [
+      "border-border-neutral-middle",
+      "bg-border-neutral-middle",
+    ],
   },
   {
     emphasis: "high" as const,
-    expectedClasses: ["border-base-300", "bg-base-300"],
+    expectedClasses: ["border-border-neutral-high", "bg-border-neutral-high"],
   },
 ] as const;
 
@@ -67,8 +70,8 @@ const TestHelpers = {
   expectDefaultStyles(element: Element) {
     const defaultClasses = [
       "shrink-0",
-      "border-base-200",
-      "bg-base-200",
+      "border-border-neutral-middle",
+      "bg-border-neutral-middle",
       "w-full",
       "h-px",
     ];
@@ -182,7 +185,7 @@ describe("Divider", () => {
           direction: "vertical" as const,
         },
         expectedClasses: [
-          "border-base-300",
+          "border-border-neutral-high",
           "border-dashed",
           "h-full",
           "w-px",
@@ -199,7 +202,7 @@ describe("Divider", () => {
           direction: "horizontal" as const,
         },
         expectedClasses: [
-          "border-base-100",
+          "border-border-neutral-low",
           "border-dashed",
           "w-full",
           "h-px",
@@ -295,7 +298,9 @@ describe("Divider", () => {
 
       // Then: StyleHelpersが正しく動作する
       expect(StyleHelpers.hasClass(divider, "shrink-0")).toBe(true);
-      expect(StyleHelpers.hasClass(divider, "border-base-300")).toBe(true);
+      expect(StyleHelpers.hasClass(divider, "border-border-neutral-high")).toBe(
+        true
+      );
       expect(StyleHelpers.hasClass(divider, "border-dashed")).toBe(true);
       expect(StyleHelpers.hasClass(divider, "nonexistent-class")).toBe(false);
     });
@@ -306,7 +311,12 @@ describe("Divider", () => {
         direction: "vertical",
         emphasis: "low",
       });
-      const expectedClasses = ["shrink-0", "border-base-100", "h-full", "w-px"];
+      const expectedClasses = [
+        "shrink-0",
+        "border-border-neutral-low",
+        "h-full",
+        "w-px",
+      ];
 
       // Then: 複数クラスチェックが正しく動作する
       expect(StyleHelpers.hasClasses(divider, expectedClasses)).toBe(true);
@@ -329,7 +339,7 @@ describe("Divider", () => {
       const divider = testContainer.querySelector("div");
 
       // Then: デフォルト値が適用される
-      expect(divider.className).toContain("border-base-200");
+      expect(divider.className).toContain("border-border-neutral-middle");
       expect(divider.className).toContain("w-full");
       expect(divider.className).toContain("h-px");
     });
