@@ -18,7 +18,7 @@ const buttonVariants = cva(
     "relative inline-flex items-center justify-center gap-0.5 whitespace-nowrap rounded-action transition-colors",
     "cursor-pointer disabled:cursor-not-allowed",
     "shrink-0 outline-none",
-    "focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
+    "focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2",
   ].join(" "),
   {
     variants: {
@@ -121,7 +121,7 @@ const buttonVariants = cva(
         theme: "primary",
         isLoading: false,
         className: [
-          "bg-white",
+          "bg-surface-base-0",
           "text-primary-500",
           "border-primary-300",
           "hover:bg-primary-50",
@@ -146,7 +146,7 @@ const buttonVariants = cva(
         theme: "neutral",
         isLoading: false,
         className: [
-          "bg-white",
+          "bg-surface-base-0",
           "text-neutral-700",
           "border-neutral-300",
           "hover:bg-[var(--color-black-alpha-50)]",
@@ -162,7 +162,7 @@ const buttonVariants = cva(
         theme: "neutral",
         isLoading: true,
         className:
-          "disabled:bg-white disabled:text-neutral-700 disabled:border-neutral-300",
+          "disabled:bg-surface-base-0 disabled:text-neutral-700 disabled:border-neutral-300",
       },
       // outline negative
       {
@@ -170,7 +170,7 @@ const buttonVariants = cva(
         theme: "negative",
         isLoading: false,
         className: [
-          "bg-white",
+          "bg-surface-base-0",
           "text-negative-500",
           "border-negative-300",
           "hover:bg-negative-50",
@@ -187,7 +187,7 @@ const buttonVariants = cva(
         theme: "negative",
         isLoading: true,
         className:
-          "disabled:bg-white disabled:text-negative-500 disabled:border-negative-300",
+          "disabled:bg-surface-base-0 disabled:text-negative-500 disabled:border-negative-300",
       },
       // ghost primary
       {

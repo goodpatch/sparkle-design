@@ -15,7 +15,7 @@ import { Spinner } from "@/components/ui/spinner";
 const iconButtonVariants = cva(
   [
     "inline-flex items-center justify-center whitespace-nowrap rounded-action",
-    "ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2",
+    "ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2",
     "relative cursor-pointer",
   ].join(" "),
   {
@@ -113,7 +113,7 @@ const iconButtonVariants = cva(
         theme: "primary",
         isLoading: false,
         className: [
-          "bg-white text-primary-500 border-primary-300",
+          "bg-surface-base-0 text-primary-500 border-primary-300",
           "hover:bg-primary-50",
           "active:bg-primary-100 active:border-primary-400 active:text-primary-600",
         ].join(" "),
@@ -123,7 +123,7 @@ const iconButtonVariants = cva(
         theme: "primary",
         isLoading: true,
         isDisabled: false,
-        className: "bg-white text-primary-500 border-primary-300",
+        className: "bg-surface-base-0 text-primary-500 border-primary-300",
       },
 
       // Outline Neutral バリアント
@@ -132,7 +132,7 @@ const iconButtonVariants = cva(
         theme: "neutral",
         isLoading: false,
         className: [
-          "bg-white text-neutral-700 border-neutral-300",
+          "bg-surface-base-0 text-neutral-700 border-neutral-300",
           "hover:bg-[var(--color-black-alpha-50)]",
           "active:bg-[var(--color-black-alpha-100)]",
         ].join(" "),
@@ -142,7 +142,7 @@ const iconButtonVariants = cva(
         theme: "neutral",
         isLoading: true,
         isDisabled: false,
-        className: "bg-white text-neutral-700 border-neutral-300",
+        className: "bg-surface-base-0 text-neutral-700 border-neutral-300",
       },
 
       // Outline Negative バリアント
@@ -152,7 +152,7 @@ const iconButtonVariants = cva(
         isLoading: false,
         isDisabled: false,
         className: [
-          "bg-white text-negative-500 border-negative-300",
+          "bg-surface-base-0 text-negative-500 border-negative-300",
           "hover:bg-negative-50",
           "active:bg-negative-100 active:border-negative-400 active:text-negative-600",
         ].join(" "),
@@ -162,7 +162,7 @@ const iconButtonVariants = cva(
         theme: "negative",
         isLoading: true,
         isDisabled: false,
-        className: "bg-white text-negative-500 border-negative-300",
+        className: "bg-surface-base-0 text-negative-500 border-negative-300",
       },
 
       // Ghost Primary バリアント

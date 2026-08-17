@@ -67,31 +67,31 @@ const tagVariants = cva(
       {
         variant: "outline",
         status: "neutral",
-        className: "border-neutral-500 text-neutral-500 bg-white",
+        className: "border-neutral-500 text-neutral-500 bg-surface-base-0",
       },
       // info + outline
       {
         variant: "outline",
         status: "info",
-        className: "border-primary-500 text-primary-500 bg-white",
+        className: "border-primary-500 text-primary-500 bg-surface-base-0",
       },
       // success + outline
       {
         variant: "outline",
         status: "success",
-        className: "border-success-500 text-success-500 bg-white",
+        className: "border-success-500 text-success-500 bg-surface-base-0",
       },
       // warning + outline
       {
         variant: "outline",
         status: "warning",
-        className: "border-warning-500 text-warning-500 bg-white",
+        className: "border-warning-500 text-warning-500 bg-surface-base-0",
       },
       // negative + outline
       {
         variant: "outline",
         status: "negative",
-        className: "border-negative-500 text-negative-500 bg-white",
+        className: "border-negative-500 text-negative-500 bg-surface-base-0",
       },
 
       // === SUBTLE バリアント ===

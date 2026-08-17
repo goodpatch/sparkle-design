@@ -37,7 +37,7 @@ const checkboxItemVariants = cva(
 const checkboxRootVariants = cva(
   [
     "rounded-xs border-2 transition-colors",
-    "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-[var(--color-ring-normal)] [.group:focus-visible_&]:ring-offset-2",
+    "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-border-ring [.group:focus-visible_&]:ring-offset-2",
   ].join(" "),
   {
     variants: {
@@ -117,8 +117,8 @@ const checkboxLabelVariants = cva("cursor-pointer", {
       lg: "character-4-regular-pro",
     },
     isDisabled: {
-      true: "text-text-disabled cursor-not-allowed",
-      false: "text-text-middle",
+      true: "text-text-neutral-disabled cursor-not-allowed",
+      false: "text-text-neutral-middle",
     },
   },
   defaultVariants: {

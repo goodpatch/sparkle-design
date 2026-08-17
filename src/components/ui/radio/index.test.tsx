@@ -201,7 +201,9 @@ describe("Radio", () => {
 
       // Then: disabled属性とスタイリングが適用されている
       expect(A11yHelpers.isDisabled(radio)).toBe(true);
-      expect(StyleHelpers.hasClass(label, "text-text-disabled")).toBe(true);
+      expect(StyleHelpers.hasClass(label, "text-text-neutral-disabled")).toBe(
+        true
+      );
       expect(StyleHelpers.hasClass(label, "cursor-not-allowed")).toBe(true);
     });
 

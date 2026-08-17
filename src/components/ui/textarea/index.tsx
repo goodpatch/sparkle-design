@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
  */
 const textareaVariants = cva(
   // ベーススタイル
-  "flex w-full rounded-action border bg-white px-3 py-1 ring-offset-background placeholder:text-base-400 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-ring-normal)] focus-visible:ring-offset-2 resize",
+  "flex w-full rounded-action border bg-surface-base-0 px-3 py-1 ring-offset-background placeholder:text-base-400 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2 resize",
   {
     variants: {
       // サイズバリアント（sm, md, lg）

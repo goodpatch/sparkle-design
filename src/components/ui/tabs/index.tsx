@@ -64,10 +64,10 @@ const tabsTriggerVariants = cva(
           "disabled:data-[state=inactive]:text-neutral-200",
         ].join(" "),
         ghost: [
-          "rounded-t-md border-x border-t border-b-0 border-transparent text-text-middle",
+          "rounded-t-md border-x border-t border-b-0 border-transparent text-text-neutral-middle",
           // active
-          "data-[state=active]:text-text-high",
-          "data-[state=active]:border-divider-middle",
+          "data-[state=active]:text-text-neutral-high",
+          "data-[state=active]:border-border-neutral-middle",
           "hover:data-[state=active]:bg-neutral-50",
           "data-[state=active]:rounded-t-md",
           "focus-visible:outline-none focus-visible:data-[state=active]:bg-neutral-200",

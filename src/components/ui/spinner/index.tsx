@@ -55,7 +55,7 @@ export function Spinner({ className, size, ref, ...props }: SpinnerProps) {
       <Icon
         icon="progress_activity"
         size={size}
-        className={cn("animate-spin text-text-low", className)}
+        className={cn("animate-spin text-text-neutral-low", className)}
       />
     </span>
   );

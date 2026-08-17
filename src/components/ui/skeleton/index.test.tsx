@@ -44,7 +44,9 @@ describe("Skeleton", () => {
       expect(StyleHelpers.hasClass(skeleton!, "animate-pulse")).toBe(true);
 
       // 背景色クラスの確認
-      expect(StyleHelpers.hasClass(skeleton!, "bg-skeleton-fill")).toBe(true);
+      expect(StyleHelpers.hasClass(skeleton!, "bg-surface-base-200")).toBe(
+        true
+      );
 
       // border-radiusクラスの確認
       expect(StyleHelpers.hasClass(skeleton!, "rounded-notice")).toBe(true);
@@ -60,7 +62,9 @@ describe("Skeleton", () => {
 
       // デフォルトクラスの確認
       expect(StyleHelpers.hasClass(skeleton!, "animate-pulse")).toBe(true);
-      expect(StyleHelpers.hasClass(skeleton!, "bg-skeleton-fill")).toBe(true);
+      expect(StyleHelpers.hasClass(skeleton!, "bg-surface-base-200")).toBe(
+        true
+      );
       expect(StyleHelpers.hasClass(skeleton!, "rounded-notice")).toBe(true);
 
       // カスタムクラスの確認

@@ -12,7 +12,7 @@ import { useInputContainerFocus } from "@/hooks/useInputContainerFocus";
 
 // 入力フィールドのスタイル定義
 const inputVariants = cva(
-  "flex gap-0 items-center w-full rounded-action border bg-white transition-colors p-1",
+  "flex gap-0 items-center w-full rounded-action border bg-surface-base-0 transition-colors p-1",
   {
     variants: {
       size: {
@@ -29,7 +29,7 @@ const inputVariants = cva(
         false: "",
       },
       isFocused: {
-        true: "ring-2 ring-[var(--color-ring-normal)] ring-offset-2 outline-hidden",
+        true: "ring-2 ring-border-ring ring-offset-2 outline-hidden",
         false: "",
       },
     },
@@ -44,7 +44,8 @@ const inputVariants = cva(
       {
         isInvalid: true,
         isDisabled: false,
-        className: "border-negative-500 hover:border-negative-600 bg-white",
+        className:
+          "border-negative-500 hover:border-negative-600 bg-surface-base-0",
       },
       // 無効状態
       {
@@ -357,9 +358,9 @@ function Input({
         aria-invalid={isInvalid || undefined}
         className={cn(
           "w-full h-full bg-transparent border-none outline-hidden focus:outline-hidden",
-          "text-text-high placeholder:text-text-placeholder px-2",
+          "text-text-neutral-high placeholder:text-text-neutral-low px-2",
           isInputDisabled &&
-            "cursor-not-allowed text-neutral-400 placeholder:text-text-disabled"
+            "cursor-not-allowed text-neutral-400 placeholder:text-text-neutral-disabled"
         )}
         onChange={handleChange}
         onFocus={handleInputFocus}
