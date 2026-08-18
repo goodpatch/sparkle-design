@@ -23,8 +23,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        solid: "border shadow-raise",
-        outline: "border shadow-raise",
+        // solid の 1px 枠線は Figma の刷新で削除された（shadow も base = 影なし）
+        // en: The 1px border on solid was removed in the Figma refresh (shadow is base = none).
+        solid: "shadow-base",
+        outline: "border shadow-base",
         ghost: "",
       },
       size: {
@@ -49,23 +51,21 @@ const buttonVariants = cva(
         theme: "primary",
         isLoading: false,
         className: [
-          "bg-primary-500",
-          "text-white",
-          "border-primary-600",
-          "hover:bg-primary-600",
-          "hover:border-primary-700",
-          "active:bg-primary-700",
-          "active:border-primary-800",
-          "disabled:bg-primary-200",
-          "disabled:border-none",
+          "bg-surface-primary-high-enabled",
+          "text-text-inverse",
+          "hover:bg-surface-primary-high-hover",
+          "active:bg-surface-primary-high-active",
+          "disabled:bg-surface-primary-high-disabled",
         ].join(" "),
       },
       {
+        // ローディング中に見えるのはスピナー（currentColor 継承）なので object トークンで着色する
+        // en: Only the spinner (inherits currentColor) is visible while loading, so color it with the object token.
         variant: "solid",
         theme: "primary",
         isLoading: true,
         className:
-          "disabled:bg-primary-500 disabled:text-white disabled:border-primary-600",
+          "disabled:bg-surface-primary-high-enabled disabled:text-object-inverse",
       },
       // solid neutral
       {
@@ -73,15 +73,11 @@ const buttonVariants = cva(
         theme: "neutral",
         isLoading: false,
         className: [
-          "bg-[var(--color-black-alpha-600)]",
-          "text-white",
-          "border-neutral-600",
-          "hover:bg-[var(--color-black-alpha-700)]",
-          "hover:border-neutral-700",
-          "active:bg-[var(--color-black-alpha-800)]",
-          "active:border-neutral-800",
-          "disabled:bg-[var(--color-black-alpha-200)]",
-          "disabled:border-none",
+          "bg-surface-neutral-high-enabled",
+          "text-text-inverse",
+          "hover:bg-surface-neutral-high-hover",
+          "active:bg-surface-neutral-high-active",
+          "disabled:bg-surface-neutral-high-disabled",
         ].join(" "),
       },
       {
@@ -89,7 +85,7 @@ const buttonVariants = cva(
         theme: "neutral",
         isLoading: true,
         className:
-          "disabled:bg-[var(--color-black-alpha-600)] disabled:text-white disabled:border-neutral-600",
+          "disabled:bg-surface-neutral-high-enabled disabled:text-object-inverse",
       },
       // solid negative
       {
@@ -97,15 +93,11 @@ const buttonVariants = cva(
         theme: "negative",
         isLoading: false,
         className: [
-          "bg-negative-500",
-          "text-white",
-          "border-negative-600",
-          "hover:bg-negative-600",
-          "hover:border-negative-700",
-          "active:bg-negative-700",
-          "active:border-negative-800",
-          "disabled:bg-negative-200",
-          "disabled:border-none",
+          "bg-surface-negative-high-enabled",
+          "text-text-inverse",
+          "hover:bg-surface-negative-high-hover",
+          "active:bg-surface-negative-high-active",
+          "disabled:bg-surface-negative-high-disabled",
         ].join(" "),
       },
       {
@@ -113,7 +105,7 @@ const buttonVariants = cva(
         theme: "negative",
         isLoading: true,
         className:
-          "disabled:bg-negative-500 disabled:text-white disabled:border-negative-600",
+          "disabled:bg-surface-negative-high-enabled disabled:text-object-inverse",
       },
       // outline primary
       {
@@ -122,15 +114,15 @@ const buttonVariants = cva(
         isLoading: false,
         className: [
           "bg-surface-base-0",
-          "text-primary-500",
-          "border-primary-300",
-          "hover:bg-primary-50",
-          "active:bg-primary-100",
-          "active:border-primary-400",
-          "active:text-primary-600",
-          "disabled:bg-[var(--color-white-alpha-700)]",
-          "disabled:border-primary-100",
-          "disabled:text-primary-200",
+          "text-text-primary-enabled",
+          "border-border-primary-high",
+          "hover:bg-surface-primary-low-hover",
+          "hover:text-text-primary-hover",
+          "active:bg-surface-primary-low-active",
+          "active:text-text-primary-active",
+          "disabled:bg-surface-primary-low-disabled",
+          "disabled:border-border-primary-low",
+          "disabled:text-text-primary-disabled",
         ].join(" "),
       },
       {
@@ -138,7 +130,7 @@ const buttonVariants = cva(
         theme: "primary",
         isLoading: true,
         className:
-          "disabled:white disabled:text-primary-500 disabled:border-primary-300",
+          "disabled:bg-surface-base-0 disabled:text-object-primary-enabled disabled:border-border-primary-high",
       },
       // outline neutral
       {
@@ -147,14 +139,15 @@ const buttonVariants = cva(
         isLoading: false,
         className: [
           "bg-surface-base-0",
-          "text-neutral-700",
-          "border-neutral-300",
-          "hover:bg-[var(--color-black-alpha-50)]",
-          "active:bg-[var(--color-black-alpha-100)]",
-          "active:border-neutral-300",
-          "disabled:bg-[var(--color-white-alpha-700)]",
-          "disabled:border-neutral-100",
-          "disabled:text-neutral-200",
+          "text-text-neutral-middle",
+          "border-border-neutral-high",
+          "hover:bg-surface-neutral-low-hover",
+          "hover:text-text-neutral-high",
+          "active:bg-surface-neutral-low-active",
+          "active:text-text-neutral-high",
+          "disabled:bg-surface-neutral-low-disabled",
+          "disabled:border-border-neutral-low",
+          "disabled:text-text-neutral-disabled",
         ].join(" "),
       },
       {
@@ -162,7 +155,7 @@ const buttonVariants = cva(
         theme: "neutral",
         isLoading: true,
         className:
-          "disabled:bg-surface-base-0 disabled:text-neutral-700 disabled:border-neutral-300",
+          "disabled:bg-surface-base-0 disabled:text-object-neutral-middle disabled:border-border-neutral-high",
       },
       // outline negative
       {
@@ -171,15 +164,15 @@ const buttonVariants = cva(
         isLoading: false,
         className: [
           "bg-surface-base-0",
-          "text-negative-500",
-          "border-negative-300",
-          "hover:bg-negative-50",
-          "active:bg-negative-100",
-          "active:border-negative-400",
-          "active:text-negative-600",
-          "disabled:bg-[var(--color-white-alpha-700)]",
-          "disabled:border-negative-100",
-          "disabled:text-negative-200",
+          "text-text-negative-enabled",
+          "border-border-negative-high",
+          "hover:bg-surface-negative-low-hover",
+          "hover:text-text-negative-hover",
+          "active:bg-surface-negative-low-active",
+          "active:text-text-negative-active",
+          "disabled:bg-surface-negative-low-disabled",
+          "disabled:border-border-negative-low",
+          "disabled:text-text-negative-disabled",
         ].join(" "),
       },
       {
@@ -187,7 +180,7 @@ const buttonVariants = cva(
         theme: "negative",
         isLoading: true,
         className:
-          "disabled:bg-surface-base-0 disabled:text-negative-500 disabled:border-negative-300",
+          "disabled:bg-surface-base-0 disabled:text-object-negative-enabled disabled:border-border-negative-high",
       },
       // ghost primary
       {
@@ -195,19 +188,20 @@ const buttonVariants = cva(
         theme: "primary",
         isLoading: false,
         className: [
-          "text-primary-500",
-          "hover:bg-primary-50",
-          "active:bg-primary-100",
-          "active:text-primary-600",
-          "disabled:bg-[var(--color-white-alpha-700)]",
-          "disabled:text-primary-200",
+          "text-text-primary-enabled",
+          "hover:bg-surface-primary-low-hover",
+          "hover:text-text-primary-hover",
+          "active:bg-surface-primary-low-active",
+          "active:text-text-primary-active",
+          "disabled:bg-surface-primary-low-disabled",
+          "disabled:text-text-primary-disabled",
         ].join(" "),
       },
       {
         variant: "ghost",
         theme: "primary",
         isLoading: true,
-        className: "disabled:text-primary-500",
+        className: "disabled:text-object-primary-enabled",
       },
       // ghost neutral
       {
@@ -215,18 +209,20 @@ const buttonVariants = cva(
         theme: "neutral",
         isLoading: false,
         className: [
-          "text-neutral-700",
-          "hover:bg-[var(--color-black-alpha-50)]",
-          "active:bg-[var(--color-black-alpha-100)]",
-          "disabled:bg-[var(--color-white-alpha-700)]",
-          "disabled:text-neutral-200",
+          "text-text-neutral-middle",
+          "hover:bg-surface-neutral-low-hover",
+          "hover:text-text-neutral-high",
+          "active:bg-surface-neutral-low-active",
+          "active:text-text-neutral-high",
+          "disabled:bg-surface-neutral-low-disabled",
+          "disabled:text-text-neutral-disabled",
         ].join(" "),
       },
       {
         variant: "ghost",
         theme: "neutral",
         isLoading: true,
-        className: "disabled:text-neutral-700",
+        className: "disabled:text-object-neutral-middle",
       },
       // ghost negative
       {
@@ -234,19 +230,20 @@ const buttonVariants = cva(
         theme: "negative",
         isLoading: false,
         className: [
-          "text-negative-500",
-          "hover:bg-negative-50",
-          "active:bg-negative-100",
-          "active:text-negative-600",
-          "disabled:bg-[var(--color-white-alpha-700)]",
-          "disabled:text-negative-200",
+          "text-text-negative-enabled",
+          "hover:bg-surface-negative-low-hover",
+          "hover:text-text-negative-hover",
+          "active:bg-surface-negative-low-active",
+          "active:text-text-negative-active",
+          "disabled:bg-surface-negative-low-disabled",
+          "disabled:text-text-negative-disabled",
         ].join(" "),
       },
       {
         variant: "ghost",
         theme: "negative",
         isLoading: true,
-        className: "disabled:text-negative-500",
+        className: "disabled:text-object-negative-enabled",
       },
     ],
     defaultVariants: {
