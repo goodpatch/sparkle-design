@@ -85,10 +85,18 @@ export class TestContainer {
  * en: Event dispatch helpers
  */
 export const EventHelpers = {
-  click(element: Element): void {
+  // preventDefault の検証が必要なケースのために MouseEventInit を上書きできるようにする。
+  // 戻り値は dispatchEvent と同じで、preventDefault されたら false
+  // en: Allow overriding MouseEventInit (e.g. `cancelable`) to test preventDefault behavior.
+  // Returns dispatchEvent's result: false when the event was canceled.
+  click(element: Element, init: MouseEventInit = {}): boolean {
+    let notCanceled = true;
     act(() => {
-      element.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      notCanceled = element.dispatchEvent(
+        new MouseEvent("click", { bubbles: true, ...init })
+      );
     });
+    return notCanceled;
   },
 
   change(element: HTMLInputElement | HTMLTextAreaElement, value: string): void {
@@ -113,12 +121,20 @@ export const EventHelpers = {
     });
   },
 
-  keyDown(element: Element, key: string): void {
+  // click と同様に KeyboardEventInit を上書きでき、戻り値で preventDefault を検証できる
+  // en: Same as click — accepts a KeyboardEventInit and returns false when canceled.
+  keyDown(
+    element: Element,
+    key: string,
+    init: KeyboardEventInit = {}
+  ): boolean {
+    let notCanceled = true;
     act(() => {
-      element.dispatchEvent(
-        new KeyboardEvent("keydown", { key, bubbles: true })
+      notCanceled = element.dispatchEvent(
+        new KeyboardEvent("keydown", { key, bubbles: true, ...init })
       );
     });
+    return notCanceled;
   },
 
   focus(element: HTMLElement): void {
