@@ -22,6 +22,9 @@ describe("IconButton", () => {
 
   afterEach(() => {
     testContainer.cleanup();
+    // console.warn の spy が後続テストに漏れないよう必ず復元する
+    // en: Always restore spies (e.g. console.warn) so they do not leak into later tests.
+    vi.restoreAllMocks();
   });
 
   describe("Basic Rendering", () => {
@@ -416,20 +419,70 @@ describe("IconButton", () => {
     });
 
     // 無効状態では有効時の hover / active クラスを出力しないこと（goodpatch/sparkle-design#305 のコメント）
-    // en: Disabled buttons must not emit the enabled hover / active classes (#305 comment).
+    // isDisabled と native disabled の双方を確認する
+    // en: Disabled buttons must not emit the enabled hover / active classes (#305 comment),
+    // for both `isDisabled` and the native `disabled` prop.
     it.each([
-      ["primary", "hover:bg-surface-primary-low-hover"],
-      ["neutral", "hover:bg-surface-neutral-low-hover"],
-      ["negative", "hover:bg-surface-negative-low-hover"],
+      [
+        "primary",
+        "hover:bg-surface-primary-low-hover",
+        "active:bg-surface-primary-low-active",
+      ],
+      [
+        "neutral",
+        "hover:bg-surface-neutral-low-hover",
+        "active:bg-surface-neutral-low-active",
+      ],
+      [
+        "negative",
+        "hover:bg-surface-negative-low-hover",
+        "active:bg-surface-negative-low-active",
+      ],
     ] as const)(
-      "does not emit enabled hover classes for disabled outline %s",
-      (theme, hoverClass) => {
+      "does not emit enabled hover / active classes for disabled outline %s",
+      (theme, hoverClass, activeClass) => {
         testContainer.render(
           <IconButton variant="outline" theme={theme} icon="plus" isDisabled />
         );
         const button = testContainer.queryButton();
 
         expect(StyleHelpers.hasClass(button, hoverClass)).toBe(false);
+        expect(StyleHelpers.hasClass(button, activeClass)).toBe(false);
+      }
+    );
+
+    it.each([
+      ["primary", "hover:bg-surface-primary-low-hover"],
+      ["neutral", "hover:bg-surface-neutral-low-hover"],
+      ["negative", "hover:bg-surface-negative-low-hover"],
+    ] as const)(
+      "does not emit enabled hover classes for outline %s with the native disabled prop",
+      (theme, hoverClass) => {
+        testContainer.render(
+          <IconButton variant="outline" theme={theme} icon="plus" disabled />
+        );
+        const button = testContainer.queryButton();
+
+        expect(StyleHelpers.hasClass(button, hoverClass)).toBe(false);
+      }
+    );
+
+    it.each(["solid", "outline", "ghost"] as const)(
+      "applies the disabled styles for %s with the native disabled prop",
+      variant => {
+        testContainer.render(
+          <IconButton variant={variant} theme="neutral" icon="plus" disabled />
+        );
+        const button = testContainer.queryButton();
+
+        expect(
+          StyleHelpers.hasClass(
+            button,
+            variant === "solid"
+              ? "disabled:bg-surface-neutral-high-disabled"
+              : "disabled:bg-surface-neutral-low-disabled"
+          )
+        ).toBe(true);
       }
     );
   });
@@ -534,18 +587,59 @@ describe("IconButton", () => {
       ).toBe(true);
     });
 
-    // <a> に button 専用の属性を渡さないこと
-    // en: Button-only attributes must not be forwarded to elements like <a>.
+    // <a> に button 専用の属性を渡さないこと（利用者が type を明示した場合も含む）
+    // en: Button-only attributes must not be forwarded to elements like <a>,
+    // including when the caller passes `type` explicitly.
     it("does not forward button-only attributes to the slotted element", () => {
       testContainer.render(
-        <IconButton asChild icon="open_in_new" aria-label="開く">
+        <IconButton asChild icon="open_in_new" aria-label="開く" type="submit">
           <a href="/foo" aria-label="開く" />
         </IconButton>
       );
       const link = testContainer.querySelector<HTMLAnchorElement>("a");
 
       expect(link.hasAttribute("type")).toBe(false);
+    });
+
+    it("does not set the disabled attribute on a non-button slotted element", () => {
+      vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <IconButton asChild icon="open_in_new" aria-label="開く" isDisabled>
+          <a href="/foo" aria-label="開く" />
+        </IconButton>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
       expect(link.hasAttribute("disabled")).toBe(false);
+      expect(link.getAttribute("aria-disabled")).toBe("true");
+    });
+
+    // 差し込み先が button の場合は、その要素自身の type を尊重する
+    // en: When the slotted element is a button, its own `type` is preserved.
+    it("keeps the slotted button's own type", () => {
+      testContainer.render(
+        <IconButton asChild icon="send" aria-label="送信">
+          <button type="submit" />
+        </IconButton>
+      );
+      const button = testContainer.queryButton();
+
+      expect(button.getAttribute("type")).toBe("submit");
+    });
+
+    it("renders the spinner inside the slotted element while loading", () => {
+      vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <IconButton asChild icon="open_in_new" aria-label="開く" isLoading>
+          <a href="/foo" aria-label="開く" />
+        </IconButton>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      expect(link.querySelector(".animate-spin")).not.toBeNull();
+      expect(link.textContent).not.toContain("open_in_new");
     });
 
     it("marks aria-disabled and warns when the slotted element is disabled", () => {
@@ -567,9 +661,14 @@ describe("IconButton", () => {
       warnSpy.mockRestore();
     });
 
+    // 無効時は IconButton 側のハンドラだけでなく、差し込んだ要素自身のハンドラも抑止する。
+    // Radix Slot は子のハンドラを先に呼ぶため、capture フェーズで止める必要がある
+    // en: When disabled, both the IconButton handler and the slotted element's own handler must be
+    // blocked. Radix Slot calls the child's handler first, so the guard runs in the capture phase.
     it("does not trigger click events when the slotted element is disabled", () => {
-      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      vi.spyOn(console, "warn").mockImplementation(() => {});
       const handleClick = vi.fn();
+      const slottedClick = vi.fn();
 
       testContainer.render(
         <IconButton
@@ -579,19 +678,80 @@ describe("IconButton", () => {
           isDisabled
           onClick={handleClick}
         >
+          <a href="/foo" aria-label="開く" onClick={slottedClick} />
+        </IconButton>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      // cancelable: true で dispatch し、戻り値で preventDefault による遷移抑止まで検証する
+      // en: Dispatch as cancelable and use the return value to verify preventDefault was applied.
+      const notCanceled = EventHelpers.click(link, { cancelable: true });
+
+      expect(handleClick).not.toHaveBeenCalled();
+      expect(slottedClick).not.toHaveBeenCalled();
+      expect(notCanceled).toBe(false);
+    });
+
+    it("does not trigger Enter activation when the slotted element is disabled", () => {
+      vi.spyOn(console, "warn").mockImplementation(() => {});
+      const handleKeyDown = vi.fn();
+
+      testContainer.render(
+        <IconButton
+          asChild
+          icon="open_in_new"
+          aria-label="開く"
+          isDisabled
+          onKeyDown={handleKeyDown}
+        >
           <a href="/foo" aria-label="開く" />
         </IconButton>
       );
       const link = testContainer.querySelector<HTMLAnchorElement>("a");
 
-      // cancelable: true で dispatch し、preventDefault による遷移抑止まで検証する
-      // en: Dispatch as cancelable so the preventDefault-based activation guard is exercised.
+      const notCanceled = EventHelpers.keyDown(link, "Enter", {
+        cancelable: true,
+      });
+
+      expect(handleKeyDown).not.toHaveBeenCalled();
+      expect(notCanceled).toBe(false);
+    });
+
+    // 有効時はハンドラが素通しされること（ガードが常に握り潰す実装への退行を防ぐ）
+    // en: Handlers must pass through while enabled (guards against a regression that always blocks).
+    it("passes click and keydown through when the slotted element is enabled", () => {
+      const handleClick = vi.fn();
+      const handleKeyDown = vi.fn();
+      const slottedClick = vi.fn();
+
+      testContainer.render(
+        <IconButton
+          asChild
+          icon="open_in_new"
+          aria-label="開く"
+          onClick={handleClick}
+          onKeyDown={handleKeyDown}
+        >
+          <a
+            href="/foo"
+            aria-label="開く"
+            onClick={event => {
+              // jsdom の未実装ナビゲーションを避けるため、差し込み側で既定動作を止める
+              // en: Cancel the default action here so jsdom's unimplemented navigation is not hit.
+              event.preventDefault();
+              slottedClick();
+            }}
+          />
+        </IconButton>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
       EventHelpers.click(link, { cancelable: true });
-      EventHelpers.keyDown(link, "Enter");
+      EventHelpers.keyDown(link, "Enter", { cancelable: true });
 
-      expect(handleClick).not.toHaveBeenCalled();
-
-      warnSpy.mockRestore();
+      expect(handleClick).toHaveBeenCalledTimes(1);
+      expect(slottedClick).toHaveBeenCalledTimes(1);
+      expect(handleKeyDown).toHaveBeenCalledTimes(1);
     });
 
     it("forwards ref to the slotted element", () => {
@@ -605,6 +765,77 @@ describe("IconButton", () => {
 
       expect(ref.current).toBeInstanceOf(HTMLAnchorElement);
       expect(ref.current?.tagName).toBe("A");
+    });
+  });
+
+  describe("Development Warnings", () => {
+    // asChild に単一要素以外を渡すと Slot が何も描画しないため、無音の故障になりやすい
+    // en: asChild with anything but a single element renders nothing — a silent failure.
+    it("warns and renders nothing when asChild has no element child", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <IconButton asChild icon="plus" aria-label="追加" />
+      );
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("[IconButton] asChild には単一の React 要素")
+      );
+      expect(testContainer.getContainer().innerHTML).toBe("");
+    });
+
+    it("warns when children are passed without asChild", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <IconButton icon="plus" aria-label="追加">
+          ラベル
+        </IconButton>
+      );
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("children は描画されません")
+      );
+      expect(testContainer.queryButton().textContent).toBe("plus");
+    });
+
+    // asChild では差し込んだ要素側にアクセシブルネームが必要（アイコンは aria-hidden のため）
+    // en: With asChild the slotted element needs an accessible name (the icon is aria-hidden).
+    it("warns when neither the button nor the slotted element has an accessible name", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <IconButton asChild icon="plus">
+          <span data-testid="slotted" />
+        </IconButton>
+      );
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("aria-label を指定してください")
+      );
+    });
+
+    it.each([
+      [
+        "the slotted element has aria-label",
+        <span key="labelled" aria-label="追加" />,
+      ],
+      [
+        "the slotted element has text content",
+        <span key="text">追加する</span>,
+      ],
+    ])("does not warn about the accessible name when %s", (_case, child) => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <IconButton asChild icon="plus">
+          {child}
+        </IconButton>
+      );
+
+      expect(warnSpy).not.toHaveBeenCalledWith(
+        expect.stringContaining("aria-label を指定してください")
+      );
     });
   });
 
