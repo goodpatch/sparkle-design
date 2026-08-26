@@ -429,12 +429,12 @@ export interface ButtonProps
  * - `isLoading` の場合でもアクセシブルネームは維持されます。
  * - `asChild` を使う場合、子要素がボタン相当のセマンティクス（role/キーボード操作）を満たすようにしてください。
  * - `asChild` で `<a>` など button 以外の要素を差し込んで無効化した場合、`aria-disabled` の付与と
- *   click / Enter・Space の抑止はこのコンポーネントが行いますが、`disabled:` プレフィックスのスタイルは
+ *   click / auxclick / Enter・Space の抑止はこのコンポーネントが行いますが、`disabled:` プレフィックスのスタイルは
  *   適用されません。無効時の見た目は差し込む要素側で用意してください（`data-disabled="true"` を
  *   利用側のスタイルフックとして出力しています）。差し込み先が native の `<button>` の場合は
  *   `disabled` 属性がそのまま渡るため、この制約はありません。
  *   en: When disabled with `asChild` and a non-button element such as `<a>`, this component sets
- *   `aria-disabled` and blocks click / Enter / Space, but `disabled:`-prefixed styles never apply —
+ *   `aria-disabled` and blocks click / auxclick / Enter / Space, but `disabled:`-prefixed styles never apply —
  *   provide the disabled appearance on the slotted element (`data-disabled="true"` is emitted as a
  *   styling hook). A slotted native `<button>` receives the real `disabled` attribute instead.
  * - native の `<button>` かどうかは差し込んだ要素そのもので判定するため、内部で `<button>` を
@@ -493,9 +493,26 @@ function Button({
     ("aria-label" in props && Boolean(props["aria-label"])) ||
     ("aria-labelledby" in props && Boolean(props["aria-labelledby"]));
   const hasChildren = React.Children.count(children) > 0;
+  // asChild では children が差し込む要素そのものなので、その要素のラベル / テキストを見る
+  // en: With asChild the children are the slotted element itself, so inspect its label / text.
+  const slottedChildProps = React.isValidElement(children)
+    ? (children.props as {
+        "aria-label"?: string;
+        "aria-labelledby"?: string;
+        children?: React.ReactNode;
+      })
+    : undefined;
+  const hasAccessibleName = asChild
+    ? hasAccessibleNameProp ||
+      Boolean(
+        slottedChildProps?.["aria-label"] ||
+          slottedChildProps?.["aria-labelledby"]
+      ) ||
+      React.Children.count(slottedChildProps?.children) > 0
+    : hasChildren || hasAccessibleNameProp;
 
   if (process.env.NODE_ENV !== "production") {
-    if (!hasChildren && !hasAccessibleNameProp) {
+    if (!hasAccessibleName) {
       // Icon-only button should use IconButton, or provide aria-label/labelledby.
       // Keep it as a warning (not an exception) to avoid breaking existing usage.
       console.warn(
@@ -613,6 +630,25 @@ function Button({
     onKeyDown?.(event);
   };
 
+  // Slot は「差し込んだ要素自身のハンドラ → Slot のハンドラ」の順で合成するため、
+  // 無効時は子側の capture ハンドラを外してガードを確実に先に効かせる。
+  // 同様に子が明示した disabled も、無効時はコンポーネント側の状態を優先する
+  // en: Slot composes "the slotted element's own handler first, then the slot's", so while
+  // disabled we strip the child's capture handlers to keep the guard authoritative. The
+  // component's disabled state also overrides a `disabled` set on the child.
+  const slottedChildren =
+    asChild && isButtonDisabled && React.isValidElement(children)
+      ? React.cloneElement(
+          children as React.ReactElement<Record<string, unknown>>,
+          {
+            onClickCapture: undefined,
+            onAuxClickCapture: undefined,
+            onKeyDownCapture: undefined,
+            ...(canUseButtonProps ? { disabled: true } : {}),
+          }
+        )
+      : children;
+
   return (
     <Comp
       // asChild ケースで <a> 等を受け入れるため公開 API は HTMLElement で広く受けるが、
@@ -646,7 +682,7 @@ function Button({
       {...restProps}
     >
       {asChild ? (
-        children
+        slottedChildren
       ) : (
         <>
           {prefixIcon && (
