@@ -85,9 +85,13 @@ export class TestContainer {
  * en: Event dispatch helpers
  */
 export const EventHelpers = {
-  click(element: Element): void {
+  // preventDefault の検証が必要なケースのために MouseEventInit を上書きできるようにする
+  // en: Allow overriding MouseEventInit (e.g. `cancelable`) to test preventDefault behavior.
+  click(element: Element, init: MouseEventInit = {}): void {
     act(() => {
-      element.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      element.dispatchEvent(
+        new MouseEvent("click", { bubbles: true, ...init })
+      );
     });
   },
 
@@ -212,7 +216,9 @@ export const AsyncHelpers = {
         if (Date.now() - startTime >= timeout) {
           const message = lastError
             ? `Timeout after ${timeout}ms (last error: ${
-                lastError instanceof Error ? lastError.message : String(lastError)
+                lastError instanceof Error
+                  ? lastError.message
+                  : String(lastError)
               })`
             : `Timeout after ${timeout}ms`;
           reject(new Error(message));

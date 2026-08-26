@@ -377,6 +377,61 @@ describe("IconButton", () => {
 
       expect(handleClick).not.toHaveBeenCalled();
     });
+
+    // native の disabled でも無効状態のスタイルが当たること（goodpatch/sparkle-design#305）
+    // en: The native `disabled` prop must also apply the disabled styles (#305).
+    it("applies disabled styling with the native disabled prop", () => {
+      testContainer.render(
+        <IconButton variant="solid" theme="primary" icon="plus" disabled />
+      );
+      const button = testContainer.queryButton();
+
+      expect(
+        StyleHelpers.hasClass(
+          button,
+          "disabled:bg-surface-primary-high-disabled"
+        )
+      ).toBe(true);
+      expect(
+        StyleHelpers.hasClass(button, "disabled:text-object-inverse")
+      ).toBe(true);
+      expect(StyleHelpers.hasClass(button, "cursor-not-allowed")).toBe(true);
+    });
+
+    it("applies disabled styling with the native disabled prop for outline variant", () => {
+      testContainer.render(
+        <IconButton variant="outline" theme="primary" icon="plus" disabled />
+      );
+      const button = testContainer.queryButton();
+
+      expect(
+        StyleHelpers.hasClass(
+          button,
+          "disabled:bg-surface-primary-low-disabled"
+        )
+      ).toBe(true);
+      expect(
+        StyleHelpers.hasClass(button, "disabled:text-object-primary-disabled")
+      ).toBe(true);
+    });
+
+    // 無効状態では有効時の hover / active クラスを出力しないこと（goodpatch/sparkle-design#305 のコメント）
+    // en: Disabled buttons must not emit the enabled hover / active classes (#305 comment).
+    it.each([
+      ["primary", "hover:bg-surface-primary-low-hover"],
+      ["neutral", "hover:bg-surface-neutral-low-hover"],
+      ["negative", "hover:bg-surface-negative-low-hover"],
+    ] as const)(
+      "does not emit enabled hover classes for disabled outline %s",
+      (theme, hoverClass) => {
+        testContainer.render(
+          <IconButton variant="outline" theme={theme} icon="plus" isDisabled />
+        );
+        const button = testContainer.queryButton();
+
+        expect(StyleHelpers.hasClass(button, hoverClass)).toBe(false);
+      }
+    );
   });
 
   describe("User Interaction", () => {
@@ -419,25 +474,137 @@ describe("IconButton", () => {
   });
 
   describe("AsChild Functionality", () => {
-    it("renders as a Slot when asChild is true", () => {
+    // asChild で差し込んだ要素がレンダリングされること（goodpatch/sparkle-design#304）
+    // en: The slotted element must actually be rendered (#304).
+    it("renders the slotted element instead of a button", () => {
       testContainer.render(
-        <IconButton asChild icon="plus">
-          <div data-testid="custom-element">Custom element</div>
+        <IconButton asChild icon="open_in_new" aria-label="開く">
+          <a href="/foo" aria-label="開く" data-testid="custom-element" />
         </IconButton>
       );
       const container = testContainer.getContainer();
 
-      // When asChild is true, Slot merges props with the child element
-      // The div should still exist but with the button's props merged
-      const customElement = container.querySelector(
+      const link = container.querySelector<HTMLAnchorElement>(
         '[data-testid="custom-element"]'
       );
-      expect(customElement).toBeDefined();
+      expect(link).not.toBeNull();
+      expect(link?.tagName).toBe("A");
+      expect(link?.getAttribute("href")).toBe("/foo");
+      expect(container.querySelector("button")).toBeNull();
+    });
 
-      // Check if the element exists and has some content
-      if (customElement) {
-        expect(customElement.textContent).toContain("Custom element");
-      }
+    it("renders the icon inside the slotted element", () => {
+      testContainer.render(
+        <IconButton asChild icon="open_in_new" aria-label="開く">
+          <a href="/foo" aria-label="開く" />
+        </IconButton>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+      const iconSpan = link.querySelector('span[aria-hidden="true"]');
+
+      expect(iconSpan).not.toBeNull();
+      expect(iconSpan?.textContent).toBe("open_in_new");
+    });
+
+    it("keeps the slotted element's own children", () => {
+      testContainer.render(
+        <IconButton asChild icon="open_in_new" aria-label="開く">
+          <a href="/foo">
+            <span data-testid="own-child">Custom element</span>
+          </a>
+        </IconButton>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      expect(link.querySelector('[data-testid="own-child"]')).not.toBeNull();
+      expect(link.textContent).toContain("Custom element");
+    });
+
+    it("merges the button classes onto the slotted element", () => {
+      testContainer.render(
+        <IconButton asChild icon="open_in_new" aria-label="開く">
+          <a href="/foo" aria-label="開く" className="my-link" />
+        </IconButton>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      expect(StyleHelpers.hasClass(link, "my-link")).toBe(true);
+      expect(
+        StyleHelpers.hasClass(link, "bg-surface-primary-high-enabled")
+      ).toBe(true);
+    });
+
+    // <a> に button 専用の属性を渡さないこと
+    // en: Button-only attributes must not be forwarded to elements like <a>.
+    it("does not forward button-only attributes to the slotted element", () => {
+      testContainer.render(
+        <IconButton asChild icon="open_in_new" aria-label="開く">
+          <a href="/foo" aria-label="開く" />
+        </IconButton>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      expect(link.hasAttribute("type")).toBe(false);
+      expect(link.hasAttribute("disabled")).toBe(false);
+    });
+
+    it("marks aria-disabled and warns when the slotted element is disabled", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <IconButton asChild icon="open_in_new" aria-label="開く" isDisabled>
+          <a href="/foo" aria-label="開く" />
+        </IconButton>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      expect(link.getAttribute("aria-disabled")).toBe("true");
+      expect(link.getAttribute("data-disabled")).toBe("true");
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("[IconButton] asChild + disabled/loading")
+      );
+
+      warnSpy.mockRestore();
+    });
+
+    it("does not trigger click events when the slotted element is disabled", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      const handleClick = vi.fn();
+
+      testContainer.render(
+        <IconButton
+          asChild
+          icon="open_in_new"
+          aria-label="開く"
+          isDisabled
+          onClick={handleClick}
+        >
+          <a href="/foo" aria-label="開く" />
+        </IconButton>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      // cancelable: true で dispatch し、preventDefault による遷移抑止まで検証する
+      // en: Dispatch as cancelable so the preventDefault-based activation guard is exercised.
+      EventHelpers.click(link, { cancelable: true });
+      EventHelpers.keyDown(link, "Enter");
+
+      expect(handleClick).not.toHaveBeenCalled();
+
+      warnSpy.mockRestore();
+    });
+
+    it("forwards ref to the slotted element", () => {
+      const ref = React.createRef<HTMLAnchorElement>();
+
+      testContainer.render(
+        <IconButton asChild icon="open_in_new" aria-label="開く" ref={ref}>
+          <a href="/foo" aria-label="開く" />
+        </IconButton>
+      );
+
+      expect(ref.current).toBeInstanceOf(HTMLAnchorElement);
+      expect(ref.current?.tagName).toBe("A");
     });
   });
 

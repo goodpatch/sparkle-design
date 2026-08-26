@@ -115,6 +115,7 @@ const iconButtonVariants = cva(
         variant: "outline",
         theme: "primary",
         isLoading: false,
+        isDisabled: false,
         className: [
           "bg-surface-base-0 text-object-primary-enabled border-border-primary-high",
           "hover:bg-surface-primary-low-hover",
@@ -135,6 +136,7 @@ const iconButtonVariants = cva(
         variant: "outline",
         theme: "neutral",
         isLoading: false,
+        isDisabled: false,
         className: [
           "bg-surface-base-0 text-object-neutral-middle border-border-neutral-high",
           "hover:bg-surface-neutral-low-hover hover:text-object-neutral-high",
@@ -304,7 +306,17 @@ const iconButtonVariants = cva(
 );
 
 type IconButtonVariants = VariantProps<typeof iconButtonVariants>;
-export interface IconButtonProps extends React.ComponentProps<"button"> {
+type NativeButtonProps = React.ComponentProps<"button">;
+
+export interface IconButtonProps
+  extends Omit<NativeButtonProps, "onClick" | "onKeyDown" | "ref"> {
+  /**
+   * ルート要素への ref。`asChild` で `<a>` 等を差し込むケースを受け入れるため
+   * `HTMLButtonElement` ではなく `HTMLElement` で広く受ける
+   * en: Ref to the root element. Typed as `HTMLElement` (not `HTMLButtonElement`)
+   * so `asChild` targets such as `<a>` are accepted.
+   */
+  ref?: React.Ref<HTMLElement>;
   /**
    * アイコンボタンのバリエーション
    * en: Variation of the icon button
@@ -321,8 +333,10 @@ export interface IconButtonProps extends React.ComponentProps<"button"> {
    */
   theme?: IconButtonVariants["theme"];
   /**
-   * ボタンを別コンポーネントの子としてレンダリングするか
-   * en: Whether to render the button as a child component
+   * ボタンを別コンポーネントの子としてレンダリングするか。
+   * true のとき、差し込んだ要素の中身を保ったままアイコンがその内側に描画される
+   * en: Whether to render the button as a child component. When true, the icon is
+   * rendered inside the slotted element while keeping the element's own children.
    */
   asChild?: boolean;
   /**
@@ -340,6 +354,16 @@ export interface IconButtonProps extends React.ComponentProps<"button"> {
    * en: Whether the button is disabled
    */
   isDisabled?: boolean;
+  /**
+   * クリック時のハンドラ。`asChild` で button 以外の要素を差し込めるため `HTMLElement` で受ける
+   * en: Click handler. Typed as `HTMLElement` because `asChild` can render non-button elements.
+   */
+  onClick?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * キー押下時のハンドラ。`asChild` で button 以外の要素を差し込めるため `HTMLElement` で受ける
+   * en: KeyDown handler. Typed as `HTMLElement` because `asChild` can render non-button elements.
+   */
+  onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
 }
 
 /**
@@ -396,6 +420,16 @@ function IconButton({
           " / Icon-only buttons require aria-label (WCAG 1.1.1)."
       );
     }
+    if (asChild && isIconButtonDisabled) {
+      // <a> 等では `disabled` 属性も `:disabled` 由来のスタイルも効かないため、
+      // 差し込んだ要素側で無効状態を表現する必要がある
+      // en: `disabled` and `:disabled` styles do not apply to elements like <a>,
+      // so the slotted element must express the disabled state itself.
+      console.warn(
+        "[IconButton] asChild + disabled/loading: 差し込んだ要素側で無効状態のセマンティクス（aria-disabled と操作の抑止）を担保してください。" +
+          " / asChild + disabled/loading: the slotted element must handle disabled semantics (e.g., aria-disabled + preventing activation)."
+      );
+    }
   }
 
   const Comp = asChild ? SlotPrimitive.Slot : "button";
@@ -414,27 +448,61 @@ function IconButton({
     }
   };
 
+  const { onClick, onKeyDown, ...restProps } = props;
+
+  const handleClick: React.MouseEventHandler<HTMLElement> = event => {
+    if (isIconButtonDisabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    onClick?.(event);
+  };
+
+  const handleKeyDown: React.KeyboardEventHandler<HTMLElement> = event => {
+    if (isIconButtonDisabled) {
+      // asChild で <a> 等を差し込んだ場合に Enter / Space での実行を止める
+      // en: Prevent activation keys when used with asChild (e.g., <a>).
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      return;
+    }
+    onKeyDown?.(event);
+  };
+
   return (
     <Comp
-      ref={ref}
-      type="button"
+      // asChild ケースで <a> 等を受け入れるため公開 API は HTMLElement で広く受けるが、
+      // 内部の Comp は <button> 固定の union が含まれるためここで narrow する。
+      // en: Public ref is HTMLElement (covers asChild targets); inner Comp's button branch needs narrowing.
+      ref={ref as React.Ref<HTMLButtonElement>}
+      type={asChild ? undefined : restProps.type || "button"}
+      aria-disabled={asChild && isIconButtonDisabled ? true : undefined}
+      data-disabled={asChild && isIconButtonDisabled ? "true" : undefined}
       className={cn(
         iconButtonVariants({
           variant,
           size,
           theme,
           isLoading,
-          isDisabled,
+          // native の disabled だけを渡された場合も無効状態のスタイルを当てる
+          // en: Apply the disabled styles even when only the native `disabled` prop is passed.
+          isDisabled: Boolean(isDisabled || disabled),
           className,
         })
       )}
-      disabled={isIconButtonDisabled}
-      {...props}
+      disabled={asChild ? undefined : isIconButtonDisabled}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      {...restProps}
     >
+      {/* asChild では差し込んだ要素の中身を保ったまま、その内側にアイコンを描画する */}
+      {/* en: In asChild mode, keep the slotted element's own children and render the icon inside it. */}
+      {asChild && <SlotPrimitive.Slottable>{children}</SlotPrimitive.Slottable>}
       {isLoading ? (
-        <>
-          <Spinner size={getIconSize()} className="text-current" />
-        </>
+        <Spinner size={getIconSize()} className="text-current" />
       ) : (
         <Icon icon={icon} size={getIconSize()} />
       )}
