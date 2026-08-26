@@ -876,6 +876,41 @@ describe("IconButton", () => {
       expect(handleClick).not.toHaveBeenCalled();
     });
 
+    // Slot は子のハンドラを先に呼ぶため、capture 同士でも子が先になる
+    // en: Slot calls the child's handler first, even capture-to-capture.
+    it("suppresses the slotted element's own capture handlers when disabled", () => {
+      const slottedClickCapture = vi.fn();
+      const slottedKeyDownCapture = vi.fn();
+
+      testContainer.render(
+        <IconButton asChild icon="open_in_new" aria-label="開く" isDisabled>
+          <a
+            href="/foo"
+            aria-label="開く"
+            onClickCapture={slottedClickCapture}
+            onKeyDownCapture={slottedKeyDownCapture}
+          />
+        </IconButton>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      EventHelpers.click(link, { cancelable: true });
+      EventHelpers.keyDown(link, "Enter", { cancelable: true });
+
+      expect(slottedClickCapture).not.toHaveBeenCalled();
+      expect(slottedKeyDownCapture).not.toHaveBeenCalled();
+    });
+
+    it("keeps the computed disabled state over the slotted button's own disabled", () => {
+      testContainer.render(
+        <IconButton asChild icon="send" aria-label="送信" isDisabled>
+          <button disabled={false} />
+        </IconButton>
+      );
+
+      expect(testContainer.queryButton().disabled).toBe(true);
+    });
+
     it("suppresses auxclick on a disabled slotted link", () => {
       const slottedAuxClick = vi.fn();
 

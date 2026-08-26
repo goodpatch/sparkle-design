@@ -629,6 +629,27 @@ function IconButton({
     onKeyDown?.(event);
   };
 
+  // Slot は「差し込んだ要素自身のハンドラ → Slot のハンドラ」の順で合成するため、
+  // 無効時は子側の capture ハンドラを外してガードを確実に先に効かせる。
+  // 同様に子が明示した disabled も、無効時はコンポーネント側の状態を優先する
+  // en: Slot composes "the slotted element's own handler first, then the slot's", so while
+  // disabled we strip the child's capture handlers to keep the guard authoritative. The
+  // component's disabled state also overrides a `disabled` set on the child.
+  const slottedChildren =
+    asChild && isActivationBlocked && React.isValidElement(children)
+      ? React.cloneElement(
+          children as React.ReactElement<Record<string, unknown>>,
+          {
+            onClickCapture: undefined,
+            onAuxClickCapture: undefined,
+            onKeyDownCapture: undefined,
+            ...(canUseButtonProps && isIconButtonDisabled
+              ? { disabled: true }
+              : {}),
+          }
+        )
+      : children;
+
   return (
     <Comp
       // asChild ケースで <a> 等を受け入れるため公開 API は HTMLElement で広く受けるが、
@@ -665,7 +686,9 @@ function IconButton({
     >
       {/* asChild では差し込んだ要素の中身を保ったまま、その内側にアイコンを描画する */}
       {/* en: In asChild mode, keep the slotted element's own children and render the icon inside it. */}
-      {asChild && <SlotPrimitive.Slottable>{children}</SlotPrimitive.Slottable>}
+      {asChild && (
+        <SlotPrimitive.Slottable>{slottedChildren}</SlotPrimitive.Slottable>
+      )}
       {isLoading ? (
         <Spinner size={getIconSize()} className="text-current" />
       ) : (

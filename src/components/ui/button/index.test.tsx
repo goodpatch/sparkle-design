@@ -928,6 +928,80 @@ describe("Button", () => {
       warnSpy.mockRestore();
     });
 
+    // Slot は子のハンドラを先に呼ぶため、capture 同士でも子が先になる。
+    // 無効時は子の capture ハンドラを外してガードを先に効かせる
+    // en: Slot calls the child's handler first, even capture-to-capture. While disabled the
+    // child's capture handlers are stripped so the guard runs first.
+    it("suppresses the slotted element's own capture handlers when disabled", () => {
+      vi.spyOn(console, "warn").mockImplementation(() => {});
+      const slottedClickCapture = vi.fn();
+      const slottedKeyDownCapture = vi.fn();
+
+      testContainer.render(
+        <Button asChild isDisabled>
+          <a
+            href="/about"
+            onClickCapture={slottedClickCapture}
+            onKeyDownCapture={slottedKeyDownCapture}
+          >
+            About
+          </a>
+        </Button>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      EventHelpers.click(link, { cancelable: true });
+      EventHelpers.keyDown(link, "Enter", { cancelable: true });
+
+      expect(slottedClickCapture).not.toHaveBeenCalled();
+      expect(slottedKeyDownCapture).not.toHaveBeenCalled();
+    });
+
+    // 子が明示した disabled={false} より、コンポーネントの無効状態を優先する
+    // en: The component's disabled state wins over a `disabled={false}` set on the child.
+    it("keeps the computed disabled state over the slotted button's own disabled", () => {
+      testContainer.render(
+        <Button asChild isDisabled>
+          <button disabled={false}>Slotted</button>
+        </Button>
+      );
+
+      expect(testContainer.queryButton().disabled).toBe(true);
+    });
+
+    // asChild では差し込んだ要素側のラベル / テキストでアクセシブルネームを判定する
+    // en: With asChild the accessible name is judged from the slotted element's label / text.
+    it("warns when the slotted element has no accessible name", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <Button asChild>
+          {/* アクセシブルネームが無いケースそのものを検証するため、意図的に空の <a> を使う */}
+          {/* en: Intentionally an empty <a>: the missing accessible name is what is under test. */}
+          {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
+          <a href="/about" />
+        </Button>
+      );
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("[Button] Accessible name is missing")
+      );
+    });
+
+    it("does not warn when the slotted element provides the accessible name", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <Button asChild>
+          <a href="/about" aria-label="About" />
+        </Button>
+      );
+
+      expect(warnSpy).not.toHaveBeenCalledWith(
+        expect.stringContaining("[Button] Accessible name is missing")
+      );
+    });
+
     it("warns when asChild has no element child", () => {
       const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
