@@ -70,6 +70,9 @@ node-compile-cache/
 # package manager lock files
 # pnpm-lock.yaml
 
+# Claude Code の作業用 git worktree（.claude/worktrees/<name> に作成される）
+.claude/worktrees/
+
 # skills — animation ブランチで追加される allowlist パターンと揃えておくことで
 # 両ブランチの merge 競合を避ける。共有スキルに追加があるたび allowlist も更新する。
 # en: Match the allowlist introduced on the `animation` branch so that merging
