@@ -149,6 +149,7 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     },
+    "./package.json": "./package.json",
     "./badge": {
       "types": "./dist/components/ui/badge/index.d.ts",
       "import": "./dist/components/ui/badge/index.js",
