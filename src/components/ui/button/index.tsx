@@ -16,7 +16,7 @@ const buttonVariants = cva(
   [
     // `relative` is required because we absolutely-position the loading spinner at the center.
     "relative inline-flex items-center justify-center gap-0.5 whitespace-nowrap rounded-action transition-colors",
-    "cursor-pointer disabled:cursor-not-allowed",
+    "cursor-pointer disabled:cursor-not-allowed aria-disabled:cursor-not-allowed",
     "shrink-0 outline-none",
     "focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2",
   ].join(" "),
@@ -55,7 +55,7 @@ const buttonVariants = cva(
           "text-text-inverse",
           "hover:bg-surface-primary-high-hover",
           "active:bg-surface-primary-high-active",
-          "disabled:bg-surface-primary-high-disabled",
+          "disabled:bg-surface-primary-high-disabled aria-disabled:bg-surface-primary-high-disabled",
         ].join(" "),
       },
       {
@@ -65,7 +65,7 @@ const buttonVariants = cva(
         theme: "primary",
         isLoading: true,
         className:
-          "disabled:bg-surface-primary-high-enabled disabled:text-object-inverse",
+          "disabled:bg-surface-primary-high-enabled aria-disabled:bg-surface-primary-high-enabled disabled:text-object-inverse aria-disabled:text-object-inverse",
       },
       // solid neutral
       {
@@ -77,7 +77,7 @@ const buttonVariants = cva(
           "text-text-inverse",
           "hover:bg-surface-neutral-high-hover",
           "active:bg-surface-neutral-high-active",
-          "disabled:bg-surface-neutral-high-disabled",
+          "disabled:bg-surface-neutral-high-disabled aria-disabled:bg-surface-neutral-high-disabled",
         ].join(" "),
       },
       {
@@ -85,7 +85,7 @@ const buttonVariants = cva(
         theme: "neutral",
         isLoading: true,
         className:
-          "disabled:bg-surface-neutral-high-enabled disabled:text-object-inverse",
+          "disabled:bg-surface-neutral-high-enabled aria-disabled:bg-surface-neutral-high-enabled disabled:text-object-inverse aria-disabled:text-object-inverse",
       },
       // solid negative
       {
@@ -97,7 +97,7 @@ const buttonVariants = cva(
           "text-text-inverse",
           "hover:bg-surface-negative-high-hover",
           "active:bg-surface-negative-high-active",
-          "disabled:bg-surface-negative-high-disabled",
+          "disabled:bg-surface-negative-high-disabled aria-disabled:bg-surface-negative-high-disabled",
         ].join(" "),
       },
       {
@@ -105,7 +105,7 @@ const buttonVariants = cva(
         theme: "negative",
         isLoading: true,
         className:
-          "disabled:bg-surface-negative-high-enabled disabled:text-object-inverse",
+          "disabled:bg-surface-negative-high-enabled aria-disabled:bg-surface-negative-high-enabled disabled:text-object-inverse aria-disabled:text-object-inverse",
       },
       // outline primary
       {
@@ -120,9 +120,9 @@ const buttonVariants = cva(
           "hover:text-text-primary-hover",
           "active:bg-surface-primary-low-active",
           "active:text-text-primary-active",
-          "disabled:bg-surface-primary-low-disabled",
-          "disabled:border-border-primary-low",
-          "disabled:text-text-primary-disabled",
+          "disabled:bg-surface-primary-low-disabled aria-disabled:bg-surface-primary-low-disabled",
+          "disabled:border-border-primary-low aria-disabled:border-border-primary-low",
+          "disabled:text-text-primary-disabled aria-disabled:text-text-primary-disabled",
         ].join(" "),
       },
       {
@@ -130,7 +130,7 @@ const buttonVariants = cva(
         theme: "primary",
         isLoading: true,
         className:
-          "disabled:bg-surface-base-0 disabled:text-object-primary-enabled disabled:border-border-primary-high",
+          "disabled:bg-surface-base-0 aria-disabled:bg-surface-base-0 disabled:text-object-primary-enabled aria-disabled:text-object-primary-enabled disabled:border-border-primary-high aria-disabled:border-border-primary-high",
       },
       // outline neutral
       {
@@ -145,9 +145,9 @@ const buttonVariants = cva(
           "hover:text-text-neutral-high",
           "active:bg-surface-neutral-low-active",
           "active:text-text-neutral-high",
-          "disabled:bg-surface-neutral-low-disabled",
-          "disabled:border-border-neutral-low",
-          "disabled:text-text-neutral-disabled",
+          "disabled:bg-surface-neutral-low-disabled aria-disabled:bg-surface-neutral-low-disabled",
+          "disabled:border-border-neutral-low aria-disabled:border-border-neutral-low",
+          "disabled:text-text-neutral-disabled aria-disabled:text-text-neutral-disabled",
         ].join(" "),
       },
       {
@@ -155,7 +155,7 @@ const buttonVariants = cva(
         theme: "neutral",
         isLoading: true,
         className:
-          "disabled:bg-surface-base-0 disabled:text-object-neutral-middle disabled:border-border-neutral-high",
+          "disabled:bg-surface-base-0 aria-disabled:bg-surface-base-0 disabled:text-object-neutral-middle aria-disabled:text-object-neutral-middle disabled:border-border-neutral-high aria-disabled:border-border-neutral-high",
       },
       // outline negative
       {
@@ -170,9 +170,9 @@ const buttonVariants = cva(
           "hover:text-text-negative-hover",
           "active:bg-surface-negative-low-active",
           "active:text-text-negative-active",
-          "disabled:bg-surface-negative-low-disabled",
-          "disabled:border-border-negative-low",
-          "disabled:text-text-negative-disabled",
+          "disabled:bg-surface-negative-low-disabled aria-disabled:bg-surface-negative-low-disabled",
+          "disabled:border-border-negative-low aria-disabled:border-border-negative-low",
+          "disabled:text-text-negative-disabled aria-disabled:text-text-negative-disabled",
         ].join(" "),
       },
       {
@@ -180,7 +180,7 @@ const buttonVariants = cva(
         theme: "negative",
         isLoading: true,
         className:
-          "disabled:bg-surface-base-0 disabled:text-object-negative-enabled disabled:border-border-negative-high",
+          "disabled:bg-surface-base-0 aria-disabled:bg-surface-base-0 disabled:text-object-negative-enabled aria-disabled:text-object-negative-enabled disabled:border-border-negative-high aria-disabled:border-border-negative-high",
       },
       // ghost primary
       {
@@ -193,15 +193,16 @@ const buttonVariants = cva(
           "hover:text-text-primary-hover",
           "active:bg-surface-primary-low-active",
           "active:text-text-primary-active",
-          "disabled:bg-surface-primary-low-disabled",
-          "disabled:text-text-primary-disabled",
+          "disabled:bg-surface-primary-low-disabled aria-disabled:bg-surface-primary-low-disabled",
+          "disabled:text-text-primary-disabled aria-disabled:text-text-primary-disabled",
         ].join(" "),
       },
       {
         variant: "ghost",
         theme: "primary",
         isLoading: true,
-        className: "disabled:text-object-primary-enabled",
+        className:
+          "disabled:text-object-primary-enabled aria-disabled:text-object-primary-enabled",
       },
       // ghost neutral
       {
@@ -214,15 +215,16 @@ const buttonVariants = cva(
           "hover:text-text-neutral-high",
           "active:bg-surface-neutral-low-active",
           "active:text-text-neutral-high",
-          "disabled:bg-surface-neutral-low-disabled",
-          "disabled:text-text-neutral-disabled",
+          "disabled:bg-surface-neutral-low-disabled aria-disabled:bg-surface-neutral-low-disabled",
+          "disabled:text-text-neutral-disabled aria-disabled:text-text-neutral-disabled",
         ].join(" "),
       },
       {
         variant: "ghost",
         theme: "neutral",
         isLoading: true,
-        className: "disabled:text-object-neutral-middle",
+        className:
+          "disabled:text-object-neutral-middle aria-disabled:text-object-neutral-middle",
       },
       // ghost negative
       {
@@ -235,15 +237,16 @@ const buttonVariants = cva(
           "hover:text-text-negative-hover",
           "active:bg-surface-negative-low-active",
           "active:text-text-negative-active",
-          "disabled:bg-surface-negative-low-disabled",
-          "disabled:text-text-negative-disabled",
+          "disabled:bg-surface-negative-low-disabled aria-disabled:bg-surface-negative-low-disabled",
+          "disabled:text-text-negative-disabled aria-disabled:text-text-negative-disabled",
         ].join(" "),
       },
       {
         variant: "ghost",
         theme: "negative",
         isLoading: true,
-        className: "disabled:text-object-negative-enabled",
+        className:
+          "disabled:text-object-negative-enabled aria-disabled:text-object-negative-enabled",
       },
     ],
     defaultVariants: {
@@ -413,15 +416,18 @@ export interface ButtonProps
  *   アイコンのみの場合は `aria-label` / `aria-labelledby` を付与するか、可能なら `IconButton` を使用してください。
  * - `isLoading` の場合でもアクセシブルネームは維持されます。
  * - `asChild` を使う場合、子要素がボタン相当のセマンティクス（role/キーボード操作）を満たすようにしてください。
- * - `asChild` で `<a>` など button 以外の要素を差し込んで無効化した場合、`aria-disabled` の付与と
- *   click / Enter・Space の抑止はこのコンポーネントが行いますが、`disabled:` プレフィックスのスタイルは
- *   適用されません。無効時の見た目は差し込む要素側で用意してください（`data-disabled="true"` を
- *   利用側のスタイルフックとして出力しています）。差し込み先が native の `<button>` の場合は
- *   `disabled` 属性がそのまま渡るため、この制約はありません。
+ * - `asChild` で `<a>` など button 以外の要素を差し込んで無効化した場合、`aria-disabled` の付与、
+ *   click / Enter・Space の抑止、`aria-disabled:` プレフィックスによる無効時の配色まで
+ *   このコンポーネントが行います（`data-disabled="true"` も利用側のスタイルフックとして出力）。
+ *   差し込み先が native の `<button>` の場合は `disabled` 属性がそのまま渡ります。
+ *   なお `aria-disabled` の要素はフォーカス可能なままなので、タブ順から外したい場合は
+ *   差し込む要素側で `tabIndex={-1}` を指定してください。
  *   en: When disabled with `asChild` and a non-button element such as `<a>`, this component sets
- *   `aria-disabled` and blocks click / Enter / Space, but `disabled:`-prefixed styles never apply —
- *   provide the disabled appearance on the slotted element (`data-disabled="true"` is emitted as a
- *   styling hook). A slotted native `<button>` receives the real `disabled` attribute instead.
+ *   `aria-disabled`, blocks click / Enter / Space, and applies the disabled colors via
+ *   `aria-disabled:`-prefixed utilities (`data-disabled="true"` is also emitted as a styling hook).
+ *   A slotted native `<button>` receives the real `disabled` attribute instead. Note that an
+ *   `aria-disabled` element stays focusable — set `tabIndex={-1}` on the slotted element to remove
+ *   it from the tab order.
  *
  * @param {ButtonProps} props
  */
@@ -476,17 +482,6 @@ function Button({
       // Keep it as a warning (not an exception) to avoid breaking existing usage.
       console.warn(
         "[Button] Accessible name is missing. Provide children text, or set aria-label/aria-labelledby. For icon-only actions, consider using IconButton."
-      );
-    }
-    if (asChild && isButtonDisabled && hasChildren && !canUseButtonProps) {
-      // aria-disabled の付与と操作の抑止はこのコンポーネントが行うが、
-      // `disabled:` 由来のスタイルは button 以外では発火しない
-      // en: This component sets aria-disabled and blocks activation, but `disabled:`
-      // styles never fire on non-button elements.
-      console.warn(
-        "[Button] asChild + disabled/loading: 無効時の配色は `disabled:` プレフィックスのため差し込んだ要素には適用されません。" +
-          "見た目の無効表現は差し込む要素側（data-disabled 属性など）で用意してください。" +
-          " / asChild + disabled/loading: `disabled:`-prefixed styles do not apply to the slotted element — provide the disabled appearance there (e.g. via the data-disabled attribute)."
       );
     }
     if (asChild && (prefixIcon || suffixIcon || isLoading)) {

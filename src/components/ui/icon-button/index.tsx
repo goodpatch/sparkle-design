@@ -236,63 +236,63 @@ const iconButtonVariants = cva(
         theme: "primary",
         isDisabled: true,
         className:
-          "disabled:bg-surface-primary-high-disabled disabled:text-object-inverse",
+          "disabled:bg-surface-primary-high-disabled aria-disabled:bg-surface-primary-high-disabled disabled:text-object-inverse aria-disabled:text-object-inverse",
       },
       {
         variant: "solid",
         theme: "neutral",
         isDisabled: true,
         className:
-          "disabled:bg-surface-neutral-high-disabled disabled:text-object-inverse",
+          "disabled:bg-surface-neutral-high-disabled aria-disabled:bg-surface-neutral-high-disabled disabled:text-object-inverse aria-disabled:text-object-inverse",
       },
       {
         variant: "solid",
         theme: "negative",
         isDisabled: true,
         className:
-          "disabled:bg-surface-negative-high-disabled disabled:text-object-inverse",
+          "disabled:bg-surface-negative-high-disabled aria-disabled:bg-surface-negative-high-disabled disabled:text-object-inverse aria-disabled:text-object-inverse",
       },
       {
         variant: "outline",
         theme: "primary",
         isDisabled: true,
         className:
-          "disabled:bg-surface-primary-low-disabled disabled:text-object-primary-disabled disabled:border-border-primary-low",
+          "disabled:bg-surface-primary-low-disabled aria-disabled:bg-surface-primary-low-disabled disabled:text-object-primary-disabled aria-disabled:text-object-primary-disabled disabled:border-border-primary-low aria-disabled:border-border-primary-low",
       },
       {
         variant: "outline",
         theme: "neutral",
         isDisabled: true,
         className:
-          "disabled:bg-surface-neutral-low-disabled disabled:text-object-neutral-disabled disabled:border-border-neutral-low",
+          "disabled:bg-surface-neutral-low-disabled aria-disabled:bg-surface-neutral-low-disabled disabled:text-object-neutral-disabled aria-disabled:text-object-neutral-disabled disabled:border-border-neutral-low aria-disabled:border-border-neutral-low",
       },
       {
         variant: "outline",
         theme: "negative",
         isDisabled: true,
         className:
-          "disabled:bg-surface-negative-low-disabled disabled:text-object-negative-disabled disabled:border-border-negative-low",
+          "disabled:bg-surface-negative-low-disabled aria-disabled:bg-surface-negative-low-disabled disabled:text-object-negative-disabled aria-disabled:text-object-negative-disabled disabled:border-border-negative-low aria-disabled:border-border-negative-low",
       },
       {
         variant: "ghost",
         theme: "primary",
         isDisabled: true,
         className:
-          "disabled:bg-surface-primary-low-disabled disabled:text-object-primary-disabled",
+          "disabled:bg-surface-primary-low-disabled aria-disabled:bg-surface-primary-low-disabled disabled:text-object-primary-disabled aria-disabled:text-object-primary-disabled",
       },
       {
         variant: "ghost",
         theme: "neutral",
         isDisabled: true,
         className:
-          "disabled:bg-surface-neutral-low-disabled disabled:text-object-neutral-disabled",
+          "disabled:bg-surface-neutral-low-disabled aria-disabled:bg-surface-neutral-low-disabled disabled:text-object-neutral-disabled aria-disabled:text-object-neutral-disabled",
       },
       {
         variant: "ghost",
         theme: "negative",
         isDisabled: true,
         className:
-          "disabled:bg-surface-negative-low-disabled disabled:text-object-negative-disabled",
+          "disabled:bg-surface-negative-low-disabled aria-disabled:bg-surface-negative-low-disabled disabled:text-object-negative-disabled aria-disabled:text-object-negative-disabled",
       },
     ],
     defaultVariants: {
@@ -410,15 +410,18 @@ export interface IconButtonProps
  *   `asChild` の場合は差し込む要素側のテキストや `aria-label` でも構いません。
  *   en: The icon is `aria-hidden` and never provides an accessible name — always pass `aria-label`.
  *   With `asChild`, text or `aria-label` on the slotted element works as well.
- * - `asChild` で `<a>` など button 以外の要素を差し込んで無効化した場合、`aria-disabled` の付与と
- *   click / Enter・Space の抑止はこのコンポーネントが行いますが、`disabled:` プレフィックスのスタイルは
- *   適用されません。無効時の見た目は差し込む要素側で用意してください（`data-disabled="true"` を
- *   利用側のスタイルフックとして出力しています）。差し込み先が native の `<button>` の場合は
- *   `disabled` 属性がそのまま渡るため、この制約はありません。
+ * - `asChild` で `<a>` など button 以外の要素を差し込んで無効化した場合、`aria-disabled` の付与、
+ *   click / Enter・Space の抑止、`aria-disabled:` プレフィックスによる無効時の配色まで
+ *   このコンポーネントが行います（`data-disabled="true"` も利用側のスタイルフックとして出力）。
+ *   差し込み先が native の `<button>` の場合は `disabled` 属性がそのまま渡ります。
+ *   なお `aria-disabled` の要素はフォーカス可能なままなので、タブ順から外したい場合は
+ *   差し込む要素側で `tabIndex={-1}` を指定してください。
  *   en: When disabled with `asChild` and a non-button element such as `<a>`, this component sets
- *   `aria-disabled` and blocks click / Enter / Space, but `disabled:`-prefixed styles never apply —
- *   provide the disabled appearance on the slotted element (`data-disabled="true"` is emitted as a
- *   styling hook). A slotted native `<button>` receives the real `disabled` attribute instead.
+ *   `aria-disabled`, blocks click / Enter / Space, and applies the disabled colors via
+ *   `aria-disabled:`-prefixed utilities (`data-disabled="true"` is also emitted as a styling hook).
+ *   A slotted native `<button>` receives the real `disabled` attribute instead. Note that an
+ *   `aria-disabled` element stays focusable — set `tabIndex={-1}` on the slotted element to remove
+ *   it from the tab order.
  *
  * @param {IconButtonProps} props
  */
@@ -493,18 +496,6 @@ function IconButton({
         "[IconButton] asChild を付けていない IconButton の children は描画されません。" +
           "アイコン以外のコンテンツが必要な場合は Button を使ってください。" +
           " / children are not rendered without asChild — use Button when you need content besides the icon."
-      );
-    }
-
-    if (asChild && isIconButtonDisabled && slottedChild && !canUseButtonProps) {
-      // aria-disabled の付与と操作の抑止はこのコンポーネントが行うが、
-      // `disabled:` 由来のスタイルは button 以外では発火しない
-      // en: This component sets aria-disabled and blocks activation, but `disabled:`
-      // styles never fire on non-button elements.
-      console.warn(
-        "[IconButton] asChild + disabled/loading: 無効時の配色は `disabled:` プレフィックスのため差し込んだ要素には適用されません。" +
-          "見た目の無効表現は差し込む要素側（data-disabled 属性など）で用意してください。" +
-          " / asChild + disabled/loading: `disabled:`-prefixed styles do not apply to the slotted element — provide the disabled appearance there (e.g. via the data-disabled attribute)."
       );
     }
   }

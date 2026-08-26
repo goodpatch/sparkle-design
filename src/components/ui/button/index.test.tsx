@@ -519,26 +519,26 @@ describe("Button", () => {
       warnSpy.mockRestore();
     });
 
-    it("warns and marks aria-disabled when asChild is disabled", () => {
-      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
-
+    it("marks aria-disabled and applies the aria-disabled styles when asChild is disabled", () => {
       testContainer.render(
         <Button asChild isDisabled>
           <a href="/about">Disabled Link</a>
         </Button>
       );
 
-      // Then: 警告が出る
-      expect(warnSpy).toHaveBeenCalledWith(
-        expect.stringContaining("[Button] asChild + disabled/loading")
-      );
-
       // Then: aria-disabled/data-disabled が付与される
-      const link = testContainer.getContainer().querySelector("a");
-      expect(link?.getAttribute("aria-disabled")).toBe("true");
-      expect(link?.getAttribute("data-disabled")).toBe("true");
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+      expect(link.getAttribute("aria-disabled")).toBe("true");
+      expect(link.getAttribute("data-disabled")).toBe("true");
 
-      warnSpy.mockRestore();
+      // Then: disabled: は <a> で発火しないため aria-disabled: 由来の配色が当たる
+      // en: `disabled:` never fires on <a>, so the aria-disabled utilities provide the colors.
+      expect(
+        StyleHelpers.hasClass(
+          link,
+          "aria-disabled:bg-surface-primary-high-disabled"
+        )
+      ).toBe(true);
     });
 
     it("handles rapid clicks gracefully", () => {
@@ -596,6 +596,37 @@ describe("Button", () => {
     });
   });
 
+  describe("Disabled Utilities", () => {
+    // disabled: を足したのに aria-disabled: を足し忘れると asChild で配色が欠ける。
+    // 対になっていることを機械的に確認する（goodpatch/sparkle-design#311）
+    // en: A `disabled:` utility without its `aria-disabled:` counterpart breaks the asChild case (#311).
+    it.each(
+      (["solid", "outline", "ghost"] as const).flatMap(variant =>
+        (["primary", "neutral", "negative"] as const).map(
+          theme => [variant, theme] as const
+        )
+      )
+    )(
+      "emits an aria-disabled counterpart for every disabled utility (%s / %s)",
+      (variant, theme) => {
+        testContainer.render(
+          <Button variant={variant} theme={theme} isDisabled>
+            Disabled
+          </Button>
+        );
+        const classes = testContainer.queryButton().className.split(/\s+/);
+        const disabledUtilities = classes
+          .filter(name => name.startsWith("disabled:"))
+          .map(name => name.slice("disabled:".length));
+
+        expect(disabledUtilities.length).toBeGreaterThan(0);
+        for (const utility of disabledUtilities) {
+          expect(classes).toContain(`aria-disabled:${utility}`);
+        }
+      }
+    );
+  });
+
   describe("AsChild Behavior", () => {
     // button 専用の属性を <a> 等へ転送しないこと（goodpatch/sparkle-design#310）
     // en: Button-only attributes must not be forwarded to elements like <a> (#310).
@@ -650,7 +681,6 @@ describe("Button", () => {
     // en: When disabled, the slotted element's own handler must be blocked too. Radix Slot calls
     // the child's handler first, so the guard runs in the capture phase.
     it("suppresses the slotted element's own onClick when disabled", () => {
-      vi.spyOn(console, "warn").mockImplementation(() => {});
       const handleClick = vi.fn();
       const slottedClick = vi.fn();
 
@@ -671,7 +701,6 @@ describe("Button", () => {
     });
 
     it("suppresses Enter activation when the slotted element is disabled", () => {
-      vi.spyOn(console, "warn").mockImplementation(() => {});
       const handleKeyDown = vi.fn();
 
       testContainer.render(
@@ -717,22 +746,6 @@ describe("Button", () => {
       expect(handleClick).toHaveBeenCalledTimes(1);
       expect(slottedClick).toHaveBeenCalledTimes(1);
       expect(handleKeyDown).toHaveBeenCalledTimes(1);
-    });
-
-    // 差し込み先が button なら disabled: スタイルが効くので、見た目を自前で用意しろとは警告しない
-    // en: A slotted <button> gets working `disabled:` styles, so the appearance warning is skipped.
-    it("does not warn about disabled styling for a slotted button", () => {
-      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
-
-      testContainer.render(
-        <Button asChild isDisabled>
-          <button>Slotted</button>
-        </Button>
-      );
-
-      expect(warnSpy).not.toHaveBeenCalledWith(
-        expect.stringContaining("[Button] asChild + disabled/loading")
-      );
     });
   });
 

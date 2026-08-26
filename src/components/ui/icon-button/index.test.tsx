@@ -485,6 +485,38 @@ describe("IconButton", () => {
         ).toBe(true);
       }
     );
+    // disabled: を足したのに aria-disabled: を足し忘れると asChild で配色が欠ける。
+    // 対になっていることを機械的に確認する（goodpatch/sparkle-design#311）
+    // en: A `disabled:` utility without its `aria-disabled:` counterpart breaks the asChild case (#311).
+    it.each(
+      (["solid", "outline", "ghost"] as const).flatMap(variant =>
+        (["primary", "neutral", "negative"] as const).map(
+          theme => [variant, theme] as const
+        )
+      )
+    )(
+      "emits an aria-disabled counterpart for every disabled utility (%s / %s)",
+      (variant, theme) => {
+        testContainer.render(
+          <IconButton
+            variant={variant}
+            theme={theme}
+            icon="plus"
+            aria-label="追加"
+            isDisabled
+          />
+        );
+        const classes = testContainer.queryButton().className.split(/\s+/);
+        const disabledUtilities = classes
+          .filter(name => name.startsWith("disabled:"))
+          .map(name => name.slice("disabled:".length));
+
+        expect(disabledUtilities.length).toBeGreaterThan(0);
+        for (const utility of disabledUtilities) {
+          expect(classes).toContain(`aria-disabled:${utility}`);
+        }
+      }
+    );
   });
 
   describe("User Interaction", () => {
@@ -602,8 +634,6 @@ describe("IconButton", () => {
     });
 
     it("does not set the disabled attribute on a non-button slotted element", () => {
-      vi.spyOn(console, "warn").mockImplementation(() => {});
-
       testContainer.render(
         <IconButton asChild icon="open_in_new" aria-label="開く" isDisabled>
           <a href="/foo" aria-label="開く" />
@@ -644,8 +674,6 @@ describe("IconButton", () => {
     // 差し込み先が native の button なら、native の disabled と無効スタイルがそのまま効く
     // en: A slotted native button receives the real `disabled` attribute and the disabled styles.
     it("forwards the native disabled state to a slotted button", () => {
-      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
-
       testContainer.render(
         <IconButton asChild icon="send" aria-label="送信" isDisabled>
           <button />
@@ -661,16 +689,9 @@ describe("IconButton", () => {
           "disabled:bg-surface-primary-high-disabled"
         )
       ).toBe(true);
-      // button では disabled: スタイルが効くので、差し込み側で用意しろという警告は出さない
-      // en: `disabled:` styles work on a button, so the "provide the appearance yourself" warning is skipped.
-      expect(warnSpy).not.toHaveBeenCalledWith(
-        expect.stringContaining("[IconButton] asChild + disabled/loading")
-      );
     });
 
     it("renders the spinner inside the slotted element while loading", () => {
-      vi.spyOn(console, "warn").mockImplementation(() => {});
-
       testContainer.render(
         <IconButton asChild icon="open_in_new" aria-label="開く" isLoading>
           <a href="/foo" aria-label="開く" />
@@ -682,9 +703,9 @@ describe("IconButton", () => {
       expect(link.textContent).not.toContain("open_in_new");
     });
 
-    it("marks aria-disabled and warns when the slotted element is disabled", () => {
-      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
-
+    // button 以外を差し込んだ無効時は、aria-disabled と aria-disabled: 由来の配色で表現する
+    // en: For a disabled non-button slot, the state is expressed via aria-disabled and its utilities.
+    it("marks aria-disabled and applies the aria-disabled styles when the slotted element is disabled", () => {
       testContainer.render(
         <IconButton asChild icon="open_in_new" aria-label="開く" isDisabled>
           <a href="/foo" aria-label="開く" />
@@ -694,11 +715,15 @@ describe("IconButton", () => {
 
       expect(link.getAttribute("aria-disabled")).toBe("true");
       expect(link.getAttribute("data-disabled")).toBe("true");
-      expect(warnSpy).toHaveBeenCalledWith(
-        expect.stringContaining("[IconButton] asChild + disabled/loading")
-      );
-
-      warnSpy.mockRestore();
+      expect(
+        StyleHelpers.hasClass(
+          link,
+          "aria-disabled:bg-surface-primary-high-disabled"
+        )
+      ).toBe(true);
+      expect(
+        StyleHelpers.hasClass(link, "aria-disabled:text-object-inverse")
+      ).toBe(true);
     });
 
     // 無効時は IconButton 側のハンドラだけでなく、差し込んだ要素自身のハンドラも抑止する。
@@ -706,7 +731,6 @@ describe("IconButton", () => {
     // en: When disabled, both the IconButton handler and the slotted element's own handler must be
     // blocked. Radix Slot calls the child's handler first, so the guard runs in the capture phase.
     it("does not trigger click events when the slotted element is disabled", () => {
-      vi.spyOn(console, "warn").mockImplementation(() => {});
       const handleClick = vi.fn();
       const slottedClick = vi.fn();
 
@@ -733,7 +757,6 @@ describe("IconButton", () => {
     });
 
     it("does not trigger Enter activation when the slotted element is disabled", () => {
-      vi.spyOn(console, "warn").mockImplementation(() => {});
       const handleKeyDown = vi.fn();
 
       testContainer.render(
