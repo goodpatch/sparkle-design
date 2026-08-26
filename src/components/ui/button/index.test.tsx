@@ -631,15 +631,23 @@ describe("Button", () => {
     // button 専用の属性を <a> 等へ転送しないこと（goodpatch/sparkle-design#310）
     // en: Button-only attributes must not be forwarded to elements like <a> (#310).
     it("does not forward button-only attributes to a non-button slotted element", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
       testContainer.render(
-        <Button asChild type="submit">
+        <Button asChild type="submit" isDisabled>
           <a href="/about">About</a>
         </Button>
       );
       const link = testContainer.querySelector<HTMLAnchorElement>("a");
 
+      // 無効化していても <a> に button 専用属性を出さないこと（無効化は aria-disabled で表現する）
+      // en: Even while disabled, no button-only attribute lands on <a>; aria-disabled expresses it.
       expect(link.hasAttribute("type")).toBe(false);
       expect(link.hasAttribute("disabled")).toBe(false);
+      expect(link.getAttribute("aria-disabled")).toBe("true");
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("type は無視されます")
+      );
     });
 
     // 差し込み先が native の button なら、button 専用の props を伝播する
@@ -702,10 +710,13 @@ describe("Button", () => {
 
     it("suppresses Enter activation when the slotted element is disabled", () => {
       const handleKeyDown = vi.fn();
+      const slottedKeyDown = vi.fn();
 
       testContainer.render(
         <Button asChild isDisabled onKeyDown={handleKeyDown}>
-          <a href="/about">About</a>
+          <a href="/about" onKeyDown={slottedKeyDown}>
+            About
+          </a>
         </Button>
       );
       const link = testContainer.querySelector<HTMLAnchorElement>("a");
@@ -715,7 +726,128 @@ describe("Button", () => {
       });
 
       expect(handleKeyDown).not.toHaveBeenCalled();
+      expect(slottedKeyDown).not.toHaveBeenCalled();
       expect(notCanceled).toBe(false);
+    });
+
+    // capture 系ハンドラは本 PR で公開した API なので、有効時に呼ばれることも固定する
+    // en: The capture handlers are newly public API here, so pin that they fire while enabled.
+    it("passes capture handlers through when enabled and blocks them when disabled", () => {
+      const onClickCapture = vi.fn();
+      const onKeyDownCapture = vi.fn();
+
+      testContainer.render(
+        <Button
+          asChild
+          onClickCapture={onClickCapture}
+          onKeyDownCapture={onKeyDownCapture}
+        >
+          <a
+            href="/about"
+            onClick={event => {
+              event.preventDefault();
+            }}
+          >
+            About
+          </a>
+        </Button>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      EventHelpers.click(link, { cancelable: true });
+      EventHelpers.keyDown(link, "Enter", { cancelable: true });
+
+      expect(onClickCapture).toHaveBeenCalledTimes(1);
+      expect(onKeyDownCapture).toHaveBeenCalledTimes(1);
+
+      testContainer.cleanup();
+      testContainer.setup();
+      vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <Button
+          asChild
+          isDisabled
+          onClickCapture={onClickCapture}
+          onKeyDownCapture={onKeyDownCapture}
+        >
+          <a href="/about">About</a>
+        </Button>
+      );
+      const disabledLink = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      EventHelpers.click(disabledLink, { cancelable: true });
+      EventHelpers.keyDown(disabledLink, "Enter", { cancelable: true });
+
+      expect(onClickCapture).toHaveBeenCalledTimes(1);
+      expect(onKeyDownCapture).toHaveBeenCalledTimes(1);
+    });
+
+    // 中クリックは click ではなく auxclick なので、別ガードが要る
+    // en: A middle click fires auxclick rather than click, so it needs its own guard.
+    it("suppresses auxclick on a disabled slotted link", () => {
+      vi.spyOn(console, "warn").mockImplementation(() => {});
+      const slottedAuxClick = vi.fn();
+
+      testContainer.render(
+        <Button asChild isDisabled>
+          <a href="/about" onAuxClick={slottedAuxClick}>
+            About
+          </a>
+        </Button>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      const notCanceled = EventHelpers.auxClick(link, { cancelable: true });
+
+      expect(slottedAuxClick).not.toHaveBeenCalled();
+      expect(notCanceled).toBe(false);
+    });
+
+    // 無効時はコンポーネントの aria-disabled が勝ち、それ以外は利用者の指定を通す
+    // en: While disabled the component's aria-disabled wins; otherwise the caller's value passes.
+    it("gives the component's aria-disabled precedence only while disabled", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <Button asChild isDisabled aria-disabled={false}>
+          <a href="/about">About</a>
+        </Button>
+      );
+
+      expect(
+        testContainer
+          .querySelector<HTMLAnchorElement>("a")
+          .getAttribute("aria-disabled")
+      ).toBe("true");
+
+      testContainer.cleanup();
+      testContainer.setup();
+
+      testContainer.render(
+        <Button asChild aria-disabled>
+          <a href="/about">About</a>
+        </Button>
+      );
+
+      expect(
+        testContainer
+          .querySelector<HTMLAnchorElement>("a")
+          .getAttribute("aria-disabled")
+      ).toBe("true");
+
+      warnSpy.mockRestore();
+    });
+
+    it("warns when asChild has no element child", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(<Button asChild>text only</Button>);
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("[Button] asChild には単一の React 要素")
+      );
+      expect(testContainer.getContainer().innerHTML).toBe("");
     });
 
     it("passes click and keydown through when the slotted element is enabled", () => {
