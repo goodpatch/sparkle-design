@@ -168,7 +168,7 @@ export interface TagProps
  * // ❌ Wrong - 件数表示に Tag を使わない
  * <Tag status="info">3件</Tag>
  * ```
-
+ *
  * **使用例 / Usage Example**
  *
  * ```tsx

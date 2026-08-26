@@ -85,6 +85,23 @@ ClickableCard.displayName = "ClickableCard";
  * </Card>
  * ```
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - `<Card>` を `<button>` / `<a>` / `role="button"` で包まないでください。クリック可能な Card には専用の `ClickableCard` を使ってください。
+ *   en: Do not wrap `<Card>` with `<button>` / `<a>` / `role="button"`. Use the dedicated `ClickableCard` component for clickable cards.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <ClickableCard onClick={handle}>
+ *   <CardHeader><CardTitle>タイトル</CardTitle></CardHeader>
+ * </ClickableCard>
+ *
+ * // ❌ Wrong
+ * <button type="button" onClick={handle}>
+ *   <Card>...</Card>
+ * </button>
+ * ```
+ *
  * @param {React.ComponentProps<"div">} props
  */
 function Card({ className, ref, ...props }: React.ComponentProps<"div">) {
@@ -143,7 +160,7 @@ Card.displayName = "Card";
  *   </CardTitle>
  * </CardHeader>
  * ```
-
+ *
  */
 function CardHeader({ className, ref, ...props }: React.ComponentProps<"div">) {
   return (
@@ -211,7 +228,7 @@ CardTitle.displayName = "CardTitle";
  *   </CardDescription>
  * </CardTitle>
  * ```
-
+ *
  * @param {React.ComponentProps<"div">} props
  */
 function CardDescription({
@@ -240,8 +257,8 @@ CardDescription.displayName = "CardDescription";
  *
  * **アンチパターン / Anti-patterns**
  *
- * - CardHeader の右側アクションは `CardControl` に集約してください。複数ボタンでも追加の layout class は不要です。
- *   en: Place right-side actions in `CardControl`. No extra layout classes are needed even with multiple buttons.
+ * - CardControl にはアクション用の Button / IconButton のみを入れてください。ステータス表示（Tag 等）は CardDescription に入れてください。
+ *   en: CardControl is for action buttons (Button / IconButton) only. Place status displays (Tag, etc.) in CardDescription.
  *
  * ```tsx
  * // ✅ Correct
@@ -249,8 +266,13 @@ CardDescription.displayName = "CardDescription";
  *   <Button theme="neutral" variant="outline">キャンセル</Button>
  *   <Button>保存</Button>
  * </CardControl>
+ *
+ * // ❌ Wrong - ステータス表示を CardControl に入れない
+ * <CardControl>
+ *   <Tag status="negative">警告</Tag>
+ * </CardControl>
  * ```
-
+ *
  * @param {React.ComponentProps<"div">} props
  */
 function CardControl({

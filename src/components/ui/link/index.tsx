@@ -40,10 +40,14 @@ export interface LinkProps extends React.ComponentProps<"a"> {
  *
  * - 外部リンクアイコンを手動で追加しないでください。`isOpenInNew` prop が自動で `open_in_new` アイコンを表示します。
  *   en: Do not manually add external link icons. The `isOpenInNew` prop automatically displays the `open_in_new` icon.
- * - `asChild` 使用時は `isOpenInNew` のアイコンが自動付与されます。手動で追加しないでください。
- *   en: When using `asChild`, the `isOpenInNew` icon is still automatically added. Do not add it manually.
- * - `asChild` の子要素は `<a>` または `next/link` 等のリンク要素を渡してください。`<span>` や `<div>` を渡すとアクセシビリティが損なわれます。
- *   en: When using `asChild`, pass a link element (`<a>` or `next/link`, etc.) as the child. Passing `<span>` or `<div>` breaks accessibility.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <Link href="https://example.com" isOpenInNew>外部リンク</Link>
+ *
+ * // ❌ Wrong - 手動アイコン
+ * <Link href="https://example.com">外部リンク <Icon icon="open_in_new" /></Link>
+ * ```
  *
  * **使用例 / Usage Example**
  *

@@ -185,7 +185,7 @@ export interface InputProps
  *   <Button size="sm">検索</Button>
  * </div>
  * ```
-
+ *
  * **使用例 / Usage Example**
  *
  * ```tsx
