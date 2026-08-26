@@ -311,7 +311,12 @@ type NativeButtonProps = React.ComponentProps<"button">;
 export interface IconButtonProps
   extends Omit<
     NativeButtonProps,
-    "onClick" | "onKeyDown" | "onClickCapture" | "onKeyDownCapture" | "ref"
+    | "onClick"
+    | "onKeyDown"
+    | "onClickCapture"
+    | "onKeyDownCapture"
+    | "onAuxClickCapture"
+    | "ref"
   > {
   /**
    * ルート要素への ref。`asChild` で `<a>` 等を差し込むケースを受け入れるため
@@ -377,6 +382,11 @@ export interface IconButtonProps
    * en: Capture-phase keydown handler. The component's disabled guard takes precedence.
    */
   onKeyDownCapture?: React.KeyboardEventHandler<HTMLElement>;
+  /**
+   * capture フェーズの中クリックハンドラ。無効時はコンポーネント側のガードが優先される
+   * en: Capture-phase auxclick handler. The component's disabled guard takes precedence.
+   */
+  onAuxClickCapture?: React.MouseEventHandler<HTMLElement>;
 }
 
 /**
@@ -414,14 +424,30 @@ export interface IconButtonProps
  *   click / Enter・Space の抑止、`aria-disabled:` プレフィックスによる無効時の配色まで
  *   このコンポーネントが行います（`data-disabled="true"` も利用側のスタイルフックとして出力）。
  *   差し込み先が native の `<button>` の場合は `disabled` 属性がそのまま渡ります。
- *   なお `aria-disabled` の要素はフォーカス可能なままなので、タブ順から外したい場合は
+ *   native の `<button>` かどうかは差し込んだ要素そのもので判定するため、内部で `<button>` を
+ *   描画するカスタムコンポーネントを渡した場合は非 button として扱われます。
+ *   また無効時に抑止できるのは click / auxclick / Enter・Space までで、コンテキストメニューの
+ *   「新しいタブで開く」は止められません。確実に遷移させたくない場合は差し込む要素側で
+ *   `href` を外してください。
+ * - `aria-disabled` を直接渡した場合も、無効時の配色が当たり操作が抑止されます（native の
+ *   `disabled` 属性は付けないため、フォーカスは残ります）。無効化には基本的に `isDisabled` を
+ *   使ってください。
+ *   en: Passing `aria-disabled` directly also applies the disabled colors and blocks activation
+ *   (the native `disabled` attribute is not set, so the element stays focusable). Prefer
+ *   `isDisabled` for disabling.
+ *   なお `aria-disabled` の要素は既定でフォーカス可能なままです。無効な項目の存在と理由を
+ *   支援技術の利用者に伝えられるため通常はそのままで構いません。タブ順から外す必要がある場合のみ
  *   差し込む要素側で `tabIndex={-1}` を指定してください。
  *   en: When disabled with `asChild` and a non-button element such as `<a>`, this component sets
- *   `aria-disabled`, blocks click / Enter / Space, and applies the disabled colors via
+ *   `aria-disabled`, blocks click / auxclick / Enter / Space, and applies the disabled colors via
  *   `aria-disabled:`-prefixed utilities (`data-disabled="true"` is also emitted as a styling hook).
- *   A slotted native `<button>` receives the real `disabled` attribute instead. Note that an
- *   `aria-disabled` element stays focusable — set `tabIndex={-1}` on the slotted element to remove
- *   it from the tab order.
+ *   A slotted native `<button>` receives the real `disabled` attribute instead. Whether the slot is
+ *   a native `<button>` is decided from the slotted element itself, so a custom component that
+ *   renders a `<button>` internally is treated as a non-button. Only click / auxclick / Enter /
+ *   Space can be blocked — "open in new tab" from the context menu cannot; drop `href` on the
+ *   slotted element when navigation must not happen. An `aria-disabled` element stays focusable by
+ *   design, which is usually what you want; set `tabIndex={-1}` on the slotted element only when it
+ *   must leave the tab order.
  *
  * @param {IconButtonProps} props
  */
@@ -441,6 +467,14 @@ function IconButton({
 }: IconButtonProps) {
   // disabled状態の管理（isDisabled、disabled、またはisLoadingがtrueの場合）
   const isIconButtonDisabled = isLoading || isDisabled || disabled;
+
+  // 利用者が aria-disabled を直接指定した場合も、見た目に合わせて操作を抑止する。
+  // native の disabled 属性は付けないため、フォーカスは残る（soft disabled）
+  // en: A caller-provided aria-disabled also blocks activation so the behavior matches the look.
+  // The native `disabled` attribute is not set, so the element stays focusable (soft disabled).
+  const isSoftDisabled =
+    props["aria-disabled"] === true || props["aria-disabled"] === "true";
+  const isActivationBlocked = Boolean(isIconButtonDisabled) || isSoftDisabled;
 
   // asChild で差し込まれたのが native の <button> なら、button 専用の props を渡してよい。
   // Slot は子の props を優先するため、差し込み側が明示した type はそのまま尊重される
@@ -481,6 +515,15 @@ function IconButton({
 
     // asChild で単一要素以外を渡すと、Slot が何も描画しない / React が例外を投げる
     // en: With asChild, anything other than a single element makes Slot render nothing or React throw.
+    // type は button 以外の差し込み先には渡さない（無効な属性になるため）
+    // en: `type` is not forwarded to non-button slots because it would be an invalid attribute.
+    if (asChild && !canUseButtonProps && props.type) {
+      console.warn(
+        "[IconButton] asChild で button 以外の要素を差し込む場合、type は無視されます。" +
+          " / In asChild mode with a non-button element, `type` is ignored."
+      );
+    }
+
     if (asChild && !slottedChild) {
       console.warn(
         "[IconButton] asChild には単一の React 要素を children として渡してください。" +
@@ -521,7 +564,9 @@ function IconButton({
     onKeyDown,
     onClickCapture,
     onKeyDownCapture,
+    onAuxClickCapture,
     type,
+    "aria-disabled": ariaDisabled,
     ...restProps
   } = props;
 
@@ -530,7 +575,7 @@ function IconButton({
   // en: Guard in the capture phase. Radix Slot composes handlers as "the slotted element's own
   // handler first, then the slot's", so a bubble-phase guard cannot stop the child's handler.
   const handleClickCapture: React.MouseEventHandler<HTMLElement> = event => {
-    if (isIconButtonDisabled) {
+    if (isActivationBlocked) {
       event.preventDefault();
       event.stopPropagation();
       return;
@@ -541,11 +586,11 @@ function IconButton({
   const handleKeyDownCapture: React.KeyboardEventHandler<
     HTMLElement
   > = event => {
-    if (isIconButtonDisabled) {
+    if (isActivationBlocked) {
       // asChild で <a> 等を差し込んだ場合に Enter / Space での実行を止める。
-      // それ以外のキー（Escape 等）は上位に伝播させる
-      // en: Block activation keys when used with asChild (e.g., <a>); let other keys
-      // such as Escape keep propagating.
+      // それ以外のキーは伝播を止めないが、無効時は利用者の onKeyDown も呼ばない
+      // en: Other keys keep propagating, but the caller's onKeyDown is not invoked
+      // while disabled.
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         event.stopPropagation();
@@ -555,15 +600,30 @@ function IconButton({
     onKeyDownCapture?.(event);
   };
 
+  // 中クリックは click ではなく auxclick として飛ぶため、別途止める必要がある
+  // en: A middle click fires `auxclick`, not `click`, so it needs its own guard.
+  const handleAuxClickCapture: React.MouseEventHandler<HTMLElement> = event => {
+    if (isActivationBlocked) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    onAuxClickCapture?.(event);
+  };
+
+  // capture 側で stopPropagation するため、無効時にこの bubble 側ハンドラへは到達しない。
+  // capture が本体・こちらは保険として残している
+  // en: The capture guard stops propagation, so this bubble handler is not reached while
+  // disabled. The capture phase is the real guard; this one is a safety net.
   const handleClick: React.MouseEventHandler<HTMLElement> = event => {
-    if (isIconButtonDisabled) {
+    if (isActivationBlocked) {
       return;
     }
     onClick?.(event);
   };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLElement> = event => {
-    if (isIconButtonDisabled) {
+    if (isActivationBlocked) {
       return;
     }
     onKeyDown?.(event);
@@ -576,8 +636,10 @@ function IconButton({
       // en: Public ref is HTMLElement (covers asChild targets); inner Comp's button branch needs narrowing.
       ref={ref as React.Ref<HTMLButtonElement>}
       type={canUseButtonProps ? type || "button" : undefined}
+      // 無効時はコンポーネント側の値を優先し、それ以外は利用者の指定をそのまま通す
+      // en: While disabled the component's value wins; otherwise the caller's value passes through.
       aria-disabled={
-        !canUseButtonProps && isIconButtonDisabled ? true : undefined
+        !canUseButtonProps && isIconButtonDisabled ? true : ariaDisabled
       }
       data-disabled={asChild && isIconButtonDisabled ? "true" : undefined}
       className={cn(
@@ -586,14 +648,16 @@ function IconButton({
           size,
           theme,
           isLoading,
-          // native の disabled だけを渡された場合も無効状態のスタイルを当てる
-          // en: Apply the disabled styles even when only the native `disabled` prop is passed.
-          isDisabled: Boolean(isDisabled || disabled),
+          // native の disabled や、利用者が直接指定した aria-disabled でも無効状態のスタイルを当てる
+          // en: Apply the disabled styles for the native `disabled` prop and a caller-provided
+          // aria-disabled as well.
+          isDisabled: Boolean(isDisabled || disabled) || isSoftDisabled,
           className,
         })
       )}
       disabled={canUseButtonProps ? isIconButtonDisabled : undefined}
       onClickCapture={handleClickCapture}
+      onAuxClickCapture={handleAuxClickCapture}
       onKeyDownCapture={handleKeyDownCapture}
       onClick={handleClick}
       onKeyDown={handleKeyDown}

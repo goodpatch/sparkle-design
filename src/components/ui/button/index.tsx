@@ -435,7 +435,14 @@ export interface ButtonProps
  *   click / Enter・Space の抑止、`aria-disabled:` プレフィックスによる無効時の配色まで
  *   このコンポーネントが行います（`data-disabled="true"` も利用側のスタイルフックとして出力）。
  *   差し込み先が native の `<button>` の場合は `disabled` 属性がそのまま渡ります。
- *   なお `aria-disabled` の要素はフォーカス可能なままなので、タブ順から外したい場合は
+ * - `aria-disabled` を直接渡した場合も、無効時の配色が当たり操作が抑止されます（native の
+ *   `disabled` 属性は付けないため、フォーカスは残ります）。無効化には基本的に `isDisabled` を
+ *   使ってください。
+ *   en: Passing `aria-disabled` directly also applies the disabled colors and blocks activation
+ *   (the native `disabled` attribute is not set, so the element stays focusable). Prefer
+ *   `isDisabled` for disabling.
+ *   なお `aria-disabled` の要素は既定でフォーカス可能なままです。無効な項目の存在と理由を
+ *   支援技術の利用者に伝えられるため通常はそのままで構いません。タブ順から外す必要がある場合のみ
  *   差し込む要素側で `tabIndex={-1}` を指定してください。
  *   en: When disabled with `asChild` and a non-button element such as `<a>`, this component sets
  *   `aria-disabled`, blocks click / auxclick / Enter / Space, and applies the disabled colors via
@@ -450,6 +457,8 @@ export interface ButtonProps
  *   custom component that renders a `<button>` internally is treated as a non-button. Also, only
  *   click / auxclick / Enter / Space can be blocked while disabled — "open in new tab" from the
  *   context menu cannot. Drop `href` on the slotted element when navigation must not happen.
+ *   An `aria-disabled` element stays focusable by design, which is usually what you want; set
+ *   `tabIndex={-1}` on the slotted element only when it must leave the tab order.
  *
  * @param {ButtonProps} props
  */
@@ -472,6 +481,14 @@ function Button({
 
   // disabled状態の管理（isDisabled、disabled、またはisLoadingがtrueの場合）
   const isButtonDisabled = isLoading || isDisabled || disabled;
+
+  // 利用者が aria-disabled を直接指定した場合も、見た目に合わせて操作を抑止する。
+  // native の disabled 属性は付けないため、フォーカスは残る（soft disabled）
+  // en: A caller-provided aria-disabled also blocks activation so the behavior matches the look.
+  // The native `disabled` attribute is not set, so the element stays focusable (soft disabled).
+  const isSoftDisabled =
+    props["aria-disabled"] === true || props["aria-disabled"] === "true";
+  const isActivationBlocked = Boolean(isButtonDisabled) || isSoftDisabled;
 
   // asChild で差し込まれたのが native の <button> なら、button 専用の props を渡してよい。
   // Slot は子の props を優先するため、差し込み側が明示した type はそのまま尊重される
@@ -552,7 +569,7 @@ function Button({
   // en: Guard in the capture phase. Radix Slot composes handlers as "the slotted element's own
   // handler first, then the slot's", so a bubble-phase guard cannot stop the child's handler.
   const handleClickCapture: React.MouseEventHandler<HTMLElement> = event => {
-    if (isButtonDisabled) {
+    if (isActivationBlocked) {
       event.preventDefault();
       event.stopPropagation();
       return;
@@ -563,7 +580,7 @@ function Button({
   const handleKeyDownCapture: React.KeyboardEventHandler<
     HTMLElement
   > = event => {
-    if (isButtonDisabled) {
+    if (isActivationBlocked) {
       // asChild で <a> 等を差し込んだ場合に Enter / Space での実行を止める。
       // それ以外のキーは伝播を止めないが、無効時は利用者の onKeyDown も呼ばない
       // en: Other keys keep propagating, but the caller's onKeyDown is not invoked
@@ -580,7 +597,7 @@ function Button({
   // 中クリックは click ではなく auxclick として飛ぶため、別途止める必要がある
   // en: A middle click fires `auxclick`, not `click`, so it needs its own guard.
   const handleAuxClickCapture: React.MouseEventHandler<HTMLElement> = event => {
-    if (isButtonDisabled) {
+    if (isActivationBlocked) {
       event.preventDefault();
       event.stopPropagation();
       return;
@@ -593,14 +610,14 @@ function Button({
   // en: The capture guard stops propagation, so this bubble handler is not reached while
   // disabled. The capture phase is the real guard; this one is a safety net.
   const handleClick: React.MouseEventHandler<HTMLElement> = event => {
-    if (isButtonDisabled) {
+    if (isActivationBlocked) {
       return;
     }
     onClick?.(event);
   };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLElement> = event => {
-    if (isButtonDisabled) {
+    if (isActivationBlocked) {
       return;
     }
     onKeyDown?.(event);

@@ -486,8 +486,9 @@ describe("IconButton", () => {
       }
     );
     // disabled: を足したのに aria-disabled: を足し忘れると asChild で配色が欠ける。
-    // 対になっていることを機械的に確認する（goodpatch/sparkle-design#311）
-    // en: A `disabled:` utility without its `aria-disabled:` counterpart breaks the asChild case (#311).
+    // 逆に aria-disabled: だけ書くと native button で配色が欠けるので、両方向を確認する
+    // en: A `disabled:` without its `aria-disabled:` pair breaks the asChild case, and the reverse
+    // breaks the native button case — so check both directions (#311).
     it.each(
       (["solid", "outline", "ghost"] as const).flatMap(variant =>
         (["primary", "neutral", "negative"] as const).map(
@@ -495,7 +496,7 @@ describe("IconButton", () => {
         )
       )
     )(
-      "emits an aria-disabled counterpart for every disabled utility (%s / %s)",
+      "pairs every disabled utility with an aria-disabled counterpart (%s / %s)",
       (variant, theme) => {
         testContainer.render(
           <IconButton
@@ -506,15 +507,19 @@ describe("IconButton", () => {
             isDisabled
           />
         );
-        const classes = testContainer.queryButton().className.split(/\s+/);
-        const disabledUtilities = classes
-          .filter(name => name.startsWith("disabled:"))
-          .map(name => name.slice("disabled:".length));
+        const classes = Array.from(testContainer.queryButton().classList);
+        const suffixesOf = (prefix: string) =>
+          classes
+            .filter(name => name.startsWith(prefix))
+            .map(name => name.slice(prefix.length))
+            .sort();
 
-        expect(disabledUtilities.length).toBeGreaterThan(0);
-        for (const utility of disabledUtilities) {
-          expect(classes).toContain(`aria-disabled:${utility}`);
-        }
+        const disabledUtilities = suffixesOf("disabled:");
+
+        // 配色クラスが 1 つも無ければテストが空振りしているので、まず下限を確認する
+        // en: Guard against a vacuous run: there must be real color utilities to compare.
+        expect(disabledUtilities.length).toBeGreaterThanOrEqual(2);
+        expect(suffixesOf("aria-disabled:")).toEqual(disabledUtilities);
       }
     );
   });
@@ -815,6 +820,76 @@ describe("IconButton", () => {
       expect(handleClick).toHaveBeenCalledTimes(1);
       expect(slottedClick).toHaveBeenCalledTimes(1);
       expect(handleKeyDown).toHaveBeenCalledTimes(1);
+    });
+
+    it.each([
+      ["outline", "aria-disabled:border-border-primary-low"],
+      ["ghost", "aria-disabled:text-object-primary-disabled"],
+    ] as const)(
+      "applies the aria-disabled utilities for the %s variant on a slotted link",
+      (variant, utility) => {
+        testContainer.render(
+          <IconButton
+            asChild
+            variant={variant}
+            icon="open_in_new"
+            aria-label="開く"
+            isDisabled
+          >
+            <a href="/foo" aria-label="開く" />
+          </IconButton>
+        );
+
+        expect(
+          StyleHelpers.hasClass(
+            testContainer.querySelector<HTMLAnchorElement>("a"),
+            utility
+          )
+        ).toBe(true);
+      }
+    );
+
+    // 利用者が aria-disabled を直接渡した場合、見た目と挙動が食い違わないこと
+    // en: A caller-provided aria-disabled must not leave the look and the behavior out of sync.
+    it("blocks activation when the caller sets aria-disabled directly", () => {
+      const handleClick = vi.fn();
+
+      testContainer.render(
+        <IconButton
+          icon="plus"
+          aria-label="追加"
+          aria-disabled
+          onClick={handleClick}
+        />
+      );
+      const button = testContainer.queryButton();
+
+      expect(button.disabled).toBe(false);
+      expect(button.getAttribute("aria-disabled")).toBe("true");
+      expect(
+        StyleHelpers.hasClass(
+          button,
+          "aria-disabled:bg-surface-primary-high-disabled"
+        )
+      ).toBe(true);
+      expect(EventHelpers.click(button, { cancelable: true })).toBe(false);
+      expect(handleClick).not.toHaveBeenCalled();
+    });
+
+    it("suppresses auxclick on a disabled slotted link", () => {
+      const slottedAuxClick = vi.fn();
+
+      testContainer.render(
+        <IconButton asChild icon="open_in_new" aria-label="開く" isDisabled>
+          <a href="/foo" aria-label="開く" onAuxClick={slottedAuxClick} />
+        </IconButton>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      const notCanceled = EventHelpers.auxClick(link, { cancelable: true });
+
+      expect(slottedAuxClick).not.toHaveBeenCalled();
+      expect(notCanceled).toBe(false);
     });
 
     it("forwards ref to the slotted element", () => {

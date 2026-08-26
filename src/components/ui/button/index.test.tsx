@@ -295,6 +295,51 @@ describe("Button", () => {
     });
   });
 
+  describe("Disabled Utilities", () => {
+    // disabled: を足したのに aria-disabled: を足し忘れると asChild で配色が欠ける。
+    // 逆に aria-disabled: だけ書くと native button で配色が欠けるので、両方向を確認する。
+    // Button は無効時も loading 用 compound を使うため isLoading も軸に入れる
+    // en: A `disabled:` without its `aria-disabled:` pair breaks the asChild case, and the reverse
+    // breaks the native button case. Button uses separate loading compounds, so isLoading is an
+    // axis here too (#311).
+    it.each(
+      (["solid", "outline", "ghost"] as const).flatMap(variant =>
+        (["primary", "neutral", "negative"] as const).flatMap(theme =>
+          [false, true].map(isLoading => [variant, theme, isLoading] as const)
+        )
+      )
+    )(
+      "pairs every disabled utility with an aria-disabled counterpart (%s / %s / loading=%s)",
+      (variant, theme, isLoading) => {
+        testContainer.render(
+          <Button
+            variant={variant}
+            theme={theme}
+            isDisabled
+            isLoading={isLoading}
+          >
+            Disabled
+          </Button>
+        );
+        const classes = Array.from(testContainer.queryButton().classList);
+        const suffixesOf = (prefix: string) =>
+          classes
+            .filter(name => name.startsWith(prefix))
+            .map(name => name.slice(prefix.length))
+            .sort();
+
+        const disabledUtilities = suffixesOf("disabled:");
+
+        // base の disabled:cursor-not-allowed だけでは空振りなので、配色クラスの存在も要求する
+        // en: The base `disabled:cursor-not-allowed` alone would be a vacuous run — require colors too.
+        expect(
+          disabledUtilities.filter(name => name !== "cursor-not-allowed").length
+        ).toBeGreaterThanOrEqual(1);
+        expect(suffixesOf("aria-disabled:")).toEqual(disabledUtilities);
+      }
+    );
+  });
+
   describe("Loading State", () => {
     it("shows loading indicator when isLoading prop is true", () => {
       // Given: loading状態のButton
@@ -596,37 +641,6 @@ describe("Button", () => {
     });
   });
 
-  describe("Disabled Utilities", () => {
-    // disabled: を足したのに aria-disabled: を足し忘れると asChild で配色が欠ける。
-    // 対になっていることを機械的に確認する（goodpatch/sparkle-design#311）
-    // en: A `disabled:` utility without its `aria-disabled:` counterpart breaks the asChild case (#311).
-    it.each(
-      (["solid", "outline", "ghost"] as const).flatMap(variant =>
-        (["primary", "neutral", "negative"] as const).map(
-          theme => [variant, theme] as const
-        )
-      )
-    )(
-      "emits an aria-disabled counterpart for every disabled utility (%s / %s)",
-      (variant, theme) => {
-        testContainer.render(
-          <Button variant={variant} theme={theme} isDisabled>
-            Disabled
-          </Button>
-        );
-        const classes = testContainer.queryButton().className.split(/\s+/);
-        const disabledUtilities = classes
-          .filter(name => name.startsWith("disabled:"))
-          .map(name => name.slice("disabled:".length));
-
-        expect(disabledUtilities.length).toBeGreaterThan(0);
-        for (const utility of disabledUtilities) {
-          expect(classes).toContain(`aria-disabled:${utility}`);
-        }
-      }
-    );
-  });
-
   describe("AsChild Behavior", () => {
     // button 専用の属性を <a> 等へ転送しないこと（goodpatch/sparkle-design#310）
     // en: Button-only attributes must not be forwarded to elements like <a> (#310).
@@ -662,6 +676,81 @@ describe("Button", () => {
 
       expect(button.disabled).toBe(true);
       expect(button.hasAttribute("aria-disabled")).toBe(false);
+      // native button では disabled: 側が発火するので、そちらのクラスが乗っていること
+      // en: On a native button the `disabled:` side fires, so that class must be present.
+      expect(
+        StyleHelpers.hasClass(
+          button,
+          "disabled:bg-surface-primary-high-disabled"
+        )
+      ).toBe(true);
+    });
+
+    // border は有効時のクラスを上書きする必要があるため、outline も確認する
+    // en: outline needs checking because the border overrides the enabled border color.
+    it.each([
+      ["outline", "aria-disabled:border-border-primary-low"],
+      ["ghost", "aria-disabled:text-text-primary-disabled"],
+    ] as const)(
+      "applies the aria-disabled utilities for the %s variant on a slotted link",
+      (variant, utility) => {
+        testContainer.render(
+          <Button asChild variant={variant} isDisabled>
+            <a href="/about">About</a>
+          </Button>
+        );
+
+        expect(
+          StyleHelpers.hasClass(
+            testContainer.querySelector<HTMLAnchorElement>("a"),
+            utility
+          )
+        ).toBe(true);
+      }
+    );
+
+    it("keeps rendering the slotted element while loading", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <Button asChild isLoading>
+          <a href="/about">About</a>
+        </Button>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      // ローディングは無効扱いだが、配色はローディング用 compound が当たる
+      // en: Loading counts as disabled, but the colors come from the loading compound.
+      expect(link.getAttribute("aria-disabled")).toBe("true");
+      expect(
+        StyleHelpers.hasClass(
+          link,
+          "aria-disabled:bg-surface-primary-high-enabled"
+        )
+      ).toBe(true);
+      expect(EventHelpers.click(link, { cancelable: true })).toBe(false);
+
+      warnSpy.mockRestore();
+    });
+
+    // 利用者が aria-disabled を直接渡した場合、見た目と挙動が食い違わないこと
+    // en: A caller-provided aria-disabled must not leave the look and the behavior out of sync.
+    it("blocks activation when the caller sets aria-disabled directly", () => {
+      const handleClick = vi.fn();
+
+      testContainer.render(
+        <Button aria-disabled onClick={handleClick}>
+          Soft disabled
+        </Button>
+      );
+      const button = testContainer.queryButton();
+
+      // native の disabled は付けない（フォーカスは残す）
+      // en: The native `disabled` attribute is not set, so the button stays focusable.
+      expect(button.disabled).toBe(false);
+      expect(button.getAttribute("aria-disabled")).toBe("true");
+      expect(EventHelpers.click(button, { cancelable: true })).toBe(false);
+      expect(handleClick).not.toHaveBeenCalled();
     });
 
     it("defaults the slotted button's type to button", () => {
