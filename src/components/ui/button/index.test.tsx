@@ -21,6 +21,9 @@ beforeEach(() => {
 
 afterEach(() => {
   testContainer.cleanup();
+  // console.warn の spy が後続テストに漏れないよう必ず復元する
+  // en: Always restore spies (e.g. console.warn) so they do not leak into later tests.
+  vi.restoreAllMocks();
 });
 
 describe("Button", () => {
@@ -590,6 +593,146 @@ describe("Button", () => {
       // asChild パターンのテストは実装の複雑さとRadix UI Slotの制約により
       // jsdom環境では不安定なため、スキップします
       // 実際のブラウザ環境やE2Eテストでのテストが推奨されます
+    });
+  });
+
+  describe("AsChild Behavior", () => {
+    // button 専用の属性を <a> 等へ転送しないこと（goodpatch/sparkle-design#310）
+    // en: Button-only attributes must not be forwarded to elements like <a> (#310).
+    it("does not forward button-only attributes to a non-button slotted element", () => {
+      testContainer.render(
+        <Button asChild type="submit">
+          <a href="/about">About</a>
+        </Button>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      expect(link.hasAttribute("type")).toBe(false);
+      expect(link.hasAttribute("disabled")).toBe(false);
+    });
+
+    // 差し込み先が native の button なら、button 専用の props を伝播する
+    // en: A slotted native <button> receives the button-only props.
+    it("forwards the native disabled state to a slotted button", () => {
+      testContainer.render(
+        <Button asChild isDisabled>
+          <button>Slotted</button>
+        </Button>
+      );
+      const button = testContainer.queryButton();
+
+      expect(button.disabled).toBe(true);
+      expect(button.hasAttribute("aria-disabled")).toBe(false);
+    });
+
+    it("defaults the slotted button's type to button", () => {
+      testContainer.render(
+        <Button asChild>
+          <button>Slotted</button>
+        </Button>
+      );
+
+      expect(testContainer.queryButton().getAttribute("type")).toBe("button");
+    });
+
+    it("keeps the slotted button's own type", () => {
+      testContainer.render(
+        <Button asChild>
+          <button type="submit">Slotted</button>
+        </Button>
+      );
+
+      expect(testContainer.queryButton().getAttribute("type")).toBe("submit");
+    });
+
+    // 無効時は差し込んだ要素自身のハンドラも抑止する。
+    // Radix Slot は子のハンドラを先に呼ぶため、capture フェーズで止める必要がある
+    // en: When disabled, the slotted element's own handler must be blocked too. Radix Slot calls
+    // the child's handler first, so the guard runs in the capture phase.
+    it("suppresses the slotted element's own onClick when disabled", () => {
+      vi.spyOn(console, "warn").mockImplementation(() => {});
+      const handleClick = vi.fn();
+      const slottedClick = vi.fn();
+
+      testContainer.render(
+        <Button asChild isDisabled onClick={handleClick}>
+          <a href="/about" onClick={slottedClick}>
+            About
+          </a>
+        </Button>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      const notCanceled = EventHelpers.click(link, { cancelable: true });
+
+      expect(handleClick).not.toHaveBeenCalled();
+      expect(slottedClick).not.toHaveBeenCalled();
+      expect(notCanceled).toBe(false);
+    });
+
+    it("suppresses Enter activation when the slotted element is disabled", () => {
+      vi.spyOn(console, "warn").mockImplementation(() => {});
+      const handleKeyDown = vi.fn();
+
+      testContainer.render(
+        <Button asChild isDisabled onKeyDown={handleKeyDown}>
+          <a href="/about">About</a>
+        </Button>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      const notCanceled = EventHelpers.keyDown(link, "Enter", {
+        cancelable: true,
+      });
+
+      expect(handleKeyDown).not.toHaveBeenCalled();
+      expect(notCanceled).toBe(false);
+    });
+
+    it("passes click and keydown through when the slotted element is enabled", () => {
+      const handleClick = vi.fn();
+      const handleKeyDown = vi.fn();
+      const slottedClick = vi.fn();
+
+      testContainer.render(
+        <Button asChild onClick={handleClick} onKeyDown={handleKeyDown}>
+          <a
+            href="/about"
+            onClick={event => {
+              // jsdom の未実装ナビゲーションを避けるため、差し込み側で既定動作を止める
+              // en: Cancel the default action here so jsdom's unimplemented navigation is not hit.
+              event.preventDefault();
+              slottedClick();
+            }}
+          >
+            About
+          </a>
+        </Button>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      EventHelpers.click(link, { cancelable: true });
+      EventHelpers.keyDown(link, "Enter", { cancelable: true });
+
+      expect(handleClick).toHaveBeenCalledTimes(1);
+      expect(slottedClick).toHaveBeenCalledTimes(1);
+      expect(handleKeyDown).toHaveBeenCalledTimes(1);
+    });
+
+    // 差し込み先が button なら disabled: スタイルが効くので、見た目を自前で用意しろとは警告しない
+    // en: A slotted <button> gets working `disabled:` styles, so the appearance warning is skipped.
+    it("does not warn about disabled styling for a slotted button", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <Button asChild isDisabled>
+          <button>Slotted</button>
+        </Button>
+      );
+
+      expect(warnSpy).not.toHaveBeenCalledWith(
+        expect.stringContaining("[Button] asChild + disabled/loading")
+      );
     });
   });
 
