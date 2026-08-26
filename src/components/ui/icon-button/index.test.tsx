@@ -628,6 +628,46 @@ describe("IconButton", () => {
       expect(button.getAttribute("type")).toBe("submit");
     });
 
+    // 差し込み先が type 未指定の button なら、暗黙の submit を避けるため type="button" を補う
+    // en: A slotted button without an explicit type gets type="button" to avoid implicit submit.
+    it("defaults the slotted button's type to button", () => {
+      testContainer.render(
+        <IconButton asChild icon="send" aria-label="送信">
+          <button />
+        </IconButton>
+      );
+      const button = testContainer.queryButton();
+
+      expect(button.getAttribute("type")).toBe("button");
+    });
+
+    // 差し込み先が native の button なら、native の disabled と無効スタイルがそのまま効く
+    // en: A slotted native button receives the real `disabled` attribute and the disabled styles.
+    it("forwards the native disabled state to a slotted button", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <IconButton asChild icon="send" aria-label="送信" isDisabled>
+          <button />
+        </IconButton>
+      );
+      const button = testContainer.queryButton();
+
+      expect(button.disabled).toBe(true);
+      expect(button.hasAttribute("aria-disabled")).toBe(false);
+      expect(
+        StyleHelpers.hasClass(
+          button,
+          "disabled:bg-surface-primary-high-disabled"
+        )
+      ).toBe(true);
+      // button では disabled: スタイルが効くので、差し込み側で用意しろという警告は出さない
+      // en: `disabled:` styles work on a button, so the "provide the appearance yourself" warning is skipped.
+      expect(warnSpy).not.toHaveBeenCalledWith(
+        expect.stringContaining("[IconButton] asChild + disabled/loading")
+      );
+    });
+
     it("renders the spinner inside the slotted element while loading", () => {
       vi.spyOn(console, "warn").mockImplementation(() => {});
 

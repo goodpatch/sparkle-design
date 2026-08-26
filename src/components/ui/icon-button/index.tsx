@@ -410,12 +410,15 @@ export interface IconButtonProps
  *   `asChild` の場合は差し込む要素側のテキストや `aria-label` でも構いません。
  *   en: The icon is `aria-hidden` and never provides an accessible name — always pass `aria-label`.
  *   With `asChild`, text or `aria-label` on the slotted element works as well.
- * - `asChild` で無効化した場合、`aria-disabled` の付与と click / Enter・Space の抑止はこのコンポーネントが行いますが、
- *   `disabled:` プレフィックスのスタイルは button 以外の要素には適用されません。無効時の見た目は差し込む要素側で用意してください
- *   （`data-disabled="true"` を利用側のスタイルフックとして出力しています）。
- *   en: When disabled with `asChild`, this component sets `aria-disabled` and blocks click / Enter / Space,
- *   but `disabled:`-prefixed styles never apply to non-button elements — provide the disabled appearance on the
- *   slotted element (`data-disabled="true"` is emitted as a styling hook).
+ * - `asChild` で `<a>` など button 以外の要素を差し込んで無効化した場合、`aria-disabled` の付与と
+ *   click / Enter・Space の抑止はこのコンポーネントが行いますが、`disabled:` プレフィックスのスタイルは
+ *   適用されません。無効時の見た目は差し込む要素側で用意してください（`data-disabled="true"` を
+ *   利用側のスタイルフックとして出力しています）。差し込み先が native の `<button>` の場合は
+ *   `disabled` 属性がそのまま渡るため、この制約はありません。
+ *   en: When disabled with `asChild` and a non-button element such as `<a>`, this component sets
+ *   `aria-disabled` and blocks click / Enter / Space, but `disabled:`-prefixed styles never apply —
+ *   provide the disabled appearance on the slotted element (`data-disabled="true"` is emitted as a
+ *   styling hook). A slotted native `<button>` receives the real `disabled` attribute instead.
  *
  * @param {IconButtonProps} props
  */
@@ -435,6 +438,14 @@ function IconButton({
 }: IconButtonProps) {
   // disabled状態の管理（isDisabled、disabled、またはisLoadingがtrueの場合）
   const isIconButtonDisabled = isLoading || isDisabled || disabled;
+
+  // asChild で差し込まれたのが native の <button> なら、button 専用の props を渡してよい。
+  // Slot は子の props を優先するため、差し込み側が明示した type はそのまま尊重される
+  // en: When the slotted element is a native <button>, button-only props can be forwarded.
+  // Slot gives the child's props precedence, so an explicit `type` on the child still wins.
+  const isSlottedNativeButton =
+    asChild && React.isValidElement(children) && children.type === "button";
+  const canUseButtonProps = !asChild || isSlottedNativeButton;
 
   if (process.env.NODE_ENV !== "production") {
     const slottedChild = React.isValidElement(children) ? children : undefined;
@@ -485,7 +496,7 @@ function IconButton({
       );
     }
 
-    if (asChild && isIconButtonDisabled) {
+    if (asChild && isIconButtonDisabled && slottedChild && !canUseButtonProps) {
       // aria-disabled の付与と操作の抑止はこのコンポーネントが行うが、
       // `disabled:` 由来のスタイルは button 以外では発火しない
       // en: This component sets aria-disabled and blocks activation, but `disabled:`
@@ -573,8 +584,10 @@ function IconButton({
       // 内部の Comp は <button> 固定の union が含まれるためここで narrow する。
       // en: Public ref is HTMLElement (covers asChild targets); inner Comp's button branch needs narrowing.
       ref={ref as React.Ref<HTMLButtonElement>}
-      type={asChild ? undefined : type || "button"}
-      aria-disabled={asChild && isIconButtonDisabled ? true : undefined}
+      type={canUseButtonProps ? type || "button" : undefined}
+      aria-disabled={
+        !canUseButtonProps && isIconButtonDisabled ? true : undefined
+      }
       data-disabled={asChild && isIconButtonDisabled ? "true" : undefined}
       className={cn(
         iconButtonVariants({
@@ -588,7 +601,7 @@ function IconButton({
           className,
         })
       )}
-      disabled={asChild ? undefined : isIconButtonDisabled}
+      disabled={canUseButtonProps ? isIconButtonDisabled : undefined}
       onClickCapture={handleClickCapture}
       onKeyDownCapture={handleKeyDownCapture}
       onClick={handleClick}
