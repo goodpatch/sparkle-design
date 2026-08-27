@@ -429,6 +429,16 @@ export interface IconButtonProps
  *   また無効時に抑止できるのは click / auxclick / Enter・Space までで、コンテキストメニューの
  *   「新しいタブで開く」は止められません。確実に遷移させたくない場合は差し込む要素側で
  *   `href` を外してください。
+ * - `type` / `form` / `value` など button 専用の props は、差し込み先が native の `<button>` の
+ *   ときだけ転送されます。それ以外の要素では不正な属性になるため落とし、dev ビルドで警告します。
+ *   必要な場合は差し込む要素側に直接指定してください（Slot のマージで子の指定が優先されます）。
+ *   また無効時は `onMouseDown` / `onPointerDown` / `onTouchStart` も呼ばれません（native の
+ *   `disabled` な `<button>` に揃えた挙動です）。
+ *   en: Button-only props such as `type`, `form`, and `value` are forwarded only when the slot is a
+ *   native `<button>`; on other elements they would be invalid attributes, so they are dropped with
+ *   a dev warning — set them on the slotted element instead (child props win in Slot's merge).
+ *   While disabled, `onMouseDown` / `onPointerDown` / `onTouchStart` are not invoked either,
+ *   matching a native disabled `<button>`.
  * - `aria-disabled` を直接渡した場合も、無効時の配色が当たり操作が抑止されます（native の
  *   `disabled` 属性は付けないため、フォーカスは残ります）。無効化には基本的に `isDisabled` を
  *   使ってください。
@@ -515,13 +525,31 @@ function IconButton({
 
     // asChild で単一要素以外を渡すと、Slot が何も描画しない / React が例外を投げる
     // en: With asChild, anything other than a single element makes Slot render nothing or React throw.
-    // type は button 以外の差し込み先には渡さない（無効な属性になるため）
-    // en: `type` is not forwarded to non-button slots because it would be an invalid attribute.
-    if (asChild && !canUseButtonProps && props.type) {
-      console.warn(
-        "[IconButton] asChild で button 以外の要素を差し込む場合、type は無視されます。" +
-          " / In asChild mode with a non-button element, `type` is ignored."
-      );
+    // button 専用の props は button 以外の差し込み先には渡さない（無効な属性になるため）
+    // en: Button-only props are not forwarded to non-button slots: they would be invalid attributes.
+    if (asChild && !canUseButtonProps) {
+      const droppedProps = (
+        [
+          "type",
+          "form",
+          "formAction",
+          "formEncType",
+          "formMethod",
+          "formNoValidate",
+          "formTarget",
+          "value",
+          "popoverTarget",
+          "popoverTargetAction",
+        ] as const
+      ).filter(name => props[name] !== undefined);
+
+      if (droppedProps.length > 0) {
+        console.warn(
+          `[IconButton] asChild で button 以外の要素を差し込む場合、${droppedProps.join(" / ")} は無視されます。` +
+            "必要な場合は差し込む要素側に直接指定してください。" +
+            ` / In asChild mode with a non-button element, ${droppedProps.join(" / ")} are ignored — set them on the slotted element instead.`
+        );
+      }
     }
 
     if (asChild && !slottedChild) {
@@ -565,10 +593,41 @@ function IconButton({
     onClickCapture,
     onKeyDownCapture,
     onAuxClickCapture,
+    onMouseDown,
+    onPointerDown,
+    onTouchStart,
     type,
+    form,
+    formAction,
+    formEncType,
+    formMethod,
+    formNoValidate,
+    formTarget,
+    value,
+    popoverTarget,
+    popoverTargetAction,
     "aria-disabled": ariaDisabled,
     ...restProps
   } = props;
+
+  // button 専用の props は、差し込み先が native の <button> のときだけ渡す。
+  // <a> 等に渡すと不正な属性になるため
+  // en: Button-only props are forwarded only when the slot is a native <button>; on elements
+  // like <a> they would be invalid attributes.
+  const buttonOnlyProps = canUseButtonProps
+    ? {
+        type: type || "button",
+        form,
+        formAction,
+        formEncType,
+        formMethod,
+        formNoValidate,
+        formTarget,
+        value,
+        popoverTarget,
+        popoverTargetAction,
+      }
+    : {};
 
   // 無効時のガードは capture フェーズで行う。Radix Slot は「差し込んだ要素自身のハンドラ →
   // Slot 側のハンドラ」の順で合成するため、bubble フェーズのガードでは子のハンドラを止められない
@@ -643,6 +702,9 @@ function IconButton({
             onClickCapture: undefined,
             onAuxClickCapture: undefined,
             onKeyDownCapture: undefined,
+            onMouseDown: undefined,
+            onPointerDown: undefined,
+            onTouchStart: undefined,
             ...(canUseButtonProps && isIconButtonDisabled
               ? { disabled: true }
               : {}),
@@ -656,7 +718,12 @@ function IconButton({
       // 内部の Comp は <button> 固定の union が含まれるためここで narrow する。
       // en: Public ref is HTMLElement (covers asChild targets); inner Comp's button branch needs narrowing.
       ref={ref as React.Ref<HTMLButtonElement>}
-      type={canUseButtonProps ? type || "button" : undefined}
+      {...buttonOnlyProps}
+      // 無効時は pointer 系のハンドラも渡さない（native の disabled 相当に揃える）
+      // en: While disabled, pointer handlers are not forwarded either, matching a native disabled button.
+      onMouseDown={isActivationBlocked ? undefined : onMouseDown}
+      onPointerDown={isActivationBlocked ? undefined : onPointerDown}
+      onTouchStart={isActivationBlocked ? undefined : onTouchStart}
       // 無効時はコンポーネント側の値を優先し、それ以外は利用者の指定をそのまま通す
       // en: While disabled the component's value wins; otherwise the caller's value passes through.
       aria-disabled={

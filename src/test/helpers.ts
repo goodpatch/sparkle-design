@@ -111,6 +111,16 @@ export const EventHelpers = {
     return notCanceled;
   },
 
+  mouseDown(element: Element, init: MouseEventInit = {}): boolean {
+    let notCanceled = true;
+    act(() => {
+      notCanceled = element.dispatchEvent(
+        new MouseEvent("mousedown", { bubbles: true, ...init })
+      );
+    });
+    return notCanceled;
+  },
+
   change(element: HTMLInputElement | HTMLTextAreaElement, value: string): void {
     act(() => {
       // input/textarea 双方に対応した value セッターを取得
@@ -240,7 +250,9 @@ export const AsyncHelpers = {
         if (Date.now() - startTime >= timeout) {
           const message = lastError
             ? `Timeout after ${timeout}ms (last error: ${
-                lastError instanceof Error ? lastError.message : String(lastError)
+                lastError instanceof Error
+                  ? lastError.message
+                  : String(lastError)
               })`
             : `Timeout after ${timeout}ms`;
           reject(new Error(message));

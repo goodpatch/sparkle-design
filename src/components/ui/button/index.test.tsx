@@ -644,6 +644,60 @@ describe("Button", () => {
   describe("AsChild Behavior", () => {
     // button 専用の属性を <a> 等へ転送しないこと（goodpatch/sparkle-design#310）
     // en: Button-only attributes must not be forwarded to elements like <a> (#310).
+    // form 系や value も <a> には不正な属性なので落とす（goodpatch/sparkle-design#315）
+    // en: form-related props and `value` are invalid on <a> too, so they are dropped (#315).
+    it("drops every button-only prop on a non-button slotted element", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <Button asChild form="my-form" value="save" popoverTarget="sheet">
+          <a href="/about">About</a>
+        </Button>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      expect(link.hasAttribute("form")).toBe(false);
+      expect(link.hasAttribute("value")).toBe(false);
+      expect(link.hasAttribute("popovertarget")).toBe(false);
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("form / value / popoverTarget は無視されます")
+      );
+    });
+
+    it("forwards button-only props to a slotted native button", () => {
+      testContainer.render(
+        <Button asChild form="my-form" value="save">
+          <button>Slotted</button>
+        </Button>
+      );
+      const button = testContainer.queryButton();
+
+      expect(button.getAttribute("form")).toBe("my-form");
+      expect(button.getAttribute("value")).toBe("save");
+    });
+
+    // native の disabled な <button> ではブラウザが pointer 系イベントを飛ばさないので挙動を揃える
+    // en: A native disabled <button> never fires pointer events; match that behavior.
+    it("does not fire pointer handlers while disabled", () => {
+      vi.spyOn(console, "warn").mockImplementation(() => {});
+      const onMouseDown = vi.fn();
+      const slottedMouseDown = vi.fn();
+
+      testContainer.render(
+        <Button asChild isDisabled onMouseDown={onMouseDown}>
+          <a href="/about" onMouseDown={slottedMouseDown}>
+            About
+          </a>
+        </Button>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      EventHelpers.mouseDown(link);
+
+      expect(onMouseDown).not.toHaveBeenCalled();
+      expect(slottedMouseDown).not.toHaveBeenCalled();
+    });
+
     it("does not forward button-only attributes to a non-button slotted element", () => {
       const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 

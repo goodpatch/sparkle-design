@@ -901,6 +901,51 @@ describe("IconButton", () => {
       expect(slottedKeyDownCapture).not.toHaveBeenCalled();
     });
 
+    it("drops every button-only prop on a non-button slotted element", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <IconButton
+          asChild
+          icon="open_in_new"
+          aria-label="開く"
+          form="my-form"
+          value="save"
+        >
+          <a href="/foo" aria-label="開く" />
+        </IconButton>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      expect(link.hasAttribute("form")).toBe(false);
+      expect(link.hasAttribute("value")).toBe(false);
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("form / value は無視されます")
+      );
+    });
+
+    it("does not fire pointer handlers while disabled", () => {
+      const onMouseDown = vi.fn();
+
+      testContainer.render(
+        <IconButton
+          asChild
+          icon="open_in_new"
+          aria-label="開く"
+          isDisabled
+          onMouseDown={onMouseDown}
+        >
+          <a href="/foo" aria-label="開く" />
+        </IconButton>
+      );
+
+      EventHelpers.mouseDown(
+        testContainer.querySelector<HTMLAnchorElement>("a")
+      );
+
+      expect(onMouseDown).not.toHaveBeenCalled();
+    });
+
     it("keeps the computed disabled state over the slotted button's own disabled", () => {
       testContainer.render(
         <IconButton asChild icon="send" aria-label="送信" isDisabled>
