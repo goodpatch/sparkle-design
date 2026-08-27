@@ -96,6 +96,7 @@
     "eslint-plugin-storybook": "^10.3.5",
     "next": "15.5.18",
     "playwright": "^1.51.1",
+    "postcss": "^8.5.26",
     "prettier": "^3.6.2",
     "react": "^19",
     "react-dom": "^19",
