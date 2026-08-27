@@ -469,10 +469,12 @@ export interface IconButtonProps
  *   `href` を外してください。
  * - `type` / `form` / `value` など button 専用の props は、差し込み先が native の `<button>` の
  *   ときだけ転送されます。それ以外の要素では不正な属性になるため落とし、dev ビルドで警告します。
- *   必要な場合は差し込む要素側に直接指定してください（Slot のマージで子の指定が優先されます）。
+ *   差し込み先が内部で `<button>` を描画するコンポーネントの場合のみ、その要素側に直接指定してください
+ *   （Slot のマージで子の指定が優先されます）。`<a>` 等では属性自体が機能しないため指定不要です。
  *   en: Button-only props such as `type`, `form`, and `value` are forwarded only when the slot is a
  *   native `<button>`; on other elements they would be invalid attributes, so they are dropped with
- *   a dev warning — set them on the slotted element instead (child props win in Slot's merge).
+ *   a dev warning. Set them on the slotted element only when that component renders a `<button>`
+ *   internally (child props win in Slot's merge) — on `<a>` and friends the attributes do nothing.
  * - `aria-disabled` を直接渡した場合も、無効時の配色が当たり操作が抑止されます（native の
  *   `disabled` 属性は付けないため、フォーカスは残ります）。無効化には基本的に `isDisabled` を
  *   使ってください。
