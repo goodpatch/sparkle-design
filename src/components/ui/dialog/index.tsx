@@ -65,7 +65,7 @@ import { Icon, IconProps } from "../icon";
  *   </DialogContent>
  * </Dialog>
  * ```
-
+ *
  * @param {React.ComponentProps<typeof DialogPrimitive.Root>} props
  */
 function Dialog({
@@ -199,7 +199,7 @@ function DialogDescription({
  * // ❌ Wrong - 二重ラップ
  * <DialogCancel><Button>キャンセル</Button></DialogCancel>
  * ```
-
+ *
  */
 function DialogCancel({
   className,
@@ -228,7 +228,7 @@ function DialogCancel({
  * // ❌ Wrong - 二重ラップ
  * <DialogAction><Button>確定</Button></DialogAction>
  * ```
-
+ *
  */
 function DialogAction({
   className,
