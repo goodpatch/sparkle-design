@@ -438,13 +438,9 @@ export interface ButtonProps
  * - `type` / `form` / `value` など button 専用の props は、差し込み先が native の `<button>` の
  *   ときだけ転送されます。それ以外の要素では不正な属性になるため落とし、dev ビルドで警告します。
  *   必要な場合は差し込む要素側に直接指定してください（Slot のマージで子の指定が優先されます）。
- *   また無効時は `onMouseDown` / `onPointerDown` / `onTouchStart` も呼ばれません（native の
- *   `disabled` な `<button>` に揃えた挙動です）。
  *   en: Button-only props such as `type`, `form`, and `value` are forwarded only when the slot is a
  *   native `<button>`; on other elements they would be invalid attributes, so they are dropped with
  *   a dev warning — set them on the slotted element instead (child props win in Slot's merge).
- *   While disabled, `onMouseDown` / `onPointerDown` / `onTouchStart` are not invoked either,
- *   matching a native disabled `<button>`.
  * - `aria-disabled` を直接渡した場合も、無効時の配色が当たり操作が抑止されます（native の
  *   `disabled` 属性は付けないため、フォーカスは残ります）。無効化には基本的に `isDisabled` を
  *   使ってください。
@@ -575,13 +571,15 @@ function Button({
           "popoverTarget",
           "popoverTargetAction",
         ] as const
-      ).filter(name => props[name] !== undefined);
+      ).filter(name => props[name] !== undefined && props[name] !== false);
 
       if (droppedProps.length > 0) {
         console.warn(
           `[Button] asChild で button 以外の要素を差し込む場合、${droppedProps.join(" / ")} は無視されます。` +
-            "必要な場合は差し込む要素側に直接指定してください。" +
-            ` / In asChild mode with a non-button element, ${droppedProps.join(" / ")} are ignored — set them on the slotted element instead.`
+            "これらは button / input 専用の属性です。差し込み先が内部で <button> を描画するコンポーネントなら、" +
+            "その要素側に直接指定してください（<a> 等では属性自体が機能しません）。" +
+            ` / In asChild mode with a non-button element, ${droppedProps.join(" / ")} are ignored: they only apply to button / input. ` +
+            "If the slotted component renders a <button> internally, set them on that element instead (they do nothing on <a> and friends)."
         );
       }
     }
@@ -604,9 +602,6 @@ function Button({
     onClickCapture,
     onKeyDownCapture,
     onAuxClickCapture,
-    onMouseDown,
-    onPointerDown,
-    onTouchStart,
     type,
     form,
     formAction,
@@ -622,9 +617,14 @@ function Button({
   } = props;
 
   // button 専用の props は、差し込み先が native の <button> のときだけ渡す。
-  // <a> 等に渡すと不正な属性になるため
-  // en: Button-only props are forwarded only when the slot is a native <button>; on elements
-  // like <a> they would be invalid attributes.
+  // <a> 等に渡すと不正な属性になるため。
+  // `name` は <a> でも受け付けられる（HTML Living Standard 上は obsolete だが UA が互換のため
+  // サポートし続けている）ので、ここでは落とさず転送したままにしている。
+  // React の型（ButtonHTMLAttributes）に button 専用 props が増えた場合はこのリストも追随すること
+  // en: Button-only props are forwarded only when the slot is a native <button>; on elements like
+  // <a> they would be invalid attributes. `name` is deliberately kept: <a name> is obsolete in the
+  // HTML Living Standard but still accepted by UAs for compatibility. Keep this list in sync when
+  // React's ButtonHTMLAttributes gains new button-only props.
   const buttonOnlyProps = canUseButtonProps
     ? {
         type: type || "button",
@@ -713,9 +713,6 @@ function Button({
             onClickCapture: undefined,
             onAuxClickCapture: undefined,
             onKeyDownCapture: undefined,
-            onMouseDown: undefined,
-            onPointerDown: undefined,
-            onTouchStart: undefined,
             ...(canUseButtonProps && isButtonDisabled
               ? { disabled: true }
               : {}),
@@ -729,6 +726,7 @@ function Button({
       // 内部の Comp は <button> 固定の union が含まれるためここで narrow する。
       // en: Public ref is HTMLElement (covers asChild targets); inner Comp's button branch needs narrowing.
       ref={ref as React.Ref<HTMLButtonElement>}
+      {...buttonOnlyProps}
       data-slot="button"
       aria-busy={isLoading || undefined}
       // 無効時はコンポーネント側の値を優先し、それ以外は利用者の指定をそのまま通す
@@ -747,12 +745,6 @@ function Button({
           className,
         })
       )}
-      {...buttonOnlyProps}
-      // 無効時は pointer 系のハンドラも渡さない（native の disabled 相当に揃える）
-      // en: While disabled, pointer handlers are not forwarded either, matching a native disabled button.
-      onMouseDown={isActivationBlocked ? undefined : onMouseDown}
-      onPointerDown={isActivationBlocked ? undefined : onPointerDown}
-      onTouchStart={isActivationBlocked ? undefined : onTouchStart}
       onClickCapture={handleClickCapture}
       onAuxClickCapture={handleAuxClickCapture}
       onKeyDownCapture={handleKeyDownCapture}

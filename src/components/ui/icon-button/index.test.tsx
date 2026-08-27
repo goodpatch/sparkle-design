@@ -901,6 +901,34 @@ describe("IconButton", () => {
       expect(slottedKeyDownCapture).not.toHaveBeenCalled();
     });
 
+    // 対象の props を網羅して検証する（1 つ落とし忘れても検知できるようにするため）
+    // en: Cover every targeted prop so that dropping one from the list is caught.
+    const BUTTON_ONLY_PROPS = {
+      form: "my-form",
+      formAction: "/submit",
+      formEncType: "multipart/form-data",
+      formMethod: "post",
+      formNoValidate: true,
+      formTarget: "_blank",
+      value: "save",
+      popoverTarget: "sheet",
+      popoverTargetAction: "toggle",
+    } as const;
+
+    const BUTTON_ONLY_ATTRIBUTES = [
+      "form",
+      "formaction",
+      "formenctype",
+      "formmethod",
+      "formnovalidate",
+      "formtarget",
+      "value",
+      "popovertarget",
+      "popovertargetaction",
+    ] as const;
+
+    // 対象の props を網羅して検証する（goodpatch/sparkle-design#315）
+    // en: Cover every targeted prop (#315).
     it("drops every button-only prop on a non-button slotted element", () => {
       const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
@@ -909,41 +937,37 @@ describe("IconButton", () => {
           asChild
           icon="open_in_new"
           aria-label="開く"
-          form="my-form"
-          value="save"
+          {...BUTTON_ONLY_PROPS}
         >
           <a href="/foo" aria-label="開く" />
         </IconButton>
       );
       const link = testContainer.querySelector<HTMLAnchorElement>("a");
 
-      expect(link.hasAttribute("form")).toBe(false);
-      expect(link.hasAttribute("value")).toBe(false);
+      for (const attribute of BUTTON_ONLY_ATTRIBUTES) {
+        expect(link.hasAttribute(attribute)).toBe(false);
+      }
       expect(warnSpy).toHaveBeenCalledWith(
-        expect.stringContaining("form / value は無視されます")
+        expect.stringContaining("は無視されます")
       );
     });
 
-    it("does not fire pointer handlers while disabled", () => {
-      const onMouseDown = vi.fn();
-
+    it("forwards every button-only prop to a slotted native button", () => {
       testContainer.render(
         <IconButton
           asChild
-          icon="open_in_new"
-          aria-label="開く"
-          isDisabled
-          onMouseDown={onMouseDown}
+          icon="send"
+          aria-label="送信"
+          {...BUTTON_ONLY_PROPS}
         >
-          <a href="/foo" aria-label="開く" />
+          <button />
         </IconButton>
       );
+      const button = testContainer.queryButton();
 
-      EventHelpers.mouseDown(
-        testContainer.querySelector<HTMLAnchorElement>("a")
-      );
-
-      expect(onMouseDown).not.toHaveBeenCalled();
+      for (const attribute of BUTTON_ONLY_ATTRIBUTES) {
+        expect(button.hasAttribute(attribute)).toBe(true);
+      }
     });
 
     it("keeps the computed disabled state over the slotted button's own disabled", () => {

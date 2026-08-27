@@ -26,6 +26,7 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/button.json
 
 - `asChild` 使用時は `prefixIcon` / `suffixIcon` / `isLoading` が反映されません。必要ならスロット先でアイコンやローディング表現を構成してください。
 - `asChild` を使う場合、子要素がボタン相当のセマンティクス（role / キーボード操作）を満たすようにしてください。無効化については、`aria-disabled` の付与と click / auxclick / Enter・Space の抑止をコンポーネント側で行います（差し込み先が native の `<button>` なら `disabled` 属性を渡します）。
+- `asChild` 使用時、`type` / `form` / `value` など button 専用の props は、差し込み先が native の `<button>` のときだけ転送されます（`<a>` 等では不正な属性になるため落とし、dev ビルドで警告します）。差し込み先が内部で `<button>` を描画するコンポーネントの場合は、その要素側に直接指定してください。
 
 ## 関連リンク
 

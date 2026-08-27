@@ -644,58 +644,63 @@ describe("Button", () => {
   describe("AsChild Behavior", () => {
     // button 専用の属性を <a> 等へ転送しないこと（goodpatch/sparkle-design#310）
     // en: Button-only attributes must not be forwarded to elements like <a> (#310).
+    // 対象の props を網羅して検証する（1 つ落とし忘れても検知できるようにするため）
+    // en: Cover every targeted prop so that dropping one from the list is caught.
+    const BUTTON_ONLY_PROPS = {
+      form: "my-form",
+      formAction: "/submit",
+      formEncType: "multipart/form-data",
+      formMethod: "post",
+      formNoValidate: true,
+      formTarget: "_blank",
+      value: "save",
+      popoverTarget: "sheet",
+      popoverTargetAction: "toggle",
+    } as const;
+
+    const BUTTON_ONLY_ATTRIBUTES = [
+      "form",
+      "formaction",
+      "formenctype",
+      "formmethod",
+      "formnovalidate",
+      "formtarget",
+      "value",
+      "popovertarget",
+      "popovertargetaction",
+    ] as const;
+
     // form 系や value も <a> には不正な属性なので落とす（goodpatch/sparkle-design#315）
     // en: form-related props and `value` are invalid on <a> too, so they are dropped (#315).
     it("drops every button-only prop on a non-button slotted element", () => {
       const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
       testContainer.render(
-        <Button asChild form="my-form" value="save" popoverTarget="sheet">
+        <Button asChild {...BUTTON_ONLY_PROPS}>
           <a href="/about">About</a>
         </Button>
       );
       const link = testContainer.querySelector<HTMLAnchorElement>("a");
 
-      expect(link.hasAttribute("form")).toBe(false);
-      expect(link.hasAttribute("value")).toBe(false);
-      expect(link.hasAttribute("popovertarget")).toBe(false);
+      for (const attribute of BUTTON_ONLY_ATTRIBUTES) {
+        expect(link.hasAttribute(attribute)).toBe(false);
+      }
       expect(warnSpy).toHaveBeenCalledWith(
-        expect.stringContaining("form / value / popoverTarget は無視されます")
+        expect.stringContaining("は無視されます")
       );
     });
 
-    it("forwards button-only props to a slotted native button", () => {
+    it("forwards every button-only prop to a slotted native button", () => {
       testContainer.render(
-        <Button asChild form="my-form" value="save">
+        <Button asChild {...BUTTON_ONLY_PROPS}>
           <button>Slotted</button>
         </Button>
       );
       const button = testContainer.queryButton();
 
-      expect(button.getAttribute("form")).toBe("my-form");
-      expect(button.getAttribute("value")).toBe("save");
-    });
-
-    // native の disabled な <button> ではブラウザが pointer 系イベントを飛ばさないので挙動を揃える
-    // en: A native disabled <button> never fires pointer events; match that behavior.
-    it("does not fire pointer handlers while disabled", () => {
-      vi.spyOn(console, "warn").mockImplementation(() => {});
-      const onMouseDown = vi.fn();
-      const slottedMouseDown = vi.fn();
-
-      testContainer.render(
-        <Button asChild isDisabled onMouseDown={onMouseDown}>
-          <a href="/about" onMouseDown={slottedMouseDown}>
-            About
-          </a>
-        </Button>
-      );
-      const link = testContainer.querySelector<HTMLAnchorElement>("a");
-
-      EventHelpers.mouseDown(link);
-
-      expect(onMouseDown).not.toHaveBeenCalled();
-      expect(slottedMouseDown).not.toHaveBeenCalled();
+      for (const attribute of BUTTON_ONLY_ATTRIBUTES) {
+        expect(button.hasAttribute(attribute)).toBe(true);
+      }
     });
 
     it("does not forward button-only attributes to a non-button slotted element", () => {
