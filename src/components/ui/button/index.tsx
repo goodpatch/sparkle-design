@@ -258,7 +258,15 @@ type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 type NativeButtonProps = React.ComponentProps<"button">;
 
 export interface ButtonProps
-  extends Omit<NativeButtonProps, "onClick" | "onKeyDown" | "ref"> {
+  extends Omit<
+    NativeButtonProps,
+    | "onClick"
+    | "onKeyDown"
+    | "onClickCapture"
+    | "onKeyDownCapture"
+    | "onAuxClickCapture"
+    | "ref"
+  > {
   /**
    * ルート要素への ref。`asChild` で `<a>` 等を差し込むケースを受け入れるため
    * `HTMLButtonElement` ではなく `HTMLElement` で広く受ける
@@ -322,6 +330,24 @@ export interface ButtonProps
   onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
 
   /**
+   * capture フェーズのクリックハンドラ。無効時はコンポーネント側のガードが優先される
+   * en: Capture-phase click handler. The component's disabled guard takes precedence.
+   */
+  onClickCapture?: React.MouseEventHandler<HTMLElement>;
+
+  /**
+   * capture フェーズのキー押下ハンドラ。無効時はコンポーネント側のガードが優先される
+   * en: Capture-phase keydown handler. The component's disabled guard takes precedence.
+   */
+  onKeyDownCapture?: React.KeyboardEventHandler<HTMLElement>;
+
+  /**
+   * capture フェーズの中クリックハンドラ。無効時はコンポーネント側のガードが優先される
+   * en: Capture-phase auxclick handler. The component's disabled guard takes precedence.
+   */
+  onAuxClickCapture?: React.MouseEventHandler<HTMLElement>;
+
+  /**
    * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
    * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
    *
@@ -369,6 +395,10 @@ export interface ButtonProps
  *   en: Use `IconButton` for icon-only buttons.
  * - `asChild` 使用時は `prefixIcon` / `suffixIcon` / `isLoading` が反映されません。必要ならスロット先でアイコンやローディング表現を構成してください。
  *   en: In `asChild` mode, `prefixIcon`, `suffixIcon`, and `isLoading` are ignored. Render icons and loading states inside the slotted child when needed.
+ * - `asChild` で差し込んだ要素が指定した props（`type` や `disabled` など）は、Slot のマージで
+ *   コンポーネント側の値より優先されます。
+ *   en: Props set on the slotted element itself (such as `type` or `disabled`) win over the
+ *   component's own values through Slot's prop merging.
  *
  * ```tsx
  * // ✅ Correct
@@ -397,7 +427,25 @@ export interface ButtonProps
  * - ボタンにはアクセシブルネームが必要です（通常は `children` のテキスト）。
  *   アイコンのみの場合は `aria-label` / `aria-labelledby` を付与するか、可能なら `IconButton` を使用してください。
  * - `isLoading` の場合でもアクセシブルネームは維持されます。
- * - `asChild` を使う場合、子要素がボタン相当のセマンティクス（role/disabled/キーボード操作）を満たすようにしてください。
+ * - `asChild` を使う場合、子要素がボタン相当のセマンティクス（role/キーボード操作）を満たすようにしてください。
+ * - `asChild` で `<a>` など button 以外の要素を差し込んで無効化した場合、`aria-disabled` の付与と
+ *   click / auxclick / Enter・Space の抑止はこのコンポーネントが行いますが、`disabled:` プレフィックスのスタイルは
+ *   適用されません。無効時の見た目は差し込む要素側で用意してください（`data-disabled="true"` を
+ *   利用側のスタイルフックとして出力しています）。差し込み先が native の `<button>` の場合は
+ *   `disabled` 属性がそのまま渡るため、この制約はありません。
+ *   en: When disabled with `asChild` and a non-button element such as `<a>`, this component sets
+ *   `aria-disabled` and blocks click / auxclick / Enter / Space, but `disabled:`-prefixed styles never apply —
+ *   provide the disabled appearance on the slotted element (`data-disabled="true"` is emitted as a
+ *   styling hook). A slotted native `<button>` receives the real `disabled` attribute instead.
+ * - native の `<button>` かどうかは差し込んだ要素そのもので判定するため、内部で `<button>` を
+ *   描画するカスタムコンポーネントを渡した場合は非 button として扱われます。
+ *   また無効時に抑止できるのは click / auxclick / Enter・Space までで、コンテキストメニューの
+ *   「新しいタブで開く」は止められません。確実に遷移させたくない場合は差し込む要素側で
+ *   `href` を外してください。
+ *   en: Whether the slot is a native `<button>` is decided from the slotted element itself, so a
+ *   custom component that renders a `<button>` internally is treated as a non-button. Also, only
+ *   click / auxclick / Enter / Space can be blocked while disabled — "open in new tab" from the
+ *   context menu cannot. Drop `href` on the slotted element when navigation must not happen.
  *
  * @param {ButtonProps} props
  */
@@ -421,6 +469,14 @@ function Button({
   // disabled状態の管理（isDisabled、disabled、またはisLoadingがtrueの場合）
   const isButtonDisabled = isLoading || isDisabled || disabled;
 
+  // asChild で差し込まれたのが native の <button> なら、button 専用の props を渡してよい。
+  // Slot は子の props を優先するため、差し込み側が明示した type はそのまま尊重される
+  // en: When the slotted element is a native <button>, button-only props can be forwarded.
+  // Slot gives the child's props precedence, so an explicit `type` on the child still wins.
+  const isSlottedNativeButton =
+    asChild && React.isValidElement(children) && children.type === "button";
+  const canUseButtonProps = !asChild || isSlottedNativeButton;
+
   // アイコンのサイズをボタンサイズに合わせて設定
   const getIconSize = () => {
     switch (size) {
@@ -437,18 +493,58 @@ function Button({
     ("aria-label" in props && Boolean(props["aria-label"])) ||
     ("aria-labelledby" in props && Boolean(props["aria-labelledby"]));
   const hasChildren = React.Children.count(children) > 0;
+  // asChild では children が差し込む要素そのものなので、その要素のラベル / テキストを見る
+  // en: With asChild the children are the slotted element itself, so inspect its label / text.
+  const slottedChildProps = React.isValidElement(children)
+    ? (children.props as {
+        "aria-label"?: string;
+        "aria-labelledby"?: string;
+        children?: React.ReactNode;
+      })
+    : undefined;
+  const hasAccessibleName = asChild
+    ? hasAccessibleNameProp ||
+      Boolean(
+        slottedChildProps?.["aria-label"] ||
+          slottedChildProps?.["aria-labelledby"]
+      ) ||
+      React.Children.count(slottedChildProps?.children) > 0
+    : hasChildren || hasAccessibleNameProp;
 
   if (process.env.NODE_ENV !== "production") {
-    if (!hasChildren && !hasAccessibleNameProp) {
+    if (!hasAccessibleName) {
       // Icon-only button should use IconButton, or provide aria-label/labelledby.
       // Keep it as a warning (not an exception) to avoid breaking existing usage.
       console.warn(
         "[Button] Accessible name is missing. Provide children text, or set aria-label/aria-labelledby. For icon-only actions, consider using IconButton."
       );
     }
-    if (asChild && isButtonDisabled) {
+    if (asChild && isButtonDisabled && hasChildren && !canUseButtonProps) {
+      // aria-disabled の付与と操作の抑止はこのコンポーネントが行うが、
+      // `disabled:` 由来のスタイルは button 以外では発火しない
+      // en: This component sets aria-disabled and blocks activation, but `disabled:`
+      // styles never fire on non-button elements.
       console.warn(
-        "[Button] asChild + disabled/loading: the child element must handle disabled semantics (e.g., aria-disabled + preventing activation). Ensure the slotted element is button-like."
+        "[Button] asChild + disabled/loading: 無効時の配色は `disabled:` プレフィックスのため差し込んだ要素には適用されません。" +
+          "見た目の無効表現は差し込む要素側（data-disabled 属性など）で用意してください。" +
+          " / asChild + disabled/loading: `disabled:`-prefixed styles do not apply to the slotted element — provide the disabled appearance there (e.g. via the data-disabled attribute)."
+      );
+    }
+    // asChild で単一要素以外を渡すと、Slot が何も描画しない / React が例外を投げる
+    // en: With asChild, anything other than a single element makes Slot render nothing or throw.
+    if (asChild && !React.isValidElement(children)) {
+      console.warn(
+        "[Button] asChild には単一の React 要素を children として渡してください。" +
+          "要素以外では何も描画されず、複数要素では実行時エラーになります。" +
+          " / asChild requires a single React element child: anything else renders nothing or throws."
+      );
+    }
+    // type は button 以外の差し込み先には渡さない（無効な属性になるため）
+    // en: `type` is not forwarded to non-button slots because it would be an invalid attribute.
+    if (asChild && !canUseButtonProps && props.type) {
+      console.warn(
+        "[Button] asChild で button 以外の要素を差し込む場合、type は無視されます。" +
+          " / In asChild mode with a non-button element, `type` is ignored."
       );
     }
     if (asChild && (prefixIcon || suffixIcon || isLoading)) {
@@ -464,12 +560,64 @@ function Button({
     }
   }
 
-  const { onClick, onKeyDown, ...restProps } = props;
+  const {
+    onClick,
+    onKeyDown,
+    onClickCapture,
+    onKeyDownCapture,
+    onAuxClickCapture,
+    type,
+    "aria-disabled": ariaDisabled,
+    ...restProps
+  } = props;
 
-  const handleClick: React.MouseEventHandler<HTMLElement> = event => {
+  // 無効時のガードは capture フェーズで行う。Radix Slot は「差し込んだ要素自身のハンドラ →
+  // Slot 側のハンドラ」の順で合成するため、bubble フェーズのガードでは子のハンドラを止められない
+  // en: Guard in the capture phase. Radix Slot composes handlers as "the slotted element's own
+  // handler first, then the slot's", so a bubble-phase guard cannot stop the child's handler.
+  const handleClickCapture: React.MouseEventHandler<HTMLElement> = event => {
     if (isButtonDisabled) {
       event.preventDefault();
       event.stopPropagation();
+      return;
+    }
+    onClickCapture?.(event);
+  };
+
+  const handleKeyDownCapture: React.KeyboardEventHandler<
+    HTMLElement
+  > = event => {
+    if (isButtonDisabled) {
+      // asChild で <a> 等を差し込んだ場合に Enter / Space での実行を止める。
+      // それ以外のキーは伝播を止めないが、無効時は利用者の onKeyDown も呼ばない
+      // en: Other keys keep propagating, but the caller's onKeyDown is not invoked
+      // while disabled.
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      return;
+    }
+    onKeyDownCapture?.(event);
+  };
+
+  // 中クリックは click ではなく auxclick として飛ぶため、別途止める必要がある
+  // en: A middle click fires `auxclick`, not `click`, so it needs its own guard.
+  const handleAuxClickCapture: React.MouseEventHandler<HTMLElement> = event => {
+    if (isButtonDisabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    onAuxClickCapture?.(event);
+  };
+
+  // capture 側で stopPropagation するため、無効時にこの bubble 側ハンドラへは到達しない。
+  // capture が本体・こちらは保険として残している
+  // en: The capture guard stops propagation, so this bubble handler is not reached while
+  // disabled. The capture phase is the real guard; this one is a safety net.
+  const handleClick: React.MouseEventHandler<HTMLElement> = event => {
+    if (isButtonDisabled) {
       return;
     }
     onClick?.(event);
@@ -477,15 +625,29 @@ function Button({
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLElement> = event => {
     if (isButtonDisabled) {
-      // Prevent activation keys when used with asChild (e.g., <a>).
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        event.stopPropagation();
-      }
       return;
     }
     onKeyDown?.(event);
   };
+
+  // Slot は「差し込んだ要素自身のハンドラ → Slot のハンドラ」の順で合成するため、
+  // 無効時は子側の capture ハンドラを外してガードを確実に先に効かせる。
+  // 同様に子が明示した disabled も、無効時はコンポーネント側の状態を優先する
+  // en: Slot composes "the slotted element's own handler first, then the slot's", so while
+  // disabled we strip the child's capture handlers to keep the guard authoritative. The
+  // component's disabled state also overrides a `disabled` set on the child.
+  const slottedChildren =
+    asChild && isButtonDisabled && React.isValidElement(children)
+      ? React.cloneElement(
+          children as React.ReactElement<Record<string, unknown>>,
+          {
+            onClickCapture: undefined,
+            onAuxClickCapture: undefined,
+            onKeyDownCapture: undefined,
+            ...(canUseButtonProps ? { disabled: true } : {}),
+          }
+        )
+      : children;
 
   return (
     <Comp
@@ -495,9 +657,13 @@ function Button({
       ref={ref as React.Ref<HTMLButtonElement>}
       data-slot="button"
       aria-busy={isLoading || undefined}
-      aria-disabled={asChild && isButtonDisabled ? true : undefined}
+      // 無効時はコンポーネント側の値を優先し、それ以外は利用者の指定をそのまま通す
+      // en: While disabled the component's value wins; otherwise the caller's value passes through.
+      aria-disabled={
+        !canUseButtonProps && isButtonDisabled ? true : ariaDisabled
+      }
       data-disabled={asChild && isButtonDisabled ? "true" : undefined}
-      disabled={asChild ? undefined : isButtonDisabled}
+      disabled={canUseButtonProps ? isButtonDisabled : undefined}
       className={cn(
         buttonVariants({
           variant,
@@ -507,13 +673,16 @@ function Button({
           className,
         })
       )}
-      type={asChild ? undefined : props.type || "button"}
+      type={canUseButtonProps ? type || "button" : undefined}
+      onClickCapture={handleClickCapture}
+      onAuxClickCapture={handleAuxClickCapture}
+      onKeyDownCapture={handleKeyDownCapture}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       {...restProps}
     >
       {asChild ? (
-        children
+        slottedChildren
       ) : (
         <>
           {prefixIcon && (

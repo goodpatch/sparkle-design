@@ -99,6 +99,18 @@ export const EventHelpers = {
     return notCanceled;
   },
 
+  // 中クリック（auxclick）。click とは別イベントなので専用のヘルパーを用意する
+  // en: Middle click (auxclick) is a separate event from click, so it gets its own helper.
+  auxClick(element: Element, init: MouseEventInit = {}): boolean {
+    let notCanceled = true;
+    act(() => {
+      notCanceled = element.dispatchEvent(
+        new MouseEvent("auxclick", { bubbles: true, button: 1, ...init })
+      );
+    });
+    return notCanceled;
+  },
+
   change(element: HTMLInputElement | HTMLTextAreaElement, value: string): void {
     act(() => {
       // input/textarea 双方に対応した value セッターを取得
