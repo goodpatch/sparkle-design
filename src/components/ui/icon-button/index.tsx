@@ -316,6 +316,9 @@ export interface IconButtonProps
     | "onClickCapture"
     | "onKeyDownCapture"
     | "onAuxClickCapture"
+    | "onMouseDown"
+    | "onPointerDown"
+    | "onTouchStart"
     | "ref"
   > {
   /**
@@ -387,6 +390,41 @@ export interface IconButtonProps
    * en: Capture-phase auxclick handler. The component's disabled guard takes precedence.
    */
   onAuxClickCapture?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   *
+   * `asChild` で button 以外の要素を差し込めるため `HTMLElement` で受ける
+   * en: Typed as `HTMLElement` because `asChild` can render non-button elements.
+   */
+  onMouseDown?: React.MouseEventHandler<HTMLElement>;
+
+  /**
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   *
+   * `asChild` で button 以外の要素を差し込めるため `HTMLElement` で受ける
+   * en: Typed as `HTMLElement` because `asChild` can render non-button elements.
+   */
+  onPointerDown?: React.PointerEventHandler<HTMLElement>;
+
+  /**
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   *
+   * `asChild` で button 以外の要素を差し込めるため `HTMLElement` で受ける
+   * en: Typed as `HTMLElement` because `asChild` can render non-button elements.
+   */
+  onTouchStart?: React.TouchEventHandler<HTMLElement>;
 }
 
 /**
@@ -429,6 +467,14 @@ export interface IconButtonProps
  *   また無効時に抑止できるのは click / auxclick / Enter・Space までで、コンテキストメニューの
  *   「新しいタブで開く」は止められません。確実に遷移させたくない場合は差し込む要素側で
  *   `href` を外してください。
+ * - `type` / `form` / `value` など button 専用の props は、差し込み先が native の `<button>` の
+ *   ときだけ転送されます。それ以外の要素では不正な属性になるため落とし、dev ビルドで警告します。
+ *   差し込み先が内部で `<button>` を描画するコンポーネントの場合のみ、その要素側に直接指定してください
+ *   （Slot のマージで子の指定が優先されます）。`<a>` 等では属性自体が機能しないため指定不要です。
+ *   en: Button-only props such as `type`, `form`, and `value` are forwarded only when the slot is a
+ *   native `<button>`; on other elements they would be invalid attributes, so they are dropped with
+ *   a dev warning. Set them on the slotted element only when that component renders a `<button>`
+ *   internally (child props win in Slot's merge) — on `<a>` and friends the attributes do nothing.
  * - `aria-disabled` を直接渡した場合も、無効時の配色が当たり操作が抑止されます（native の
  *   `disabled` 属性は付けないため、フォーカスは残ります）。無効化には基本的に `isDisabled` を
  *   使ってください。
@@ -515,13 +561,43 @@ function IconButton({
 
     // asChild で単一要素以外を渡すと、Slot が何も描画しない / React が例外を投げる
     // en: With asChild, anything other than a single element makes Slot render nothing or React throw.
-    // type は button 以外の差し込み先には渡さない（無効な属性になるため）
-    // en: `type` is not forwarded to non-button slots because it would be an invalid attribute.
-    if (asChild && !canUseButtonProps && props.type) {
+    if (props.onMouseDown || props.onPointerDown || props.onTouchStart) {
+      // WCAG 2.5.2 Pointer Cancellation: 押下ではなく離した時点で実行するべき
+      // en: WCAG 2.5.2 Pointer Cancellation — activate on release, not on pointer down.
       console.warn(
-        "[IconButton] asChild で button 以外の要素を差し込む場合、type は無視されます。" +
-          " / In asChild mode with a non-button element, `type` is ignored."
+        "[IconButton] onMouseDown / onPointerDown / onTouchStart はアクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）で非推奨です。" +
+          "押下ではなく離した時点で実行される onClick を使ってください。" +
+          " / onMouseDown / onPointerDown / onTouchStart are deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Prefer onClick (activation on release)."
       );
+    }
+
+    // button 専用の props は button 以外の差し込み先には渡さない（無効な属性になるため）
+    // en: Button-only props are not forwarded to non-button slots: they would be invalid attributes.
+    if (asChild && !canUseButtonProps) {
+      const droppedProps = (
+        [
+          "type",
+          "form",
+          "formAction",
+          "formEncType",
+          "formMethod",
+          "formNoValidate",
+          "formTarget",
+          "value",
+          "popoverTarget",
+          "popoverTargetAction",
+        ] as const
+      ).filter(name => props[name] !== undefined && props[name] !== false);
+
+      if (droppedProps.length > 0) {
+        console.warn(
+          `[IconButton] asChild で button 以外の要素を差し込む場合、${droppedProps.join(" / ")} は無視されます。` +
+            "これらは button / input 専用の属性です。差し込み先が内部で <button> を描画するコンポーネントなら、" +
+            "その要素側に直接指定してください（<a> 等では属性自体が機能しません）。" +
+            ` / In asChild mode with a non-button element, ${droppedProps.join(" / ")} are ignored: they only apply to button / input. ` +
+            "If the slotted component renders a <button> internally, set them on that element instead (they do nothing on <a> and friends)."
+        );
+      }
     }
 
     if (asChild && !slottedChild) {
@@ -566,9 +642,42 @@ function IconButton({
     onKeyDownCapture,
     onAuxClickCapture,
     type,
+    form,
+    formAction,
+    formEncType,
+    formMethod,
+    formNoValidate,
+    formTarget,
+    value,
+    popoverTarget,
+    popoverTargetAction,
     "aria-disabled": ariaDisabled,
     ...restProps
   } = props;
+
+  // button 専用の props は、差し込み先が native の <button> のときだけ渡す。
+  // <a> 等に渡すと不正な属性になるため。
+  // `name` は <a> でも受け付けられる（HTML Living Standard 上は obsolete だが UA が互換のため
+  // サポートし続けている）ので、ここでは落とさず転送したままにしている。
+  // React の型（ButtonHTMLAttributes）に button 専用 props が増えた場合はこのリストも追随すること
+  // en: Button-only props are forwarded only when the slot is a native <button>; on elements like
+  // <a> they would be invalid attributes. `name` is deliberately kept: <a name> is obsolete in the
+  // HTML Living Standard but still accepted by UAs for compatibility. Keep this list in sync when
+  // React's ButtonHTMLAttributes gains new button-only props.
+  const buttonOnlyProps = canUseButtonProps
+    ? {
+        type: type || "button",
+        form,
+        formAction,
+        formEncType,
+        formMethod,
+        formNoValidate,
+        formTarget,
+        value,
+        popoverTarget,
+        popoverTargetAction,
+      }
+    : {};
 
   // 無効時のガードは capture フェーズで行う。Radix Slot は「差し込んだ要素自身のハンドラ →
   // Slot 側のハンドラ」の順で合成するため、bubble フェーズのガードでは子のハンドラを止められない
@@ -656,7 +765,7 @@ function IconButton({
       // 内部の Comp は <button> 固定の union が含まれるためここで narrow する。
       // en: Public ref is HTMLElement (covers asChild targets); inner Comp's button branch needs narrowing.
       ref={ref as React.Ref<HTMLButtonElement>}
-      type={canUseButtonProps ? type || "button" : undefined}
+      {...buttonOnlyProps}
       // 無効時はコンポーネント側の値を優先し、それ以外は利用者の指定をそのまま通す
       // en: While disabled the component's value wins; otherwise the caller's value passes through.
       aria-disabled={

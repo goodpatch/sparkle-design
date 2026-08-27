@@ -644,6 +644,67 @@ describe("Button", () => {
   describe("AsChild Behavior", () => {
     // button 専用の属性を <a> 等へ転送しないこと（goodpatch/sparkle-design#310）
     // en: Button-only attributes must not be forwarded to elements like <a> (#310).
+    // 対象の props を網羅して検証する（1 つ落とし忘れても検知できるようにするため）
+    // en: Cover every targeted prop so that dropping one from the list is caught.
+    const BUTTON_ONLY_PROPS = {
+      type: "submit",
+      form: "my-form",
+      formAction: "/submit",
+      formEncType: "multipart/form-data",
+      formMethod: "post",
+      formNoValidate: true,
+      formTarget: "_blank",
+      value: "save",
+      popoverTarget: "sheet",
+      popoverTargetAction: "toggle",
+    } as const;
+
+    const BUTTON_ONLY_ATTRIBUTES = [
+      "type",
+      "form",
+      "formaction",
+      "formenctype",
+      "formmethod",
+      "formnovalidate",
+      "formtarget",
+      "value",
+      "popovertarget",
+      "popovertargetaction",
+    ] as const;
+
+    // form 系や value も <a> には不正な属性なので落とす（goodpatch/sparkle-design#315）
+    // en: form-related props and `value` are invalid on <a> too, so they are dropped (#315).
+    it("drops every button-only prop on a non-button slotted element", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <Button asChild {...BUTTON_ONLY_PROPS}>
+          <a href="/about">About</a>
+        </Button>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      for (const attribute of BUTTON_ONLY_ATTRIBUTES) {
+        expect(link.hasAttribute(attribute)).toBe(false);
+      }
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("は無視されます")
+      );
+    });
+
+    it("forwards every button-only prop to a slotted native button", () => {
+      testContainer.render(
+        <Button asChild {...BUTTON_ONLY_PROPS}>
+          <button>Slotted</button>
+        </Button>
+      );
+      const button = testContainer.queryButton();
+
+      for (const attribute of BUTTON_ONLY_ATTRIBUTES) {
+        expect(button.hasAttribute(attribute)).toBe(true);
+      }
+    });
+
     it("does not forward button-only attributes to a non-button slotted element", () => {
       const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 

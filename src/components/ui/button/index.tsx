@@ -435,6 +435,14 @@ export interface ButtonProps
  *   click / auxclick / Enter・Space の抑止、`aria-disabled:` プレフィックスによる無効時の配色まで
  *   このコンポーネントが行います（`data-disabled="true"` も利用側のスタイルフックとして出力）。
  *   差し込み先が native の `<button>` の場合は `disabled` 属性がそのまま渡ります。
+ * - `type` / `form` / `value` など button 専用の props は、差し込み先が native の `<button>` の
+ *   ときだけ転送されます。それ以外の要素では不正な属性になるため落とし、dev ビルドで警告します。
+ *   差し込み先が内部で `<button>` を描画するコンポーネントの場合のみ、その要素側に直接指定してください
+ *   （Slot のマージで子の指定が優先されます）。`<a>` 等では属性自体が機能しないため指定不要です。
+ *   en: Button-only props such as `type`, `form`, and `value` are forwarded only when the slot is a
+ *   native `<button>`; on other elements they would be invalid attributes, so they are dropped with
+ *   a dev warning. Set them on the slotted element only when that component renders a `<button>`
+ *   internally (child props win in Slot's merge) — on `<a>` and friends the attributes do nothing.
  * - `aria-disabled` を直接渡した場合も、無効時の配色が当たり操作が抑止されます（native の
  *   `disabled` 属性は付けないため、フォーカスは残ります）。無効化には基本的に `isDisabled` を
  *   使ってください。
@@ -549,13 +557,33 @@ function Button({
           " / asChild requires a single React element child: anything else renders nothing or throws."
       );
     }
-    // type は button 以外の差し込み先には渡さない（無効な属性になるため）
-    // en: `type` is not forwarded to non-button slots because it would be an invalid attribute.
-    if (asChild && !canUseButtonProps && props.type) {
-      console.warn(
-        "[Button] asChild で button 以外の要素を差し込む場合、type は無視されます。" +
-          " / In asChild mode with a non-button element, `type` is ignored."
-      );
+    // button 専用の props は button 以外の差し込み先には渡さない（無効な属性になるため）
+    // en: Button-only props are not forwarded to non-button slots: they would be invalid attributes.
+    if (asChild && !canUseButtonProps) {
+      const droppedProps = (
+        [
+          "type",
+          "form",
+          "formAction",
+          "formEncType",
+          "formMethod",
+          "formNoValidate",
+          "formTarget",
+          "value",
+          "popoverTarget",
+          "popoverTargetAction",
+        ] as const
+      ).filter(name => props[name] !== undefined && props[name] !== false);
+
+      if (droppedProps.length > 0) {
+        console.warn(
+          `[Button] asChild で button 以外の要素を差し込む場合、${droppedProps.join(" / ")} は無視されます。` +
+            "これらは button / input 専用の属性です。差し込み先が内部で <button> を描画するコンポーネントなら、" +
+            "その要素側に直接指定してください（<a> 等では属性自体が機能しません）。" +
+            ` / In asChild mode with a non-button element, ${droppedProps.join(" / ")} are ignored: they only apply to button / input. ` +
+            "If the slotted component renders a <button> internally, set them on that element instead (they do nothing on <a> and friends)."
+        );
+      }
     }
     if (asChild && (prefixIcon || suffixIcon || isLoading)) {
       console.warn(
@@ -577,9 +605,42 @@ function Button({
     onKeyDownCapture,
     onAuxClickCapture,
     type,
+    form,
+    formAction,
+    formEncType,
+    formMethod,
+    formNoValidate,
+    formTarget,
+    value,
+    popoverTarget,
+    popoverTargetAction,
     "aria-disabled": ariaDisabled,
     ...restProps
   } = props;
+
+  // button 専用の props は、差し込み先が native の <button> のときだけ渡す。
+  // <a> 等に渡すと不正な属性になるため。
+  // `name` は <a> でも受け付けられる（HTML Living Standard 上は obsolete だが UA が互換のため
+  // サポートし続けている）ので、ここでは落とさず転送したままにしている。
+  // React の型（ButtonHTMLAttributes）に button 専用 props が増えた場合はこのリストも追随すること
+  // en: Button-only props are forwarded only when the slot is a native <button>; on elements like
+  // <a> they would be invalid attributes. `name` is deliberately kept: <a name> is obsolete in the
+  // HTML Living Standard but still accepted by UAs for compatibility. Keep this list in sync when
+  // React's ButtonHTMLAttributes gains new button-only props.
+  const buttonOnlyProps = canUseButtonProps
+    ? {
+        type: type || "button",
+        form,
+        formAction,
+        formEncType,
+        formMethod,
+        formNoValidate,
+        formTarget,
+        value,
+        popoverTarget,
+        popoverTargetAction,
+      }
+    : {};
 
   // 無効時のガードは capture フェーズで行う。Radix Slot は「差し込んだ要素自身のハンドラ →
   // Slot 側のハンドラ」の順で合成するため、bubble フェーズのガードでは子のハンドラを止められない
@@ -667,6 +728,7 @@ function Button({
       // 内部の Comp は <button> 固定の union が含まれるためここで narrow する。
       // en: Public ref is HTMLElement (covers asChild targets); inner Comp's button branch needs narrowing.
       ref={ref as React.Ref<HTMLButtonElement>}
+      {...buttonOnlyProps}
       data-slot="button"
       aria-busy={isLoading || undefined}
       // 無効時はコンポーネント側の値を優先し、それ以外は利用者の指定をそのまま通す
@@ -685,7 +747,6 @@ function Button({
           className,
         })
       )}
-      type={canUseButtonProps ? type || "button" : undefined}
       onClickCapture={handleClickCapture}
       onAuxClickCapture={handleAuxClickCapture}
       onKeyDownCapture={handleKeyDownCapture}

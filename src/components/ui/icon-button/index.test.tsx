@@ -901,6 +901,77 @@ describe("IconButton", () => {
       expect(slottedKeyDownCapture).not.toHaveBeenCalled();
     });
 
+    // 対象の props を網羅して検証する（1 つ落とし忘れても検知できるようにするため）
+    // en: Cover every targeted prop so that dropping one from the list is caught.
+    const BUTTON_ONLY_PROPS = {
+      type: "submit",
+      form: "my-form",
+      formAction: "/submit",
+      formEncType: "multipart/form-data",
+      formMethod: "post",
+      formNoValidate: true,
+      formTarget: "_blank",
+      value: "save",
+      popoverTarget: "sheet",
+      popoverTargetAction: "toggle",
+    } as const;
+
+    const BUTTON_ONLY_ATTRIBUTES = [
+      "type",
+      "form",
+      "formaction",
+      "formenctype",
+      "formmethod",
+      "formnovalidate",
+      "formtarget",
+      "value",
+      "popovertarget",
+      "popovertargetaction",
+    ] as const;
+
+    // 対象の props を網羅して検証する（goodpatch/sparkle-design#315）
+    // en: Cover every targeted prop (#315).
+    it("drops every button-only prop on a non-button slotted element", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <IconButton
+          asChild
+          icon="open_in_new"
+          aria-label="開く"
+          {...BUTTON_ONLY_PROPS}
+        >
+          <a href="/foo" aria-label="開く" />
+        </IconButton>
+      );
+      const link = testContainer.querySelector<HTMLAnchorElement>("a");
+
+      for (const attribute of BUTTON_ONLY_ATTRIBUTES) {
+        expect(link.hasAttribute(attribute)).toBe(false);
+      }
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("は無視されます")
+      );
+    });
+
+    it("forwards every button-only prop to a slotted native button", () => {
+      testContainer.render(
+        <IconButton
+          asChild
+          icon="send"
+          aria-label="送信"
+          {...BUTTON_ONLY_PROPS}
+        >
+          <button />
+        </IconButton>
+      );
+      const button = testContainer.queryButton();
+
+      for (const attribute of BUTTON_ONLY_ATTRIBUTES) {
+        expect(button.hasAttribute(attribute)).toBe(true);
+      }
+    });
+
     it("keeps the computed disabled state over the slotted button's own disabled", () => {
       testContainer.render(
         <IconButton asChild icon="send" aria-label="送信" isDisabled>
@@ -942,6 +1013,20 @@ describe("IconButton", () => {
   });
 
   describe("Development Warnings", () => {
+    // Button と同じく WCAG 2.5.2 の観点で pointer down 系を非推奨にしている
+    // en: Pointer-down handlers are deprecated for WCAG 2.5.2, matching Button.
+    it("warns when a pointer-down handler is used", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <IconButton icon="plus" aria-label="追加" onPointerDown={() => {}} />
+      );
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("[IconButton] onMouseDown / onPointerDown")
+      );
+    });
+
     // asChild に単一要素以外を渡すと Slot が何も描画しないため、無音の故障になりやすい
     // en: asChild with anything but a single element renders nothing — a silent failure.
     it("warns and renders nothing when asChild has no element child", () => {
