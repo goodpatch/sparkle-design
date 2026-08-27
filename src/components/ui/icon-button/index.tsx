@@ -391,18 +391,38 @@ export interface IconButtonProps
    */
   onAuxClickCapture?: React.MouseEventHandler<HTMLElement>;
   /**
-   * pointer 押下時のハンドラ。`asChild` で button 以外の要素を差し込めるため `HTMLElement` で受ける
-   * en: MouseDown handler. Typed as `HTMLElement` because `asChild` can render non-button elements.
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   *
+   * `asChild` で button 以外の要素を差し込めるため `HTMLElement` で受ける
+   * en: Typed as `HTMLElement` because `asChild` can render non-button elements.
    */
   onMouseDown?: React.MouseEventHandler<HTMLElement>;
+
   /**
-   * pointer 押下時のハンドラ。`asChild` で button 以外の要素を差し込めるため `HTMLElement` で受ける
-   * en: PointerDown handler. Typed as `HTMLElement` because `asChild` can render non-button elements.
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   *
+   * `asChild` で button 以外の要素を差し込めるため `HTMLElement` で受ける
+   * en: Typed as `HTMLElement` because `asChild` can render non-button elements.
    */
   onPointerDown?: React.PointerEventHandler<HTMLElement>;
+
   /**
-   * タッチ開始時のハンドラ。`asChild` で button 以外の要素を差し込めるため `HTMLElement` で受ける
-   * en: TouchStart handler. Typed as `HTMLElement` because `asChild` can render non-button elements.
+   * @deprecated アクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）により、基本的に使用を避けてください。
+   * en: Deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Avoid using this in most cases.
+   *
+   * Prefer using `onClick` (activation on release) instead of triggering actions on pointer down.
+   * ref: https://www.w3.org/TR/WCAG21/#pointer-cancellation
+   *
+   * `asChild` で button 以外の要素を差し込めるため `HTMLElement` で受ける
+   * en: Typed as `HTMLElement` because `asChild` can render non-button elements.
    */
   onTouchStart?: React.TouchEventHandler<HTMLElement>;
 }
@@ -539,6 +559,16 @@ function IconButton({
 
     // asChild で単一要素以外を渡すと、Slot が何も描画しない / React が例外を投げる
     // en: With asChild, anything other than a single element makes Slot render nothing or React throw.
+    if (props.onMouseDown || props.onPointerDown || props.onTouchStart) {
+      // WCAG 2.5.2 Pointer Cancellation: 押下ではなく離した時点で実行するべき
+      // en: WCAG 2.5.2 Pointer Cancellation — activate on release, not on pointer down.
+      console.warn(
+        "[IconButton] onMouseDown / onPointerDown / onTouchStart はアクセシビリティ観点（WCAG 2.5.2 Pointer Cancellation）で非推奨です。" +
+          "押下ではなく離した時点で実行される onClick を使ってください。" +
+          " / onMouseDown / onPointerDown / onTouchStart are deprecated for accessibility reasons (WCAG 2.5.2 Pointer Cancellation). Prefer onClick (activation on release)."
+      );
+    }
+
     // button 専用の props は button 以外の差し込み先には渡さない（無効な属性になるため）
     // en: Button-only props are not forwarded to non-button slots: they would be invalid attributes.
     if (asChild && !canUseButtonProps) {

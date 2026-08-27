@@ -1013,6 +1013,20 @@ describe("IconButton", () => {
   });
 
   describe("Development Warnings", () => {
+    // Button と同じく WCAG 2.5.2 の観点で pointer down 系を非推奨にしている
+    // en: Pointer-down handlers are deprecated for WCAG 2.5.2, matching Button.
+    it("warns when a pointer-down handler is used", () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      testContainer.render(
+        <IconButton icon="plus" aria-label="追加" onPointerDown={() => {}} />
+      );
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("[IconButton] onMouseDown / onPointerDown")
+      );
+    });
+
     // asChild に単一要素以外を渡すと Slot が何も描画しないため、無音の故障になりやすい
     // en: asChild with anything but a single element renders nothing — a silent failure.
     it("warns and renders nothing when asChild has no element child", () => {
