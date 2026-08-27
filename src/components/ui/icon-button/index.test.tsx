@@ -904,6 +904,7 @@ describe("IconButton", () => {
     // 対象の props を網羅して検証する（1 つ落とし忘れても検知できるようにするため）
     // en: Cover every targeted prop so that dropping one from the list is caught.
     const BUTTON_ONLY_PROPS = {
+      type: "submit",
       form: "my-form",
       formAction: "/submit",
       formEncType: "multipart/form-data",
@@ -916,6 +917,7 @@ describe("IconButton", () => {
     } as const;
 
     const BUTTON_ONLY_ATTRIBUTES = [
+      "type",
       "form",
       "formaction",
       "formenctype",

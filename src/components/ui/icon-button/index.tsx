@@ -316,6 +316,9 @@ export interface IconButtonProps
     | "onClickCapture"
     | "onKeyDownCapture"
     | "onAuxClickCapture"
+    | "onMouseDown"
+    | "onPointerDown"
+    | "onTouchStart"
     | "ref"
   > {
   /**
@@ -387,6 +390,21 @@ export interface IconButtonProps
    * en: Capture-phase auxclick handler. The component's disabled guard takes precedence.
    */
   onAuxClickCapture?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * pointer 押下時のハンドラ。`asChild` で button 以外の要素を差し込めるため `HTMLElement` で受ける
+   * en: MouseDown handler. Typed as `HTMLElement` because `asChild` can render non-button elements.
+   */
+  onMouseDown?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * pointer 押下時のハンドラ。`asChild` で button 以外の要素を差し込めるため `HTMLElement` で受ける
+   * en: PointerDown handler. Typed as `HTMLElement` because `asChild` can render non-button elements.
+   */
+  onPointerDown?: React.PointerEventHandler<HTMLElement>;
+  /**
+   * タッチ開始時のハンドラ。`asChild` で button 以外の要素を差し込めるため `HTMLElement` で受ける
+   * en: TouchStart handler. Typed as `HTMLElement` because `asChild` can render non-button elements.
+   */
+  onTouchStart?: React.TouchEventHandler<HTMLElement>;
 }
 
 /**
