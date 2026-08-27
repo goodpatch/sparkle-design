@@ -61,7 +61,7 @@ import { IconButton } from "../icon-button";
  *   </ModalContent>
  * </Modal>
  * ```
-
+ *
  * @param {React.ComponentProps<typeof DialogPrimitive.Root>} props
  */
 function Modal({

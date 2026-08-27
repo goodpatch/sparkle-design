@@ -63,7 +63,7 @@ export interface IconProps extends React.ComponentProps<"span"> {
  * // ❌ Wrong - className を直書きしない
  * <span className="material-symbols-rounded text-sm">content_copy</span>
  * ```
-
+ *
  * **使用例 / Usage Example**
  *
  * ```tsx

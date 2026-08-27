@@ -424,7 +424,7 @@ export interface ButtonProps
  *   <Link href="/items/new">新規作成</Link>
  * </Button>
  * ```
-
+ *
  * **アクセシビリティ / Accessibility**
  *
  * - ボタンにはアクセシブルネームが必要です（通常は `children` のテキスト）。

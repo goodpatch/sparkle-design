@@ -472,7 +472,7 @@ Specify any installed font family:
 <CardHeader>
   <CardTitle>
     プロジェクト一覧
-    <CardDescription className="character-3-regular-pro text-text-low">
+    <CardDescription className="character-3-regular-pro text-text-neutral-low">
       全 12 件
     </CardDescription>
   </CardTitle>
@@ -526,7 +526,7 @@ Input / Select / Textarea のデフォルトサイズは md。横並びの Butto
 
 ```tsx
 // ✅ Correct — Sparkle Design の typography / color token を使う
-<CardDescription className="character-3-regular-pro text-text-low">
+<CardDescription className="character-3-regular-pro text-text-neutral-low">
   全 12 件
 </CardDescription>
 
@@ -590,6 +590,24 @@ shadcn/ui と混在するプロジェクトでも、Sparkle Design のコンポ�
 ```
 
 `CardControl` は既定で `flex items-center gap-2` を持つ。複数アクションでも追加の layout class は不要。
+
+### クリック可能な Card: ClickableCard を使う
+
+```tsx
+// ✅ Correct
+<ClickableCard onClick={handle}>
+  <CardHeader><CardTitle>タイトル</CardTitle></CardHeader>
+</ClickableCard>
+
+// ❌ Wrong - <button> / <a> で Card を包まない
+<button type="button" onClick={handle}>
+  <Card>
+    <CardHeader><CardTitle>タイトル</CardTitle></CardHeader>
+  </Card>
+</button>
+```
+
+`ClickableCard` はクリック可能な Card のパターンとして必要な `role` / キーボード操作 / focus ring を提供する。`<button>` / `<a>` / `role="button"` でラップすると、ボタンの内側に対話型要素（リンクやフォーム要素）を置いたときにネストされた interactive 要素になりアクセシビリティ違反になる。
 
 ### Icon / Spinner: スケール値（1-12）を使う
 
@@ -702,24 +720,34 @@ Material Symbols は `Icon` / `IconButton` 経由で使用する。直書きす�
 <Link href="https://example.com">外部リンク <Icon icon="open_in_new" /></Link>
 ```
 
-### Card 系コンポーネントの padding を安易に上書きしない
+### Tailwind デフォルト typography を使わない
 
 ```tsx
-// ✅ Correct — デフォルトの padding（CardHeader: px-6 py-2, CardContent: px-6 py-2）をそのまま使う
-<CardHeader>
-  <CardTitle>タイトル</CardTitle>
-</CardHeader>
-<CardContent>
-  <p>内容</p>
-</CardContent>
+// ✅ Correct — character-* utility を使う
+<span className="character-3-regular-pro">テキスト</span>
 
-// ❌ Wrong — padding を安易に上書きしない
-<CardHeader className="p-4 pb-2">
-  <CardTitle>タイトル</CardTitle>
-</CardHeader>
-<CardContent className="px-4 pb-4 pt-0">
-  <p>内容</p>
-</CardContent>
+// ❌ Wrong — Tailwind デフォルトの typography を使わない
+<span className="text-sm font-medium">テキスト</span>
+
+// 例外 — character-* に対応するサイズが無い場合は arbitrary value を使うか
+// suppress コメントを付けて残す
+<span className="text-[10px] text-text-neutral-low">12px 未満の極小メタ情報</span>
+{/* sparkle-disable-next-line tailwind-typography */}
+<span className="text-xs">どうしても text-xs で残したいケース</span>
+```
+
+Sparkle Design コンポーネント内では `character-*-pro` / `character-*-mono` を使用する。character-1（12px）より小さい指定や、対応 token が無いサイズは Tailwind の arbitrary value (`text-[10px]` 等) で表現するか、`// sparkle-disable-line tailwind-typography` で個別に例外指定する。
+
+`font-medium` / `font-semibold`（500 / 600）は character-* に対応する token が存在しない。`character-N-regular-pro font-semibold` のように Tailwind の font-weight ユーティリティを併用しても、character-* が意図的に Tailwind の後に読み込まれる cascade 設計のため上書きされず効かない。これらのウェイトが必要な場合は `extend.custom-css` で `character-N-semibold-pro` のような独自クラスを定義し、font-family / font-size / letter-spacing / line-height は character-* と同じプリミティブトークンを流用する（詳細は README の「character-* に無いウェイトを使いたい場合」）。
+
+### CardTitle に typography を上書きしない
+
+```tsx
+// ✅ Correct — CardTitle はデフォルトで character-4-bold-pro が適用される
+<CardTitle>タイトル</CardTitle>
+
+// ❌ Wrong — typography を上書きしない
+<CardTitle className="character-2-bold-pro">タイトル</CardTitle>
 ```
 
 ### CardControl にはアクションボタンのみを入れる
@@ -727,7 +755,6 @@ Material Symbols は `Icon` / `IconButton` 経由で使用する。直書きす�
 ```tsx
 // ✅ Correct — Button / IconButton を CardControl に入れる
 <CardControl>
-  <Button theme="neutral" variant="outline">キャンセル</Button>
   <Button>保存</Button>
 </CardControl>
 
@@ -737,9 +764,35 @@ Material Symbols は `Icon` / `IconButton` 経由で使用する。直書きす�
 </CardControl>
 ```
 
-### isDisabled を持つコンポーネントでは disabled を使わない
+### Card 系コンポーネントの padding を上書きしない
 
-Button, Input, Checkbox, IconButton など `isDisabled` prop を持つコンポーネントでは、HTML 標準の `disabled` ではなく `isDisabled` を使う。
+```tsx
+// ✅ Correct — デフォルトの padding をそのまま使う
+<CardHeader>
+  <CardTitle>タイトル</CardTitle>
+</CardHeader>
+
+// ❌ Wrong — padding を安易に上書きしない
+<CardHeader className="p-4 pb-2">
+  <CardTitle>タイトル</CardTitle>
+</CardHeader>
+```
+
+### asChild と prefixIcon / suffixIcon / isLoading を併用しない
+
+```tsx
+// ✅ Correct
+<Button asChild>
+  <Link href="/items/new">新規作成</Link>
+</Button>
+
+// ❌ Wrong — asChild では prefixIcon は反映されない
+<Button asChild prefixIcon="add">
+  <Link href="/items/new">新規作成</Link>
+</Button>
+```
+
+### disabled ではなく isDisabled を使う
 
 ```tsx
 // ✅ Correct
@@ -750,17 +803,7 @@ Button, Input, Checkbox, IconButton など `isDisabled` prop を持つコンポ�
 <Button disabled>確定</Button>
 ```
 
-> **注意**: 全コンポーネントが `isDisabled` を持つわけではありません（例: RadioItem は HTML 標準の `disabled` を使います）。各コンポーネントの型定義を確認してください。
-
-### Icon に children テキストを渡さない
-
-```tsx
-// ✅ Correct — icon prop を使う
-<Icon icon="chevron_left" size={4} />
-
-// ❌ Wrong — children にテキストを渡さない（旧 Material Icons の書き方）
-<Icon size={4}>chevron_left</Icon>
-```
+HTML 標準の `disabled` も互換のため受け付けますが、Sparkle Design のコードでは `isDisabled` に統一します。
 
 ### Button の prefixIcon / suffixIcon に JSX を渡さない
 
@@ -771,6 +814,136 @@ Button, Input, Checkbox, IconButton など `isDisabled` prop を持つコンポ�
 // ❌ Wrong — JSX を渡さない
 <Button prefixIcon={<Icon icon="bolt" size={4} />}>アクション</Button>
 ```
+
+### Icon の children にテキストを渡さない
+
+```tsx
+// ✅ Correct — icon prop を使う
+<Icon icon="chevron_left" size={4} />
+
+// ❌ Wrong — children にテキストを渡さない
+<Icon size={4}>chevron_left</Icon>
+```
+
+### 旧セマンティックカラーではなく用途別トークンを使う
+
+新体系は「用途 × 意味 × 強度 × **状態**」で、状態がトークン名に内包される。
+そのため**同じ旧クラスでも文脈によって移行先が変わる**。
+
+| if（状況） | then（移行先） |
+|---|---|
+| 通常状態の背景に `bg-primary-600` | `bg-surface-primary-high-enabled` |
+| hover の背景に `hover:bg-primary-700` | `hover:bg-surface-primary-high-hover` |
+| variant 接頭辞なしで `bg-primary-200` | **自動変換しない**（`surface-primary-high-disabled` と `surface-primary-middle-active` のどちらか判断が要る） |
+| 文字色に `text-primary-600` | `text-text-primary-enabled` |
+| 枠線に `border-primary-300` | `border-border-primary-high` |
+| アイコン色に `fill-primary-600` | `fill-object-primary-enabled` |
+
+`secondary` は `neutral` に統合された。ユーティリティ接頭辞がそのまま用途に対応する
+（`bg-` → surface / `text-` → text / `border-`・`divide-`・`outline-`・`ring-` → border / `fill-`・`stroke-` → object）。
+
+判断が付かないときは推測で置換せず、Figma の該当箇所を確認する。
+
+### Tailwind 既定パレットの色をそのまま使わない
+
+```tsx
+// ✅ Correct — 用途別セマンティックトークンを使う
+<main className="bg-surface-base-100">
+  <h1 className="character-6-bold-pro text-text-negative-enabled">認証エラー</h1>
+</main>
+
+// ❌ Wrong — Tailwind 既定パレットの色を直接指定する
+<main className="bg-gray-50">
+  <h1 className="character-6-bold-pro text-red-600">認証エラー</h1>
+</main>
+```
+
+Sparkle のプリミティブは Tailwind の同名変数をそのまま参照しているため
+（`--color-negative-600: var(--color-red-600)`）、`gray` / `red` / `green` / `yellow` / `blue`
+の 5 系統は**置き換えても値が変わらない**。それ以外（`slate` / `zinc` / `emerald` …）は
+色味が変わるので、移行先は候補として提示するだけで自動変換はしない。
+
+| if（状況） | then（移行先） |
+|---|---|
+| 背景に `bg-gray-100` | `bg-surface-base-100`（ページ地の専用トークン） |
+| 文字色に `text-red-600` | `text-text-negative-enabled` |
+| 枠線に `border-gray-200` | `border-border-neutral-*` |
+| アイコン色に `fill-red-600` | `fill-object-negative-enabled` |
+| `bg-blue-600` | ブランド色なら `surface-primary-*`、状態表示なら `surface-info-*`。**Figma を見て決める** |
+| `text-purple-500` など対応する意味が無い色 | 用途から選び直す。装飾用の面なら `bg-surface-accent-1` 〜 `3` |
+
+`surface-base-*` は `0` / `100` / `200` の 3 段しか無い。`bg-gray-50` のように対応する
+段が無いレベルは `surface-neutral-*` 側に案内される。**移行先は check の出力に従うこと**
+（この表は用途の考え方を示すもので、レベルごとの対応はコマンドが出す）。
+
+`text-neutral-*` は Sparkle の旧セマンティック層と同名なので、このルールではなく
+`legacy-color-token` が扱う（同じ箇所を二重に報告しないため）。
+
+このルールは **Sparkle を使っているファイルにだけ**適用される（Sparkle からの import か
+`character-*` の使用がある場合）。素の React コードや、Sparkle と無関係なユーティリティは対象外。
+
+検査対象は `.js` / `.jsx` / `.ts` / `.tsx` のみで、**`.css` の `@apply` は見ていない**
+（`legacy-color-token` は `.css` も見るので、そちらとは対象範囲が違う）。CSS 側に
+Tailwind 既定パレットの色が残っていないかは手で確認すること。
+
+### 旧セマンティックカラーの CSS 変数を直接参照しない
+
+```tsx
+// ✅ Correct
+<div className="ring-2 ring-[var(--color-border-ring)] ring-offset-2" />
+
+// ❌ Wrong — beta 終了時に削除される旧トークン
+<div className="ring-2 ring-[var(--color-ring-normal)] ring-offset-2" />
+```
+
+フォーカスリングの `--color-ring-normal` は `--color-border-ring`（blue/700 固定）に移行する。
+`--color-primary-600` のようなスケール付きの旧変数は、変数名だけでは用途
+（surface / text / border / object）が決まらないため**自動変換しない**。
+
+### 削除予定の後方互換エイリアスを直接参照しない
+
+```tsx
+// ✅ Correct
+<div className="rounded-[var(--radius-container)]" />
+
+// ❌ Wrong — beta 終了時に削除され、角丸がサイレントに消える
+<div className="rounded-[var(--radius-halfModal)]" />
+```
+
+Figma の `Borders: Semantics` で `halfModal` は `container` にリネームされた。
+`--radius-halfModal` は beta 期間だけのエイリアスで、消えても CSS としては
+有効なまま（値が空になるだけ）なので**ビルドエラーにならずに角丸だけが失われる**。
+
+### 余白は Figma の Spacing: Primitives のステップだけ使う
+
+Figma の余白は 17 段（0 / 2 / 4 / 6 / 8 / 12 / 16 / 20 / 24 / 32 / 40 / 48 / 56 / 72 / 88 / 104 / 120 px）。
+Tailwind の 1 ステップは 4px なので、`p-4` = 16px、`p-6` = 24px が対応する。
+
+```tsx
+// ✅ Correct — 6=24px / 4=16px / 8=32px はいずれもスケール上にある
+<div className="p-6 gap-4 mt-8" />
+
+// ❌ Wrong — 7 は 28px。24px と 32px の間にステップは無い
+<div className="p-7" />
+```
+
+**Tailwind の数字と Figma の数字は一致しない。** Figma の `padding/16` は 16px、
+Tailwind の `p-16` は 64px で 4 倍違う。Figma の値を見て同じ数字を書かないこと。
+
+| Figma | px | Tailwind |
+|---|---|---|
+| `padding/8` | 8px | `p-2` |
+| `padding/16` | 16px | `p-4` |
+| `padding/24` | 24px | `p-6` |
+| `padding/120` | 120px | `p-30` |
+
+このスケールは **CSS 変数として出力されていない**。`--spacing-16` のような
+名前付きキーを定義すると Tailwind の `p-16` がその値に差し替わり、
+既存コードの余白がビルドも警告も通ったまま変わってしまうため。
+だから「変数を使う」ではなく「使ってよい値を守る」という形の制約になっている。
+
+デザイン上どうしてもスケール外の値が要る場合は、Figma 側にステップを追加するのが本筋。
+個別に外すなら `sparkle-disable-next-line use-figma-spacing-scale` を使う。
 
 ---
 

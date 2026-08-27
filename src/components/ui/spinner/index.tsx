@@ -33,7 +33,7 @@ export interface SpinnerProps extends React.ComponentProps<"span"> {
  * // ❌ Wrong - ピクセル値
  * <Spinner size={24} />
  * ```
-
+ *
  * **使用例 / Usage Example**
  *
  * ```tsx

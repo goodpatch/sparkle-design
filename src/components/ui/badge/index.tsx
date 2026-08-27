@@ -118,7 +118,7 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
  * // ❌ Wrong - ステータスラベルに Badge を使わない
  * <Badge>未紐付け</Badge>
  * ```
-
+ *
  * **使用例 / Usage Example**
  *
  * ```tsx
