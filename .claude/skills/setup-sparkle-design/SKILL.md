@@ -4,7 +4,7 @@ license: Apache-2.0
 description: >
   **未導入プロジェクト向け**の sparkle-design 初期導入・セットアップを支援するスキル。
   npm インストール、sparkle-design-cli による初回 CSS 生成、sparkle.config.json の
-  新規作成、アンチパターンガードの導入、コンポーネント選択ガイドまでをカバー。
+  新規作成、AI ガード（Sparkle Design Guard）の導入、コンポーネント選択ガイドまでをカバー。
   **導入済みプロジェクトでテーマ（primary / font / radius）を変えたい場合は
   `change-sparkle-config` スキルを使うこと** — この setup スキルは初期導入専用。
   「Sparkle Design を導入」「sparkle-design をインストール」「デザインシステムをセットアップ」
@@ -71,11 +71,17 @@ npx --yes sparkle-design-cli setup --assistant claude
 
 `--assistant` は `claude` / `cursor` / `codex` / `generic` から選択可能。部分的に実行したい場合は `--skip-install` / `--skip-scaffold` / `--skip-generate` を使う。CI では `--strict` を付けて silent failure を exit 1 に昇格できる。
 
+#### 実行前後の確認
+
+1. 実行前に `--dry-run` を付けて変更予定を確認する（既存プロジェクトでは特に）
+2. 実行後に `git diff` で `package.json`・`CLAUDE.md`・`.claude/settings.json` などの変更内容を確認し、ユーザーに要約して伝える
+3. `lint:sparkle` を 1 回実行し、通ることを確かめる
+
 ### 生成されるファイル
 
 - `sparkle.config.json` -- デザインテーマ設定（初期値: blue / BIZ UDPGothic / BIZ UDGothic / md）
 - `postcss.config.mjs` -- PostCSS 設定（`@tailwindcss/postcss` プラグインを有効化）
-- `src/app/globals.css` / `src/globals.css` / `src/index.css` -- Tailwind エントリポイント CSS（プロジェクト構成から自動判定。`@import "tailwindcss";` 不在時は canonical な import を自動 prepend）
+- `src/app/globals.css` / `src/globals.css` / `src/index.css` -- Tailwind エントリ CSS（プロジェクト構成から自動判定。`@import "tailwindcss";` 不在時は canonical な import を自動 prepend）
 - `src/app/sparkle-design.css` -- デザイントークン（プリミティブ `:root` + セマンティック `:root` + `@theme inline`）
 - `src/app/SparkleHead.tsx` -- フォント読み込み用 React コンポーネント（Next.js 等のレイアウト用）
 - `index.html`（Vite のみ） -- `<head>` 内に `<!-- sparkle-design-cli:fonts:start --> ... end -->` の managed block で font `<link>` を upsert
@@ -101,16 +107,16 @@ export default function RootLayout({ children }) {
 }
 ```
 
-> **TailwindCSS v4 との互換性**: CLI が Tailwind エントリポイント CSS に `@source` ディレクティブを自動挿入するため、TailwindCSS v4 でも `node_modules` 内のクラスが正しく検出されます。追加パッケージがある場合は `extend.source-packages` 配列に追加してください。
+> **TailwindCSS v4 との互換性**: CLI が Tailwind エントリ CSS に `@source` ディレクティブを自動挿入するため、TailwindCSS v4 でも `node_modules` 内のクラスが正しく検出されます。追加パッケージがある場合は `extend.source-packages` 配列に追加してください。
 
-> Tailwind エントリポイント CSS がルートレイアウト（`src/app/layout.tsx` や `_app.tsx`）で import されていることを確認する。
+> Tailwind エントリ CSS がルートレイアウト（`src/app/layout.tsx` や `_app.tsx`）で import されていることを確認する。
 
-### テーマをカスタマイズする
+### 初期導入時にテーマを決める
 
-`sparkle.config.json` を編集した後、再生成する:
+初期導入の流れの中で `sparkle.config.json` を編集した場合は、再生成する。**導入済みプロジェクトでテーマを変える場合は `change-sparkle-config` スキルを使う。**
 
 ```bash
-npx sparkle-design-cli generate
+npx --yes sparkle-design-cli generate
 ```
 
 #### 拡張設定（extend）
@@ -147,7 +153,7 @@ npx sparkle-design-cli generate
 
 `extend` にはファイルパスも指定可能（例: `"extend": "./sparkle.extend.json"`）。
 
-### Step 3: コンポーネントを使う
+### コンポーネントを使う
 
 ```tsx
 import { Button, Card, Input } from "sparkle-design";
@@ -204,7 +210,7 @@ npx --yes sparkle-design-cli check src --strict
 npx --yes sparkle-design-cli check src --format json
 ```
 
-13 種類のアンチパターンを自動検出する。`lint:sparkle` があるプロジェクトでは、個別ルールを毎回列挙するより先にコマンドを回す。
+検出ルールの一覧は CLI の help で確認する（件数やルール名をここに書き写さない）。`lint:sparkle` があるプロジェクトでは、個別ルールを毎回列挙するより先にコマンドを回す。
 
 ---
 
@@ -225,9 +231,9 @@ npx --yes sparkle-design-cli check src --format json
 
 ## AI アシスタント補足
 
-### Anti-pattern ガードの浸透
+### AI ガード（Sparkle Design Guard）の浸透
 
-初回セットアップ時に、利用プロジェクトの `CODING-RULES.md` や `CLAUDE.md` へ最低限以下を追記する:
+`setup` を使った場合は、CLI が `CLAUDE.md`（既存の `AGENTS.md` があれば併記）に Guard ブロックを自動で入れるので、手動の追記は不要。`setup` を使わずに導入した場合に限り、同じ規則で `CLAUDE.md`（既存の `AGENTS.md` があれば併記）へ最低限以下を追記する:
 
 ```markdown
 ## Sparkle Design Guard
@@ -249,6 +255,3 @@ Load references as needed:
 - **Load for update**: `references/update-workflow.md`
 - **Load for config field details / multi-theme setups**: `references/config-reference.md`
 
----
-
-Last Updated: 2026-03-31

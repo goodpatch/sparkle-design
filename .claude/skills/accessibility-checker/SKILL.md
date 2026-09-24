@@ -3,7 +3,7 @@ name: accessibility-checker
 license: Apache-2.0
 description: >
   WCAG 準拠のアクセシビリティチェックをチェックリスト駆動で実行するスキル。
-  コンポーネント・ページ・PR に対して Pass/Fail/N/A/Needs Review の構造化レポートを
+  コンポーネント・ページ・PR に対して Pass/Fail/N/A/Needs review の構造化レポートを
   生成し、エビデンスと修正案を提示する。
   「アクセシビリティチェック」「a11y チェック」「WCAG をチェック」「a11y レビュー」
   「アクセシビリティ監査」「WCAG 準拠確認」「アクセシビリティレポート」への言及、
@@ -31,6 +31,8 @@ This skill works with PR diffs, partial context, or full component reviews.
 ## Quick Start
 
 ### Automated Report Generation
+
+スクリプトは対象リポジトリのルートから、スキル内のパスを指定して実行する（例: `python .claude/skills/accessibility-checker/scripts/generate_report.py`）。以下の例は読みやすさのため `scripts/` から書いている。`--output` などの引数は対象リポジトリのルートからの相対パス。
 
 ```bash
 # Generate report from checklist
@@ -94,7 +96,7 @@ Review each component/story, focusing on applicability and evidence collection.
 
 ### 3. Fix
 
-Apply minimal, safe code changes per component, then re-check affected items.
+Apply minimal, safe code changes per component, then re-check affected items: 該当するチェックリスト項目を再判定し、プロジェクトの lint / test を実行して、結果をレポートの「テスト / 検証」に記録する。
 
 > **🛑 Fix は既定の動作ではない（このスキルで最優先のルール）**
 >
@@ -168,15 +170,17 @@ For each checklist item:
 - ファイル名は kebab-case + `-a11y-review.md` サフィックス（例: `button-a11y-review.md`、`segmented-control-a11y-review.md`）
 - 同名レポートが既にあれば上書き更新する（更新履歴は git log で追える）
 
+**既定の書き方**: 下の Report structure の 8 セクションに沿って書く（既存レポート `docs/pr/tabs-a11y-review.md` 等と同じ構成）。`examples/` のテンプレートや `scripts/generate_report.py` の出力は下書きの起点として使ってよいが、最終形は Report structure に合わせる。
+
 ```bash
-# 正しい例（対象リポジトリのルートで実行することを想定）
+# テンプレートから始める場合の例（対象リポジトリのルートで実行することを想定）
 cp .claude/skills/accessibility-checker/examples/component-report.md docs/pr/button-a11y-review.md
 ```
 
 **Report structure**:
 1. **対象 / Target**: コンポーネント名 + 関連ファイル + レビュー契機
 2. **参照したチェックリスト / 方針**: checklist パス + project policy + 使っている primitive（Radix 等）が自動提供する ARIA
-3. **チェック結果**: ID / 項目 / Level / 確認ポイント / Result / Evidence / Fix / Notes の 7 列テーブル（全 31 項目）。列名は既存レポート（`docs/pr/tabs-a11y-review.md` 等）に合わせて `Fix / Notes`
+3. **チェック結果**: ID / 項目 / Level / 確認ポイント / Result / Evidence / Fix / Notes の 7 列テーブル（`assets/checklist.csv` の全項目）。最後の `Fix / Notes` は 1 列で、列名は既存レポート（`docs/pr/tabs-a11y-review.md` 等）に合わせる
 4. **Summary**: Pass / Fail / Needs review / N/A の件数
 5. **対応内容**: Fail / Needs review への対処方針
 6. **Regression 確認**（refactor 後のレビューの場合）: 変更前後の挙動差分
@@ -286,12 +290,14 @@ Report templates available in `examples/`:
 
 ### Findings Table
 
-| ID | Category | Level | Check | Result | Evidence | Recommended Fix |
-|---:|----------|-------|-------|--------|----------|-----------------|
+Report structure の「チェック結果」と同じ 7 列で書く。
+
+| ID | 項目 | Level | 確認ポイント | Result | Evidence | Fix / Notes |
+|---:|------|-------|--------------|--------|----------|-------------|
 | 1.1.1 | Non-text Content | A | Icons have text alternatives | Pass | `button.tsx:42`, has aria-label | - |
 | 2.1.1 | Keyboard | A | Keyboard accessible | Fail | No onKeyDown for custom div | Add keyboard handler |
 | 2.4.7 | Focus Visible | AA | Focus indicator visible | Pass | `:focus-visible` styles present | - |
-| 4.1.2 | Name, Role, Value | A | Accessible name provided | Needs Review | Cannot verify without running | Check with screen reader |
+| 4.1.2 | Name, Role, Value | A | Accessible name provided | Needs review | Cannot verify without running | Check with screen reader |
 
 ---
 
@@ -316,7 +322,7 @@ Report templates available in `examples/`:
 3. **Use templates**: Copy appropriate template for report structure
 4. **Load references as needed**: Don't load all references upfront
 5. **Be evidence-driven**: Every Pass/Fail needs concrete evidence
-6. **Mark Needs Review liberally**: Better to flag uncertainty than guess
+6. **Mark Needs review liberally**: Better to flag uncertainty than guess
 
 ### Common Patterns
 
@@ -359,7 +365,3 @@ python scripts/export_summary.py --reports docs/pr/ --output summary.md
 - **`references/*.md`**: WCAG guides, violations, testing
 - **`examples/*.md`**: Report templates
 
----
-
-**Version**: 2.1.0
-**Last Updated**: 2026-02-12

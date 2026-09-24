@@ -22,6 +22,10 @@ import subprocess
 import sys
 from pathlib import Path
 
+# shadcn の add は通常数十秒で終わる。ネットワーク不調などで終わらない場合に、
+# エージェントを無期限に待たせないための上限（調整済みの値ではなく安全側の上限）
+INSTALL_TIMEOUT_SECONDS = 300
+
 
 def detect_package_manager(project_path: Path) -> str:
     """Detect package manager from lockfiles.
@@ -36,6 +40,7 @@ def detect_package_manager(project_path: Path) -> str:
         "pnpm-lock.yaml": "pnpm",
         "yarn.lock": "yarn",
         "bun.lockb": "bun",
+        "bun.lock": "bun",  # bun 1.2 以降のテキスト形式
         "package-lock.json": "npm",
     }
 
@@ -169,6 +174,10 @@ def install_component(
             capture_output=True,
             text=True,
             check=True,
+            # 出力を捕捉しているので、shadcn が対話プロンプトを出すと画面に出ないまま止まる。
+            # 標準入力を閉じてプロンプトを即座に失敗させ、止まらないようにする
+            stdin=subprocess.DEVNULL,
+            timeout=INSTALL_TIMEOUT_SECONDS,
         )
 
         output = result.stdout + result.stderr
@@ -178,6 +187,11 @@ def install_component(
         error_msg = f"Command failed with exit code {e.returncode}\n"
         error_msg += f"stdout: {e.stdout}\n"
         error_msg += f"stderr: {e.stderr}"
+        return False, error_msg
+
+    except subprocess.TimeoutExpired:
+        error_msg = f"Command timed out after {INSTALL_TIMEOUT_SECONDS} seconds\n"
+        error_msg += "Run the manual installation command to see what shadcn is waiting for."
         return False, error_msg
 
     except FileNotFoundError:

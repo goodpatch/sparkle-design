@@ -481,6 +481,3 @@ import {
 | ナビゲーション       | `link`（遷移）/ `breadcrumb`（階層表示）/ `tabs`（コンテキスト内切替）         |
 | 追加情報             | `tooltip`（ホバー表示）/ `inline-message`（常時表示）                          |
 
----
-
-Last Updated: 2026-03-31

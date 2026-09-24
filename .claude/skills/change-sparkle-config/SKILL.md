@@ -127,6 +127,8 @@ user-invocable: true
 | ビジネスライク | blue | sm / md | Inter | Roboto Mono |
 | 高級感 / フォーマル | purple | none / sm | IBM Plex Sans JP | Roboto Mono |
 
+候補が並ぶセル（`yellow / pink / orange` など）は、現在の値が候補にあればそれを残し、無ければ先頭の値を主案にする（残りは別案として打診のみ）。
+
 ### やってはいけない
 
 - **許可リストの外の値を書かない**（例: `primary: "teal"` や `font-pro: "Comic Sans"`）。ステップ 6 のバリデーションを必ず通す
