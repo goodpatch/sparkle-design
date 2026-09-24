@@ -74,7 +74,7 @@ npx --yes sparkle-design-cli setup --assistant claude
 #### 実行前後の確認
 
 1. 実行前に `--dry-run` を付けて変更予定を確認する（既存プロジェクトでは特に）
-2. 実行後に `git diff` で `package.json`・`CLAUDE.md`・`.claude/settings.json` などの変更内容を確認し、ユーザーに要約して伝える
+2. 実行後に `git status --short` で新規作成されたファイル（`sparkle.config.json`・生成 CSS など）を、`git diff` で既存ファイル（`package.json`・`CLAUDE.md`・`.claude/settings.json` など）の変更を確認し、ユーザーに要約して伝える
 3. `lint:sparkle` を 1 回実行し、通ることを確かめる
 
 ### 生成されるファイル
@@ -109,7 +109,7 @@ export default function RootLayout({ children }) {
 
 > **TailwindCSS v4 との互換性**: CLI が Tailwind エントリ CSS に `@source` ディレクティブを自動挿入するため、TailwindCSS v4 でも `node_modules` 内のクラスが正しく検出されます。追加パッケージがある場合は `extend.source-packages` 配列に追加してください。
 
-> Tailwind エントリ CSS がルートレイアウト（`src/app/layout.tsx` や `_app.tsx`）で import されていることを確認する。
+> Tailwind エントリ CSS がアプリのエントリで import されていることを確認する（Next.js: `src/app/layout.tsx` や `_app.tsx`、Vite: `src/main.tsx` 等）。
 
 ### 初期導入時にテーマを決める
 

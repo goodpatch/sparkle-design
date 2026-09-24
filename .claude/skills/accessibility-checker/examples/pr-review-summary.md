@@ -103,7 +103,7 @@ Suggestions for enhancement:
 | Accessible name | ✅ Pass | Has aria-label |
 | Keyboard support | ✅ Pass | Tested Tab/Enter |
 | Focus visible | ❌ Fail | No :focus-visible style |
-| Loading state | ⚠️ Needs Review | No aria-busy attribute |
+| Loading state | ⚠️ Needs review | No aria-busy attribute |
 
 #### Required Fixes
 

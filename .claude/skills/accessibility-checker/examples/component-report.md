@@ -13,7 +13,7 @@
 | **Pass** | 0 |
 | **Fail** | 0 |
 | **N/A** | 0 |
-| **Needs Review** | 0 |
+| **Needs review** | 0 |
 | **Total Checks** | 0 |
 
 ### Top Risks
@@ -56,7 +56,7 @@
 #### [ID] [Check Name]
 - **Reason**: [Why this check doesn't apply]
 
-### Needs Review Items
+### Needs review Items
 
 #### [ID] [Check Name]
 - **Issue**: [What couldn't be verified]

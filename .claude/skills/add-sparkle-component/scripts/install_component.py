@@ -22,8 +22,11 @@ import subprocess
 import sys
 from pathlib import Path
 
-# shadcn の add は通常数十秒で終わる。ネットワーク不調などで終わらない場合に、
+# shadcn の add は通常数十秒で終わる。ネットワーク不調や、出力を捕捉しているため
+# 見えない確認プロンプト（既存ファイルの上書き確認など）で止まった場合に、
 # エージェントを無期限に待たせないための上限（調整済みの値ではなく安全側の上限）
+# en: Upper bound so the agent never waits forever when shadcn stalls on the network
+# en: or on a hidden confirmation prompt (e.g. overwrite). A safe cap, not a tuned value.
 INSTALL_TIMEOUT_SECONDS = 300
 
 
@@ -40,7 +43,7 @@ def detect_package_manager(project_path: Path) -> str:
         "pnpm-lock.yaml": "pnpm",
         "yarn.lock": "yarn",
         "bun.lockb": "bun",
-        "bun.lock": "bun",  # bun 1.2 以降のテキスト形式
+        "bun.lock": "bun",  # bun 1.2 以降のテキスト形式 / en: text lockfile (bun 1.2+)
         "package-lock.json": "npm",
     }
 
@@ -174,9 +177,8 @@ def install_component(
             capture_output=True,
             text=True,
             check=True,
-            # 出力を捕捉しているので、shadcn が対話プロンプトを出すと画面に出ないまま止まる。
-            # 標準入力を閉じてプロンプトを即座に失敗させ、止まらないようにする
-            stdin=subprocess.DEVNULL,
+            # 確認プロンプトで止まった場合は成功扱いにせず、タイムアウトの失敗として返す
+            # en: If shadcn stalls on a prompt, fail with a timeout instead of reporting success
             timeout=INSTALL_TIMEOUT_SECONDS,
         )
 
@@ -191,7 +193,10 @@ def install_component(
 
     except subprocess.TimeoutExpired:
         error_msg = f"Command timed out after {INSTALL_TIMEOUT_SECONDS} seconds\n"
-        error_msg += "Run the manual installation command to see what shadcn is waiting for."
+        error_msg += (
+            "shadcn may be waiting for a confirmation (e.g. overwriting an existing file). "
+            "Run the manual installation command to see the prompt."
+        )
         return False, error_msg
 
     except FileNotFoundError:

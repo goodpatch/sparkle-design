@@ -42,10 +42,13 @@ python scripts/install_component.py button
 
 ### Manual Installation
 
-Use this only when the script above cannot run (e.g. Python is unavailable) or when you need to see shadcn's interactive prompts. Use the dlx command of the detected package manager (`pnpm dlx` for pnpm, `npx` for npm):
+Use this only when the script above cannot run (e.g. Python is unavailable) or when you need to see shadcn's interactive prompts (e.g. overwrite confirmation). Use the line for the detected package manager:
 
 ```bash
-pnpm dlx shadcn@latest add @sparkle-design/<component-name>
+pnpm dlx shadcn@latest add @sparkle-design/<component-name>   # pnpm
+npx --yes shadcn@latest add @sparkle-design/<component-name>  # npm
+yarn dlx shadcn@latest add @sparkle-design/<component-name>   # yarn
+bunx shadcn@latest add @sparkle-design/<component-name>       # bun
 ```
 
 ---
@@ -179,8 +182,8 @@ After installation, verify:
 - [ ] Storybook story created/updated at the component location
 - [ ] shadcn/ui 既定の `text-muted-foreground` / `bg-background` / `font-medium` などを残していない
 - [ ] Typography / color は `character-*` / `text-text-*` など Sparkle Design token に置き換えた
-- [ ] lint が通る: `<pm> lint`（型チェック用の script があればそれも実行）
-- [ ] Component displays correctly: `<pm> storybook`
+- [ ] lint が通る: `<pm> run lint`（型チェック用の script があればそれも実行）
+- [ ] Component displays correctly: `<pm> run storybook`
 
 **Note:**
 - `<pm>` refers to the project's package manager (npm/pnpm/yarn/bun)
@@ -284,9 +287,9 @@ For detailed information, consult these references:
 2. **Validate first** - Run `validate_config.py` before installation
 3. **Check lockfiles** - Detect package manager before running commands
 4. **Verify CSS setup** - On first installation, check CSS import structure
-5. **Run lint** - Execute `<pm> lint` after installation (and the type-check script if the project has one)
+5. **Run lint** - Execute `<pm> run lint` after installation (and the type-check script if the project has one)
 6. **Run project guard if available** - If the target project has `lint:sparkle`, run it before finishing
-7. **Test in Storybook** - Verify component works: `<pm> storybook`
+7. **Test in Storybook** - Verify component works: `<pm> run storybook`
 
 ### Anti-pattern ガードの確認
 

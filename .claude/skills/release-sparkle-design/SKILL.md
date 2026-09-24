@@ -124,7 +124,7 @@ user-invocable: true
 > 「タグを打って publish して」と明示的に指示されてから着手し、実行前に
 > 置き換えた実際の値（`X.Y.Z` / `RELEASE_SHA`）を提示して確認を取る。
 
-- [ ] `git fetch origin main && git checkout main && git pull` で最新化
+- [ ] リリース用 worktree ではなく、`main` をチェックアウトしている本チェックアウトに戻って `git fetch origin main && git checkout main && git pull` で最新化する（`main` は本チェックアウトで使われているので、worktree 側では checkout できない）
 - [ ] **リリースコミットの SHA を必ず特定する**（下のスニペットで候補が 1 件であることを確かめる）
 - [ ] **タグはリリースコミットの SHA を明示して打つ**（HEAD に打つと main が進んだ場合に誤タグ → publish 漏れ・誤 publish の温床）:
   ```bash
@@ -185,7 +185,7 @@ user-invocable: true
 
 ### リリースコミットだけ作って tag/release を忘れていた場合
 
-そのコミットの SHA を `git log --oneline | grep release` で特定して、後付けで tag + release を作成可能。
+そのコミットの SHA を「マージ後: タグ・Release・publish」の「候補が 1 件であることを確認する」スニペットで特定して、後付けで tag + release を作成可能。
 このスキルの「過去リリース追補」セクションを参照。
 
 ### CHANGELOG が古い場合

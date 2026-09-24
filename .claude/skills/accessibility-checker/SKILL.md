@@ -32,17 +32,17 @@ This skill works with PR diffs, partial context, or full component reviews.
 
 ### Automated Report Generation
 
-スクリプトは対象リポジトリのルートから、スキル内のパスを指定して実行する（例: `python .claude/skills/accessibility-checker/scripts/generate_report.py`）。以下の例は読みやすさのため `scripts/` から書いている。`--output` などの引数は対象リポジトリのルートからの相対パス。
+スクリプトは対象リポジトリのルートから、スキル内のパスを指定して実行する。`--output` などの引数は対象リポジトリのルートからの相対パス。
 
 ```bash
 # Generate report from checklist
-python scripts/generate_report.py --component button
+python .claude/skills/accessibility-checker/scripts/generate_report.py --component button
 
 # Quick component check
-python scripts/check_component.py src/components/ui/button/
+python .claude/skills/accessibility-checker/scripts/check_component.py src/components/ui/button/
 
 # Validate checklist CSV
-python scripts/validate_checklist_csv.py
+python .claude/skills/accessibility-checker/scripts/validate_checklist_csv.py
 ```
 
 ### AI-Assisted Review
@@ -139,7 +139,7 @@ For detailed workflow (including status updates), see:
 
 ```bash
 # Validate checklist format
-python scripts/validate_checklist_csv.py assets/checklist.csv
+python .claude/skills/accessibility-checker/scripts/validate_checklist_csv.py .claude/skills/accessibility-checker/assets/checklist.csv
 ```
 
 Checklist columns are automatically mapped from Japanese headers.
@@ -224,23 +224,23 @@ See [references/project-policy.md](references/project-policy.md) for details.
 
 ```bash
 # Full report from checklist
-python scripts/generate_report.py --checklist assets/checklist.csv
+python .claude/skills/accessibility-checker/scripts/generate_report.py --checklist .claude/skills/accessibility-checker/assets/checklist.csv
 
 # Component-specific report — 出力先は必ず docs/pr/<component>-a11y-review.md
-python scripts/generate_report.py --component button --output docs/pr/button-a11y-review.md
+python .claude/skills/accessibility-checker/scripts/generate_report.py --component button --output docs/pr/button-a11y-review.md
 
 # Use custom template
-python scripts/generate_report.py --template examples/component-report.md
+python .claude/skills/accessibility-checker/scripts/generate_report.py --template .claude/skills/accessibility-checker/examples/component-report.md
 ```
 
 ### Quick Component Check
 
 ```bash
 # Check component directory
-python scripts/check_component.py src/components/ui/button/
+python .claude/skills/accessibility-checker/scripts/check_component.py src/components/ui/button/
 
 # Check specific file with verbose output
-python scripts/check_component.py src/components/ui/button/index.tsx --verbose
+python .claude/skills/accessibility-checker/scripts/check_component.py src/components/ui/button/index.tsx --verbose
 ```
 
 **Note**: This performs basic static analysis. For comprehensive checking, use AI-assisted review.
@@ -249,17 +249,17 @@ python scripts/check_component.py src/components/ui/button/index.tsx --verbose
 
 ```bash
 # Export from docs/pr/ where reports live
-python scripts/export_summary.py --reports docs/pr/
+python .claude/skills/accessibility-checker/scripts/export_summary.py --reports docs/pr/
 
 # Export to file
-python scripts/export_summary.py --reports docs/pr/ --output summary.md
+python .claude/skills/accessibility-checker/scripts/export_summary.py --reports docs/pr/ --output summary.md
 ```
 
 ### Validate Checklist
 
 ```bash
 # Validate CSV structure
-python scripts/validate_checklist_csv.py assets/checklist.csv
+python .claude/skills/accessibility-checker/scripts/validate_checklist_csv.py .claude/skills/accessibility-checker/assets/checklist.csv
 ```
 
 ---
@@ -330,18 +330,18 @@ Report structure の「チェック結果」と同じ 7 列で書く。
 
 ```bash
 # 1. Validate checklist
-python scripts/validate_checklist_csv.py
+python .claude/skills/accessibility-checker/scripts/validate_checklist_csv.py
 
 # 2. Quick automated check
-python scripts/check_component.py src/components/ui/button/
+python .claude/skills/accessibility-checker/scripts/check_component.py src/components/ui/button/
 
 # 3. Generate structured report — 出力先は必ず docs/pr/<component>-a11y-review.md
-python scripts/generate_report.py --component button --output docs/pr/button-a11y-review.md
+python .claude/skills/accessibility-checker/scripts/generate_report.py --component button --output docs/pr/button-a11y-review.md
 
 # 4. AI reviews each item, updates report with findings
 
 # 5. Export summary for README
-python scripts/export_summary.py --reports docs/pr/ --output summary.md
+python .claude/skills/accessibility-checker/scripts/export_summary.py --reports docs/pr/ --output summary.md
 ```
 
 ### Progressive Disclosure

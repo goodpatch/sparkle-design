@@ -140,7 +140,7 @@ def generate_report(
 |--------|-------|
 | **Total Checks** | {total_checks} |
 
-**Note**: This is a template report. Actual Pass/Fail/NA/Needs Review
+**Note**: This is a template report. Actual Pass/Fail/NA/Needs review
 determinations require AI analysis of the code and context.
 
 ---
@@ -157,7 +157,7 @@ For each checklist item above:
 
 1. **Determine applicability**: Is this relevant to the component/scope?
 2. **Check implementation**: Review code, tests, stories
-3. **Record result**: Pass / Fail / N/A / Needs Review
+3. **Record result**: Pass / Fail / N/A / Needs review
 4. **Capture evidence**: File paths, line numbers, reproduction steps
 5. **Recommend fixes**: If Fail, provide specific code changes
 
