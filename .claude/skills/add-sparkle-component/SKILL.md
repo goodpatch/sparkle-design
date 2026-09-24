@@ -42,13 +42,13 @@ python scripts/install_component.py button
 
 ### Manual Installation
 
-For manual control:
+Use this only when the script above cannot run (e.g. Python is unavailable) or when you need to see shadcn's interactive prompts (e.g. overwrite confirmation). Use the line for the detected package manager:
 
 ```bash
-# Auto-detect package manager and use appropriate command
-pnpm dlx shadcn@latest add @sparkle-design/<component-name>
-# or
-npx shadcn@latest add @sparkle-design/<component-name>
+pnpm dlx shadcn@latest add @sparkle-design/<component-name>   # pnpm
+npx --yes shadcn@latest add @sparkle-design/<component-name>  # npm
+yarn dlx shadcn@latest add @sparkle-design/<component-name>   # yarn
+bunx shadcn@latest add @sparkle-design/<component-name>       # bun
 ```
 
 ---
@@ -85,7 +85,7 @@ The skill automatically detects the package manager by checking lockfiles:
 
 - `pnpm-lock.yaml` → **pnpm**
 - `yarn.lock` → **yarn**
-- `bun.lockb` → **bun**
+- `bun.lockb` / `bun.lock` → **bun**
 - `package-lock.json` → **npm**
 - No lockfile → **npm** (default)
 
@@ -178,12 +178,12 @@ After installation, verify:
 
 - [ ] Component installed at the correct path (check console output after installation)
 - [ ] CSS imports configured correctly (first time only)
-- [ ] Old duplicate files removed (if any)
+- [ ] `git status` / `git diff` で、既存ファイルが上書きされていないか確認した（上書きされていたら差分を報告し、戻すかどうかユーザーに判断を仰ぐ）
 - [ ] Storybook story created/updated at the component location
 - [ ] shadcn/ui 既定の `text-muted-foreground` / `bg-background` / `font-medium` などを残していない
 - [ ] Typography / color は `character-*` / `text-text-*` など Sparkle Design token に置き換えた
-- [ ] No type errors: `<pm> lint`
-- [ ] Component displays correctly: `<pm> storybook`
+- [ ] lint が通る: `<pm> run lint`（型チェック用の script があればそれも実行）
+- [ ] Component displays correctly: `<pm> run storybook`
 
 **Note:**
 - `<pm>` refers to the project's package manager (npm/pnpm/yarn/bun)
@@ -191,41 +191,11 @@ After installation, verify:
 
 ---
 
-## Theme Customization (Optional)
+## Theme Customization
 
-### When CSS Regeneration is Needed
+コンポーネントの追加・削除・props の変更・Story の更新では、CSS の再生成は**不要**。
 
-**Only** regenerate CSS when modifying `sparkle.config.json`:
-
-```json
-{
-  "primary": "blue",
-  "font-pro": "Geist",
-  "font-mono": "Geist Mono",
-  "radius": "md"
-}
-```
-
-プロジェクト固有の拡張は `extend` セクションにまとめる（v1.5.0+）:
-- `extend.fonts`: フォントごとのウェイト制御とフォールバックチェーン
-- `extend.source-packages`: `@source` ディレクティブの追加パッケージ（npm パッケージとして利用する場合に必須）
-- `extend.custom-css`: プロジェクト固有のカスタムトークン CSS ファイルパス
-- 詳細は `sparkle-design-cli generate --help` を参照
-
-> **legacy 設定との互換性**: v1.4.x 以前のプロジェクトではトップレベルに `source-packages` / `custom-css` を配置している場合があります。これらも引き続き動作しますが、`extend` セクションへの移行を推奨します。
-
-**Regenerate CSS:**
-
-```bash
-pnpm dlx sparkle-design-cli generate
-```
-
-### When Regeneration is NOT Needed
-
-- ❌ Adding components
-- ❌ Deleting components
-- ❌ Modifying component props
-- ❌ Updating stories
+テーマ（`sparkle.config.json` の primary / font / radius など）を変えたいときは、このスキルではなく `change-sparkle-config` スキルを使う。
 
 ---
 
@@ -300,35 +270,10 @@ For detailed information, consult these references:
 
 ---
 
-## Component Features
-
-Sparkle Design components provide:
-
-- **Consistent API** - Standardized props: `variant`, `size`, `theme`, `isLoading`, `isDisabled`
-- **Tailwind-based** - Utility-first CSS with full customization
-- **Accessible** - WAI-ARIA compliant with keyboard navigation and screen reader support
-- **Type-safe** - Full TypeScript support with CVA variants
-- **Responsive** - Mobile-first design with Tailwind breakpoints
-
-**For complete feature documentation**, see [references/sparkle-design-features.md](references/sparkle-design-features.md)
-
----
-
 ## Related Resources
-
-### Official Documentation
 
 - [Sparkle Design](https://sparkle-design.goodpatch.com/)
 - [shadcn/ui CLI](https://ui.shadcn.com/docs/cli)
-- [Tailwind CSS](https://tailwindcss.com/docs)
-- [Radix UI](https://www.radix-ui.com/)
-
-### Project Documentation
-
-Consult the project's documentation for:
-- Project-specific guidelines (e.g., AGENTS.md, CONTRIBUTING.md)
-- Component development conventions
-- Code style and patterns
 
 ---
 
@@ -342,13 +287,13 @@ Consult the project's documentation for:
 2. **Validate first** - Run `validate_config.py` before installation
 3. **Check lockfiles** - Detect package manager before running commands
 4. **Verify CSS setup** - On first installation, check CSS import structure
-5. **Run type checking** - Execute `<pm> lint` after installation
+5. **Run lint** - Execute `<pm> run lint` after installation (and the type-check script if the project has one)
 6. **Run project guard if available** - If the target project has `lint:sparkle`, run it before finishing
-7. **Test in Storybook** - Verify component works: `<pm> storybook`
+7. **Test in Storybook** - Verify component works: `<pm> run storybook`
 
-### Anti-pattern ガイドの浸透
+### Anti-pattern ガードの確認
 
-初回セットアップ時は、対象プロジェクトで `npx --yes sparkle-design-cli setup --assistant <claude|codex|cursor|generic>` または `pnpm dlx sparkle-design-cli setup --assistant <claude|codex|cursor|generic>` を実行して guard を差し込む。`--target` を省略した場合は `src` 系を自動検出し、既存の Sparkle 用 script は再実行で更新される。独自 script を上書きしたい場合だけ `--force-script-update` を使う。
+guard（`lint:sparkle` と AI ガード）が未導入のプロジェクトでは、導入は `setup-sparkle-design` スキルの担当なので、そちらに誘導する。
 
 `lint:sparkle` があるプロジェクトでは、個別のアンチパターンを毎回列挙するより先にコマンドを回す。AI は可能なら `lint:sparkle:json` を実行し、script がまだ無い場合だけ `npx --yes sparkle-design-cli check <detected-target> --format json` を使う。`findings` と `manualReviewReminders` の両方を確認し、詳細なルール説明が必要な場合だけ `references/sparkle-design-features.md` を読む。
 
@@ -361,7 +306,3 @@ Load references as needed:
 - **Load for details**: `references/sparkle-design-features.md` (includes Anti-patterns section)
 - **Load for CSS setup**: `references/css-structure.md`
 
----
-
-**Version**: 2.2.0
-**Last Updated**: 2026-03-06

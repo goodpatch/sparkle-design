@@ -6,7 +6,7 @@ description: >
   package.json の version bump、CHANGELOG.md の更新、リリース PR 作成、PR マージ後の
   git tag 作成・push、GitHub Release 作成、npm publish までを一連の手順で実行する。
   CHANGELOG 更新漏れと GitHub Release 作成漏れを防ぐためのチェックリストを含む。
-  「sparkle-design をリリース」「sparkle-design の新バージョンを切る」「v1.0.x をリリース」
+  「sparkle-design をリリース」「sparkle-design の新バージョンを切る」「vX.Y.Z をリリース」
   「sparkle-design の CHANGELOG を更新」で発動。
   English: "release sparkle-design", "cut a new sparkle-design version",
   "publish sparkle-design", "bump sparkle-design version".
@@ -19,7 +19,7 @@ user-invocable: true
 
 **このスキルが解決する問題**:
 
-- 過去に v1.0.1 / v1.0.2 / v1.0.3 で CHANGELOG.md 更新が漏れた（v1.0.3 では GitHub Release と git tag も未作成）
+- CHANGELOG.md の更新漏れや、GitHub Release・git tag の作成漏れが繰り返し起きていた
 - リリース手順がドキュメント化されておらず、各リリースで作業者が手探りになっていた
 - このスキルはチェックリストとして機能し、リリース漏れをゼロにする
 
@@ -50,7 +50,7 @@ user-invocable: true
 2. **`sparkle-design` リポジトリのルートで作業する**
 
    - 編集・テスト・git 操作はすべて `sparkle-design` のチェックアウトディレクトリで実行
-   - 並列作業を分離したい場合は git worktree を使ってもよい（既存運用では `.claude/worktrees/<name>` 配下に置く慣例）。worktree を使わずに `chore/release-X.Y.Z` ブランチを直接切る運用でも可
+   - 既定は git worktree（`.claude/worktrees/<name>` 配下）で `chore/release-X.Y.Z` ブランチを切る。本チェックアウトに未コミットの変更が無く、並行作業も無いときに限り、直接ブランチを切ってもよい
 
 3. **以下のチェックリストを順に実行する**
 
@@ -74,7 +74,7 @@ user-invocable: true
 
 タグ未作成・Release 未作成のバージョンがある場合は **新バージョンを切る前に** 必ず追補する。
 
-- [ ] 該当バージョンのリリースコミット（`🔖 chore: release vX.Y.Z` 等）の SHA を特定: `git log --all --oneline | grep release`
+- [ ] 該当バージョンのリリースコミット（`🔖 chore: release vX.Y.Z` 等）の SHA を、下の「マージ後: タグ・Release・publish」にある「候補が 1 件であることを確認する」スニペットで特定する
 - [ ] そのコミットに対して `git tag vX.Y.Z <SHA>` でタグを作成（ローカルタグまでは自走してよい）
 - [ ] 🛑 `git push origin vX.Y.Z` でタグを push
 - [ ] 🛑 `gh release create vX.Y.Z --title "vX.Y.Z" --notes "..."` で Release を作成
@@ -97,7 +97,7 @@ user-invocable: true
   - [ ] **CHANGELOG にも未反映の過去バージョンがある場合は同時に追補する**
 - [ ] `pnpm install` で lockfile が壊れていないか確認
 - [ ] テスト: `pnpm test` で全部 pass を確認
-- [ ] 型チェック: `pnpm type-check`（or `npx tsc --noEmit`）
+- [ ] 型チェック: `pnpm type-check`
 - [ ] format: `pnpm format:check`（必要なら `pnpm format`）
 - [ ] コミット作成（メッセージ規約: 日本語 + emoji prefix）
   - 例: `🔖 chore: release vX.Y.Z`
@@ -124,8 +124,8 @@ user-invocable: true
 > 「タグを打って publish して」と明示的に指示されてから着手し、実行前に
 > 置き換えた実際の値（`X.Y.Z` / `RELEASE_SHA`）を提示して確認を取る。
 
-- [ ] `git fetch origin main && git checkout main && git pull` で最新化
-- [ ] **リリースコミットの SHA を `git log --oneline | grep release | head -1` で必ず特定**
+- [ ] リリース用 worktree ではなく、`main` をチェックアウトしている本チェックアウトに戻って `git fetch origin main && git checkout main && git pull` で最新化する（`main` は本チェックアウトで使われているので、worktree 側では checkout できない）
+- [ ] **リリースコミットの SHA を必ず特定する**（下のスニペットで候補が 1 件であることを確かめる）
 - [ ] **タグはリリースコミットの SHA を明示して打つ**（HEAD に打つと main が進んだ場合に誤タグ → publish 漏れ・誤 publish の温床）:
   ```bash
   # 候補が 1 件であることを確認してからタグを打つ（別バージョンを掴むと誤 publish になる）
@@ -185,7 +185,7 @@ user-invocable: true
 
 ### リリースコミットだけ作って tag/release を忘れていた場合
 
-そのコミットの SHA を `git log --oneline | grep release` で特定して、後付けで tag + release を作成可能。
+そのコミットの SHA を「マージ後: タグ・Release・publish」の「候補が 1 件であることを確認する」スニペットで特定して、後付けで tag + release を作成可能。
 このスキルの「過去リリース追補」セクションを参照。
 
 ### CHANGELOG が古い場合

@@ -8,6 +8,16 @@ Related:
 - Project policy: `./project-policy.md`
 - Checklist: `../assets/checklist.csv`
 
+## 目次
+
+- 1. Scope Definition
+- 2. Checklist Interpretation (Reflecting Project Policy)
+- 3. Review (Recording Evidence)
+- 4. Fixes (Minimal Changes + Non-Breaking Improvements)
+- 5. Verification
+- 6. Status Updates (README, etc.)
+- 7. Change Summary (Brief Summary)
+
 ---
 
 ## 1. Scope Definition

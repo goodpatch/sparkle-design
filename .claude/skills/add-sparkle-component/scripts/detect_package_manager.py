@@ -22,6 +22,7 @@ LOCKFILE_MAP = {
     "pnpm-lock.yaml": "pnpm",
     "yarn.lock": "yarn",
     "bun.lockb": "bun",
+    "bun.lock": "bun",  # bun 1.2 以降のテキスト形式 / en: text lockfile (bun 1.2+)
     "package-lock.json": "npm",
 }
 
