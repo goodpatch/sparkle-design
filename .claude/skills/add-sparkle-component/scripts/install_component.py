@@ -198,6 +198,9 @@ def install_component(
         Tuple of (success, output_message)
     """
     pm_command = get_package_manager_command(package_manager, project_path)
+    # Yarn Classic の npx フォールバック時は、実際に必要な npm を案内に使う
+    # en: On the Yarn Classic npx fallback, report npm, which is what the command actually needs
+    effective_manager = "npm" if pm_command[0] == "npx" else package_manager
     full_command = pm_command + [
         "shadcn@latest",
         "add",
@@ -205,7 +208,10 @@ def install_component(
     ]
 
     print(f"🚀 Installing component: {component_name}")
-    print(f"📦 Using package manager: {package_manager}")
+    if effective_manager != package_manager:
+        print(f"📦 Using package manager: {effective_manager} (Yarn Classic has no dlx)")
+    else:
+        print(f"📦 Using package manager: {package_manager}")
     print(f"⚙️  Running: {' '.join(full_command)}\n")
 
     try:
@@ -239,7 +245,7 @@ def install_component(
 
     except FileNotFoundError:
         error_msg = f"Command not found: {pm_command[0]}\n"
-        error_msg += f"Please install {package_manager} first."
+        error_msg += f"Please install {effective_manager} first."
         return False, error_msg
 
     except Exception as e:
