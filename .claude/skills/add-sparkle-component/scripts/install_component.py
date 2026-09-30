@@ -132,26 +132,28 @@ def is_yarn_berry(project_path: Path) -> bool:
     `yarn dlx` は Berry にしか無く、Yarn Classic（1.x）では unknown command になる。
     en: `yarn dlx` exists only in Berry; Yarn Classic (1.x) rejects it as an unknown command.
 
+    `packageManager` の yarn 指定（Corepack のバージョン固定）を優先し、
+    無い場合だけ `.yarnrc.yml` の有無で判定する。
+    en: A `packageManager` yarn pin (Corepack) takes precedence; `.yarnrc.yml` is only a fallback.
+
     Args:
         project_path: Path to the project directory
 
     Returns:
-        True if `.yarnrc.yml` exists or `packageManager` pins yarn@2 or later
+        True if `packageManager` pins yarn@2 or later, or (without a yarn pin) `.yarnrc.yml` exists
     """
-    if (project_path / ".yarnrc.yml").exists():
-        return True
-
     package_json = project_path / "package.json"
-    if not package_json.exists():
-        return False
-    try:
-        package_manager = json.loads(package_json.read_text()).get("packageManager", "")
-    except (json.JSONDecodeError, OSError):
-        return False
-    if not isinstance(package_manager, str) or not package_manager.startswith("yarn@"):
-        return False
-    major = package_manager.removeprefix("yarn@").split(".", 1)[0]
-    return major.isdigit() and int(major) >= 2
+    if package_json.exists():
+        try:
+            package_manager = json.loads(package_json.read_text()).get("packageManager")
+        except (json.JSONDecodeError, OSError, AttributeError):
+            package_manager = None
+        if isinstance(package_manager, str) and package_manager.startswith("yarn@"):
+            major = package_manager.removeprefix("yarn@").split(".", 1)[0]
+            if major.isdigit():
+                return int(major) >= 2
+
+    return (project_path / ".yarnrc.yml").exists()
 
 
 def get_package_manager_command(

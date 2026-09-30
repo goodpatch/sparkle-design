@@ -92,7 +92,7 @@ pnpm dlx sparkle-design-cli generate
 # or
 npm exec sparkle-design-cli generate
 # or
-yarn dlx sparkle-design-cli generate
+yarn dlx sparkle-design-cli generate  # Yarn Berry (v2+) only; Yarn Classic (1.x) uses the npm line
 # or
 bunx sparkle-design-cli generate
 ```

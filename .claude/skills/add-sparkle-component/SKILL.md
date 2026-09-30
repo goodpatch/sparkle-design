@@ -51,7 +51,7 @@ yarn dlx shadcn@latest add @sparkle-design/<component-name>   # yarn (Berry / v2
 bunx shadcn@latest add @sparkle-design/<component-name>       # bun
 ```
 
-`yarn dlx` exists only in Yarn Berry (v2+). For Yarn Classic (1.x) projects — no `.yarnrc.yml` and no `packageManager: "yarn@2+"` — use the npm line instead (`install_component.py` does this automatically).
+`yarn dlx` exists only in Yarn Berry (v2+). For Yarn Classic (1.x) projects, use the npm line instead (`install_component.py` does this automatically). To tell them apart, a `packageManager` pin in `package.json` wins (`yarn@1.x` → Classic, `yarn@2+` → Berry); only without a yarn pin does a `.yarnrc.yml` indicate Berry.
 
 ---
 
