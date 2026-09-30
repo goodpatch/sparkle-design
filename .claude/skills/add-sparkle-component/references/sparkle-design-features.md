@@ -607,7 +607,11 @@ shadcn/ui と混在するプロジェクトでも、Sparkle Design のコンポ�
 </button>
 ```
 
-`ClickableCard` はクリック可能な Card のパターンとして必要な `role` / キーボード操作 / focus ring を提供する。`<button>` / `<a>` / `role="button"` でラップすると、ボタンの内側に対話型要素（リンクやフォーム要素）を置いたときにネストされた interactive 要素になりアクセシビリティ違反になる。
+`ClickableCard` はネイティブの `<button type="button">` をレンダリングし、Card の見た目・focus ring・`isDisabled` を揃えた**アクション用**のカード。自前で `<button>` / `role="button"` を巻く代わりにこれを使う。
+
+- `ClickableCard` 自体が `<button>` なので、**内側にリンク・ボタン・フォーム要素を置かない**（ネストされた interactive 要素になりアクセシビリティ違反になる）。中身は `CardHeader` / `CardTitle` / テキストなど非対話の要素に限る
+- 別ページへ遷移する**ナビゲーション用**のカードには使わない（リンクのセマンティクスが失われる）。通常の `Card` を使い、`CardTitle` 内の見出しテキストを `<a>`（Next.js なら `Link`）にする
+- カード内に複数のアクション（ボタン・リンク・チェックボックス等）がある**複合カード**は、通常の `Card` の中に個々の操作要素を置く。カード全体をクリック領域にしない
 
 ### Icon / Spinner: スケール値（1-12）を使う
 
@@ -792,7 +796,9 @@ Sparkle Design コンポーネント内では `character-*-pro` / `character-*-m
 </Button>
 ```
 
-### disabled ではなく isDisabled を使う
+### isDisabled を持つコンポーネントでは disabled を使わない
+
+Button, Input, Checkbox, IconButton など `isDisabled` prop を持つコンポーネントでは、HTML 標準の `disabled` ではなく `isDisabled` を使う。
 
 ```tsx
 // ✅ Correct
@@ -804,6 +810,8 @@ Sparkle Design コンポーネント内では `character-*-pro` / `character-*-m
 ```
 
 HTML 標準の `disabled` も互換のため受け付けますが、Sparkle Design のコードでは `isDisabled` に統一します。
+
+> **注意**: 全コンポーネントが `isDisabled` を持つわけではない（例: `RadioItem` / `Switch` / `SelectTrigger` は HTML 標準の `disabled` のみを受け付け、`isDisabled` を渡すと型エラーになる）。各コンポーネントの型定義を確認すること。
 
 ### Button の prefixIcon / suffixIcon に JSX を渡さない
 

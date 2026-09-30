@@ -125,11 +125,43 @@ def get_component_path(project_path: Path, component_name: str) -> str:
         return f"{default_path}/{component_name}/"
 
 
-def get_package_manager_command(manager: str) -> list[str]:
+def is_yarn_berry(project_path: Path) -> bool:
+    """Yarn Berry（2 以降）のプロジェクトかどうかを判定する。
+    en: Detect whether the project uses Yarn Berry (v2+).
+
+    `yarn dlx` は Berry にしか無く、Yarn Classic（1.x）では unknown command になる。
+    en: `yarn dlx` exists only in Berry; Yarn Classic (1.x) rejects it as an unknown command.
+
+    Args:
+        project_path: Path to the project directory
+
+    Returns:
+        True if `.yarnrc.yml` exists or `packageManager` pins yarn@2 or later
+    """
+    if (project_path / ".yarnrc.yml").exists():
+        return True
+
+    package_json = project_path / "package.json"
+    if not package_json.exists():
+        return False
+    try:
+        package_manager = json.loads(package_json.read_text()).get("packageManager", "")
+    except (json.JSONDecodeError, OSError):
+        return False
+    if not isinstance(package_manager, str) or not package_manager.startswith("yarn@"):
+        return False
+    major = package_manager.removeprefix("yarn@").split(".", 1)[0]
+    return major.isdigit() and int(major) >= 2
+
+
+def get_package_manager_command(
+    manager: str, project_path: Path | None = None
+) -> list[str]:
     """Get the appropriate command for the package manager.
 
     Args:
         manager: Package manager name
+        project_path: Path to the project directory (used to tell Yarn Berry from Classic)
 
     Returns:
         List of command parts
@@ -137,7 +169,11 @@ def get_package_manager_command(manager: str) -> list[str]:
     if manager == "pnpm":
         return ["pnpm", "dlx"]
     elif manager == "yarn":
-        return ["yarn", "dlx"]
+        # Yarn Classic には dlx が無いため npx にフォールバックする
+        # en: Yarn Classic has no dlx, so fall back to npx
+        if project_path is not None and is_yarn_berry(project_path):
+            return ["yarn", "dlx"]
+        return ["npx", "--yes"]
     elif manager == "bun":
         return ["bunx"]
     else:  # npm
@@ -159,7 +195,7 @@ def install_component(
     Returns:
         Tuple of (success, output_message)
     """
-    pm_command = get_package_manager_command(package_manager)
+    pm_command = get_package_manager_command(package_manager, project_path)
     full_command = pm_command + [
         "shadcn@latest",
         "add",

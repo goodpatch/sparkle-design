@@ -47,9 +47,11 @@ Use this only when the script above cannot run (e.g. Python is unavailable) or w
 ```bash
 pnpm dlx shadcn@latest add @sparkle-design/<component-name>   # pnpm
 npx --yes shadcn@latest add @sparkle-design/<component-name>  # npm
-yarn dlx shadcn@latest add @sparkle-design/<component-name>   # yarn
+yarn dlx shadcn@latest add @sparkle-design/<component-name>   # yarn (Berry / v2+)
 bunx shadcn@latest add @sparkle-design/<component-name>       # bun
 ```
+
+`yarn dlx` exists only in Yarn Berry (v2+). For Yarn Classic (1.x) projects — no `.yarnrc.yml` and no `packageManager: "yarn@2+"` — use the npm line instead (`install_component.py` does this automatically).
 
 ---
 
@@ -293,7 +295,7 @@ For detailed information, consult these references:
 
 ### Anti-pattern ガードの確認
 
-guard（`lint:sparkle` と AI ガード）が未導入のプロジェクトでは、導入は `setup-sparkle-design` スキルの担当なので、そちらに誘導する。
+guard（`lint:sparkle` と AI ガード）が未導入のプロジェクトでは、導入は `setup-sparkle-design` スキル（internal 環境では `install-sparkle-design` スキル）の担当なので、そちらに誘導する。
 
 `lint:sparkle` があるプロジェクトでは、個別のアンチパターンを毎回列挙するより先にコマンドを回す。AI は可能なら `lint:sparkle:json` を実行し、script がまだ無い場合だけ `npx --yes sparkle-design-cli check <detected-target> --format json` を使う。`findings` と `manualReviewReminders` の両方を確認し、詳細なルール説明が必要な場合だけ `references/sparkle-design-features.md` を読む。
 
