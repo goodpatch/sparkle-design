@@ -609,7 +609,7 @@ shadcn/ui と混在するプロジェクトでも、Sparkle Design のコンポ�
 
 `ClickableCard` はネイティブの `<button type="button">` をレンダリングし、Card の見た目・focus ring・`isDisabled` を揃えた**アクション用**のカード。自前で `<button>` / `role="button"` を巻く代わりにこれを使う。
 
-- `ClickableCard` 自体が `<button>` なので、**内側にリンク・ボタン・フォーム要素を置かない**（ネストされた interactive 要素になりアクセシビリティ違反になる）。中身は `CardHeader` / `CardTitle` / テキストなど非対話の要素に限る
+- `ClickableCard` 自体が `<button>` なので、**内側にリンク・ボタン・フォーム要素を置かない**（ネストされた interactive 要素になりアクセシビリティ違反になる）。中身は非対話の要素に限る
 - 別ページへ遷移する**ナビゲーション用**のカードには使わない（リンクのセマンティクスが失われる）。通常の `Card` を使い、`CardTitle` 内の見出しテキストを `<a>`（Next.js なら `Link`）にする
 - カード内に複数のアクション（ボタン・リンク・チェックボックス等）がある**複合カード**は、通常の `Card` の中に個々の操作要素を置く。カード全体をクリック領域にしない
 
