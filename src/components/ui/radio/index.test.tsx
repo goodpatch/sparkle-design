@@ -687,8 +687,10 @@ describe("Radio", () => {
       );
       expect(callbackRef).toHaveBeenCalled();
       testContainer.cleanup();
-      // StrictMode の付け外し確認を含め、ref が付いた回数だけ cleanup が呼ばれ、ref(null) は呼ばれない
-      // en: cleanup runs once per attach (including StrictMode's re-attach) and ref(null) is never called
+      // Radix 内部で ref が付け直されることがあるため回数は固定せず、ref が付いた回数だけ
+      // cleanup が呼ばれ、ref(null) は呼ばれないことを確かめる
+      // en: Radix may re-attach the ref, so don't pin the count: cleanup runs once per attach
+      //     and ref(null) is never called
       expect(cleanup).toHaveBeenCalledTimes(callbackRef.mock.calls.length);
       expect(callbackRef).not.toHaveBeenCalledWith(null);
       testContainer = new TestContainer();
