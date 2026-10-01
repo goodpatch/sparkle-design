@@ -48,7 +48,7 @@
 | 3.2.1 | フォーカス時 | A | フォーカスで予期しない動作が起きない | Pass | コンポーネントに `onFocus` による副作用的な処理（ページ遷移・ダイアログ表示等）なし。Radix UI の標準フォーカス挙動のみ。 | - |
 | 3.2.2 | 入力時 | A | 入力で意図しない動作が起きない | Pass | `index.tsx:178` — `onValueChange` コールバックは値の変更のみ通知。コンポーネント内部でページ遷移等の副作用なし。テスト `index.test.tsx:145-162` でコールバック挙動を検証済み。 | - |
 | 3.2.4 | 一貫した識別性 | AA | 同じコンポーネントは一貫したラベル | Pass | `index.tsx:256-307` — `RadioItem` は統一的な Props（`size`, `isInvalid`, `disabled`, `label`）で制御。CVA バリアントにより一貫したスタイリング。Stories `index.stories.tsx` の各ストーリーでも一貫した使用パターン。 | - |
-| 3.3.1 | エラーの特定 | A | 入力エラーが利用者に伝わる | Needs review | `index.tsx:259,68-69` — `isInvalid` prop でエラー状態の視覚スタイル（`border-negative-500`）は適用されるが、`aria-invalid` 属性がプログラム的に設定されていない。スクリーンリーダーにエラー状態が伝わらない可能性がある。 | `isInvalid={true}` 時に `aria-invalid="true"` を `RadioPrimitive.Item` に付与することを推奨。また、エラーメッセージ用の `aria-errormessage` / `aria-describedby` の仕組みも検討。 |
+| 3.3.1 | エラーの特定 | A | 入力エラーが利用者に伝わる | Needs review | `index.tsx:259,68-69` — `isInvalid` prop でエラー状態の視覚スタイル（`border-negative-500`）は適用されるが、`aria-invalid` 属性がプログラム的に設定されていない。スクリーンリーダーにエラー状態が伝わらない可能性がある。 | `isInvalid={true}` 時に `aria-invalid="true"` を付与することを推奨。**（追記: ARIA 1.2 では `aria-invalid` のサポートロールに `radio` は含まれないため、`RadioPrimitive.Item` ではなく `RadioPrimitive.Root`（radiogroup）に付ける形で #333 にて対応）**また、エラーメッセージ用の `aria-errormessage` / `aria-describedby` の仕組みも検討。 |
 | 3.3.2 | ラベル又は説明 | A | 入力欄にラベル/説明がある | Pass | `index.tsx:297-303` — `label` prop で `<label htmlFor={id}>` を描画。テスト `index.test.tsx:289-303` でラベルの関連付けを検証済み。 | `label` なしの使用も可能だが、その場合は利用側で `aria-label` 等の指定が必要（ドキュメントでの案内を推奨）。 |
 | 3.3.3 | エラー修正方法の提案 | AA | 修正方法が提示されている | N/A | - | ラジオボタンは選択肢の中から選ぶ UI であり、修正方法の提案（「正しい形式は...」等）は通常不要。エラーメッセージの表示は親フォーム側の責務。 |
 | 3.3.8 | アクセシブル認証（最低限） | AA | 認証が記憶依存になっていない | N/A | - | 認証コンポーネントではない。 |

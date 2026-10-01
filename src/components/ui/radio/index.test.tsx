@@ -4,13 +4,58 @@
 
 import React from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { screen } from "@testing-library/react";
+import { useForm } from "react-hook-form";
 import {
   TestContainer,
   EventHelpers,
   A11yHelpers,
   StyleHelpers,
 } from "../../../test/helpers";
+import {
+  Form,
+  FormControl,
+  FormErrorMessage,
+  FormField,
+  FormHeader,
+  FormItem,
+} from "../form";
 import { Radio, RadioItem } from "./index";
+
+/**
+ * Form と組み合わせた Radio のテスト用コンポーネント
+ * en: Test component combining Radio with Form
+ */
+function RadioFormComponent({ errorMessage }: { errorMessage?: string }) {
+  const form = useForm<{ plan: string }>({ defaultValues: { plan: "" } });
+
+  React.useEffect(() => {
+    if (errorMessage) {
+      form.setError("plan", { message: errorMessage });
+    }
+  }, [errorMessage, form]);
+
+  return (
+    <Form {...form}>
+      <FormField
+        control={form.control}
+        name="plan"
+        render={({ field }) => (
+          <FormItem>
+            <FormHeader label="プラン" />
+            <FormControl>
+              <Radio value={field.value} onValueChange={field.onChange}>
+                <RadioItem value="free" id="plan-free" label="無料" />
+                <RadioItem value="pro" id="plan-pro" label="有料" />
+              </Radio>
+            </FormControl>
+            <FormErrorMessage />
+          </FormItem>
+        )}
+      />
+    </Form>
+  );
+}
 
 let testContainer: TestContainer;
 
@@ -533,14 +578,158 @@ describe("Radio", () => {
       expect(label.className).not.toContain("text-text-medium");
     });
 
-    it("exposes aria-invalid only when isInvalid", () => {
+    it("sets aria-invalid on the radiogroup, not on each radio (ARIA 1.2)", () => {
+      testContainer.render(
+        <Radio isInvalid>
+          <RadioItem value="a" id="g-a" label="A" />
+          <RadioItem value="b" id="g-b" label="B" />
+        </Radio>
+      );
+      const group = testContainer.querySelector('[role="radiogroup"]');
+      expect(group.getAttribute("aria-invalid")).toBe("true");
+      testContainer
+        .getContainer()
+        .querySelectorAll('[role="radio"]')
+        .forEach((r: Element) =>
+          expect(r.hasAttribute("aria-invalid")).toBe(false)
+        );
+    });
+
+    it("propagates group isInvalid to every item's error style", () => {
+      testContainer.render(
+        <Radio isInvalid>
+          <RadioItem value="a" id="p-a" label="A" />
+        </Radio>
+      );
+      const ring = testContainer.querySelector("#p-a")
+        .firstElementChild as HTMLElement;
+      expect(ring.className.split(/\s+/)).toContain(
+        "border-object-negative-enabled"
+      );
+    });
+
+    it("treats aria-invalid passed to Radio (e.g. by FormControl) as invalid", () => {
+      testContainer.render(
+        <Radio aria-invalid>
+          <RadioItem value="a" id="f-a" label="A" />
+        </Radio>
+      );
+      const group = testContainer.querySelector('[role="radiogroup"]');
+      expect(group.getAttribute("aria-invalid")).toBe("true");
+      const ring = testContainer.querySelector("#f-a")
+        .firstElementChild as HTMLElement;
+      expect(ring.className.split(/\s+/)).toContain(
+        "border-object-negative-enabled"
+      );
+    });
+
+    it.each([false, "false", ""] as const)(
+      "does not treat aria-invalid=%j as invalid",
+      value => {
+        testContainer.render(
+          <Radio aria-invalid={value as React.AriaAttributes["aria-invalid"]}>
+            <RadioItem value="a" id="n-a" label="A" />
+          </Radio>
+        );
+        const group = testContainer.querySelector('[role="radiogroup"]');
+        expect(group.hasAttribute("aria-invalid")).toBe(false);
+      }
+    );
+
+    it("does not set aria-invalid when valid, and item-level isInvalid stays visual only", () => {
       const { item } = renderItem({ isInvalid: true });
-      expect(item.getAttribute("aria-invalid")).toBe("true");
+      expect(item.hasAttribute("aria-invalid")).toBe(false);
+      const group = testContainer.querySelector('[role="radiogroup"]');
+      expect(group.hasAttribute("aria-invalid")).toBe(false);
+    });
+  });
+
+  describe("Accessible name of the radiogroup", () => {
+    it("names the radiogroup from <label for> via aria-labelledby", async () => {
+      testContainer.render(
+        <div>
+          <label id="grp-label" htmlFor="grp">
+            プラン
+          </label>
+          <Radio id="grp">
+            <RadioItem value="a" id="grp-a" label="A" />
+          </Radio>
+        </div>
+      );
+      const group = testContainer.querySelector('[role="radiogroup"]');
+      await vi.waitFor(() =>
+        expect(group.getAttribute("aria-labelledby")).toBe("grp-label")
+      );
+    });
+
+    it("keeps an explicit aria-labelledby / aria-label", () => {
+      testContainer.render(
+        <div>
+          <label id="other" htmlFor="grp2">
+            other
+          </label>
+          <Radio id="grp2" aria-labelledby="explicit">
+            <RadioItem value="a" id="grp2-a" label="A" />
+          </Radio>
+        </div>
+      );
+      const group = testContainer.querySelector('[role="radiogroup"]');
+      expect(group.getAttribute("aria-labelledby")).toBe("explicit");
+    });
+
+    it("runs the cleanup returned by a React 19 callback ref on unmount", () => {
+      const cleanup = vi.fn();
+      const callbackRef = vi.fn(() => cleanup);
+      testContainer.render(
+        <Radio ref={callbackRef}>
+          <RadioItem value="a" id="cb-a" label="A" />
+        </Radio>
+      );
+      expect(callbackRef).toHaveBeenCalled();
       testContainer.cleanup();
+      // Radix 内部で ref が付け直されることがあるため回数は固定せず、ref が付いた回数だけ
+      // cleanup が呼ばれ、ref(null) は呼ばれないことを確かめる
+      // en: Radix may re-attach the ref, so don't pin the count: cleanup runs once per attach
+      //     and ref(null) is never called
+      expect(cleanup).toHaveBeenCalledTimes(callbackRef.mock.calls.length);
+      expect(callbackRef).not.toHaveBeenCalledWith(null);
       testContainer = new TestContainer();
       testContainer.setup();
-      const { item: valid } = renderItem({});
-      expect(valid.hasAttribute("aria-invalid")).toBe(false);
+    });
+
+    it("forwards ref to the radiogroup element", () => {
+      const ref = React.createRef<HTMLDivElement>();
+      testContainer.render(
+        <Radio ref={ref}>
+          <RadioItem value="a" id="ref-a" label="A" />
+        </Radio>
+      );
+      expect(ref.current?.getAttribute("role")).toBe("radiogroup");
+    });
+  });
+
+  describe("Form integration", () => {
+    it("names the radiogroup with the FormHeader label", async () => {
+      testContainer.render(<RadioFormComponent />);
+      const group = await screen.findByRole("radiogroup", { name: "プラン" });
+      expect(group).toBeInTheDocument();
+      expect(group).not.toHaveAttribute("aria-invalid");
+    });
+
+    it("exposes the form error on the radiogroup and styles every item", async () => {
+      testContainer.render(
+        <RadioFormComponent errorMessage="プランを選択してください" />
+      );
+      const group = await screen.findByRole("radiogroup", { name: "プラン" });
+      await vi.waitFor(() =>
+        expect(group).toHaveAttribute("aria-invalid", "true")
+      );
+      screen.getAllByRole("radio").forEach(radio => {
+        expect(radio).not.toHaveAttribute("aria-invalid");
+        expect(
+          (radio.firstElementChild as HTMLElement).className.split(/\s+/)
+        ).toContain("border-object-negative-enabled");
+      });
     });
   });
 });
