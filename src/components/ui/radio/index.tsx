@@ -8,7 +8,6 @@ import * as React from "react";
 import { RadioGroup as RadioPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import { findLabelIdsFor } from "@/lib/a11y";
 
 /**
  * Radio（radiogroup）のエラー状態を各 RadioItem に伝える
@@ -193,6 +192,25 @@ export interface RadioProps extends RadioPrimitiveProps {
 }
 
 /**
+ * `htmlFor` が指定 id を指す `<label>` のうち、id を持つものの id を空白区切りで返す。
+ * `label[for]` は labelable 要素（input / button など）にしか名前を与えないため、
+ * `span[role="slider"]` や `div[role="radiogroup"]` には aria-labelledby で関連付け直す必要がある。
+ * en: Returns space-separated ids of `<label>` elements (that have an id) whose
+ *     `htmlFor` points to the given id. `label[for]` only names labelable elements
+ *     (input, button, ...), so role-based controls such as `span[role="slider"]` or
+ *     `div[role="radiogroup"]` must be re-associated via aria-labelledby.
+ */
+function findLabelIdsFor(target: HTMLElement, id: string): string | undefined {
+  const root = target.getRootNode() as Document | ShadowRoot;
+  // NOTE: useId 由来の id は CSS セレクタで特殊文字を含むため、属性セレクタではなく htmlFor で比較する
+  // en: useId-generated ids contain selector-special characters, so compare htmlFor instead of using an attribute selector
+  const ids = Array.from(root.querySelectorAll<HTMLLabelElement>("label[for]"))
+    .filter(label => label.htmlFor === id && label.id)
+    .map(label => label.id);
+  return ids.length > 0 ? ids.join(" ") : undefined;
+}
+
+/**
  * **概要 / Overview**
  *
  * - ラジオボタンは単一選択の形式でユーザーからの入力を取得するために使用するコンポーネントです。
@@ -239,8 +257,19 @@ function Radio({ className, isInvalid = false, ref, ...props }: RadioProps) {
   const setRootRef = React.useCallback(
     (node: HTMLDivElement | null) => {
       rootRef.current = node;
-      if (typeof ref === "function") ref(node);
-      else if (ref) ref.current = node;
+      if (typeof ref === "function") {
+        // React 19 の callback ref が返す cleanup はアンマウント時にそのまま呼ぶ
+        // en: Forward the cleanup returned by a React 19 callback ref so it runs on unmount
+        const cleanup = ref(node);
+        if (typeof cleanup === "function") {
+          return () => {
+            rootRef.current = null;
+            cleanup();
+          };
+        }
+      } else if (ref) {
+        ref.current = node;
+      }
     },
     [ref]
   );

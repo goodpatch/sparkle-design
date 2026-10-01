@@ -677,6 +677,24 @@ describe("Radio", () => {
       expect(group.getAttribute("aria-labelledby")).toBe("explicit");
     });
 
+    it("runs the cleanup returned by a React 19 callback ref on unmount", () => {
+      const cleanup = vi.fn();
+      const callbackRef = vi.fn(() => cleanup);
+      testContainer.render(
+        <Radio ref={callbackRef}>
+          <RadioItem value="a" id="cb-a" label="A" />
+        </Radio>
+      );
+      expect(callbackRef).toHaveBeenCalled();
+      testContainer.cleanup();
+      // StrictMode の付け外し確認を含め、ref が付いた回数だけ cleanup が呼ばれ、ref(null) は呼ばれない
+      // en: cleanup runs once per attach (including StrictMode's re-attach) and ref(null) is never called
+      expect(cleanup).toHaveBeenCalledTimes(callbackRef.mock.calls.length);
+      expect(callbackRef).not.toHaveBeenCalledWith(null);
+      testContainer = new TestContainer();
+      testContainer.setup();
+    });
+
     it("forwards ref to the radiogroup element", () => {
       const ref = React.createRef<HTMLDivElement>();
       testContainer.render(
