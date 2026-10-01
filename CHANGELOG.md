@@ -5,6 +5,55 @@
 
 ## [Unreleased]
 
+## [2.0.0-beta.0] - 2026-10-01
+
+Figma（`7alBZXZf65YgcII41TWT0r`）のスタイル刷新を反映する **beta リリース**です（トラッキング: goodpatch/sparkle-design-internal#247）。`npm install sparkle-design@beta` で導入できます。`latest` は 1.0.7 のままです。
+
+### ⚠️ Breaking Changes
+
+- **React 19 が必須になりました**。全コンポーネントを `React.forwardRef` から ref-as-prop に移行し、`react` / `react-dom` を `dependencies` から `peerDependencies`（`^19`）に移しました。React 18 では `ref` が渡らなくなります (#274)
+- **見た目が変わります**。Figma の新セマンティックトークンに合わせて全コンポーネントの配色・影・一部の角丸を置き換えました。主な変化は次のとおりです
+  - 状態ごとの色が 1 段濃くなりました（Figma 側で enabled = 600 / hover = 700 / active = 800 に整理されたため）
+  - プリミティブ配色 50 値とシャドウ全段を Figma に合わせて再定義しました。未移行のクラスを使っている箇所も色・影が変わります (#299)
+  - Card の角丸が `rounded-container`（md プロファイルで 2px → 8px）、Dialog の角丸が `rounded-modal`（8px → 12px）になりました (#330)
+  - Button / Icon Button の solid から 1px 枠線を削除し、影を `shadow-base` にしました (#303)
+  - Tabs の solid のリスト下線が primary からグレー（`border/neutral/low`）になりました (#328)
+  - Slider の塗りが `object/info`（青固定）になり、primary に追従しなくなりました。Tag の `status="info"` も同様です (#302, #329)
+  - Badge の normal が info から primary 追従（`surface/primary/high/enabled`）になりました (#329)
+
+### Added
+
+- 新セマンティックトークン（`surface/*` `border/*` `object/*` `text/*` の 101 件）と `--radius-container` を生成 CSS に追加しました。CSS 変数名は Figma のパスをそのまま写しています（例: `surface/primary/high/enabled` → `--color-surface-primary-high-enabled`）(#299)
+- `exports` に `./package.json` を追加しました (#308)
+
+### Changed
+
+- 全コンポーネントを新セマンティックトークンへ移行しました。旧トークン（`bg-primary-500` 等）は beta 期間中は併存し、beta 終了時に削除予定です。移行には `npx --yes sparkle-design-cli@beta migrate` が使えます
+  - Divider / Link / Inline Message / Form (#301)
+  - Input / Textarea / Tag (#302)
+  - Button / Icon Button (#303)
+  - Checkbox / Radio / Switch (#327)
+  - Tabs (#328)
+  - Select / Slider / Badge / Breadcrumb (#329)
+  - Card / Dialog / Toast / Tooltip (#330)
+  - 状態に依存しない旧トークンの一括置換 (#300)
+- `sparkle-design.css` を `sparkle-design-cli@2.5.0-beta.4` で再生成しました（`border/warning` が yellow-400 に、`border/inverse` を新設）
+- `build:css` を `sparkle-design-cli@beta` で生成するようにしました（beta 期間中のみ）(#299)
+- `Publish to npm` workflow が version から dist-tag を決めるようになりました（`-beta.N` → `beta`、`-rc.N` → `next`）(#331)
+
+### Fixed
+
+- IconButton の `asChild` が子要素を描画しない問題と、native の `disabled` が配色に反映されない問題を修正 (#307)
+- Button の `asChild` まわりの挙動を IconButton と揃えました (#312)
+- `asChild` で無効化したときに `aria-disabled` 由来の配色が当たらない問題を修正 (#313)
+- button 専用の props を button 以外の差し込み先へ転送しないようにしました (#316)
+- ClickableCard 内のサブコンポーネントを `span` で描画し、`button` の中に不正な要素が入らないようにしました (#320)
+- Slider のつまみ（`role="slider"`）にアクセシブルネームを渡せるようにしました (#321)
+- FormItem の列トラックが親の幅を超えてはみ出す問題を修正 (#323)
+- Radio のラベルが存在しないトークン（`text-text-medium`）を参照して色が付いていなかった問題を修正し、`isInvalid` のとき `aria-invalid` を付けるようにしました (#327)
+- Tabs で、キーボードフォーカス中のタブに hover の配色が勝ってしまう問題を修正 (#328)
+
+
 ## [1.0.7] - 2026-07-21
 
 ### Security
