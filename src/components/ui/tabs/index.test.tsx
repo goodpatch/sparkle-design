@@ -65,8 +65,8 @@ describe("Tabs", () => {
         .getContainer()
         .querySelectorAll('[data-slot="tabs-trigger"]');
       // Then: solid
-      expect(triggers[0].className).toContain("rounded-t-md");
-      expect(triggers[1].className).toContain("rounded-t-md");
+      expect(triggers[0].className).toContain("rounded-t-action");
+      expect(triggers[1].className).toContain("rounded-t-action");
     });
 
     it("lineバリアントのクラスが正しく付与される", () => {
@@ -241,7 +241,7 @@ describe("Tabs", () => {
         .getContainer()
         .querySelector('[data-slot="tabs-trigger"]');
       // Then: solidバリアントのクラス
-      expect(trigger?.className).toContain("rounded-t-md");
+      expect(trigger?.className).toContain("rounded-t-action");
     });
     it("TabsContentはvalueが一致しない場合は非表示", () => {
       // Given: 2タブ構成

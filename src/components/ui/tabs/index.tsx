@@ -29,56 +29,60 @@ const tabsTriggerVariants = cva(
     variants: {
       variant: {
         solid: [
-          "rounded-t-md",
+          "rounded-t-action",
           // active
-          "data-[state=active]:bg-primary-500",
-          "data-[state=active]:text-white",
-          "hover:data-[state=active]:bg-primary-600",
-          "focus-visible:outline-none focus-visible:data-[state=active]:bg-primary-700",
+          "data-[state=active]:bg-surface-primary-high-enabled",
+          "data-[state=active]:text-text-inverse",
+          "hover:data-[state=active]:bg-surface-primary-high-hover",
+          "focus-visible:outline-none focus-visible:data-[state=active]:bg-surface-primary-high-active",
+          "disabled:data-[state=active]:bg-surface-primary-high-disabled",
           // inactive
           "data-[state=inactive]:bg-transparent",
-          "data-[state=inactive]:text-neutral-700",
-          "enabled:hover:data-[state=inactive]:bg-neutral-50",
-          "focus-visible:outline-none focus-visible:data-[state=inactive]:bg-neutral-100",
-          "focus-visible:data-[state=inactive]:text-primary-700",
+          "data-[state=inactive]:text-text-neutral-middle",
+          "enabled:hover:data-[state=inactive]:bg-surface-neutral-low-hover",
+          "focus-visible:outline-none focus-visible:data-[state=inactive]:bg-surface-neutral-low-active",
           // disabled
-          "disabled:data-[state=inactive]:text-neutral-200",
+          "disabled:data-[state=inactive]:text-text-neutral-disabled",
         ].join(" "),
         line: [
           "relative rounded-none border-none z-10 focus-visible:outline-none",
           "after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-2px] after:h-0.5 after:rounded after:pointer-events-none after:z-10",
           // active
-          "data-[state=active]:text-primary-500",
-          "data-[state=active]:after:bg-primary-500",
+          "data-[state=active]:text-text-primary-enabled",
+          "data-[state=active]:after:bg-border-primary-extra-high",
           "data-[state=active]:after:h-0.5",
+          "enabled:hover:data-[state=active]:bg-surface-primary-low-hover",
+          "enabled:hover:data-[state=active]:text-text-primary-hover",
+          "focus-visible:outline-none focus-visible:data-[state=active]:bg-surface-primary-low-active",
+          "focus-visible:data-[state=active]:text-text-primary-active",
           // inactive
-          "data-[state=inactive]:text-neutral-500",
+          "data-[state=inactive]:text-text-neutral-middle",
           "data-[state=inactive]:after:bg-transparent",
           // hover (inactive, not disabled)
-          "enabled:hover:data-[state=inactive]:bg-neutral-50",
-          "focus-visible:outline-none focus-visible:data-[state=active]:bg-neutral-100",
-          "focus-visible:data-[state=active]:text-primary-700",
-          "focus-visible:data-[state=inactive]:text-primary-700",
+          "enabled:hover:data-[state=inactive]:bg-surface-neutral-low-hover",
+          "focus-visible:outline-none focus-visible:data-[state=inactive]:bg-surface-neutral-low-active",
           // disabled
-          "disabled:data-[state=active]:text-neutral-200",
-          "disabled:data-[state=inactive]:text-neutral-200",
+          "disabled:data-[state=active]:text-text-primary-disabled",
+          "disabled:data-[state=active]:after:bg-border-primary-low",
+          "disabled:data-[state=inactive]:text-text-neutral-disabled",
         ].join(" "),
         ghost: [
-          "rounded-t-md border-x border-t border-b-0 border-transparent text-text-neutral-middle",
+          "rounded-t-action border-x border-t border-b-0 border-transparent text-text-neutral-middle",
           // active
           "data-[state=active]:text-text-neutral-high",
+          "data-[state=active]:bg-surface-base-0",
           "data-[state=active]:border-border-neutral-middle",
-          "hover:data-[state=active]:bg-neutral-50",
-          "data-[state=active]:rounded-t-md",
-          "focus-visible:outline-none focus-visible:data-[state=active]:bg-neutral-200",
+          "hover:data-[state=active]:bg-surface-neutral-low-hover",
+          "data-[state=active]:rounded-t-action",
+          "focus-visible:outline-none focus-visible:data-[state=active]:bg-surface-neutral-low-active",
           // inactive
-          "data-[state=inactive]:text-neutral-500",
-          "enabled:hover:data-[state=inactive]:bg-neutral-50",
-          "focus-visible:outline-none focus-visible:data-[state=inactive]:bg-neutral-100",
-          "focus-visible:data-[state=inactive]:text-primary-700",
+          "data-[state=inactive]:text-text-neutral-middle",
+          "enabled:hover:data-[state=inactive]:bg-surface-neutral-low-hover",
+          "focus-visible:outline-none focus-visible:data-[state=inactive]:bg-surface-neutral-low-active",
           // disabled
-          "disabled:data-[state=active]:text-neutral-200",
-          "disabled:data-[state=inactive]:text-neutral-200",
+          "disabled:data-[state=active]:text-text-neutral-disabled",
+          "disabled:data-[state=active]:bg-surface-base-0",
+          "disabled:data-[state=inactive]:text-text-neutral-disabled",
         ].join(" "),
       },
     },
@@ -95,8 +99,8 @@ type TabsTriggerProps = React.ComponentProps<typeof TabsPrimitive.Trigger> &
 const tabsListVariants = cva(["relative inline-flex items-center"], {
   variants: {
     variant: {
-      solid: "border-b-2 border-b-primary-500 rounded-none",
-      line: "border-b-2 border-b-neutral-200 rounded-none overflow-visible",
+      solid: "border-b-2 border-b-border-neutral-low rounded-none",
+      line: "border-b-2 border-b-border-neutral-low rounded-none overflow-visible",
       ghost: "",
     },
     scrollable: {
