@@ -52,27 +52,35 @@ jobs:
           # pre-release の命名ルール（sparkle-design-cli の publish.yml と同じ）:
           #   - `-beta.N`  → beta dist-tag
           #   - `-rc.N`    → next dist-tag
-          #   - それ以外 (-alpha.N 等) は未対応として exit 1
+          #   - それ以外 (-alpha.N 等) は channel の指定にかかわらず exit 1
           # 素の `npm publish` だと prerelease でも latest に載ってしまうため、
           # 必ず --tag を明示する。
           # en: Same naming rule as sparkle-design-cli. Always pass --tag so a
           # prerelease never lands on `latest`.
-          case "$VERSION" in
-            *-beta.*) AUTO="beta" ;;
-            *-rc.*)   AUTO="next" ;;
-            *-*)      AUTO="unsupported" ;;
-            *)        AUTO="latest" ;;
-          esac
+          # 形式は数値まで含めて完全一致で判定する（`1.2.3-beta.foo` や
+          # `1.2.3-foo-beta.4` を beta 扱いしない）。
+          # en: Match the full format, numeric parts included.
+          if [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+$ ]]; then
+            AUTO="beta"
+          elif [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-rc\.[0-9]+$ ]]; then
+            AUTO="next"
+          elif [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            AUTO="latest"
+          else
+            AUTO="unsupported"
+          fi
+
+          # channel を手動指定しても、未対応の version は先に止める。
+          # en: Reject unsupported versions before honoring a manual channel.
+          if [ "$AUTO" = "unsupported" ]; then
+            echo "::error::未対応の version です: $VERSION (サポートは X.Y.Z / X.Y.Z-beta.N / X.Y.Z-rc.N のみ)"
+            exit 1
+          fi
 
           if [ "$INPUT_CHANNEL" = "auto" ]; then
             CHANNEL="$AUTO"
           else
             CHANNEL="$INPUT_CHANNEL"
-          fi
-
-          if [ "$CHANNEL" = "unsupported" ]; then
-            echo "::error::未対応の prerelease version です: $VERSION (サポートは -beta.N / -rc.N のみ)"
-            exit 1
           fi
 
           case "$CHANNEL:$VERSION" in
