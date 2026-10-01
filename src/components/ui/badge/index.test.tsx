@@ -242,7 +242,7 @@ describe("Badge", () => {
       const badge = testContainer.querySelector("div");
 
       // Then: gapのクラスが適用されない
-      expect(badge.className).not.toContain("outline-white");
+      expect(badge.className).not.toContain("outline-border-inverse");
     });
 
     it("applies gap styles when isGapped is true", () => {
@@ -257,7 +257,7 @@ describe("Badge", () => {
       const badge = testContainer.querySelector("div");
 
       // Then: gapのクラスが適用される
-      expect(badge.className).toContain("outline-white");
+      expect(badge.className).toContain("outline-border-inverse");
       expect(badge.className).toContain("outline-4");
     });
 
@@ -281,7 +281,7 @@ describe("Badge", () => {
         const badge = testContainer.querySelector("div");
 
         // Then: 適切なアウトライン幅が適用される
-        expect(badge.className).toContain("outline-white");
+        expect(badge.className).toContain("outline-border-inverse");
         expect(badge.className).toContain(expectedOutline);
 
         // Clean up for next iteration

@@ -35,22 +35,22 @@ const badgeVariants = cva(
       {
         isGapped: true,
         size: "xs",
-        class: "outline-white outline-2",
+        class: "outline-border-inverse outline-2",
       },
       {
         isGapped: true,
         size: "sm",
-        class: "outline-white outline-4",
+        class: "outline-border-inverse outline-4",
       },
       {
         isGapped: true,
         size: "md",
-        class: "outline-white outline-4",
+        class: "outline-border-inverse outline-4",
       },
       {
         isGapped: true,
         size: "lg",
-        class: "outline-white outline-4",
+        class: "outline-border-inverse outline-4",
       },
       // 数字がない場合はheightを指定
       {

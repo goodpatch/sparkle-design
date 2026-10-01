@@ -424,7 +424,8 @@
 
   --color-border-info: var(--color-blue-300);
   --color-border-success: var(--color-green-300);
-  --color-border-warning: var(--color-yellow-300);
+  --color-border-warning: var(--color-yellow-400);
+  --color-border-inverse: var(--color-white);
   /* Figma の定義どおり blue/700 固定（primary 設定には追従しない）。
      旧 --color-ring-normal の移行先。
      en: Fixed to blue/700 exactly as defined in Figma — it does not follow
@@ -1112,6 +1113,7 @@
   --color-border-info: var(--color-border-info);
   --color-border-success: var(--color-border-success);
   --color-border-warning: var(--color-border-warning);
+  --color-border-inverse: var(--color-border-inverse);
   --color-border-ring: var(--color-border-ring);
 
   /* object — アイコン等の図形 */
@@ -1524,7 +1526,6 @@
     font-size: var(--icon-1-fill-0-font-size);
     font-weight: var(--icon-1-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
-    font-display: optional;
     letter-spacing: var(--icon-1-fill-0-letter-spacing);
     line-height: var(--icon-1-fill-0-line-height);
   }
@@ -1533,7 +1534,6 @@
     font-size: var(--icon-1-fill-1-font-size);
     font-weight: var(--icon-1-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
-    font-display: optional;
     letter-spacing: var(--icon-1-fill-1-letter-spacing);
     line-height: var(--icon-1-fill-1-line-height);
   }
@@ -1542,7 +1542,6 @@
     font-size: var(--icon-2-fill-0-font-size);
     font-weight: var(--icon-2-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
-    font-display: optional;
     letter-spacing: var(--icon-2-fill-0-letter-spacing);
     line-height: var(--icon-2-fill-0-line-height);
   }
@@ -1551,7 +1550,6 @@
     font-size: var(--icon-2-fill-1-font-size);
     font-weight: var(--icon-2-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
-    font-display: optional;
     letter-spacing: var(--icon-2-fill-1-letter-spacing);
     line-height: var(--icon-2-fill-1-line-height);
   }
@@ -1560,7 +1558,6 @@
     font-size: var(--icon-3-fill-0-font-size);
     font-weight: var(--icon-3-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
-    font-display: optional;
     letter-spacing: var(--icon-3-fill-0-letter-spacing);
     line-height: var(--icon-3-fill-0-line-height);
   }
@@ -1569,7 +1566,6 @@
     font-size: var(--icon-3-fill-1-font-size);
     font-weight: var(--icon-3-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
-    font-display: optional;
     letter-spacing: var(--icon-3-fill-1-letter-spacing);
     line-height: var(--icon-3-fill-1-line-height);
   }
@@ -1578,7 +1574,6 @@
     font-size: var(--icon-4-fill-0-font-size);
     font-weight: var(--icon-4-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
-    font-display: optional;
     letter-spacing: var(--icon-4-fill-0-letter-spacing);
     line-height: var(--icon-4-fill-0-line-height);
   }
@@ -1587,7 +1582,6 @@
     font-size: var(--icon-4-fill-1-font-size);
     font-weight: var(--icon-4-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
-    font-display: optional;
     letter-spacing: var(--icon-4-fill-1-letter-spacing);
     line-height: var(--icon-4-fill-1-line-height);
   }
@@ -1596,7 +1590,6 @@
     font-size: var(--icon-5-fill-0-font-size);
     font-weight: var(--icon-5-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
-    font-display: optional;
     letter-spacing: var(--icon-5-fill-0-letter-spacing);
     line-height: var(--icon-5-fill-0-line-height);
   }
@@ -1605,7 +1598,6 @@
     font-size: var(--icon-5-fill-1-font-size);
     font-weight: var(--icon-5-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
-    font-display: optional;
     letter-spacing: var(--icon-5-fill-1-letter-spacing);
     line-height: var(--icon-5-fill-1-line-height);
   }
@@ -1614,7 +1606,6 @@
     font-size: var(--icon-6-fill-0-font-size);
     font-weight: var(--icon-6-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
-    font-display: optional;
     letter-spacing: var(--icon-6-fill-0-letter-spacing);
     line-height: var(--icon-6-fill-0-line-height);
   }
@@ -1623,7 +1614,6 @@
     font-size: var(--icon-6-fill-1-font-size);
     font-weight: var(--icon-6-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
-    font-display: optional;
     letter-spacing: var(--icon-6-fill-1-letter-spacing);
     line-height: var(--icon-6-fill-1-line-height);
   }
@@ -1632,7 +1622,6 @@
     font-size: var(--icon-7-fill-0-font-size);
     font-weight: var(--icon-7-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
-    font-display: optional;
     letter-spacing: var(--icon-7-fill-0-letter-spacing);
     line-height: var(--icon-7-fill-0-line-height);
   }
@@ -1641,7 +1630,6 @@
     font-size: var(--icon-7-fill-1-font-size);
     font-weight: var(--icon-7-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
-    font-display: optional;
     letter-spacing: var(--icon-7-fill-1-letter-spacing);
     line-height: var(--icon-7-fill-1-line-height);
   }
@@ -1650,7 +1638,6 @@
     font-size: var(--icon-8-fill-0-font-size);
     font-weight: var(--icon-8-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
-    font-display: optional;
     letter-spacing: var(--icon-8-fill-0-letter-spacing);
     line-height: var(--icon-8-fill-0-line-height);
   }
@@ -1659,7 +1646,6 @@
     font-size: var(--icon-8-fill-1-font-size);
     font-weight: var(--icon-8-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
-    font-display: optional;
     letter-spacing: var(--icon-8-fill-1-letter-spacing);
     line-height: var(--icon-8-fill-1-line-height);
   }
@@ -1668,7 +1654,6 @@
     font-size: var(--icon-9-fill-0-font-size);
     font-weight: var(--icon-9-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
-    font-display: optional;
     letter-spacing: var(--icon-9-fill-0-letter-spacing);
     line-height: var(--icon-9-fill-0-line-height);
   }
@@ -1677,7 +1662,6 @@
     font-size: var(--icon-9-fill-1-font-size);
     font-weight: var(--icon-9-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
-    font-display: optional;
     letter-spacing: var(--icon-9-fill-1-letter-spacing);
     line-height: var(--icon-9-fill-1-line-height);
   }
@@ -1686,7 +1670,6 @@
     font-size: var(--icon-10-fill-0-font-size);
     font-weight: var(--icon-10-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
-    font-display: optional;
     letter-spacing: var(--icon-10-fill-0-letter-spacing);
     line-height: var(--icon-10-fill-0-line-height);
   }
@@ -1695,7 +1678,6 @@
     font-size: var(--icon-10-fill-1-font-size);
     font-weight: var(--icon-10-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
-    font-display: optional;
     letter-spacing: var(--icon-10-fill-1-letter-spacing);
     line-height: var(--icon-10-fill-1-line-height);
   }
@@ -1704,7 +1686,6 @@
     font-size: var(--icon-11-fill-0-font-size);
     font-weight: var(--icon-11-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
-    font-display: optional;
     letter-spacing: var(--icon-11-fill-0-letter-spacing);
     line-height: var(--icon-11-fill-0-line-height);
   }
@@ -1713,7 +1694,6 @@
     font-size: var(--icon-11-fill-1-font-size);
     font-weight: var(--icon-11-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
-    font-display: optional;
     letter-spacing: var(--icon-11-fill-1-letter-spacing);
     line-height: var(--icon-11-fill-1-line-height);
   }
@@ -1722,7 +1702,6 @@
     font-size: var(--icon-12-fill-0-font-size);
     font-weight: var(--icon-12-fill-0-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-0);
-    font-display: optional;
     letter-spacing: var(--icon-12-fill-0-letter-spacing);
     line-height: var(--icon-12-fill-0-line-height);
   }
@@ -1731,7 +1710,6 @@
     font-size: var(--icon-12-fill-1-font-size);
     font-weight: var(--icon-12-fill-1-font-weight);
     font-variation-settings: var(--font-weight-icon-fill-1);
-    font-display: optional;
     letter-spacing: var(--icon-12-fill-1-letter-spacing);
     line-height: var(--icon-12-fill-1-line-height);
   }
