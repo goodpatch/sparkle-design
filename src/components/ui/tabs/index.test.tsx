@@ -331,7 +331,9 @@ describe("Tabs", () => {
       ],
     ] as const)("applies %s trigger tokens", (variant, expected) => {
       const { trigger } = renderTabs(variant);
-      expected.forEach(cls => expect(trigger.className).toContain(cls));
+      expected.forEach(cls =>
+        expect(trigger.className.split(/\s+/)).toContain(cls)
+      );
     });
 
     it.each([
@@ -339,7 +341,7 @@ describe("Tabs", () => {
       ["line", "border-b-border-neutral-low"],
     ] as const)("uses %s list underline token", (variant, cls) => {
       const { list } = renderTabs(variant);
-      expect(list.className).toContain(cls);
+      expect(list.className.split(/\s+/)).toContain(cls);
     });
 
     it("ghost list has no underline", () => {
