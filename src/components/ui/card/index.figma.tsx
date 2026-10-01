@@ -65,7 +65,6 @@ figma.connect(
               Description
             </CardDescription>
           </CardTitle>
-          <CardControl>Control</CardControl>
         </CardHeader>
         <CardContent>Content</CardContent>
       </ClickableCard>

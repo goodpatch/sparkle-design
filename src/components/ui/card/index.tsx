@@ -6,6 +6,21 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * ClickableCard の内側かどうかを伝えるコンテキスト
+ * en: Context that tells whether a component is rendered inside ClickableCard
+ */
+const ClickableCardContext = React.createContext(false);
+
+/**
+ * Card のサブコンポーネントが描画する要素を返す。
+ * ClickableCard（`<button>`）の内側では phrasing content のみ許可されるため `span` を、それ以外では `div` を返す。
+ * en: Returns the element Card subcomponents render. Inside ClickableCard (`<button>`), only phrasing content is allowed, so it returns `span`; otherwise `div`.
+ */
+function useCardElement(): "div" | "span" {
+  return React.useContext(ClickableCardContext) ? "span" : "div";
+}
+
 export interface ClickableCardProps extends React.ComponentProps<"button"> {
   /**
    * クリック時の処理
@@ -33,6 +48,38 @@ export interface ClickableCardProps extends React.ComponentProps<"button"> {
  * </ClickableCard>
  * ```
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - ClickableCard は `<button>` を描画するため、内側には phrasing content しか置けません。`CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter` は ClickableCard の内側では自動的に `<span>` で描画されるので、これらで構成してください。`<div>` / `<p>` / 見出し要素を直書きしないでください。
+ *   en: ClickableCard renders a `<button>`, which only permits phrasing content. `CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter` automatically render as `<span>` inside ClickableCard, so compose the card with them. Do not write `<div>` / `<p>` / heading elements directly.
+ * - ClickableCard の内側に Button / IconButton / リンクなどの対話型要素（`CardControl` を含む）を置かないでください。ネストされた interactive 要素になり、アクセシビリティ違反になります。カード内に個別の操作が必要な場合は `Card` を使ってください。
+ *   en: Do not place interactive elements such as Button / IconButton / links (including `CardControl`) inside ClickableCard. They become nested interactive elements, which is an accessibility violation. Use `Card` when the card needs its own actions.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <ClickableCard onClick={handle}>
+ *   <CardHeader>
+ *     <CardTitle>タイトル</CardTitle>
+ *   </CardHeader>
+ *   <CardContent>コンテンツの内容</CardContent>
+ * </ClickableCard>
+ *
+ * // ❌ Wrong - div を直書きしない
+ * <ClickableCard onClick={handle}>
+ *   <div className="px-6">タイトル</div>
+ * </ClickableCard>
+ *
+ * // ❌ Wrong - 対話型要素を入れない
+ * <ClickableCard onClick={handle}>
+ *   <CardHeader>
+ *     <CardTitle>タイトル</CardTitle>
+ *     <CardControl>
+ *       <Button>編集</Button>
+ *     </CardControl>
+ *   </CardHeader>
+ * </ClickableCard>
+ * ```
+ *
  * @param {ClickableCardProps} props
  */
 function ClickableCard({
@@ -40,6 +87,7 @@ function ClickableCard({
   isDisabled,
   onClick,
   ref,
+  children,
   ...props
 }: ClickableCardProps) {
   return (
@@ -56,7 +104,11 @@ function ClickableCard({
       disabled={isDisabled}
       type="button"
       {...props}
-    />
+    >
+      <ClickableCardContext.Provider value={true}>
+        {children}
+      </ClickableCardContext.Provider>
+    </button>
   );
 }
 ClickableCard.displayName = "ClickableCard";
@@ -91,7 +143,7 @@ ClickableCard.displayName = "ClickableCard";
  *   en: Do not wrap `<Card>` with `<button>` / `<a>` / `role="button"`. Use the dedicated `ClickableCard` component for clickable cards.
  *
  * ```tsx
- * // ✅ Correct
+ * // ✅ Correct - CardHeader / CardTitle は ClickableCard の内側では <span> で描画される
  * <ClickableCard onClick={handle}>
  *   <CardHeader><CardTitle>タイトル</CardTitle></CardHeader>
  * </ClickableCard>
@@ -163,8 +215,9 @@ Card.displayName = "Card";
  *
  */
 function CardHeader({ className, ref, ...props }: React.ComponentProps<"div">) {
+  const Comp = useCardElement();
   return (
-    <div
+    <Comp
       ref={ref}
       className={cn(
         "flex flex-row gap-2 justify-between px-6 py-2 items-center",
@@ -177,8 +230,9 @@ function CardHeader({ className, ref, ...props }: React.ComponentProps<"div">) {
 CardHeader.displayName = "CardHeader";
 
 function CardTitle({ className, ref, ...props }: React.ComponentProps<"div">) {
+  const Comp = useCardElement();
   return (
-    <div
+    <Comp
       ref={ref}
       className={cn("character-4-bold-pro flex items-center gap-2", className)}
       {...props}
@@ -236,7 +290,14 @@ function CardDescription({
   ref,
   ...props
 }: React.ComponentProps<"div">) {
-  return <div ref={ref} className={cn("", className)} {...props} />;
+  const Comp = useCardElement();
+  return (
+    <Comp
+      ref={ref}
+      className={cn(Comp === "span" && "block", className)}
+      {...props}
+    />
+  );
 }
 CardDescription.displayName = "CardDescription";
 
@@ -280,8 +341,9 @@ function CardControl({
   ref,
   ...props
 }: React.ComponentProps<"div">) {
+  const Comp = useCardElement();
   return (
-    <div
+    <Comp
       ref={ref}
       className={cn("flex items-center gap-2", className)}
       {...props}
@@ -304,10 +366,15 @@ function CardContent({
   ref,
   ...props
 }: CardContentProps) {
+  const Comp = useCardElement();
   return (
-    <div
+    <Comp
       ref={ref}
-      className={cn(isSpace ? "px-6 py-2" : "", className)}
+      className={cn(
+        Comp === "span" && "block",
+        isSpace ? "px-6 py-2" : "",
+        className
+      )}
       {...props}
     />
   );
@@ -315,8 +382,9 @@ function CardContent({
 CardContent.displayName = "CardContent";
 
 function CardFooter({ className, ref, ...props }: React.ComponentProps<"div">) {
+  const Comp = useCardElement();
   return (
-    <div
+    <Comp
       ref={ref}
       className={cn("flex items-center justify-end px-6 py-2", className)}
       {...props}
