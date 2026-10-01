@@ -5,6 +5,11 @@
 
 ## [Unreleased]
 
+### Changed
+
+- 1.x を React 18 向けの**非推奨（deprecated）メンテナンスライン**とし、この `v1` ブランチで続けます。不具合・セキュリティの修正と、最新の CLI と噛み合わせるためのトークン・スタイルの追従だけを行います。React 19 以上は 2.x をお使いください
+- npm への公開を trusted publishing（OIDC）による staged publishing に切り替えました（main の #335 / #336 と同じワークフロー）。CI は stage まで、公開はメンテナーが 2FA で承認します。2.x が `latest` になった後は `latest-1` に載ります
+
 ## [1.0.7] - 2026-07-21
 
 ### Security
