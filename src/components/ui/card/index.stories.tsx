@@ -103,21 +103,16 @@ export const Clickable: ClickableStory = {
         <CardTitle>
           {args.title}
           <CardDescription className="character-3-regular-pro text-text-low">
-            <div className="border border-dashed border-purple-300 text-purple-300">
+            <span className="block border border-dashed border-purple-300 text-purple-300">
               SLOT
-            </div>
+            </span>
           </CardDescription>
         </CardTitle>
-        <CardControl>
-          <div className="border border-dashed border-purple-300 text-purple-300">
-            SLOT
-          </div>
-        </CardControl>
       </CardHeader>
       <CardContent isSpace={args.isSpace}>
-        <div className="border border-dashed border-purple-300 text-purple-300 w-[272px]">
+        <span className="block border border-dashed border-purple-300 text-purple-300 w-[272px]">
           SLOT
-        </div>
+        </span>
       </CardContent>
     </ClickableCard>
   ),
@@ -148,21 +143,16 @@ export const ClickableDisabled: ClickableStory = {
         <CardTitle>
           {args.title}
           <CardDescription className="character-3-regular-pro text-text-low">
-            <div className="border border-dashed border-purple-300 text-purple-300">
+            <span className="block border border-dashed border-purple-300 text-purple-300">
               SLOT
-            </div>
+            </span>
           </CardDescription>
         </CardTitle>
-        <CardControl>
-          <div className="border border-dashed border-purple-300 text-purple-300">
-            SLOT
-          </div>
-        </CardControl>
       </CardHeader>
       <CardContent isSpace={args.isSpace}>
-        <div className="border border-dashed border-purple-300 text-purple-300 w-[272px]">
+        <span className="block border border-dashed border-purple-300 text-purple-300 w-[272px]">
           SLOT
-        </div>
+        </span>
       </CardContent>
     </ClickableCard>
   ),

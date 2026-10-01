@@ -6,6 +6,26 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * Card のサブコンポーネントが描画する要素
+ * en: Element rendered by Card subcomponents
+ */
+type CardPartElement = "div" | "span";
+
+export interface CardPartProps extends React.HTMLAttributes<HTMLElement> {
+  /**
+   * 描画する要素。ClickableCard（`<button>`）の内側では phrasing content のみ許可されるため `"span"` を使います。ClickableCard の JSX 内に直接書いたサブコンポーネントには自動で `"span"` が付与されます。
+   * en: Element to render. Inside ClickableCard (`<button>`), only phrasing content is allowed, so use `"span"`. Subcomponents written directly in ClickableCard's JSX get `"span"` automatically.
+   * @default "div"
+   */
+  as?: CardPartElement;
+  /**
+   * ルート要素への ref。`as` で `<span>` を描画するケースがあるため `HTMLElement` で受けます。
+   * en: Ref to the root element. Typed as `HTMLElement` because `as` may render a `<span>`.
+   */
+  ref?: React.Ref<HTMLElement>;
+}
+
 export interface ClickableCardProps extends React.ComponentProps<"button"> {
   /**
    * クリック時の処理
@@ -33,6 +53,38 @@ export interface ClickableCardProps extends React.ComponentProps<"button"> {
  * </ClickableCard>
  * ```
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - ClickableCard は `<button>` を描画するため、内側では `<div>` / `<p>` / 見出し要素は使わないでください（phrasing content のみ許可）。`CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter` で構成してください。ClickableCard の JSX 内に直接書いたものには自動で `as="span"` が付与されます。独自コンポーネントで包む場合や Promise（非同期）で渡す場合は `as="span"` を明示してください。
+ *   en: ClickableCard renders a `<button>`, so do not use `<div>` / `<p>` / heading elements inside it (only phrasing content is allowed). Compose the card with `CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter`. Those written directly in ClickableCard's JSX get `as="span"` automatically; when you wrap them in your own component or pass them as a Promise (async), set `as="span"` explicitly.
+ * - ClickableCard の内側では Button / IconButton / リンクなどの対話型要素（`CardControl` を含む）を使わないでください。ネストされた interactive 要素になり、アクセシビリティ違反になります。カード内に個別の操作が必要な場合は `Card` を使ってください。
+ *   en: Do not use interactive elements such as Button / IconButton / links (including `CardControl`) inside ClickableCard. They become nested interactive elements, which is an accessibility violation. Use `Card` when the card needs its own actions.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <ClickableCard onClick={handle}>
+ *   <CardHeader>
+ *     <CardTitle>タイトル</CardTitle>
+ *   </CardHeader>
+ *   <CardContent>コンテンツの内容</CardContent>
+ * </ClickableCard>
+ *
+ * // ❌ Wrong - div を直書きしない
+ * <ClickableCard onClick={handle}>
+ *   <div className="px-6">タイトル</div>
+ * </ClickableCard>
+ *
+ * // ❌ Wrong - 対話型要素を入れない
+ * <ClickableCard onClick={handle}>
+ *   <CardHeader>
+ *     <CardTitle>タイトル</CardTitle>
+ *     <CardControl>
+ *       <Button>編集</Button>
+ *     </CardControl>
+ *   </CardHeader>
+ * </ClickableCard>
+ * ```
+ *
  * @param {ClickableCardProps} props
  */
 function ClickableCard({
@@ -40,6 +92,7 @@ function ClickableCard({
   isDisabled,
   onClick,
   ref,
+  children,
   ...props
 }: ClickableCardProps) {
   return (
@@ -56,7 +109,9 @@ function ClickableCard({
       disabled={isDisabled}
       type="button"
       {...props}
-    />
+    >
+      {toPhrasingContent(children)}
+    </button>
   );
 }
 ClickableCard.displayName = "ClickableCard";
@@ -91,7 +146,7 @@ ClickableCard.displayName = "ClickableCard";
  *   en: Do not wrap `<Card>` with `<button>` / `<a>` / `role="button"`. Use the dedicated `ClickableCard` component for clickable cards.
  *
  * ```tsx
- * // ✅ Correct
+ * // ✅ Correct - CardHeader / CardTitle は ClickableCard の内側では <span> で描画される
  * <ClickableCard onClick={handle}>
  *   <CardHeader><CardTitle>タイトル</CardTitle></CardHeader>
  * </ClickableCard>
@@ -162,10 +217,15 @@ Card.displayName = "Card";
  * ```
  *
  */
-function CardHeader({ className, ref, ...props }: React.ComponentProps<"div">) {
+function CardHeader({
+  as: Comp = "div",
+  className,
+  ref,
+  ...props
+}: CardPartProps) {
   return (
-    <div
-      ref={ref}
+    <Comp
+      ref={ref as React.Ref<HTMLDivElement & HTMLSpanElement>}
       className={cn(
         "flex flex-row gap-2 justify-between px-6 py-2 items-center",
         className
@@ -176,10 +236,15 @@ function CardHeader({ className, ref, ...props }: React.ComponentProps<"div">) {
 }
 CardHeader.displayName = "CardHeader";
 
-function CardTitle({ className, ref, ...props }: React.ComponentProps<"div">) {
+function CardTitle({
+  as: Comp = "div",
+  className,
+  ref,
+  ...props
+}: CardPartProps) {
   return (
-    <div
-      ref={ref}
+    <Comp
+      ref={ref as React.Ref<HTMLDivElement & HTMLSpanElement>}
       className={cn("character-4-bold-pro flex items-center gap-2", className)}
       {...props}
     />
@@ -229,14 +294,21 @@ CardTitle.displayName = "CardTitle";
  * </CardTitle>
  * ```
  *
- * @param {React.ComponentProps<"div">} props
+ * @param {CardPartProps} props
  */
 function CardDescription({
+  as: Comp = "div",
   className,
   ref,
   ...props
-}: React.ComponentProps<"div">) {
-  return <div ref={ref} className={cn("", className)} {...props} />;
+}: CardPartProps) {
+  return (
+    <Comp
+      ref={ref as React.Ref<HTMLDivElement & HTMLSpanElement>}
+      className={cn(Comp === "span" && "block", className)}
+      {...props}
+    />
+  );
 }
 CardDescription.displayName = "CardDescription";
 
@@ -273,16 +345,17 @@ CardDescription.displayName = "CardDescription";
  * </CardControl>
  * ```
  *
- * @param {React.ComponentProps<"div">} props
+ * @param {CardPartProps} props
  */
 function CardControl({
+  as: Comp = "div",
   className,
   ref,
   ...props
-}: React.ComponentProps<"div">) {
+}: CardPartProps) {
   return (
-    <div
-      ref={ref}
+    <Comp
+      ref={ref as React.Ref<HTMLDivElement & HTMLSpanElement>}
       className={cn("flex items-center gap-2", className)}
       {...props}
     />
@@ -290,7 +363,7 @@ function CardControl({
 }
 CardControl.displayName = "CardControl";
 
-export interface CardContentProps extends React.ComponentProps<"div"> {
+export interface CardContentProps extends CardPartProps {
   /**
    * スペースを入れるかどうか
    * en: Whether to add spacing
@@ -299,31 +372,107 @@ export interface CardContentProps extends React.ComponentProps<"div"> {
 }
 
 function CardContent({
+  as: Comp = "div",
   className,
   isSpace = true,
   ref,
   ...props
 }: CardContentProps) {
   return (
-    <div
-      ref={ref}
-      className={cn(isSpace ? "px-6 py-2" : "", className)}
+    <Comp
+      ref={ref as React.Ref<HTMLDivElement & HTMLSpanElement>}
+      className={cn(
+        Comp === "span" && "block",
+        isSpace ? "px-6 py-2" : "",
+        className
+      )}
       {...props}
     />
   );
 }
 CardContent.displayName = "CardContent";
 
-function CardFooter({ className, ref, ...props }: React.ComponentProps<"div">) {
+function CardFooter({
+  as: Comp = "div",
+  className,
+  ref,
+  ...props
+}: CardPartProps) {
   return (
-    <div
-      ref={ref}
+    <Comp
+      ref={ref as React.Ref<HTMLDivElement & HTMLSpanElement>}
       className={cn("flex items-center justify-end px-6 py-2", className)}
       {...props}
     />
   );
 }
 CardFooter.displayName = "CardFooter";
+
+/**
+ * ClickableCard の内側で `<span>` 描画に切り替える Card のサブコンポーネント
+ * en: Card subcomponents switched to `<span>` rendering inside ClickableCard
+ */
+const CARD_PARTS = new Set<unknown>([
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardControl,
+  CardContent,
+  CardFooter,
+]);
+
+/**
+ * ClickableCard の children を走査し、Card のサブコンポーネントに `as="span"` を付与する。
+ * hooks（Context）を使わないため Server Component でも動作する。走査対象は Card のサブコンポーネント・Fragment・HTML 要素のみで、独自コンポーネントの内側には入らない。明示された `as` は上書きしない。
+ * Promise の children は変換しない（`.then` で包むと描画ごとに新しい Promise になり再サスペンドを招くため）。解決後の Card のサブコンポーネントには `as="span"` を明示してもらう。
+ * en: Walks ClickableCard's children and adds `as="span"` to Card subcomponents.
+ * It uses no hooks (Context), so it also works in Server Components. It only descends into Card subcomponents, Fragments and HTML elements, never into custom components. An explicit `as` is never overridden.
+ * Promise children are left untouched (wrapping them with `.then` would create a new Promise on every render and re-suspend), so their resolved Card subcomponents must set `as="span"` explicitly.
+ */
+function toPhrasingContent(node: React.ReactNode): React.ReactNode {
+  if (Array.isArray(node)) {
+    return node.map(toPhrasingContent);
+  }
+  if (React.isValidElement<CardPartProps>(node)) {
+    return cloneAsPhrasing(node);
+  }
+  // Set やジェネレーターなど配列以外の iterable も React は children として描画するため配列化して走査する
+  // en: React also renders non-array iterables (Set, generators, ...) as children, so convert them to arrays and walk them
+  if (node !== null && typeof node === "object" && Symbol.iterator in node) {
+    return Array.from(node as Iterable<React.ReactNode>, toPhrasingContent);
+  }
+  return node;
+}
+
+/**
+ * 単一の要素に `as="span"` を付与し、その children を再帰的に走査する
+ * en: Adds `as="span"` to a single element and walks its children recursively
+ */
+function cloneAsPhrasing(
+  node: React.ReactElement<CardPartProps>
+): React.ReactNode {
+  const isCardPart = CARD_PARTS.has(node.type);
+  if (
+    !isCardPart &&
+    node.type !== React.Fragment &&
+    typeof node.type !== "string"
+  ) {
+    return node;
+  }
+  const { as, children } = node.props;
+  const shouldSetAs = isCardPart && as === undefined;
+  if (children === undefined && !shouldSetAs) {
+    return node;
+  }
+  // children は props 経由で渡す（可変長引数で配列を渡すと key 警告が出るため）
+  // en: Pass children via props (passing an array as a rest argument triggers key warnings)
+  return React.cloneElement(node, {
+    ...(shouldSetAs ? { as: "span" as const } : {}),
+    ...(children === undefined
+      ? {}
+      : { children: toPhrasingContent(children) }),
+  });
+}
 
 export {
   ClickableCard,

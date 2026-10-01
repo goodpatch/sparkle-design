@@ -610,9 +610,287 @@ describe("Card Components", () => {
       // When: カード全体をクリック
       const card = testContainer.querySelector("button");
 
-      // Then: カード全体がクリック可能
+      // Then: カード全体がクリック可能で、button 内に div（flow content）を含まない
       expect(card).toBeTruthy();
       expect((card as HTMLButtonElement).type).toBe("button");
+      expect(card.querySelectorAll("div")).toHaveLength(0);
+    });
+  });
+
+  describe("Inside ClickableCard", () => {
+    /**
+     * ClickableCard 内で span（phrasing content）として描画されるサブコンポーネント
+     * en: Subcomponents rendered as span (phrasing content) inside ClickableCard
+     */
+    const SUBCOMPONENT_CASES = [
+      { name: "CardHeader", Component: CardHeader, displayClass: "flex" },
+      { name: "CardTitle", Component: CardTitle, displayClass: "flex" },
+      {
+        name: "CardDescription",
+        Component: CardDescription,
+        displayClass: "block",
+      },
+      { name: "CardControl", Component: CardControl, displayClass: "flex" },
+      { name: "CardContent", Component: CardContent, displayClass: "block" },
+      { name: "CardFooter", Component: CardFooter, displayClass: "flex" },
+    ] as const;
+
+    it.each(SUBCOMPONENT_CASES)(
+      "renders $name as a span with $displayClass display inside ClickableCard",
+      ({ Component, displayClass }) => {
+        // Given: ClickableCard 内のサブコンポーネント
+        testContainer.render(
+          <ClickableCard>
+            <Component data-testid="sub">Content</Component>
+          </ClickableCard>
+        );
+
+        // When: サブコンポーネントの要素を取得
+        const sub = testContainer.querySelector('[data-testid="sub"]');
+
+        // Then: span として描画され、ブロックレベルの見た目を保つ
+        expect(sub.tagName).toBe("SPAN");
+        expect(sub.classList.contains(displayClass)).toBe(true);
+      }
+    );
+
+    it.each(SUBCOMPONENT_CASES)(
+      "renders $name as a div outside ClickableCard",
+      ({ Component }) => {
+        // Given: Card 内のサブコンポーネント
+        testContainer.render(
+          <Card>
+            <Component data-testid="sub">Content</Component>
+          </Card>
+        );
+
+        // When: サブコンポーネントの要素を取得
+        const sub = testContainer.querySelector('[data-testid="sub"]');
+
+        // Then: div として描画され、block クラスは付与されない
+        expect(sub.tagName).toBe("DIV");
+        expect(sub.classList.contains("block")).toBe(false);
+      }
+    );
+
+    it("keeps base classes of CardHeader and CardTitle when rendered as span", () => {
+      // Given: ClickableCard 内の CardHeader / CardTitle
+      testContainer.render(
+        <ClickableCard>
+          <CardHeader data-testid="header">
+            <CardTitle data-testid="title">タイトル</CardTitle>
+          </CardHeader>
+        </ClickableCard>
+      );
+
+      // When: 要素を取得
+      const header = testContainer.querySelector('[data-testid="header"]');
+      const title = testContainer.querySelector('[data-testid="title"]');
+
+      // Then: div 版と同じクラスが適用される
+      TestHelpers.expectClassesToExist(header, [
+        "flex",
+        "flex-row",
+        "gap-2",
+        "justify-between",
+        "px-6",
+        "py-2",
+        "items-center",
+      ]);
+      TestHelpers.expectClassesToExist(title, [
+        "character-4-bold-pro",
+        "flex",
+        "items-center",
+        "gap-2",
+      ]);
+    });
+
+    it("forwards ref to the rendered span", () => {
+      // Given: ref 付きの CardTitle
+      const ref = React.createRef<HTMLDivElement>();
+      testContainer.render(
+        <ClickableCard>
+          <CardTitle ref={ref}>タイトル</CardTitle>
+        </ClickableCard>
+      );
+
+      // Then: ref は描画された span を指す
+      expect(ref.current?.tagName).toBe("SPAN");
+    });
+
+    it("respects an explicit as prop inside and outside ClickableCard", () => {
+      // Given: as を明示したサブコンポーネント
+      testContainer.render(
+        <>
+          <ClickableCard>
+            <CardTitle as="div" data-testid="inside-div">
+              Inside
+            </CardTitle>
+          </ClickableCard>
+          <Card>
+            <CardTitle as="span" data-testid="outside-span">
+              Outside
+            </CardTitle>
+          </Card>
+        </>
+      );
+
+      // When: 各要素を取得
+      const insideDiv = testContainer.querySelector(
+        '[data-testid="inside-div"]'
+      );
+      const outsideSpan = testContainer.querySelector(
+        '[data-testid="outside-span"]'
+      );
+
+      // Then: 明示した as が優先される
+      expect(insideDiv.tagName).toBe("DIV");
+      expect(outsideSpan.tagName).toBe("SPAN");
+    });
+
+    it("applies span through Fragments, HTML elements and mapped arrays", () => {
+      // Given: Fragment・HTML 要素・配列の中にあるサブコンポーネント
+      const items = ["a", "b"];
+      const consoleError = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
+      testContainer.render(
+        <ClickableCard>
+          <>
+            <CardTitle data-testid="in-fragment">Fragment</CardTitle>
+          </>
+          <span>
+            <CardDescription data-testid="in-span">Span</CardDescription>
+          </span>
+          {items.map(item => (
+            <CardContent key={item} data-testid={`item-${item}`}>
+              {item}
+            </CardContent>
+          ))}
+        </ClickableCard>
+      );
+
+      // Then: すべて span で描画され、key 警告も出ない
+      ["in-fragment", "in-span", "item-a", "item-b"].forEach(id => {
+        expect(
+          testContainer.querySelector(`[data-testid="${id}"]`).tagName
+        ).toBe("SPAN");
+      });
+      expect(consoleError).not.toHaveBeenCalled();
+      consoleError.mockRestore();
+    });
+
+    it("applies span to non-array iterable children such as Set and generators", () => {
+      // Given: Set とジェネレーターで渡したサブコンポーネント
+      function* generateTitles() {
+        yield (
+          <CardTitle key="gen" data-testid="in-generator">
+            Generator
+          </CardTitle>
+        );
+      }
+      testContainer.render(
+        <ClickableCard>
+          {
+            new Set([
+              <CardTitle key="set" data-testid="in-set">
+                Set
+              </CardTitle>,
+            ])
+          }
+          {generateTitles()}
+        </ClickableCard>
+      );
+
+      // Then: どちらも span で描画される
+      expect(
+        testContainer.querySelector('[data-testid="in-set"]').tagName
+      ).toBe("SPAN");
+      expect(
+        testContainer.querySelector('[data-testid="in-generator"]').tagName
+      ).toBe("SPAN");
+    });
+
+    it("leaves Promise children untouched (async Card parts need an explicit as)", () => {
+      // Given: Promise で渡した children
+      const promise = Promise.resolve(<CardTitle>Async</CardTitle>);
+
+      // When: ClickableCard を関数として呼び出す
+      const button = ClickableCard({ children: promise });
+
+      // Then: 同一の Promise がそのまま渡される（描画ごとに新しい Promise を作らない）
+      expect(button.props.children).toBe(promise);
+    });
+
+    it("does not descend into custom components", () => {
+      // Given: 独自コンポーネント（render prop を含む）で包んだサブコンポーネント
+      const Wrapper = ({ children }: { children: React.ReactNode }) => (
+        <>{children}</>
+      );
+      const RenderProp = ({
+        children,
+      }: {
+        children: (label: string) => React.ReactNode;
+      }) => <>{children("render prop")}</>;
+      testContainer.render(
+        <ClickableCard>
+          <Wrapper>
+            <CardTitle data-testid="wrapped">Wrapped</CardTitle>
+            <CardTitle as="span" data-testid="wrapped-explicit">
+              Explicit
+            </CardTitle>
+          </Wrapper>
+          <RenderProp>
+            {label => <span data-testid="render-prop">{label}</span>}
+          </RenderProp>
+        </ClickableCard>
+      );
+
+      // Then: 独自コンポーネント内は自動付与されず（as の明示が必要）、render prop も壊れない
+      expect(
+        testContainer.querySelector('[data-testid="wrapped"]').tagName
+      ).toBe("DIV");
+      expect(
+        testContainer.querySelector('[data-testid="wrapped-explicit"]').tagName
+      ).toBe("SPAN");
+      expect(
+        testContainer.querySelector('[data-testid="render-prop"]').textContent
+      ).toBe("render prop");
+    });
+
+    it("uses no hooks so it stays Server Component compatible", () => {
+      // Given/When: React の描画外で関数として直接呼び出す（hooks を使うと Invalid hook call になる）
+      // Then: 例外なく要素を返し、ClickableCard は子に as="span" を付与する
+      expect(() => CardTitle({ children: "Title" })).not.toThrow();
+      const button = ClickableCard({
+        children: <CardTitle>Title</CardTitle>,
+      });
+      const child = button.props.children as React.ReactElement<{
+        as?: string;
+      }>;
+      expect(child.props.as).toBe("span");
+    });
+
+    it("renders span only within the ClickableCard subtree", () => {
+      // Given: ClickableCard の外にある Card（兄弟要素）
+      testContainer.render(
+        <>
+          <ClickableCard>
+            <CardTitle data-testid="inside">Inside</CardTitle>
+          </ClickableCard>
+          <Card>
+            <CardTitle data-testid="outside">Outside</CardTitle>
+          </Card>
+        </>
+      );
+
+      // When: 各 CardTitle を取得
+      const inside = testContainer.querySelector('[data-testid="inside"]');
+      const outside = testContainer.querySelector('[data-testid="outside"]');
+
+      // Then: ClickableCard の内側だけ span になる
+      expect(inside.tagName).toBe("SPAN");
+      expect(outside.tagName).toBe("DIV");
     });
   });
 
