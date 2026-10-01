@@ -10,7 +10,56 @@ import {
   A11yHelpers,
   StyleHelpers,
 } from "@/test/helpers";
+import { screen } from "@testing-library/react";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormErrorMessage,
+  FormField,
+  FormHeader,
+  FormHelperMessage,
+  FormItem,
+} from "../form";
 import { Slider } from "./index";
+
+/**
+ * Form と組み合わせた Slider のテスト用コンポーネント
+ * en: Test component combining Slider with Form
+ */
+function SliderFormComponent({ errorMessage }: { errorMessage?: string }) {
+  const form = useForm<{ satisfaction: number }>({
+    defaultValues: { satisfaction: 30 },
+  });
+
+  React.useEffect(() => {
+    if (errorMessage) {
+      form.setError("satisfaction", { message: errorMessage });
+    }
+  }, [errorMessage, form]);
+
+  return (
+    <Form {...form}>
+      <FormField
+        control={form.control}
+        name="satisfaction"
+        render={({ field }) => (
+          <FormItem>
+            <FormHeader label="満足度" />
+            <FormControl>
+              <Slider
+                value={[field.value]}
+                onValueChange={([v]) => field.onChange(v)}
+              />
+            </FormControl>
+            <FormHelperMessage>0〜100で選択してください</FormHelperMessage>
+            <FormErrorMessage />
+          </FormItem>
+        )}
+      />
+    </Form>
+  );
+}
 
 describe("Slider", () => {
   let testContainer: TestContainer;
@@ -364,6 +413,133 @@ describe("Slider", () => {
       const sliderThumb = getSliderThumb(testContainer.getContainer());
 
       expect(sliderThumb).toHaveAttribute("aria-valuenow", "75");
+    });
+
+    describe("Accessible name", () => {
+      it("aria-label を role=slider のつまみに付与する", () => {
+        testContainer.render(<Slider aria-label="満足度" />);
+
+        expect(
+          screen.getByRole("slider", { name: "満足度" })
+        ).toBeInTheDocument();
+      });
+
+      it("aria-label を Root には付与しない", () => {
+        testContainer.render(<Slider aria-label="満足度" />);
+
+        const sliderRoot = getSliderRoot(testContainer.getContainer());
+        expect(sliderRoot).not.toHaveAttribute("aria-label");
+      });
+
+      it("aria-labelledby で参照した要素のテキストがつまみの名前になる", () => {
+        testContainer.render(
+          <>
+            <span id="volume-label">音量</span>
+            <Slider aria-labelledby="volume-label" />
+          </>
+        );
+
+        expect(
+          screen.getByRole("slider", { name: "音量" })
+        ).toBeInTheDocument();
+      });
+
+      it("id / aria-describedby / aria-invalid をつまみに付与する", () => {
+        testContainer.render(
+          <Slider id="s1" aria-describedby="s1-help" aria-invalid />
+        );
+
+        const sliderThumb = getSliderThumb(testContainer.getContainer());
+        const sliderRoot = getSliderRoot(testContainer.getContainer());
+
+        expect(sliderThumb).toHaveAttribute("id", "s1");
+        expect(sliderThumb).toHaveAttribute("aria-describedby", "s1-help");
+        expect(sliderThumb).toHaveAttribute("aria-invalid", "true");
+        expect(sliderRoot).not.toHaveAttribute("id");
+      });
+
+      it("id を htmlFor で指す id 付きの label を aria-labelledby で関連付ける", () => {
+        testContainer.render(
+          <>
+            <label id="brightness-label" htmlFor="brightness">
+              明るさ
+            </label>
+            <Slider id="brightness" />
+          </>
+        );
+
+        const sliderThumb = screen.getByRole("slider", { name: "明るさ" });
+        expect(sliderThumb).toHaveAttribute(
+          "aria-labelledby",
+          "brightness-label"
+        );
+      });
+
+      it("明示的な aria-label がある場合は label を自動で関連付けない", () => {
+        testContainer.render(
+          <>
+            <label id="brightness-label" htmlFor="brightness">
+              明るさ
+            </label>
+            <Slider id="brightness" aria-label="画面の明るさ" />
+          </>
+        );
+
+        const sliderThumb = screen.getByRole("slider", {
+          name: "画面の明るさ",
+        });
+        expect(sliderThumb).not.toHaveAttribute("aria-labelledby");
+      });
+
+      it("id を持たない label しかない場合は aria-labelledby を付与しない", () => {
+        testContainer.render(
+          <>
+            <label htmlFor="brightness">明るさ</label>
+            <Slider id="brightness" />
+          </>
+        );
+
+        const sliderThumb = getSliderThumb(testContainer.getContainer());
+        expect(sliderThumb).not.toHaveAttribute("aria-labelledby");
+      });
+    });
+
+    describe("With Form", () => {
+      it("FormHeader のラベルがつまみの名前になる", () => {
+        testContainer.render(<SliderFormComponent />);
+
+        const sliderThumb = screen.getByRole("slider", { name: "満足度" });
+        expect(sliderThumb).toHaveAttribute("aria-valuenow", "30");
+      });
+
+      it("FormLabel の htmlFor がつまみの id を指す", () => {
+        testContainer.render(<SliderFormComponent />);
+
+        const label = screen.getByText("満足度").closest("label");
+        const sliderThumb = screen.getByRole("slider");
+        expect(label).toHaveAttribute("for", sliderThumb.id);
+      });
+
+      it("FormHelperMessage がつまみの説明として関連付く", () => {
+        testContainer.render(<SliderFormComponent />);
+
+        expect(
+          screen.getByRole("slider", {
+            description: "0〜100で選択してください",
+          })
+        ).toBeInTheDocument();
+      });
+
+      it("エラー時につまみへ aria-invalid とエラーメッセージの説明が付く", async () => {
+        testContainer.render(
+          <SliderFormComponent errorMessage="満足度を選択してください" />
+        );
+
+        const sliderThumb = await screen.findByRole("slider", {
+          description: /満足度を選択してください/,
+        });
+        expect(sliderThumb).toHaveAttribute("aria-invalid", "true");
+      });
     });
   });
 

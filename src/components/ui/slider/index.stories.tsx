@@ -38,6 +38,14 @@ const meta: Meta<typeof Slider> = {
         defaultValue: { summary: "false" },
       },
     },
+    "aria-label": {
+      control: "text",
+      description:
+        "つまみ（role=slider）のアクセシブルネーム / en: Accessible name of the thumb (role=slider)",
+      table: {
+        type: { summary: "string" },
+      },
+    },
     className: {
       control: "text",
       table: {
@@ -52,6 +60,7 @@ type Story = StoryObj<typeof Slider>;
 
 export const Default: Story = {
   args: {
+    "aria-label": "音量",
     defaultValue: [50],
     max: 100,
     step: 1,
@@ -65,6 +74,7 @@ export const Default: Story = {
 
 export const Disabled: Story = {
   args: {
+    "aria-label": "音量",
     defaultValue: [50],
     max: 100,
     step: 1,
@@ -79,6 +89,7 @@ export const Disabled: Story = {
 
 export const Controlled: Story = {
   args: {
+    "aria-label": "音量",
     max: 100,
     step: 1,
   },
@@ -96,6 +107,7 @@ export const Controlled: Story = {
 
 export const WithUnit: Story = {
   args: {
+    "aria-label": "進捗率",
     defaultValue: [25],
     max: 100,
     step: 1,
@@ -104,6 +116,22 @@ export const WithUnit: Story = {
   render: ({ className, ...props }) => (
     <div className="flex flex-col items-center justify-center w-[240px]">
       <Slider {...props} />
+    </div>
+  ),
+};
+
+export const WithVisibleLabel: Story = {
+  args: {
+    defaultValue: [50],
+    max: 100,
+    step: 1,
+  },
+  render: ({ className, ...props }) => (
+    <div className="flex flex-col gap-2 w-[240px]">
+      <span id="slider-story-label" className="character-3-regular-pro">
+        明るさ
+      </span>
+      <Slider {...props} aria-labelledby="slider-story-label" />
     </div>
   ),
 };

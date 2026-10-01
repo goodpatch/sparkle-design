@@ -133,6 +133,7 @@ const useFormField = () => {
     id,
     name: fieldContext.name,
     formItemId: `${id}-form-item`,
+    formLabelId: `${id}-form-item-label`,
     formDescriptionId: `${id}-form-item-description`,
     formMessageId: `${id}-form-item-message`,
     ...fieldState,
@@ -184,13 +185,18 @@ function FormLabel({
   className,
   ...props
 }: React.ComponentProps<typeof LabelPrimitive.Root>) {
-  const { error, formItemId } = useFormField();
+  const { error, formItemId, formLabelId } = useFormField();
 
   return (
     <Label
       data-slot="form-label"
       data-error={!!error}
       className={className}
+      // id を付与し、label[for] が効かない role ベースのコントロール（Slider など）から
+      // aria-labelledby で参照できるようにする
+      // en: Give the label an id so role-based controls that label[for] cannot name
+      //     (e.g. Slider) can reference it via aria-labelledby
+      id={formLabelId}
       htmlFor={formItemId}
       {...props}
     />
