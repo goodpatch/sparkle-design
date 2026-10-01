@@ -78,7 +78,7 @@ user-invocable: true
 
 タグ未作成・Release 未作成のバージョンがある場合は **新バージョンを切る前に** 必ず追補する。
 
-- [ ] 該当バージョンを公開した commit の SHA を npm の記録から特定する: `npm view sparkle-design@X.Y.Z gitHead --registry=https://registry.npmjs.org`（CI から公開した版は main のマージコミットが記録されている）
+- [ ] 該当バージョンを公開した commit の SHA を npm の記録から特定する: `npm view sparkle-design@X.Y.Z gitHead --registry=https://registry.npmjs.org`（CI から公開した版は stage した commit が記録されている）
 - [ ] 🛑 `gh workflow run "Publish GitHub Release" -f ref=<SHA>` で tag と Release を作る
   - ワークフローは npm で公開済みであることと、`gitHead` が SHA と一致すること（記録が無ければ止まる）を確かめてから tag を打ち、CHANGELOG の該当セクションを notes にする
 
@@ -131,12 +131,12 @@ npm は 2027 年 1 月に granular access token での直接 publish を廃止�
 > 対象の version（`X.Y.Z`）と main の最新 commit を提示して確認を取る。
 
 - [ ] リリース PR が main にマージ済みで、main の `package.json` の `version` が `X.Y.Z` になっていることを確認する（`git fetch origin main && git show origin/main:package.json | jq -r .version`）
-- [ ] 🛑 **npm へ stage** — main を ref にしてワークフローを実行する（`gh workflow run` の `--ref` はブランチ名かタグ名のみで SHA は渡せない。ワークフローは main 以外からの実行を拒否する）。dist-tag は version から自動判定（`-beta.N` → `beta`、`-rc.N` → `next`、それ以外 → `latest`）:
+- [ ] 🛑 **npm へ stage** — main を ref にしてワークフローを実行する（`gh workflow run` の `--ref` はブランチ名かタグ名のみで SHA は渡せない。ワークフローは main と `v<N>`（メンテナンスライン）以外からの実行を拒否する）。dist-tag は version から自動判定（`-beta.N` → `beta`、`-rc.N` → `next`、それ以外 → `latest`）:
   ```bash
   gh workflow run "Publish to npm" --ref main -f channel=auto
   ```
   - stage した時点では**まだ公開されていない**（`npm stage reject` で取り下げられる）。dist-tag は stage 時に決まり、承認時には変えられない
-  - 実行結果の Summary に **stage ID・commit（main のマージコミット）・承認コマンド**が出る。以降はこの commit を使う
+  - 実行結果の Summary に **stage ID・commit（stage した commit）・承認コマンド**が出る。以降はこの commit を使う
 - [ ] 👤 **メンテナーが 2FA 付きで承認する**（AI は実行しない）。手元で `npm login --registry=https://registry.npmjs.org` 済みであること（社内 proxy が既定 registry の環境があるので、コマンドには必ず `--registry` を付ける）。必要なら先に中身を確認する:
   ```bash
   npx -y npm@11.21.0 stage download <stage-id> --registry=https://registry.npmjs.org   # 任意: tarball を確認
@@ -148,6 +148,22 @@ npm は 2027 年 1 月に granular access token での直接 publish を廃止�
   ```bash
   gh workflow run "Publish GitHub Release" -f ref=<Summary の commit>
   ```
+
+### メンテナンスライン（1.x）のリリース
+
+1.x は React 18 向けの**非推奨（deprecated）メンテナンスライン**で、`v1` ブランチで管理する（期限は設けず、利用側の React 19 移行を促しながら続ける）。2.x（main）は React 19 以上。
+
+- **1.x に入れるもの**: 不具合の修正、セキュリティ修正（依存の脆弱性対応を含む）、**最新の CLI と噛み合わせるためのトークン・スタイルの追従**（CLI は 1.x でも固定せず最新を使う方針のため、CLI が生成するトークンが変わったら 1.x のコンポーネントも追従させる）。**入れないもの**: 新機能、新コンポーネント、React 19 前提の変更（ref を props で受ける等）
+- **CLI との順序**: CLI のトークン変更を `latest` に出す前に、1.x の追従版を出す。旧トークンの削除（beta 終了時）は、1.x が新トークンへ移行し終えてから行う
+- **backport の手順**: main にマージした修正を、`v1` から切ったブランチに `git cherry-pick -x <commit>` で取り込み、`v1` 向けの PR を作る（base を `v1` にする）。React 19 前提のコード（ref を props で受ける等）が混ざらないことを確認する
+- **リリース**: `v1` 上で version（`1.x.y`）と CHANGELOG を更新する PR をマージし、`v1` から stage する:
+  ```bash
+  gh workflow run "Publish to npm" --ref v1 -f channel=auto
+  ```
+  dist-tag は自動判定。npm の `latest` がまだ 1.x なら `latest`、2.x が `latest` になった後は `latest-1` に載る（`latest` を巻き戻さない）。prerelease は出さない
+- 承認と tag・Release は main と同じ（`stage approve` → `Publish GitHub Release -f ref=<Summary の commit>`）。npm の `latest` でない版の GitHub Release には「Latest」が付かない
+- ⚠️ **承認の前に dist-tag を照合する**: dist-tag は stage 時に決まる。stage 後・承認前に 2.x が `latest` になっていると、Summary の dist-tag が `latest` のまま承認すると `latest` が 1.x に巻き戻る。承認前に `npm view sparkle-design dist-tags.latest --registry=https://registry.npmjs.org` の major が 1 のままであることを確かめ、2.x になっていたら `stage reject` して `--ref v1` で stage し直す（今度は `latest-1` になる）
+- `v1` の publish.yml / release.yml は main からのコピーで管理する。main のワークフローを変えたら `v1` にも同じ変更を backport する
 
 ### 完了報告
 
