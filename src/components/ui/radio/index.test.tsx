@@ -249,14 +249,14 @@ describe("Radio", () => {
       // When: ラジオボタンの内側のindicatorを取得
       const radioItem = testContainer.querySelector("#radio1");
       const indicator = radioItem.querySelector(
-        'div[class*="border-negative-500"]'
+        'div[class*="border-object-negative-enabled"]'
       );
 
       // Then: エラー状態のスタイリングが内側のindicatorに適用されている
       expect(indicator).toBeTruthy();
-      expect(StyleHelpers.hasClass(indicator!, "border-negative-500")).toBe(
-        true
-      );
+      expect(
+        StyleHelpers.hasClass(indicator!, "border-object-negative-enabled")
+      ).toBe(true);
     });
 
     it("applies error styling when selected and invalid", () => {
@@ -275,15 +275,15 @@ describe("Radio", () => {
       // When: ラジオボタンの内側のindicatorを取得（選択済み状態）
       const radioItem = testContainer.querySelector("#radio1");
       const indicator = radioItem.querySelector(
-        'div[class*="border-negative-500"]'
+        'div[class*="border-object-negative-enabled"]'
       );
 
       // Then: エラー状態のスタイリングが内側のindicatorに適用されている
       expect(radioItem.getAttribute("data-state")).toBe("checked");
       expect(indicator).toBeTruthy();
-      expect(StyleHelpers.hasClass(indicator!, "border-negative-500")).toBe(
-        true
-      );
+      expect(
+        StyleHelpers.hasClass(indicator!, "border-object-negative-enabled")
+      ).toBe(true);
     });
   });
 

@@ -18,7 +18,7 @@ const labelVariants = cva("cursor-pointer", {
     },
     isDisabled: {
       true: "text-text-neutral-disabled cursor-not-allowed",
-      false: "text-text-medium",
+      false: "text-text-neutral-middle",
     },
   },
   defaultVariants: {
@@ -53,7 +53,7 @@ const radioItemVariants = cva(
 
 const radioIndicatorVariants = cva(
   [
-    "flex items-center justify-center rounded-full border border-2 transition-colors",
+    "flex items-center justify-center rounded-full border border-2 bg-surface-base-0 transition-colors",
     "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-border-ring [.group:focus-visible_&]:ring-offset-2",
   ].join(" "),
   {
@@ -64,8 +64,8 @@ const radioIndicatorVariants = cva(
         lg: "h-6 w-6",
       },
       isInvalid: {
-        true: "border-negative-500 [.group[data-state=checked]_&]:border-negative-500",
-        false: "border-neutral-500",
+        true: "border-object-negative-enabled [.group[data-state=checked]_&]:border-object-negative-enabled",
+        false: "border-object-neutral-low",
       },
       isDisabled: {
         true: "",
@@ -76,24 +76,24 @@ const radioIndicatorVariants = cva(
       {
         isDisabled: false,
         isInvalid: false,
-        className: "hover:border-neutral-600",
+        className: "hover:border-object-neutral-middle",
       },
       {
         isDisabled: false,
         isInvalid: true,
-        className: "hover:border-negative-600",
+        className: "hover:border-object-negative-hover",
       },
       {
         isDisabled: true,
         isInvalid: false,
         className:
-          "border-neutral-200 [.group[data-state=checked]_&]:border-primary-100",
+          "border-object-neutral-disabled [.group[data-state=checked]_&]:border-object-primary-disabled",
       },
       {
         isDisabled: true,
         isInvalid: true,
         className:
-          "border-negative-200 [.group[data-state=checked]_&]:border-negative-200",
+          "border-object-negative-disabled [.group[data-state=checked]_&]:border-object-negative-disabled",
       },
     ],
     defaultVariants: {
@@ -112,8 +112,8 @@ const radioIndicatorDotVariants = cva(
         lg: "h-6 w-6",
       },
       isInvalid: {
-        true: "[.group[data-state=checked]_&]:bg-negative-500",
-        false: "[.group[data-state=checked]_&]:bg-primary-500",
+        true: "[.group[data-state=checked]_&]:bg-object-negative-enabled",
+        false: "[.group[data-state=checked]_&]:bg-object-primary-enabled",
       },
       isDisabled: {
         true: "",
@@ -124,22 +124,24 @@ const radioIndicatorDotVariants = cva(
       {
         isDisabled: false,
         isInvalid: false,
-        className: "[.group[data-state=checked]_&]:hover:bg-primary-600",
+        className:
+          "[.group[data-state=checked]_&]:hover:bg-object-primary-hover",
       },
       {
         isDisabled: false,
         isInvalid: true,
-        className: "[.group[data-state=checked]_&]:hover:bg-negative-600",
+        className:
+          "[.group[data-state=checked]_&]:hover:bg-object-negative-hover",
       },
       {
         isDisabled: true,
         isInvalid: false,
-        className: "[.group[data-state=checked]_&]:bg-primary-100",
+        className: "[.group[data-state=checked]_&]:bg-object-primary-disabled",
       },
       {
         isDisabled: true,
         isInvalid: true,
-        className: "[.group[data-state=checked]_&]:bg-negative-200",
+        className: "[.group[data-state=checked]_&]:bg-object-negative-disabled",
       },
     ],
     defaultVariants: {

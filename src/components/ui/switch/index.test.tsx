@@ -205,7 +205,7 @@ describe("Switch", () => {
 
       // disabled styling should be applied to thumb
       expect(thumbElement.className).toContain(
-        "data-[state=unchecked]:bg-neutral-50"
+        "data-[state=unchecked]:bg-surface-neutral-low-disabled"
       );
     });
 
@@ -217,7 +217,7 @@ describe("Switch", () => {
 
       // disabled styling should be applied to thumb
       expect(thumbElement.className).toContain(
-        "data-[state=checked]:bg-primary-50"
+        "data-[state=checked]:bg-surface-primary-low-disabled"
       );
     });
   });

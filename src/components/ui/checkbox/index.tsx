@@ -36,7 +36,7 @@ const checkboxItemVariants = cva(
 
 const checkboxRootVariants = cva(
   [
-    "rounded-xs border-2 transition-colors",
+    "rounded-minimum border-2 transition-colors",
     "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-border-ring [.group:focus-visible_&]:ring-offset-2",
   ].join(" "),
   {
@@ -48,14 +48,14 @@ const checkboxRootVariants = cva(
       },
       isInvalid: {
         true: [
-          "border-negative-500",
-          "[.group[data-state=checked]_&]:bg-negative-500 [.group[data-state=checked]_&]:border-none",
-          "[.group[data-state=indeterminate]_&]:bg-negative-500 [.group[data-state=indeterminate]_&]:border-none",
+          "bg-surface-base-0 border-object-negative-enabled",
+          "[.group[data-state=checked]_&]:bg-object-negative-enabled [.group[data-state=checked]_&]:border-none",
+          "[.group[data-state=indeterminate]_&]:bg-object-negative-enabled [.group[data-state=indeterminate]_&]:border-none",
         ].join(" "),
         false: [
-          "border-neutral-500",
-          "[.group[data-state=checked]_&]:bg-primary-500 [.group[data-state=checked]_&]:border-none",
-          "[.group[data-state=indeterminate]_&]:bg-primary-500 [.group[data-state=indeterminate]_&]:border-none",
+          "bg-surface-base-0 border-object-neutral-low",
+          "[.group[data-state=checked]_&]:bg-object-primary-enabled [.group[data-state=checked]_&]:border-none",
+          "[.group[data-state=indeterminate]_&]:bg-object-primary-enabled [.group[data-state=indeterminate]_&]:border-none",
         ].join(" "),
       },
       isDisabled: {
@@ -68,36 +68,36 @@ const checkboxRootVariants = cva(
         isDisabled: false,
         isInvalid: false,
         className: [
-          "hover:border-neutral-600",
-          "[.group[data-state=checked]_&]:hover:bg-primary-600",
-          "[.group[data-state=indeterminate]_&]:hover:bg-primary-600",
+          "hover:border-object-neutral-middle",
+          "[.group[data-state=checked]_&]:hover:bg-object-primary-hover",
+          "[.group[data-state=indeterminate]_&]:hover:bg-object-primary-hover",
         ].join(" "),
       },
       {
         isDisabled: false,
         isInvalid: true,
         className: [
-          "hover:border-negative-600",
-          "[.group[data-state=checked]_&]:hover:bg-negative-600",
-          "[.group[data-state=indeterminate]_&]:hover:bg-negative-600",
+          "hover:border-object-negative-hover",
+          "[.group[data-state=checked]_&]:hover:bg-object-negative-hover",
+          "[.group[data-state=indeterminate]_&]:hover:bg-object-negative-hover",
         ].join(" "),
       },
       {
         isDisabled: true,
         isInvalid: false,
         className: [
-          "border-neutral-200",
-          "[.group[data-state=checked]_&]:bg-primary-200 [.group[data-state=checked]_&]:border-primary-200",
-          "[.group[data-state=indeterminate]_&]:bg-primary-200 [.group[data-state=indeterminate]_&]:border-primary-200",
+          "border-object-neutral-disabled",
+          "[.group[data-state=checked]_&]:bg-object-primary-disabled [.group[data-state=checked]_&]:border-object-primary-disabled",
+          "[.group[data-state=indeterminate]_&]:bg-object-primary-disabled [.group[data-state=indeterminate]_&]:border-object-primary-disabled",
         ].join(" "),
       },
       {
         isDisabled: true,
         isInvalid: true,
         className: [
-          "border-negative-200",
-          "[.group[data-state=checked]_&]:bg-negative-200 [.group[data-state=checked]_&]:border-negative-200",
-          "[.group[data-state=indeterminate]_&]:bg-negative-200 [.group[data-state=indeterminate]_&]:border-negative-200",
+          "border-object-negative-disabled",
+          "[.group[data-state=checked]_&]:bg-object-negative-disabled [.group[data-state=checked]_&]:border-object-negative-disabled",
+          "[.group[data-state=indeterminate]_&]:bg-object-negative-disabled [.group[data-state=indeterminate]_&]:border-object-negative-disabled",
         ].join(" "),
       },
     ],
@@ -256,7 +256,7 @@ function Checkbox({
         >
           <CheckboxPrimitive.Indicator
             data-slot="checkbox-indicator"
-            className="flex items-center justify-center text-white"
+            className="flex items-center justify-center text-surface-base-0"
           >
             <Icon
               icon={

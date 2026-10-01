@@ -248,7 +248,7 @@ describe("Checkbox", () => {
           testContainer.render(<Checkbox id={`test-${size}`} size={size} />);
           const checkboxOuter = testContainer.querySelector(`#test-${size}`);
           const checkboxInner = checkboxOuter.querySelector(
-            'div[class*="rounded-xs"]'
+            'div[class*="rounded-minimum"]'
           );
 
           // Then: 外側（タップ可能領域）と内側（視覚的チェックボックス）に適切なサイズクラスが適用されている
@@ -279,12 +279,14 @@ describe("Checkbox", () => {
       testContainer.render(<Checkbox id="test-checkbox" isInvalid />);
       const checkboxOuter = testContainer.querySelector("#test-checkbox");
       const checkboxInner = checkboxOuter.querySelector(
-        'div[class*="border-negative-500"]'
+        'div[class*="border-object-negative-enabled"]'
       );
 
       // Then: invalid状態のクラスが内側のチェックボックスに適用されている
       expect(checkboxInner).toBeTruthy();
-      expect(checkboxInner!.className).toContain("border-negative-500");
+      expect(checkboxInner!.className).toContain(
+        "border-object-negative-enabled"
+      );
     });
   });
 
@@ -506,13 +508,15 @@ describe("Checkbox", () => {
       );
       const checkboxOuter = testContainer.querySelector("#test-checkbox");
       const checkboxInner = checkboxOuter.querySelector(
-        'div[class*="border-negative-500"]'
+        'div[class*="border-object-negative-enabled"]'
       );
 
       // Then: indeterminate状態でinvalidスタイルが内側のチェックボックスに適用されている
       expect(checkboxOuter.getAttribute("data-state")).toBe("indeterminate");
       expect(checkboxInner).toBeTruthy();
-      expect(checkboxInner!.className).toContain("border-negative-500");
+      expect(checkboxInner!.className).toContain(
+        "border-object-negative-enabled"
+      );
     });
 
     it("handles indeterminate state when disabled", () => {
