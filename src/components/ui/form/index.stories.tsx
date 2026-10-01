@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { expect } from "storybook/test";
 
 import { Button } from "../button";
 import { Input } from "../input";
@@ -14,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../select";
+import { Tag } from "../tag";
 import { Textarea } from "../textarea";
 import {
   Form,
@@ -261,5 +263,85 @@ export const Error: Story = {
         />
       </Form>
     );
+  },
+};
+
+const narrowContainerChips = [
+  "デザインシステム",
+  "アクセシビリティ",
+  "プロトタイピング",
+  "ユーザーリサーチ",
+  "フロントエンド",
+];
+
+/**
+ * 狭い親（幅 20rem）の中に、折り返さない中身（チップ列）を持つ FormItem を置いた例。
+ * 列トラックが親の幅に合わせられるため、FormItem は親からはみ出さない。
+ * en: A FormItem with non-wrapping content (a chip row) inside a narrow (20rem) parent.
+ * en: The column track follows the parent's width, so the FormItem does not overflow the parent.
+ */
+export const NarrowContainer: Story = {
+  render: () => {
+    const form = useForm();
+    return (
+      <Form {...form}>
+        <div
+          data-testid="narrow-container"
+          className="grid gap-4 w-80 p-4 rounded-minimum border border-border-neutral-middle"
+        >
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem data-testid="input-item">
+                <FormHeader label="名前" />
+                <FormControl>
+                  <Input placeholder="プレースホルダー" {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="skills"
+            render={() => (
+              <FormItem data-testid="chip-item">
+                <FormHeader label="スキル" />
+                <FormControl>
+                  {/* label[for] は div に名前を付けられないため、group に直接名前を付ける
+                      en: label[for] cannot name a div, so name the group directly */}
+                  <div
+                    role="group"
+                    aria-label="スキル"
+                    className="flex gap-1 overflow-x-auto"
+                  >
+                    {narrowContainerChips.map(chip => (
+                      <Tag key={chip} className="shrink-0 whitespace-nowrap">
+                        {chip}
+                      </Tag>
+                    ))}
+                  </div>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
+      </Form>
+    );
+  },
+  play: async ({ canvas }) => {
+    const container = canvas.getByTestId("narrow-container");
+    const containerRect = container.getBoundingClientRect();
+
+    // 通常の Input も折り返さないチップ列も、親の右端を超えない
+    // en: Neither a regular Input nor a non-wrapping chip row extends past the parent's right edge
+    for (const testId of ["input-item", "chip-item"]) {
+      const itemRect = canvas.getByTestId(testId).getBoundingClientRect();
+      await expect(itemRect.right).toBeLessThanOrEqual(containerRect.right);
+    }
+
+    // チップ列の group にアクセシブルな名前が付いている
+    // en: The chip row group has an accessible name
+    await expect(canvas.getByRole("group", { name: "スキル" })).toBeVisible();
   },
 };

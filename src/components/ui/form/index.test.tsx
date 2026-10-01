@@ -885,5 +885,55 @@ describe("Form", () => {
       // Then: gridクラスが適用される
       expect(formItem?.className).toContain("grid");
     });
+
+    it("FormItem の列トラックを親の幅に合わせるクラスを付与する", () => {
+      // Given: FormItemを含むフォーム
+      testContainer.render(<TestFormComponent />);
+
+      // When: FormItemのクラスを確認
+      const formItem = testContainer
+        .getContainer()
+        .querySelector('[data-slot="form-item"]');
+
+      // Then: 中身の最小幅で広がらないよう minmax(0,1fr) のトラックが指定される
+      expect(formItem).toHaveClass("grid-cols-[minmax(0,1fr)]");
+    });
+
+    it("className で列トラックの指定を上書きできる", () => {
+      // Given: grid-cols を上書きする className を渡した FormItem
+      function OverrideColsForm() {
+        const form = useForm<{ test: string }>({
+          defaultValues: { test: "" },
+        });
+
+        return (
+          <Form {...(form as any)}>
+            <FormField
+              control={form.control}
+              name="test"
+              render={({ field }) => (
+                <FormItem className="grid-cols-2">
+                  <FormHeader label="上書き" />
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </Form>
+        );
+      }
+
+      testContainer.render(<OverrideColsForm />);
+
+      // When: FormItemのクラスを確認
+      const formItem = testContainer
+        .getContainer()
+        .querySelector('[data-slot="form-item"]');
+
+      // Then: 既定の grid-cols は tailwind-merge で除去され、渡した指定が残る
+      expect(formItem).toHaveClass("grid-cols-2");
+      expect(formItem).not.toHaveClass("grid-cols-[minmax(0,1fr)]");
+    });
   });
 });
