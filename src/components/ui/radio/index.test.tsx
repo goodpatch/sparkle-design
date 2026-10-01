@@ -533,14 +533,56 @@ describe("Radio", () => {
       expect(label.className).not.toContain("text-text-medium");
     });
 
-    it("exposes aria-invalid only when isInvalid", () => {
+    it("sets aria-invalid on the radiogroup, not on each radio (ARIA 1.2)", () => {
+      testContainer.render(
+        <Radio isInvalid>
+          <RadioItem value="a" id="g-a" label="A" />
+          <RadioItem value="b" id="g-b" label="B" />
+        </Radio>
+      );
+      const group = testContainer.querySelector('[role="radiogroup"]');
+      expect(group.getAttribute("aria-invalid")).toBe("true");
+      testContainer
+        .getContainer()
+        .querySelectorAll('[role="radio"]')
+        .forEach((r: Element) =>
+          expect(r.hasAttribute("aria-invalid")).toBe(false)
+        );
+    });
+
+    it("propagates group isInvalid to every item's error style", () => {
+      testContainer.render(
+        <Radio isInvalid>
+          <RadioItem value="a" id="p-a" label="A" />
+        </Radio>
+      );
+      const ring = testContainer.querySelector("#p-a")
+        .firstElementChild as HTMLElement;
+      expect(ring.className.split(/\s+/)).toContain(
+        "border-object-negative-enabled"
+      );
+    });
+
+    it("treats aria-invalid passed to Radio (e.g. by FormControl) as invalid", () => {
+      testContainer.render(
+        <Radio aria-invalid>
+          <RadioItem value="a" id="f-a" label="A" />
+        </Radio>
+      );
+      const group = testContainer.querySelector('[role="radiogroup"]');
+      expect(group.getAttribute("aria-invalid")).toBe("true");
+      const ring = testContainer.querySelector("#f-a")
+        .firstElementChild as HTMLElement;
+      expect(ring.className.split(/\s+/)).toContain(
+        "border-object-negative-enabled"
+      );
+    });
+
+    it("does not set aria-invalid when valid, and item-level isInvalid stays visual only", () => {
       const { item } = renderItem({ isInvalid: true });
-      expect(item.getAttribute("aria-invalid")).toBe("true");
-      testContainer.cleanup();
-      testContainer = new TestContainer();
-      testContainer.setup();
-      const { item: valid } = renderItem({});
-      expect(valid.hasAttribute("aria-invalid")).toBe(false);
+      expect(item.hasAttribute("aria-invalid")).toBe(false);
+      const group = testContainer.querySelector('[role="radiogroup"]');
+      expect(group.hasAttribute("aria-invalid")).toBe(false);
     });
   });
 });

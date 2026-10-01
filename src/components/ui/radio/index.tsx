@@ -5,9 +5,16 @@
 "use client";
 
 import * as React from "react";
+import { useContext } from "react";
 import { RadioGroup as RadioPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+
+/**
+ * Radio（radiogroup）のエラー状態を各 RadioItem に伝える
+ * en: Propagates the radio group's invalid state to each RadioItem
+ */
+const RadioInvalidContext = React.createContext(false);
 
 const labelVariants = cva("cursor-pointer", {
   variants: {
@@ -177,6 +184,12 @@ export interface RadioProps extends RadioPrimitiveProps {
    * en: Callback when the radio value changes
    */
   onValueChange?: RadioPrimitiveProps["onValueChange"];
+  /**
+   * グループ全体がエラー状態かどうか。`aria-invalid` を radiogroup に付け、配下の RadioItem もエラー配色になる
+   * en: Whether the whole group is in an error state. Sets `aria-invalid` on the radiogroup and renders every RadioItem in the error style
+   * @default false
+   */
+  isInvalid?: boolean;
 }
 
 /**
@@ -196,13 +209,26 @@ export interface RadioProps extends RadioPrimitiveProps {
  *
  * @param {RadioProps} props
  */
-function Radio({ className, ...props }: RadioProps) {
+function Radio({ className, isInvalid = false, ...props }: RadioProps) {
+  // aria-invalid は ARIA 1.2 で radiogroup がサポートロール（radio は対象外）なのでグループに付ける。
+  // FormControl などが aria-invalid を直接渡した場合もエラー配色を伝える
+  // en: ARIA 1.2 supports aria-invalid on radiogroup (not on radio), so set it on the group.
+  // An aria-invalid passed directly (e.g. by FormControl) also turns on the error style
+  const ariaInvalid = props["aria-invalid"];
+  const groupInvalid =
+    isInvalid ||
+    (ariaInvalid !== undefined &&
+      ariaInvalid !== false &&
+      ariaInvalid !== "false");
   return (
-    <RadioPrimitive.Root
-      data-slot="radio-group"
-      className={cn("grid gap-y-2 gap-x-4", className)}
-      {...props}
-    />
+    <RadioInvalidContext.Provider value={groupInvalid}>
+      <RadioPrimitive.Root
+        data-slot="radio-group"
+        className={cn("grid gap-y-2 gap-x-4", className)}
+        {...props}
+        aria-invalid={groupInvalid || undefined}
+      />
+    </RadioInvalidContext.Provider>
   );
 }
 Radio.displayName = RadioPrimitive.Root.displayName;
@@ -222,8 +248,8 @@ interface RadioItemProps extends RadioPrimitiveItemProps {
    */
   size?: RadioItemVariantProps["size"];
   /**
-   * エラー状態かどうか
-   * en: Whether the radio button is in an error state
+   * エラー配色にするかどうか（見た目のみ）。支援技術に無効状態を伝えるには Radio の `isInvalid` を使う
+   * en: Whether to render this item in the error style (visual only). Use `isInvalid` on Radio to expose the invalid state to assistive technology
    * @default false
    */
   isInvalid?: RadioIndicatorDotVariantProps["isInvalid"];
@@ -257,18 +283,18 @@ interface RadioItemProps extends RadioPrimitiveItemProps {
 function RadioItem({
   className,
   size = "md",
-  isInvalid = false,
+  isInvalid: isInvalidProp = false,
   disabled = false,
   label,
   id,
   ...props
 }: RadioItemProps) {
+  const isInvalid = useContext(RadioInvalidContext) || !!isInvalidProp;
   return (
     <div className="flex items-center">
       <RadioPrimitive.Item
         data-slot="radio-group-item"
         id={id}
-        aria-invalid={isInvalid || undefined}
         className={cn(
           radioItemVariants({ size, isDisabled: disabled }),
           "group",
