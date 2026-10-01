@@ -2,6 +2,17 @@ name: Publish to npm
 
 on:
   workflow_dispatch:
+    inputs:
+      channel:
+        description: "Dist-tag を選択。auto は package.json の version から自動判定 (X.Y.Z-beta.N → beta / X.Y.Z-rc.N → next / X.Y.Z → latest)。"
+        type: choice
+        required: true
+        default: auto
+        options:
+          - auto
+          - latest
+          - next
+          - beta
 
 jobs:
   publish:
@@ -30,9 +41,66 @@ jobs:
 
       - run: pnpm run build:package
 
-      - run: npm publish
+      - name: Determine dist-tag
+        id: tag
+        env:
+          INPUT_CHANNEL: ${{ inputs.channel }}
+        run: |
+          set -euo pipefail
+          VERSION=$(node -p "require('./package.json').version")
+
+          # pre-release の命名ルール（sparkle-design-cli の publish.yml と同じ）:
+          #   - `-beta.N`  → beta dist-tag
+          #   - `-rc.N`    → next dist-tag
+          #   - それ以外 (-alpha.N 等) は未対応として exit 1
+          # 素の `npm publish` だと prerelease でも latest に載ってしまうため、
+          # 必ず --tag を明示する。
+          # en: Same naming rule as sparkle-design-cli. Always pass --tag so a
+          # prerelease never lands on `latest`.
+          case "$VERSION" in
+            *-beta.*) AUTO="beta" ;;
+            *-rc.*)   AUTO="next" ;;
+            *-*)      AUTO="unsupported" ;;
+            *)        AUTO="latest" ;;
+          esac
+
+          if [ "$INPUT_CHANNEL" = "auto" ]; then
+            CHANNEL="$AUTO"
+          else
+            CHANNEL="$INPUT_CHANNEL"
+          fi
+
+          if [ "$CHANNEL" = "unsupported" ]; then
+            echo "::error::未対応の prerelease version です: $VERSION (サポートは -beta.N / -rc.N のみ)"
+            exit 1
+          fi
+
+          case "$CHANNEL:$VERSION" in
+            latest:*-*)
+              echo "::error::prerelease version ($VERSION) は latest へ publish できません"
+              exit 1
+              ;;
+            beta:*-*) ;;
+            beta:*)
+              echo "::error::安定版 ($VERSION) は beta へ publish できません。-beta.N を付けてください"
+              exit 1
+              ;;
+            next:*-*) ;;
+            next:*)
+              echo "::error::安定版 ($VERSION) は next へ publish できません。-rc.N を付けてください"
+              exit 1
+              ;;
+          esac
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "channel=$CHANNEL" >> "$GITHUB_OUTPUT"
+          echo "→ $VERSION を --tag $CHANNEL で publish します"
+
+      - name: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          PUBLISH_TAG: ${{ steps.tag.outputs.channel }}
+        run: npm publish --tag "$PUBLISH_TAG"
 
       - name: Tag commit and create GitHub Release
         # npm publish が成功した直後に同じ commit に `vX.Y.Z` tag を打ち、
@@ -73,9 +141,18 @@ jobs:
             printf 'Release %s\n\nCHANGELOG.md にこのバージョン用のセクションがありません。後追いで CHANGELOG を更新してから本 release notes も編集してください。\n' "${VERSION}" > "${NOTES_FILE}"
           fi
 
+          # `-` を含むバージョン (X.Y.Z-rc.N / X.Y.Z-beta.N) は GitHub 上で
+          # pre-release マークを付ける。
+          # en: Mark pre-release for any version containing a `-` (rc / beta).
+          PRERELEASE_FLAG=""
+          if [[ "${VERSION}" == *-* ]]; then
+            PRERELEASE_FLAG="--prerelease"
+          fi
+
           gh release create "${TAG}" \
             --title "${TAG}" \
-            --notes-file "${NOTES_FILE}"
+            --notes-file "${NOTES_FILE}" \
+            ${PRERELEASE_FLAG}
 
       - name: Summary
         run: |
@@ -85,5 +162,6 @@ jobs:
             echo ""
             echo "- package: \`sparkle-design\`"
             echo "- version: \`$VERSION\`"
+            echo "- dist-tag: \`${{ steps.tag.outputs.channel }}\`"
             echo "- GitHub Release: [v${VERSION}](https://github.com/${{ github.repository }}/releases/tag/v${VERSION})"
           } >> "$GITHUB_STEP_SUMMARY"
