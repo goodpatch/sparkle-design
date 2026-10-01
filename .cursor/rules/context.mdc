@@ -91,7 +91,7 @@ npm removes direct publishing with granular access tokens in January 2027. CI au
 2. A maintainer approves with 2FA: `npx -y npm@11.21.0 stage approve <stage-id> --otp=<code> --registry=https://registry.npmjs.org` — **agents never run this**
 3. After it is public: `gh workflow run "Publish GitHub Release" -f ref=<commit shown in the stage Summary>` creates the tag and GitHub Release
 
-**1.x is a deprecated maintenance line for React 18** on the `v1` branch (bug and security fixes only; no new features, style refresh or React 19-only code). Backport with `git cherry-pick -x` into a PR based on `v1`, and stage with `gh workflow run "Publish to npm" --ref v1` (published under `latest-1` once 2.x is `latest`).
+**1.x is a deprecated maintenance line for React 18** on the `v1` branch: bug and security fixes, plus token/style updates needed to stay compatible with the latest sparkle-design-cli (the CLI is never pinned, so 1.x must follow its tokens). No new features or React 19-only code (ref-as-prop). Release CLI token changes to `latest` only after 1.x has followed them. Backport with `git cherry-pick -x` into a PR based on `v1`, and stage with `gh workflow run "Publish to npm" --ref v1` (published under `latest-1` once 2.x is `latest`).
 
 The npm trusted publisher allows **stage only** (`npm trust github sparkle-design --repository goodpatch/sparkle-design --file publish.yml --allow-stage-publish --registry=https://registry.npmjs.org`). See `.claude/skills/release-sparkle-design/SKILL.md`.
 

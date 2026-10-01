@@ -7,7 +7,7 @@
 
 ### Changed
 
-- 1.x を React 18 向けの**非推奨（deprecated）メンテナンスライン**とし、`v1` ブランチで不具合とセキュリティの修正だけを続けます。新機能と Figma のスタイル刷新は 2.x（React 19 以上）にだけ入ります。README に対応表と移行の案内を追加しました
+- 1.x を React 18 向けの**非推奨（deprecated）メンテナンスライン**とし、`v1` ブランチで続けます。入れるのは不具合・セキュリティの修正と、最新の CLI と噛み合わせるためのトークン・スタイルの追従だけで、新機能と React 19 前提の変更は 2.x にだけ入ります。README に React・CLI との対応表と移行の案内を追加しました
 - `Publish to npm` workflow が `v<N>` ブランチ（旧メジャーのメンテナンスライン）からの stage に対応しました。npm の `latest` がより新しいメジャーのときは `latest-<N>` に載せ、`latest` を巻き戻しません。GitHub Release も npm の `latest` でない版には「Latest」を付けません
 
 ## [2.0.0-beta.0] - 2026-10-01
