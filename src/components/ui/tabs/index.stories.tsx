@@ -58,7 +58,7 @@ export const Scrollable: TabsListVariantStory = {
     scrollable: true,
   },
   render: args => (
-    <div className="w-72 border border-dashed border-neutral-300 p-2">
+    <div className="w-72 border border-dashed border-border-neutral-middle p-2">
       <Tabs defaultValue="sync">
         <TabsList variant={args.variant} scrollable={args.scrollable}>
           <TabsTrigger value="sync">カレンダー同期</TabsTrigger>
