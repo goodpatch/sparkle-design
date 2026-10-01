@@ -51,7 +51,8 @@ Figma（`7alBZXZf65YgcII41TWT0r`）のスタイル刷新を反映する **beta �
 - ClickableCard 内のサブコンポーネントを `span` で描画し、`button` の中に不正な要素が入らないようにしました (#320)
 - Slider のつまみ（`role="slider"`）にアクセシブルネームを渡せるようにしました (#321)
 - FormItem の列トラックが親の幅を超えてはみ出す問題を修正 (#323)
-- Radio のラベルが存在しないトークン（`text-text-medium`）を参照して色が付いていなかった問題を修正し、`isInvalid` のとき `aria-invalid` を付けるようにしました (#327)
+- Radio のラベルが存在しないトークン（`text-text-medium`）を参照して色が付いていなかった問題を修正 (#327)
+- Radio に `isInvalid` を追加し、`aria-invalid` を ARIA 1.2 のサポートロールである radiogroup に付けるようにしました。`FormControl` から渡る `aria-invalid` もエラー配色に反映します。`RadioItem` の `isInvalid` は見た目だけの指定です (#327, #333)
 - Tabs で、キーボードフォーカス中のタブに hover の配色が勝ってしまう問題を修正 (#328)
 
 

@@ -578,6 +578,19 @@ describe("Radio", () => {
       );
     });
 
+    it.each([false, "false", ""] as const)(
+      "does not treat aria-invalid=%j as invalid",
+      value => {
+        testContainer.render(
+          <Radio aria-invalid={value as React.AriaAttributes["aria-invalid"]}>
+            <RadioItem value="a" id="n-a" label="A" />
+          </Radio>
+        );
+        const group = testContainer.querySelector('[role="radiogroup"]');
+        expect(group.hasAttribute("aria-invalid")).toBe(false);
+      }
+    );
+
     it("does not set aria-invalid when valid, and item-level isInvalid stays visual only", () => {
       const { item } = renderItem({ isInvalid: true });
       expect(item.hasAttribute("aria-invalid")).toBe(false);

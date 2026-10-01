@@ -70,15 +70,18 @@ figma.connect(
       // "isLabel": figma.boolean('isLabel'),
       // "isFocused": figma.boolean('isFocused')
     },
+    // エラー状態は Radio（radiogroup）に指定する。aria-invalid がグループに付き、配下の項目もエラー配色になる
+    // en: Set the error state on Radio (the radiogroup): aria-invalid goes on the group and every item renders in the error style
     example: props => (
-      <RadioItem
-        size={props.size}
-        isInvalid={props.isInvalid}
-        label={props.label}
-        disabled={props.disabled}
-        value={props.value}
-        checked={props.checked}
-      />
+      <Radio isInvalid={props.isInvalid}>
+        <RadioItem
+          size={props.size}
+          label={props.label}
+          disabled={props.disabled}
+          value={props.value}
+          checked={props.checked}
+        />
+      </Radio>
     ),
   }
 );

@@ -5,7 +5,6 @@
 "use client";
 
 import * as React from "react";
-import { useContext } from "react";
 import { RadioGroup as RadioPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
@@ -213,13 +212,18 @@ function Radio({ className, isInvalid = false, ...props }: RadioProps) {
   // aria-invalid は ARIA 1.2 で radiogroup がサポートロール（radio は対象外）なのでグループに付ける。
   // FormControl などが aria-invalid を直接渡した場合もエラー配色を伝える
   // en: ARIA 1.2 supports aria-invalid on radiogroup (not on radio), so set it on the group.
+  // 空文字は ARIA では false 相当なので invalid 扱いしない
+  // en: An empty string means false in ARIA, so it is not treated as invalid
   // An aria-invalid passed directly (e.g. by FormControl) also turns on the error style
-  const ariaInvalid = props["aria-invalid"];
+  // 型付けされていない呼び出し（JS や Slot 経由）の空文字も弾けるよう unknown で比較する
+  // en: Compare as unknown so an empty string from untyped callers (JS, Slot) is also rejected
+  const ariaInvalid: unknown = props["aria-invalid"];
   const groupInvalid =
     isInvalid ||
     (ariaInvalid !== undefined &&
       ariaInvalid !== false &&
-      ariaInvalid !== "false");
+      ariaInvalid !== "false" &&
+      ariaInvalid !== "");
   return (
     <RadioInvalidContext.Provider value={groupInvalid}>
       <RadioPrimitive.Root
@@ -289,7 +293,7 @@ function RadioItem({
   id,
   ...props
 }: RadioItemProps) {
-  const isInvalid = useContext(RadioInvalidContext) || !!isInvalidProp;
+  const isInvalid = React.useContext(RadioInvalidContext) || !!isInvalidProp;
   return (
     <div className="flex items-center">
       <RadioPrimitive.Item
