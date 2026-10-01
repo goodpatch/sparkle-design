@@ -120,7 +120,7 @@ export function BreadcrumbSeparator({
     <span
       aria-hidden="true"
       data-slot="breadcrumb-separator"
-      className={cn("mx-1 text-neutral-500 select-none", className)}
+      className={cn("mx-1 text-text-neutral-low select-none", className)}
       {...props}
     >
       {children ?? "/"}

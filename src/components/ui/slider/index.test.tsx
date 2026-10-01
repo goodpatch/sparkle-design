@@ -359,14 +359,16 @@ describe("Slider", () => {
       const thumb = getSliderThumb(container);
 
       if (track) {
-        expect(StyleHelpers.hasClass(track, "bg-neutral-100")).toBe(true);
+        expect(StyleHelpers.hasClass(track, "bg-surface-base-100")).toBe(true);
         expect(StyleHelpers.hasClass(track, "cursor-not-allowed")).toBe(true);
       }
       if (range) {
-        expect(StyleHelpers.hasClass(range, "bg-neutral-200")).toBe(true);
+        expect(StyleHelpers.hasClass(range, "bg-surface-base-200")).toBe(true);
       }
       if (thumb) {
-        expect(StyleHelpers.hasClass(thumb, "bg-neutral-100")).toBe(true);
+        expect(
+          StyleHelpers.hasClass(thumb, "bg-surface-neutral-middle-disabled")
+        ).toBe(true);
         expect(StyleHelpers.hasClass(thumb, "cursor-not-allowed")).toBe(true);
       }
     });
@@ -641,7 +643,7 @@ describe("Slider", () => {
       }
       // 有効な状態でのスタイリングを確認
       if (track) {
-        expect(StyleHelpers.hasClass(track, "bg-neutral-200")).toBe(true);
+        expect(StyleHelpers.hasClass(track, "bg-surface-base-200")).toBe(true);
       }
       if (range && track) {
         // ダイナミッククラスなので存在確認のみ
@@ -717,5 +719,65 @@ describe("Slider", () => {
         minWidth: "calc(6ch + var(--spacing) * 2)",
       });
     });
+  });
+});
+
+describe("Slider Figma token mapping", () => {
+  // Figma: Slider 15094:965 / Parts/Thumb 14468:118（2026-10-01 取得）
+  // en: Figma Slider 15094:965 / Parts/Thumb 14468:118 (retrieved 2026-10-01)
+  let testContainer: TestContainer;
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
+  const parts = () => {
+    const q = (slot: string) =>
+      testContainer.querySelector(`[data-slot="${slot}"]`) as HTMLElement;
+    return {
+      track: q("slider-track"),
+      range: q("slider-range"),
+      thumb: q("slider-thumb"),
+    };
+  };
+
+  it("uses object/info for the range (not primary) and base surfaces for the track", () => {
+    testContainer.render(<Slider defaultValue={[50]} />);
+    const { track, range } = parts();
+    expect(range.className).toContain("bg-object-info");
+    expect(range.className).not.toMatch(/bg-primary-/);
+    expect(track.className).toContain("bg-surface-base-200");
+    expect(track.className).toContain("rounded-minimum");
+  });
+
+  it("layers translucent hover / focus colors over the white thumb", () => {
+    testContainer.render(<Slider defaultValue={[50]} />);
+    const { thumb } = parts();
+    [
+      "bg-surface-base-0",
+      "border-object-neutral-low",
+      "shadow-raise",
+      "hover:border-object-neutral-middle",
+      "hover:bg-linear-to-r",
+      "hover:from-surface-neutral-low-hover",
+      "hover:to-surface-neutral-low-hover",
+      "focus:border-object-info",
+      "focus:bg-linear-to-r",
+      "focus:from-surface-primary-low-active",
+      "focus:to-surface-primary-low-active",
+    ].forEach(cls => expect(thumb.className).toContain(cls));
+  });
+
+  it("applies disabled tokens", () => {
+    testContainer.render(<Slider defaultValue={[50]} disabled />);
+    const { track, range, thumb } = parts();
+    expect(track.className).toContain("bg-surface-base-100");
+    expect(range.className).toContain("bg-surface-base-200");
+    ["bg-surface-neutral-middle-disabled", "bg-none", "shadow-base"].forEach(
+      cls => expect(thumb.className).toContain(cls)
+    );
   });
 });

@@ -25,10 +25,10 @@ const sliderRootVariants = cva(
   }
 );
 
-const sliderRangeVariants = cva("absolute h-full bg-primary-500", {
+const sliderRangeVariants = cva("absolute h-full bg-object-info", {
   variants: {
     isDisabled: {
-      true: "bg-neutral-200",
+      true: "bg-surface-base-200",
     },
   },
   defaultVariants: {
@@ -38,9 +38,11 @@ const sliderRangeVariants = cva("absolute h-full bg-primary-500", {
 
 const sliderThumbVariants = cva(
   [
-    "relative block rounded-full border border-neutral-500 bg-surface-base-0 shadow-raise cursor-pointer",
-    "ring-offset-background transition-colors hover:bg-neutral-100",
-    "focus:outline-hidden focus:bg-primary-100 focus:border-primary-200",
+    "relative block rounded-full border border-object-neutral-low bg-surface-base-0 shadow-raise cursor-pointer",
+    // 半透明の状態色は白地に重ねる（つまみの下のトラックを透かさない）
+    // en: Layer translucent state colors over the white fill so the track does not show through
+    "ring-offset-background transition-colors hover:border-object-neutral-middle hover:bg-linear-to-r hover:from-surface-neutral-low-hover hover:to-surface-neutral-low-hover",
+    "focus:outline-hidden focus:border-object-info focus:bg-linear-to-r focus:from-surface-primary-low-active focus:to-surface-primary-low-active",
     "focus:ring-2 focus:ring-border-ring focus:ring-offset-2",
     "h-4 w-4",
     // タッチターゲットを24x24px以上に拡張（WCAG 2.5.8）
@@ -50,7 +52,7 @@ const sliderThumbVariants = cva(
   {
     variants: {
       isDisabled: {
-        true: "pointer-events-none bg-neutral-100 hover:bg-neutral-100 border-none cursor-not-allowed",
+        true: "pointer-events-none bg-surface-neutral-middle-disabled bg-none border-none shadow-base cursor-not-allowed",
       },
     },
     defaultVariants: {
@@ -285,10 +287,10 @@ function Slider({
         <SliderPrimitive.Track
           data-slot="slider-track"
           className={cn(
-            "relative w-full grow overflow-hidden rounded-xs h-1",
+            "relative w-full grow overflow-hidden rounded-minimum h-1",
             isDisabledState
-              ? "bg-neutral-100 cursor-not-allowed"
-              : "bg-neutral-200 cursor-pointer"
+              ? "bg-surface-base-100 cursor-not-allowed"
+              : "bg-surface-base-200 cursor-pointer"
           )}
         >
           <SliderPrimitive.Range

@@ -53,6 +53,75 @@ describe("Select", () => {
   it.todo("should close dropdown after selection");
   it.todo("should support keyboard navigation (arrow keys)");
   it.todo("should support search/filtering functionality");
+  describe("Figma token mapping", () => {
+    // Figma: Select 139:22300（2026-10-01 取得）
+    // en: Figma Select 139:22300 (retrieved 2026-10-01)
+    const renderTrigger = (props: {
+      isInvalid?: boolean;
+      disabled?: boolean;
+    }) => {
+      testContainer.render(
+        <Select>
+          <SelectTrigger {...props}>
+            <SelectValue placeholder="選択" />
+          </SelectTrigger>
+        </Select>
+      );
+      const trigger = testContainer.querySelector(
+        '[data-slot="select-trigger"]'
+      ) as HTMLElement;
+      const icon = trigger.lastElementChild as HTMLElement;
+      return { trigger, icon };
+    };
+
+    it.each([
+      [
+        "enabled",
+        {},
+        [
+          "bg-surface-base-0",
+          "border-border-neutral-extra-high-enabled",
+          "hover:border-border-neutral-extra-high-hover",
+          "data-[state=open]:border-border-neutral-extra-high-hover",
+        ],
+        "text-object-neutral-middle",
+      ],
+      [
+        "invalid",
+        { isInvalid: true },
+        [
+          "border-border-negative-extra-high-enabled",
+          "hover:border-border-negative-extra-high-hover",
+          "data-[state=open]:border-border-negative-extra-high-hover",
+        ],
+        "text-object-neutral-middle",
+      ],
+      [
+        "disabled",
+        { disabled: true },
+        [
+          "bg-surface-neutral-middle-disabled",
+          "border-border-neutral-extra-high-disabled",
+          "text-text-neutral-disabled",
+        ],
+        "text-object-neutral-disabled",
+      ],
+      [
+        "invalid disabled",
+        { isInvalid: true, disabled: true },
+        [
+          "bg-surface-neutral-middle-disabled",
+          "border-border-negative-extra-high-disabled",
+        ],
+        "text-object-neutral-disabled",
+      ],
+    ])("applies %s trigger and icon tokens", (_, props, expected, iconCls) => {
+      const { trigger, icon } = renderTrigger(props);
+      expected.forEach(cls => expect(trigger.className).toContain(cls));
+      expect(icon.className).toContain(iconCls);
+    });
+  });
+
   it.todo("should handle disabled state correctly");
   it.todo("should support multi-select mode");
 });
