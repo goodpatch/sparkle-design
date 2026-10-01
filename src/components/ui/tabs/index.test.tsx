@@ -263,4 +263,104 @@ describe("Tabs", () => {
       expect(contents[1].getAttribute("data-state")).toBe("inactive");
     });
   });
+
+  describe("Figma token mapping", () => {
+    // Figma: Tabs/Parts/Item 234:3608 と Tabs 234:3639（2026-10-01 取得）
+    // en: Figma Tabs/Parts/Item 234:3608 and Tabs 234:3639 (retrieved 2026-10-01)
+    const renderTabs = (variant: "solid" | "line" | "ghost") => {
+      testContainer.render(
+        <Tabs defaultValue="tab1">
+          <TabsList variant={variant}>
+            <TabsTrigger value="tab1">A</TabsTrigger>
+            <TabsTrigger value="tab2">B</TabsTrigger>
+          </TabsList>
+        </Tabs>
+      );
+      const root = testContainer.getContainer();
+      return {
+        list: root.querySelector('[data-slot="tabs-list"]') as HTMLElement,
+        trigger: root.querySelector(
+          '[data-slot="tabs-trigger"]'
+        ) as HTMLElement,
+      };
+    };
+
+    it.each([
+      [
+        "solid",
+        [
+          "data-[state=active]:bg-surface-primary-high-enabled",
+          "data-[state=active]:text-text-inverse",
+          "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-primary-high-hover",
+          "focus-visible:data-[state=active]:bg-surface-primary-high-active",
+          "disabled:data-[state=active]:bg-surface-primary-high-disabled",
+          "data-[state=inactive]:text-text-neutral-middle",
+          "enabled:not-focus-visible:hover:data-[state=inactive]:bg-surface-neutral-low-hover",
+          "focus-visible:data-[state=inactive]:bg-surface-neutral-low-active",
+          "disabled:data-[state=inactive]:text-text-neutral-disabled",
+        ],
+      ],
+      [
+        "line",
+        [
+          "data-[state=active]:text-text-primary-enabled",
+          "data-[state=active]:after:bg-border-primary-extra-high",
+          "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-primary-low-hover",
+          "enabled:not-focus-visible:hover:data-[state=active]:text-text-primary-hover",
+          "focus-visible:data-[state=active]:bg-surface-primary-low-active",
+          "focus-visible:data-[state=active]:text-text-primary-active",
+          "disabled:data-[state=active]:text-text-primary-disabled",
+          "disabled:data-[state=active]:after:bg-border-primary-low",
+          "data-[state=inactive]:text-text-neutral-middle",
+          "enabled:not-focus-visible:hover:data-[state=inactive]:bg-surface-neutral-low-hover",
+          "disabled:data-[state=inactive]:text-text-neutral-disabled",
+        ],
+      ],
+      [
+        "ghost",
+        [
+          "data-[state=active]:text-text-neutral-high",
+          "data-[state=active]:bg-surface-base-0",
+          "data-[state=active]:border-border-neutral-middle",
+          "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-neutral-low-hover",
+          "focus-visible:data-[state=active]:bg-surface-neutral-low-active",
+          "disabled:data-[state=active]:text-text-neutral-disabled",
+          "enabled:not-focus-visible:hover:data-[state=inactive]:bg-surface-neutral-low-hover",
+          "disabled:data-[state=inactive]:text-text-neutral-disabled",
+        ],
+      ],
+    ] as const)("applies %s trigger tokens", (variant, expected) => {
+      const { trigger } = renderTabs(variant);
+      expected.forEach(cls => expect(trigger.className).toContain(cls));
+    });
+
+    it.each([
+      ["solid", "border-b-border-neutral-low"],
+      ["line", "border-b-border-neutral-low"],
+    ] as const)("uses %s list underline token", (variant, cls) => {
+      const { list } = renderTabs(variant);
+      expect(list.className).toContain(cls);
+    });
+
+    it("ghost list has no underline", () => {
+      const { list } = renderTabs("ghost");
+      expect(list.className).not.toMatch(/border-b-/);
+    });
+
+    it("never applies hover tokens while focus-visible", () => {
+      (["solid", "line", "ghost"] as const).forEach(variant => {
+        testContainer.cleanup();
+        testContainer = new TestContainer();
+        testContainer.setup();
+        const { trigger } = renderTabs(variant);
+        const hoverClasses = trigger.className
+          .split(/\s+/)
+          .filter(c => c.includes("hover:"));
+        expect(hoverClasses.length).toBeGreaterThan(0);
+        hoverClasses.forEach(c =>
+          expect(c.startsWith("enabled:not-focus-visible:hover:")).toBe(true)
+        );
+      });
+    });
+  });
 });

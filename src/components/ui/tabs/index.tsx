@@ -33,13 +33,13 @@ const tabsTriggerVariants = cva(
           // active
           "data-[state=active]:bg-surface-primary-high-enabled",
           "data-[state=active]:text-text-inverse",
-          "hover:data-[state=active]:bg-surface-primary-high-hover",
+          "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-primary-high-hover",
           "focus-visible:outline-none focus-visible:data-[state=active]:bg-surface-primary-high-active",
           "disabled:data-[state=active]:bg-surface-primary-high-disabled",
           // inactive
           "data-[state=inactive]:bg-transparent",
           "data-[state=inactive]:text-text-neutral-middle",
-          "enabled:hover:data-[state=inactive]:bg-surface-neutral-low-hover",
+          "enabled:not-focus-visible:hover:data-[state=inactive]:bg-surface-neutral-low-hover",
           "focus-visible:outline-none focus-visible:data-[state=inactive]:bg-surface-neutral-low-active",
           // disabled
           "disabled:data-[state=inactive]:text-text-neutral-disabled",
@@ -51,15 +51,15 @@ const tabsTriggerVariants = cva(
           "data-[state=active]:text-text-primary-enabled",
           "data-[state=active]:after:bg-border-primary-extra-high",
           "data-[state=active]:after:h-0.5",
-          "enabled:hover:data-[state=active]:bg-surface-primary-low-hover",
-          "enabled:hover:data-[state=active]:text-text-primary-hover",
+          "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-primary-low-hover",
+          "enabled:not-focus-visible:hover:data-[state=active]:text-text-primary-hover",
           "focus-visible:outline-none focus-visible:data-[state=active]:bg-surface-primary-low-active",
           "focus-visible:data-[state=active]:text-text-primary-active",
           // inactive
           "data-[state=inactive]:text-text-neutral-middle",
           "data-[state=inactive]:after:bg-transparent",
           // hover (inactive, not disabled)
-          "enabled:hover:data-[state=inactive]:bg-surface-neutral-low-hover",
+          "enabled:not-focus-visible:hover:data-[state=inactive]:bg-surface-neutral-low-hover",
           "focus-visible:outline-none focus-visible:data-[state=inactive]:bg-surface-neutral-low-active",
           // disabled
           "disabled:data-[state=active]:text-text-primary-disabled",
@@ -72,12 +72,12 @@ const tabsTriggerVariants = cva(
           "data-[state=active]:text-text-neutral-high",
           "data-[state=active]:bg-surface-base-0",
           "data-[state=active]:border-border-neutral-middle",
-          "hover:data-[state=active]:bg-surface-neutral-low-hover",
+          "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-neutral-low-hover",
           "data-[state=active]:rounded-t-action",
           "focus-visible:outline-none focus-visible:data-[state=active]:bg-surface-neutral-low-active",
           // inactive
           "data-[state=inactive]:text-text-neutral-middle",
-          "enabled:hover:data-[state=inactive]:bg-surface-neutral-low-hover",
+          "enabled:not-focus-visible:hover:data-[state=inactive]:bg-surface-neutral-low-hover",
           "focus-visible:outline-none focus-visible:data-[state=inactive]:bg-surface-neutral-low-active",
           // disabled
           "disabled:data-[state=active]:text-text-neutral-disabled",
