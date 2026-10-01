@@ -359,14 +359,16 @@ describe("Slider", () => {
       const thumb = getSliderThumb(container);
 
       if (track) {
-        expect(StyleHelpers.hasClass(track, "bg-neutral-100")).toBe(true);
+        expect(StyleHelpers.hasClass(track, "bg-surface-base-100")).toBe(true);
         expect(StyleHelpers.hasClass(track, "cursor-not-allowed")).toBe(true);
       }
       if (range) {
-        expect(StyleHelpers.hasClass(range, "bg-neutral-200")).toBe(true);
+        expect(StyleHelpers.hasClass(range, "bg-surface-base-200")).toBe(true);
       }
       if (thumb) {
-        expect(StyleHelpers.hasClass(thumb, "bg-neutral-100")).toBe(true);
+        expect(
+          StyleHelpers.hasClass(thumb, "bg-surface-neutral-middle-disabled")
+        ).toBe(true);
         expect(StyleHelpers.hasClass(thumb, "cursor-not-allowed")).toBe(true);
       }
     });
@@ -641,7 +643,7 @@ describe("Slider", () => {
       }
       // 有効な状態でのスタイリングを確認
       if (track) {
-        expect(StyleHelpers.hasClass(track, "bg-neutral-200")).toBe(true);
+        expect(StyleHelpers.hasClass(track, "bg-surface-base-200")).toBe(true);
       }
       if (range && track) {
         // ダイナミッククラスなので存在確認のみ

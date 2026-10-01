@@ -58,7 +58,7 @@ describe("Badge", () => {
       // Then: 基本スタイルが適用される
       expect(badge.className).toContain("inline-flex");
       expect(badge.className).toContain("items-center");
-      expect(badge.className).toContain("text-white");
+      expect(badge.className).toContain("text-text-inverse");
       expect(badge.className).toContain("text-center");
       expect(badge.className).toContain("justify-center");
       expect(badge.className).toContain("rounded-full");
@@ -147,7 +147,7 @@ describe("Badge", () => {
       const badge = testContainer.querySelector("div");
 
       // Then: normalバリアントのスタイルが適用される
-      expect(badge.className).toContain("bg-info-500");
+      expect(badge.className).toContain("bg-surface-primary-high-enabled");
     });
 
     it("applies normal variant correctly", () => {
@@ -158,7 +158,7 @@ describe("Badge", () => {
       const badge = testContainer.querySelector("div");
 
       // Then: normalバリアントのスタイルが適用される
-      expect(badge.className).toContain("bg-info-500");
+      expect(badge.className).toContain("bg-surface-primary-high-enabled");
     });
 
     it("applies emphasis variant correctly", () => {
@@ -169,7 +169,7 @@ describe("Badge", () => {
       const badge = testContainer.querySelector("div");
 
       // Then: emphasisバリアントのスタイルが適用される
-      expect(badge.className).toContain("bg-negative-500");
+      expect(badge.className).toContain("bg-surface-negative-high-enabled");
     });
   });
 
@@ -524,7 +524,7 @@ describe("Badge", () => {
         const badge = testContainer.querySelector("div");
         expect(badge.className).toContain("inline-flex");
         expect(badge.className).toContain("items-center");
-        expect(badge.className).toContain("text-white");
+        expect(badge.className).toContain("text-text-inverse");
         expect(badge.className).toContain("rounded-full");
 
         // Clean up for next iteration
@@ -569,10 +569,10 @@ describe("Badge", () => {
 
       // When: 通知バッジを確認
       const normalBadge = testContainer.querySelector(
-        "div[class*='bg-info-500']"
+        "div[class*='bg-surface-primary-high-enabled']"
       );
       const emphasisBadge = testContainer.querySelector(
-        "div[class*='bg-negative-500']"
+        "div[class*='bg-surface-negative-high-enabled']"
       );
 
       // Then: 通知コンテキストで正常に機能する

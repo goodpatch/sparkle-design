@@ -25,12 +25,12 @@ const selectTriggerVariants = cva(
         lg: "h-12 py-1 pl-4 pr-2 gap-2 character-4-regular-pro",
       },
       isInvalid: {
-        true: "bg-surface-base-0 border-negative-500 hover:border-negative-600 data-[state=open]:border-negative-600",
+        true: "bg-surface-base-0 border-border-negative-extra-high-enabled hover:border-border-negative-extra-high-hover data-[state=open]:border-border-negative-extra-high-hover",
         false:
-          "border-neutral-500 hover:border-neutral-600 data-[state=open]:border-neutral-600",
+          "border-border-neutral-extra-high-enabled hover:border-border-neutral-extra-high-hover data-[state=open]:border-border-neutral-extra-high-hover",
       },
       isDisabled: {
-        true: "cursor-not-allowed bg-neutral-50 border-neutral-200 hover:border-neutral-200 text-text-neutral-disabled",
+        true: "cursor-not-allowed bg-surface-neutral-middle-disabled border-border-neutral-extra-high-disabled hover:border-border-neutral-extra-high-disabled text-text-neutral-disabled",
         false: "cursor-pointer",
       },
     },
@@ -38,7 +38,8 @@ const selectTriggerVariants = cva(
       {
         isInvalid: true,
         isDisabled: true,
-        class: "bg-neutral-50 border-negative-200 hover:border-negative-200",
+        class:
+          "bg-surface-neutral-middle-disabled border-border-negative-extra-high-disabled hover:border-border-negative-extra-high-disabled",
       },
     ],
     defaultVariants: {
@@ -57,8 +58,8 @@ const selectIconVariants = cva("", {
       lg: "icon-7-fill-0",
     },
     isDisabled: {
-      true: "text-text-neutral-disabled",
-      false: "text-neutral-700",
+      true: "text-object-neutral-disabled",
+      false: "text-object-neutral-middle",
     },
   },
   defaultVariants: {
@@ -338,7 +339,7 @@ function SelectItem({
         [
           "relative flex w-full cursor-pointer select-none items-center rounded-notice",
           "py-1.5 pl-8 pr-2 text-sm",
-          "character-1-regular-pro text-neutral-700",
+          "character-1-regular-pro text-text-neutral-middle",
           "outline-none focus:bg-neutral-100 data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
         ].join(" "),
         className
