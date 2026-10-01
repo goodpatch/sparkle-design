@@ -51,8 +51,12 @@ Figma（`7alBZXZf65YgcII41TWT0r`）のスタイル刷新を反映する **beta �
 - ClickableCard 内のサブコンポーネントを `span` で描画し、`button` の中に不正な要素が入らないようにしました (#320)
 - Slider のつまみ（`role="slider"`）にアクセシブルネームを渡せるようにしました (#321)
 - FormItem の列トラックが親の幅を超えてはみ出す問題を修正 (#323)
-- Radio のラベルが存在しないトークン（`text-text-medium`）を参照して色が付いていなかった問題を修正し、`isInvalid` のとき `aria-invalid` を付けるようにしました (#327)
+- Radio のラベルが存在しないトークン（`text-text-medium`）を参照して色が付いていなかった問題を修正 (#327)
+- Radio に `isInvalid` を追加し、`aria-invalid` を ARIA 1.2 のサポートロールである radiogroup に付けるようにしました。`FormControl` から渡る `aria-invalid` もエラー配色に反映します。`RadioItem` の `isInvalid` は見た目だけの指定です (#327, #333)
 - Tabs で、キーボードフォーカス中のタブに hover の配色が勝ってしまう問題を修正 (#328)
+- Radio の radiogroup が `<label for>` から `aria-labelledby` で名前を取るようにし、`FormHeader` + `FormControl` で包むだけでグループ名が読み上げられるようにしました（Slider と同じ方式）(#333)
+- Slider のロールを持たないルート要素から `aria-disabled` を外しました。無効状態は `role="slider"` のつまみに付きます。ルートの `[aria-disabled]` をスタイルやテストで参照している場合は `[data-disabled]` に置き換えてください (#333)
+- Breadcrumb の現在地（`BreadcrumbPage`）から `aria-disabled="true"` を外しました。現在地は `aria-current="page"` で示します (#333)
 
 
 ## [1.0.7] - 2026-07-21

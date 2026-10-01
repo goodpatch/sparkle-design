@@ -105,16 +105,13 @@ export const Sizes: Story = {
 };
 
 export const Invalid: Story = {
-  render: args => (
-    <Radio defaultValue="comfortable">
-      <RadioItem value="default" id="invalid1" isInvalid label="Default" />
-      <RadioItem
-        value="comfortable"
-        id="invalid2"
-        isInvalid
-        label="Comfortable"
-      />
-      <RadioItem value="compact" id="invalid3" isInvalid label="Compact" />
+  render: () => (
+    // エラー状態はグループ（radiogroup）に指定する。aria-invalid がグループに付き、各項目もエラー配色になる
+    // en: Set the error state on the group: aria-invalid goes on the radiogroup and every item renders in the error style
+    <Radio defaultValue="comfortable" isInvalid>
+      <RadioItem value="default" id="invalid1" label="Default" />
+      <RadioItem value="comfortable" id="invalid2" label="Comfortable" />
+      <RadioItem value="compact" id="invalid3" label="Compact" />
     </Radio>
   ),
 };

@@ -113,7 +113,8 @@ const TestHelpers = {
 
     expect(nav).toHaveAttribute("aria-label");
     if (currentPage) {
-      expect(currentPage).toHaveAttribute("aria-disabled", "true");
+      // 現在地は aria-current で示し、ロールの無い span に aria-disabled は付けない（ARIA 1.2）
+      expect(currentPage).not.toHaveAttribute("aria-disabled");
     }
   },
 };
@@ -260,7 +261,7 @@ describe("Breadcrumb", () => {
         "span[aria-current='page']"
       );
       expect(currentPage).toBeDefined();
-      expect(currentPage?.getAttribute("aria-disabled")).toBe("true");
+      expect(currentPage?.hasAttribute("aria-disabled")).toBe(false);
     });
 
     it("provides semantic HTML structure", () => {
