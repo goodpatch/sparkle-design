@@ -133,9 +133,19 @@ jobs:
               exit 1
             fi
             PKG=$(node -p "require('./package.json').name")
-            LATEST=$(npm view "$PKG" dist-tags.latest --registry=https://registry.npmjs.org 2>/dev/null || true)
+            # 取得に失敗して空のまま進むと、2.x が latest になった後に latest を 1.x へ
+            # 巻き戻しかねないので止める
+            # en: Fail closed: proceeding with an empty value could move latest back to 1.x
+            if ! LATEST=$(npm view "$PKG" dist-tags.latest --registry=https://registry.npmjs.org); then
+              echo "::error::npm の dist-tags.latest を取得できませんでした。時間をおいて再実行してください"
+              exit 1
+            fi
             LATEST_MAJOR="${LATEST%%.*}"
-            if [ -n "$LATEST" ] && [ "$LATEST_MAJOR" -gt "$LINE" ]; then
+            if ! [[ "$LATEST_MAJOR" =~ ^[0-9]+$ ]]; then
+              echo "::error::npm の dist-tags.latest が想定外の値です: '$LATEST'"
+              exit 1
+            fi
+            if [ "$LATEST_MAJOR" -gt "$LINE" ]; then
               EXPECTED="latest-${LINE}"
             else
               EXPECTED="latest"
