@@ -14,6 +14,10 @@ on:
           - next
           - beta
 
+concurrency:
+  group: npm-release
+  cancel-in-progress: false
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -105,12 +109,23 @@ jobs:
           echo "channel=$CHANNEL" >> "$GITHUB_OUTPUT"
           echo "→ $VERSION を --tag $CHANNEL で stage します"
 
+      - name: Only stage from main
+        # npm の trusted publisher はリポジトリとワークフローしか照合せず、ブランチは見ない。
+        # 任意ブランチのコードを stage できないよう main 以外からの実行を止める
+        # en: npm's trusted publisher matches the repository and workflow, not the branch.
+        # Refuse to stage from anything other than main
+        run: |
+          if [ "$GITHUB_REF" != "refs/heads/main" ]; then
+            echo "::error::stage は main からのみ実行できます（実行元: $GITHUB_REF）"
+            exit 1
+          fi
+
       - name: Install npm with staged publishing
         # `npm stage` は npm 11.20.0 以降、trusted publishing は 11.5.1 以降。
         # Node 22.14.0 同梱の npm 10 には無いので入れ替える
         # en: `npm stage` needs npm >= 11.20.0 and trusted publishing >= 11.5.1;
         # Node 22.14.0 ships npm 10
-        run: npm install -g npm@^11.21.0 && npm --version
+        run: npm install -g npm@11.21.0 && npm --version
 
       - name: npm stage publish
         id: stage
@@ -145,12 +160,13 @@ jobs:
             echo "- package: \`sparkle-design\`"
             echo "- version: \`$PUBLISHED_VERSION\`"
             echo "- dist-tag: \`$PUBLISHED_TAG\`"
+            echo "- ref: \`${GITHUB_REF}\`"
             echo "- commit: \`${GITHUB_SHA}\`"
             echo "- stage id: \`$STAGE_ID\`"
             echo ""
             echo "#### 次の手順 / Next steps"
             echo ""
-            echo "1. 中身を確認する（任意）: \`npx -y npm@^11.21.0 stage download $STAGE_ID\`"
-            echo "2. 2FA 付きで承認して公開する: \`npx -y npm@^11.21.0 stage approve $STAGE_ID --otp=<code>\`（不要なら \`npx -y npm@^11.21.0 stage reject $STAGE_ID --otp=<code>\`）"
+            echo "1. 中身を確認する（任意）: \`npx -y npm@11.21.0 stage download $STAGE_ID --registry=https://registry.npmjs.org\`"
+            echo "2. 2FA 付きで承認して公開する: \`npx -y npm@11.21.0 stage approve $STAGE_ID --registry=https://registry.npmjs.org --otp=<code>\`（不要なら \`npx -y npm@11.21.0 stage reject $STAGE_ID --registry=https://registry.npmjs.org --otp=<code>\`）"
             echo "3. 公開後に tag と GitHub Release を作る: \`gh workflow run \"Publish GitHub Release\" --repo ${GITHUB_REPOSITORY} -f ref=${GITHUB_SHA}\`"
           } >> "$GITHUB_STEP_SUMMARY"

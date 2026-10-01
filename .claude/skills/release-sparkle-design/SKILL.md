@@ -78,7 +78,7 @@ user-invocable: true
 
 タグ未作成・Release 未作成のバージョンがある場合は **新バージョンを切る前に** 必ず追補する。
 
-- [ ] 該当バージョンのリリースコミット（`🔖 chore: release vX.Y.Z` 等）の SHA を、下の「マージ後: stage → 承認 → tag・Release」にある「候補が 1 件であることを確かめる」スニペットで特定する
+- [ ] 該当バージョンを公開した commit の SHA を npm の記録から特定する: `npm view sparkle-design@X.Y.Z gitHead --registry=https://registry.npmjs.org`（CI から公開した版は main のマージコミットが記録されている）
 - [ ] 🛑 `gh workflow run "Publish GitHub Release" -f ref=<SHA>` で tag と Release を作る
   - ワークフローは npm で公開済みであること（と、記録があれば `gitHead` が SHA と一致すること）を確かめてから tag を打ち、CHANGELOG の該当セクションを notes にする
 
@@ -131,18 +131,18 @@ npm は 2027 年 1 月に granular access token での直接 publish を廃止�
 > 対象の version（`X.Y.Z`）と main の最新 commit を提示して確認を取る。
 
 - [ ] リリース PR が main にマージ済みで、main の `package.json` の `version` が `X.Y.Z` になっていることを確認する（`git fetch origin main && git show origin/main:package.json | jq -r .version`）
-- [ ] 🛑 **npm へ stage** — main を ref にしてワークフローを実行する（`gh workflow run` の `--ref` はブランチ名かタグ名のみ。SHA は渡せない）。dist-tag は version から自動判定（`-beta.N` → `beta`、`-rc.N` → `next`、それ以外 → `latest`）:
+- [ ] 🛑 **npm へ stage** — main を ref にしてワークフローを実行する（`gh workflow run` の `--ref` はブランチ名かタグ名のみで SHA は渡せない。ワークフローは main 以外からの実行を拒否する）。dist-tag は version から自動判定（`-beta.N` → `beta`、`-rc.N` → `next`、それ以外 → `latest`）:
   ```bash
   gh workflow run "Publish to npm" --ref main -f channel=auto
   ```
   - stage した時点では**まだ公開されていない**（`npm stage reject` で取り下げられる）。dist-tag は stage 時に決まり、承認時には変えられない
   - 実行結果の Summary に **stage ID・commit（main のマージコミット）・承認コマンド**が出る。以降はこの commit を使う
-- [ ] 👤 **メンテナーが 2FA 付きで承認する**（AI は実行しない）。必要なら先に中身を確認する:
+- [ ] 👤 **メンテナーが 2FA 付きで承認する**（AI は実行しない）。手元で `npm login --registry=https://registry.npmjs.org` 済みであること（社内 proxy が既定 registry の環境があるので、コマンドには必ず `--registry` を付ける）。必要なら先に中身を確認する:
   ```bash
-  npx -y npm@^11.21.0 stage download <stage-id>   # 任意: tarball を確認
-  npx -y npm@^11.21.0 stage approve <stage-id> --otp=<code>
+  npx -y npm@11.21.0 stage download <stage-id> --registry=https://registry.npmjs.org   # 任意: tarball を確認
+  npx -y npm@11.21.0 stage approve <stage-id> --otp=<code> --registry=https://registry.npmjs.org
   ```
-  取り下げる場合は `npx -y npm@^11.21.0 stage reject <stage-id> --otp=<code>`
+  取り下げる場合は `npx -y npm@11.21.0 stage reject <stage-id> --otp=<code> --registry=https://registry.npmjs.org`
 - [ ] 公開確認: `npm view sparkle-design@X.Y.Z version --registry=https://registry.npmjs.org` と `npm view sparkle-design dist-tags --registry=https://registry.npmjs.org`（社内 proxy 経由だと反映が遅れるので registry を明示する）
 - [ ] 🛑 **tag と GitHub Release を作る** — 公開を確認してから、Summary に出た commit を渡して実行する。ワークフローは npm 上の公開と `gitHead` がその commit と一致することを確かめてから tag を打ち、CHANGELOG の節で Release を作る（`-` を含む版は pre-release）:
   ```bash
@@ -170,7 +170,7 @@ npm は 2027 年 1 月に granular access token での直接 publish を廃止�
 
 ### リリースコミットだけ作って tag/release を忘れていた場合
 
-そのコミットの SHA を「マージ後: stage → 承認 → tag・Release」の「候補が 1 件であることを確かめる」スニペットで特定し、`gh workflow run "Publish GitHub Release" -f ref=<SHA>` で後付けで tag + Release を作成できる（npm で公開済みであることが前提）。
+`npm view sparkle-design@X.Y.Z gitHead --registry=https://registry.npmjs.org` で公開した commit の SHA を特定し、`gh workflow run "Publish GitHub Release" -f ref=<SHA>` で後付けで tag + Release を作成できる（npm で公開済みであることが前提）。
 このスキルの「過去リリース追補」セクションを参照。
 
 ### CHANGELOG が古い場合
@@ -182,7 +182,7 @@ GitHub Release の本文がある場合はそれを CHANGELOG にコピーすれ
 
 - `pnpm-lock.yaml` の整合性が崩れていないか確認（`pnpm install --frozen-lockfile` を試す）
 - `pnpm.overrides` は本リポジトリでは `package.json` の `pnpm.overrides` に置く運用（CI が使う pnpm のバージョンで読まれることを確認済み）。ローカルの pnpm バージョンが大幅に違うと挙動差で lockfile が書き換わることがあるので、ローカルで pnpm install するときは lockfile の差分（特に `overrides:` セクション）を確認すること
-- **認証エラー（E404 / ENEEDAUTH / 403）** は trusted publisher の設定を疑う。npmjs.com の設定と workflow のファイル名・リポジトリが一致しているか、stage が許可されているかを `npx -y npm@^11.21.0 trust list sparkle-design` で確認する（次節）
+- **認証エラー（E404 / ENEEDAUTH / 403）** は trusted publisher の設定を疑う。npmjs.com の設定と workflow のファイル名・リポジトリが一致しているか、stage が許可されているかを `npx -y npm@11.21.0 trust list sparkle-design --registry=https://registry.npmjs.org` で確認する（次節）
 - 直接 publish できるトークン（Bypass 2FA 付き）を発行し直す対応は**取らない**。2027 年 1 月に廃止される
 
 ### trusted publisher（OIDC）の設定
@@ -190,9 +190,9 @@ GitHub Release の本文がある場合はそれを CHANGELOG にコピーすれ
 トークンの発行・更新は不要。npm 側でパッケージと GitHub Actions のワークフローを一度だけ結び付ける（npm の 2FA が要るのでメンテナーが実行する）:
 
 ```bash
-npx -y npm@^11.21.0 trust github sparkle-design \
-  --repository goodpatch/sparkle-design --file publish.yml --allow-stage-publish
-npx -y npm@^11.21.0 trust list sparkle-design   # 確認
+npx -y npm@11.21.0 trust github sparkle-design \
+  --repository goodpatch/sparkle-design --file publish.yml --allow-stage-publish --registry=https://registry.npmjs.org
+npx -y npm@11.21.0 trust list sparkle-design --registry=https://registry.npmjs.org   # 確認
 ```
 
 - `--allow-stage-publish` だけを付け、`--allow-publish` は付けない（CI から直接公開できないようにし、公開の確定を人の 2FA に限る）

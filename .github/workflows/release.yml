@@ -13,6 +13,10 @@ on:
         type: string
         required: true
 
+concurrency:
+  group: npm-release
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -21,6 +25,17 @@ jobs:
       # en: `contents: write` is required to push the tag and create the GitHub Release
       contents: write
     steps:
+      - name: Validate input
+        # ブランチ名を渡すとその時点の HEAD に tag を打ってしまうので、完全な SHA だけ受け付ける
+        # en: Accept only a full commit SHA; a branch name would tag whatever HEAD is now
+        env:
+          INPUT_REF: ${{ inputs.ref }}
+        run: |
+          if ! [[ "$INPUT_REF" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::ref には 40 桁の commit SHA を指定してください（Publish to npm の Summary の commit）"
+            exit 1
+          fi
+
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.ref }}

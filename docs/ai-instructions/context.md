@@ -82,10 +82,10 @@ pnpm test      # Component tests
 npm removes direct publishing with granular access tokens in January 2027. CI authenticates with **trusted publishing (GitHub Actions OIDC, no token)** and only **stages** releases:
 
 1. `gh workflow run "Publish to npm" --ref main` stages the version (not public yet; dist-tag is fixed at stage time). `--ref` takes a branch or tag, not a SHA
-2. A maintainer approves with 2FA: `npx -y npm@^11.21.0 stage approve <stage-id> --otp=<code>` — **agents never run this**
+2. A maintainer approves with 2FA: `npx -y npm@11.21.0 stage approve <stage-id> --otp=<code> --registry=https://registry.npmjs.org` — **agents never run this**
 3. After it is public: `gh workflow run "Publish GitHub Release" -f ref=<commit shown in the stage Summary>` creates the tag and GitHub Release
 
-The npm trusted publisher allows **stage only** (`npm trust github sparkle-design --repository goodpatch/sparkle-design --file publish.yml --allow-stage-publish`). See `.claude/skills/release-sparkle-design/SKILL.md`.
+The npm trusted publisher allows **stage only** (`npm trust github sparkle-design --repository goodpatch/sparkle-design --file publish.yml --allow-stage-publish --registry=https://registry.npmjs.org`). See `.claude/skills/release-sparkle-design/SKILL.md`.
 
 ### Irreversible Operations Are Blocked by a Hook
 `scripts/hooks/irreversible-ops-guard.sh` (a PreToolUse hook wired in `.claude/settings.json`) blocks:
