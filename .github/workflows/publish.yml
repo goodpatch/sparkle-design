@@ -23,6 +23,9 @@ jobs:
       # en: Staging needs no write access. The tag and GitHub Release are created after
       # approval by release.yml (Publish GitHub Release)
       contents: read
+      # npm の trusted publishing（OIDC）で認証する。NPM_TOKEN は使わない
+      # en: Authenticate to npm via trusted publishing (OIDC); no NPM_TOKEN
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
@@ -100,24 +103,26 @@ jobs:
 
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "channel=$CHANNEL" >> "$GITHUB_OUTPUT"
-          echo "→ $VERSION を --tag $CHANNEL で publish します"
+          echo "→ $VERSION を --tag $CHANNEL で stage します"
 
       - name: Install npm with staged publishing
-        # `npm stage` と stage 専用トークン（read-write-stage-only）は npm 11.20.0 以降。
+        # `npm stage` は npm 11.20.0 以降、trusted publishing は 11.5.1 以降。
         # Node 22.14.0 同梱の npm 10 には無いので入れ替える
-        # en: `npm stage` and stage-only tokens need npm >= 11.20.0; Node 22.14.0 ships npm 10
+        # en: `npm stage` needs npm >= 11.20.0 and trusted publishing >= 11.5.1;
+        # Node 22.14.0 ships npm 10
         run: npm install -g npm@^11.21.0 && npm --version
 
       - name: npm stage publish
         id: stage
-        # 2027 年 1 月に granular access token での直接 publish が廃止されるため、
-        # stage 専用トークンで「公開待ち」として登録するだけにする。公開の確定は
-        # メンテナーが 2FA 付きで `npm stage approve` する（このワークフローでは公開しない）
-        # en: Direct publish with granular access tokens is removed in January 2027, so only
-        # stage the version with a stage-only token. A maintainer finalizes it with 2FA via
-        # `npm stage approve` (this workflow never makes the version public)
+        # trusted publishing（OIDC）で「公開待ち」として登録するだけにする。npmjs.com の
+        # trusted publisher は stage だけを許可しておき、公開の確定はメンテナーが 2FA 付きで
+        # `npm stage approve` する（このワークフローでは公開しない）。public リポジトリなので
+        # provenance も自動で付く
+        # en: Only stage the version via trusted publishing (OIDC). The npmjs.com trusted
+        # publisher allows staging only; a maintainer finalizes it with 2FA via
+        # `npm stage approve` (this workflow never makes the version public). Provenance is
+        # attached automatically since the repository is public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           PUBLISH_TAG: ${{ steps.tag.outputs.channel }}
         run: |
           set -euo pipefail
@@ -145,7 +150,7 @@ jobs:
             echo ""
             echo "#### 次の手順 / Next steps"
             echo ""
-            echo "1. 中身を確認する（任意）: \`npm stage download $STAGE_ID\`"
-            echo "2. 2FA 付きで承認して公開する: \`npm stage approve $STAGE_ID --otp=<code>\`（不要なら \`npm stage reject $STAGE_ID --otp=<code>\`）"
+            echo "1. 中身を確認する（任意）: \`npx -y npm@^11.21.0 stage download $STAGE_ID\`"
+            echo "2. 2FA 付きで承認して公開する: \`npx -y npm@^11.21.0 stage approve $STAGE_ID --otp=<code>\`（不要なら \`npx -y npm@^11.21.0 stage reject $STAGE_ID --otp=<code>\`）"
             echo "3. 公開後に tag と GitHub Release を作る: \`gh workflow run \"Publish GitHub Release\" --repo ${GITHUB_REPOSITORY} -f ref=${GITHUB_SHA}\`"
           } >> "$GITHUB_STEP_SUMMARY"

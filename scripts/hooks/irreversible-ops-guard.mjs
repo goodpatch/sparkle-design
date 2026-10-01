@@ -31,7 +31,7 @@ const OPTIONS_WITH_VALUE = new Set([
   // gh
   "-R", "--repo", "--hostname",
   // パッケージマネージャ
-  "-w", "--workspace", "-F", "--filter", "--dir", "--prefix", "--registry",
+  "-w", "--workspace", "-F", "--filter", "--dir", "--prefix", "--registry", "--otp",
 ]);
 
 /** `env` 自身のオプションのうち値を取るもの。 */
@@ -236,6 +236,9 @@ export function inspectSegment(segment) {
   if (cmd === "npx" && /^npm(@.+)?$/.test(rest[0] ?? "")) {
     cmd = "npm";
     rest = rest.slice(1);
+    // `npx -p npm@11 npm …` は -p の値の後ろにもう一度 npm が来る
+    // en: `npx -p npm@11 npm …` repeats npm after the -p value
+    if (/^npm(@.+)?$/.test(rest[0] ?? "")) rest = rest.slice(1);
     while (rest.length > 0 && rest[0].startsWith("-")) {
       const option = rest.shift();
       if (OPTIONS_WITH_VALUE.has(option)) rest.shift();
@@ -276,8 +279,10 @@ export function inspectSegment(segment) {
     if (pair === "repo archive") return { op: "gh repo archive (GitHub リポジトリのアーカイブ)" };
     if (pair === "workflow run") {
       // publish 系ワークフローだけを対象にする (CI の再実行などは素通し)
-      if (rest.some((t) => /publish/i.test(t))) {
-        return { op: "gh workflow run (publish ワークフローの実行)" };
+      // release（tag push と GitHub Release 作成を伴う）もファイル名指定を含めて止める
+      // en: Also block release workflows (tag push + GitHub Release), including by filename
+      if (rest.some((t) => /publish|release/i.test(t))) {
+        return { op: "gh workflow run (publish / release ワークフローの実行)" };
       }
     }
     return null;

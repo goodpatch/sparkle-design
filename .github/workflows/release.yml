@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       ref:
-        description: "stage した commit の SHA（Publish to npm の Summary に出る）"
+        description: "stage した commit の SHA（Publish to npm の Summary の commit。main のマージコミット）"
         type: string
         required: true
 
@@ -35,8 +35,6 @@ jobs:
         # en: Make sure the version is public (approved) and was built from this commit,
         # so we never tag an unapproved version
         id: verify
-        env:
-          INPUT_REF: ${{ inputs.ref }}
         run: |
           set -euo pipefail
           VERSION=$(node -p "require('./package.json').version")
@@ -65,8 +63,18 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           TAG="v${VERSION}"
 
-          if git rev-parse --verify "refs/tags/${TAG}" >/dev/null 2>&1; then
-            echo "tag ${TAG} already exists locally — skipping git tag push"
+          # checkout はタグを取得しないので、リモートで既存タグを確かめる。既に別の commit を
+          # 指していたら誤タグなので止める（再実行・過去リリースの追補で同じタグを打たない）
+          # en: checkout doesn't fetch tags, so check the remote. Stop if an existing tag points
+          # elsewhere (makes reruns and backfills safe)
+          REMOTE_TAG_SHA=$(git ls-remote origin "refs/tags/${TAG}^{}" | awk '{print $1}')
+          [ -n "$REMOTE_TAG_SHA" ] || REMOTE_TAG_SHA=$(git ls-remote origin "refs/tags/${TAG}" | awk '{print $1}')
+          if [ -n "$REMOTE_TAG_SHA" ]; then
+            if [ "$REMOTE_TAG_SHA" != "$(git rev-parse HEAD)" ]; then
+              echo "::error::tag ${TAG} は既に ${REMOTE_TAG_SHA} を指しています（指定 commit と異なる）"
+              exit 1
+            fi
+            echo "tag ${TAG} already exists on the remote — skipping git tag push"
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
