@@ -205,7 +205,7 @@ describe("Switch", () => {
 
       // disabled styling should be applied to thumb
       expect(thumbElement.className).toContain(
-        "data-[state=unchecked]:bg-neutral-50"
+        "data-[state=unchecked]:bg-surface-neutral-low-disabled"
       );
     });
 
@@ -217,7 +217,7 @@ describe("Switch", () => {
 
       // disabled styling should be applied to thumb
       expect(thumbElement.className).toContain(
-        "data-[state=checked]:bg-primary-50"
+        "data-[state=checked]:bg-surface-primary-low-disabled"
       );
     });
   });
@@ -337,6 +337,55 @@ describe("Switch", () => {
       testContainer.render(<Switch size="lg" />);
       switchElement = testContainer.querySelector('[data-slot="switch"]');
       expect(StyleHelpers.hasClass(switchElement, "h-8")).toBe(true);
+    });
+  });
+
+  describe("Figma token mapping", () => {
+    // Figma: Switch 1075:22224（2026-10-01 取得）。トラックに枠線の bind は無く padding/2
+    // en: Figma Switch 1075:22224 (retrieved 2026-10-01): no border bind on the track, padding/2
+    let testContainer: TestContainer;
+    beforeEach(() => {
+      testContainer = new TestContainer();
+      testContainer.setup();
+    });
+    afterEach(() => {
+      testContainer.cleanup();
+    });
+
+    it("applies track tokens for each state", () => {
+      testContainer.render(<Switch />);
+      const track = testContainer.querySelector('[data-slot="switch"]');
+      [
+        "data-[state=unchecked]:bg-surface-neutral-high-enabled",
+        "data-[state=unchecked]:hover:bg-surface-neutral-high-hover",
+        "data-[state=checked]:bg-surface-primary-high-enabled",
+        "data-[state=checked]:hover:bg-surface-primary-high-hover",
+        "disabled:data-[state=unchecked]:bg-surface-neutral-high-disabled",
+        "disabled:data-[state=checked]:bg-surface-primary-high-disabled",
+      ].forEach(cls => expect(track.className).toContain(cls));
+    });
+
+    it.each(["sm", "md", "lg"] as const)(
+      "keeps a transparent 1px border + p-px (= padding/2) for forced-colors (%s)",
+      size => {
+        testContainer.render(<Switch size={size} />);
+        const track = testContainer.querySelector('[data-slot="switch"]');
+        const classes = track.className.split(/\s+/);
+        ["border", "border-transparent", "p-px"].forEach(cls =>
+          expect(classes).toContain(cls)
+        );
+        expect(
+          classes.some((c: string) => /border-(neutral|primary)-/.test(c))
+        ).toBe(false);
+      }
+    );
+
+    it("applies thumb tokens", () => {
+      testContainer.render(<Switch />);
+      const thumb = testContainer.querySelector('[data-slot="switch-thumb"]');
+      ["bg-surface-base-0", "shadow-raise"].forEach(cls =>
+        expect(thumb.className).toContain(cls)
+      );
     });
   });
 });

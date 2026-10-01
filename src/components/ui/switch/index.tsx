@@ -12,11 +12,15 @@ import { cva, VariantProps } from "class-variance-authority";
 
 const switchVariants = cva(
   [
-    "relative peer inline-flex shrink-0 cursor-pointer items-center rounded-full border transition-colors",
+    // Figma に枠線の bind は無いが、強制カラーモード（Windows ハイコントラスト等）で
+    // トラックの外形を残すため透明な 1px 枠を持たせる（padding と合わせて padding/2 相当）
+    // en: Figma binds no border, but keep a transparent 1px border so the track outline
+    // survives forced-colors mode (together with p-px this equals padding/2)
+    "relative peer inline-flex shrink-0 cursor-pointer items-center rounded-full border border-transparent transition-colors",
     "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-    "data-[state=unchecked]:bg-neutral-500 data-[state=unchecked]:border-neutral-600 data-[state=unchecked]:hover:bg-neutral-600 data-[state=unchecked]:hover:border-neutral-700",
-    "data-[state=checked]:bg-primary-500 data-[state=checked]:border-primary-600 data-[state=checked]:hover:bg-primary-600 data-[state=checked]:hover:border-primary-700",
-    "disabled:cursor-not-allowed disabled:data-[state=unchecked]:bg-neutral-100 disabled:data-[state=unchecked]:border-transparent disabled:data-[state=checked]:bg-primary-200 disabled:data-[state=checked]:border-transparent",
+    "data-[state=unchecked]:bg-surface-neutral-high-enabled data-[state=unchecked]:hover:bg-surface-neutral-high-hover",
+    "data-[state=checked]:bg-surface-primary-high-enabled data-[state=checked]:hover:bg-surface-primary-high-hover",
+    "disabled:cursor-not-allowed disabled:data-[state=unchecked]:bg-surface-neutral-high-disabled disabled:data-[state=checked]:bg-surface-primary-high-disabled",
   ].join(" "),
   {
     variants: {
@@ -35,7 +39,7 @@ const switchVariants = cva(
 );
 
 const thumbVariants = cva(
-  "pointer-events-none block rounded-full bg-surface-base-0 shadow-raise ring-0 transition-transform bg-surface-base-0",
+  "pointer-events-none block rounded-full bg-surface-base-0 shadow-raise ring-0 transition-transform",
   {
     variants: {
       size: {
@@ -44,7 +48,7 @@ const thumbVariants = cva(
         lg: "h-7 w-7 data-[state=checked]:translate-x-7 data-[state=unchecked]:translate-x-0",
       },
       disabled: {
-        true: "data-[state=unchecked]:bg-neutral-50 data-[state=checked]:bg-primary-50",
+        true: "data-[state=unchecked]:bg-surface-neutral-low-disabled data-[state=checked]:bg-surface-primary-low-disabled",
         false: "",
       },
     },

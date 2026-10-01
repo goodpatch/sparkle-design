@@ -248,7 +248,7 @@ describe("Checkbox", () => {
           testContainer.render(<Checkbox id={`test-${size}`} size={size} />);
           const checkboxOuter = testContainer.querySelector(`#test-${size}`);
           const checkboxInner = checkboxOuter.querySelector(
-            'div[class*="rounded-xs"]'
+            'div[class*="rounded-minimum"]'
           );
 
           // Then: 外側（タップ可能領域）と内側（視覚的チェックボックス）に適切なサイズクラスが適用されている
@@ -279,12 +279,14 @@ describe("Checkbox", () => {
       testContainer.render(<Checkbox id="test-checkbox" isInvalid />);
       const checkboxOuter = testContainer.querySelector("#test-checkbox");
       const checkboxInner = checkboxOuter.querySelector(
-        'div[class*="border-negative-500"]'
+        'div[class*="border-object-negative-enabled"]'
       );
 
       // Then: invalid状態のクラスが内側のチェックボックスに適用されている
       expect(checkboxInner).toBeTruthy();
-      expect(checkboxInner!.className).toContain("border-negative-500");
+      expect(checkboxInner!.className).toContain(
+        "border-object-negative-enabled"
+      );
     });
   });
 
@@ -506,13 +508,15 @@ describe("Checkbox", () => {
       );
       const checkboxOuter = testContainer.querySelector("#test-checkbox");
       const checkboxInner = checkboxOuter.querySelector(
-        'div[class*="border-negative-500"]'
+        'div[class*="border-object-negative-enabled"]'
       );
 
       // Then: indeterminate状態でinvalidスタイルが内側のチェックボックスに適用されている
       expect(checkboxOuter.getAttribute("data-state")).toBe("indeterminate");
       expect(checkboxInner).toBeTruthy();
-      expect(checkboxInner!.className).toContain("border-negative-500");
+      expect(checkboxInner!.className).toContain(
+        "border-object-negative-enabled"
+      );
     });
 
     it("handles indeterminate state when disabled", () => {
@@ -528,6 +532,72 @@ describe("Checkbox", () => {
       // Then: indeterminate状態のままでクリックは無効
       expect(checkbox.getAttribute("data-state")).toBe("indeterminate");
       expect(A11yHelpers.isDisabled(checkbox)).toBe(true);
+    });
+  });
+
+  describe("Figma token mapping", () => {
+    // Figma: Checkbox/Parts/Item 176:7554（2026-10-01 取得）
+    // en: Figma Checkbox/Parts/Item 176:7554 (retrieved 2026-10-01)
+    const box = (props: { isInvalid?: boolean; isDisabled?: boolean }) => {
+      testContainer.render(<Checkbox id="token-cb" {...props} />);
+      return testContainer.querySelector("#token-cb")
+        .firstElementChild as HTMLElement;
+    };
+    const checked = (s: string) =>
+      [
+        `[.group[data-state=checked]_&]:${s}`,
+        `[.group[data-state=indeterminate]_&]:${s}`,
+      ] as const;
+
+    it.each([
+      [
+        "neutral",
+        {},
+        [
+          "rounded-minimum",
+          "bg-surface-base-0",
+          "border-object-neutral-low",
+          "hover:border-object-neutral-middle",
+          ...checked("bg-object-primary-enabled"),
+          ...checked("hover:bg-object-primary-hover"),
+        ],
+      ],
+      [
+        "neutral disabled",
+        { isDisabled: true },
+        [
+          "border-object-neutral-disabled",
+          ...checked("bg-object-primary-disabled"),
+          ...checked("border-object-primary-disabled"),
+        ],
+      ],
+      [
+        "invalid",
+        { isInvalid: true },
+        [
+          "border-object-negative-enabled",
+          "hover:border-object-negative-hover",
+          ...checked("bg-object-negative-enabled"),
+          ...checked("hover:bg-object-negative-hover"),
+        ],
+      ],
+      [
+        "invalid disabled",
+        { isInvalid: true, isDisabled: true },
+        [
+          "border-object-negative-disabled",
+          ...checked("bg-object-negative-disabled"),
+        ],
+      ],
+    ])("applies %s tokens", (_, props, expected) => {
+      const el = box(props);
+      expected.forEach(cls => expect(el.className.split(/\s+/)).toContain(cls));
+    });
+
+    it("does not apply hover tokens while disabled", () => {
+      const el = box({ isDisabled: true });
+      expect(el.className).not.toContain("hover:border-object-neutral-middle");
+      expect(el.className).not.toContain("hover:bg-object-primary-hover");
     });
   });
 });

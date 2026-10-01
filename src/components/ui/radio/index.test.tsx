@@ -249,14 +249,14 @@ describe("Radio", () => {
       // When: ラジオボタンの内側のindicatorを取得
       const radioItem = testContainer.querySelector("#radio1");
       const indicator = radioItem.querySelector(
-        'div[class*="border-negative-500"]'
+        'div[class*="border-object-negative-enabled"]'
       );
 
       // Then: エラー状態のスタイリングが内側のindicatorに適用されている
       expect(indicator).toBeTruthy();
-      expect(StyleHelpers.hasClass(indicator!, "border-negative-500")).toBe(
-        true
-      );
+      expect(
+        StyleHelpers.hasClass(indicator!, "border-object-negative-enabled")
+      ).toBe(true);
     });
 
     it("applies error styling when selected and invalid", () => {
@@ -275,15 +275,15 @@ describe("Radio", () => {
       // When: ラジオボタンの内側のindicatorを取得（選択済み状態）
       const radioItem = testContainer.querySelector("#radio1");
       const indicator = radioItem.querySelector(
-        'div[class*="border-negative-500"]'
+        'div[class*="border-object-negative-enabled"]'
       );
 
       // Then: エラー状態のスタイリングが内側のindicatorに適用されている
       expect(radioItem.getAttribute("data-state")).toBe("checked");
       expect(indicator).toBeTruthy();
-      expect(StyleHelpers.hasClass(indicator!, "border-negative-500")).toBe(
-        true
-      );
+      expect(
+        StyleHelpers.hasClass(indicator!, "border-object-negative-enabled")
+      ).toBe(true);
     });
   });
 
@@ -423,6 +423,124 @@ describe("Radio", () => {
       // Keyboard activation testing is complex with Radix UI components
       // and requires more sophisticated event simulation than our current setup supports
       // This would be better tested in E2E tests or with a more complete testing environment
+    });
+  });
+
+  describe("Figma token mapping", () => {
+    // Figma: Radio/Parts/Item 176:7906（2026-10-01 取得）
+    // en: Figma Radio/Parts/Item 176:7906 (retrieved 2026-10-01)
+    const renderItem = (props: {
+      isInvalid?: boolean;
+      disabled?: boolean;
+      checked?: boolean;
+    }) => {
+      testContainer.render(
+        <Radio defaultValue={props.checked ? "a" : undefined}>
+          <RadioItem
+            value="a"
+            id="token-radio"
+            label="A"
+            isInvalid={props.isInvalid}
+            disabled={props.disabled}
+          />
+        </Radio>
+      );
+      const item = testContainer.querySelector("#token-radio");
+      const ring = item.firstElementChild as HTMLElement;
+      const dot = item.querySelector(
+        '[data-slot="radio-group-indicator"]'
+      ) as HTMLElement | null;
+      return { item, ring, dot };
+    };
+
+    it.each([
+      [
+        "neutral",
+        {},
+        [
+          "bg-surface-base-0",
+          "border-object-neutral-low",
+          "hover:border-object-neutral-middle",
+        ],
+      ],
+      [
+        "neutral disabled",
+        { disabled: true },
+        [
+          "border-object-neutral-disabled",
+          "[.group[data-state=checked]_&]:border-object-primary-disabled",
+        ],
+      ],
+      [
+        "invalid",
+        { isInvalid: true },
+        [
+          "border-object-negative-enabled",
+          "hover:border-object-negative-hover",
+        ],
+      ],
+      [
+        "invalid disabled",
+        { isInvalid: true, disabled: true },
+        ["border-object-negative-disabled"],
+      ],
+    ])("applies %s ring tokens", (_, props, expected) => {
+      const { ring } = renderItem(props);
+      expected.forEach(cls =>
+        expect(ring.className.split(/\s+/)).toContain(cls)
+      );
+    });
+
+    it.each([
+      [
+        "neutral",
+        {},
+        [
+          "[.group[data-state=checked]_&]:bg-object-primary-enabled",
+          "[.group[data-state=checked]_&]:hover:bg-object-primary-hover",
+        ],
+      ],
+      [
+        "neutral disabled",
+        { disabled: true },
+        ["[.group[data-state=checked]_&]:bg-object-primary-disabled"],
+      ],
+      [
+        "invalid",
+        { isInvalid: true },
+        [
+          "[.group[data-state=checked]_&]:bg-object-negative-enabled",
+          "[.group[data-state=checked]_&]:hover:bg-object-negative-hover",
+        ],
+      ],
+      [
+        "invalid disabled",
+        { isInvalid: true, disabled: true },
+        ["[.group[data-state=checked]_&]:bg-object-negative-disabled"],
+      ],
+    ])("applies %s checked dot tokens", (_, props, expected) => {
+      const { dot } = renderItem({ ...props, checked: true });
+      expect(dot).toBeTruthy();
+      expected.forEach(cls =>
+        expect(dot!.className.split(/\s+/)).toContain(cls)
+      );
+    });
+
+    it("uses text-neutral-middle for the label (not the undefined text-medium)", () => {
+      renderItem({});
+      const label = testContainer.querySelector('label[for="token-radio"]');
+      expect(label.className).toContain("text-text-neutral-middle");
+      expect(label.className).not.toContain("text-text-medium");
+    });
+
+    it("exposes aria-invalid only when isInvalid", () => {
+      const { item } = renderItem({ isInvalid: true });
+      expect(item.getAttribute("aria-invalid")).toBe("true");
+      testContainer.cleanup();
+      testContainer = new TestContainer();
+      testContainer.setup();
+      const { item: valid } = renderItem({});
+      expect(valid.hasAttribute("aria-invalid")).toBe(false);
     });
   });
 });
