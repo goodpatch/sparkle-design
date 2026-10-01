@@ -153,6 +153,8 @@ const FormItemContext = React.createContext<FormItemContextValue>(
  *
  * - フォームアイテムはフォームフィールドのラベル、入力要素、ヘルパーテキストをグループ化するために使用するコンポーネントです。
  * - en: The FormItem component is used to group the label, input elements, and helper text of a form field.
+ * - 列トラックは親の幅に合わせる（`minmax(0,1fr)`）ため、折り返さない中身（チップ列や長い選択値など）があっても親からはみ出しません。
+ * - en: The column track follows the parent's width (`minmax(0,1fr)`), so non-wrapping content (e.g. chip rows or long selected values) does not overflow the parent.
  *
  * **使用例 / Usage Example**
  *
@@ -174,7 +176,12 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
     <FormItemContext.Provider value={{ id }}>
       <div
         data-slot="form-item"
-        className={cn("grid content-start", className)}
+        // 暗黙の auto トラックは中身の min-content まで広がるため、minmax(0,1fr) で親の幅に合わせる
+        // en: An implicit auto track grows to the content's min-content width, so use minmax(0,1fr) to follow the parent's width
+        className={cn(
+          "grid grid-cols-[minmax(0,1fr)] content-start",
+          className
+        )}
         {...props}
       />
     </FormItemContext.Provider>
