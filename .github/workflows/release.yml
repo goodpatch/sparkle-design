@@ -1,0 +1,147 @@
+name: Publish GitHub Release
+
+# npm stage approve で公開が確定した後に実行し、stage した commit に tag を打って
+# GitHub Release を作る。npm 上で該当バージョンが公開済みであることを確かめてから動く
+# en: Run after `npm stage approve` has made the version public. Tags the staged commit
+# and creates the GitHub Release, after confirming the version is live on npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "stage した commit の SHA（Publish to npm の Summary の commit。main のマージコミット）"
+        type: string
+        required: true
+
+concurrency:
+  group: npm-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      # git tag の push と `gh release create` に contents: write が必要
+      # en: `contents: write` is required to push the tag and create the GitHub Release
+      contents: write
+    steps:
+      - name: Validate input
+        # ブランチ名を渡すとその時点の HEAD に tag を打ってしまうので、完全な SHA だけ受け付ける
+        # en: Accept only a full commit SHA; a branch name would tag whatever HEAD is now
+        env:
+          INPUT_REF: ${{ inputs.ref }}
+        run: |
+          if ! [[ "$INPUT_REF" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::ref には 40 桁の commit SHA を指定してください（Publish to npm の Summary の commit）"
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".node-version"
+
+      - name: Verify the version is public on npm
+        # approve 前に実行して未公開の版に tag を打たないよう、公開済みかと
+        # stage した commit（gitHead）が一致するかを確かめる
+        # en: Make sure the version is public (approved) and was built from this commit,
+        # so we never tag an unapproved version
+        id: verify
+        run: |
+          set -euo pipefail
+          VERSION=$(node -p "require('./package.json').version")
+          HEAD_SHA=$(git rev-parse HEAD)
+          PUBLISHED=$(npm view "sparkle-design@${VERSION}" version --registry=https://registry.npmjs.org 2>/dev/null || true)
+          if [ "$PUBLISHED" != "$VERSION" ]; then
+            echo "::error::sparkle-design@${VERSION} はまだ npm で公開されていません。npm stage approve を先に実行してください（approve 直後は反映待ちのことがあるので、数分後に再実行してください）"
+            exit 1
+          fi
+          GIT_HEAD=$(npm view "sparkle-design@${VERSION}" gitHead --registry=https://registry.npmjs.org 2>/dev/null || true)
+          # CI から stage した版には必ず gitHead が記録される。空なら異常として止める
+          # （この commit から出た版にだけ tag を打つ保証を弱めない）
+          # en: Versions staged from CI always record gitHead; treat an empty one as an error
+          if [ -z "$GIT_HEAD" ]; then
+            echo "::error::sparkle-design@${VERSION} の gitHead が npm に記録されていません。tag を打つ commit を確認できないため中止します"
+            exit 1
+          fi
+          if [ "$GIT_HEAD" != "$HEAD_SHA" ]; then
+            echo "::error::npm の gitHead ($GIT_HEAD) と指定した commit ($HEAD_SHA) が一致しません"
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Tag commit and create GitHub Release
+        # stage した commit に `vX.Y.Z` tag を打ち、CHANGELOG.md の `## [X.Y.Z]`
+        # セクションを release notes として GitHub Release を作る
+        # en: Tag the staged commit and create the GitHub Release, using the
+        # CHANGELOG section as notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          VERSION=$(node -p "require('./package.json').version")
+          TAG="v${VERSION}"
+
+          # checkout はタグを取得しないので、リモートで既存タグを確かめる。既に別の commit を
+          # 指していたら誤タグなので止める（再実行・過去リリースの追補で同じタグを打たない）
+          # en: checkout doesn't fetch tags, so check the remote. Stop if an existing tag points
+          # elsewhere (makes reruns and backfills safe)
+          REMOTE_TAG_SHA=$(git ls-remote origin "refs/tags/${TAG}^{}" | awk '{print $1}')
+          [ -n "$REMOTE_TAG_SHA" ] || REMOTE_TAG_SHA=$(git ls-remote origin "refs/tags/${TAG}" | awk '{print $1}')
+          if [ -n "$REMOTE_TAG_SHA" ]; then
+            if [ "$REMOTE_TAG_SHA" != "$(git rev-parse HEAD)" ]; then
+              echo "::error::tag ${TAG} は既に ${REMOTE_TAG_SHA} を指しています（指定 commit と異なる）"
+              exit 1
+            fi
+            echo "tag ${TAG} already exists on the remote — skipping git tag push"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git tag "${TAG}"
+            git push origin "${TAG}"
+          fi
+
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            echo "release ${TAG} already exists — leaving notes untouched"
+            exit 0
+          fi
+
+          NOTES_FILE="$(mktemp)"
+          node scripts/extract-changelog-section.mjs "${VERSION}" > "${NOTES_FILE}"
+          if [ ! -s "${NOTES_FILE}" ]; then
+            # CHANGELOG に該当セクションが無いとき。release は作るが
+            # 内容は fallback note にして、抜け漏れを後で人間が拾えるよう
+            # warn を出す。
+            # en: No CHANGELOG entry — emit a fallback note and warn so a
+            # follow-up PR can fix CHANGELOG without blocking publish.
+            echo "::warning::CHANGELOG.md に [${VERSION}] セクションが見つかりません。fallback note で release を作成します。"
+            printf 'Release %s\n\nCHANGELOG.md にこのバージョン用のセクションがありません。後追いで CHANGELOG を更新してから本 release notes も編集してください。\n' "${VERSION}" > "${NOTES_FILE}"
+          fi
+
+          # `-` を含むバージョン (X.Y.Z-rc.N / X.Y.Z-beta.N) は GitHub 上で
+          # pre-release マークを付ける。
+          # en: Mark pre-release for any version containing a `-` (rc / beta).
+          PRERELEASE_FLAG=""
+          if [[ "${VERSION}" == *-* ]]; then
+            PRERELEASE_FLAG="--prerelease"
+          fi
+
+          gh release create "${TAG}" \
+            --title "${TAG}" \
+            --notes-file "${NOTES_FILE}" \
+            ${PRERELEASE_FLAG}
+
+      - name: Summary
+        env:
+          PUBLISHED_VERSION: ${{ steps.verify.outputs.version }}
+        run: |
+          {
+            echo "### Released"
+            echo ""
+            echo "- package: \`sparkle-design\`"
+            echo "- version: \`$PUBLISHED_VERSION\`"
+            echo "- GitHub Release: [v${PUBLISHED_VERSION}](https://github.com/${{ github.repository }}/releases/tag/v${PUBLISHED_VERSION})"
+          } >> "$GITHUB_STEP_SUMMARY"

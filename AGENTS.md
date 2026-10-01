@@ -96,11 +96,20 @@ pnpm test      # Component tests
 - **Update the lockfile whenever `package.json` changes**: CI runs `pnpm install --frozen-lockfile` and will fail otherwise
 - **Use the pinned toolchain**: Node.js 22.14.0 / pnpm 10.12.4 (see `.tool-versions`; newer pnpm majors can rewrite the lockfile)
 
+### npm Releases Use Staged Publishing via OIDC
+npm removes direct publishing with granular access tokens in January 2027. CI authenticates with **trusted publishing (GitHub Actions OIDC, no token)** and only **stages** releases:
+
+1. `gh workflow run "Publish to npm" --ref main` stages the version (not public yet; dist-tag is fixed at stage time). `--ref` takes a branch or tag, not a SHA
+2. A maintainer approves with 2FA: `npx -y npm@11.21.0 stage approve <stage-id> --otp=<code> --registry=https://registry.npmjs.org` — **agents never run this**
+3. After it is public: `gh workflow run "Publish GitHub Release" -f ref=<commit shown in the stage Summary>` creates the tag and GitHub Release
+
+The npm trusted publisher allows **stage only** (`npm trust github sparkle-design --repository goodpatch/sparkle-design --file publish.yml --allow-stage-publish --registry=https://registry.npmjs.org`). See `.claude/skills/release-sparkle-design/SKILL.md`.
+
 ### Irreversible Operations Are Blocked by a Hook
 `scripts/hooks/irreversible-ops-guard.sh` (a PreToolUse hook wired in `.claude/settings.json`) blocks:
 
-- `npm/pnpm/yarn/bun publish` (an enabled `--dry-run` passes), `unpublish`, `deprecate`
-- `gh pr merge`, `gh release create/delete`, `gh repo create/delete/archive`, publish workflows
+- `npm/pnpm/yarn/bun publish` (an enabled `--dry-run` passes), `unpublish`, `deprecate`, `npm stage approve` / `reject` (also when run through `npx npm@…`)
+- `gh pr merge`, `gh release create/delete`, `gh repo create/delete/archive`, publish / release workflows
 - Release tag pushes, `--tags`, force pushes (including a `+` refspec), and remote ref deletion (`--delete` / `:ref`)
 
 It also looks inside command substitutions (`$(...)`) and `bash -c "..."`, so those are not a way around it.

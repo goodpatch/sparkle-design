@@ -13,7 +13,7 @@
 //
 // ブロックを解除するには、ユーザーから明示的な指示を得たうえで、
 // コマンドの先頭に SPARKLE_CONFIRM=1 を付けて実行する:
-//   SPARKLE_CONFIRM=1 gh workflow run "Publish to npm" --ref v1.2.3
+//   SPARKLE_CONFIRM=1 gh workflow run "Publish to npm" --ref main
 //
 // SPARKLE_CONFIRM=1 は「ユーザーがこの操作を名指しで指示した」ことの表明であり、
 // AI が自分の判断で付け足してよいものではない。
@@ -31,7 +31,7 @@ const OPTIONS_WITH_VALUE = new Set([
   // gh
   "-R", "--repo", "--hostname",
   // パッケージマネージャ
-  "-w", "--workspace", "-F", "--filter", "--dir", "--prefix", "--registry",
+  "-w", "--workspace", "-F", "--filter", "--dir", "--prefix", "--registry", "--otp",
 ]);
 
 /** `env` 自身のオプションのうち値を取るもの。 */
@@ -207,7 +207,7 @@ export function inspectSegment(segment) {
 
   if (confirmed) return { confirmed: true };
 
-  const cmd = tokens[index];
+  let cmd = tokens[index];
   if (!cmd) return null;
   index++;
 
@@ -229,7 +229,22 @@ export function inspectSegment(segment) {
     if (OPTIONS_WITH_VALUE.has(token)) index++;
   }
 
-  const rest = tokens.slice(index);
+  let rest = tokens.slice(index);
+
+  // `npx -y npm@11 stage approve` のように npx 経由で npm を呼ぶ形も npm として判定する
+  // en: Treat `npx -y npm@11 stage approve` (npm invoked through npx) as npm
+  if (cmd === "npx" && /^npm(@.+)?$/.test(rest[0] ?? "")) {
+    cmd = "npm";
+    rest = rest.slice(1);
+    // `npx -p npm@11 npm …` は -p の値の後ろにもう一度 npm が来る
+    // en: `npx -p npm@11 npm …` repeats npm after the -p value
+    if (/^npm(@.+)?$/.test(rest[0] ?? "")) rest = rest.slice(1);
+    while (rest.length > 0 && rest[0].startsWith("-")) {
+      const option = rest.shift();
+      if (OPTIONS_WITH_VALUE.has(option)) rest.shift();
+    }
+  }
+
   const sub = rest[0] ?? "";
   const sub2 = rest[1] ?? "";
 
@@ -241,6 +256,16 @@ export function inspectSegment(segment) {
     }
     if (sub === "unpublish") return { op: `${cmd} unpublish (公開済みバージョンの削除)` };
     if (sub === "deprecate") return { op: `${cmd} deprecate (公開済みバージョンの非推奨化)` };
+    // staged publishing: stage 自体は未公開で reject できるので素通しし、
+    // 公開を確定させる approve と、staged 版を消す reject を止める
+    // en: Staged publishing — staging is not public and can be rejected, so let it through;
+    // block approve (makes the version public) and reject (discards the staged version)
+    if (sub === "stage" && sub2 === "approve") {
+      return { op: `${cmd} stage approve (staged 版の公開)` };
+    }
+    if (sub === "stage" && sub2 === "reject") {
+      return { op: `${cmd} stage reject (staged 版の破棄)` };
+    }
     return null;
   }
 
@@ -254,8 +279,10 @@ export function inspectSegment(segment) {
     if (pair === "repo archive") return { op: "gh repo archive (GitHub リポジトリのアーカイブ)" };
     if (pair === "workflow run") {
       // publish 系ワークフローだけを対象にする (CI の再実行などは素通し)
-      if (rest.some((t) => /publish/i.test(t))) {
-        return { op: "gh workflow run (publish ワークフローの実行)" };
+      // release（tag push と GitHub Release 作成を伴う）もファイル名指定を含めて止める
+      // en: Also block release workflows (tag push + GitHub Release), including by filename
+      if (rest.some((t) => /publish|release/i.test(t))) {
+        return { op: "gh workflow run (publish / release ワークフローの実行)" };
       }
     }
     return null;

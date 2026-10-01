@@ -41,6 +41,7 @@ Figma（`7alBZXZf65YgcII41TWT0r`）のスタイル刷新を反映する **beta �
 - `sparkle-design.css` を `sparkle-design-cli@2.5.0-beta.4` で再生成しました（`border/warning` が yellow-400 に、`border/inverse` を新設）
 - `build:css` を `sparkle-design-cli@beta` で生成するようにしました（beta 期間中のみ）(#299)
 - `Publish to npm` workflow が version から dist-tag を決めるようになりました（`-beta.N` → `beta`、`-rc.N` → `next`）(#331)
+- npm への公開を trusted publishing（OIDC）による staged publishing に切り替えました。CI は stage までを行い、公開はメンテナーが 2FA で承認します。tag と GitHub Release は承認後に `Publish GitHub Release` workflow で作ります (#335)
 
 ### Fixed
 
@@ -54,6 +55,7 @@ Figma（`7alBZXZf65YgcII41TWT0r`）のスタイル刷新を反映する **beta �
 - Radio のラベルが存在しないトークン（`text-text-medium`）を参照して色が付いていなかった問題を修正 (#327)
 - Radio に `isInvalid` を追加し、`aria-invalid` を ARIA 1.2 のサポートロールである radiogroup に付けるようにしました。`FormControl` から渡る `aria-invalid` もエラー配色に反映します。`RadioItem` の `isInvalid` は見た目だけの指定です (#327, #333)
 - Tabs で、キーボードフォーカス中のタブに hover の配色が勝ってしまう問題を修正 (#328)
+- `cn()` が Sparkle の角丸・影・タイポグラフィ名（`rounded-action` / `shadow-raise` / `character-*` 等）の重なりを解決できず、利用側の `className` による上書きが効かないことがある問題を修正（npm パッケージ利用時。shadcn registry 経由では利用側の `cn()` が使われる）(#334)
 - Radio の radiogroup が `<label for>` から `aria-labelledby` で名前を取るようにし、`FormHeader` + `FormControl` で包むだけでグループ名が読み上げられるようにしました（Slider と同じ方式）(#333)
 - Slider のロールを持たないルート要素から `aria-disabled` を外しました。無効状態は `role="slider"` のつまみに付きます。ルートの `[aria-disabled]` をスタイルやテストで参照している場合は `[data-disabled]` に置き換えてください (#333)
 - Breadcrumb の現在地（`BreadcrumbPage`）から `aria-disabled="true"` を外しました。現在地は `aria-current="page"` で示します (#333)
