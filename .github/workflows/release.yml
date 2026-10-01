@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       ref:
-        description: "stage した commit の SHA（Publish to npm の Summary の commit。main のマージコミット）"
+        description: "stage した commit の SHA（Publish to npm の Summary の commit）"
         type: string
         required: true
 
@@ -129,9 +129,15 @@ jobs:
           # en: Don't mark the GitHub Release as "Latest" unless it's npm's latest
           PKG_NAME=$(node -p "require('./package.json').name")
           NPM_LATEST=$(npm view "$PKG_NAME" dist-tags.latest --registry=https://registry.npmjs.org 2>/dev/null || true)
-          LATEST_FLAG="--latest=false"
-          if [ "$NPM_LATEST" = "$VERSION" ]; then
-            LATEST_FLAG="--latest"
+          # 取得できなかったときはフラグを付けず GitHub の自動判定（日付と semver）に任せる
+          # en: If npm can't be read, leave it to GitHub's automatic choice (date + semver)
+          LATEST_FLAG=""
+          if [ -n "$NPM_LATEST" ]; then
+            if [ "$NPM_LATEST" = "$VERSION" ]; then
+              LATEST_FLAG="--latest"
+            else
+              LATEST_FLAG="--latest=false"
+            fi
           fi
 
           PRERELEASE_FLAG=""

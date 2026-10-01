@@ -145,6 +145,12 @@ jobs:
               echo "::error::npm の dist-tags.latest が想定外の値です: '$LATEST'"
               exit 1
             fi
+            # メンテナンスラインは latest より古いか同じメジャーだけ（新しいメジャーは main から出す）
+            # en: A maintenance line must not be newer than latest (new majors ship from main)
+            if [ "$LINE" -gt "$LATEST_MAJOR" ]; then
+              echo "::error::v${LINE} は latest（$LATEST）より新しいメジャーです。新しいメジャーは main から出してください"
+              exit 1
+            fi
             if [ "$LATEST_MAJOR" -gt "$LINE" ]; then
               EXPECTED="latest-${LINE}"
             else

@@ -131,7 +131,7 @@ npm は 2027 年 1 月に granular access token での直接 publish を廃止�
 > 対象の version（`X.Y.Z`）と main の最新 commit を提示して確認を取る。
 
 - [ ] リリース PR が main にマージ済みで、main の `package.json` の `version` が `X.Y.Z` になっていることを確認する（`git fetch origin main && git show origin/main:package.json | jq -r .version`）
-- [ ] 🛑 **npm へ stage** — main を ref にしてワークフローを実行する（`gh workflow run` の `--ref` はブランチ名かタグ名のみで SHA は渡せない。ワークフローは main 以外からの実行を拒否する）。dist-tag は version から自動判定（`-beta.N` → `beta`、`-rc.N` → `next`、それ以外 → `latest`）:
+- [ ] 🛑 **npm へ stage** — main を ref にしてワークフローを実行する（`gh workflow run` の `--ref` はブランチ名かタグ名のみで SHA は渡せない。ワークフローは main と `v<N>`（メンテナンスライン）以外からの実行を拒否する）。dist-tag は version から自動判定（`-beta.N` → `beta`、`-rc.N` → `next`、それ以外 → `latest`）:
   ```bash
   gh workflow run "Publish to npm" --ref main -f channel=auto
   ```
@@ -162,6 +162,8 @@ npm は 2027 年 1 月に granular access token での直接 publish を廃止�
   ```
   dist-tag は自動判定。npm の `latest` がまだ 1.x なら `latest`、2.x が `latest` になった後は `latest-1` に載る（`latest` を巻き戻さない）。prerelease は出さない
 - 承認と tag・Release は main と同じ（`stage approve` → `Publish GitHub Release -f ref=<Summary の commit>`）。npm の `latest` でない版の GitHub Release には「Latest」が付かない
+- ⚠️ **承認の前に dist-tag を照合する**: dist-tag は stage 時に決まる。stage 後・承認前に 2.x が `latest` になっていると、Summary の dist-tag が `latest` のまま承認すると `latest` が 1.x に巻き戻る。承認前に `npm view sparkle-design dist-tags.latest --registry=https://registry.npmjs.org` の major が 1 のままであることを確かめ、2.x になっていたら `stage reject` して `--ref v1` で stage し直す（今度は `latest-1` になる）
+- `v1` の publish.yml / release.yml は main からのコピーで管理する。main のワークフローを変えたら `v1` にも同じ変更を backport する
 
 ### 完了報告
 
