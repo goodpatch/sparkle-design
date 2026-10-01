@@ -56,11 +56,18 @@ jobs:
           HEAD_SHA=$(git rev-parse HEAD)
           PUBLISHED=$(npm view "sparkle-design@${VERSION}" version --registry=https://registry.npmjs.org 2>/dev/null || true)
           if [ "$PUBLISHED" != "$VERSION" ]; then
-            echo "::error::sparkle-design@${VERSION} はまだ npm で公開されていません。npm stage approve を先に実行してください"
+            echo "::error::sparkle-design@${VERSION} はまだ npm で公開されていません。npm stage approve を先に実行してください（approve 直後は反映待ちのことがあるので、数分後に再実行してください）"
             exit 1
           fi
           GIT_HEAD=$(npm view "sparkle-design@${VERSION}" gitHead --registry=https://registry.npmjs.org 2>/dev/null || true)
-          if [ -n "$GIT_HEAD" ] && [ "$GIT_HEAD" != "$HEAD_SHA" ]; then
+          # CI から stage した版には必ず gitHead が記録される。空なら異常として止める
+          # （この commit から出た版にだけ tag を打つ保証を弱めない）
+          # en: Versions staged from CI always record gitHead; treat an empty one as an error
+          if [ -z "$GIT_HEAD" ]; then
+            echo "::error::sparkle-design@${VERSION} の gitHead が npm に記録されていません。tag を打つ commit を確認できないため中止します"
+            exit 1
+          fi
+          if [ "$GIT_HEAD" != "$HEAD_SHA" ]; then
             echo "::error::npm の gitHead ($GIT_HEAD) と指定した commit ($HEAD_SHA) が一致しません"
             exit 1
           fi

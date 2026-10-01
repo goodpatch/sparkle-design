@@ -142,7 +142,9 @@ jobs:
         run: |
           set -euo pipefail
           OUT="$(mktemp)"
-          npm stage publish --tag "$PUBLISH_TAG" --json > "$OUT"
+          # 失敗時も npm の JSON 出力（error の詳細）をログに残す
+          # en: Keep npm's JSON output (error details) in the log even on failure
+          npm stage publish --tag "$PUBLISH_TAG" --json > "$OUT" || { cat "$OUT"; exit 1; }
           cat "$OUT"
           STAGE_ID=$(node -e 'const r=JSON.parse(require("fs").readFileSync(process.argv[1],"utf8")); const v=r.stageId ?? Object.values(r).find(x=>x&&x.stageId)?.stageId; if(!v){console.error("stageId が出力にありません"); process.exit(1)} console.log(v)' "$OUT")
           echo "stage_id=$STAGE_ID" >> "$GITHUB_OUTPUT"

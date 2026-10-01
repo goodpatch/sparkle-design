@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // CHANGELOG.md から `## [X.Y.Z]` 形式のセクション本文を 1 つだけ stdout に出す。
-// publish.yml の GitHub Release 自動作成 step が release notes として食わせる
+// release.yml（Publish GitHub Release）が GitHub Release の notes として食わせる
 // 想定で、見つからなければ exit 0 + 空出力（caller 側で fallback note に切り替える）。
 //
 // usage: node scripts/extract-changelog-section.mjs <version>
@@ -11,7 +11,7 @@
 // `process.cwd()/CHANGELOG.md` で解決される前提。
 //
 // en: Print one `## [X.Y.Z]` section body from CHANGELOG.md to stdout for
-// publish.yml's GitHub Release step. Empty stdout + exit 0 means the section
+// release.yml (Publish GitHub Release). Empty stdout + exit 0 means the section
 // is missing — the caller should fall back to a generic note.
 
 import fs from 'node:fs';
