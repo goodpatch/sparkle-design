@@ -55,10 +55,10 @@ export interface ClickableCardProps extends React.ComponentProps<"button"> {
  *
  * **アンチパターン / Anti-patterns**
  *
- * - ClickableCard は `<button>` を描画するため、内側には phrasing content しか置けません。`CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter` は ClickableCard の内側では自動的に `<span>` で描画されるので、これらで構成してください。`<div>` / `<p>` / 見出し要素を直書きしないでください。
- *   en: ClickableCard renders a `<button>`, which only permits phrasing content. `CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter` automatically render as `<span>` inside ClickableCard, so compose the card with them. Do not write `<div>` / `<p>` / heading elements directly.
- * - ClickableCard の内側に Button / IconButton / リンクなどの対話型要素（`CardControl` を含む）を置かないでください。ネストされた interactive 要素になり、アクセシビリティ違反になります。カード内に個別の操作が必要な場合は `Card` を使ってください。
- *   en: Do not place interactive elements such as Button / IconButton / links (including `CardControl`) inside ClickableCard. They become nested interactive elements, which is an accessibility violation. Use `Card` when the card needs its own actions.
+ * - ClickableCard は `<button>` を描画するため、内側では `<div>` / `<p>` / 見出し要素は使わないでください（phrasing content のみ許可）。`CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter` で構成してください。ClickableCard の JSX 内に直接書いたものには自動で `as="span"` が付与されます。独自コンポーネントで包む場合は `as="span"` を明示してください。
+ *   en: ClickableCard renders a `<button>`, so do not use `<div>` / `<p>` / heading elements inside it (only phrasing content is allowed). Compose the card with `CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter`. Those written directly in ClickableCard's JSX get `as="span"` automatically; when you wrap them in your own component, set `as="span"` explicitly.
+ * - ClickableCard の内側では Button / IconButton / リンクなどの対話型要素（`CardControl` を含む）を使わないでください。ネストされた interactive 要素になり、アクセシビリティ違反になります。カード内に個別の操作が必要な場合は `Card` を使ってください。
+ *   en: Do not use interactive elements such as Button / IconButton / links (including `CardControl`) inside ClickableCard. They become nested interactive elements, which is an accessibility violation. Use `Card` when the card needs its own actions.
  *
  * ```tsx
  * // ✅ Correct
@@ -431,9 +431,24 @@ function toPhrasingContent(node: React.ReactNode): React.ReactNode {
   if (Array.isArray(node)) {
     return node.map(toPhrasingContent);
   }
-  if (!React.isValidElement<CardPartProps>(node)) {
-    return node;
+  if (React.isValidElement<CardPartProps>(node)) {
+    return cloneAsPhrasing(node);
   }
+  // Set やジェネレーターなど配列以外の iterable も React は children として描画するため配列化して走査する
+  // en: React also renders non-array iterables (Set, generators, ...) as children, so convert them to arrays and walk them
+  if (node !== null && typeof node === "object" && Symbol.iterator in node) {
+    return Array.from(node as Iterable<React.ReactNode>, toPhrasingContent);
+  }
+  return node;
+}
+
+/**
+ * 単一の要素に `as="span"` を付与し、その children を再帰的に走査する
+ * en: Adds `as="span"` to a single element and walks its children recursively
+ */
+function cloneAsPhrasing(
+  node: React.ReactElement<CardPartProps>
+): React.ReactNode {
   const isCardPart = CARD_PARTS.has(node.type);
   if (
     !isCardPart &&

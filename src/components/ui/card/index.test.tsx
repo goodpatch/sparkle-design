@@ -780,6 +780,37 @@ describe("Card Components", () => {
       consoleError.mockRestore();
     });
 
+    it("applies span to non-array iterable children such as Set and generators", () => {
+      // Given: Set とジェネレーターで渡したサブコンポーネント
+      function* generateTitles() {
+        yield (
+          <CardTitle key="gen" data-testid="in-generator">
+            Generator
+          </CardTitle>
+        );
+      }
+      testContainer.render(
+        <ClickableCard>
+          {
+            new Set([
+              <CardTitle key="set" data-testid="in-set">
+                Set
+              </CardTitle>,
+            ])
+          }
+          {generateTitles()}
+        </ClickableCard>
+      );
+
+      // Then: どちらも span で描画される
+      expect(
+        testContainer.querySelector('[data-testid="in-set"]').tagName
+      ).toBe("SPAN");
+      expect(
+        testContainer.querySelector('[data-testid="in-generator"]').tagName
+      ).toBe("SPAN");
+    });
+
     it("does not descend into custom components", () => {
       // Given: 独自コンポーネント（render prop を含む）で包んだサブコンポーネント
       const Wrapper = ({ children }: { children: React.ReactNode }) => (
