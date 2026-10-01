@@ -2,6 +2,34 @@ import { type ClassValue, clsx } from "clsx";
 import { extendTailwindMerge } from "tailwind-merge";
 
 /**
+ * src/app/sparkle-design.css の --radius-* / --shadow-* のうち Tailwind 標準に無い名前。
+ * CSS とのずれは utils.test.ts で検出する
+ * en: --radius-* / --shadow-* names in src/app/sparkle-design.css that Tailwind doesn't ship.
+ *     Drift from the CSS is caught by utils.test.ts
+ */
+export const SPARKLE_RADIUS_NAMES = [
+  "divide",
+  "minimum",
+  "notice",
+  "action",
+  "container",
+  "modal",
+  "round",
+  "halfModal",
+] as const;
+export const SPARKLE_SHADOW_NAMES = [
+  "base",
+  "flat",
+  "raise",
+  "stick",
+  "float",
+  "popout",
+  // Tailwind 標準は 2xl まで。Sparkle は 3xl を追加している
+  // en: Tailwind stops at 2xl; Sparkle adds 3xl
+  "3xl",
+] as const;
+
+/**
  * Sparkle のテーマから生成されるユーティリティを tailwind-merge に教える。
  * tailwind-merge は Tailwind 標準のスケール名（`rounded-lg` 等）しか知らないため、
  * 登録しないと `rounded-modal rounded-none` のように両方残り、利用側の `className`
@@ -15,19 +43,10 @@ const twMerge = extendTailwindMerge<"sparkle-character" | "sparkle-icon">({
     theme: {
       // src/app/sparkle-design.css の --radius-* のうち Tailwind 標準に無いもの
       // en: --radius-* names in src/app/sparkle-design.css that Tailwind doesn't ship
-      radius: [
-        "divide",
-        "minimum",
-        "notice",
-        "action",
-        "container",
-        "modal",
-        "round",
-        "halfModal",
-      ],
+      radius: [...SPARKLE_RADIUS_NAMES],
       // --shadow-* のセマンティック名
       // en: Semantic --shadow-* names
-      shadow: ["base", "flat", "raise", "stick", "float", "popout"],
+      shadow: [...SPARKLE_SHADOW_NAMES],
     },
     classGroups: {
       // character-* / icon-* はフォント関連の複数プロパティをまとめて指定するクラス。
