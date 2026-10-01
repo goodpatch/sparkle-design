@@ -107,6 +107,52 @@ export interface SliderProps extends SliderPrimitiveProps {
    * en: Set the unit display of the slider
    */
   unit?: string;
+  /**
+   * つまみ（`role="slider"` を持つ要素）に付与する id。
+   * `<label htmlFor>` や FormControl から渡される id は Root ではなくつまみに付与される。
+   * en: id applied to the thumb (the element with `role="slider"`).
+   *     ids passed via `<label htmlFor>` or FormControl land on the thumb, not the root.
+   */
+  id?: string;
+  /**
+   * つまみのアクセシブルネーム。可視ラベルがない場合に指定する。
+   * en: Accessible name of the thumb. Use when there is no visible label.
+   */
+  "aria-label"?: string;
+  /**
+   * つまみのアクセシブルネームを参照する要素の id（空白区切りで複数可）
+   * en: id(s) of the element(s) that label the thumb (space separated)
+   */
+  "aria-labelledby"?: string;
+  /**
+   * つまみの補足説明を参照する要素の id（FormControl から自動で渡される）
+   * en: id(s) of the element(s) that describe the thumb (passed automatically by FormControl)
+   */
+  "aria-describedby"?: string;
+  /**
+   * つまみの値が不正かどうか（FormControl から自動で渡される）
+   * en: Whether the thumb value is invalid (passed automatically by FormControl)
+   */
+  "aria-invalid"?: React.AriaAttributes["aria-invalid"];
+}
+
+/**
+ * `htmlFor` が指定 id を指す `<label>` のうち、id を持つものの id を空白区切りで返す。
+ * `label[for]` は labelable 要素（input / button など）にしか名前を与えないため、
+ * `span[role="slider"]` のつまみには aria-labelledby で関連付け直す必要がある。
+ * en: Returns space-separated ids of `<label>` elements (that have an id) whose
+ *     `htmlFor` points to the given id. `label[for]` only names labelable elements
+ *     (input, button, ...), so the `span[role="slider"]` thumb must be re-associated
+ *     via aria-labelledby.
+ */
+function findLabelIdsFor(target: HTMLElement, id: string): string | undefined {
+  const root = target.getRootNode() as Document | ShadowRoot;
+  // NOTE: useId 由来の id は CSS セレクタで特殊文字を含むため、属性セレクタではなく htmlFor で比較する
+  // en: useId-generated ids contain selector-special characters, so compare htmlFor instead of using an attribute selector
+  const ids = Array.from(root.querySelectorAll<HTMLLabelElement>("label[for]"))
+    .filter(label => label.htmlFor === id && label.id)
+    .map(label => label.id);
+  return ids.length > 0 ? ids.join(" ") : undefined;
 }
 
 /**
@@ -119,13 +165,38 @@ export interface SliderProps extends SliderPrimitiveProps {
  *
  * ```tsx
  * <Slider
+ *   aria-label="音量"
  *   value={[50]}
  *   onValueChange={setValue}
  *   min={0}
  *   max={100}
  *   step={1}
  * />
+ *
+ * // フォームと組み合わせる場合（FormHeader のラベルが自動で関連付く）
+ * // en: With Form (the FormHeader label is associated automatically)
+ * <FormItem>
+ *   <FormHeader label="満足度" />
+ *   <FormControl>
+ *     <Slider value={[field.value]} onValueChange={([v]) => field.onChange(v)} />
+ *   </FormControl>
+ * </FormItem>
  * ```
+ *
+ * **アクセシビリティ / Accessibility**
+ *
+ * - 名前・状態は `role="slider"` のつまみに付きます。`id` / `aria-label` / `aria-labelledby` /
+ *   `aria-describedby` / `aria-invalid` はつまみに付与されます。
+ * - 可視ラベルがない場合は `aria-label`、ある場合は `aria-labelledby` で名前を付けてください。
+ *   `FormHeader` + `FormControl` で包んだ場合はラベルが自動で関連付きます。
+ * - 自前の `<label htmlFor>` を使う場合は、ラベルにも `id` を付けるか `aria-labelledby` を
+ *   指定してください（`label[for]` だけでは `role="slider"` に名前が付きません）。
+ * - en: The name and state belong to the thumb with `role="slider"`. `id`, `aria-label`,
+ *   `aria-labelledby`, `aria-describedby` and `aria-invalid` are applied to the thumb.
+ * - en: Use `aria-label` without a visible label, or `aria-labelledby` with one.
+ *   Wrapping in `FormHeader` + `FormControl` associates the label automatically.
+ * - en: When using your own `<label htmlFor>`, give the label an `id` too or pass
+ *   `aria-labelledby` (`label[for]` alone does not name a `role="slider"` element).
  *
  * @param {SliderProps} props
  */
@@ -137,9 +208,34 @@ function Slider({
   defaultValue,
   onValueChange,
   unit,
+  id,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-invalid": ariaInvalid,
   ...props
 }: SliderProps) {
   const isDisabledState = Boolean(isDisabled || disabled);
+
+  // label[for] で指されたラベルを aria-labelledby としてつまみに関連付ける。
+  // label[for] は span[role="slider"] に名前を与えないため、id が渡され明示的な名前がないときは
+  // その id を htmlFor で指す id 付きの <label> をマウント時に探して aria-labelledby に設定する。
+  // これにより FormHeader + FormControl で包むだけでラベルが読み上げられる。
+  // en: Associate labels pointing at the thumb via label[for] as aria-labelledby.
+  //     label[for] does not name a span[role="slider"], so when an id is given without an
+  //     explicit name, look up <label> elements (with an id) whose htmlFor matches on mount
+  //     and set them as aria-labelledby, so FormHeader + FormControl is enough.
+  const thumbRef = React.useRef<HTMLSpanElement>(null);
+  const [associatedLabelIds, setAssociatedLabelIds] = React.useState<
+    string | undefined
+  >(undefined);
+  React.useEffect(() => {
+    if (!id || ariaLabel || ariaLabelledBy || !thumbRef.current) {
+      setAssociatedLabelIds(undefined);
+      return;
+    }
+    setAssociatedLabelIds(findLabelIdsFor(thumbRef.current, id));
+  }, [id, ariaLabel, ariaLabelledBy]);
 
   // 非制御コンポーネントの場合の内部状態管理
   const [internalValue, setInternalValue] = React.useState<number[]>(
@@ -201,7 +297,16 @@ function Slider({
           />
         </SliderPrimitive.Track>
         <SliderPrimitive.Thumb
+          ref={thumbRef}
           data-slot="slider-thumb"
+          id={id}
+          aria-label={ariaLabel}
+          aria-labelledby={ariaLabelledBy ?? associatedLabelIds}
+          aria-describedby={ariaDescribedBy}
+          aria-invalid={ariaInvalid}
+          // Radix は無効状態を Root にしか付与しないため、role="slider" のつまみにも伝える
+          // en: Radix only marks the root as disabled, so expose it on the role="slider" thumb too
+          aria-disabled={isDisabledState || undefined}
           className={cn(sliderThumbVariants({ isDisabled: isDisabledState }))}
         />
       </SliderPrimitive.Root>

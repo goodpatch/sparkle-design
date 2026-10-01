@@ -594,9 +594,10 @@ shadcn/ui と混在するプロジェクトでも、Sparkle Design のコンポ�
 ### クリック可能な Card: ClickableCard を使う
 
 ```tsx
-// ✅ Correct
+// ✅ Correct - Card のサブコンポーネントで構成する（自動で as="span" が付与される）
 <ClickableCard onClick={handle}>
   <CardHeader><CardTitle>タイトル</CardTitle></CardHeader>
+  <CardContent>コンテンツの内容</CardContent>
 </ClickableCard>
 
 // ❌ Wrong - <button> / <a> で Card を包まない
@@ -605,13 +606,19 @@ shadcn/ui と混在するプロジェクトでも、Sparkle Design のコンポ�
     <CardHeader><CardTitle>タイトル</CardTitle></CardHeader>
   </Card>
 </button>
+
+// ❌ Wrong - ClickableCard の内側に <div> や対話型要素（CardControl / Button / リンク）を置かない
+<ClickableCard onClick={handle}>
+  <div className="px-6">タイトル</div>
+  <CardControl><Button>編集</Button></CardControl>
+</ClickableCard>
 ```
 
-`ClickableCard` はネイティブの `<button type="button">` をレンダリングし、Card の見た目・focus ring・`isDisabled` を揃えた**アクション用**のカード。自前で `<button>` / `role="button"` を巻く代わりにこれを使う。
+`ClickableCard` はクリック可能な Card のパターンとして必要なボタンのセマンティクス / キーボード操作 / focus ring を提供する。`<Card>` を `<button>` / `<a>` / `role="button"` で自前ラップしないこと。
 
-- `ClickableCard` 自体が `<button>` なので、**内側にリンク・ボタン・フォーム要素を置かない**（ネストされた interactive 要素になりアクセシビリティ違反になる）。中身は非対話の要素に限る
-- 別ページへ遷移する**ナビゲーション用**のカードには使わない（リンクのセマンティクスが失われる）。通常の `Card` を使い、`CardTitle` 内の見出しテキストを `<a>`（Next.js なら `Link`）にする
-- カード内に複数のアクション（ボタン・リンク・チェックボックス等）がある**複合カード**は、通常の `Card` の中に個々の操作要素を置く。カード全体をクリック領域にしない
+`ClickableCard` 自体が `<button>` を描画するため、内側には phrasing content しか置けない。`CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter` で構成すれば有効な HTML になる。ClickableCard の JSX 内に直接書いたものには自動で `as="span"` が付与され、`<span>`（`flex` / `block` 付き）で描画される。独自コンポーネントで包む場合や Promise（非同期）で渡す場合は自動付与が届かないため、`as="span"` を明示する。`<div>` / `<p>` / 見出しを直書きしないこと。また Button やリンクなどの対話型要素はネストされた interactive 要素になりアクセシビリティ違反になるため置かない。カード内に個別の操作が必要なら `Card` を使う。
+
+別ページへ遷移する**ナビゲーション用**のカードには `ClickableCard` を使わない（リンクのセマンティクスが失われる）。通常の `Card` を使い、`CardTitle` 内の見出しテキストを `<a>`（Next.js なら `Link`）にする。
 
 ### Icon / Spinner: スケール値（1-12）を使う
 
