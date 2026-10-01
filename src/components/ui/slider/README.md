@@ -20,6 +20,7 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/slider.json
 
 ```tsx
 <Slider
+  aria-label="音量"
   value={[50]}
   onValueChange={setValue}
   min={0}
@@ -30,7 +31,7 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/slider.json
 
 ## アクセシビリティ
 
-名前や状態を持つのは `role="slider"` のつまみ（Thumb）です。`id` / `aria-label` / `aria-labelledby` / `aria-describedby` / `aria-invalid` は Root ではなくつまみに付与されます。
+名前や状態を持つのは `role="slider"` のつまみ（Thumb）です。`id` / `aria-label` / `aria-labelledby` / `aria-describedby` / `aria-invalid` は Root ではなくつまみに付与され、無効時は `aria-disabled` もつまみに付きます。
 
 - 可視ラベルがない場合は `aria-label` で名前を付けてください。
 

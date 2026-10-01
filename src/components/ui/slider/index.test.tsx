@@ -305,8 +305,8 @@ describe("Slider", () => {
       const valueIndicator = getValueIndicator(testContainer.getContainer());
 
       expect(sliderRoot).toHaveAttribute("aria-disabled", "true");
-      // Radix UIではthumb要素にはaria-disabled属性は付かない
-      expect(sliderThumb).not.toHaveAttribute("aria-disabled");
+      // role="slider" のつまみにも無効状態を伝える
+      expect(sliderThumb).toHaveAttribute("aria-disabled", "true");
 
       if (sliderRoot) {
         expect(StyleHelpers.hasClass(sliderRoot, "cursor-not-allowed")).toBe(
@@ -327,8 +327,8 @@ describe("Slider", () => {
       const sliderThumb = getSliderThumb(testContainer.getContainer());
 
       expect(sliderRoot).toHaveAttribute("aria-disabled", "true");
-      // Radix UIではthumb要素にはaria-disabled属性は付かない
-      expect(sliderThumb).not.toHaveAttribute("aria-disabled");
+      // role="slider" のつまみにも無効状態を伝える
+      expect(sliderThumb).toHaveAttribute("aria-disabled", "true");
     });
 
     it("does not respond to keyboard events when disabled", () => {
@@ -422,6 +422,13 @@ describe("Slider", () => {
         expect(
           screen.getByRole("slider", { name: "満足度" })
         ).toBeInTheDocument();
+      });
+
+      it("無効でないときはつまみに aria-disabled を付与しない", () => {
+        testContainer.render(<Slider aria-label="満足度" />);
+
+        const sliderThumb = getSliderThumb(testContainer.getContainer());
+        expect(sliderThumb).not.toHaveAttribute("aria-disabled");
       });
 
       it("aria-label を Root には付与しない", () => {

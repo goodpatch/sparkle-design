@@ -161,24 +161,6 @@ function findLabelIdsFor(target: HTMLElement, id: string): string | undefined {
  * - スライダーは任意の範囲の中からユーザーに特定の数値を選択してもらうために使用するコンポーネントです。
  * - en: The Slider component is used to select a value within a range.
  *
- * **アクセシビリティ / Accessibility**
- *
- * - 名前・状態を持つのは `role="slider"` のつまみです。`id` / `aria-label` / `aria-labelledby` /
- *   `aria-describedby` / `aria-invalid` は Root ではなくつまみに付与されます。
- * - 可視ラベルがない場合は `aria-label`、ある場合は `aria-labelledby` で名前を付けてください。
- * - `label[for]` は仕様上 `span[role="slider"]` に名前を与えないため、`id` が渡され
- *   `aria-label` / `aria-labelledby` が未指定のときは、その id を `htmlFor` で指す
- *   id 付きの `<label>` をマウント時に探して `aria-labelledby` に設定します。
- *   これにより `FormHeader` + `FormControl` で包むだけでラベルが読み上げられます。
- * - en: The thumb with `role="slider"` carries the name and state. `id`, `aria-label`,
- *   `aria-labelledby`, `aria-describedby` and `aria-invalid` are applied to the thumb,
- *   not the root.
- * - en: Use `aria-label` without a visible label, or `aria-labelledby` with one.
- * - en: `label[for]` does not name a `span[role="slider"]`, so when `id` is given and
- *   neither `aria-label` nor `aria-labelledby` is set, the slider looks up `<label>`
- *   elements (with an id) whose `htmlFor` matches on mount and sets them as
- *   `aria-labelledby`. Wrapping in `FormHeader` + `FormControl` is therefore enough.
- *
  * **使用例 / Usage Example**
  *
  * ```tsx
@@ -201,6 +183,21 @@ function findLabelIdsFor(target: HTMLElement, id: string): string | undefined {
  * </FormItem>
  * ```
  *
+ * **アクセシビリティ / Accessibility**
+ *
+ * - 名前・状態は `role="slider"` のつまみに付きます。`id` / `aria-label` / `aria-labelledby` /
+ *   `aria-describedby` / `aria-invalid` はつまみに付与されます。
+ * - 可視ラベルがない場合は `aria-label`、ある場合は `aria-labelledby` で名前を付けてください。
+ *   `FormHeader` + `FormControl` で包んだ場合はラベルが自動で関連付きます。
+ * - 自前の `<label htmlFor>` を使う場合は、ラベルにも `id` を付けるか `aria-labelledby` を
+ *   指定してください（`label[for]` だけでは `role="slider"` に名前が付きません）。
+ * - en: The name and state belong to the thumb with `role="slider"`. `id`, `aria-label`,
+ *   `aria-labelledby`, `aria-describedby` and `aria-invalid` are applied to the thumb.
+ * - en: Use `aria-label` without a visible label, or `aria-labelledby` with one.
+ *   Wrapping in `FormHeader` + `FormControl` associates the label automatically.
+ * - en: When using your own `<label htmlFor>`, give the label an `id` too or pass
+ *   `aria-labelledby` (`label[for]` alone does not name a `role="slider"` element).
+ *
  * @param {SliderProps} props
  */
 function Slider({
@@ -220,8 +217,14 @@ function Slider({
 }: SliderProps) {
   const isDisabledState = Boolean(isDisabled || disabled);
 
-  // label[for] で指されたラベルを aria-labelledby としてつまみに関連付ける
-  // en: Associate labels pointing at the thumb via label[for] as aria-labelledby
+  // label[for] で指されたラベルを aria-labelledby としてつまみに関連付ける。
+  // label[for] は span[role="slider"] に名前を与えないため、id が渡され明示的な名前がないときは
+  // その id を htmlFor で指す id 付きの <label> をマウント時に探して aria-labelledby に設定する。
+  // これにより FormHeader + FormControl で包むだけでラベルが読み上げられる。
+  // en: Associate labels pointing at the thumb via label[for] as aria-labelledby.
+  //     label[for] does not name a span[role="slider"], so when an id is given without an
+  //     explicit name, look up <label> elements (with an id) whose htmlFor matches on mount
+  //     and set them as aria-labelledby, so FormHeader + FormControl is enough.
   const thumbRef = React.useRef<HTMLSpanElement>(null);
   const [associatedLabelIds, setAssociatedLabelIds] = React.useState<
     string | undefined
@@ -301,6 +304,9 @@ function Slider({
           aria-labelledby={ariaLabelledBy ?? associatedLabelIds}
           aria-describedby={ariaDescribedBy}
           aria-invalid={ariaInvalid}
+          // Radix は無効状態を Root にしか付与しないため、role="slider" のつまみにも伝える
+          // en: Radix only marks the root as disabled, so expose it on the role="slider" thumb too
+          aria-disabled={isDisabledState || undefined}
           className={cn(sliderThumbVariants({ isDisabled: isDisabledState }))}
         />
       </SliderPrimitive.Root>
