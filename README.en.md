@@ -6,6 +6,10 @@
 
 # Sparkle Design for React
 
+> [!WARNING]
+> **1.x is a deprecated maintenance line for React 18.** It only receives bug and security fixes, plus token/style updates needed to stay compatible with the latest `sparkle-design-cli`; no new features. Use 2.x for React 19+ projects ([support table and migration notes](https://github.com/goodpatch/sparkle-design/blob/main/README.en.md#versions-react-and-cli-support)).
+
+
 English | **[日本語](./README.md)**
 
 [![npm version](https://img.shields.io/npm/v/sparkle-design)](https://www.npmjs.com/package/sparkle-design)

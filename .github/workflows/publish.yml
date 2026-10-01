@@ -2,18 +2,34 @@ name: Publish to npm
 
 on:
   workflow_dispatch:
+    inputs:
+      channel:
+        description: "Dist-tag を選択。auto は package.json の version から自動判定 (X.Y.Z-beta.N → beta / X.Y.Z-rc.N → next / X.Y.Z → latest)。"
+        type: choice
+        required: true
+        default: auto
+        options:
+          - auto
+          - latest
+          - next
+          - beta
+
+concurrency:
+  group: npm-release
+  cancel-in-progress: false
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      # git tag の push と `gh release create` に contents: write が必要。
-      # 従来は手動タグ付け運用だったが、v1.0.6 で GitHub Release 作成が漏れたため
-      # 自動化する（sparkle-design-cli / sparkle-design-internal の publish.yml と同じ対応）。
-      # en: `contents: write` is required to push the release tag and create the
-      # GitHub Release. Manual tagging was missed for v1.0.6, so this mirrors
-      # sparkle-design-cli / sparkle-design-internal's automation.
-      contents: write
+      # stage するだけなので書き込み権限は不要。tag と GitHub Release は承認後に
+      # release.yml（Publish GitHub Release）で作る
+      # en: Staging needs no write access. The tag and GitHub Release are created after
+      # approval by release.yml (Publish GitHub Release)
+      contents: read
+      # npm の trusted publishing（OIDC）で認証する。NPM_TOKEN は使わない
+      # en: Authenticate to npm via trusted publishing (OIDC); no NPM_TOKEN
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
@@ -30,60 +46,183 @@ jobs:
 
       - run: pnpm run build:package
 
-      - run: npm publish
+      - name: Determine dist-tag
+        id: tag
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Tag commit and create GitHub Release
-        # npm publish が成功した直後に同じ commit に `vX.Y.Z` tag を打ち、
-        # CHANGELOG.md の `## [X.Y.Z]` セクションを release notes として
-        # GitHub Release を自動作成する。手動 tag 漏れを防ぐための後段処理。
-        # en: Tag the commit and create a matching GitHub Release after a
-        # successful npm publish, using the CHANGELOG section as notes.
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_CHANNEL: ${{ inputs.channel }}
         run: |
           set -euo pipefail
           VERSION=$(node -p "require('./package.json').version")
-          TAG="v${VERSION}"
 
-          if git rev-parse --verify "refs/tags/${TAG}" >/dev/null 2>&1; then
-            echo "tag ${TAG} already exists locally — skipping git tag push"
+          # pre-release の命名ルール（sparkle-design-cli の publish.yml と同じ）:
+          #   - `-beta.N`  → beta dist-tag
+          #   - `-rc.N`    → next dist-tag
+          #   - それ以外 (-alpha.N 等) は channel の指定にかかわらず exit 1
+          # 素の `npm publish` だと prerelease でも latest に載ってしまうため、
+          # 必ず --tag を明示する。
+          # en: Same naming rule as sparkle-design-cli. Always pass --tag so a
+          # prerelease never lands on `latest`.
+          # 形式は数値まで含めて完全一致で判定する（`1.2.3-beta.foo` や
+          # `1.2.3-foo-beta.4` を beta 扱いしない）。
+          # en: Match the full format, numeric parts included.
+          if [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+$ ]]; then
+            AUTO="beta"
+          elif [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-rc\.[0-9]+$ ]]; then
+            AUTO="next"
+          elif [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            AUTO="latest"
           else
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git tag "${TAG}"
-            git push origin "${TAG}"
+            AUTO="unsupported"
           fi
 
-          if gh release view "${TAG}" >/dev/null 2>&1; then
-            echo "release ${TAG} already exists — leaving notes untouched"
-            exit 0
+          # channel を手動指定しても、未対応の version は先に止める。
+          # en: Reject unsupported versions before honoring a manual channel.
+          if [ "$AUTO" = "unsupported" ]; then
+            echo "::error::未対応の version です: $VERSION (サポートは X.Y.Z / X.Y.Z-beta.N / X.Y.Z-rc.N のみ)"
+            exit 1
           fi
 
-          NOTES_FILE="$(mktemp)"
-          node scripts/extract-changelog-section.mjs "${VERSION}" > "${NOTES_FILE}"
-          if [ ! -s "${NOTES_FILE}" ]; then
-            # CHANGELOG に該当セクションが無いとき。release は作るが
-            # 内容は fallback note にして、抜け漏れを後で人間が拾えるよう
-            # warn を出す。
-            # en: No CHANGELOG entry — emit a fallback note and warn so a
-            # follow-up PR can fix CHANGELOG without blocking publish.
-            echo "::warning::CHANGELOG.md に [${VERSION}] セクションが見つかりません。fallback note で release を作成します。"
-            printf 'Release %s\n\nCHANGELOG.md にこのバージョン用のセクションがありません。後追いで CHANGELOG を更新してから本 release notes も編集してください。\n' "${VERSION}" > "${NOTES_FILE}"
+          if [ "$INPUT_CHANNEL" = "auto" ]; then
+            CHANNEL="$AUTO"
+          else
+            CHANNEL="$INPUT_CHANNEL"
           fi
 
-          gh release create "${TAG}" \
-            --title "${TAG}" \
-            --notes-file "${NOTES_FILE}"
+          case "$CHANNEL:$VERSION" in
+            latest:*-*)
+              echo "::error::prerelease version ($VERSION) は latest へ publish できません"
+              exit 1
+              ;;
+            beta:*-*) ;;
+            beta:*)
+              echo "::error::安定版 ($VERSION) は beta へ publish できません。-beta.N を付けてください"
+              exit 1
+              ;;
+            next:*-*) ;;
+            next:*)
+              echo "::error::安定版 ($VERSION) は next へ publish できません。-rc.N を付けてください"
+              exit 1
+              ;;
+          esac
+
+          # 実行元ブランチの方針（npm の trusted publisher はブランチを照合しないので、
+          # ここで誤った stage を止める。最終的な歯止めはメンテナーの 2FA 承認）:
+          #   - main: 現行メジャー。上の判定どおり
+          #   - v<N>: 旧メジャーのメンテナンスライン（非推奨・修正のみ）。版の major が N の
+          #     安定版だけを出し、npm の latest がより新しいメジャーなら latest-<N> に載せて
+          #     latest を巻き戻さない
+          #   - それ以外: 止める
+          # en: Branch policy (the trusted publisher doesn't check branches, so stop mistakes
+          # here; the final safeguard is the maintainer's 2FA approval):
+          #   - main: current major, as decided above
+          #   - v<N>: maintenance line of an older major (deprecated, fixes only). Only stable
+          #     N.x versions; if npm's latest is a newer major, publish under latest-<N> so
+          #     latest never moves back
+          #   - anything else: refuse
+          MAJOR="${VERSION%%.*}"
+          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
+            :
+          elif [[ "$GITHUB_REF" =~ ^refs/heads/v([0-9]+)$ ]]; then
+            LINE="${BASH_REMATCH[1]}"
+            if [ "$MAJOR" != "$LINE" ]; then
+              echo "::error::v${LINE} ブランチからは ${LINE}.x しか出せません（version: $VERSION）"
+              exit 1
+            fi
+            if [[ "$VERSION" == *-* ]]; then
+              echo "::error::メンテナンスライン（v${LINE}）では prerelease を出しません（version: $VERSION）"
+              exit 1
+            fi
+            PKG=$(node -p "require('./package.json').name")
+            # 取得に失敗して空のまま進むと、2.x が latest になった後に latest を 1.x へ
+            # 巻き戻しかねないので止める
+            # en: Fail closed: proceeding with an empty value could move latest back to 1.x
+            if ! LATEST=$(npm view "$PKG" dist-tags.latest --registry=https://registry.npmjs.org); then
+              echo "::error::npm の dist-tags.latest を取得できませんでした。時間をおいて再実行してください"
+              exit 1
+            fi
+            LATEST_MAJOR="${LATEST%%.*}"
+            if ! [[ "$LATEST_MAJOR" =~ ^[0-9]+$ ]]; then
+              echo "::error::npm の dist-tags.latest が想定外の値です: '$LATEST'"
+              exit 1
+            fi
+            # メンテナンスラインは latest より古いか同じメジャーだけ（新しいメジャーは main から出す）
+            # en: A maintenance line must not be newer than latest (new majors ship from main)
+            if [ "$LINE" -gt "$LATEST_MAJOR" ]; then
+              echo "::error::v${LINE} は latest（$LATEST）より新しいメジャーです。新しいメジャーは main から出してください"
+              exit 1
+            fi
+            if [ "$LATEST_MAJOR" -gt "$LINE" ]; then
+              EXPECTED="latest-${LINE}"
+            else
+              EXPECTED="latest"
+            fi
+            if [ "$INPUT_CHANNEL" != "auto" ] && [ "$CHANNEL" != "$EXPECTED" ]; then
+              echo "::error::v${LINE} ブランチの dist-tag は $EXPECTED です（指定: $CHANNEL）。channel は auto で実行してください"
+              exit 1
+            fi
+            CHANNEL="$EXPECTED"
+          else
+            echo "::error::stage は main か v<N>（メンテナンスライン）からのみ実行できます（実行元: $GITHUB_REF）"
+            exit 1
+          fi
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "channel=$CHANNEL" >> "$GITHUB_OUTPUT"
+          echo "→ $VERSION を --tag $CHANNEL で stage します"
+
+      - name: Install npm with staged publishing
+        # `npm stage` は npm 11.20.0 以降、trusted publishing は 11.5.1 以降。
+        # Node 22.14.0 同梱の npm 10 には無いので入れ替える
+        # en: `npm stage` needs npm >= 11.20.0 and trusted publishing >= 11.5.1;
+        # Node 22.14.0 ships npm 10
+        run: npm install -g npm@11.21.0 && npm --version
+
+      - name: npm stage publish
+        id: stage
+        # trusted publishing（OIDC）で「公開待ち」として登録するだけにする。npmjs.com の
+        # trusted publisher は stage だけを許可しておき、公開の確定はメンテナーが 2FA 付きで
+        # `npm stage approve` する（このワークフローでは公開しない）。public リポジトリなので
+        # provenance も自動で付く
+        # en: Only stage the version via trusted publishing (OIDC). The npmjs.com trusted
+        # publisher allows staging only; a maintainer finalizes it with 2FA via
+        # `npm stage approve` (this workflow never makes the version public). Provenance is
+        # attached automatically since the repository is public
+        env:
+          PUBLISH_TAG: ${{ steps.tag.outputs.channel }}
+        run: |
+          set -euo pipefail
+          OUT="$(mktemp)"
+          # 失敗時も npm の JSON 出力（error の詳細）をログに残す
+          # en: Keep npm's JSON output (error details) in the log even on failure
+          npm stage publish --tag "$PUBLISH_TAG" --json > "$OUT" || { cat "$OUT"; exit 1; }
+          cat "$OUT"
+          STAGE_ID=$(node -e 'const r=JSON.parse(require("fs").readFileSync(process.argv[1],"utf8")); const v=r.stageId ?? Object.values(r).find(x=>x&&x.stageId)?.stageId; if(!v){console.error("stageId が出力にありません"); process.exit(1)} console.log(v)' "$OUT")
+          echo "stage_id=$STAGE_ID" >> "$GITHUB_OUTPUT"
+          echo "→ staged with id $STAGE_ID (tag $PUBLISH_TAG)"
 
       - name: Summary
+        env:
+          STAGE_ID: ${{ steps.stage.outputs.stage_id }}
+          PUBLISHED_VERSION: ${{ steps.tag.outputs.version }}
+          PUBLISHED_TAG: ${{ steps.tag.outputs.channel }}
         run: |
-          VERSION=$(node -p "require('./package.json').version")
           {
-            echo "### Published"
+            echo "### Staged（まだ公開されていません / not public yet）"
             echo ""
             echo "- package: \`sparkle-design\`"
-            echo "- version: \`$VERSION\`"
-            echo "- GitHub Release: [v${VERSION}](https://github.com/${{ github.repository }}/releases/tag/v${VERSION})"
+            echo "- version: \`$PUBLISHED_VERSION\`"
+            echo "- dist-tag: \`$PUBLISHED_TAG\`"
+            echo "- ref: \`${GITHUB_REF}\`"
+            echo "- commit: \`${GITHUB_SHA}\`"
+            echo "- stage id: \`$STAGE_ID\`"
+            if [[ "$GITHUB_REF" == refs/heads/v* ]] && [ "$PUBLISHED_TAG" = "latest" ]; then
+              echo ""
+              echo "> ⚠️ メンテナンスラインを \`latest\` で stage しました。承認前に \`npm view sparkle-design dist-tags.latest --registry=https://registry.npmjs.org\` の major が変わっていないことを確かめてください（新しいメジャーが \`latest\` になっていたら reject して出し直す）"
+            fi
+            echo ""
+            echo "#### 次の手順 / Next steps"
+            echo ""
+            echo "1. 中身を確認する（任意）: \`npx -y npm@11.21.0 stage download $STAGE_ID --registry=https://registry.npmjs.org\`"
+            echo "2. 2FA 付きで承認して公開する: \`npx -y npm@11.21.0 stage approve $STAGE_ID --registry=https://registry.npmjs.org --otp=<code>\`（不要なら \`npx -y npm@11.21.0 stage reject $STAGE_ID --registry=https://registry.npmjs.org --otp=<code>\`）"
+            echo "3. 公開後に tag と GitHub Release を作る: \`gh workflow run \"Publish GitHub Release\" --repo ${GITHUB_REPOSITORY} -f ref=${GITHUB_SHA}\`"
           } >> "$GITHUB_STEP_SUMMARY"
