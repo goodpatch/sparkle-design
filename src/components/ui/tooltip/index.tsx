@@ -99,18 +99,18 @@ function TooltipContent({
         side={side}
         sideOffset={sideOffset}
         className={cn(
-          "bg-neutral-900 shadow-float animate-in fade-in-0 zoom-in-95",
+          "bg-surface-inverse shadow-float animate-in fade-in-0 zoom-in-95",
           "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
           "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2",
           "data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
           "z-50 w-fit origin-[--radix-tooltip-content-transform-origin] rounded-notice",
-          "px-2 py-1 character-2-regular-pro text-white",
+          "px-2 py-1 character-2-regular-pro text-text-inverse",
           className
         )}
         {...props}
       >
         {children}
-        <TooltipPrimitive.Arrow className="bg-neutral-900 fill-neutral-900 shadow-float z-50 size-3 translate-y-[calc(-50%_-_1px)] rotate-45 rounded-xs" />
+        <TooltipPrimitive.Arrow className="bg-surface-inverse fill-surface-inverse shadow-float z-50 size-3 translate-y-[calc(-50%_-_1px)] rotate-45 rounded-xs" />
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
   );

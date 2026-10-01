@@ -99,10 +99,10 @@ function ClickableCard({
     <button
       ref={ref}
       className={cn(
-        "rounded-action border border-border-neutral-middle bg-surface-base-0 shadow-raise text-text-neutral-middle py-4 cursor-pointer hover:bg-neutral-50",
+        "rounded-action border border-border-neutral-middle bg-surface-base-0 shadow-flat text-text-neutral-middle py-4 cursor-pointer hover:bg-surface-neutral-middle-enabled",
         "transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2",
-        "active:bg-neutral-50 active:shadow-float active:border-primary-400",
-        "disabled:cursor-not-allowed disabled:bg-surface-base-0 disabled:border-secondary-100 disabled:text-secondary-200 disabled:shadow-flat",
+        "active:bg-surface-neutral-middle-enabled active:shadow-raise active:border-border-primary-extra-high",
+        "disabled:cursor-not-allowed disabled:bg-surface-base-0 disabled:border-border-neutral-low disabled:text-text-neutral-disabled disabled:shadow-flat",
         className
       )}
       onClick={onClick}
@@ -164,7 +164,7 @@ function Card({ className, ref, ...props }: React.ComponentProps<"div">) {
     <div
       ref={ref}
       className={cn(
-        "rounded-minimum border border-border-neutral-middle bg-surface-base-0 text-text-neutral-middle py-4",
+        "rounded-container border border-border-neutral-middle bg-surface-base-0 text-text-neutral-middle py-4",
         className
       )}
       {...props}
@@ -211,7 +211,7 @@ Card.displayName = "Card";
  * <CardHeader>
  *   <CardTitle>
  *     タイトル
- *     <span className="text-sm text-neutral-500">全 12 件</span>
+ *     <span className="text-sm text-text-neutral-low">全 12 件</span>
  *   </CardTitle>
  * </CardHeader>
  * ```

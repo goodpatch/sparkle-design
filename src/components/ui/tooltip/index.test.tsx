@@ -113,4 +113,30 @@ describe("Tooltip", () => {
     );
     expect(visibleTooltip).toHaveAttribute("data-side", "right");
   });
+
+  it("applies Figma tokens to the content and arrow", async () => {
+    // Figma: Tooltip 973:684（2026-10-01 取得）
+    // en: Figma Tooltip 973:684 (retrieved 2026-10-01)
+    testContainer.render(
+      <Tooltip>
+        <TooltipTrigger>Token</TooltipTrigger>
+        <TooltipContent side="top">Token Content</TooltipContent>
+      </Tooltip>
+    );
+    await userEvent.hover(screen.getByText("Token"));
+    await screen.findAllByText("Token Content");
+    const content = document.querySelector(
+      '[data-slot="tooltip-content"]'
+    ) as HTMLElement;
+    expect(content).toBeTruthy();
+    ["bg-surface-inverse", "text-text-inverse", "rounded-notice"].forEach(cls =>
+      expect(content.className).toContain(cls)
+    );
+    const arrow = content.querySelector("svg") as SVGElement;
+    expect(arrow).toBeTruthy();
+    const arrowClass = arrow.getAttribute("class") ?? "";
+    ["bg-surface-inverse", "fill-surface-inverse"].forEach(cls =>
+      expect(arrowClass).toContain(cls)
+    );
+  });
 });

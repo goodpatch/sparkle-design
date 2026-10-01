@@ -100,7 +100,12 @@ describe("Toast", () => {
         expect(StyleHelpers.hasClass(toastElement, "rounded-notice")).toBe(
           true
         );
-        expect(StyleHelpers.hasClass(toastElement, "bg-neutral-50")).toBe(true);
+        expect(
+          StyleHelpers.hasClass(
+            toastElement,
+            "bg-surface-neutral-middle-enabled"
+          )
+        ).toBe(true);
         expect(StyleHelpers.hasClass(toastElement, "border")).toBe(true);
         expect(
           StyleHelpers.hasClass(toastElement, "border-border-neutral-middle")
