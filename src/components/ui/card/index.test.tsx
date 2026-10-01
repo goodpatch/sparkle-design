@@ -23,7 +23,7 @@ import {
  * en: Test data constants
  */
 const CARD_BASE_CLASSES = [
-  "rounded-minimum",
+  "rounded-container",
   "border",
   "border-border-neutral-middle",
   "bg-surface-base-0",
@@ -35,18 +35,18 @@ const CLICKABLE_CARD_BASE_CLASSES = [
   "border",
   "border-border-neutral-middle",
   "bg-surface-base-0",
-  "shadow-raise",
+  "shadow-flat",
   "text-text-neutral-middle",
   "py-4",
   "cursor-pointer",
-  "hover:bg-neutral-50",
+  "hover:bg-surface-neutral-middle-enabled",
   "transition-colors",
 ] as const;
 
 const CLICKABLE_CARD_INTERACTION_CLASSES = [
-  "active:bg-neutral-50",
-  "active:shadow-float",
-  "active:border-primary-400",
+  "active:bg-surface-neutral-middle-enabled",
+  "active:shadow-raise",
+  "active:border-border-primary-extra-high",
 ] as const;
 
 const CLICKABLE_CARD_FOCUS_CLASSES = [
@@ -59,8 +59,8 @@ const CLICKABLE_CARD_FOCUS_CLASSES = [
 const CLICKABLE_CARD_DISABLED_CLASSES = [
   "disabled:cursor-not-allowed",
   "disabled:bg-surface-base-0",
-  "disabled:border-secondary-100",
-  "disabled:text-secondary-200",
+  "disabled:border-border-neutral-low",
+  "disabled:text-text-neutral-disabled",
   "disabled:shadow-flat",
 ] as const;
 

@@ -60,7 +60,7 @@ export const Warning: Story = {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            <DialogIcon icon="warning" className="text-warning-500" />
+            <DialogIcon icon="warning" className="text-object-warning" />
             変更内容を保存せずに移動
           </DialogTitle>
           <DialogDescription>
@@ -85,7 +85,7 @@ export const Negative: Story = {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            <DialogIcon icon="error" className="text-negative-400" />
+            <DialogIcon icon="error" className="text-object-negative-enabled" />
             アドレスを削除
           </DialogTitle>
           <DialogDescription>
