@@ -9,6 +9,7 @@ import { Slider as SliderPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+import { findLabelIdsFor } from "@/lib/a11y";
 import { getIndicatorMinCh } from "./utils";
 
 const sliderRootVariants = cva(
@@ -139,25 +140,6 @@ export interface SliderProps extends SliderPrimitiveProps {
 }
 
 /**
- * `htmlFor` が指定 id を指す `<label>` のうち、id を持つものの id を空白区切りで返す。
- * `label[for]` は labelable 要素（input / button など）にしか名前を与えないため、
- * `span[role="slider"]` のつまみには aria-labelledby で関連付け直す必要がある。
- * en: Returns space-separated ids of `<label>` elements (that have an id) whose
- *     `htmlFor` points to the given id. `label[for]` only names labelable elements
- *     (input, button, ...), so the `span[role="slider"]` thumb must be re-associated
- *     via aria-labelledby.
- */
-function findLabelIdsFor(target: HTMLElement, id: string): string | undefined {
-  const root = target.getRootNode() as Document | ShadowRoot;
-  // NOTE: useId 由来の id は CSS セレクタで特殊文字を含むため、属性セレクタではなく htmlFor で比較する
-  // en: useId-generated ids contain selector-special characters, so compare htmlFor instead of using an attribute selector
-  const ids = Array.from(root.querySelectorAll<HTMLLabelElement>("label[for]"))
-    .filter(label => label.htmlFor === id && label.id)
-    .map(label => label.id);
-  return ids.length > 0 ? ids.join(" ") : undefined;
-}
-
-/**
  * **概要 / Overview**
  *
  * - スライダーは任意の範囲の中からユーザーに特定の数値を選択してもらうために使用するコンポーネントです。
@@ -274,7 +256,11 @@ function Slider({
       <SliderPrimitive.Root
         data-slot="slider"
         disabled={isDisabledState}
-        aria-disabled={isDisabledState}
+        // Radix はロールを持たないルート（span）にも aria-disabled を付けるが、ARIA 1.2 では
+        // aria-disabled のグローバル属性としての使用は非推奨。無効状態は role="slider" のつまみに付ける
+        // en: Radix also sets aria-disabled on the role-less root span, but ARIA 1.2 deprecates
+        //     aria-disabled as a global attribute. The disabled state is exposed on the role="slider" thumb
+        aria-disabled={undefined}
         className={cn(
           sliderRootVariants({ isDisabled: isDisabledState }),
           className

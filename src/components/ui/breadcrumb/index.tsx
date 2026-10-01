@@ -141,7 +141,6 @@ export function BreadcrumbPage({
   return (
     <span
       data-slot="breadcrumb-page"
-      aria-disabled="true"
       aria-current="page"
       className={cn(
         "character-3-regular-pro text-text-neutral-high cursor-default",

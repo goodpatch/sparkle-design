@@ -8,6 +8,7 @@ import * as React from "react";
 import { RadioGroup as RadioPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { findLabelIdsFor } from "@/lib/a11y";
 
 /**
  * Radio（radiogroup）のエラー状態を各 RadioItem に伝える
@@ -208,15 +209,13 @@ export interface RadioProps extends RadioPrimitiveProps {
  *
  * @param {RadioProps} props
  */
-function Radio({ className, isInvalid = false, ...props }: RadioProps) {
+function Radio({ className, isInvalid = false, ref, ...props }: RadioProps) {
   // aria-invalid は ARIA 1.2 で radiogroup がサポートロール（radio は対象外）なのでグループに付ける。
-  // FormControl などが aria-invalid を直接渡した場合もエラー配色を伝える
+  // FormControl などが aria-invalid を直接渡した場合もエラー配色を伝える。空文字は ARIA では
+  // false 相当なので invalid 扱いしない（型付けされていない呼び出しに備えて unknown で比較する）
   // en: ARIA 1.2 supports aria-invalid on radiogroup (not on radio), so set it on the group.
-  // 空文字は ARIA では false 相当なので invalid 扱いしない
-  // en: An empty string means false in ARIA, so it is not treated as invalid
-  // An aria-invalid passed directly (e.g. by FormControl) also turns on the error style
-  // 型付けされていない呼び出し（JS や Slot 経由）の空文字も弾けるよう unknown で比較する
-  // en: Compare as unknown so an empty string from untyped callers (JS, Slot) is also rejected
+  //     An aria-invalid passed directly (e.g. by FormControl) also turns on the error style.
+  //     An empty string means false in ARIA (compared as unknown for untyped callers)
   const ariaInvalid: unknown = props["aria-invalid"];
   const groupInvalid =
     isInvalid ||
@@ -224,12 +223,46 @@ function Radio({ className, isInvalid = false, ...props }: RadioProps) {
       ariaInvalid !== false &&
       ariaInvalid !== "false" &&
       ariaInvalid !== "");
+
+  // label[for] は div[role="radiogroup"] に名前を与えないため、id が渡され明示的な名前がないときは
+  // その id を htmlFor で指す id 付きの <label> を探して aria-labelledby に設定する（Slider と同じ方式）。
+  // これにより FormHeader + FormControl で包むだけでグループ名が読み上げられる
+  // en: label[for] does not name a div[role="radiogroup"], so when an id is given without an
+  //     explicit name, look up <label> elements (with an id) whose htmlFor matches and set them
+  //     as aria-labelledby (same approach as Slider), so FormHeader + FormControl is enough
+  const {
+    id,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+  } = props;
+  const rootRef = React.useRef<HTMLDivElement | null>(null);
+  const setRootRef = React.useCallback(
+    (node: HTMLDivElement | null) => {
+      rootRef.current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref) ref.current = node;
+    },
+    [ref]
+  );
+  const [associatedLabelIds, setAssociatedLabelIds] = React.useState<
+    string | undefined
+  >(undefined);
+  React.useEffect(() => {
+    if (!id || ariaLabel || ariaLabelledBy || !rootRef.current) {
+      setAssociatedLabelIds(undefined);
+      return;
+    }
+    setAssociatedLabelIds(findLabelIdsFor(rootRef.current, id));
+  }, [id, ariaLabel, ariaLabelledBy]);
+
   return (
     <RadioInvalidContext.Provider value={groupInvalid}>
       <RadioPrimitive.Root
         data-slot="radio-group"
         className={cn("grid gap-y-2 gap-x-4", className)}
         {...props}
+        ref={setRootRef}
+        aria-labelledby={ariaLabelledBy ?? associatedLabelIds}
         aria-invalid={groupInvalid || undefined}
       />
     </RadioInvalidContext.Provider>

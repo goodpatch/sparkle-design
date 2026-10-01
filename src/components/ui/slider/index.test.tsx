@@ -304,7 +304,8 @@ describe("Slider", () => {
       const sliderThumb = getSliderThumb(testContainer.getContainer());
       const valueIndicator = getValueIndicator(testContainer.getContainer());
 
-      expect(sliderRoot).toHaveAttribute("aria-disabled", "true");
+      // aria-disabled はロールを持たないルートには付けず、role="slider" のつまみにだけ付ける（ARIA 1.2）
+      expect(sliderRoot).not.toHaveAttribute("aria-disabled");
       // role="slider" のつまみにも無効状態を伝える
       expect(sliderThumb).toHaveAttribute("aria-disabled", "true");
 
@@ -326,7 +327,8 @@ describe("Slider", () => {
       const sliderRoot = getSliderRoot(testContainer.getContainer());
       const sliderThumb = getSliderThumb(testContainer.getContainer());
 
-      expect(sliderRoot).toHaveAttribute("aria-disabled", "true");
+      // aria-disabled はロールを持たないルートには付けず、role="slider" のつまみにだけ付ける（ARIA 1.2）
+      expect(sliderRoot).not.toHaveAttribute("aria-disabled");
       // role="slider" のつまみにも無効状態を伝える
       expect(sliderThumb).toHaveAttribute("aria-disabled", "true");
     });
