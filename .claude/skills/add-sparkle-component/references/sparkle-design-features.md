@@ -616,7 +616,7 @@ shadcn/ui と混在するプロジェクトでも、Sparkle Design のコンポ�
 
 `ClickableCard` はクリック可能な Card のパターンとして必要なボタンのセマンティクス / キーボード操作 / focus ring を提供する。`<Card>` を `<button>` / `<a>` / `role="button"` で自前ラップしないこと。
 
-`ClickableCard` 自体が `<button>` を描画するため、内側には phrasing content しか置けない。`CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter` で構成すれば有効な HTML になる。ClickableCard の JSX 内に直接書いたものには自動で `as="span"` が付与され、`<span>`（`flex` / `block` 付き）で描画される。独自コンポーネントで包むと自動付与が届かないため、その場合は `as="span"` を明示する。`<div>` / `<p>` / 見出しを直書きしないこと。また Button やリンクなどの対話型要素はネストされた interactive 要素になりアクセシビリティ違反になるため置かない。カード内に個別の操作が必要なら `Card` を使う。
+`ClickableCard` 自体が `<button>` を描画するため、内側には phrasing content しか置けない。`CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter` で構成すれば有効な HTML になる。ClickableCard の JSX 内に直接書いたものには自動で `as="span"` が付与され、`<span>`（`flex` / `block` 付き）で描画される。独自コンポーネントで包む場合や Promise（非同期）で渡す場合は自動付与が届かないため、`as="span"` を明示する。`<div>` / `<p>` / 見出しを直書きしないこと。また Button やリンクなどの対話型要素はネストされた interactive 要素になりアクセシビリティ違反になるため置かない。カード内に個別の操作が必要なら `Card` を使う。
 
 ### Icon / Spinner: スケール値（1-12）を使う
 

@@ -55,8 +55,8 @@ export interface ClickableCardProps extends React.ComponentProps<"button"> {
  *
  * **アンチパターン / Anti-patterns**
  *
- * - ClickableCard は `<button>` を描画するため、内側では `<div>` / `<p>` / 見出し要素は使わないでください（phrasing content のみ許可）。`CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter` で構成してください。ClickableCard の JSX 内に直接書いたものには自動で `as="span"` が付与されます。独自コンポーネントで包む場合は `as="span"` を明示してください。
- *   en: ClickableCard renders a `<button>`, so do not use `<div>` / `<p>` / heading elements inside it (only phrasing content is allowed). Compose the card with `CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter`. Those written directly in ClickableCard's JSX get `as="span"` automatically; when you wrap them in your own component, set `as="span"` explicitly.
+ * - ClickableCard は `<button>` を描画するため、内側では `<div>` / `<p>` / 見出し要素は使わないでください（phrasing content のみ許可）。`CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter` で構成してください。ClickableCard の JSX 内に直接書いたものには自動で `as="span"` が付与されます。独自コンポーネントで包む場合や Promise（非同期）で渡す場合は `as="span"` を明示してください。
+ *   en: ClickableCard renders a `<button>`, so do not use `<div>` / `<p>` / heading elements inside it (only phrasing content is allowed). Compose the card with `CardHeader` / `CardTitle` / `CardDescription` / `CardContent` / `CardFooter`. Those written directly in ClickableCard's JSX get `as="span"` automatically; when you wrap them in your own component or pass them as a Promise (async), set `as="span"` explicitly.
  * - ClickableCard の内側では Button / IconButton / リンクなどの対話型要素（`CardControl` を含む）を使わないでください。ネストされた interactive 要素になり、アクセシビリティ違反になります。カード内に個別の操作が必要な場合は `Card` を使ってください。
  *   en: Do not use interactive elements such as Button / IconButton / links (including `CardControl`) inside ClickableCard. They become nested interactive elements, which is an accessibility violation. Use `Card` when the card needs its own actions.
  *
@@ -424,8 +424,10 @@ const CARD_PARTS = new Set<unknown>([
 /**
  * ClickableCard の children を走査し、Card のサブコンポーネントに `as="span"` を付与する。
  * hooks（Context）を使わないため Server Component でも動作する。走査対象は Card のサブコンポーネント・Fragment・HTML 要素のみで、独自コンポーネントの内側には入らない。明示された `as` は上書きしない。
+ * Promise の children は変換しない（`.then` で包むと描画ごとに新しい Promise になり再サスペンドを招くため）。解決後の Card のサブコンポーネントには `as="span"` を明示してもらう。
  * en: Walks ClickableCard's children and adds `as="span"` to Card subcomponents.
  * It uses no hooks (Context), so it also works in Server Components. It only descends into Card subcomponents, Fragments and HTML elements, never into custom components. An explicit `as` is never overridden.
+ * Promise children are left untouched (wrapping them with `.then` would create a new Promise on every render and re-suspend), so their resolved Card subcomponents must set `as="span"` explicitly.
  */
 function toPhrasingContent(node: React.ReactNode): React.ReactNode {
   if (Array.isArray(node)) {

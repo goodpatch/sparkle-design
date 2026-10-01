@@ -811,6 +811,17 @@ describe("Card Components", () => {
       ).toBe("SPAN");
     });
 
+    it("leaves Promise children untouched (async Card parts need an explicit as)", () => {
+      // Given: Promise で渡した children
+      const promise = Promise.resolve(<CardTitle>Async</CardTitle>);
+
+      // When: ClickableCard を関数として呼び出す
+      const button = ClickableCard({ children: promise });
+
+      // Then: 同一の Promise がそのまま渡される（描画ごとに新しい Promise を作らない）
+      expect(button.props.children).toBe(promise);
+    });
+
     it("does not descend into custom components", () => {
       // Given: 独自コンポーネント（render prop を含む）で包んだサブコンポーネント
       const Wrapper = ({ children }: { children: React.ReactNode }) => (
