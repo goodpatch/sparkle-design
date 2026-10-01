@@ -13,7 +13,7 @@
 //
 // ブロックを解除するには、ユーザーから明示的な指示を得たうえで、
 // コマンドの先頭に SPARKLE_CONFIRM=1 を付けて実行する:
-//   SPARKLE_CONFIRM=1 gh workflow run "Publish to npm" --ref v1.2.3
+//   SPARKLE_CONFIRM=1 gh workflow run "Publish to npm" --ref main
 //
 // SPARKLE_CONFIRM=1 は「ユーザーがこの操作を名指しで指示した」ことの表明であり、
 // AI が自分の判断で付け足してよいものではない。

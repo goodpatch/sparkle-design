@@ -111,9 +111,11 @@ jobs:
 
       - name: Only stage from main
         # npm の trusted publisher はリポジトリとワークフローしか照合せず、ブランチは見ない。
-        # 任意ブランチのコードを stage できないよう main 以外からの実行を止める
+        # 誤って main 以外から stage しないよう止める（ワークフローを書き換えれば外せる検査なので、
+        # 最終的な歯止めはメンテナーの 2FA 承認）
         # en: npm's trusted publisher matches the repository and workflow, not the branch.
-        # Refuse to stage from anything other than main
+        # Guard against staging from anything other than main by mistake (this in-workflow check
+        # can be edited away; the final safeguard is the maintainer's 2FA approval)
         run: |
           if [ "$GITHUB_REF" != "refs/heads/main" ]; then
             echo "::error::stage は main からのみ実行できます（実行元: $GITHUB_REF）"

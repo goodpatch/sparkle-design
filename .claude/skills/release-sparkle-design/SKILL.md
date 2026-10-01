@@ -80,11 +80,11 @@ user-invocable: true
 
 - [ ] 該当バージョンを公開した commit の SHA を npm の記録から特定する: `npm view sparkle-design@X.Y.Z gitHead --registry=https://registry.npmjs.org`（CI から公開した版は main のマージコミットが記録されている）
 - [ ] 🛑 `gh workflow run "Publish GitHub Release" -f ref=<SHA>` で tag と Release を作る
-  - ワークフローは npm で公開済みであること（と、記録があれば `gitHead` が SHA と一致すること）を確かめてから tag を打ち、CHANGELOG の該当セクションを notes にする
+  - ワークフローは npm で公開済みであることと、`gitHead` が SHA と一致すること（記録が無ければ止まる）を確かめてから tag を打ち、CHANGELOG の該当セクションを notes にする
 
 > 🛑 **ここで停止する。** 追補対象のバージョンと、打とうとしているタグ / SHA の対応表を提示し、
 > ユーザーの承認を得てから push・Release 作成を実行する。タグの push は取り消しが面倒で、
-> 誤ったコミットに打つと publish 対象がずれる。
+> 誤ったコミットに打つと、公開した内容と tag の指す commit が食い違う。
 
 ### 新バージョンの準備（リリース PR 作成）
 
