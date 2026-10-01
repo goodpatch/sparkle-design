@@ -12,7 +12,11 @@ import { cva, VariantProps } from "class-variance-authority";
 
 const switchVariants = cva(
   [
-    "relative peer inline-flex shrink-0 cursor-pointer items-center rounded-full transition-colors",
+    // Figma に枠線の bind は無いが、強制カラーモード（Windows ハイコントラスト等）で
+    // トラックの外形を残すため透明な 1px 枠を持たせる（padding と合わせて padding/2 相当）
+    // en: Figma binds no border, but keep a transparent 1px border so the track outline
+    // survives forced-colors mode (together with p-px this equals padding/2)
+    "relative peer inline-flex shrink-0 cursor-pointer items-center rounded-full border border-transparent transition-colors",
     "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
     "data-[state=unchecked]:bg-surface-neutral-high-enabled data-[state=unchecked]:hover:bg-surface-neutral-high-hover",
     "data-[state=checked]:bg-surface-primary-high-enabled data-[state=checked]:hover:bg-surface-primary-high-hover",
@@ -23,9 +27,9 @@ const switchVariants = cva(
       size: {
         // smサイズのタッチターゲットを24px以上に拡張（WCAG 2.5.8）
         // en: Expand sm size touch target to 24px minimum (WCAG 2.5.8)
-        sm: "h-4 w-7 p-0.5 before:absolute before:content-[''] before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-full before:min-h-6",
-        md: "h-6 w-11 p-0.5",
-        lg: "h-8 w-[60px] p-0.5",
+        sm: "h-4 w-7 p-px before:absolute before:content-[''] before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-full before:min-h-6",
+        md: "h-6 w-11 p-px",
+        lg: "h-8 w-[60px] p-px",
       },
     },
     defaultVariants: {

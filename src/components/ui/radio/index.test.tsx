@@ -486,7 +486,9 @@ describe("Radio", () => {
       ],
     ])("applies %s ring tokens", (_, props, expected) => {
       const { ring } = renderItem(props);
-      expected.forEach(cls => expect(ring.className).toContain(cls));
+      expected.forEach(cls =>
+        expect(ring.className.split(/\s+/)).toContain(cls)
+      );
     });
 
     it.each([
@@ -519,7 +521,9 @@ describe("Radio", () => {
     ])("applies %s checked dot tokens", (_, props, expected) => {
       const { dot } = renderItem({ ...props, checked: true });
       expect(dot).toBeTruthy();
-      expected.forEach(cls => expect(dot!.className).toContain(cls));
+      expected.forEach(cls =>
+        expect(dot!.className.split(/\s+/)).toContain(cls)
+      );
     });
 
     it("uses text-neutral-middle for the label (not the undefined text-medium)", () => {

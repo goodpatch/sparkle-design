@@ -591,7 +591,7 @@ describe("Checkbox", () => {
       ],
     ])("applies %s tokens", (_, props, expected) => {
       const el = box(props);
-      expected.forEach(cls => expect(el.className).toContain(cls));
+      expected.forEach(cls => expect(el.className.split(/\s+/)).toContain(cls));
     });
 
     it("does not apply hover tokens while disabled", () => {

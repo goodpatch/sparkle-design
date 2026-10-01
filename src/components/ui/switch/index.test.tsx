@@ -365,21 +365,20 @@ describe("Switch", () => {
       ].forEach(cls => expect(track.className).toContain(cls));
     });
 
-    it.each([
-      ["sm", "p-0.5"],
-      ["md", "p-0.5"],
-      ["lg", "p-0.5"],
-    ] as const)("has no track border and uses padding/2 (%s)", (size, pad) => {
-      testContainer.render(<Switch size={size} />);
-      const track = testContainer.querySelector('[data-slot="switch"]');
-      const classes = track.className.split(/\s+/);
-      expect(classes).toContain(pad);
-      expect(classes).not.toContain("p-px");
-      expect(classes).not.toContain("border");
-      expect(
-        classes.some((c: string) => /border-(neutral|primary)-/.test(c))
-      ).toBe(false);
-    });
+    it.each(["sm", "md", "lg"] as const)(
+      "keeps a transparent 1px border + p-px (= padding/2) for forced-colors (%s)",
+      size => {
+        testContainer.render(<Switch size={size} />);
+        const track = testContainer.querySelector('[data-slot="switch"]');
+        const classes = track.className.split(/\s+/);
+        ["border", "border-transparent", "p-px"].forEach(cls =>
+          expect(classes).toContain(cls)
+        );
+        expect(
+          classes.some((c: string) => /border-(neutral|primary)-/.test(c))
+        ).toBe(false);
+      }
+    );
 
     it("applies thumb tokens", () => {
       testContainer.render(<Switch />);
