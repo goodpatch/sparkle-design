@@ -268,6 +268,7 @@ function RadioItem({
       <RadioPrimitive.Item
         data-slot="radio-group-item"
         id={id}
+        aria-invalid={isInvalid || undefined}
         className={cn(
           radioItemVariants({ size, isDisabled: disabled }),
           "group",

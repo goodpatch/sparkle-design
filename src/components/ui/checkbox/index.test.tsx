@@ -534,4 +534,70 @@ describe("Checkbox", () => {
       expect(A11yHelpers.isDisabled(checkbox)).toBe(true);
     });
   });
+
+  describe("Figma token mapping", () => {
+    // Figma: Checkbox/Parts/Item 176:7554（2026-10-01 取得）
+    // en: Figma Checkbox/Parts/Item 176:7554 (retrieved 2026-10-01)
+    const box = (props: { isInvalid?: boolean; isDisabled?: boolean }) => {
+      testContainer.render(<Checkbox id="token-cb" {...props} />);
+      return testContainer.querySelector("#token-cb")
+        .firstElementChild as HTMLElement;
+    };
+    const checked = (s: string) =>
+      [
+        `[.group[data-state=checked]_&]:${s}`,
+        `[.group[data-state=indeterminate]_&]:${s}`,
+      ] as const;
+
+    it.each([
+      [
+        "neutral",
+        {},
+        [
+          "rounded-minimum",
+          "bg-surface-base-0",
+          "border-object-neutral-low",
+          "hover:border-object-neutral-middle",
+          ...checked("bg-object-primary-enabled"),
+          ...checked("hover:bg-object-primary-hover"),
+        ],
+      ],
+      [
+        "neutral disabled",
+        { isDisabled: true },
+        [
+          "border-object-neutral-disabled",
+          ...checked("bg-object-primary-disabled"),
+          ...checked("border-object-primary-disabled"),
+        ],
+      ],
+      [
+        "invalid",
+        { isInvalid: true },
+        [
+          "border-object-negative-enabled",
+          "hover:border-object-negative-hover",
+          ...checked("bg-object-negative-enabled"),
+          ...checked("hover:bg-object-negative-hover"),
+        ],
+      ],
+      [
+        "invalid disabled",
+        { isInvalid: true, isDisabled: true },
+        [
+          "border-object-negative-disabled",
+          ...checked("bg-object-negative-disabled"),
+        ],
+      ],
+    ])("applies %s tokens", (_, props, expected) => {
+      const el = box(props);
+      expected.forEach(cls => expect(el.className).toContain(cls));
+    });
+
+    it("does not apply hover tokens while disabled", () => {
+      const el = box({ isDisabled: true });
+      expect(el.className).not.toContain("hover:border-object-neutral-middle");
+      expect(el.className).not.toContain("hover:bg-object-primary-hover");
+    });
+  });
 });
