@@ -14,17 +14,18 @@ Figma（`7alBZXZf65YgcII41TWT0r`）のスタイル刷新を反映する **beta �
 - **React 19 が必須になりました**。全コンポーネントを `React.forwardRef` から ref-as-prop に移行し、`react` / `react-dom` を `dependencies` から `peerDependencies`（`^19`）に移しました。React 18 では `ref` が渡らなくなります (#274)
 - **見た目が変わります**。Figma の新セマンティックトークンに合わせて全コンポーネントの配色・影・一部の角丸を置き換えました。主な変化は次のとおりです
   - 状態ごとの色が 1 段濃くなりました（Figma 側で enabled = 600 / hover = 700 / active = 800 に整理されたため）
-  - プリミティブ配色 50 値とシャドウ全段を Figma に合わせて再定義しました。未移行のクラスを使っている箇所も色・影が変わります (#299)
+  - プリミティブ配色 80 値（8 色相 × 10 段）と黒白アルファの一部、シャドウ（`2xs`〜`lg`）を Figma に合わせて再定義しました。未移行のクラスを使っている箇所も色・影が変わります (#299)
   - Card の角丸が `rounded-container`（md プロファイルで 2px → 8px）、Dialog の角丸が `rounded-modal`（8px → 12px）になりました (#330)
-  - Button / Icon Button の solid から 1px 枠線を削除し、影を `shadow-base` にしました (#303)
+  - Button / Icon Button の solid から 1px 枠線を削除し、solid・outline の影を `shadow-base`（影なし）にしました (#303)
   - Tabs の solid のリスト下線が primary からグレー（`border/neutral/low`）になりました (#328)
   - Slider の塗りが `object/info`（青固定）になり、primary に追従しなくなりました。Tag の `status="info"` も同様です (#302, #329)
   - Badge の normal が info から primary 追従（`surface/primary/high/enabled`）になりました (#329)
 
 ### Added
 
-- 新セマンティックトークン（`surface/*` `border/*` `object/*` `text/*` の 101 件）と `--radius-container` を生成 CSS に追加しました。CSS 変数名は Figma のパスをそのまま写しています（例: `surface/primary/high/enabled` → `--color-surface-primary-high-enabled`）(#299)
+- 新セマンティックトークン（`surface/*` `border/*` `object/*` `text/*`）と `--radius-container` を生成 CSS に追加しました。CSS 変数名は Figma のパスをそのまま写しています（例: `surface/primary/high/enabled` → `--color-surface-primary-high-enabled`）。#299 で 100 件、このリリースの再生成で `border/inverse` を加えて計 101 件です (#299)
 - `exports` に `./package.json` を追加しました (#308)
+- Card のサブコンポーネントに `as` prop と公開型 `CardPartProps` を追加しました（ClickableCard の中では `span` で描画するため）(#320)
 
 ### Changed
 
