@@ -149,6 +149,19 @@ npm は 2027 年 1 月に granular access token での直接 publish を廃止�
   gh workflow run "Publish GitHub Release" -f ref=<Summary の commit>
   ```
 
+### メンテナンスライン（1.x）のリリース
+
+1.x は React 18 向けの**非推奨（deprecated）メンテナンスライン**で、`v1` ブランチで管理する（期限は設けず、利用側の React 19 移行を促しながら続ける）。2.x（main）は React 19 以上。
+
+- **1.x に入れるもの**: 不具合の修正、セキュリティ修正（依存の脆弱性対応を含む）。**入れないもの**: 新機能、新コンポーネント、Figma のスタイル刷新・新トークン、React 19 前提の変更
+- **backport の手順**: main にマージした修正を、`v1` から切ったブランチに `git cherry-pick -x <commit>` で取り込み、`v1` 向けの PR を作る（base を `v1` にする）。React 19 前提のコード（ref を props で受ける等）が混ざらないことを確認する
+- **リリース**: `v1` 上で version（`1.x.y`）と CHANGELOG を更新する PR をマージし、`v1` から stage する:
+  ```bash
+  gh workflow run "Publish to npm" --ref v1 -f channel=auto
+  ```
+  dist-tag は自動判定。npm の `latest` がまだ 1.x なら `latest`、2.x が `latest` になった後は `latest-1` に載る（`latest` を巻き戻さない）。prerelease は出さない
+- 承認と tag・Release は main と同じ（`stage approve` → `Publish GitHub Release -f ref=<Summary の commit>`）。npm の `latest` でない版の GitHub Release には「Latest」が付かない
+
 ### 完了報告
 
 - [ ] チームへリリース完了を共有（Slack / esa など）

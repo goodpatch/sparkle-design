@@ -124,6 +124,16 @@ jobs:
           # `-` を含むバージョン (X.Y.Z-rc.N / X.Y.Z-beta.N) は GitHub 上で
           # pre-release マークを付ける。
           # en: Mark pre-release for any version containing a `-` (rc / beta).
+          # npm の latest になっていない版（旧メジャーのメンテナンスライン等）には
+          # GitHub の「Latest」表示を付けない
+          # en: Don't mark the GitHub Release as "Latest" unless it's npm's latest
+          PKG_NAME=$(node -p "require('./package.json').name")
+          NPM_LATEST=$(npm view "$PKG_NAME" dist-tags.latest --registry=https://registry.npmjs.org 2>/dev/null || true)
+          LATEST_FLAG="--latest=false"
+          if [ "$NPM_LATEST" = "$VERSION" ]; then
+            LATEST_FLAG="--latest"
+          fi
+
           PRERELEASE_FLAG=""
           if [[ "${VERSION}" == *-* ]]; then
             PRERELEASE_FLAG="--prerelease"
@@ -132,7 +142,8 @@ jobs:
           gh release create "${TAG}" \
             --title "${TAG}" \
             --notes-file "${NOTES_FILE}" \
-            ${PRERELEASE_FLAG}
+            ${PRERELEASE_FLAG} \
+            ${LATEST_FLAG}
 
       - name: Summary
         env:

@@ -24,6 +24,21 @@ It implements [Goodpatch](https://goodpatch.com/)'s "Sparkle Design" system on t
 - 🎨 **Customizability** ... A dedicated CLI tool lets you apply the same customizations found in the Figma files. This makes it easy to spin up code for design systems built on Sparkle Design.
 - 🤖 **AI Friendly** ... Ships with skills and guard configurations for Claude Code, Cursor, and Codex. Maintain design system quality even during AI-assisted coding.
 
+## Versions and React support
+
+| Version | React | Status |
+|---|---|---|
+| **2.x** | 19+ | Current. New features and the Figma style refresh land here only (currently in beta: `npm install sparkle-design@beta`) |
+| **1.x** | 18 | **Deprecated maintenance line.** Bug and security fixes only; no new features |
+
+2.x receives `ref` as a regular prop (the React 19 approach) in every component, so on React 18 refs and Radix `asChild` compositions (e.g. Tooltip / Dialog triggers) don't work correctly. Use 1.x for React 18 projects.
+
+```bash
+npm install sparkle-design@1
+```
+
+To move from 1.x to 2.x, upgrade your project to React 19 first. `npx --yes sparkle-design-cli@beta migrate` reports how to replace legacy tokens (e.g. `bg-primary-500`) with the new ones (dry run by default; `--write` rewrites files).
+
 ## Quick Start
 
 ### 1. Set up

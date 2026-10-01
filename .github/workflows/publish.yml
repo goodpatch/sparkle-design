@@ -105,22 +105,54 @@ jobs:
               ;;
           esac
 
+          # 実行元ブランチの方針（npm の trusted publisher はブランチを照合しないので、
+          # ここで誤った stage を止める。最終的な歯止めはメンテナーの 2FA 承認）:
+          #   - main: 現行メジャー。上の判定どおり
+          #   - v<N>: 旧メジャーのメンテナンスライン（非推奨・修正のみ）。版の major が N の
+          #     安定版だけを出し、npm の latest がより新しいメジャーなら latest-<N> に載せて
+          #     latest を巻き戻さない
+          #   - それ以外: 止める
+          # en: Branch policy (the trusted publisher doesn't check branches, so stop mistakes
+          # here; the final safeguard is the maintainer's 2FA approval):
+          #   - main: current major, as decided above
+          #   - v<N>: maintenance line of an older major (deprecated, fixes only). Only stable
+          #     N.x versions; if npm's latest is a newer major, publish under latest-<N> so
+          #     latest never moves back
+          #   - anything else: refuse
+          MAJOR="${VERSION%%.*}"
+          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
+            :
+          elif [[ "$GITHUB_REF" =~ ^refs/heads/v([0-9]+)$ ]]; then
+            LINE="${BASH_REMATCH[1]}"
+            if [ "$MAJOR" != "$LINE" ]; then
+              echo "::error::v${LINE} ブランチからは ${LINE}.x しか出せません（version: $VERSION）"
+              exit 1
+            fi
+            if [[ "$VERSION" == *-* ]]; then
+              echo "::error::メンテナンスライン（v${LINE}）では prerelease を出しません（version: $VERSION）"
+              exit 1
+            fi
+            PKG=$(node -p "require('./package.json').name")
+            LATEST=$(npm view "$PKG" dist-tags.latest --registry=https://registry.npmjs.org 2>/dev/null || true)
+            LATEST_MAJOR="${LATEST%%.*}"
+            if [ -n "$LATEST" ] && [ "$LATEST_MAJOR" -gt "$LINE" ]; then
+              EXPECTED="latest-${LINE}"
+            else
+              EXPECTED="latest"
+            fi
+            if [ "$INPUT_CHANNEL" != "auto" ] && [ "$CHANNEL" != "$EXPECTED" ]; then
+              echo "::error::v${LINE} ブランチの dist-tag は $EXPECTED です（指定: $CHANNEL）。channel は auto で実行してください"
+              exit 1
+            fi
+            CHANNEL="$EXPECTED"
+          else
+            echo "::error::stage は main か v<N>（メンテナンスライン）からのみ実行できます（実行元: $GITHUB_REF）"
+            exit 1
+          fi
+
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "channel=$CHANNEL" >> "$GITHUB_OUTPUT"
           echo "→ $VERSION を --tag $CHANNEL で stage します"
-
-      - name: Only stage from main
-        # npm の trusted publisher はリポジトリとワークフローしか照合せず、ブランチは見ない。
-        # 誤って main 以外から stage しないよう止める（ワークフローを書き換えれば外せる検査なので、
-        # 最終的な歯止めはメンテナーの 2FA 承認）
-        # en: npm's trusted publisher matches the repository and workflow, not the branch.
-        # Guard against staging from anything other than main by mistake (this in-workflow check
-        # can be edited away; the final safeguard is the maintainer's 2FA approval)
-        run: |
-          if [ "$GITHUB_REF" != "refs/heads/main" ]; then
-            echo "::error::stage は main からのみ実行できます（実行元: $GITHUB_REF）"
-            exit 1
-          fi
 
       - name: Install npm with staged publishing
         # `npm stage` は npm 11.20.0 以降、trusted publishing は 11.5.1 以降。

@@ -24,6 +24,21 @@ shadcn/ui をベースに、[グッドパッチ](https://goodpatch.com/)のデ�
 - 🎨 **カスタマイズ性** ... 専用CLIツールを利用し、Figmaファイルと同等のカスタマイズを適用することが出来ます。これによりSparkle Designをベースとしたデザインシステムのコードを素早く用意することが出来ます。
 - 🤖 **AI フレンドリー** ... Claude Code / Cursor / Codex 向けのスキルとガード設定を同梱。AI コーディングでもデザインシステムの品質を維持できます。
 
+## バージョンと React の対応
+
+| バージョン | React | 状態 |
+|---|---|---|
+| **2.x** | 19 以上 | 現行。新機能と Figma のスタイル刷新はこちらにだけ入ります（現在は beta: `npm install sparkle-design@beta`） |
+| **1.x** | 18 | **非推奨（deprecated）のメンテナンスライン**。不具合とセキュリティの修正のみ行い、新機能は追加しません |
+
+2.x は全コンポーネントで `ref` を通常の props として受け取る React 19 の方式に移行しているため、React 18 では `ref` や Radix の `asChild` 経由の組み合わせ（Tooltip / Dialog のトリガーなど）が正しく動きません。React 18 のプロジェクトは 1.x をお使いください。
+
+```bash
+npm install sparkle-design@1
+```
+
+1.x から 2.x へは、プロジェクトを React 19 に上げてから移行してください。旧トークン（`bg-primary-500` など）から新トークンへの置き換えは `npx --yes sparkle-design-cli@beta migrate` で確認できます（既定は変更内容の表示のみ。`--write` で書き換え）。
+
 ## クイックスタート
 
 ### 1. セットアップ
