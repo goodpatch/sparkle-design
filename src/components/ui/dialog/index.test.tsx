@@ -148,4 +148,21 @@ describe("Dialog", () => {
     expect(content.getAttribute("aria-labelledby")).toBe(title.id);
     expect(content.getAttribute("aria-describedby")).toBe(desc.id);
   });
+
+  it("applies Figma panel tokens to DialogContent", async () => {
+    // Figma: Dialog 14857:825（2026-10-01 取得）
+    // en: Figma Dialog 14857:825 (retrieved 2026-10-01)
+    setupDialog();
+    fireEvent.click(screen.getByRole("button", { name: "open" }));
+    await screen.findByText("タイトル");
+    const content = document.querySelector(
+      '[data-slot="dialog-content"]'
+    ) as HTMLElement;
+    [
+      "bg-surface-base-0",
+      "rounded-modal",
+      "border-border-neutral-low",
+      "shadow-popout",
+    ].forEach(cls => expect(content.className).toContain(cls));
+  });
 });
