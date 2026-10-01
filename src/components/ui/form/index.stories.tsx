@@ -156,18 +156,18 @@ export const Default: Story = {
               render={({ field }) => (
                 <FormItem>
                   <FormHeader label="役割" isRequired />
-                  <FormControl>
-                    <Select onValueChange={field.onChange} value={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="選択してください" />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="developer">開発者</SelectItem>
-                        <SelectItem value="designer">デザイナー</SelectItem>
-                        <SelectItem value="manager">マネージャー</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="developer">開発者</SelectItem>
+                      <SelectItem value="designer">デザイナー</SelectItem>
+                      <SelectItem value="manager">マネージャー</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormErrorMessage />
                 </FormItem>
               )}
