@@ -78,10 +78,19 @@ pnpm test      # Component tests
 - **Update the lockfile whenever `package.json` changes**: CI runs `pnpm install --frozen-lockfile` and will fail otherwise
 - **Use the pinned toolchain**: Node.js 22.14.0 / pnpm 10.12.4 (see `.tool-versions`; newer pnpm majors can rewrite the lockfile)
 
+### npm Releases Use Staged Publishing
+npm removes direct publishing with granular access tokens in January 2027, so CI only **stages** releases:
+
+1. `gh workflow run "Publish to npm" --ref <release-sha>` stages the version with the stage-only `NPM_TOKEN` (not public yet; dist-tag is fixed at stage time)
+2. A maintainer approves with 2FA: `npx -y npm@^11.21.0 stage approve <stage-id> --otp=<code>` — **agents never run this**
+3. After it is public: `gh workflow run "Publish GitHub Release" -f ref=<release-sha>` creates the tag and GitHub Release
+
+When `NPM_TOKEN` expires (stage fails with E404), a maintainer runs `scripts/rotate-npm-token.sh --expires 90` (prompts for the npm password + OTP and writes the new stage-only token to the secret without printing it). See `.claude/skills/release-sparkle-design/SKILL.md`.
+
 ### Irreversible Operations Are Blocked by a Hook
 `scripts/hooks/irreversible-ops-guard.sh` (a PreToolUse hook wired in `.claude/settings.json`) blocks:
 
-- `npm/pnpm/yarn/bun publish` (an enabled `--dry-run` passes), `unpublish`, `deprecate`
+- `npm/pnpm/yarn/bun publish` (an enabled `--dry-run` passes), `unpublish`, `deprecate`, `npm stage approve` / `reject` (also when run through `npx npm@…`)
 - `gh pr merge`, `gh release create/delete`, `gh repo create/delete/archive`, publish workflows
 - Release tag pushes, `--tags`, force pushes (including a `+` refspec), and remote ref deletion (`--delete` / `:ref`)
 

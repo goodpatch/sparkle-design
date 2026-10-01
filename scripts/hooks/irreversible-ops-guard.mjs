@@ -207,7 +207,7 @@ export function inspectSegment(segment) {
 
   if (confirmed) return { confirmed: true };
 
-  const cmd = tokens[index];
+  let cmd = tokens[index];
   if (!cmd) return null;
   index++;
 
@@ -229,7 +229,19 @@ export function inspectSegment(segment) {
     if (OPTIONS_WITH_VALUE.has(token)) index++;
   }
 
-  const rest = tokens.slice(index);
+  let rest = tokens.slice(index);
+
+  // `npx -y npm@11 stage approve` のように npx 経由で npm を呼ぶ形も npm として判定する
+  // en: Treat `npx -y npm@11 stage approve` (npm invoked through npx) as npm
+  if (cmd === "npx" && /^npm(@.+)?$/.test(rest[0] ?? "")) {
+    cmd = "npm";
+    rest = rest.slice(1);
+    while (rest.length > 0 && rest[0].startsWith("-")) {
+      const option = rest.shift();
+      if (OPTIONS_WITH_VALUE.has(option)) rest.shift();
+    }
+  }
+
   const sub = rest[0] ?? "";
   const sub2 = rest[1] ?? "";
 
@@ -241,6 +253,16 @@ export function inspectSegment(segment) {
     }
     if (sub === "unpublish") return { op: `${cmd} unpublish (公開済みバージョンの削除)` };
     if (sub === "deprecate") return { op: `${cmd} deprecate (公開済みバージョンの非推奨化)` };
+    // staged publishing: stage 自体は未公開で reject できるので素通しし、
+    // 公開を確定させる approve と、staged 版を消す reject を止める
+    // en: Staged publishing — staging is not public and can be rejected, so let it through;
+    // block approve (makes the version public) and reject (discards the staged version)
+    if (sub === "stage" && sub2 === "approve") {
+      return { op: `${cmd} stage approve (staged 版の公開)` };
+    }
+    if (sub === "stage" && sub2 === "reject") {
+      return { op: `${cmd} stage reject (staged 版の破棄)` };
+    }
     return null;
   }
 
