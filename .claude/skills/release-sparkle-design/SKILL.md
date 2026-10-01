@@ -136,7 +136,7 @@ npm は 2027 年 1 月に granular access token での直接 publish を廃止�
   gh workflow run "Publish to npm" --ref main -f channel=auto
   ```
   - stage した時点では**まだ公開されていない**（`npm stage reject` で取り下げられる）。dist-tag は stage 時に決まり、承認時には変えられない
-  - 実行結果の Summary に **stage ID・commit（main のマージコミット）・承認コマンド**が出る。以降はこの commit を使う
+  - 実行結果の Summary に **stage ID・commit（stage した commit）・承認コマンド**が出る。以降はこの commit を使う
 - [ ] 👤 **メンテナーが 2FA 付きで承認する**（AI は実行しない）。手元で `npm login --registry=https://registry.npmjs.org` 済みであること（社内 proxy が既定 registry の環境があるので、コマンドには必ず `--registry` を付ける）。必要なら先に中身を確認する:
   ```bash
   npx -y npm@11.21.0 stage download <stage-id> --registry=https://registry.npmjs.org   # 任意: tarball を確認

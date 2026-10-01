@@ -215,6 +215,10 @@ jobs:
             echo "- ref: \`${GITHUB_REF}\`"
             echo "- commit: \`${GITHUB_SHA}\`"
             echo "- stage id: \`$STAGE_ID\`"
+            if [[ "$GITHUB_REF" == refs/heads/v* ]] && [ "$PUBLISHED_TAG" = "latest" ]; then
+              echo ""
+              echo "> ⚠️ メンテナンスラインを \`latest\` で stage しました。承認前に \`npm view sparkle-design dist-tags.latest --registry=https://registry.npmjs.org\` の major が変わっていないことを確かめてください（新しいメジャーが \`latest\` になっていたら reject して出し直す）"
+            fi
             echo ""
             echo "#### 次の手順 / Next steps"
             echo ""

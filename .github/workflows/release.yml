@@ -129,15 +129,13 @@ jobs:
           # en: Don't mark the GitHub Release as "Latest" unless it's npm's latest
           PKG_NAME=$(node -p "require('./package.json').name")
           NPM_LATEST=$(npm view "$PKG_NAME" dist-tags.latest --registry=https://registry.npmjs.org 2>/dev/null || true)
-          # 取得できなかったときはフラグを付けず GitHub の自動判定（日付と semver）に任せる
-          # en: If npm can't be read, leave it to GitHub's automatic choice (date + semver)
-          LATEST_FLAG=""
-          if [ -n "$NPM_LATEST" ]; then
-            if [ "$NPM_LATEST" = "$VERSION" ]; then
-              LATEST_FLAG="--latest"
-            else
-              LATEST_FLAG="--latest=false"
-            fi
+          # 取得できなかったときは Latest を付けない（旧メジャーに付くよりは安全。あとで
+          # `gh release edit --latest` で直せる）
+          # en: If npm can't be read, don't mark it Latest (safer than marking an old major;
+          # fix later with `gh release edit --latest`)
+          LATEST_FLAG="--latest=false"
+          if [ -n "$NPM_LATEST" ] && [ "$NPM_LATEST" = "$VERSION" ]; then
+            LATEST_FLAG="--latest"
           fi
 
           PRERELEASE_FLAG=""
