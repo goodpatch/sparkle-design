@@ -78,7 +78,7 @@ user-invocable: true
 
 タグ未作成・Release 未作成のバージョンがある場合は **新バージョンを切る前に** 必ず追補する。
 
-- [ ] 該当バージョンを公開した commit の SHA を npm の記録から特定する: `npm view sparkle-design@X.Y.Z gitHead --registry=https://registry.npmjs.org`（CI から公開した版は main のマージコミットが記録されている）
+- [ ] 該当バージョンを公開した commit の SHA を npm の記録から特定する: `npm view sparkle-design@X.Y.Z gitHead --registry=https://registry.npmjs.org`（CI から公開した版は stage した commit が記録されている）
 - [ ] 🛑 `gh workflow run "Publish GitHub Release" -f ref=<SHA>` で tag と Release を作る
   - ワークフローは npm で公開済みであることと、`gitHead` が SHA と一致すること（記録が無ければ止まる）を確かめてから tag を打ち、CHANGELOG の該当セクションを notes にする
 
