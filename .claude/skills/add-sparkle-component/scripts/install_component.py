@@ -125,11 +125,45 @@ def get_component_path(project_path: Path, component_name: str) -> str:
         return f"{default_path}/{component_name}/"
 
 
-def get_package_manager_command(manager: str) -> list[str]:
+def is_yarn_berry(project_path: Path) -> bool:
+    """Yarn Berry（2 以降）のプロジェクトかどうかを判定する。
+    en: Detect whether the project uses Yarn Berry (v2+).
+
+    `yarn dlx` は Berry にしか無く、Yarn Classic（1.x）では unknown command になる。
+    en: `yarn dlx` exists only in Berry; Yarn Classic (1.x) rejects it as an unknown command.
+
+    `packageManager` の yarn 指定（Corepack のバージョン固定）を優先し、
+    無い場合だけ `.yarnrc.yml` の有無で判定する。
+    en: A `packageManager` yarn pin (Corepack) takes precedence; `.yarnrc.yml` is only a fallback.
+
+    Args:
+        project_path: Path to the project directory
+
+    Returns:
+        True if `packageManager` pins yarn@2 or later, or (without a yarn pin) `.yarnrc.yml` exists
+    """
+    package_json = project_path / "package.json"
+    if package_json.exists():
+        try:
+            package_manager = json.loads(package_json.read_text()).get("packageManager")
+        except (json.JSONDecodeError, OSError, AttributeError):
+            package_manager = None
+        if isinstance(package_manager, str) and package_manager.startswith("yarn@"):
+            major = package_manager.removeprefix("yarn@").split(".", 1)[0]
+            if major.isdigit():
+                return int(major) >= 2
+
+    return (project_path / ".yarnrc.yml").exists()
+
+
+def get_package_manager_command(
+    manager: str, project_path: Path | None = None
+) -> list[str]:
     """Get the appropriate command for the package manager.
 
     Args:
         manager: Package manager name
+        project_path: Path to the project directory (used to tell Yarn Berry from Classic)
 
     Returns:
         List of command parts
@@ -137,7 +171,11 @@ def get_package_manager_command(manager: str) -> list[str]:
     if manager == "pnpm":
         return ["pnpm", "dlx"]
     elif manager == "yarn":
-        return ["yarn", "dlx"]
+        # Yarn Classic には dlx が無いため npx にフォールバックする
+        # en: Yarn Classic has no dlx, so fall back to npx
+        if project_path is not None and is_yarn_berry(project_path):
+            return ["yarn", "dlx"]
+        return ["npx", "--yes"]
     elif manager == "bun":
         return ["bunx"]
     else:  # npm
@@ -159,7 +197,10 @@ def install_component(
     Returns:
         Tuple of (success, output_message)
     """
-    pm_command = get_package_manager_command(package_manager)
+    pm_command = get_package_manager_command(package_manager, project_path)
+    # Yarn Classic の npx フォールバック時は、実際に必要な npm を案内に使う
+    # en: On the Yarn Classic npx fallback, report npm, which is what the command actually needs
+    effective_manager = "npm" if pm_command[0] == "npx" else package_manager
     full_command = pm_command + [
         "shadcn@latest",
         "add",
@@ -167,7 +208,10 @@ def install_component(
     ]
 
     print(f"🚀 Installing component: {component_name}")
-    print(f"📦 Using package manager: {package_manager}")
+    if effective_manager != package_manager:
+        print(f"📦 Using package manager: {effective_manager} (Yarn Classic has no dlx)")
+    else:
+        print(f"📦 Using package manager: {package_manager}")
     print(f"⚙️  Running: {' '.join(full_command)}\n")
 
     try:
@@ -201,7 +245,7 @@ def install_component(
 
     except FileNotFoundError:
         error_msg = f"Command not found: {pm_command[0]}\n"
-        error_msg += f"Please install {package_manager} first."
+        error_msg += f"Please install {effective_manager} first."
         return False, error_msg
 
     except Exception as e:

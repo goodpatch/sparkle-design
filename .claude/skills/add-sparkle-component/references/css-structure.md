@@ -328,7 +328,7 @@ pnpm dlx sparkle-design-cli generate
 # npm
 npm exec sparkle-design-cli generate
 
-# yarn
+# yarn (Berry / v2+ only — for Yarn Classic 1.x, use the npm line above)
 yarn dlx sparkle-design-cli generate
 
 # bun
