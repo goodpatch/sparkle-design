@@ -816,6 +816,21 @@ describe("Form", () => {
     });
   });
 
+  describe("FormLabel id", () => {
+    it("FormLabel に id を付与し、入力要素の名前は従来どおり label[for] で付く", () => {
+      // Given: 通常のフォーム
+      testContainer.render(<TestFormComponent />);
+
+      // When: ラベルと入力要素を取得
+      const label = screen.getByText("テストフィールド").closest("label");
+      const input = screen.getByRole("textbox", { name: "テストフィールド" });
+
+      // Then: ラベルは formItemId 由来の id を持ち、for は入力要素を指す
+      expect(label?.id).toBe(`${input.id}-label`);
+      expect(label).toHaveAttribute("for", input.id);
+    });
+  });
+
   describe("FormLabel styling", () => {
     it("applies custom className to FormHeader", () => {
       // Given: カスタムクラス付きFormHeader
