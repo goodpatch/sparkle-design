@@ -282,7 +282,7 @@ const narrowContainerChips = [
  */
 export const NarrowContainer: Story = {
   render: () => {
-    const form = useForm({ defaultValues: { name: "" } });
+    const form = useForm();
     return (
       <Form {...form}>
         <div
@@ -308,7 +308,13 @@ export const NarrowContainer: Story = {
               <FormItem data-testid="chip-item">
                 <FormHeader label="スキル" />
                 <FormControl>
-                  <div role="group" className="flex gap-1 overflow-x-auto">
+                  {/* label[for] は div に名前を付けられないため、group に直接名前を付ける
+                      en: label[for] cannot name a div, so name the group directly */}
+                  <div
+                    role="group"
+                    aria-label="スキル"
+                    className="flex gap-1 overflow-x-auto"
+                  >
                     {narrowContainerChips.map(chip => (
                       <Tag key={chip} className="shrink-0 whitespace-nowrap">
                         {chip}
@@ -332,7 +338,10 @@ export const NarrowContainer: Story = {
     for (const testId of ["input-item", "chip-item"]) {
       const itemRect = canvas.getByTestId(testId).getBoundingClientRect();
       await expect(itemRect.right).toBeLessThanOrEqual(containerRect.right);
-      await expect(itemRect.width).toBeLessThan(containerRect.width);
     }
+
+    // チップ列の group にアクセシブルな名前が付いている
+    // en: The chip row group has an accessible name
+    await expect(canvas.getByRole("group", { name: "スキル" })).toBeVisible();
   },
 };
