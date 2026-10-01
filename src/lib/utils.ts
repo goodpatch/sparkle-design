@@ -24,9 +24,6 @@ export const SPARKLE_SHADOW_NAMES = [
   "stick",
   "float",
   "popout",
-  // Tailwind 標準は 2xl まで。Sparkle は 3xl を追加している
-  // en: Tailwind stops at 2xl; Sparkle adds 3xl
-  "3xl",
 ] as const;
 
 /**

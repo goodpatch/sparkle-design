@@ -3,8 +3,10 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { cn, SPARKLE_RADIUS_NAMES, SPARKLE_SHADOW_NAMES } from "./utils";
 
-// Tailwind が標準で持つスケール名（tailwind-merge が既に知っているもの）
-// en: Scale names Tailwind ships by default (already known to tailwind-merge)
+// tailwind-merge が登録なしで認識する名前（Tailwind v4 の標準テーマ名と、
+// isTshirtSize で判定される 3xl などの T シャツサイズ）
+// en: Names tailwind-merge recognizes without registration (Tailwind v4 default theme
+// names plus T-shirt sizes such as 3xl matched by isTshirtSize)
 const TAILWIND_RADIUS = [
   "none",
   "xs",
@@ -17,7 +19,17 @@ const TAILWIND_RADIUS = [
   "4xl",
   "full",
 ];
-const TAILWIND_SHADOW = ["none", "2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
+const TAILWIND_SHADOW = [
+  "none",
+  "2xs",
+  "xs",
+  "sm",
+  "md",
+  "lg",
+  "xl",
+  "2xl",
+  "3xl",
+];
 
 describe("cn", () => {
   it.each([
@@ -33,6 +45,9 @@ describe("cn", () => {
     ["shadow-popout shadow-lg", "shadow-lg"],
     ["shadow-flat shadow-raise", "shadow-raise"],
     ["shadow-3xl shadow-none", "shadow-none"],
+    // 旧実装では shadow-raise が影の色と誤判定されて消えていた
+    // en: The old setup misread shadow-raise as a shadow color and dropped it
+    ["shadow-raise shadow-red-500", "shadow-raise shadow-red-500"],
     // タイポグラフィは同種同士だけ後勝ち
     // en: Typography only overrides its own kind
     ["character-3-regular-pro character-2-bold-mono", "character-2-bold-mono"],
@@ -67,7 +82,7 @@ describe("cn", () => {
     );
     const names = (prefix: string) => [
       ...new Set(
-        [...css.matchAll(new RegExp(`--${prefix}-([A-Za-z0-9]+):`, "g"))].map(
+        [...css.matchAll(new RegExp(`--${prefix}-([A-Za-z0-9-]+):`, "g"))].map(
           m => m[1]
         )
       ),
