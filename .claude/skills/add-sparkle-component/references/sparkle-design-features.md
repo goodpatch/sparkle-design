@@ -539,7 +539,7 @@ Input / Select / Textarea のデフォルトサイズは md。横並びの Butto
 </CardDescription>
 ```
 
-shadcn/ui と混在するプロジェクトでも、Sparkle Design のコンポーネント内では `character-*` / `text-text-*` / Sparkle の color token を優先する。
+shadcn/ui と混在するプロジェクトでも、`character-*` / `text-text-*` / Sparkle の color token を優先する（`sparkle-design-cli check` はファイル全体のクラス名を検査する）。
 
 ### Button: prefixIcon / suffixIcon を使う
 
