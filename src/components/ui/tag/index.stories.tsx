@@ -211,3 +211,26 @@ export const StatusBody: Story = {
     </div>
   ),
 };
+
+export const Descenders: Story = {
+  render: args => (
+    <div className="flex flex-col gap-4">
+      {(["sm", "md", "lg"] as const).map(size => (
+        <div key={size} className="flex items-center gap-4">
+          <Tag {...args} size={size}>
+            Tag gypq
+          </Tag>
+          <Tag
+            {...args}
+            size={size}
+            body="status"
+            variant="outline"
+            className="max-w-32"
+          >
+            Tag gypq long label with ellipsis
+          </Tag>
+        </div>
+      ))}
+    </div>
+  ),
+};

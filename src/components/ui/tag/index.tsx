@@ -219,7 +219,8 @@ function Tag({
           />
         </span>
       )}
-      <span className="min-w-0 truncate [text-box-trim:trim-both] [text-box-edge:cap_alphabetic]">
+      {/* Keep descenders inside the clip box; negative margins preserve the cap-trimmed layout. */}
+      <span className="min-w-0 truncate py-1 -my-1 [text-box-trim:trim-both] [text-box-edge:cap_alphabetic]">
         {children}
       </span>
     </div>
