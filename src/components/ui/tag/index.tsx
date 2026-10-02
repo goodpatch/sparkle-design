@@ -219,7 +219,10 @@ function Tag({
           />
         </span>
       )}
-      {/* Keep descenders inside the clip box; negative margins preserve the cap-trimmed layout. */}
+      {/*
+        ディセンダーの描画領域を確保し、負のmarginでtrim後の寸法を維持する。
+        en: Keep descenders inside the clip box; negative margins preserve the cap-trimmed layout.
+      */}
       <span className="min-w-0 truncate py-1 -my-1 [text-box-trim:trim-both] [text-box-edge:cap_alphabetic]">
         {children}
       </span>
