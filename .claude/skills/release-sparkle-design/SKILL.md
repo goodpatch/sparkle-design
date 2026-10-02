@@ -4,7 +4,8 @@ license: Apache-2.0
 description: >
   sparkle-design（公開 npm パッケージ）の新バージョンをリリースするための手順スキル。
   package.json の version bump、CHANGELOG.md の更新、リリース PR 作成、PR マージ後の
-  git tag 作成・push、GitHub Release 作成、npm publish までを一連の手順で実行する。
+  npm への stage、メンテナーによる 2FA 承認（npm stage approve）、承認後の git tag・
+  GitHub Release 作成までを一連の手順で実行する。
   CHANGELOG 更新漏れと GitHub Release 作成漏れを防ぐためのチェックリストを含む。
   「sparkle-design をリリース」「sparkle-design の新バージョンを切る」「vX.Y.Z をリリース」
   「sparkle-design の CHANGELOG を更新」で発動。
@@ -31,13 +32,16 @@ user-invocable: true
 
 > **🛑 不可逆操作の扱い（このスキルで最優先のルール）**
 >
-> 🛑 が付いた項目（PR マージ / タグ push / GitHub Release 作成 / npm publish）は、
+> 🛑 が付いた項目（PR マージ / npm への stage / GitHub Release 作成）は、
 > **ユーザーが名指しで指示したときだけ**実行する。「リリースして」という最初の依頼は、
 > マージ・publish までの事前承認ではない。**リストに並んでいることは実行してよい理由にならない。**
 > 🛑 の手前まで進んだら停止し、状況（PR 番号 / CI 状態 / 次のコマンド）を報告して指示を待つ。
 >
 > これらは `scripts/hooks/irreversible-ops-guard.sh`（PreToolUse hook）が実際にブロックする。
 > ブロックされたら、ユーザーの指示を得たうえで `SPARKLE_CONFIRM=1` を先頭に付けて再実行する。
+>
+> 👤 **`npm stage approve`（公開の確定）は AI が実行しない。** npm の 2FA コードが要る操作で、
+> メンテナー本人が手元で実行する。AI は stage ID とコマンドを提示して待つ。
 > **hook が無い環境（Claude Code 以外のエージェント）でも、上のルールは同じように適用する。**
 
 ### 実行方針
@@ -74,15 +78,13 @@ user-invocable: true
 
 タグ未作成・Release 未作成のバージョンがある場合は **新バージョンを切る前に** 必ず追補する。
 
-- [ ] 該当バージョンのリリースコミット（`🔖 chore: release vX.Y.Z` 等）の SHA を、下の「マージ後: タグ・Release・publish」にある「候補が 1 件であることを確認する」スニペットで特定する
-- [ ] そのコミットに対して `git tag vX.Y.Z <SHA>` でタグを作成（ローカルタグまでは自走してよい）
-- [ ] 🛑 `git push origin vX.Y.Z` でタグを push
-- [ ] 🛑 `gh release create vX.Y.Z --title "vX.Y.Z" --notes "..."` で Release を作成
-  - notes は CHANGELOG.md の該当セクションをコピペするのが確実
+- [ ] 該当バージョンを公開した commit の SHA を npm の記録から特定する: `npm view sparkle-design@X.Y.Z gitHead --registry=https://registry.npmjs.org`（CI から公開した版は stage した commit が記録されている）
+- [ ] 🛑 `gh workflow run "Publish GitHub Release" -f ref=<SHA>` で tag と Release を作る
+  - ワークフローは npm で公開済みであることと、`gitHead` が SHA と一致すること（記録が無ければ止まる）を確かめてから tag を打ち、CHANGELOG の該当セクションを notes にする
 
 > 🛑 **ここで停止する。** 追補対象のバージョンと、打とうとしているタグ / SHA の対応表を提示し、
 > ユーザーの承認を得てから push・Release 作成を実行する。タグの push は取り消しが面倒で、
-> 誤ったコミットに打つと publish 対象がずれる。
+> 誤ったコミットに打つと、公開した内容と tag の指す commit が食い違う。
 
 ### 新バージョンの準備（リリース PR 作成）
 
@@ -118,51 +120,50 @@ user-invocable: true
   - `--admin` は保護ブランチのレビュー要件を迂回する。**ユーザーが admin マージを明示的に求めたときだけ**使う。
     「protection で弾かれたから `--admin` を付け直す」を AI の判断でやらない
 
-### マージ後: タグ・Release・publish
+### マージ後: stage → 承認 → tag・Release
 
-> 🛑 **マージが済んだからといって、AI の判断で続けて publish まで走らない。**
-> 「タグを打って publish して」と明示的に指示されてから着手し、実行前に
-> 置き換えた実際の値（`X.Y.Z` / `RELEASE_SHA`）を提示して確認を取る。
+npm は 2027 年 1 月に granular access token での直接 publish を廃止する。CI は
+**trusted publishing（GitHub Actions の OIDC）で `npm stage publish` するだけ**で（トークンは使わない）、
+公開の確定はメンテナーが 2FA 付きで `npm stage approve` する。tag と GitHub Release は公開を確認してから作る。
 
-- [ ] リリース用 worktree ではなく、`main` をチェックアウトしている本チェックアウトに戻って `git fetch origin main && git checkout main && git pull` で最新化する（`main` は本チェックアウトで使われているので、worktree 側では checkout できない）
-- [ ] **リリースコミットの SHA を必ず特定する**（下のスニペットで候補が 1 件であることを確かめる）
-- [ ] **タグはリリースコミットの SHA を明示して打つ**（HEAD に打つと main が進んだ場合に誤タグ → publish 漏れ・誤 publish の温床）:
+> 🛑 **マージが済んだからといって、AI の判断で続けて stage まで走らない。**
+> 「stage して」「リリースして」と明示的に指示されてから着手し、実行前に
+> 対象の version（`X.Y.Z`）と main の最新 commit を提示して確認を取る。
+
+- [ ] リリース PR が main にマージ済みで、main の `package.json` の `version` が `X.Y.Z` になっていることを確認する（`git fetch origin main && git show origin/main:package.json | jq -r .version`）
+- [ ] 🛑 **npm へ stage** — main を ref にしてワークフローを実行する（`gh workflow run` の `--ref` はブランチ名かタグ名のみで SHA は渡せない。ワークフローは main と `v<N>`（メンテナンスライン）以外からの実行を拒否する）。dist-tag は version から自動判定（`-beta.N` → `beta`、`-rc.N` → `next`、それ以外 → `latest`）:
   ```bash
-  # 候補が 1 件であることを確認してからタグを打つ（別バージョンを掴むと誤 publish になる）
-  CANDIDATES=$(git log --format='%H %s' | grep -F "release vX.Y.Z")
-  echo "$CANDIDATES"
-  [ "$(echo "$CANDIDATES" | wc -l)" -eq 1 ] || { echo "候補が 1 件ではない。手で SHA を特定すること" >&2; exit 1; }
-  RELEASE_SHA=$(echo "$CANDIDATES" | awk '{print $1}')
-  git show --no-patch --oneline "$RELEASE_SHA"   # 対象コミットを目視確認する
-  git tag vX.Y.Z "$RELEASE_SHA"
+  gh workflow run "Publish to npm" --ref main -f channel=auto
   ```
-- [ ] 🛑 タグを push する（打った SHA とコミットメッセージを提示して確認後）:
+  - stage した時点では**まだ公開されていない**（`npm stage reject` で取り下げられる）。dist-tag は stage 時に決まり、承認時には変えられない
+  - 実行結果の Summary に **stage ID・commit（stage した commit）・承認コマンド**が出る。以降はこの commit を使う
+- [ ] 👤 **メンテナーが 2FA 付きで承認する**（AI は実行しない）。手元で `npm login --registry=https://registry.npmjs.org` 済みであること（社内 proxy が既定 registry の環境があるので、コマンドには必ず `--registry` を付ける）。必要なら先に中身を確認する:
   ```bash
-  git push origin vX.Y.Z
+  npx -y npm@11.21.0 stage download <stage-id> --registry=https://registry.npmjs.org   # 任意: tarball を確認
+  npx -y npm@11.21.0 stage approve <stage-id> --otp=<code> --registry=https://registry.npmjs.org
   ```
-- [ ] 🛑 **GitHub Release 作成**:
-  CHANGELOG.md のセクションを `--notes` で直接渡すのが確実:
+  取り下げる場合は `npx -y npm@11.21.0 stage reject <stage-id> --otp=<code> --registry=https://registry.npmjs.org`
+- [ ] 公開確認: `npm view sparkle-design@X.Y.Z version --registry=https://registry.npmjs.org` と `npm view sparkle-design dist-tags --registry=https://registry.npmjs.org`（社内 proxy 経由だと反映が遅れるので registry を明示する）
+- [ ] 🛑 **tag と GitHub Release を作る** — 公開を確認してから、Summary に出た commit を渡して実行する。ワークフローは npm 上の公開と `gitHead` がその commit と一致することを確かめてから tag を打ち、CHANGELOG の節で Release を作る（`-` を含む版は pre-release）:
   ```bash
-  awk '/^## \[X\.Y\.Z\]/{flag=1;next} /^## \[/{flag=0} flag' CHANGELOG.md > /tmp/notes.md
-  # 見出しの誤記や CHANGELOG 未反映だと空になる。空の Release を作らない
-  [ -s /tmp/notes.md ] || { echo "CHANGELOG から vX.Y.Z のセクションを抽出できなかった" >&2; exit 1; }
-  cat /tmp/notes.md   # 内容を目視確認してから作成する
-  gh release create vX.Y.Z --title "vX.Y.Z" --notes-file /tmp/notes.md
+  gh workflow run "Publish GitHub Release" -f ref=<Summary の commit>
   ```
-- [ ] 🛑 **npm publish** — GitHub Actions ワークフローを実行。**tag ref で実行する**ことで、main が進んでも正しいリリースコミットの内容が publish される:
+
+### メンテナンスライン（1.x）のリリース
+
+1.x は React 18 向けの**非推奨（deprecated）メンテナンスライン**で、`v1` ブランチで管理する（期限は設けず、利用側の React 19 移行を促しながら続ける）。2.x（main）は React 19 以上。
+
+- **1.x に入れるもの**: 不具合の修正、セキュリティ修正（依存の脆弱性対応を含む）、**最新の CLI と噛み合わせるためのトークン・スタイルの追従**（CLI は 1.x でも固定せず最新を使う方針のため、CLI が生成するトークンが変わったら 1.x のコンポーネントも追従させる）。**入れないもの**: 新機能、新コンポーネント、React 19 前提の変更（ref を props で受ける等）
+- **CLI との順序**: CLI のトークン変更を `latest` に出す前に、1.x の追従版を出す。旧トークンの削除（beta 終了時）は、1.x が新トークンへ移行し終えてから行う
+- **backport の手順**: main にマージした修正を、`v1` から切ったブランチに `git cherry-pick -x <commit>` で取り込み、`v1` 向けの PR を作る（base を `v1` にする）。React 19 前提のコード（ref を props で受ける等）が混ざらないことを確認する
+- **リリース**: `v1` 上で version（`1.x.y`）と CHANGELOG を更新する PR をマージし、`v1` から stage する:
   ```bash
-  gh workflow run "Publish to npm" --ref vX.Y.Z
+  gh workflow run "Publish to npm" --ref v1 -f channel=auto
   ```
-  - **publish は取り消せない。** npm の unpublish は公開 72 時間以内かつ依存されていない場合のみで、
-    実質的な回復手段は「新しいパッチバージョンを出す」しかない。実行前に必ずユーザーの明示的な
-    指示を得る（`--ref` に渡すタグ名も読み上げて確認する）
-  - workflow が `npm error code E404 'pkg@X.Y.Z' is not in this registry` で失敗する場合は **NPM_TOKEN の期限切れ**（auth 失敗が 404 として返る npm registry 仕様）
-  - workflow が `npm error code EOTP` で失敗する場合は、**トークン種別が 2FA バイパス対応していない**。次のいずれかで作り直し:
-    - Classic Token: タイプを **Automation** で発行
-    - Granular Access Token: 作成時に **「Bypass 2FA when publishing」を有効** にする
-- [ ] 公開確認:
-  - <https://www.npmjs.com/package/sparkle-design> の versions に X.Y.Z が出ているか
-  - `npm view sparkle-design version` で確認
+  dist-tag は自動判定。npm の `latest` がまだ 1.x なら `latest`、2.x が `latest` になった後は `latest-1` に載る（`latest` を巻き戻さない）。prerelease は出さない
+- 承認と tag・Release は main と同じ（`stage approve` → `Publish GitHub Release -f ref=<Summary の commit>`）。npm の `latest` でない版の GitHub Release には「Latest」が付かない
+- ⚠️ **承認の前に dist-tag を照合する**: dist-tag は stage 時に決まる。stage 後・承認前に 2.x が `latest` になっていると、Summary の dist-tag が `latest` のまま承認すると `latest` が 1.x に巻き戻る。承認前に `npm view sparkle-design dist-tags.latest --registry=https://registry.npmjs.org` の major が 1 のままであることを確かめ、2.x になっていたら `stage reject` して `--ref v1` で stage し直す（今度は `latest-1` になる）
+- `v1` の publish.yml / release.yml は main からのコピーで管理する。main のワークフローを変えたら `v1` にも同じ変更を backport する
 
 ### 完了報告
 
@@ -185,7 +186,7 @@ user-invocable: true
 
 ### リリースコミットだけ作って tag/release を忘れていた場合
 
-そのコミットの SHA を「マージ後: タグ・Release・publish」の「候補が 1 件であることを確認する」スニペットで特定して、後付けで tag + release を作成可能。
+`npm view sparkle-design@X.Y.Z gitHead --registry=https://registry.npmjs.org` で公開した commit の SHA を特定し、`gh workflow run "Publish GitHub Release" -f ref=<SHA>` で後付けで tag + Release を作成できる（npm で公開済みであることが前提）。
 このスキルの「過去リリース追補」セクションを参照。
 
 ### CHANGELOG が古い場合
@@ -193,12 +194,26 @@ user-invocable: true
 `git log <最古の未反映タグ>..HEAD --oneline` で範囲を取って、各バージョンの section を遡って書き戻す。
 GitHub Release の本文がある場合はそれを CHANGELOG にコピーすれば早い。
 
-### npm publish ワークフローが失敗する場合
+### npm stage ワークフローが失敗する場合
 
 - `pnpm-lock.yaml` の整合性が崩れていないか確認（`pnpm install --frozen-lockfile` を試す）
 - `pnpm.overrides` は本リポジトリでは `package.json` の `pnpm.overrides` に置く運用（CI が使う pnpm のバージョンで読まれることを確認済み）。ローカルの pnpm バージョンが大幅に違うと挙動差で lockfile が書き換わることがあるので、ローカルで pnpm install するときは lockfile の差分（特に `overrides:` セクション）を確認すること
-- 認証エラーは npm 仕様で 404 として返ることが多い。`NPM_TOKEN` の有効期限切れや権限不足を最初に疑う
-- 2FA OTP を要求された場合（`npm error code EOTP`）はトークン種別が automation 対応していない。Classic Token なら Automation 型、Granular Access Token なら「Bypass 2FA when publishing」を有効にしたものを発行
+- **認証エラー（E404 / ENEEDAUTH / 403）** は trusted publisher の設定を疑う。npmjs.com の設定と workflow のファイル名・リポジトリが一致しているか、stage が許可されているかを `npx -y npm@11.21.0 trust list sparkle-design --registry=https://registry.npmjs.org` で確認する（次節）
+- 直接 publish できるトークン（Bypass 2FA 付き）を発行し直す対応は**取らない**。2027 年 1 月に廃止される
+
+### trusted publisher（OIDC）の設定
+
+トークンの発行・更新は不要。npm 側でパッケージと GitHub Actions のワークフローを一度だけ結び付ける（npm の 2FA が要るのでメンテナーが実行する）:
+
+```bash
+npx -y npm@11.21.0 trust github sparkle-design \
+  --repository goodpatch/sparkle-design --file publish.yml --allow-stage-publish --registry=https://registry.npmjs.org
+npx -y npm@11.21.0 trust list sparkle-design --registry=https://registry.npmjs.org   # 確認
+```
+
+- `--allow-stage-publish` だけを付け、`--allow-publish` は付けない（CI から直接公開できないようにし、公開の確定を人の 2FA に限る）
+- ワークフローのファイル名（`publish.yml`）やリポジトリ名を変えたら設定し直す
+- OIDC で stage できることを確認したら、リポジトリの `NPM_TOKEN` secret は削除する（`gh secret delete NPM_TOKEN --repo goodpatch/sparkle-design`）
 
 ### マージ後のローカル checkout が worktree と衝突する
 
