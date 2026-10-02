@@ -59,7 +59,7 @@ describe("Link", () => {
       // Then: デフォルトスタイルが適用される
       expect(link.className).toContain("inline");
       expect(link.className).toContain("group");
-      expect(link.className).toContain("character-3-regular-pro");
+      expect(link.className).toContain("character-2-regular-pro");
       expect(span.className).toContain("text-text-primary-enabled");
       expect(span.className).toContain("group-hover:text-text-primary-hover");
     });
@@ -158,7 +158,7 @@ describe("Link", () => {
       const link = testContainer.querySelector("a");
 
       // Then: デフォルトcharacterクラスが適用される
-      expect(link.className).toContain("character-3-regular-pro");
+      expect(link.className).toContain("character-2-regular-pro");
     });
 
     it("does not override existing character class", () => {
@@ -174,7 +174,7 @@ describe("Link", () => {
 
       // Then: 既存のcharacterクラスが保持され、デフォルトが追加されない
       expect(link.className).toContain("character-5-bold-pro");
-      expect(link.className).not.toContain("character-3-regular-pro");
+      expect(link.className).not.toContain("character-2-regular-pro");
     });
 
     it("sets correct icon size based on character class", () => {
@@ -212,7 +212,7 @@ describe("Link", () => {
 
       // Then: デフォルトアイコンサイズが設定される
       expect(icon).toBeDefined();
-      expect(icon!.className).toContain("icon-3");
+      expect(icon!.className).toContain("icon-2");
     });
   });
 

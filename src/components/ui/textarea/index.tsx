@@ -15,14 +15,13 @@ import { cn } from "@/lib/utils";
  */
 const textareaVariants = cva(
   // ベーススタイル
-  "flex w-full rounded-action border bg-surface-base-0 px-3 py-1 ring-offset-background placeholder:text-text-neutral-low focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2 resize",
+  "flex w-full rounded-action border bg-surface-base-0 pt-2 pb-1 ring-offset-background placeholder:text-text-neutral-low focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2 resize",
   {
     variants: {
-      // サイズバリアント（sm, md, lg）
+      // サイズバリアント（md, lg）
       size: {
-        sm: "min-h-[56px] character-2-regular-pro",
-        md: "min-h-[56px] character-3-regular-pro",
-        lg: "min-h-[64px] character-4-regular-pro",
+        md: "min-h-32 px-3 character-2-regular-pro",
+        lg: "min-h-32 px-4 character-3-regular-pro",
       },
       // エラー状態のバリアント
       isInvalid: {

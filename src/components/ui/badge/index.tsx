@@ -8,7 +8,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center text-text-inverse text-center justify-center rounded-full transition-colors focus:outline-hidden focus:ring-2 focus:ring-border-ring focus:ring-offset-2",
+  "inline-flex overflow-hidden items-center text-text-inverse text-center justify-center rounded-full transition-colors focus:outline-hidden focus:ring-2 focus:ring-border-ring focus:ring-offset-2",
   {
     variants: {
       variant: {
@@ -20,7 +20,8 @@ const badgeVariants = cva(
         false: "",
       },
       size: {
-        xs: "w-2 h-2 min-w-2",
+        "2xs": "w-2 h-2 min-w-2",
+        xs: "w-3.5 h-3.5 min-w-3.5",
         sm: "w-4 h-4 min-w-4",
         md: "min-w-6 py-0.5 px-1.5 character-1-bold-mono",
         lg: "min-w-8 py-1 px-1.5 character-3-bold-mono",
@@ -34,8 +35,13 @@ const badgeVariants = cva(
       // isGappedのボーダー設定
       {
         isGapped: true,
-        size: "xs",
+        size: "2xs",
         class: "outline-border-inverse outline-2",
+      },
+      {
+        isGapped: true,
+        size: "xs",
+        class: "outline-border-inverse outline-4",
       },
       {
         isGapped: true,
@@ -139,7 +145,7 @@ function Badge({
 }: BadgeProps) {
   // sm以下のサイズの場合は、文字を非表示にする
   // en: Hide text for sizes sm and below
-  if (size === "sm" || size === "xs") {
+  if (size === "sm" || size === "xs" || size === "2xs") {
     isNumberVisible = false;
   }
 

@@ -10,6 +10,26 @@
 - 1.x を React 18 向けの**非推奨（deprecated）メンテナンスライン**とし、`v1` ブランチで続けます。入れるのは不具合・セキュリティの修正と、最新の CLI と噛み合わせるためのトークン・スタイルの追従だけで、新機能と React 19 前提の変更は 2.x にだけ入ります。README に React・CLI との対応表と移行の案内を追加しました
 - `Publish to npm` workflow が `v<N>` ブランチ（旧メジャーのメンテナンスライン）からの stage に対応しました。npm の `latest` がより新しいメジャーのときは `latest-<N>` に載せ、`latest` を巻き戻しません。GitHub Release も npm の `latest` でない版には「Latest」を付けません
 
+## [2.0.0-beta.1] - 2026-10-02
+
+Figma の56ページ・374件の「スタイル更新」注釈を再監査した beta。Gray の色値確認は保留し、既存値を維持しています。
+
+### Changed
+
+- Button・入力・Checkbox・Radio・Tabs・Link の文字サイズ、余白、フォーカス表示を注釈に合わせました。
+- Dialog／Modal は共通 Overlay を合成し、背景を `surface/overlay`（black 30%）へ統一しました。Radix の開閉制御を維持します。
+- Tag のステータスドットとカプセル形状、Badge の5段階サイズ、Slider・Toast のスタイルを更新しました。
+
+### Breaking Changes
+
+- Icon／Spinner は22pxの `size=6` を追加。従来の `size=6..12` は実寸維持のため `7..13` へ移行してください。CSS は CLI 2.5.0-beta.6 相当のテンプレートが必要です。
+- Badge の従来の8px `xs` は `2xs` へ変更し、新 `xs` は14pxです。
+- Textarea のサイズは `md`／`lg`。従来の `sm` は `md` へ移行してください。
+
+### Known limitations
+
+- Gray の値、Information List のホバーはデザイナー確認待ちです。Textarea Counter とカスタム Resize handle は未実装です。詳細は `docs/style-migration-247.md` を参照してください。
+
 ## [2.0.0-beta.0] - 2026-10-01
 
 Figma（`7alBZXZf65YgcII41TWT0r`）のスタイル刷新を反映する **beta リリース**です（トラッキング: goodpatch/sparkle-design-internal#247）。`npm install sparkle-design@beta` で導入できます。`latest` は 1.0.7 のままです。

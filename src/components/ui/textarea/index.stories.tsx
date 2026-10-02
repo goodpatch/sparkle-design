@@ -20,7 +20,7 @@ const meta: Meta<typeof Textarea> = {
     },
     size: {
       control: { type: "radio" },
-      options: ["sm", "md", "lg"],
+      options: ["md", "lg"],
     },
     placeholder: {
       control: "text",
@@ -100,7 +100,7 @@ export const DisabledWithInvalidState: Story = {
 export const SizeVariations: Story = {
   render: () => (
     <div className="flex flex-col gap-4 w-[400px]">
-      <Textarea placeholder="小サイズのテキストエリア" size="sm" />
+      <Textarea placeholder="小サイズのテキストエリア" size="md" />
       <Textarea placeholder="標準サイズのテキストエリア" size="md" />
       <Textarea placeholder="大サイズのテキストエリア" size="lg" />
     </div>

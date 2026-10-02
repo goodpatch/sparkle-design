@@ -19,8 +19,8 @@ const labelVariants = cva("cursor-pointer", {
   variants: {
     size: {
       sm: "character-2-regular-pro",
-      md: "character-3-regular-pro",
-      lg: "character-4-regular-pro",
+      md: "character-2-regular-pro",
+      lg: "character-3-regular-pro",
     },
     isDisabled: {
       true: "text-text-neutral-disabled cursor-not-allowed",
@@ -41,9 +41,9 @@ const radioItemVariants = cva(
   {
     variants: {
       size: {
-        sm: "h-8 w-8",
-        md: "h-10 w-10",
-        lg: "h-12 w-12",
+        sm: "h-8 w-4",
+        md: "h-10 w-[18px]",
+        lg: "h-12 w-5",
       },
       isDisabled: {
         true: "cursor-not-allowed",
@@ -66,8 +66,8 @@ const radioIndicatorVariants = cva(
     variants: {
       size: {
         sm: "h-4 w-4",
-        md: "h-5 w-5",
-        lg: "h-6 w-6",
+        md: "h-[18px] w-[18px]",
+        lg: "h-5 w-5",
       },
       isInvalid: {
         true: "border-object-negative-enabled [.group[data-state=checked]_&]:border-object-negative-enabled",
@@ -114,8 +114,8 @@ const radioIndicatorDotVariants = cva(
     variants: {
       size: {
         sm: "h-4 w-4",
-        md: "h-5 w-5",
-        lg: "h-6 w-6",
+        md: "h-[18px] w-[18px]",
+        lg: "h-5 w-5",
       },
       isInvalid: {
         true: "[.group[data-state=checked]_&]:bg-object-negative-enabled",
@@ -162,8 +162,8 @@ const radioIndicatorDotInnerVariants = cva("rounded-full bg-surface-base-0", {
   variants: {
     size: {
       sm: "h-2 w-2",
-      md: "h-2.5 w-2.5",
-      lg: "h-3 w-3",
+      md: "h-[9px] w-[9px]",
+      lg: "h-2.5 w-2.5",
     },
   },
   defaultVariants: {
@@ -357,7 +357,9 @@ function RadioItem({
 }: RadioItemProps) {
   const isInvalid = React.useContext(RadioInvalidContext) || !!isInvalidProp;
   return (
-    <div className="flex items-center">
+    <div
+      className={cn("flex items-center", size === "lg" ? "gap-2" : "gap-1.5")}
+    >
       <RadioPrimitive.Item
         data-slot="radio-group-item"
         id={id}

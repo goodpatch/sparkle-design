@@ -91,16 +91,11 @@ describe("Textarea", () => {
   describe("Size Variants", () => {
     it("applies size variant classes", () => {
       // GIVEN: 3サイズを検証
-      (["sm", "md", "lg"] as const).forEach(size => {
+      (["md", "lg"] as const).forEach(size => {
         testContainer.render(<Textarea size={size} />);
         const el = testContainer.querySelector<HTMLTextAreaElement>("textarea");
         // THEN: 対応クラス存在
-        const expected =
-          size === "sm"
-            ? "min-h-[56px]"
-            : size === "md"
-              ? "min-h-[56px]"
-              : "min-h-[64px]";
+        const expected = "min-h-32";
         expect(el.className).toContain(expected);
       });
     });

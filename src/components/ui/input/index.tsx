@@ -17,8 +17,8 @@ const inputVariants = cva(
     variants: {
       size: {
         sm: "h-8 character-2-regular-pro",
-        md: "h-10 character-3-regular-pro",
-        lg: "h-12 character-4-regular-pro",
+        md: "h-10 character-2-regular-pro",
+        lg: "h-12 character-3-regular-pro",
       },
       isInvalid: {
         true: "border-border-negative-extra-high-enabled",
@@ -346,6 +346,10 @@ function Input({
           isFocused: isInputFocused && !isIconButtonFocused,
           className,
         }),
+        isInputDisabled &&
+          !isInvalid &&
+          !isTrigger &&
+          "border-border-neutral-middle",
         !isInputDisabled && "cursor-text" // 入力可能な場合はテキストカーソルを表示
       )}
       // NOTE: not supportエラーがLintで出るためコメントアウト
@@ -361,7 +365,10 @@ function Input({
         aria-invalid={isInvalid || undefined}
         className={cn(
           "w-full h-full bg-transparent border-none outline-hidden focus:outline-hidden",
-          "text-text-neutral-high placeholder:text-text-neutral-low px-2",
+          "text-text-neutral-high placeholder:text-text-neutral-low pr-2",
+          size === "lg" ? "pl-3" : size === "sm" ? "pl-1.5" : "pl-2",
+          !isTrigger &&
+            (size === "lg" ? "pr-3" : size === "sm" ? "pr-1.5" : "pr-2"),
           isInputDisabled &&
             "cursor-not-allowed text-text-neutral-disabled placeholder:text-text-neutral-disabled"
         )}

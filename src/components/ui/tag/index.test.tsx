@@ -128,7 +128,7 @@ describe("Tag", () => {
 
       // Then: すべてのプロパティが適用される
       expect(tag).toHaveClass("border", "min-w-14", "custom");
-      expect(tag.className).toContain("border-object-info");
+      expect(tag.className).toContain("border-border-info");
     });
   });
 

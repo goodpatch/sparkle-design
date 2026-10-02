@@ -18,9 +18,9 @@ const checkboxItemVariants = cva(
   {
     variants: {
       size: {
-        sm: "h-8 w-8",
-        md: "h-10 w-10",
-        lg: "h-12 w-12",
+        sm: "h-8 w-4",
+        md: "h-10 w-[18px]",
+        lg: "h-12 w-5",
       },
       isDisabled: {
         true: "cursor-not-allowed",
@@ -43,8 +43,8 @@ const checkboxRootVariants = cva(
     variants: {
       size: {
         sm: "h-4 w-4",
-        md: "h-5 w-5",
-        lg: "h-6 w-6",
+        md: "h-[18px] w-[18px]",
+        lg: "h-5 w-5",
       },
       isInvalid: {
         true: [
@@ -113,12 +113,13 @@ const checkboxLabelVariants = cva("cursor-pointer", {
   variants: {
     size: {
       sm: "character-2-regular-pro",
-      md: "character-3-regular-pro",
-      lg: "character-4-regular-pro",
+      md: "character-2-regular-pro",
+      lg: "character-3-regular-pro",
     },
     isDisabled: {
       true: "text-text-neutral-disabled cursor-not-allowed",
-      false: "text-text-neutral-middle",
+      false:
+        "text-text-neutral-middle group-hover/checkbox:text-text-neutral-high",
     },
   },
   defaultVariants: {
@@ -230,7 +231,12 @@ function Checkbox({
   const isCheckboxDisabled = isDisabled || disabled;
 
   return (
-    <div className="flex items-center">
+    <div
+      className={cn(
+        "group/checkbox flex items-center",
+        size === "lg" ? "gap-2" : "gap-1.5"
+      )}
+    >
       <CheckboxPrimitive.Root
         data-slot="checkbox"
         id={id}
@@ -259,6 +265,7 @@ function Checkbox({
             className="flex items-center justify-center text-surface-base-0"
           >
             <Icon
+              className="text-current"
               icon={
                 checked === "indeterminate"
                   ? "check_indeterminate_small"
@@ -269,11 +276,11 @@ function Checkbox({
                   case "sm":
                     return 3;
                   case "md":
-                    return 5;
+                    return 4;
                   case "lg":
-                    return 6;
-                  default:
                     return 5;
+                  default:
+                    return 4;
                 }
               })()}
             />

@@ -28,7 +28,7 @@ export interface SpinnerProps extends React.ComponentProps<"span"> {
  *
  * ```tsx
  * // ✅ Correct - スケール値
- * <Spinner size={6} />
+ * <Spinner size={7} />
  *
  * // ❌ Wrong - ピクセル値
  * <Spinner size={24} />
@@ -37,7 +37,7 @@ export interface SpinnerProps extends React.ComponentProps<"span"> {
  * **使用例 / Usage Example**
  *
  * ```tsx
- * <Spinner size={6} />
+ * <Spinner size={7} />
  * ```
  *
  * @param {SpinnerProps} props

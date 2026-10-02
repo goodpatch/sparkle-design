@@ -16,6 +16,7 @@ figma.connect(
     props: {
       // These props were automatically mapped based on your linked code:
       size: figma.enum("size", {
+        "2xs": "2xs",
         xs: "xs",
         sm: "sm",
         md: "md",

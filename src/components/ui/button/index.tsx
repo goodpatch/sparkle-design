@@ -30,9 +30,9 @@ const buttonVariants = cva(
         ghost: "",
       },
       size: {
-        sm: "h-8 min-w-16 px-3 py-1 character-2-bold-pro",
-        md: "h-10 min-w-20 px-4 py-1.5 character-3-bold-pro",
-        lg: "h-12 min-w-24 px-5 py-2 character-4-bold-pro",
+        sm: "h-8 min-w-16 px-3 py-1 character-1-bold-pro",
+        md: "h-10 min-w-20 px-4 py-1.5 character-2-bold-pro",
+        lg: "h-12 min-w-24 px-5 py-2 character-3-bold-pro",
       },
       theme: {
         primary: "",
@@ -512,7 +512,7 @@ function Button({
       case "sm":
         return 4;
       case "lg":
-        return 6;
+        return 7;
       default:
         return 5;
     }
@@ -762,7 +762,7 @@ function Button({
             <Icon
               icon={prefixIcon}
               size={getIconSize()}
-              className={cn({ "opacity-0": isLoading })}
+              className={cn("text-current", { "opacity-0": isLoading })}
             />
           )}
 
@@ -781,7 +781,7 @@ function Button({
             <Icon
               icon={suffixIcon}
               size={getIconSize()}
-              className={cn({ "opacity-0": isLoading })}
+              className={cn("text-current", { "opacity-0": isLoading })}
             />
           )}
         </>

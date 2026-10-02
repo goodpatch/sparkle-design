@@ -15,7 +15,7 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/spinner.json
 ## 使い方
 
 ```tsx
-<Spinner size={6} />
+<Spinner size={7} />
 ```
 
 ## 関連リンク

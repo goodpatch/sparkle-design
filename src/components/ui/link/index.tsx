@@ -88,15 +88,19 @@ export function Link({
   // character-X-*-* のXの部分（サイズ）を取得
   const characterSizeMatch = className?.match(/character-(\d+)-/);
 
-  const parsed = characterSizeMatch ? parseInt(characterSizeMatch[1], 10) : 3;
-  const characterSize = (parsed >= 1 && parsed <= 12 ? parsed : 3) as IconSize;
+  const parsed = characterSizeMatch ? parseInt(characterSizeMatch[1], 10) : 2;
+  const characterSize = (parsed >= 1 && parsed <= 12 ? parsed : 2) as IconSize;
 
   // character クラスの生成
   const characterSizeClass = hasCharacterClass
     ? "" // 外部で指定されている場合は付与しない
     : `character-${characterSize}-regular-pro`;
 
-  const linkClassName = cn("inline group", characterSizeClass, className);
+  const linkClassName = cn(
+    "inline group rounded-lg focus-visible:outline-2 focus-visible:outline-border-ring focus-visible:outline-offset-2",
+    characterSizeClass,
+    className
+  );
 
   if (
     asChild &&
@@ -120,7 +124,9 @@ export function Link({
       {isExternalLink && (
         <Icon
           icon="open_in_new"
-          size={characterSize}
+          size={
+            (characterSize >= 6 ? characterSize + 1 : characterSize) as IconSize
+          }
           className="ml-1 align-middle inline-block text-object-primary-enabled group-hover:text-object-primary-hover"
         />
       )}
@@ -147,7 +153,11 @@ export function Link({
                 {isExternalLink && (
                   <Icon
                     icon="open_in_new"
-                    size={characterSize}
+                    size={
+                      (characterSize >= 6
+                        ? characterSize + 1
+                        : characterSize) as IconSize
+                    }
                     className="ml-1 align-middle inline-block text-object-primary-enabled group-hover:text-object-primary-hover"
                   />
                 )}

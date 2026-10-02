@@ -8,6 +8,7 @@ import * as React from "react";
 import { Dialog as DialogPrimitive } from "radix-ui";
 
 import { cn } from "@/lib/utils";
+import { Overlay } from "../overlay";
 import { IconButton } from "../icon-button";
 
 /**
@@ -108,7 +109,7 @@ function ModalClose({
       <IconButton
         icon="close"
         data-slot="modal-close"
-        size="xs"
+        size="sm"
         variant="ghost"
         theme="neutral"
         aria-label={ariaLabel}
@@ -124,14 +125,9 @@ function ModalOverlay({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Overlay>) {
   return (
-    <DialogPrimitive.Overlay
-      data-slot="modal-overlay"
-      className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
-        className
-      )}
-      {...props}
-    />
+    <DialogPrimitive.Overlay {...props} asChild>
+      <Overlay data-slot="modal-overlay" className={cn("z-50", className)} />
+    </DialogPrimitive.Overlay>
   );
 }
 

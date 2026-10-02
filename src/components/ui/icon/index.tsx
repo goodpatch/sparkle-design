@@ -6,8 +6,8 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * アイコンサイズのスケール値（1-12）
- * en: Icon size scale values (1-12)
+ * アイコンサイズのスケール値（1-13）
+ * en: Icon size scale values (1-13)
  *
  * | scale | px  |
  * |-------|-----|
@@ -16,15 +16,16 @@ import { cn } from "@/lib/utils";
  * | 3     | 16  |
  * | 4     | 18  |
  * | 5     | 20  |
- * | 6     | 24  |
- * | 7     | 28  |
- * | 8     | 32  |
- * | 9     | 36  |
- * | 10    | 42  |
- * | 11    | 48  |
- * | 12    | 54  |
+ * | 6     | 22  |
+ * | 7     | 24  |
+ * | 8     | 28  |
+ * | 9     | 32  |
+ * | 10    | 36  |
+ * | 11    | 42  |
+ * | 12    | 48  |
+ * | 13    | 54  |
  */
-export type IconSize = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+export type IconSize = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
 
 export interface IconProps extends React.ComponentProps<"span"> {
   /**
@@ -33,8 +34,8 @@ export interface IconProps extends React.ComponentProps<"span"> {
    */
   icon: string;
   /**
-   * アイコンサイズ（スケール値 1-12）
-   * en: Size of the icon (scale value 1-12)
+   * アイコンサイズ（スケール値 1-13）
+   * en: Size of the icon (scale value 1-13)
    * @see IconSize
    */
   size?: IconSize;
@@ -67,7 +68,7 @@ export interface IconProps extends React.ComponentProps<"span"> {
  * **使用例 / Usage Example**
  *
  * ```tsx
- * <Icon icon="check" size={6} fill={true} />
+ * <Icon icon="check" size={7} fill={true} />
  * ```
  *
  * @param {IconProps} props
@@ -96,7 +97,11 @@ export function Icon({
       // font-weight が継承されると疑似ボールド（faux bold）で太く描画されるため明示する。
       // en: Icons are unified at weight 500. Set font-weight explicitly so an inherited
       // font-weight (e.g. bold Button labels) does not trigger faux-bold rendering.
-      className={cn(iconTypographyClass, "select-none font-medium", className)}
+      className={cn(
+        iconTypographyClass,
+        "select-none font-medium text-object-neutral-high",
+        className
+      )}
       aria-hidden="true"
       {...props}
     >
