@@ -747,7 +747,7 @@ Material Symbols は `Icon` / `IconButton` 経由で使用する。直書きす�
 <span className="text-xs">どうしても text-xs で残したいケース</span>
 ```
 
-Sparkle Design コンポーネント内では `character-*-pro` / `character-*-mono` を使用する。character-1（12px）より小さい指定や、対応 token が無いサイズは Tailwind の arbitrary value (`text-[10px]` 等) で表現するか、`// sparkle-disable-line tailwind-typography` で個別に例外指定する。
+Sparkle Design コンポーネント内では `character-*-pro` / `character-*-mono` を使用する。character-1（12px）より小さい指定や、対応 token が無いサイズは Tailwind の arbitrary value (`text-[10px]` 等) で表現するか、同じ行の `// sparkle-disable-line tailwind-typography` / 直前の行の `// sparkle-disable-next-line tailwind-typography` で個別に例外指定する。
 
 `font-medium` / `font-semibold`（500 / 600）は character-* に対応する token が存在しない。`character-N-regular-pro font-semibold` のように Tailwind の font-weight ユーティリティを併用しても、character-* が意図的に Tailwind の後に読み込まれる cascade 設計のため上書きされず効かない。これらのウェイトが必要な場合は `extend.custom-css` で `character-N-semibold-pro` のような独自クラスを定義し、font-family / font-size / letter-spacing / line-height は character-* と同じプリミティブトークンを流用する（詳細は README の「character-* に無いウェイトを使いたい場合」）。
 
