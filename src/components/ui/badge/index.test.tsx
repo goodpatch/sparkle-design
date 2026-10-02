@@ -25,6 +25,17 @@ afterEach(() => {
 
 describe("Badge", () => {
   describe("Basic Rendering", () => {
+    it("2xsは8pxで数字を表示しない", () => {
+      testContainer.render(
+        <Badge size="2xs" isNumberVisible>
+          5
+        </Badge>
+      );
+      const badge = testContainer.querySelector("div");
+      expect(badge.className).toContain("h-2");
+      expect(badge.className).toContain("w-2");
+      expect(badge.textContent).toBe("");
+    });
     it("renders a basic badge with number", () => {
       // Given: 基本的なBadge
       testContainer.render(<Badge>5</Badge>);
@@ -89,9 +100,9 @@ describe("Badge", () => {
       const badge = testContainer.querySelector("div");
 
       // Then: xsサイズのクラスが適用される（数字は非表示）
-      expect(badge.className).toContain("w-2");
-      expect(badge.className).toContain("h-2");
-      expect(badge.className).toContain("min-w-2");
+      expect(badge.className).toContain("w-3.5");
+      expect(badge.className).toContain("h-3.5");
+      expect(badge.className).toContain("min-w-3.5");
       expect(badge.textContent).toBe(""); // 数字は非表示
     });
 
@@ -264,7 +275,8 @@ describe("Badge", () => {
     it("applies different outline width for different sizes", () => {
       // Given: 異なるサイズのgapped Badge
       const testCases = [
-        { size: "xs" as const, expectedOutline: "outline-2" },
+        { size: "2xs" as const, expectedOutline: "outline-2" },
+        { size: "xs" as const, expectedOutline: "outline-4" },
         { size: "sm" as const, expectedOutline: "outline-4" },
         { size: "md" as const, expectedOutline: "outline-4" },
         { size: "lg" as const, expectedOutline: "outline-4" },

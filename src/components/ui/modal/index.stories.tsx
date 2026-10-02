@@ -52,14 +52,14 @@ export const Default: Story = {
           </ModalBody>
           <ModalFooter>
             <Button
-              size="sm"
+              size="md"
               theme="neutral"
               variant="ghost"
               onClick={() => setOpen(false)}
             >
               キャンセル
             </Button>
-            <Button size="sm" onClick={() => setOpen(false)}>
+            <Button size="md" onClick={() => setOpen(false)}>
               保存
             </Button>
           </ModalFooter>
@@ -92,14 +92,14 @@ export const SizeVariants: Story = {
                 </ModalBody>
                 <ModalFooter>
                   <Button
-                    size="sm"
+                    size="md"
                     theme="neutral"
                     variant="ghost"
                     onClick={() => setOpen(null)}
                   >
                     キャンセル
                   </Button>
-                  <Button size="sm" onClick={() => setOpen(null)}>
+                  <Button size="md" onClick={() => setOpen(null)}>
                     保存
                   </Button>
                 </ModalFooter>
@@ -126,14 +126,14 @@ export const HeaderHidden: Story = {
           </ModalBody>
           <ModalFooter>
             <Button
-              size="sm"
+              size="md"
               theme="neutral"
               variant="ghost"
               onClick={() => setOpen(false)}
             >
               キャンセル
             </Button>
-            <Button size="sm" onClick={() => setOpen(false)}>
+            <Button size="md" onClick={() => setOpen(false)}>
               保存
             </Button>
           </ModalFooter>
@@ -161,14 +161,14 @@ export const CloseButtonHidden: Story = {
           </ModalBody>
           <ModalFooter>
             <Button
-              size="sm"
+              size="md"
               theme="neutral"
               variant="ghost"
               onClick={() => setOpen(false)}
             >
               キャンセル
             </Button>
-            <Button size="sm" onClick={() => setOpen(false)}>
+            <Button size="md" onClick={() => setOpen(false)}>
               保存
             </Button>
           </ModalFooter>
@@ -218,14 +218,14 @@ export const EnabledOverlayClickToClose: Story = {
           </ModalBody>
           <ModalFooter>
             <Button
-              size="sm"
+              size="md"
               theme="neutral"
               variant="ghost"
               onClick={() => setOpen(false)}
             >
               キャンセル
             </Button>
-            <Button size="sm" onClick={() => setOpen(false)}>
+            <Button size="md" onClick={() => setOpen(false)}>
               保存
             </Button>
           </ModalFooter>

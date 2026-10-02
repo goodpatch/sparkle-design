@@ -247,7 +247,7 @@ Sparkle Design uses Material Symbols for icons.
 
 ### Icon Size Scale
 
-Icon / Spinner の `size` prop はスケール値（1-12）を受け取る。ピクセル値は渡さないこと。
+Icon / Spinner の `size` prop はスケール値（1-13）を受け取る。ピクセル値は渡さないこと。
 
 | scale | px  | 用途例 |
 |-------|-----|--------|
@@ -256,22 +256,23 @@ Icon / Spinner の `size` prop はスケール値（1-12）を受け取る。ピ
 | 3     | 16  | インラインアイコン |
 | 4     | 18  | ボタン sm |
 | 5     | 20  | ボタン md（デフォルト） |
-| 6     | 24  | ボタン lg |
-| 7     | 28  | サイドバーロゴ |
-| 8     | 32  | |
-| 9     | 36  | |
-| 10    | 42  | |
-| 11    | 48  | 大型アイコン |
-| 12    | 54  | |
+| 6     | 22  | |
+| 7     | 24  | ボタン lg |
+| 8     | 28  | サイドバーロゴ |
+| 9     | 32  | |
+| 10    | 36  | |
+| 11    | 42  | |
+| 12    | 48  | 大型アイコン |
+| 13    | 54  | |
 
 ```tsx
 // Wrong - ピクセル値
 <Icon icon="settings" size={24} />
 
 // Correct - スケール値
-<Icon icon="settings" size={6} />
+<Icon icon="settings" size={7} />
 
-// Button の prefixIcon/suffixIcon はサイズ自動設定（sm→4, md→5, lg→6）
+// Button の prefixIcon/suffixIcon はサイズ自動設定（sm→4, md→5, lg→7）
 <Button prefixIcon="check">確定</Button>
 ```
 
@@ -566,7 +567,7 @@ shadcn/ui と混在するプロジェクトでも、`character-*` / `text-text-*
 </Button>
 ```
 
-> Button は size に応じてアイコンサイズを自動設定する（sm→4, md→5, lg→6）。isLoading 時にアイコンを自動で非表示にする。`asChild` 使用時はアイコンやローディング表現をスロット先で組み立てる。
+> Button は size に応じてアイコンサイズを自動設定する（sm→4, md→5, lg→7）。isLoading 時にアイコンを自動で非表示にする。`asChild` 使用時はアイコンやローディング表現をスロット先で組み立てる。
 
 ### CardHeader: CardControl を使う
 
@@ -620,11 +621,11 @@ shadcn/ui と混在するプロジェクトでも、`character-*` / `text-text-*
 
 別ページへ遷移する**ナビゲーション用**のカードには `ClickableCard` を使わない（リンクのセマンティクスが失われる）。通常の `Card` を使い、`CardTitle` 内の見出しテキストを `<a>`（Next.js なら `Link`）にする。
 
-### Icon / Spinner: スケール値（1-12）を使う
+### Icon / Spinner: スケール値（1-13）を使う
 
 ```tsx
 // ✅ Correct - スケール値
-<Icon icon="settings" size={6} />   // 24px 相当
+<Icon icon="settings" size={7} />   // 24px 相当
 
 // ❌ Wrong - ピクセル値は受け付けない
 <Icon icon="settings" size={24} />

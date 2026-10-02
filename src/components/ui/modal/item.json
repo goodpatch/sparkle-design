@@ -11,5 +11,8 @@
     }
   ],
   "dependencies": ["radix-ui"],
-  "registryDependencies": ["https://sparkle-design.goodpatch.com/r/icon.json"]
+  "registryDependencies": [
+    "https://sparkle-design.goodpatch.com/r/icon-button.json",
+    "https://sparkle-design.goodpatch.com/r/overlay.json"
+  ]
 }

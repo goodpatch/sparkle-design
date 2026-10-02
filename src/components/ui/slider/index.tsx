@@ -38,7 +38,7 @@ const sliderRangeVariants = cva("absolute h-full bg-object-info", {
 
 const sliderThumbVariants = cva(
   [
-    "relative block rounded-full border border-object-neutral-low bg-surface-base-0 shadow-raise cursor-pointer",
+    "relative block rounded-full border border-object-neutral-low bg-surface-base-0 shadow-base cursor-pointer",
     // 半透明の状態色は白地に重ねる（つまみの下のトラックを透かさない）
     // en: Layer translucent state colors over the white fill so the track does not show through
     "ring-offset-background transition-colors hover:border-object-neutral-middle hover:bg-linear-to-r hover:from-surface-neutral-low-hover hover:to-surface-neutral-low-hover",
@@ -52,7 +52,7 @@ const sliderThumbVariants = cva(
   {
     variants: {
       isDisabled: {
-        true: "pointer-events-none bg-surface-neutral-middle-disabled bg-none border-none shadow-base cursor-not-allowed",
+        true: "pointer-events-none bg-surface-neutral-middle-disabled bg-none border-object-neutral-low shadow-base cursor-not-allowed",
       },
     },
     defaultVariants: {

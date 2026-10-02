@@ -162,7 +162,7 @@ function InlineMessage({
         >
           <Icon
             icon={statusIcon}
-            size={6}
+            size={7}
             fill={false}
             className={cn(colorClass)}
           />

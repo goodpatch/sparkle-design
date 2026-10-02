@@ -20,9 +20,11 @@ const selectTriggerVariants = cva(
   {
     variants: {
       size: {
-        sm: "h-8 py-1 pl-2 pr-1 gap-2 character-2-regular-pro",
-        md: "h-10 py-1 pl-3 pr-1.5 gap-2 character-3-regular-pro",
-        lg: "h-12 py-1 pl-4 pr-2 gap-2 character-4-regular-pro",
+        // Figma の内側6px + 外側4pxを合成した10px。en: Combine inner 6px and outer 4px.
+        // sparkle-disable-next-line use-figma-spacing-scale
+        sm: "h-8 py-1 pl-2.5 pr-1.5 gap-2 character-2-regular-pro",
+        md: "h-10 py-1 pl-3 pr-2 gap-2 character-2-regular-pro",
+        lg: "h-12 py-1 pl-4 pr-2 gap-2 character-3-regular-pro",
       },
       isInvalid: {
         true: "bg-surface-base-0 border-border-negative-extra-high-enabled hover:border-border-negative-extra-high-hover data-[state=open]:border-border-negative-extra-high-hover",
@@ -54,8 +56,8 @@ const selectIconVariants = cva("", {
   variants: {
     size: {
       sm: "icon-5-fill-0",
-      md: "icon-6-fill-0",
-      lg: "icon-7-fill-0",
+      md: "icon-7-fill-0",
+      lg: "icon-8-fill-0",
     },
     isDisabled: {
       true: "text-object-neutral-disabled",
@@ -347,7 +349,7 @@ function SelectItem({
       {...props}
     >
       <SelectPrimitive.ItemIndicator className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-        <Icon icon="check" size={4} />
+        <Icon icon="check" size={4} className="text-current" />
       </SelectPrimitive.ItemIndicator>
       <SelectPrimitive.ItemText className={cn("flex-1", textClassName)}>
         {children}
@@ -406,7 +408,11 @@ function SelectScrollUpButton({
       )}
       {...props}
     >
-      <Icon icon="expand_less" size={4} />
+      <Icon
+        icon="expand_less"
+        size={4}
+        className="text-object-neutral-middle"
+      />
     </SelectPrimitive.ScrollUpButton>
   );
 }
@@ -436,7 +442,11 @@ function SelectScrollDownButton({
       )}
       {...props}
     >
-      <Icon icon="expand_more" size={4} />
+      <Icon
+        icon="expand_more"
+        size={4}
+        className="text-object-neutral-middle"
+      />
     </SelectPrimitive.ScrollDownButton>
   );
 }

@@ -13,10 +13,10 @@ const meta: Meta<typeof Spinner> = {
       control: {
         type: "range",
         min: 1,
-        max: 12,
+        max: 13,
         step: 1,
       },
-      defaultValue: 6,
+      defaultValue: 7,
     },
   },
 };
@@ -26,7 +26,7 @@ type Story = StoryObj<typeof Spinner>;
 
 export const Default: Story = {
   args: {
-    size: 6,
+    size: 7,
   },
 };
 
@@ -45,6 +45,7 @@ export const Size: Story = {
       <Spinner {...args} size={10} />
       <Spinner {...args} size={11} />
       <Spinner {...args} size={12} />
+      <Spinner {...args} size={13} />
     </div>
   ),
 };

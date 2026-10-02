@@ -761,7 +761,7 @@ describe("Slider Figma token mapping", () => {
     [
       "bg-surface-base-0",
       "border-object-neutral-low",
-      "shadow-raise",
+      "shadow-base",
       "hover:border-object-neutral-middle",
       "hover:bg-linear-to-r",
       "hover:from-surface-neutral-low-hover",

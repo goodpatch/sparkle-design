@@ -14,7 +14,7 @@ figma.connect(
   "https://www.figma.com/design/7alBZXZf65YgcII41TWT0r/Sparkle-Design?node-id=2876-24038",
   {
     props: {
-      size: figma.enum("size", { sm: "sm", md: "md", lg: "lg" }),
+      size: figma.enum("size", { md: "md", lg: "lg" }),
       isInvalid: figma.boolean("isInvalid"),
       isDisabled: figma.enum("state", {
         disabled: true,

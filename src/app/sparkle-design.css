@@ -128,6 +128,7 @@
   --font-size-16: 1rem; /* 16px */
   --font-size-18: 1.125rem; /* 18px */
   --font-size-20: 1.25rem; /* 20px */
+  --font-size-22: 1.375rem; /* 22px */
   --font-size-24: 1.5rem; /* 24px */
   --font-size-28: 1.75rem; /* 28px */
   --font-size-32: 2rem; /* 32px */
@@ -776,75 +777,85 @@
   --icon-5-fill-1-letter-spacing: var(--letter-spacing-normal);
   --icon-5-fill-1-line-height: var(--line-height-leading-none);
   --icon-6-fill-0-font-family: var(--font-family-icon);
-  --icon-6-fill-0-font-size: var(--font-size-24);
+  --icon-6-fill-0-font-size: var(--font-size-22);
   --icon-6-fill-0-font-weight: var(--font-weight-icon);
   --icon-6-fill-0-letter-spacing: var(--letter-spacing-normal);
   --icon-6-fill-0-line-height: var(--line-height-leading-none);
   --icon-6-fill-1-font-family: var(--font-family-icon);
-  --icon-6-fill-1-font-size: var(--font-size-24);
+  --icon-6-fill-1-font-size: var(--font-size-22);
   --icon-6-fill-1-font-weight: var(--font-weight-icon);
   --icon-6-fill-1-letter-spacing: var(--letter-spacing-normal);
   --icon-6-fill-1-line-height: var(--line-height-leading-none);
   --icon-7-fill-0-font-family: var(--font-family-icon);
-  --icon-7-fill-0-font-size: var(--font-size-28);
+  --icon-7-fill-0-font-size: var(--font-size-24);
   --icon-7-fill-0-font-weight: var(--font-weight-icon);
   --icon-7-fill-0-letter-spacing: var(--letter-spacing-normal);
   --icon-7-fill-0-line-height: var(--line-height-leading-none);
   --icon-7-fill-1-font-family: var(--font-family-icon);
-  --icon-7-fill-1-font-size: var(--font-size-28);
+  --icon-7-fill-1-font-size: var(--font-size-24);
   --icon-7-fill-1-font-weight: var(--font-weight-icon);
   --icon-7-fill-1-letter-spacing: var(--letter-spacing-normal);
   --icon-7-fill-1-line-height: var(--line-height-leading-none);
   --icon-8-fill-0-font-family: var(--font-family-icon);
-  --icon-8-fill-0-font-size: var(--font-size-32);
+  --icon-8-fill-0-font-size: var(--font-size-28);
   --icon-8-fill-0-font-weight: var(--font-weight-icon);
   --icon-8-fill-0-letter-spacing: var(--letter-spacing-normal);
   --icon-8-fill-0-line-height: var(--line-height-leading-none);
   --icon-8-fill-1-font-family: var(--font-family-icon);
-  --icon-8-fill-1-font-size: var(--font-size-32);
+  --icon-8-fill-1-font-size: var(--font-size-28);
   --icon-8-fill-1-font-weight: var(--font-weight-icon);
   --icon-8-fill-1-letter-spacing: var(--letter-spacing-normal);
   --icon-8-fill-1-line-height: var(--line-height-leading-none);
   --icon-9-fill-0-font-family: var(--font-family-icon);
-  --icon-9-fill-0-font-size: var(--font-size-36);
+  --icon-9-fill-0-font-size: var(--font-size-32);
   --icon-9-fill-0-font-weight: var(--font-weight-icon);
   --icon-9-fill-0-letter-spacing: var(--letter-spacing-normal);
   --icon-9-fill-0-line-height: var(--line-height-leading-none);
   --icon-9-fill-1-font-family: var(--font-family-icon);
-  --icon-9-fill-1-font-size: var(--font-size-36);
+  --icon-9-fill-1-font-size: var(--font-size-32);
   --icon-9-fill-1-font-weight: var(--font-weight-icon);
   --icon-9-fill-1-letter-spacing: var(--letter-spacing-normal);
   --icon-9-fill-1-line-height: var(--line-height-leading-none);
   --icon-10-fill-0-font-family: var(--font-family-icon);
-  --icon-10-fill-0-font-size: var(--font-size-42);
+  --icon-10-fill-0-font-size: var(--font-size-36);
   --icon-10-fill-0-font-weight: var(--font-weight-icon);
   --icon-10-fill-0-letter-spacing: var(--letter-spacing-normal);
   --icon-10-fill-0-line-height: var(--line-height-leading-none);
   --icon-10-fill-1-font-family: var(--font-family-icon);
-  --icon-10-fill-1-font-size: var(--font-size-42);
+  --icon-10-fill-1-font-size: var(--font-size-36);
   --icon-10-fill-1-font-weight: var(--font-weight-icon);
   --icon-10-fill-1-letter-spacing: var(--letter-spacing-normal);
   --icon-10-fill-1-line-height: var(--line-height-leading-none);
   --icon-11-fill-0-font-family: var(--font-family-icon);
-  --icon-11-fill-0-font-size: var(--font-size-48);
+  --icon-11-fill-0-font-size: var(--font-size-42);
   --icon-11-fill-0-font-weight: var(--font-weight-icon);
   --icon-11-fill-0-letter-spacing: var(--letter-spacing-normal);
   --icon-11-fill-0-line-height: var(--line-height-leading-none);
   --icon-11-fill-1-font-family: var(--font-family-icon);
-  --icon-11-fill-1-font-size: var(--font-size-48);
+  --icon-11-fill-1-font-size: var(--font-size-42);
   --icon-11-fill-1-font-weight: var(--font-weight-icon);
   --icon-11-fill-1-letter-spacing: var(--letter-spacing-normal);
   --icon-11-fill-1-line-height: var(--line-height-leading-none);
   --icon-12-fill-0-font-family: var(--font-family-icon);
-  --icon-12-fill-0-font-size: var(--font-size-54);
+  --icon-12-fill-0-font-size: var(--font-size-48);
   --icon-12-fill-0-font-weight: var(--font-weight-icon);
   --icon-12-fill-0-letter-spacing: var(--letter-spacing-normal);
   --icon-12-fill-0-line-height: var(--line-height-leading-none);
   --icon-12-fill-1-font-family: var(--font-family-icon);
-  --icon-12-fill-1-font-size: var(--font-size-54);
+  --icon-12-fill-1-font-size: var(--font-size-48);
   --icon-12-fill-1-font-weight: var(--font-weight-icon);
   --icon-12-fill-1-letter-spacing: var(--letter-spacing-normal);
   --icon-12-fill-1-line-height: var(--line-height-leading-none);
+  --icon-13-fill-0-font-family: var(--font-family-icon);
+  --icon-13-fill-0-font-size: var(--font-size-54);
+  --icon-13-fill-0-font-weight: var(--font-weight-icon);
+  --icon-13-fill-0-letter-spacing: var(--letter-spacing-normal);
+  --icon-13-fill-0-line-height: var(--line-height-leading-none);
+  --icon-13-fill-1-font-family: var(--font-family-icon);
+  --icon-13-fill-1-font-size: var(--font-size-54);
+  --icon-13-fill-1-font-weight: var(--font-weight-icon);
+  --icon-13-fill-1-letter-spacing: var(--letter-spacing-normal);
+  --icon-13-fill-1-line-height: var(--line-height-leading-none);
 
   /* 角丸 - デフォルト値は設定可能 */
   /* NOTE: ここに書かれた var(--radius-*) は「置換前のデフォルト値」で、
@@ -1712,5 +1723,21 @@
     font-variation-settings: var(--font-weight-icon-fill-1);
     letter-spacing: var(--icon-12-fill-1-letter-spacing);
     line-height: var(--icon-12-fill-1-line-height);
+  }
+  .icon-13-fill-0 {
+    font-family: var(--icon-13-fill-0-font-family);
+    font-size: var(--icon-13-fill-0-font-size);
+    font-weight: var(--icon-13-fill-0-font-weight);
+    font-variation-settings: var(--font-weight-icon-fill-0);
+    letter-spacing: var(--icon-13-fill-0-letter-spacing);
+    line-height: var(--icon-13-fill-0-line-height);
+  }
+  .icon-13-fill-1 {
+    font-family: var(--icon-13-fill-1-font-family);
+    font-size: var(--icon-13-fill-1-font-size);
+    font-weight: var(--icon-13-fill-1-font-weight);
+    font-variation-settings: var(--font-weight-icon-fill-1);
+    letter-spacing: var(--icon-13-fill-1-letter-spacing);
+    line-height: var(--icon-13-fill-1-line-height);
   }
 }

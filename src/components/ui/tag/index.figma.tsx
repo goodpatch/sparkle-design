@@ -24,6 +24,7 @@ figma.connect(
         md: "md",
         lg: "lg",
       }),
+      body: figma.enum("body", { none: "none", status: "status" }),
       status: figma.enum("status", {
         neutral: "neutral",
         info: "info",
@@ -34,7 +35,12 @@ figma.connect(
       label: figma.string("label"),
     },
     example: props => (
-      <Tag variant={props.variant} size={props.size} status={props.status}>
+      <Tag
+        variant={props.variant}
+        size={props.size}
+        status={props.status}
+        body={props.body}
+      >
         {props.label}
       </Tag>
     ),

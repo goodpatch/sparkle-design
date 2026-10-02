@@ -629,9 +629,9 @@ function IconButton({
       case "sm":
         return 5;
       case "lg":
-        return 7;
+        return 8;
       default:
-        return 6;
+        return 7;
     }
   };
 
@@ -801,7 +801,7 @@ function IconButton({
       {isLoading ? (
         <Spinner size={getIconSize()} className="text-current" />
       ) : (
-        <Icon icon={icon} size={getIconSize()} />
+        <Icon icon={icon} size={getIconSize()} className="text-current" />
       )}
     </Comp>
   );

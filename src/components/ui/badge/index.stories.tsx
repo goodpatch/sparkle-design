@@ -14,7 +14,7 @@ const meta: Meta<typeof Badge> = {
     },
     size: {
       control: "select",
-      options: ["xs", "sm", "md", "lg"],
+      options: ["2xs", "xs", "sm", "md", "lg"],
     },
     variant: {
       control: "select",
@@ -39,6 +39,9 @@ export const Size: Story = {
   render: args => {
     return (
       <div className="flex flex-row gap-2 items-start">
+        <Badge {...args} size="2xs">
+          0
+        </Badge>
         <Badge {...args} size="xs">
           13
         </Badge>

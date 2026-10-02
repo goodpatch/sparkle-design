@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 // タグのスタイル定義
 const tagVariants = cva(
-  "inline-flex items-center justify-center rounded-notice h-fit min-w-0",
+  "inline-flex items-center justify-center rounded-full h-fit min-w-0",
   {
     variants: {
       variant: {
@@ -17,9 +17,9 @@ const tagVariants = cva(
         subtle: "",
       },
       size: {
-        sm: "py-0 px-2 min-w-10 character-1-bold-pro",
-        md: "py-0.5 px-2 min-w-12 character-1-bold-pro",
-        lg: "py-1 px-2 min-w-14 character-2-bold-pro",
+        sm: "min-h-5 py-1 px-1.5 min-w-10 character-1-bold-pro",
+        md: "min-h-6 py-1.5 px-2 min-w-12 character-1-bold-pro",
+        lg: "min-h-7 py-1.5 px-2 min-w-14 character-2-bold-pro",
       },
       status: {
         neutral: "",
@@ -68,32 +68,32 @@ const tagVariants = cva(
         variant: "outline",
         status: "neutral",
         className:
-          "border-object-neutral-middle text-text-neutral-middle bg-surface-base-0",
+          "border-border-neutral-middle text-text-neutral-middle bg-surface-base-0",
       },
       // info + outline
       {
         variant: "outline",
         status: "info",
-        className: "border-object-info text-text-info bg-surface-base-0",
+        className: "border-border-info text-text-info bg-surface-base-0",
       },
       // success + outline
       {
         variant: "outline",
         status: "success",
-        className: "border-object-success text-text-success bg-surface-base-0",
+        className: "border-border-success text-text-success bg-surface-base-0",
       },
       // warning + outline
       {
         variant: "outline",
         status: "warning",
-        className: "border-object-warning text-text-warning bg-surface-base-0",
+        className: "border-border-warning text-text-warning bg-surface-base-0",
       },
       // negative + outline
       {
         variant: "outline",
         status: "negative",
         className:
-          "border-object-negative-enabled text-text-negative-enabled bg-surface-base-0",
+          "border-border-negative-high text-text-negative-enabled bg-surface-base-0",
       },
 
       // === SUBTLE バリアント ===
@@ -140,6 +140,8 @@ const tagVariants = cva(
 export interface TagProps
   extends React.ComponentProps<"div">,
     VariantProps<typeof tagVariants> {
+  /** ステータスドットの表示 / en: Whether to show a status dot */
+  body?: "none" | "status";
   /**
    * タグのラベルテキスト
    * en: Label text displayed inside the tag
@@ -179,9 +181,10 @@ export interface TagProps
  */
 function Tag({
   className,
-  variant,
-  size,
-  status,
+  variant = "solid",
+  size = "md",
+  status = "neutral",
+  body = "none",
   children,
   ref,
   ...props
@@ -192,7 +195,33 @@ function Tag({
       className={cn(tagVariants({ variant, size, status, className }))}
       {...props}
     >
-      <span className="min-w-0 truncate">{children}</span>
+      {body === "status" && (
+        <span
+          aria-hidden="true"
+          className={cn(
+            "flex size-2.5 shrink-0 items-center justify-center",
+            size === "sm" ? "mr-0.5" : "mr-1"
+          )}
+        >
+          <span
+            className={cn(
+              "size-1.5 rounded-full",
+              variant === "solid"
+                ? "bg-object-inverse"
+                : {
+                    neutral: "bg-object-neutral-middle",
+                    info: "bg-object-info",
+                    success: "bg-object-success",
+                    warning: "bg-object-warning",
+                    negative: "bg-object-negative-enabled",
+                  }[status ?? "neutral"]
+            )}
+          />
+        </span>
+      )}
+      <span className="min-w-0 truncate [text-box-trim:trim-both] [text-box-edge:cap_alphabetic]">
+        {children}
+      </span>
     </div>
   );
 }

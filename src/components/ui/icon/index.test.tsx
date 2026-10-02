@@ -55,7 +55,7 @@ describe("Icon", () => {
     it("size指定で icon-<size>-fill-0 が付与される", () => {
       // Given: size指定のIcon
       // en: Given Icon with size
-      testContainer.render(<Icon icon="home" size={6} />);
+      testContainer.render(<Icon icon="home" size={7} />);
 
       // When: aria-hiddenなspan要素を取得
       // en: When selecting the aria-hidden span element
@@ -63,7 +63,7 @@ describe("Icon", () => {
 
       // Then: 指定サイズのクラスが付与される
       // en: Then class for specified size is applied
-      expect(StyleHelpers.hasClass(span, "icon-6-fill-0")).toBe(true);
+      expect(StyleHelpers.hasClass(span, "icon-7-fill-0")).toBe(true);
     });
 
     it("fill=true で icon-3-fill-1 が付与される", () => {
@@ -83,7 +83,7 @@ describe("Icon", () => {
     it("size と fill の両方を指定できる", () => {
       // Given: sizeとfillを指定
       // en: Given size and fill specified
-      testContainer.render(<Icon icon="home" size={8} fill />);
+      testContainer.render(<Icon icon="home" size={9} fill />);
 
       // When: aria-hiddenなspan要素を取得
       // en: When selecting the aria-hidden span element
@@ -91,7 +91,7 @@ describe("Icon", () => {
 
       // Then: 両方の指定に応じたクラス
       // en: Then class reflects both size and fill
-      expect(StyleHelpers.hasClass(span, "icon-8-fill-1")).toBe(true);
+      expect(StyleHelpers.hasClass(span, "icon-9-fill-1")).toBe(true);
     });
   });
 
@@ -118,7 +118,7 @@ describe("Icon", () => {
       // Given: 既にアイコングラフ用クラスを含む
       // en: Given className already includes the icon typography class
       testContainer.render(
-        <Icon icon="favorite" className="icon-10-fill-1 some-class" fill />
+        <Icon icon="favorite" className="icon-11-fill-1 some-class" fill />
       );
 
       // When: aria-hiddenなspan要素を取得
@@ -127,9 +127,9 @@ describe("Icon", () => {
 
       // Then: 既存クラスは残り、自動生成クラスは追加されない
       // en: Then keep provided class and do not add auto-generated one
-      expect(StyleHelpers.hasClass(span, "icon-10-fill-1")).toBe(true);
+      expect(StyleHelpers.hasClass(span, "icon-11-fill-1")).toBe(true);
       expect(span.className.includes("icon-3-fill-1")).toBe(false);
-      expect(span.className.includes("icon-6-fill-0")).toBe(false);
+      expect(span.className.includes("icon-7-fill-0")).toBe(false);
     });
   });
 

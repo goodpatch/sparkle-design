@@ -19,6 +19,26 @@ const renderTag = (props: React.ComponentProps<typeof Tag>) => {
 };
 
 describe("Tag", () => {
+  it("既定bodyにはドットを追加しない", () => {
+    const tag = renderTag({ children: "状態" });
+    expect(tag.querySelector('[aria-hidden="true"]')).toBeNull();
+  });
+  it.each([
+    ["solid", "warning", "bg-object-inverse"],
+    ["subtle", "success", "bg-object-success"],
+    ["outline", "negative", "bg-object-negative-enabled"],
+  ] as const)("%s/%sのドットは装飾として表示する", (variant, status, color) => {
+    const tag = renderTag({
+      body: "status",
+      variant,
+      status,
+      children: "状態",
+    });
+    const dot = tag.querySelector('[aria-hidden="true"]');
+    expect(dot).not.toBeNull();
+    expect(dot?.firstElementChild?.className).toContain(color);
+    expect(tag.textContent).toBe("状態");
+  });
   beforeEach(() => {
     testContainer = new TestContainer();
     testContainer.setup();
@@ -128,7 +148,7 @@ describe("Tag", () => {
 
       // Then: すべてのプロパティが適用される
       expect(tag).toHaveClass("border", "min-w-14", "custom");
-      expect(tag.className).toContain("border-object-info");
+      expect(tag.className).toContain("border-border-info");
     });
   });
 

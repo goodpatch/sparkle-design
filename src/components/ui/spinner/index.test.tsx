@@ -348,7 +348,7 @@ describe("Spinner", () => {
         <div>
           <Spinner data-testid="spinner-1" size={3} />
           <Spinner data-testid="spinner-2" size={5} />
-          <Spinner data-testid="spinner-3" size={8} />
+          <Spinner data-testid="spinner-3" size={9} />
         </div>
       );
 

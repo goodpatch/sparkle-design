@@ -15,7 +15,7 @@ npx shadcn@latest add https://sparkle-design.goodpatch.com/r/icon.json
 ## 使い方
 
 ```tsx
-<Icon icon="check" size={6} fill={true} />
+<Icon icon="check" size={7} fill={true} />
 ```
 
 ## 関連リンク

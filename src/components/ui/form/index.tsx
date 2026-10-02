@@ -364,7 +364,7 @@ function FormErrorMessage({ className, ...props }: React.ComponentProps<"p">) {
       )}
       {...props}
     >
-      <Icon icon="error" size={3} />
+      <Icon icon="error" size={3} className="text-object-negative-enabled" />
       {body}
     </p>
   );

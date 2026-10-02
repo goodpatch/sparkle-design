@@ -17,6 +17,7 @@ const meta: Meta<typeof Tag> = {
       control: "select",
       options: ["sm", "md", "lg"],
     },
+    body: { control: "select", options: ["none", "status"] },
     status: {
       control: "select",
       options: ["neutral", "info", "success", "warning", "negative"],
@@ -177,6 +178,36 @@ export const LineBreakPrevention: Story = {
           </Tag>
         </div>
       </div>
+    </div>
+  ),
+};
+
+// ステータスドットを含む全サイズ・色・表示方式を確認する。
+// en: Covers every size, status and variant with the decorative status dot.
+export const StatusBody: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      {(["solid", "outline", "subtle"] as const).map(variant => (
+        <div key={variant} className="flex flex-col gap-2">
+          {(["sm", "md", "lg"] as const).map(size => (
+            <div key={size} className="flex items-center gap-2">
+              {(
+                ["neutral", "info", "success", "warning", "negative"] as const
+              ).map(status => (
+                <Tag
+                  key={status}
+                  variant={variant}
+                  size={size}
+                  status={status}
+                  body="status"
+                >
+                  ラベル
+                </Tag>
+              ))}
+            </div>
+          ))}
+        </div>
+      ))}
     </div>
   ),
 };

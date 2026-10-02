@@ -9,6 +9,7 @@ import { AlertDialog as DialogPrimitive } from "radix-ui";
 
 import { cn } from "@/lib/utils";
 import { Button, ButtonProps } from "@/components/ui/button";
+import { Overlay } from "../overlay";
 import { Icon, IconProps } from "../icon";
 
 /**
@@ -91,14 +92,9 @@ function DialogOverlay({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Overlay>) {
   return (
-    <DialogPrimitive.Overlay
-      data-slot="dialog-overlay"
-      className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
-        className
-      )}
-      {...props}
-    />
+    <DialogPrimitive.Overlay {...props} asChild>
+      <Overlay data-slot="dialog-overlay" className={cn("z-50", className)} />
+    </DialogPrimitive.Overlay>
   );
 }
 
@@ -208,7 +204,7 @@ function DialogCancel({
 }: React.ComponentProps<typeof DialogPrimitive.Cancel>) {
   return (
     <DialogPrimitive.Cancel data-slot="dialog-cancel" asChild {...props}>
-      <Button variant="ghost" theme="neutral" size="sm" className={className}>
+      <Button variant="ghost" theme="neutral" size="md" className={className}>
         {children}
       </Button>
     </DialogPrimitive.Cancel>
@@ -239,7 +235,7 @@ function DialogAction({
 }: React.ComponentProps<typeof DialogPrimitive.Action> & ButtonProps) {
   return (
     <DialogPrimitive.Action data-slot="dialog-action" asChild {...props}>
-      <Button variant={variant} theme={theme} size="sm" className={className}>
+      <Button variant={variant} theme={theme} size="md" className={className}>
         {children}
       </Button>
     </DialogPrimitive.Action>

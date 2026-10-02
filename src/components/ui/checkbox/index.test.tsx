@@ -228,18 +228,18 @@ describe("Checkbox", () => {
       const testCases = [
         {
           size: "sm",
-          expectedOuterClasses: ["h-8", "w-8"],
+          expectedOuterClasses: ["h-8", "w-4"],
           expectedInnerClasses: ["h-4", "w-4"],
         },
         {
           size: "md",
-          expectedOuterClasses: ["h-10", "w-10"],
-          expectedInnerClasses: ["h-5", "w-5"],
+          expectedOuterClasses: ["h-10", "w-[18px]"],
+          expectedInnerClasses: ["h-[18px]", "w-[18px]"],
         },
         {
           size: "lg",
-          expectedOuterClasses: ["h-12", "w-12"],
-          expectedInnerClasses: ["h-6", "w-6"],
+          expectedOuterClasses: ["h-12", "w-5"],
+          expectedInnerClasses: ["h-5", "w-5"],
         },
       ] as const;
 

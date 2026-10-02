@@ -8,8 +8,8 @@ import { Icon, type IconSize } from "@/components/ui/icon";
 
 export interface SpinnerProps extends React.ComponentProps<"span"> {
   /**
-   * スピナーのサイズ（スケール値 1-12）
-   * en: Size of the spinner (scale value 1-12)
+   * スピナーのサイズ（スケール値 1-13）
+   * en: Size of the spinner (scale value 1-13)
    * @see IconSize
    */
   size?: IconSize;
@@ -23,12 +23,12 @@ export interface SpinnerProps extends React.ComponentProps<"span"> {
  *
  * **アンチパターン / Anti-patterns**
  *
- * - `size` にピクセル値（24, 32 など）を渡さないでください。スケール値（1-12）を使用してください。
- *   en: Do not pass pixel values to `size`. Use scale values (1-12) instead.
+ * - `size` にピクセル値（24, 32 など）を渡さないでください。スケール値（1-13）を使用してください。
+ *   en: Do not pass pixel values to `size`. Use scale values (1-13) instead.
  *
  * ```tsx
  * // ✅ Correct - スケール値
- * <Spinner size={6} />
+ * <Spinner size={7} />
  *
  * // ❌ Wrong - ピクセル値
  * <Spinner size={24} />
@@ -37,7 +37,7 @@ export interface SpinnerProps extends React.ComponentProps<"span"> {
  * **使用例 / Usage Example**
  *
  * ```tsx
- * <Spinner size={6} />
+ * <Spinner size={7} />
  * ```
  *
  * @param {SpinnerProps} props
