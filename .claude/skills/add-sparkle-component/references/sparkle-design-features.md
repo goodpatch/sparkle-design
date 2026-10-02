@@ -272,7 +272,7 @@ Icon / Spinner の `size` prop はスケール値（1-13）を受け取る。ピ
 // Correct - スケール値
 <Icon icon="settings" size={7} />
 
-// Button の prefixIcon/suffixIcon はサイズ自動設定（sm→4, md→5, lg→6）
+// Button の prefixIcon/suffixIcon はサイズ自動設定（sm→4, md→5, lg→7）
 <Button prefixIcon="check">確定</Button>
 ```
 
@@ -567,7 +567,7 @@ shadcn/ui と混在するプロジェクトでも、`character-*` / `text-text-*
 </Button>
 ```
 
-> Button は size に応じてアイコンサイズを自動設定する（sm→4, md→5, lg→6）。isLoading 時にアイコンを自動で非表示にする。`asChild` 使用時はアイコンやローディング表現をスロット先で組み立てる。
+> Button は size に応じてアイコンサイズを自動設定する（sm→4, md→5, lg→7）。isLoading 時にアイコンを自動で非表示にする。`asChild` 使用時はアイコンやローディング表現をスロット先で組み立てる。
 
 ### CardHeader: CardControl を使う
 

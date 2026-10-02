@@ -5,16 +5,14 @@
 
 ## [Unreleased]
 
-### Changed
-
-- 1.x を React 18 向けの**非推奨（deprecated）メンテナンスライン**とし、`v1` ブランチで続けます。入れるのは不具合・セキュリティの修正と、最新の CLI と噛み合わせるためのトークン・スタイルの追従だけで、新機能と React 19 前提の変更は 2.x にだけ入ります。README に React・CLI との対応表と移行の案内を追加しました
-- `Publish to npm` workflow が `v<N>` ブランチ（旧メジャーのメンテナンスライン）からの stage に対応しました。npm の `latest` がより新しいメジャーのときは `latest-<N>` に載せ、`latest` を巻き戻しません。GitHub Release も npm の `latest` でない版には「Latest」を付けません
-
 ## [2.0.0-beta.1] - 2026-10-02
 
 Figma の56ページ・374件の「スタイル更新」注釈を再監査した beta。Gray の色値確認は保留し、既存値を維持しています。
 
 ### Changed
+
+- 1.x を React 18 向けの**非推奨（deprecated）メンテナンスライン**とし、`v1` ブランチで続けます。入れるのは不具合・セキュリティの修正と、最新の CLI と噛み合わせるためのトークン・スタイルの追従だけで、新機能と React 19 前提の変更は 2.x にだけ入ります。README に React・CLI との対応表と移行の案内を追加しました
+- `Publish to npm` workflow が `v<N>` ブランチ（旧メジャーのメンテナンスライン）からの stage に対応しました。npm の `latest` がより新しいメジャーのときは `latest-<N>` に載せ、`latest` を巻き戻しません。GitHub Release も npm の `latest` でない版には「Latest」を付けません
 
 - Button・入力・Checkbox・Radio・Tabs・Link の文字サイズ、余白、フォーカス表示を注釈に合わせました。
 - Dialog／Modal は共通 Overlay を合成し、背景を `surface/overlay`（black 30%）へ統一しました。Radix の開閉制御を維持します。

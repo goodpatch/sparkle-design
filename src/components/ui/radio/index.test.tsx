@@ -100,7 +100,7 @@ describe("Radio", () => {
       const radioItem = testContainer.querySelector("#radio1");
       const indicator = radioItem.querySelector('div[class*="h-[18px]"]');
 
-      // Then: 外側はh-10（mediumサイズ）、内側はh-5（indicatorサイズ）が適用されている
+      // Then: 外側はh-10（mediumサイズ）、内側は18px（indicatorサイズ）が適用されている
       expect(StyleHelpers.hasClass(radioItem, "h-10")).toBe(true);
       expect(StyleHelpers.hasClass(radioItem, "w-[18px]")).toBe(true);
       expect(indicator).toBeTruthy();

@@ -11,8 +11,9 @@ import { cn } from "@/lib/utils";
 import { Icon } from "@/components/ui/icon";
 
 const checkboxItemVariants = cva(
+  // 表示寸法を維持しつつ、疑似要素で横24pxの操作領域を確保。en: Keep visuals, expand hit width to 24px.
   [
-    "relative rounded-sm transition-colors flex items-center justify-center cursor-pointer",
+    "relative before:absolute before:inset-y-0 before:left-1/2 before:w-6 before:-translate-x-1/2 before:content-[''] rounded-sm transition-colors flex items-center justify-center cursor-pointer",
     "focus:outline-none",
   ].join(" "),
   {

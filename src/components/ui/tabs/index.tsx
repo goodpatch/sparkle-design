@@ -105,7 +105,7 @@ const tabsListVariants = cva(["relative inline-flex items-center"], {
     },
     scrollable: {
       true: [
-        "w-full max-w-full justify-start gap-2 overflow-x-auto overflow-y-visible",
+        "w-full max-w-full justify-start gap-2 overflow-x-auto overflow-y-visible p-1",
         "whitespace-nowrap overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
       ].join(" "),
       false: "w-fit justify-center gap-2 overflow-visible",

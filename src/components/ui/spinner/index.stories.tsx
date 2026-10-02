@@ -16,7 +16,7 @@ const meta: Meta<typeof Spinner> = {
         max: 13,
         step: 1,
       },
-      defaultValue: 6,
+      defaultValue: 7,
     },
   },
 };
@@ -26,7 +26,7 @@ type Story = StoryObj<typeof Spinner>;
 
 export const Default: Story = {
   args: {
-    size: 6,
+    size: 7,
   },
 };
 

@@ -25,6 +25,17 @@ afterEach(() => {
 
 describe("Badge", () => {
   describe("Basic Rendering", () => {
+    it("2xsは8pxで数字を表示しない", () => {
+      testContainer.render(
+        <Badge size="2xs" isNumberVisible>
+          5
+        </Badge>
+      );
+      const badge = testContainer.querySelector("div");
+      expect(badge.className).toContain("h-2");
+      expect(badge.className).toContain("w-2");
+      expect(badge.textContent).toBe("");
+    });
     it("renders a basic badge with number", () => {
       // Given: 基本的なBadge
       testContainer.render(<Badge>5</Badge>);

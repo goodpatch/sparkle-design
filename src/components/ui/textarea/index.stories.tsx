@@ -95,12 +95,11 @@ export const DisabledWithInvalidState: Story = {
 
 /**
  * サイズバリエーション
- * sm（小）、md（中）、lg（大）の3サイズ
+ * md（標準）、lg（大）の2サイズ
  */
 export const SizeVariations: Story = {
   render: () => (
     <div className="flex flex-col gap-4 w-[400px]">
-      <Textarea placeholder="小サイズのテキストエリア" size="md" />
       <Textarea placeholder="標準サイズのテキストエリア" size="md" />
       <Textarea placeholder="大サイズのテキストエリア" size="lg" />
     </div>

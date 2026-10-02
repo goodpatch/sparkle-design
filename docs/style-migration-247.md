@@ -5,6 +5,7 @@
 
 ## API と consumer の移行
 
+- Icon: 既定色はobject/neutral/high。色付きの親要素に追随させるconsumerはclassName="text-current"を指定。
 - Icon/Spinner: size=6を22pxとして追加。旧size6〜12で実寸を維持する参照は7〜13に変更。character段階は据え置き。Code Connect・サンプル・同梱スキルを追随。
 - Badge: 従来xs（8px）は2xsに変更。新xsは14px。Code Connectのsize軸も追随。
 - Tag: body=none/statusを追加。ステータスドットは装飾としてaria-hidden。色・最小高さ・leadingTrim・余白は注釈を採用。

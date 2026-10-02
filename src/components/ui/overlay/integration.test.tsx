@@ -1,10 +1,20 @@
+/** @jest-environment jsdom */
 import React from "react";
-import { afterEach, describe, expect, it } from "vitest";
+import { TestContainer } from "../../../test/helpers";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { Dialog, DialogContent, DialogTitle, DialogCancel } from "../dialog";
 import { Modal, ModalContent, ModalTitle, ModalClose } from "../modal";
 
-afterEach(cleanup);
+let testContainer: TestContainer;
+beforeEach(() => {
+  testContainer = new TestContainer();
+  testContainer.setup();
+});
+afterEach(() => {
+  cleanup();
+  testContainer.cleanup();
+});
 
 describe("共通 Overlay の合成", () => {
   it("Dialog の開閉状態とキャンセル操作を維持する", () => {
