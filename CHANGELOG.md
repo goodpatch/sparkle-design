@@ -5,6 +5,12 @@
 
 ## [Unreleased]
 
+## [1.0.8] - 2026-10-13
+
+### Security
+
+- `shadcn` を `dependencies` から `devDependencies` に移しました。`shadcn` はレジストリのビルドにだけ使う CLI です。利用側のプロジェクトに `@modelcontextprotocol/sdk` → `express` → `proxy-addr` などの依存（critical の脆弱性を含む）を持ち込まなくなります (#350)
+
 ### Changed
 
 - 1.x を React 18 向けの**非推奨（deprecated）メンテナンスライン**とし、この `v1` ブランチで続けます。不具合・セキュリティの修正と、最新の CLI と噛み合わせるためのトークン・スタイルの追従だけを行います。React 19 以上は 2.x をお使いください
