@@ -1,0 +1,28 @@
+# npm はセキュリティ更新のみ（open-pull-requests-limit: 0 でバージョン更新 PR を止める）。
+# GitHub Actions は週次でまとめて更新する。
+# en: npm gets security updates only (limit 0 disables version-update PRs);
+# en: GitHub Actions are updated weekly as one grouped PR.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Tokyo
+    open-pull-requests-limit: 0
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Tokyo
+    groups:
+      actions:
+        patterns: ["*"]
