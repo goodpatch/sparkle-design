@@ -62,9 +62,6 @@ importers:
       react-hook-form:
         specifier: ^7.63.0
         version: 7.63.0(react@19.2.8)
-      shadcn:
-        specifier: ^2.5.0
-        version: 2.6.3(@types/node@20.19.0)(typescript@5.8.3)
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -162,6 +159,9 @@ importers:
       react-dom:
         specifier: ^19
         version: 19.2.8(react@19.2.8)
+      shadcn:
+        specifier: ^2.5.0
+        version: 2.6.3(@types/node@20.19.0)(typescript@5.8.3)
       storybook:
         specifier: ^10.3.5
         version: 10.3.5(@testing-library/dom@10.4.0)(prettier@3.6.2)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
