@@ -9,7 +9,7 @@ jobs:
   lint-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # .tool-versionsファイルからNode.jsとpnpmのバージョンを読み取り
       - name: Read .tool-versions
@@ -19,12 +19,12 @@ jobs:
           echo "pnpm-version=$(grep pnpm .tool-versions | cut -d' ' -f2)" >> $GITHUB_OUTPUT
 
       # pnpmセットアップ（.tool-versionsから読み取ったバージョンを使用）
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
           version: ${{ steps.tool-versions.outputs.pnpm-version }}
 
       # Node.jsセットアップ（.tool-versionsから読み取ったバージョンを使用）
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: ${{ steps.tool-versions.outputs.node-version }}
           cache: "pnpm"
