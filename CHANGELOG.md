@@ -5,6 +5,17 @@
 
 ## [Unreleased]
 
+## [2.0.0-beta.3] - 2026-10-13
+
+### Security
+
+- `shadcn` を `dependencies` から `devDependencies` に移しました。`shadcn` はレジストリのビルドにだけ使う CLI です。利用側のプロジェクトに `@modelcontextprotocol/sdk` → `express` → `proxy-addr` などの依存（critical の脆弱性を含む）を持ち込まなくなります (#347)
+- 開発用の `next` を 15.5.27 に上げ、lockfile 上の `brace-expansion` / `js-yaml` / `qs` / `hono` などを patched version に更新しました。`pnpm.overrides` は保ったままです (#348)
+
+### Changed
+
+- Dependabot と、週次で本番依存を監査するワークフローを追加しました (#344)
+
 ## [2.0.0-beta.2] - 2026-10-02
 
 ### Fixed
