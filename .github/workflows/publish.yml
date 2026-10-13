@@ -223,6 +223,6 @@ jobs:
             echo "#### 次の手順 / Next steps"
             echo ""
             echo "1. 中身を確認する（任意）: \`npx -y npm@11.21.0 stage download $STAGE_ID --registry=https://registry.npmjs.org\`"
-            echo "2. 2FA 付きで承認して公開する: \`npx -y npm@11.21.0 stage approve $STAGE_ID --registry=https://registry.npmjs.org --otp=<code>\`（不要なら \`npx -y npm@11.21.0 stage reject $STAGE_ID --registry=https://registry.npmjs.org --otp=<code>\`）"
+            echo "2. 2FA 付きで承認して公開する（2FA は表示される URL をブラウザで開いて完了する。\`--otp\` は不要）: \`npx -y npm@11.21.0 stage approve $STAGE_ID --registry=https://registry.npmjs.org\`（不要なら \`npx -y npm@11.21.0 stage reject $STAGE_ID --registry=https://registry.npmjs.org\`）"
             echo "3. 公開後に tag と GitHub Release を作る: \`gh workflow run \"Publish GitHub Release\" --repo ${GITHUB_REPOSITORY} -f ref=${GITHUB_SHA}\`"
           } >> "$GITHUB_STEP_SUMMARY"

@@ -137,12 +137,12 @@ npm は 2027 年 1 月に granular access token での直接 publish を廃止�
   ```
   - stage した時点では**まだ公開されていない**（`npm stage reject` で取り下げられる）。dist-tag は stage 時に決まり、承認時には変えられない
   - 実行結果の Summary に **stage ID・commit（stage した commit）・承認コマンド**が出る。以降はこの commit を使う
-- [ ] 👤 **メンテナーが 2FA 付きで承認する**（AI は実行しない）。手元で `npm login --registry=https://registry.npmjs.org` 済みであること（社内 proxy が既定 registry の環境があるので、コマンドには必ず `--registry` を付ける）。必要なら先に中身を確認する:
+- [ ] 👤 **メンテナーが 2FA 付きで承認する**（AI は実行しない）。2FA はコマンドが表示する URL をブラウザで開いて完了する（Web 認証）。`--otp` は付けない（案内するコマンドにも付けない。Web 認証が E404 で通らないときだけ `--auth-type=legacy --otp=<code>` を試す）。手元で `npm login --registry=https://registry.npmjs.org` 済みであること（社内 proxy が既定 registry の環境があるので、コマンドには必ず `--registry` を付ける）。必要なら先に中身を確認する:
   ```bash
   npx -y npm@11.21.0 stage download <stage-id> --registry=https://registry.npmjs.org   # 任意: tarball を確認
-  npx -y npm@11.21.0 stage approve <stage-id> --otp=<code> --registry=https://registry.npmjs.org
+  npx -y npm@11.21.0 stage approve <stage-id> --registry=https://registry.npmjs.org
   ```
-  取り下げる場合は `npx -y npm@11.21.0 stage reject <stage-id> --otp=<code> --registry=https://registry.npmjs.org`
+  取り下げる場合は `npx -y npm@11.21.0 stage reject <stage-id> --registry=https://registry.npmjs.org`
 - [ ] 公開確認: `npm view sparkle-design@X.Y.Z version --registry=https://registry.npmjs.org` と `npm view sparkle-design dist-tags --registry=https://registry.npmjs.org`（社内 proxy 経由だと反映が遅れるので registry を明示する）
 - [ ] 🛑 **tag と GitHub Release を作る** — 公開を確認してから、Summary に出た commit を渡して実行する。ワークフローは npm 上の公開と `gitHead` がその commit と一致することを確かめてから tag を打ち、CHANGELOG の節で Release を作る（`-` を含む版は pre-release）:
   ```bash
