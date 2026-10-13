@@ -100,7 +100,7 @@ pnpm test      # Component tests
 npm removes direct publishing with granular access tokens in January 2027. CI authenticates with **trusted publishing (GitHub Actions OIDC, no token)** and only **stages** releases:
 
 1. `gh workflow run "Publish to npm" --ref main` stages the version (not public yet; dist-tag is fixed at stage time). `--ref` takes a branch or tag, not a SHA
-2. A maintainer approves with 2FA: `npx -y npm@11.21.0 stage approve <stage-id> --otp=<code> --registry=https://registry.npmjs.org` — **agents never run this**
+2. A maintainer approves with 2FA: `npx -y npm@11.21.0 stage approve <stage-id> --registry=https://registry.npmjs.org` (2FA is completed in the browser via web auth; do not add `--otp`) — **agents never run this**
 3. After it is public: `gh workflow run "Publish GitHub Release" -f ref=<commit shown in the stage Summary>` creates the tag and GitHub Release
 
 **1.x is a deprecated maintenance line for React 18** on the `v1` branch: bug and security fixes, plus token/style updates needed to stay compatible with the latest sparkle-design-cli (the CLI is never pinned, so 1.x must follow its tokens). No new features or React 19-only code (ref-as-prop). Release CLI token changes to `latest` only after 1.x has followed them. Backport with `git cherry-pick -x` into a PR based on `v1`, and stage with `gh workflow run "Publish to npm" --ref v1` (published under `latest-1` once 2.x is `latest`).
