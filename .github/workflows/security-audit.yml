@@ -1,0 +1,80 @@
+# 本番依存（devDependencies を除く）の既知脆弱性を週次で監査する。
+# critical / high が見つかったら Issue（label: security-audit）を作成・更新し、解消したら閉じる。
+# PR のゲートにはしない（既存の推移的依存で無関係な PR が止まるのを避けるため）。
+# 背景: IPA「不正アクセスによる漏えい等の事案を踏まえ、速やかに実施すべき対策等について」(2026-10-09)
+# en: Weekly audit of production dependencies. Opens/updates an issue labelled
+# en: `security-audit` when critical/high advisories exist, and closes it once resolved.
+name: Security Audit
+
+on:
+  schedule:
+    - cron: "0 0 * * 1" # 毎週月曜 09:00 JST / every Monday 09:00 JST
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: security-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Audit production dependencies
+        id: audit
+        run: |
+          set +e
+          if [ -f pnpm-lock.yaml ]; then
+            npx -y pnpm@10.12.4 audit --prod --json --registry=https://registry.npmjs.org > audit.json 2>/dev/null
+            npx -y pnpm@10.12.4 audit --prod --registry=https://registry.npmjs.org > audit.txt 2>&1
+          else
+            npm audit --omit=dev --package-lock-only --json --registry=https://registry.npmjs.org > audit.json 2>/dev/null
+            npm audit --omit=dev --package-lock-only --registry=https://registry.npmjs.org > audit.txt 2>&1
+          fi
+          set -e
+          node <<'EOF'
+          const fs = require("fs");
+          const v = JSON.parse(fs.readFileSync("audit.json", "utf8")).metadata?.vulnerabilities;
+          if (!v) { console.error("audit.json に metadata.vulnerabilities がありません"); process.exit(1); }
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `critical=${v.critical}\nhigh=${v.high}\n`);
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,
+            `### 本番依存の監査結果\n\n| critical | high | moderate | low |\n|---|---|---|---|\n| ${v.critical} | ${v.high} | ${v.moderate} | ${v.low} |\n`);
+          EOF
+
+      - name: Open or update issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CRITICAL: ${{ steps.audit.outputs.critical }}
+          HIGH: ${{ steps.audit.outputs.high }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh label create security-audit --color B60205 --description "週次セキュリティ監査" --force >/dev/null
+          issue=$(gh issue list --state open --label security-audit --json number --jq '.[0].number // empty')
+          if [ "$CRITICAL" -eq 0 ] && [ "$HIGH" -eq 0 ]; then
+            if [ -n "$issue" ]; then
+              gh issue close "$issue" --comment "本番依存の critical / high は解消しました（[実行結果]($RUN_URL)）。"
+            fi
+            exit 0
+          fi
+          {
+            echo "本番依存に **critical: $CRITICAL / high: $HIGH** の既知脆弱性があります（[実行結果]($RUN_URL)）。"
+            echo
+            echo '<details><summary>audit の出力</summary>'
+            echo
+            echo '```'
+            head -c 50000 audit.txt
+            echo '```'
+            echo
+            echo '</details>'
+          } > body.md
+          if [ -n "$issue" ]; then
+            gh issue comment "$issue" --body-file body.md
+          else
+            gh issue create --title "🔒 本番依存に既知の脆弱性があります（週次セキュリティ監査）" --label security-audit --body-file body.md
+          fi
