@@ -69,6 +69,8 @@ user-invocable: true
 npx --yes sparkle-design-cli setup --assistant claude
 ```
 
+> 2.x（React 19）を beta で使う間は、この SKILL.md に出てくる `sparkle-design-cli` をすべて `sparkle-design-cli@beta` に読み替える（`setup` / `generate` / `check` とも）。タグなしは 1.x 向けの安定版 CLI を解決し、2.x と噛み合わないトークンを生成する。
+
 このコマンド 1 つで以下が全て実行される:
 
 1. **パッケージマネージャー検出** -- pnpm / yarn / bun / npm を lockfile から自動判定
