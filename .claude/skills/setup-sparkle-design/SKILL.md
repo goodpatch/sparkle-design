@@ -54,11 +54,22 @@ user-invocable: true
 
 ---
 
+## バージョンの選び方
+
+| プロジェクトの React | 使うバージョン | インストール |
+|---|---|---|
+| 19 | **2.x**（現行。現在は beta で、`latest` はまだ 1.x） | `npm install sparkle-design@beta`（CLI も `npx --yes sparkle-design-cli@beta`） |
+| 18 | **1.x**（非推奨のメンテナンスライン） | `npm install sparkle-design@1` |
+
+2.x は `ref` を通常の props として受け取る React 19 の方式のため、React 18 では `ref` や Radix の `asChild` 経由の組み合わせが正しく動かない（npm では peer 依存の衝突で止まる）。詳細は README の「バージョンと React・CLI の対応」を参照。
+
 ## Quick Start（1 コマンド）
 
 ```bash
 npx --yes sparkle-design-cli setup --assistant claude
 ```
+
+> 2.x（React 19）を beta で使う間は、この SKILL.md に出てくる `sparkle-design-cli` をすべて `sparkle-design-cli@beta` に読み替える（`setup` / `generate` / `check` とも）。タグなしは 1.x 向けの安定版 CLI を解決し、2.x と噛み合わないトークンを生成する。
 
 このコマンド 1 つで以下が全て実行される:
 

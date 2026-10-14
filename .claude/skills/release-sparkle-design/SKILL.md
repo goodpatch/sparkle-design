@@ -213,7 +213,7 @@ npx -y npm@11.21.0 trust list sparkle-design --registry=https://registry.npmjs.o
 
 - `--allow-stage-publish` だけを付け、`--allow-publish` は付けない（CI から直接公開できないようにし、公開の確定を人の 2FA に限る）
 - ワークフローのファイル名（`publish.yml`）やリポジトリ名を変えたら設定し直す
-- OIDC で stage できることを確認したら、リポジトリの `NPM_TOKEN` secret は削除する（`gh secret delete NPM_TOKEN --repo goodpatch/sparkle-design`）
+- リポジトリの `NPM_TOKEN` secret は OIDC での stage を確認したうえで削除済み（2026-10）。publish 系のワークフローはトークンを使わない
 
 ### マージ後のローカル checkout が worktree と衝突する
 

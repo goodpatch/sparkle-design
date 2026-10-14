@@ -4,7 +4,7 @@
 "Sparkle Design" is a React component library built with modern web technologies, providing consistent UI components for web applications.
 
 ## Technology Stack
-- **Framework**: Next.js 15.5.18 + React 18 + TypeScript
+- **Framework**: Next.js 15 + React 19 + TypeScript (1.x on the `v1` branch is the React 18 maintenance line)
 - **Styling**: TailwindCSS 4 + CVA (Class Variance Authority)
 - **Testing**: Vitest + Testing Library + jsdom
 - **Documentation**: Storybook

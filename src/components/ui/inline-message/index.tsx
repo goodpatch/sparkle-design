@@ -87,6 +87,8 @@ export interface InlineMessageProps
  *
  * - インラインメッセージはユーザーにシステムやサービスの状態を伝えるために使用するコンポーネントです。
  * - en: The InlineMessage component is used to convey system or service status to users.
+ * - 既定の幅は Figma と同じ 448px（`max-w-full` で親より広がらない）。`w-fit` / `inline-flex` / auto の grid トラックなど、中身の幅で決まる親の中では親を 448px まで押し広げるため、`className="w-full"` を渡すか `contain: inline-size` の要素で包む。
+ * - en: The default width is 448px, matching Figma (capped by `max-w-full`). Inside a parent sized by its content (`w-fit`, `inline-flex`, auto grid tracks), it widens the parent to 448px; pass `className="w-full"` or wrap it in an element with `contain: inline-size`.
  *
  * **使用例 / Usage Example**
  *

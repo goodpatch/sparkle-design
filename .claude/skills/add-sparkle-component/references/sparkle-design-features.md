@@ -249,6 +249,8 @@ Sparkle Design uses Material Symbols for icons.
 
 Icon / Spinner の `size` prop はスケール値（1-13）を受け取る。ピクセル値は渡さないこと。
 
+> **1.x（`sparkle-design@1`）は旧スケール（1-12）**。22px が無く、6 → 24px / 7 → 28px … 12 → 54px と 1 つずつずれる。Button の自動設定も lg→6。`package.json` の `sparkle-design` のメジャーを見て読み替えること（下表と以降の例は 2.x）。
+
 | scale | px  | 用途例 |
 |-------|-----|--------|
 | 1     | 12  | 極小 |
