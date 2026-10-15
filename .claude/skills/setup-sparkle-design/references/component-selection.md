@@ -16,10 +16,10 @@ UI コンポーネントは以下の優先順位で選択する:
 2. 該当コンポーネントがあればそれを使う
 3. なければ shadcn/ui を確認し、使う場合は Sparkle Design トークンに統一する
 4. shadcn/ui 由来の以下のトークンは使わない:
-   - `text-muted-foreground` -> `text-text-low`
-   - `bg-background` -> `bg-white` or `bg-neutral-50`
+   - `text-muted-foreground` -> `text-text-neutral-low`
+   - `bg-background` -> `bg-surface-base-0`（白） or `bg-surface-base-100`
    - `font-medium` -> `character-*` utility
-   - `hover:bg-accent` -> `hover:bg-neutral-50`
+   - `hover:bg-accent` -> `hover:bg-surface-neutral-low-hover`
 
 ---
 
@@ -65,7 +65,7 @@ npx --yes sparkle-design-cli check src --format json
    <CardDescription className="text-sm text-muted-foreground">
 
    // After
-   <CardDescription className="character-3-regular-pro text-text-low"> {/* character-3: 16px / 行高 24px */}
+   <CardDescription className="character-3-regular-pro text-text-neutral-low"> {/* character-3: 16px / 行高 24px */}
    ```
 
 3. **Typography を `character-*` utility に統一**
@@ -92,9 +92,9 @@ pnpm type-check && pnpm build
 
 | shadcn/ui | Sparkle Design | 用途 |
 |-----------|---------------|------|
-| `text-muted-foreground` | `text-text-low` | 補足テキスト |
-| `bg-background` | `bg-white` | 背景 |
-| `border-border` | `border-divider-middle` | 区切り線 |
-| `hover:bg-accent` | `hover:bg-neutral-50` | ホバー背景 |
+| `text-muted-foreground` | `text-text-neutral-low` | 補足テキスト |
+| `bg-background` | `bg-surface-base-0` | 背景 |
+| `border-border` | `border-border-neutral-middle` | 区切り線 |
+| `hover:bg-accent` | `hover:bg-surface-neutral-low-hover` | ホバー背景 |
 | `text-sm` | `character-2-regular-pro`（14px / 行高 24px） | テキストサイズ |
 | `font-medium` | `character-*-bold-pro` | テキストウェイト |
