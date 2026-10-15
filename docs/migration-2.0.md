@@ -194,7 +194,7 @@ npx --yes sparkle-design-cli@beta check src
 
 | 旧 | 新 |
 |---|---|
-| `--radius-halfModal` | `--radius-container` |
+| `--radius-halfModal` | `--radius-container`（`radius` が `md` のとき 8px、`lg` のとき 12px） |
 
 Figma で `halfModal` が `container` にリネームされました。`--radius-halfModal` は beta の間だけ残している後方互換のエイリアスです。**削除されると角丸がエラーも出ずに消える**ため、`rounded-[var(--radius-halfModal)]` のような直接参照は `migrate` で置き換えてください（自動変換可）。
 

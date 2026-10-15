@@ -65,12 +65,12 @@ npx --yes sparkle-design-cli check src --format json
    <CardDescription className="text-sm text-muted-foreground">
 
    // After
-   <CardDescription className="character-3-regular-pro text-text-low">
+   <CardDescription className="character-3-regular-pro text-text-low"> {/* character-3: 16px / 行高 24px */}
    ```
 
 3. **Typography を `character-*` utility に統一**
    - 素の `text-sm` / `leading-*` / `tracking-*` 組み合わせを廃止
-   - Sparkle Design の `character-*-pro` / `character-*-mono` に置き換え
+   - Sparkle Design の `character-*-pro` / `character-*-mono` に置き換え（`character-1`（12px）〜 `character-12`（54px））
 
 4. **不要になった旧コンポーネントファイルを削除**
    - `src/components/ui/` 内の shadcn/ui ソースコピーを削除
@@ -96,5 +96,5 @@ pnpm type-check && pnpm build
 | `bg-background` | `bg-white` | 背景 |
 | `border-border` | `border-divider-middle` | 区切り線 |
 | `hover:bg-accent` | `hover:bg-neutral-50` | ホバー背景 |
-| `text-sm` | `character-2-regular-pro` | テキストサイズ |
+| `text-sm` | `character-2-regular-pro`（14px / 行高 24px） | テキストサイズ |
 | `font-medium` | `character-*-bold-pro` | テキストウェイト |
