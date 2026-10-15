@@ -111,7 +111,7 @@ Components use CVA for type-safe variant composition.
 
 ```tsx
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md font-medium transition-colors",
+  "inline-flex items-center justify-center rounded-md font-medium transition-colors", // rounded-md = --radius-md（6px）
   {
     variants: {
       variant: {
@@ -271,10 +271,10 @@ Icon / Spinner の `size` prop はスケール値（1-13）を受け取る。ピ
 // Wrong - ピクセル値
 <Icon icon="settings" size={24} />
 
-// Correct - スケール値
+// Correct - スケール値（7 = 24px）
 <Icon icon="settings" size={7} />
 
-// Button の prefixIcon/suffixIcon はサイズ自動設定（sm→4, md→5, lg→7）
+// Button の prefixIcon/suffixIcon はサイズ自動設定（sm→4（18px）, md→5（20px）, lg→7（24px））
 <Button prefixIcon="check">確定</Button>
 ```
 
@@ -420,9 +420,11 @@ Available color options:
 
 ### Custom Radius
 
-Available radius options:
+Available radius options（`sparkle-variables/radius.csv` の `name` 列。`full` は入力値として存在しない）:
 
-- `none`, `sm`, `md`, `lg`, `xl`, `full`
+- `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`
+
+各プロファイルで `--radius-action` / `--radius-container` / `--radius-modal` が指す実寸: `none` 0 / 0 / 0px、`xs` 2 / 4 / 6px、`sm` 4 / 6 / 8px、`md` 6 / 8 / 12px、`lg` 8 / 12 / 16px、`xl` 12 / 16 / 24px、`2xl` 16 / 24 / 24px、`3xl` 24 / 24 / 24px
 
 ### Custom Fonts
 

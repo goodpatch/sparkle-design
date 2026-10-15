@@ -188,7 +188,7 @@ Material Symbols Rounded アイコンを表示。
 import { Icon } from "sparkle-design";
 
 <Icon>home</Icon>
-<Icon size={6} fill={1}>favorite</Icon>
+<Icon size={6} fill={1}>favorite</Icon> {/* size 6 = 22px */}
 ```
 
 ---

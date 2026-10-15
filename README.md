@@ -41,7 +41,7 @@ CLI はどちらのバージョンでも固定せず最新を使います。CLI 
 
 1.x を使い続ける場合も、CLI が生成するトークンが変わったときは、アプリ側で使っている旧トークンのクラスを `migrate` で確認してください。
 
-1.x から 2.x へは、プロジェクトを React 19 に上げてから移行してください。旧トークン（`text-neutral-900` など）から新トークンへの置き換えは `npx --yes sparkle-design-cli@beta migrate` で確認できます（既定は変更内容の表示のみ。`--write` で書き換え）。
+1.x から 2.x へは、プロジェクトを React 19 に上げてから移行してください。旧トークン（`text-neutral-900` など）から新トークンへの置き換えは `npx --yes sparkle-design-cli@beta migrate` で確認できます（既定は変更内容の表示のみ。`--write` で書き換え）。手順と主な変更点は [1.x から 2.0 への移行ガイド](https://github.com/goodpatch/sparkle-design/blob/main/docs/migration-2.0.md) を参照してください。
 
 ## クイックスタート
 

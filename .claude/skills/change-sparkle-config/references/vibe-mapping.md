@@ -14,7 +14,7 @@
 **SKILL.md の許可リストと同一**。reference 単独参照でも自己完結できるよう再掲する:
 
 - **primary**: `blue` / `red` / `orange` / `green` / `purple` / `pink` / `yellow`
-- **radius**: `none` / `xs` / `sm` / `md` / `lg` / `xl` / `2xl` / `3xl`
+- **radius**: `none` / `xs` / `sm` / `md` / `lg` / `xl` / `2xl` / `3xl`（`--radius-action` / `--radius-container` / `--radius-modal` の実寸: `none` 0 / 0 / 0px、`xs` 2 / 4 / 6px、`sm` 4 / 6 / 8px、`md` 6 / 8 / 12px、`lg` 8 / 12 / 16px、`xl` 12 / 16 / 24px、`2xl` 16 / 24 / 24px、`3xl` 24 / 24 / 24px。`radius.csv` の対応と生成 CSS の `--radius-*` primitive から算出）
 - **font-pro**（proportional 用途 OK なもの）: `BIZ UDPGothic` / `Noto Sans JP` / `IBM Plex Sans JP` / `Inter` / `Roboto` / `Lato` / `Open Sans` / `Montserrat` / `Hiragino Sans`
 - **font-mono**（monospace 用途 OK なもの）: `BIZ UDGothic` / `Noto Sans JP` / `IBM Plex Sans JP` / `Inter` / `Roboto Mono` / `Lato` / `Open Sans` / `Montserrat` / `Hiragino Sans`
 

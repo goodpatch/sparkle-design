@@ -97,6 +97,8 @@ user-invocable: true
 
 `none` / `xs` / `sm` / `md` / `lg` / `xl` / `2xl` / `3xl`
 
+各段の実寸（`--radius-action` / `--radius-container` / `--radius-modal`）: `none` 0 / 0 / 0px、`xs` 2 / 4 / 6px、`sm` 4 / 6 / 8px、`md` 6 / 8 / 12px、`lg` 8 / 12 / 16px、`xl` 12 / 16 / 24px、`2xl` 16 / 24 / 24px、`3xl` 24 / 24 / 24px（`radius.csv` の対応と生成 CSS の `--radius-*` primitive から算出）
+
 > ⚠️ `full` は `sparkle-variables/radius.csv` に **入力キーとして存在しない**（`round` 列の semantic 出力にのみ現れる）。`radius: "full"` や上記以外の値は `generate` 実行時にエラーで停止する（型検証あり）。丸みを最大化したい場合は `3xl` を使う。
 
 #### font-pro / font-mono（11 種、用途制限あり）
