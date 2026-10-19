@@ -167,7 +167,7 @@ npm は 2027 年 1 月に granular access token での直接 publish を廃止�
 
 ### 完了報告
 
-- [ ] チームへリリース完了を共有（Slack / esa など）
+- [ ] チームへリリース完了を共有（Slack / Gp space など）
 - [ ] CHANGELOG.md / GitHub Release / npm の 3 つが揃っていることを最終確認
 
 ---
