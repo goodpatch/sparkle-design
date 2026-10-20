@@ -5,6 +5,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Modal の `size` ごとの最大幅を Figma とガイドラインに合わせました（md 480px → 512px、lg 640px → 672px、xl 960px → 1024px。sm の 320px は変わりません）
+
 ## [2.0.0-beta.3] - 2026-10-13
 
 ### Security
