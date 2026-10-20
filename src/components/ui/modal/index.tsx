@@ -135,11 +135,11 @@ function ModalOverlay({
 export type ModalSize =
   // 320px
   | "sm"
-  // 480px
+  // 512px
   | "md"
-  // 640px
+  // 672px
   | "lg"
-  // 960px
+  // 1024px
   | "xl"
   // 100vw
   | "full";
@@ -184,11 +184,11 @@ function ModalContent({
     size === "sm"
       ? "max-w-xs"
       : size === "md"
-        ? "max-w-[480px]"
+        ? "max-w-[512px]"
         : size === "lg"
-          ? "max-w-[640px]"
+          ? "max-w-[672px]"
           : size === "xl"
-            ? "max-w-[960px]"
+            ? "max-w-[1024px]"
             : size === "full"
               ? "max-w-[calc(100vw-80px)] h-[calc(100vh-80px)] overflow-hidden"
               : "";
