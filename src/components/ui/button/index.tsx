@@ -30,7 +30,9 @@ const buttonVariants = cva(
         ghost: "",
       },
       size: {
-        sm: "h-8 min-w-16 px-3 py-1 character-1-bold-pro",
+        // sm の文字は同じ高さの Input / Select（sm）に揃えて 14px（Figma の最終調整）
+        // en: sm text is 14px to match sm Input / Select of the same height (Figma final pass).
+        sm: "h-8 min-w-16 px-3 py-1 character-2-bold-pro",
         md: "h-10 min-w-20 px-4 py-1.5 character-2-bold-pro",
         lg: "h-12 min-w-24 px-5 py-2 character-3-bold-pro",
       },
