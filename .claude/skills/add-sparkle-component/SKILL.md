@@ -62,7 +62,7 @@ Before installing components, ensure the project has:
 1. **Registry Configuration** - `components.json` with Sparkle Design registry
 2. **Sparkle Config** - `sparkle.config.json` (optional but recommended)
 3. **Package Manager** - npm, pnpm, yarn, or bun installed
-4. **Node.js** - Version 18.0.0 or higher for consumer projects (sparkle-design itself is developed on 22.14.0; see `.tool-versions`)
+4. **Node.js** - Version 18.0.0 or higher for consumer projects (sparkle-design itself is developed on Node 22 LTS; the exact patch is pinned in `.tool-versions`)
 
 ### Validate Configuration
 

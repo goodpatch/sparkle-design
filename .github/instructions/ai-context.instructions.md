@@ -13,7 +13,7 @@ applyTo: "**"
 - **Testing**: Vitest + Testing Library + jsdom
 - **Documentation**: Storybook
 - **Package Manager**: pnpm
-- **Node.js**: 22.14.0 (see `.node-version`)
+- **Node.js**: 22 LTS (exact patch pinned in `.node-version`)
 
 ## Project Structure
 ```
@@ -80,7 +80,7 @@ pnpm test      # Component tests
 - **No direct push to `main`**: always go through a PR (admin merge required)
 - **PR merges use normal merge (`--merge`)**: never squash-merge (squashing loses commits)
 - **Update the lockfile whenever `package.json` changes**: CI runs `pnpm install --frozen-lockfile` and will fail otherwise
-- **Use the pinned toolchain**: Node.js 22.14.0 / pnpm 10.12.4 (see `.tool-versions`; newer pnpm majors can rewrite the lockfile)
+- **Use the pinned toolchain**: Node.js 22 LTS / pnpm 10.12.4 (see `.tool-versions`; newer pnpm majors can rewrite the lockfile)
 
 ### npm Releases Use Staged Publishing via OIDC
 npm removes direct publishing with granular access tokens in January 2027. CI authenticates with **trusted publishing (GitHub Actions OIDC, no token)** and only **stages** releases:
