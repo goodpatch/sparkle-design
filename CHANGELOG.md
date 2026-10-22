@@ -5,6 +5,10 @@
 
 ## [Unreleased]
 
+### Security
+
+- 開発用の `next` を 15.5.18 から 15.5.28 に上げました（2026-10-14 のセキュリティリリース）。`next` は devDependencies なので、パッケージの利用者には影響しません
+
 ### Fixed
 
 - Modal の `size` ごとの最大幅を Figma とガイドラインに合わせました（md 480px → 512px、lg 640px → 672px、xl 960px → 1024px。sm の 320px は変わりません）
