@@ -5,13 +5,20 @@
 
 ## [Unreleased]
 
+## [2.0.0-beta.4] - 2026-10-22
+
 ### Changed
 
-- Button の `size="sm"` の文字を 12px（`character-1-bold-pro`）から 14px（`character-2-bold-pro`）にしました。同じ高さの Input / Select（sm）と文字サイズを揃えるための Figma の最終調整です
+- Button の `size="sm"` の文字を 12px（`character-1-bold-pro`）から 14px（`character-2-bold-pro`）にしました。同じ高さの Input / Select（sm）と文字サイズを揃えるための Figma の最終調整です (#360)
 
 ### Fixed
 
-- Modal の `size` ごとの最大幅を Figma とガイドラインに合わせました（md 480px → 512px、lg 640px → 672px、xl 960px → 1024px。sm の 320px は変わりません）
+- Modal の `size` ごとの最大幅を Figma とガイドラインに合わせました（md 480px → 512px、lg 640px → 672px、xl 960px → 1024px。sm の 320px は変わりません） (#358)
+
+### Security
+
+- 開発用の `next` を 15.5.28 に上げました（2026-10-14 のセキュリティリリース）。`next` は devDependencies なので、パッケージの利用者には影響しません (#355)
+- devDependencies 配下の推移的依存（`undici` / `tar` / `ip-address` / `proxy-addr` / `image-size` / `@hono/node-server`）を、`pnpm.overrides` で patched version に引き上げました。既存の overrides は保ったままです (#357)
 
 ## [2.0.0-beta.3] - 2026-10-13
 
