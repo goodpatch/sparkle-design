@@ -177,6 +177,18 @@ describe("Button", () => {
       expect(StyleHelpers.hasClass(button, "px-3")).toBe(true);
     });
 
+    it("small サイズの文字は sm の Input / Select と同じ 14px（character-2）になる", () => {
+      // Given: smallサイズのButton
+      testContainer.render(<Button size="sm">Small Button</Button>);
+
+      // When: クラス名を確認
+      const button = testContainer.queryButton();
+
+      // Then: 12px（character-1）ではなく 14px（character-2）の bold が適用される
+      expect(StyleHelpers.hasClass(button, "character-2-bold-pro")).toBe(true);
+      expect(StyleHelpers.hasClass(button, "character-1-bold-pro")).toBe(false);
+    });
+
     it("applies large size classes", () => {
       // Given: largeサイズのButton
       testContainer.render(<Button size="lg">Large Button</Button>);
