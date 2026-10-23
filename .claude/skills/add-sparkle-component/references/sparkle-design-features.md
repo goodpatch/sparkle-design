@@ -900,7 +900,7 @@ sparkle-design 2.0 から Icon は既定色（`text-object-neutral-high`）を�
 
 ```tsx
 // ✅ Correct — 選択肢が少なく常に 1 つ選ばれている
-<Radio value={value} onValueChange={setValue}>
+<Radio aria-label="サイズ" value={value} onValueChange={setValue}>
   <RadioItem value="sm" label="小" />
   <RadioItem value="md" label="中" />
 </Radio>
@@ -915,12 +915,12 @@ sparkle-design 2.0 から Icon は既定色（`text-object-neutral-high`）を�
 </div>
 ```
 
-単一選択は `Radio` / `Select` / sparkle-design-internal の `SegmentedControl`（2〜5 個の切り替え）から選ぶ。手組みの `role="radio"` は矢印キーでの移動や `aria-checked` の同期を自前で実装することになり、漏れやすい。
+単一選択は `Radio` / `Select` / sparkle-design-internal の `SegmentedControl`（2〜5 個の切り替え）から選ぶ。手組みの `role="radio"` は矢印キーでの移動や `aria-checked` の同期を自前で実装することになり、漏れやすい。グループには見えるラベル（`FormHeader` など）か `aria-label` / `aria-labelledby` で名前を付ける。
 
 ### フォームのエラー表示は FormErrorMessage を使う
 
 ```tsx
-// ✅ Correct — 入力欄と aria-describedby / aria-invalid で関連付く
+// ✅ Correct — 入力欄と aria-describedby / aria-invalid で関連付く（Form / FormField の内側）
 <FormItem>
   <FormHeader label="招待コード" />
   <FormControl>
@@ -937,6 +937,8 @@ sparkle-design 2.0 から Icon は既定色（`text-object-neutral-high`）を�
 ```
 
 手組みのエラー表示は見た目が同じでも入力欄との関連が無く、スクリーンリーダーではどの欄のエラーかが伝わらない。入力欄に紐づかないエラーは `InlineMessage` を使う。
+
+`FormErrorMessage` などの Form の部品は react-hook-form の `Form` / `FormField` の内側でだけ動く（コンテキストが無いと実行時エラーになる）。react-hook-form を使わないフォームでは、エラー文に id を付けて入力欄の `aria-describedby` から指し、入力欄に `aria-invalid` を付ける。
 
 ### 旧セマンティックカラーではなく用途別トークンを使う
 
