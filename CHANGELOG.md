@@ -7,6 +7,7 @@
 
 ### Security
 
+- 開発用の Storybook（`storybook` / `@storybook/*`）を 10.3.5 から 10.6.3 に上げました（2026-10-21〜22 に出た、10.6.2 未満の開発サーバーに対する advisory への追従）。devDependencies なので、パッケージの利用者には影響しません
 - 開発用の `react` / `react-dom` を lockfile 上で 19.2.8 から 19.2.9 に上げました（2026-10-14 のセキュリティリリース）。`package.json` の範囲指定（`^19`）は変えていないため、パッケージの利用者には影響しません (#364)
 - 開発用の `vite` を 6.4.3 から 6.4.5 に、`vitest` / `@vitest/*` を 4.1.11 から 4.1.12 に上げました（Dependabot の vite 更新と、2026-10-21 の Vitest の advisory への追従）。いずれも devDependencies なので、パッケージの利用者には影響しません
 
