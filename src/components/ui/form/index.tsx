@@ -284,6 +284,27 @@ function FormHeader({
  *   <Input placeholder="プレースホルダー" {...field} {...fieldState} isInvalid={fieldState.invalid} />
  * </FormControl>
  * ```
+ * **アンチパターン / Anti-patterns**
+ *
+ * - `Select` と組み合わせるときは `Select` のルートではなく `SelectTrigger` を包んでください。`Select` のルートは DOM を持たないため、渡した `id` が付かずラベルが関連付きません。
+ *   en: With `Select`, wrap `SelectTrigger` rather than the `Select` root. The root renders no DOM, so the forwarded `id` lands nowhere and the label is not associated.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <Select value={field.value} onValueChange={field.onChange}>
+ *   <FormControl>
+ *     <SelectTrigger>
+ *       <SelectValue placeholder="選択してください" />
+ *     </SelectTrigger>
+ *   </FormControl>
+ *   <SelectContent>...</SelectContent>
+ * </Select>
+ *
+ * // ❌ Wrong - Select のルートを包まない
+ * <FormControl>
+ *   <Select>...</Select>
+ * </FormControl>
+ * ```
  */
 function FormControl({ ...props }: React.ComponentProps<typeof Slot.Root>) {
   const { error, formItemId, formDescriptionId, formMessageId } =
@@ -344,6 +365,21 @@ function FormHelperMessage({ className, ...props }: React.ComponentProps<"p">) {
  *
  * ```tsx
  * <FormErrorMessage />
+ * ```
+ * **アンチパターン / Anti-patterns**
+ *
+ * - `<Icon icon="error" />` と negative 系の文字色でエラー表示を手組みしないでください。`FormErrorMessage` は `aria-describedby` / `aria-invalid` で入力欄と関連付きます。
+ *   en: Do not hand-roll error text with `<Icon icon="error" />` and a negative text color. `FormErrorMessage` is linked to the field via `aria-describedby` / `aria-invalid`.
+ *
+ * ```tsx
+ * // ✅ Correct
+ * <FormErrorMessage />
+ *
+ * // ❌ Wrong - 手組みのエラー表示
+ * <span className="text-text-negative-enabled">
+ *   <Icon icon="error" size={3} />
+ *   コードが見つかりません
+ * </span>
  * ```
  */
 function FormErrorMessage({ className, ...props }: React.ComponentProps<"p">) {
