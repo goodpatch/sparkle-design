@@ -845,6 +845,101 @@ HTML 標準の `disabled` も互換のため受け付けますが、Sparkle Desi
 <Icon size={4}>chevron_left</Icon>
 ```
 
+### Icon を親の色に合わせるときは text-current を付ける
+
+```tsx
+// ✅ Correct — Button の asChild ではスロット先に文字色が付くので、Icon は text-current で追随させる
+<Button asChild>
+  <Link href="/guidelines">
+    ガイドラインを確認
+    <Icon icon="arrow_forward" className="text-current" />
+  </Link>
+</Button>
+
+// ❌ Wrong — Icon は既定で text-object-neutral-high を持つため、ボタンの色に関係なく黒いまま
+<Button asChild>
+  <Link href="/guidelines">
+    ガイドラインを確認
+    <Icon icon="arrow_forward" />
+  </Link>
+</Button>
+```
+
+sparkle-design 2.0 から Icon は既定色（`text-object-neutral-high`）を持ち、親の文字色を継承しない。色付きの親（Button の asChild のスロット先・Link・`text-*` を付けた要素）に合わせるなら `className="text-current"` を付ける。
+
+### Select をフォームで使うときは FormControl で SelectTrigger を包む
+
+```tsx
+// ✅ Correct — FormControl は SelectTrigger を包む
+<FormItem>
+  <FormHeader label="プラン" />
+  <Select value={field.value} onValueChange={field.onChange}>
+    <FormControl>
+      <SelectTrigger>
+        <SelectValue placeholder="選択してください" />
+      </SelectTrigger>
+    </FormControl>
+    <SelectContent>
+      <SelectItem value="free">Free</SelectItem>
+    </SelectContent>
+  </Select>
+</FormItem>
+
+// ❌ Wrong — Select のルートを FormControl で包まない
+<FormControl>
+  <Select value={field.value} onValueChange={field.onChange}>
+    <SelectTrigger>…</SelectTrigger>
+    <SelectContent>…</SelectContent>
+  </Select>
+</FormControl>
+```
+
+`FormControl` は Slot で `id` / `aria-describedby` / `aria-invalid` を直下の子に渡す。`Select` のルートは DOM を持たないので id がどこにも付かず、`FormHeader` の `<label for>` が何も指さない（ラベルを押してもフォーカスせず、読み上げでも関連が伝わらない）。
+
+### 単一選択を role="radio" で手組みしない
+
+```tsx
+// ✅ Correct — 選択肢が少なく常に 1 つ選ばれている
+<Radio aria-label="サイズ" value={value} onValueChange={setValue}>
+  <RadioItem value="sm" label="小" />
+  <RadioItem value="md" label="中" />
+</Radio>
+
+// ✅ Correct — 選択肢が多い・表示スペースが狭い
+<Select value={value} onValueChange={setValue}>…</Select>
+
+// ❌ Wrong — button に role="radio" を付けて手組みしない
+<div role="radiogroup">
+  <button type="button" role="radio" aria-checked={value === "sm"}>小</button>
+  <button type="button" role="radio" aria-checked={value === "md"}>中</button>
+</div>
+```
+
+単一選択は `Radio` / `Select` / sparkle-design-internal の `SegmentedControl`（2〜5 個の切り替え）から選ぶ。手組みの `role="radio"` は矢印キーでの移動や `aria-checked` の同期を自前で実装することになり、漏れやすい。グループには見えるラベル（`FormHeader` など）か `aria-label` / `aria-labelledby` で名前を付ける。
+
+### フォームのエラー表示は FormErrorMessage を使う
+
+```tsx
+// ✅ Correct — エラー文が入力欄の aria-describedby から指され、入力欄に aria-invalid が付く（Form / FormField の内側）
+<FormItem>
+  <FormHeader label="招待コード" />
+  <FormControl>
+    <Input {...field} isInvalid={fieldState.invalid} />
+  </FormControl>
+  <FormErrorMessage />
+</FormItem>
+
+// ❌ Wrong — Icon と negative 色でエラー表示を手組みしない
+<span className="flex items-center gap-1 text-text-negative-enabled">
+  <Icon icon="error" size={3} />
+  コードが見つかりません
+</span>
+```
+
+手組みのエラー表示は見た目が同じでも入力欄との関連が無く、スクリーンリーダーではどの欄のエラーかが伝わらない。入力欄に紐づかないエラーは `InlineMessage` を使う。
+
+`FormErrorMessage` などの Form の部品は react-hook-form の `Form` / `FormField` の内側でだけ動く（コンテキストが無いと実行時エラーになる）。react-hook-form を使わないフォームでは、エラー文に id を付けて入力欄の `aria-describedby` から指し、入力欄に `aria-invalid` を付ける。
+
 ### 旧セマンティックカラーではなく用途別トークンを使う
 
 新体系は「用途 × 意味 × 強度 × **状態**」で、状態がトークン名に内包される。

@@ -400,10 +400,8 @@ export interface ButtonProps
  *   en: Use `IconButton` for icon-only buttons.
  * - `asChild` 使用時は `prefixIcon` / `suffixIcon` / `isLoading` が反映されません。必要ならスロット先でアイコンやローディング表現を構成してください。
  *   en: In `asChild` mode, `prefixIcon`, `suffixIcon`, and `isLoading` are ignored. Render icons and loading states inside the slotted child when needed.
- * - `asChild` で差し込んだ要素が指定した props（`type` や `disabled` など）は、Slot のマージで
- *   コンポーネント側の値より優先されます。
- *   en: Props set on the slotted element itself (such as `type` or `disabled`) win over the
- *   component's own values through Slot's prop merging.
+ * - `asChild` で差し込んだ要素が指定した props（`type` や `disabled` など）は、Slot のマージでコンポーネント側の値より優先されます。
+ *   en: Props set on the slotted element itself (such as `type` or `disabled`) win over the component's own values through Slot's prop merging.
  *
  * ```tsx
  * // ✅ Correct
