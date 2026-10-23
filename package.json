@@ -85,8 +85,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@vitest/browser-playwright": "^4.1.11",
-    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/browser-playwright": "^4.1.12",
+    "@vitest/coverage-v8": "^4.1.12",
     "axe-core": "^4.10.3",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
@@ -104,8 +104,8 @@
     "tailwindcss": "^4",
     "tsc-alias": "^1.8.16",
     "typescript": "^5",
-    "vite": "6.4.3",
-    "vitest": "^4.1.11"
+    "vite": "6.4.5",
+    "vitest": "^4.1.12"
   },
   "pnpm": {
     "overrides": {
