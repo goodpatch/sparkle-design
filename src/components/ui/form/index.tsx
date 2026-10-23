@@ -368,8 +368,8 @@ function FormHelperMessage({ className, ...props }: React.ComponentProps<"p">) {
  * ```
  * **アンチパターン / Anti-patterns**
  *
- * - `<Icon icon="error" />` と negative 系の文字色でエラー表示を手組みしないでください。`FormErrorMessage` は `aria-describedby` / `aria-invalid` で入力欄と関連付きます。
- *   en: Do not hand-roll error text with `<Icon icon="error" />` and a negative text color. `FormErrorMessage` is linked to the field via `aria-describedby` / `aria-invalid`.
+ * - `<Icon icon="error" />` と negative 系の文字色でエラー表示を手組みしないでください。エラーがあるとき、`FormErrorMessage` は入力欄の `aria-describedby` から指され、入力欄には `aria-invalid` が付きます。
+ *   en: Do not hand-roll error text with `<Icon icon="error" />` and a negative text color. When there is an error, the field points to `FormErrorMessage` through `aria-describedby`, and `aria-invalid` marks the field as invalid.
  *
  * ```tsx
  * // ✅ Correct

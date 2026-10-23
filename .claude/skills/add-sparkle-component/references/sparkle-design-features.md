@@ -920,7 +920,7 @@ sparkle-design 2.0 から Icon は既定色（`text-object-neutral-high`）を�
 ### フォームのエラー表示は FormErrorMessage を使う
 
 ```tsx
-// ✅ Correct — 入力欄と aria-describedby / aria-invalid で関連付く（Form / FormField の内側）
+// ✅ Correct — エラー文が入力欄の aria-describedby から指され、入力欄に aria-invalid が付く（Form / FormField の内側）
 <FormItem>
   <FormHeader label="招待コード" />
   <FormControl>
