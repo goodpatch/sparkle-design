@@ -5,6 +5,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- CardHeader の幅が足りないとき、日本語の CardTitle が 1 文字幅まで縮んで縦書きになる不具合を直しました。CardHeader と CardTitle を `flex-wrap` にし、入りきらないときは CardControl（と CardTitle 内の CardDescription）が次の行に折り返します。折り返した CardControl は右端に寄せます（`ml-auto`）。(#371)
+
 ### Security
 
 - 開発用の Storybook（`storybook` / `@storybook/*`）を 10.3.5 から 10.6.3 に上げました（2026-10-21〜22 に出た、10.6.2 未満の開発サーバーに対する advisory への追従）。devDependencies なので、パッケージの利用者には影響しません

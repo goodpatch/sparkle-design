@@ -223,11 +223,13 @@ function CardHeader({
   ref,
   ...props
 }: CardPartProps) {
+  // 幅が足りないときは CardControl を折り返す。折り返さないと CardTitle が min-content まで縮み、日本語の見出しが 1 文字幅の縦書きになる
+  // en: Wrap CardControl when space runs out. Otherwise CardTitle shrinks to min-content and a Japanese title becomes one character wide
   return (
     <Comp
       ref={ref as React.Ref<HTMLDivElement & HTMLSpanElement>}
       className={cn(
-        "flex flex-row gap-2 justify-between px-6 py-2 items-center",
+        "flex flex-row flex-wrap gap-2 justify-between px-6 py-2 items-center",
         className
       )}
       {...props}
@@ -245,7 +247,10 @@ function CardTitle({
   return (
     <Comp
       ref={ref as React.Ref<HTMLDivElement & HTMLSpanElement>}
-      className={cn("character-4-bold-pro flex items-center gap-2", className)}
+      className={cn(
+        "character-4-bold-pro flex flex-wrap items-center gap-2",
+        className
+      )}
       {...props}
     />
   );
@@ -356,7 +361,7 @@ function CardControl({
   return (
     <Comp
       ref={ref as React.Ref<HTMLDivElement & HTMLSpanElement>}
-      className={cn("flex items-center gap-2", className)}
+      className={cn("flex items-center gap-2 ml-auto", className)}
       {...props}
     />
   );

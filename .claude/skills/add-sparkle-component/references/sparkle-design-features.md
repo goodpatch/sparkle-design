@@ -794,6 +794,46 @@ Sparkle Design コンポーネント内では `character-*-pro` / `character-*-m
 </CardHeader>
 ```
 
+### CardHeader の見出しの横に Tag と文字のボタンを並べるとき
+
+```tsx
+// 💡 内訳をダイアログで開くだけなら、ボタンを置かずカード自身をトリガーにする手もある
+// （ClickableCard は <button> なので中は phrasing content だけ。Tag は <div> を描画するので入れない）
+<ClickableCard onClick={openBreakdownDialog}>
+  <CardHeader>
+    <CardTitle>
+      解約率
+      <CardDescription className="character-3-regular-pro text-text-negative-enabled">
+        目標未達
+      </CardDescription>
+    </CardTitle>
+  </CardHeader>
+  <CardContent>2.9%</CardContent>
+</ClickableCard>
+
+// ⚠️ sparkle-design 1.0.8 以前と 2.0.0-beta.4 以前では、狭い幅で見出しが 1 文字幅の縦書きになる
+<Card>
+  <CardHeader>
+    <CardTitle>
+      解約率
+      <CardDescription>
+        <Tag status="negative" variant="subtle">目標未達</Tag>
+      </CardDescription>
+    </CardTitle>
+    <CardControl>
+      <Button variant="ghost" size="sm" prefixIcon="download">エクスポート</Button>
+    </CardControl>
+  </CardHeader>
+  <CardContent>2.9%</CardContent>
+</Card>
+```
+
+Title + TitleSlot（`CardDescription`）+ ControlSlot（`CardControl`）を全部使う形は Card ガイドラインの既定の形で、そのまま使ってよい。ただし sparkle-design 1.0.8 以前と 2.0.0-beta.4 以前は、幅が足りないと `CardTitle` が 1 文字幅まで縮んで縦書きになるので、修正を含む版に上げる（上げた後は `CardControl` が見出しの下に折り返す）。
+
+`check` は、コードに直接書かれた見出し・Tag・ボタンの文字から「見出しの行を 1 行に並べたときの幅」を見積もり、280px（125% に拡大すると約 350px。スマホ幅に 1 列で置いたカード相当）を超えるときだけ警告する。`{title}` のような式の中身は見積もれないので数えない。上げられないときは、文字を短くするか、ボタンを `CardFooter` に移す。
+
+ボタンがカードの詳細を開くだけなら、ボタンを置かずカード自身をトリガーにすることも検討する（ガイドラインの Don't：情報へのナビゲーションだけのボタンを置かない）。別ページへ遷移するなら `Card` のまま `CardTitle` 内の見出しを `<a>`（Next.js なら `Link`）にし、ダイアログを開くなどページ内の操作なら `ClickableCard` を使う。
+
 ### asChild と prefixIcon / suffixIcon / isLoading を併用しない
 
 ```tsx

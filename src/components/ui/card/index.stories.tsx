@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { action } from "storybook/actions";
+import { expect } from "storybook/test";
+import { Button } from "../button";
+import { Tag } from "../tag";
 import {
   Card,
   CardContent,
@@ -157,4 +160,45 @@ export const ClickableDisabled: ClickableStory = {
     </ClickableCard>
   ),
   argTypes: Clickable.argTypes,
+};
+
+/**
+ * 狭い幅で見出しの横に Tag と文字のボタンを並べた例。CardControl が見出しの下に折り返し、見出しは縦書きにならない
+ * en: A narrow card with a Tag and a text button beside the title. CardControl wraps below, and the title does not become vertical
+ */
+export const NarrowHeader: Story = {
+  args: {
+    title: "解約率",
+    isSpace: true,
+  },
+  render: args => (
+    <div className="w-[260px]">
+      <Card>
+        <CardHeader>
+          <CardTitle data-testid="narrow-title">
+            {args.title}
+            <CardDescription className="character-3-regular-pro text-text-neutral-low">
+              <Tag status="negative" variant="subtle">
+                目標未達
+              </Tag>
+            </CardDescription>
+          </CardTitle>
+          <CardControl>
+            <Button variant="ghost" size="sm" prefixIcon="download">
+              エクスポート
+            </Button>
+          </CardControl>
+        </CardHeader>
+        <CardContent isSpace={args.isSpace}>2.9%</CardContent>
+      </Card>
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    // 見出しの文字が 1 行に収まっている（縮んで 1 文字ずつ折り返していない）
+    // en: The title text stays on one line (it has not shrunk to one character per line)
+    const title = canvas.getByTestId("narrow-title");
+    const range = document.createRange();
+    range.selectNodeContents(title.firstChild as Node);
+    await expect(range.getClientRects().length).toBe(1);
+  },
 };
