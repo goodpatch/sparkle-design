@@ -182,8 +182,6 @@ Card.displayName = "Card";
  *   en: For supporting text or counts inside CardTitle, do not inline a `span`; use `CardDescription`.
  * - `CardDescription` はタイトルの補足テキスト用です。長い説明文は `CardContent` に配置してください。
  *   en: Use `CardDescription` for short supporting text in CardTitle. Put long descriptive copy inside `CardContent`.
- * - 1 つの CardHeader に、`CardDescription`（Tag など）を含む `CardTitle` と、文字の付いた Button を入れた `CardControl` を並べないでください。幅が足りないと `CardControl` が見出しの下に折り返し、ヘッダーが高くなります。状態の Tag は `CardContent` の先頭、文字の付いたボタンは `CardFooter` に置いてください。
- *   en: Do not combine, in one CardHeader, a `CardTitle` containing `CardDescription` (e.g. a Tag) with a `CardControl` holding a Button with text. When space runs out, `CardControl` wraps below the title and the header grows. Put the status Tag at the top of `CardContent` and text buttons in `CardFooter`.
  *
  * ```tsx
  * // ✅ Correct
@@ -215,31 +213,6 @@ Card.displayName = "Card";
  *     タイトル
  *     <span className="text-sm text-text-neutral-low">全 12 件</span>
  *   </CardTitle>
- * </CardHeader>
- *
- * // ✅ Correct - 状態の Tag は CardContent、文字のボタンは CardFooter に置く
- * <CardHeader>
- *   <CardTitle>解約率</CardTitle>
- * </CardHeader>
- * <CardContent>
- *   <Tag status="negative" variant="subtle">目標未達</Tag>
- *   2.9%
- * </CardContent>
- * <CardFooter>
- *   <Button variant="ghost" size="sm" suffixIcon="chevron_right">内訳を見る</Button>
- * </CardFooter>
- *
- * // ❌ Wrong - 見出しの横に Tag と文字のボタンを並べない（狭い幅でヘッダーが崩れる）
- * <CardHeader>
- *   <CardTitle>
- *     解約率
- *     <CardDescription>
- *       <Tag status="negative" variant="subtle">目標未達</Tag>
- *     </CardDescription>
- *   </CardTitle>
- *   <CardControl>
- *     <Button variant="ghost" size="sm" suffixIcon="chevron_right">内訳を見る</Button>
- *   </CardControl>
  * </CardHeader>
  * ```
  *

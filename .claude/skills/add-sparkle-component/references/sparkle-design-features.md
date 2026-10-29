@@ -794,36 +794,42 @@ Sparkle Design コンポーネント内では `character-*-pro` / `character-*-m
 </CardHeader>
 ```
 
-### CardHeader の見出しの横に Tag と文字のボタンを並べない
+### CardHeader の見出しの横に Tag と文字のボタンを並べるとき
 
 ```tsx
-// ✅ Correct - 状態の Tag は CardContent、文字のボタンは CardFooter に置く
-<CardHeader>
-  <CardTitle>解約率</CardTitle>
-</CardHeader>
-<CardContent>
-  <Tag status="negative" variant="subtle">目標未達</Tag>
-  2.9%
-</CardContent>
-<CardFooter>
-  <Button variant="ghost" size="sm" suffixIcon="chevron_right">内訳を見る</Button>
-</CardFooter>
+// ✅ Correct - 詳細へ移動するだけなら、ボタンを置かずカード自身をトリガーにする
+<ClickableCard onClick={openBreakdown}>
+  <CardHeader>
+    <CardTitle>
+      解約率
+      <CardDescription>
+        <Tag status="negative" variant="subtle">目標未達</Tag>
+      </CardDescription>
+    </CardTitle>
+  </CardHeader>
+  <CardContent>2.9%</CardContent>
+</ClickableCard>
 
-// ❌ Wrong - 見出しの横に Tag と文字のボタンを並べない（狭い幅でヘッダーが崩れる）
-<CardHeader>
-  <CardTitle>
-    解約率
-    <CardDescription>
-      <Tag status="negative" variant="subtle">目標未達</Tag>
-    </CardDescription>
-  </CardTitle>
-  <CardControl>
-    <Button variant="ghost" size="sm" suffixIcon="chevron_right">内訳を見る</Button>
-  </CardControl>
-</CardHeader>
+// ⚠️ sparkle-design 2.0.0-beta.4 以前では、狭い幅で見出しが 1 文字幅の縦書きになる
+<Card>
+  <CardHeader>
+    <CardTitle>
+      解約率
+      <CardDescription>
+        <Tag status="negative" variant="subtle">目標未達</Tag>
+      </CardDescription>
+    </CardTitle>
+    <CardControl>
+      <Button variant="ghost" size="sm" prefixIcon="download">エクスポート</Button>
+    </CardControl>
+  </CardHeader>
+  <CardContent>2.9%</CardContent>
+</Card>
 ```
 
-`CardTitle` に `CardDescription`（Tag など）を入れ、同じ `CardHeader` の `CardControl` に文字の付いた Button を入れると、幅が足りないときにヘッダーが崩れる（sparkle-design 2.0.0-beta.4 までは見出しが 1 文字幅の縦書きになる）。状態の Tag は `CardContent` の先頭、文字の付いたボタンは `CardFooter` に置く。IconButton だけの `CardControl` は対象外。
+Title + TitleSlot（`CardDescription`）+ ControlSlot（`CardControl`）を全部使う形は Card ガイドラインの既定の形で、そのまま使ってよい。ただし sparkle-design 2.0.0-beta.4 以前は、幅が足りないと `CardTitle` が 1 文字幅まで縮んで縦書きになるので、修正を含む版に上げる（上げた後は `CardControl` が見出しの下に折り返す）。
+
+ボタンが詳細へ移動するだけなら、ガイドラインの Don't（情報へのナビゲーションだけのボタンを置かない）に当たる。ボタンを置かず `ClickableCard` でカード自身をトリガーにする。`CardFooter` に移しても同じ Don't に当たる。
 
 ### asChild と prefixIcon / suffixIcon / isLoading を併用しない
 

@@ -184,8 +184,8 @@ export const NarrowHeader: Story = {
             </CardDescription>
           </CardTitle>
           <CardControl>
-            <Button variant="ghost" size="sm" suffixIcon="chevron_right">
-              内訳を見る
+            <Button variant="ghost" size="sm" prefixIcon="download">
+              エクスポート
             </Button>
           </CardControl>
         </CardHeader>
