@@ -797,13 +797,14 @@ Sparkle Design コンポーネント内では `character-*-pro` / `character-*-m
 ### CardHeader の見出しの横に Tag と文字のボタンを並べるとき
 
 ```tsx
-// ✅ Correct - 詳細へ移動するだけなら、ボタンを置かずカード自身をトリガーにする
-<ClickableCard onClick={openBreakdown}>
+// ✅ Correct - 内訳をダイアログで開くだけなら、ボタンを置かずカード自身をトリガーにする
+// （ClickableCard は <button> なので中は phrasing content だけ。Tag は <div> を描画するので入れない）
+<ClickableCard onClick={openBreakdownDialog}>
   <CardHeader>
     <CardTitle>
       解約率
-      <CardDescription>
-        <Tag status="negative" variant="subtle">目標未達</Tag>
+      <CardDescription className="character-3-regular-pro text-text-negative-enabled">
+        目標未達
       </CardDescription>
     </CardTitle>
   </CardHeader>
@@ -829,7 +830,7 @@ Sparkle Design コンポーネント内では `character-*-pro` / `character-*-m
 
 Title + TitleSlot（`CardDescription`）+ ControlSlot（`CardControl`）を全部使う形は Card ガイドラインの既定の形で、そのまま使ってよい。ただし sparkle-design 2.0.0-beta.4 以前は、幅が足りないと `CardTitle` が 1 文字幅まで縮んで縦書きになるので、修正を含む版に上げる（上げた後は `CardControl` が見出しの下に折り返す）。
 
-ボタンが詳細へ移動するだけなら、ガイドラインの Don't（情報へのナビゲーションだけのボタンを置かない）に当たる。ボタンを置かず `ClickableCard` でカード自身をトリガーにする。`CardFooter` に移しても同じ Don't に当たる。
+ボタンがカードの情報の詳細を開くだけなら、ガイドラインの Don't（情報へのナビゲーションだけのボタンを置かない）に当たる。ボタンを置かず、カード自身をトリガーにする。別ページへ遷移するなら `Card` のまま `CardTitle` 内の見出しを `<a>`（Next.js なら `Link`）にし、ダイアログを開くなどページ内の操作なら `ClickableCard` を使う。`CardFooter` に移しても同じ Don't に当たる。
 
 ### asChild と prefixIcon / suffixIcon / isLoading を併用しない
 
