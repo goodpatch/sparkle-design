@@ -312,6 +312,7 @@ describe("Card Components", () => {
       // Then: 適切なレイアウトスタイルが適用される
       expect(header.className).toContain("flex");
       expect(header.className).toContain("flex-row");
+      expect(header.className).toContain("flex-wrap");
       expect(header.className).toContain("gap-2");
       expect(header.className).toContain("justify-between");
       expect(header.className).toContain("px-6");
@@ -351,6 +352,7 @@ describe("Card Components", () => {
       // Then: 適切なタイポグラフィスタイルが適用される
       expect(title.className).toContain("character-4-bold-pro");
       expect(title.className).toContain("flex");
+      expect(title.className).toContain("flex-wrap");
       expect(title.className).toContain("items-center");
       expect(title.className).toContain("gap-2");
       expect(title.textContent).toBe("Card Title");
@@ -435,6 +437,7 @@ describe("Card Components", () => {
       expect(control.className).toContain("flex");
       expect(control.className).toContain("items-center");
       expect(control.className).toContain("gap-2");
+      expect(control.className).toContain("ml-auto");
       expect(button).toBeTruthy();
       expect(button.textContent).toBe("Control Action");
     });
