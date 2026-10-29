@@ -11,6 +11,7 @@
 
 ### Fixed
 
+- CardHeader の幅が足りないとき、日本語の CardTitle が 1 文字幅まで縮んで縦書きになる不具合を直しました。CardHeader と CardTitle を `flex-wrap` にし、入りきらないときは CardControl（と CardTitle 内の CardDescription）が次の行に折り返します。折り返した CardControl は右端に寄せます（`ml-auto`） (#371)
 - Modal の `size` ごとの最大幅を Figma とガイドラインに合わせました（md 480px → 512px、lg 640px → 672px、xl 960px → 1024px。sm の 320px は変わりません）
 
 ## [1.0.8] - 2026-10-13

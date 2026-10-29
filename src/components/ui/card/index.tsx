@@ -145,10 +145,12 @@ const CardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
+  // 幅が足りないときは CardControl を折り返す。折り返さないと CardTitle が min-content まで縮み、日本語の見出しが 1 文字幅の縦書きになる
+  // en: Wrap CardControl when space runs out. Otherwise CardTitle shrinks to min-content and a Japanese title becomes one character wide
   <div
     ref={ref}
     className={cn(
-      "flex flex-row gap-2 justify-between px-6 py-2 items-center",
+      "flex flex-row flex-wrap gap-2 justify-between px-6 py-2 items-center",
       className
     )}
     {...props}
@@ -162,7 +164,10 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("character-4-bold-pro flex items-center gap-2", className)}
+    className={cn(
+      "character-4-bold-pro flex flex-wrap items-center gap-2",
+      className
+    )}
     {...props}
   />
 ));
@@ -254,7 +259,11 @@ const CardControl = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex items-center gap-2", className)} {...props} />
+  <div
+    ref={ref}
+    className={cn("flex items-center gap-2 ml-auto", className)}
+    {...props}
+  />
 ));
 CardControl.displayName = "CardControl";
 
