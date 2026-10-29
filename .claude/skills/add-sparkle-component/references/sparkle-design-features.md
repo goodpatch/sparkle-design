@@ -811,7 +811,7 @@ Sparkle Design コンポーネント内では `character-*-pro` / `character-*-m
   <CardContent>2.9%</CardContent>
 </ClickableCard>
 
-// ⚠️ sparkle-design 2.0.0-beta.4 以前では、狭い幅で見出しが 1 文字幅の縦書きになる
+// ⚠️ sparkle-design 1.0.8 以前と 2.0.0-beta.4 以前では、狭い幅で見出しが 1 文字幅の縦書きになる
 <Card>
   <CardHeader>
     <CardTitle>
@@ -828,7 +828,7 @@ Sparkle Design コンポーネント内では `character-*-pro` / `character-*-m
 </Card>
 ```
 
-Title + TitleSlot（`CardDescription`）+ ControlSlot（`CardControl`）を全部使う形は Card ガイドラインの既定の形で、そのまま使ってよい。ただし sparkle-design 2.0.0-beta.4 以前は、幅が足りないと `CardTitle` が 1 文字幅まで縮んで縦書きになるので、修正を含む版に上げる（上げた後は `CardControl` が見出しの下に折り返す）。
+Title + TitleSlot（`CardDescription`）+ ControlSlot（`CardControl`）を全部使う形は Card ガイドラインの既定の形で、そのまま使ってよい。ただし sparkle-design 1.0.8 以前と 2.0.0-beta.4 以前は、幅が足りないと `CardTitle` が 1 文字幅まで縮んで縦書きになるので、修正を含む版に上げる（上げた後は `CardControl` が見出しの下に折り返す）。
 
 `check` は、コードに直接書かれた見出し・Tag・ボタンの文字から「見出しの行を 1 行に並べたときの幅」を見積もり、280px（125% に拡大すると約 350px。スマホ幅に 1 列で置いたカード相当）を超えるときだけ警告する。`{title}` のような式の中身は見積もれないので数えない。上げられないときは、文字を短くするか、ボタンを `CardFooter` に移す。
 
