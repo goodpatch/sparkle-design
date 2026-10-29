@@ -1,6 +1,6 @@
 {
   "name": "sparkle-design",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
