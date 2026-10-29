@@ -5,6 +5,8 @@
 
 ## [Unreleased]
 
+## [1.0.9] - 2026-10-29
+
 ### Security
 
 - 開発用の `next` を 15.5.18 から 15.5.28 に上げました（2026-10-14 のセキュリティリリース）。`next` は devDependencies なので、パッケージの利用者には影響しません (#365)
@@ -12,7 +14,7 @@
 ### Fixed
 
 - CardHeader の幅が足りないとき、日本語の CardTitle が 1 文字幅まで縮んで縦書きになる不具合を直しました。CardHeader と CardTitle を `flex-wrap` にし、入りきらないときは CardControl（と CardTitle 内の CardDescription）が次の行に折り返します。折り返した CardControl は右端に寄せます（`ml-auto`） (#371)
-- Modal の `size` ごとの最大幅を Figma とガイドラインに合わせました（md 480px → 512px、lg 640px → 672px、xl 960px → 1024px。sm の 320px は変わりません）
+- Modal の `size` ごとの最大幅を Figma とガイドラインに合わせました（md 480px → 512px、lg 640px → 672px、xl 960px → 1024px。sm の 320px は変わりません） (#359)
 
 ## [1.0.8] - 2026-10-13
 
