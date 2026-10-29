@@ -794,6 +794,37 @@ Sparkle Design コンポーネント内では `character-*-pro` / `character-*-m
 </CardHeader>
 ```
 
+### CardHeader の見出しの横に Tag と文字のボタンを並べない
+
+```tsx
+// ✅ Correct - 状態の Tag は CardContent、文字のボタンは CardFooter に置く
+<CardHeader>
+  <CardTitle>解約率</CardTitle>
+</CardHeader>
+<CardContent>
+  <Tag status="negative" variant="subtle">目標未達</Tag>
+  2.9%
+</CardContent>
+<CardFooter>
+  <Button variant="ghost" size="sm" suffixIcon="chevron_right">内訳を見る</Button>
+</CardFooter>
+
+// ❌ Wrong - 見出しの横に Tag と文字のボタンを並べない（狭い幅でヘッダーが崩れる）
+<CardHeader>
+  <CardTitle>
+    解約率
+    <CardDescription>
+      <Tag status="negative" variant="subtle">目標未達</Tag>
+    </CardDescription>
+  </CardTitle>
+  <CardControl>
+    <Button variant="ghost" size="sm" suffixIcon="chevron_right">内訳を見る</Button>
+  </CardControl>
+</CardHeader>
+```
+
+`CardTitle` に `CardDescription`（Tag など）を入れ、同じ `CardHeader` の `CardControl` に文字の付いた Button を入れると、幅が足りないときにヘッダーが崩れる（sparkle-design 2.0.0-beta.4 までは見出しが 1 文字幅の縦書きになる）。状態の Tag は `CardContent` の先頭、文字の付いたボタンは `CardFooter` に置く。IconButton だけの `CardControl` は対象外。
+
 ### asChild と prefixIcon / suffixIcon / isLoading を併用しない
 
 ```tsx
