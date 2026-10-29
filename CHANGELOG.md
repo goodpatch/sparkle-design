@@ -5,9 +5,11 @@
 
 ## [Unreleased]
 
+## [2.0.0-beta.5] - 2026-10-29
+
 ### Fixed
 
-- CardHeader の幅が足りないとき、日本語の CardTitle が 1 文字幅まで縮んで縦書きになる不具合を直しました。CardHeader と CardTitle を `flex-wrap` にし、入りきらないときは CardControl（と CardTitle 内の CardDescription）が次の行に折り返します。折り返した CardControl は右端に寄せます（`ml-auto`）。(#371)
+- CardHeader の幅が足りないとき、日本語の CardTitle が 1 文字幅まで縮んで縦書きになる不具合を直しました。CardHeader と CardTitle を `flex-wrap` にし、入りきらないときは CardControl（と CardTitle 内の CardDescription）が次の行に折り返します。折り返した CardControl は右端に寄せます（`ml-auto`） (#371)
 
 ### Security
 
