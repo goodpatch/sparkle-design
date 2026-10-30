@@ -263,7 +263,7 @@ function Checkbox({
         >
           <CheckboxPrimitive.Indicator
             data-slot="checkbox-indicator"
-            className="flex items-center justify-center text-surface-base-0"
+            className="flex items-center justify-center text-object-inverse"
           >
             <Icon
               className="text-current"
