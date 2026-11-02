@@ -116,6 +116,48 @@
   --radius-3xl: 1.5rem; /* 24px */
   --radius-full: 9999px;
 
+  /* イージング */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-massive: cubic-bezier(0.55, 0, 0.1, 1);
+  --ease-airy: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /* BEGIN generated: spring easings */
+  --spring-duration-ratio: 1.5;
+  /* bounce 0 */
+  --ease-spring-0: linear(
+    0, 0.0011 0.6%, 0.0049 1.3%, 0.0111 2%, 0.0209 2.8%, 0.0332 3.6%,
+    0.0476 4.4%, 0.0839 6.1%, 0.1183 7.5%, 0.1637 9.2%, 0.3605 16.1%, 0.4527 19.5%,
+    0.4983 21.3%, 0.5414 23.1%, 0.5819 24.9%, 0.6196 26.7%, 0.6528 28.4%, 0.6854 30.2%,
+    0.7138 31.9%, 0.7415 33.7%, 0.7669 35.5%, 0.7913 37.4%, 0.8134 39.3%, 0.8334 41.2%,
+    0.855 43.5%, 0.8748 45.9%, 0.8921 48.3%, 0.9083 50.9%, 0.9226 53.6%, 0.9353 56.4%,
+    0.9467 59.4%, 0.9567 62.6%, 0.9717 69.1%, 0.9828 76.5%, 0.9914 86.7%, 0.9965 99.9%,
+    1
+  );
+  /* bounce 0.08 */
+  --ease-spring-08: linear(
+    0, 0.0011 0.6%, 0.0049 1.3%, 0.0112 2%, 0.0211 2.8%, 0.0336 3.6%,
+    0.0484 4.4%, 0.0673 5.3%, 0.0882 6.2%, 0.1268 7.7%, 0.1745 9.4%, 0.3853 16.4%,
+    0.4826 19.8%, 0.5306 21.6%, 0.5735 23.3%, 0.6161 25.1%, 0.6535 26.8%, 0.6882 28.5%,
+    0.7203 30.2%, 0.7499 31.9%, 0.7769 33.6%, 0.8016 35.3%, 0.8252 37.1%, 0.8466 38.9%,
+    0.8667 40.8%, 0.8872 43%, 0.9058 45.3%, 0.9217 47.6%, 0.9364 50.1%, 0.9491 52.7%,
+    0.96 55.4%, 0.9694 58.3%, 0.9773 61.4%, 0.9888 68.1%, 0.996 76.1%, 0.9997 86.9%,
+    1
+  );
+  /* bounce 0.18 */
+  --ease-spring-18: linear(
+    0, 0.0015 0.7%, 0.0057 1.4%, 0.0136 2.2%, 0.0244 3%, 0.0378 3.8%,
+    0.0556 4.7%, 0.0759 5.6%, 0.0984 6.5%, 0.1397 8%, 0.1938 9.8%, 0.4204 16.8%,
+    0.522 20.1%, 0.5737 21.9%, 0.6197 23.6%, 0.6628 25.3%, 0.7005 26.9%, 0.7354 28.5%,
+    0.7676 30.1%, 0.7971 31.7%, 0.824 33.3%, 0.8499 35%, 0.8731 36.7%, 0.8937 38.4%,
+    0.913 40.2%, 0.9316 42.2%, 0.9474 44.2%, 0.962 46.4%, 0.974 48.6%, 0.9841 50.9%,
+    0.9926 53.4%, 0.9993 56%, 1.0045 58.9%, 1.0099 64.6%, 1.011 71.7%, 1.0026 99.9%,
+    1
+  );
+  /* END generated: spring easings */
+
   /* タイポグラフィ変数 */
   /* フォントファミリー */
   --font-family-pro: 'Inter', sans-serif;
@@ -165,14 +207,6 @@
   --font-weight-icon-fill-1: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
 
   /* シャドウ */
-  /* Primitive */
-  /* Figma の Box Shadow Primitives（⬢ Effects ページ）と 1:1 対応する。
-     各段は「近距離で締める層」と「遠距離で広げる層」の 2 層構成で、
-     alpha は 2xs〜md が 5%（--color-black-alpha-50）、lg 以上は
-     1 層目のみ 10%（--color-black-alpha-100）に上がる。
-     en: Mirrors Figma's Box Shadow primitives 1:1. Each step is a
-     two-layer shadow (a tight layer plus a diffuse one). Alpha is 5%
-     through `md`; from `lg` up the tight layer steps to 10%. */
   --shadow-none: 0px 0px 0px 0px var(--color-black);
   --shadow-2xs:
     0px 1.7px 2.4px 0px var(--color-black-alpha-50),
@@ -299,7 +333,7 @@
   --color-text-high: var(--color-neutral-900);
   --color-skeleton-fill: var(--color-neutral-200);
 
-  /* ベースカラー（base） - gray と同等 */
+  /* ベースカラー */
   --color-base-50: var(--color-gray-50);
   --color-base-100: var(--color-gray-100);
   --color-base-200: var(--color-gray-200);
@@ -310,31 +344,6 @@
   --color-base-700: var(--color-gray-700);
   --color-base-800: var(--color-gray-800);
   --color-base-900: var(--color-gray-900);
-
-  /* ------------------------------------------------------------------
-     用途別セマンティックカラー（Figma `Colors: Semantics` と 1:1 対応）
-
-     Figma のパス（例: surface/primary/high/enabled）をそのまま
-     `--color-surface-primary-high-enabled` に写している。Figma の
-     アノテーションが指示する移行先をそのまま変数名として引ける。
-
-     軸: 用途（surface = 背景 / border = 枠線 / object = アイコン等 /
-     text = 文字）× 意味（neutral / primary / negative / info / success /
-     warning / accent / inverse）× 強度（extra-high / high / middle / low）
-     × 状態（enabled / hover / active / disabled）。
-     **状態をトークン名に内包する**のが旧セマンティック層との最大の違い。
-
-     `primary` 系は sparkle.config.json の primary 設定に追従させるため
-     blue を経由する。`info` / `success` / `warning` はステータス色
-     なので primary 設定に関わらず固定色相を参照する（旧 --color-info-* と
-     同じ扱い）。
-
-     en: 1:1 mirror of Figma's `Colors: Semantics`. The Figma path becomes
-     the variable name verbatim, so an annotation's migration target can be
-     used as-is. Unlike the legacy semantic layer, interaction state is part
-     of the token name. `primary` follows the configured primary color;
-     status hues (info/success/warning) stay fixed.
-     ------------------------------------------------------------------ */
 
   /* surface — 背景 */
   --color-surface-base-0: var(--color-white);
@@ -361,17 +370,6 @@
   --color-surface-primary-middle-hover: var(--color-blue-100);
   --color-surface-primary-middle-active: var(--color-blue-200);
   --color-surface-primary-middle-disabled: var(--color-blue-50);
-  /* NOTE: surface/{primary,negative}/low/{hover,active} の 4 つは Figma でも
-     エイリアスではなく実値（#1d83f714 / #1d83f72e / #e4534e14 / #e4534e2e）。
-     これは「不透明なプリミティブのどれか」ではなく **primary(negative) を
-     敷いた透明色**であり、単色トークンのエイリアスでは表現できないため。
-     ベース色は blue/500(#1d83f7) / red/500(#e4534e) と完全一致しており、
-     アルファは 0x14 = 7.84% / 0x2e = 18.04%。意図どおりのティントとして
-     color-mix で表現し、primary 設定に追従させる。
-     en: The only literal (non-alias) values in Figma — tints of
-     primary/negative that an alias cannot express. Their base colors match
-     blue/500 and red/500 exactly; alpha is 0x14 (7.84%) and 0x2e (18.04%).
-     Modeled as color-mix so they follow the configured primary. */
   --color-surface-primary-low-hover: color-mix(in srgb, var(--color-blue-500) 8%, transparent);
   --color-surface-primary-low-active: color-mix(in srgb, var(--color-blue-500) 18%, transparent);
   --color-surface-primary-low-disabled: var(--color-white-alpha-700);
@@ -427,10 +425,6 @@
   --color-border-success: var(--color-green-300);
   --color-border-warning: var(--color-yellow-400);
   --color-border-inverse: var(--color-white);
-  /* Figma の定義どおり blue/700 固定（primary 設定には追従しない）。
-     旧 --color-ring-normal の移行先。
-     en: Fixed to blue/700 exactly as defined in Figma — it does not follow
-     the configured primary color. Migration target of --color-ring-normal. */
   --color-border-ring: var(--color-blue-700);
 
   /* object — アイコン等の図形 */
@@ -475,17 +469,7 @@
   --color-text-warning: var(--color-yellow-700);
   --color-text-inverse: var(--color-white);
 
-  /* ------------------------------------------------------------------
-     タイポグラフィのセマンティックトークン（Figma `Typography: Semantics` と 1:1 対応）
-
-     Figma のパス（例: character/1/regular-pro/font-size）をそのまま
-     `--character-1-regular-pro-font-size` に写している。下の @layer utilities
-     にある 72 クラス（character 48 + icon 24）は、この変数を参照する形に
-     揃えてあるので、値の定義箇所はここ 1 箇所だけになる。
-
-     en: 1:1 mirror of Figma's `Typography: Semantics`. The 72 utility
-     classes below consume these variables, so each value is declared once.
-     ------------------------------------------------------------------ */
+  /* タイポグラフィ */
   --character-1-regular-pro-font-family: var(--font-family-pro);
   --character-1-regular-pro-font-size: var(--font-size-12);
   --character-1-regular-pro-font-weight: var(--font-weight-char-normal);
@@ -857,7 +841,7 @@
   --icon-13-fill-1-letter-spacing: var(--letter-spacing-normal);
   --icon-13-fill-1-line-height: var(--line-height-leading-none);
 
-  /* 角丸（radius.csv の選択プロファイル行から生成） */
+  /* 角丸 */
   --radius-divide: var(--radius-none);
   --radius-minimum: var(--radius-sm);
   --radius-notice: var(--radius-md);
@@ -866,7 +850,7 @@
   --radius-modal: var(--radius-2xl);
   --radius-round: var(--radius-full);
 
-  /* @deprecated --radius-halfModal は beta 期間の後方互換エイリアス（`halfModal` → `container`）。beta 終了時に削除する。 */
+  /* @deprecated --radius-container を使う */
   --radius-halfModal: var(--radius-container);
 
   /* シャドウ */
@@ -876,42 +860,57 @@
   --shadow-stick: var(--shadow-sm);
   --shadow-float: var(--shadow-md);
   --shadow-popout: var(--shadow-lg);
+
+  /* モーション */
+  --motion-latency: 0ms;
+  --motion-move-visual-duration: 300ms;
+  --motion-move-duration-ratio: 1;
+  --motion-move-ease: var(--ease-out-quint);
+  --motion-fade-duration: 220ms;
+  --motion-fade-ease: var(--ease-out-cubic);
+  --motion-distance: 8px;
+  --motion-scale: 0.95;
+  --motion-exit-duration: 160ms;
+  --motion-settle-visual-duration: 250ms;
+  --motion-settle-ease: var(--ease-spring-0);
+
+  --motion-move-duration: calc(var(--motion-move-visual-duration) * var(--motion-move-duration-ratio));
+  --motion-settle-duration: calc(var(--motion-settle-visual-duration) * var(--spring-duration-ratio));
+  --motion-exit-ease: var(--ease-exit);
+  --motion-exit-distance: calc(var(--motion-distance) * 0.5);
+  --motion-exit-scale: calc((1 + var(--motion-scale)) / 2);
+  --motion-color-duration: var(--motion-settle-visual-duration);
+  --motion-color-ease: ease-out;
+  --motion-color-delay: var(--motion-latency);
+  --motion-overlay-enter-duration: max(var(--motion-fade-duration), var(--motion-move-visual-duration) * 0.6);
+  --motion-overlay-enter-ease: var(--motion-fade-ease);
+  --motion-overlay-exit-duration: var(--motion-exit-duration);
+  --motion-overlay-exit-delay: calc(var(--motion-exit-duration) * 0.3);
+  --motion-content-delay: calc(var(--motion-latency) + var(--motion-move-visual-duration) * 0.25);
+  --motion-content-delay-tooltip: calc(var(--motion-latency) + var(--motion-move-visual-duration) * var(--motion-small-ratio) * 0.1);
+  --motion-toast-fade-duration: min(var(--motion-fade-duration), var(--motion-move-visual-duration));
+  --motion-blink-duration: 160ms;
+  --motion-blink-ease: linear;
+  --motion-hover-close-delay: 150ms;
+  --motion-pop-from-x: 0;
+  --motion-pop-from-y: 0;
+  --motion-small-ratio: 0.75;
+  --motion-move-duration-small: calc(var(--motion-move-duration) * var(--motion-small-ratio));
+  --motion-settle-duration-small: calc(var(--motion-settle-duration) * var(--motion-small-ratio));
+  --motion-exit-duration-small: calc(var(--motion-exit-duration) * var(--motion-small-ratio));
+  --motion-color-duration-small: calc(var(--motion-color-duration) * var(--motion-small-ratio));
 }
 
-/* 最大幅 — Figma の `Sizing: Primitives`（`max-width/xs` 〜 `max-width/7xl` の 11 件） */
-/* NOTE: ここだけ `@theme inline` でも プレーンな `:root` でもなく **`@theme static`**
-   に実値を書く。他のトークンと形が違うのは、`--container-*` が Tailwind v4 で
-   2 種類の使われ方をするため。
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-latency: 0ms;
+    --motion-distance: 0px;
+    --motion-scale: 1;
+    --motion-settle-duration: 0ms;
+  }
+}
 
-   - `max-w-*` / `w-*` / `min-w-*` → `var(--container-*)` に展開される
-   - `@sm:` / `@xl:` などの container query バリアント →
-     `@container (width >= 36rem)` のように **実値がベタ書きされる**
-
-   後者は CSS の仕様上 `var()` を書けない。そのため:
-
-   - プレーンな `:root` に書くと、`max-w-*` は追従するが container query の
-     条件は Tailwind のデフォルトのまま**黙って据え置かれる**
-   - `@theme inline` に自己参照（`var(--container-xl)`）で書くと、条件に var() を
-     置けないため **`@xl:` ユーティリティ自体が生成されなくなる**（さらに悪い）
-
-   `@theme` に実値を書いた場合だけ両方が追従する。tailwindcss 4 を実際に
-   コンパイルして 3 通りとも確認済み。
-   だから `@theme inline` の自己参照（issue #229 の設計）をここに適用しないこと。
-
-   さらに `static` を付けるのは、素の `@theme` だと**使われていない変数が
-   出力から消える**ため（tree-shaking）。他のトークンはプレーンな `:root` に
-   あるので常に参照できるが、`@theme` だけ「`max-w-6xl` を書いていない
-   プロジェクトでは `var(--container-6xl)` が解決しない」という差が出てしまう。
-   `@theme static` なら 11 件すべてが必ず出力される。
-
-   Tailwind の `--container-3xs` / `--container-2xs` は Figma に対応する変数が
-   ないため意図的に定義しない（＝Tailwind のデフォルトのまま残る）。
-   en: Must be `@theme` with literal values. Container-query variants inline the
-   value into `@container (width >= …)`, where `var()` is invalid — a plain
-   `:root` silently keeps Tailwind's defaults for those, and the `@theme inline`
-   self-reference makes the variants disappear entirely. `static` prevents
-   tree-shaking, so all 11 stay available to hand-written CSS the way every
-   other token in this file is. Verified by compiling tailwindcss 4. */
+/* 最大幅 */
 @theme static {
   --container-xs: 20rem; /* 320px */
   --container-sm: 24rem; /* 384px */
@@ -926,13 +925,7 @@
   --container-7xl: 80rem; /* 1280px */
 }
 
-/* セマンティクスのトークン定義（Tailwind ユーティリティ生成用） */
-/* NOTE: 各宣言は上の「セマンティックトークン」:root ブロックにある同名変数を
-   自己参照している（例: --color-primary-500: var(--color-primary-500)）。
-   プリミティブへの直接参照にしない意図的な設計。Tailwind v4 は @theme inline
-   の宣言右辺を compiled utility class にそのまま埋め込むため、直接参照だと
-   セマンティック変数が一切参照されなくなり、別セレクタでのランタイム上書きが
-   compiled utility に効かなくなる。 */
+/* Tailwind ユーティリティ用 */
 @theme inline {
   /* セマンティクスカラー定義 */
   --color-neutral-50: var(--color-neutral-50);
@@ -1024,7 +1017,7 @@
   --color-text-high: var(--color-text-high);
   --color-skeleton-fill: var(--color-skeleton-fill);
 
-  /* ベースカラー（base） - gray と同等 */
+  /* ベースカラー */
   --color-base-50: var(--color-base-50);
   --color-base-100: var(--color-base-100);
   --color-base-200: var(--color-base-200);
@@ -1035,10 +1028,6 @@
   --color-base-700: var(--color-base-700);
   --color-base-800: var(--color-base-800);
   --color-base-900: var(--color-base-900);
-
-  /* 用途別セマンティックカラー（Figma `Colors: Semantics` と 1:1 対応）。
-     上の :root ブロックと同名変数の自己参照にする理由は、このブロック
-     冒頭の NOTE (issue #229) を参照。 */
 
   /* surface — 背景 */
   --color-surface-base-0: var(--color-surface-base-0);
@@ -1149,7 +1138,7 @@
   --color-text-warning: var(--color-text-warning);
   --color-text-inverse: var(--color-text-inverse);
 
-  /* 角丸（radius.csv の列から生成） */
+  /* 角丸 */
   --radius-divide: var(--radius-divide);
   --radius-minimum: var(--radius-minimum);
   --radius-notice: var(--radius-notice);
@@ -1157,7 +1146,7 @@
   --radius-container: var(--radius-container);
   --radius-modal: var(--radius-modal);
   --radius-round: var(--radius-round);
-  /* @deprecated beta 期間の後方互換エイリアス（`halfModal` → `container`）。 */
+  /* @deprecated --radius-container を使う */
   --radius-halfModal: var(--radius-halfModal);
 
   /* シャドウ */
@@ -1167,6 +1156,84 @@
   --shadow-stick: var(--shadow-stick);
   --shadow-float: var(--shadow-float);
   --shadow-popout: var(--shadow-popout);
+
+  /* モーション */
+  --motion-latency: var(--motion-latency);
+  --motion-move-visual-duration: var(--motion-move-visual-duration);
+  --motion-move-duration-ratio: var(--motion-move-duration-ratio);
+  --motion-move-ease: var(--motion-move-ease);
+  --motion-fade-duration: var(--motion-fade-duration);
+  --motion-fade-ease: var(--motion-fade-ease);
+  --motion-distance: var(--motion-distance);
+  --motion-scale: var(--motion-scale);
+  --motion-exit-duration: var(--motion-exit-duration);
+  --motion-settle-visual-duration: var(--motion-settle-visual-duration);
+  --motion-settle-ease: var(--motion-settle-ease);
+
+  --motion-move-duration: var(--motion-move-duration);
+  --motion-settle-duration: var(--motion-settle-duration);
+  --motion-exit-ease: var(--motion-exit-ease);
+  --motion-exit-distance: var(--motion-exit-distance);
+  --motion-exit-scale: var(--motion-exit-scale);
+  --motion-color-duration: var(--motion-color-duration);
+  --motion-color-ease: var(--motion-color-ease);
+  --motion-color-delay: var(--motion-color-delay);
+  --motion-overlay-enter-duration: var(--motion-overlay-enter-duration);
+  --motion-overlay-enter-ease: var(--motion-overlay-enter-ease);
+  --motion-overlay-exit-duration: var(--motion-overlay-exit-duration);
+  --motion-overlay-exit-delay: var(--motion-overlay-exit-delay);
+  --motion-content-delay: var(--motion-content-delay);
+  --motion-content-delay-tooltip: var(--motion-content-delay-tooltip);
+  --motion-toast-fade-duration: var(--motion-toast-fade-duration);
+  --motion-blink-duration: var(--motion-blink-duration);
+  --motion-blink-ease: var(--motion-blink-ease);
+  --motion-hover-close-delay: var(--motion-hover-close-delay);
+  --motion-pop-from-x: var(--motion-pop-from-x);
+  --motion-pop-from-y: var(--motion-pop-from-y);
+  --motion-small-ratio: var(--motion-small-ratio);
+  --motion-move-duration-small: var(--motion-move-duration-small);
+  --motion-settle-duration-small: var(--motion-settle-duration-small);
+  --motion-exit-duration-small: var(--motion-exit-duration-small);
+  --motion-color-duration-small: var(--motion-color-duration-small);
+}
+
+/* アニメーション */
+@theme inline {
+  --animate-motion-pop-in: motion-fade-in var(--motion-fade-duration) var(--motion-fade-ease) var(--motion-latency) both, motion-pop-in var(--motion-move-duration) var(--motion-move-ease) var(--motion-latency) both;
+  --animate-motion-pop-in-small: motion-fade-in var(--motion-fade-duration) var(--motion-fade-ease) var(--motion-latency) both, motion-pop-in var(--motion-move-duration-small) var(--motion-move-ease) var(--motion-latency) both;
+  --animate-motion-pop-out: motion-fade-out var(--motion-exit-duration) var(--motion-exit-ease) both, motion-pop-out var(--motion-exit-duration) var(--motion-exit-ease) both;
+  --animate-motion-pop-out-small: motion-fade-out var(--motion-exit-duration-small) var(--motion-exit-ease) both, motion-pop-out var(--motion-exit-duration-small) var(--motion-exit-ease) both;
+  --animate-motion-content-in: motion-fade-in var(--motion-fade-duration) var(--motion-fade-ease) var(--motion-content-delay) both;
+  --animate-motion-content-in-tooltip: motion-fade-in var(--motion-fade-duration) var(--motion-fade-ease) var(--motion-content-delay-tooltip) both;
+  --animate-motion-overlay-in: motion-fade-in var(--motion-overlay-enter-duration) var(--motion-overlay-enter-ease) both;
+  --animate-motion-overlay-out: motion-fade-out var(--motion-overlay-exit-duration) var(--motion-exit-ease) var(--motion-overlay-exit-delay) both;
+  --animate-motion-blink: motion-blink var(--motion-blink-duration) var(--motion-blink-ease);
+
+  @keyframes motion-fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes motion-fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes motion-pop-in {
+    from {
+      transform: translate(calc(var(--motion-pop-from-x) * var(--motion-distance)), calc(var(--motion-pop-from-y) * var(--motion-distance))) scale(var(--motion-scale));
+    }
+  }
+  @keyframes motion-blink {
+    40% {
+      opacity: 0;
+    }
+  }
+  @keyframes motion-pop-out {
+    to {
+      transform: translate(calc(var(--motion-pop-from-x) * var(--motion-exit-distance)), calc(var(--motion-pop-from-y) * var(--motion-exit-distance))) scale(var(--motion-exit-scale));
+    }
+  }
 }
 
 /* フォントレンダリング */
@@ -1177,8 +1244,7 @@
   }
 }
 
-/* Figmaのテキストスタイル定義 */
-/* NOTE: v4の記法ではないがv3環境で使われても反映できるようにこちらの記法で記述 */
+/* テキストスタイル */
 @layer utilities {
   .character-1-regular-pro {
     /* Character テキストスタイル */

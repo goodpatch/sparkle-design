@@ -2,5 +2,6 @@
   "primary": "blue",
   "font-mono": "Reddit Mono",
   "font-pro": "Inter",
-  "radius": "lg"
+  "radius": "lg",
+  "motion-weight": "middle"
 }
