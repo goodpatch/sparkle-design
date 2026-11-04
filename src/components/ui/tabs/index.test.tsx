@@ -423,6 +423,9 @@ describe("Tabs のモーション", () => {
       "data-[ready]:delay-(--motion-latency)",
     ].forEach(cls => expect(indicator.className).toContain(cls));
     expect(indicator).toHaveAttribute("aria-hidden", "true");
+    // THEN: 最初の位置合わせでは動かさない
+    // en: THEN the first placement is not animated
+    expect(indicator).not.toHaveAttribute("data-ready");
   });
 
   it("選択中のタブが変わると、インジケーターがそのタブの位置へ移る", async () => {
@@ -470,6 +473,9 @@ describe("Tabs のモーション", () => {
     // THEN: インジケーターが 2 つ目のタブの位置へ移る
     // en: THEN the indicator moves to the second tab
     await waitFor(() => expect(indicator.style.translate).toBe("80px 0px"));
+    // THEN: 選択が移ったときは動かす（data-ready）
+    // en: THEN it animates because the selection moved (data-ready)
+    await waitFor(() => expect(indicator).toHaveAttribute("data-ready"));
     spies.forEach(spy => spy.mockRestore());
   });
 });

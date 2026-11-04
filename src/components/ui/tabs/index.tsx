@@ -127,8 +127,8 @@ type TabsListVariants = VariantProps<typeof tabsListVariants>;
 const tabsIndicatorVariants = cva(
   [
     "pointer-events-none absolute top-0 left-0",
-    // 最初の位置合わせでは動かさない（左上から滑ってこないように）
-    // en: Do not animate the first placement, so it does not slide in from the corner
+    // 選択が別のタブへ移ったときだけ動かす（最初の位置合わせや大きさの変化では動かさない）
+    // en: Animate only when the selection moves to another tab (not on first placement or resizes)
     "data-[ready]:transition-[translate,width,height] data-[ready]:duration-(--motion-settle-duration) data-[ready]:ease-(--motion-settle-ease) data-[ready]:delay-(--motion-latency)",
   ],
   {
@@ -146,7 +146,13 @@ const tabsIndicatorVariants = cva(
   }
 );
 
-type TabRect = { x: number; y: number; width: number; height: number };
+type TabRect = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  moving: boolean;
+};
 
 /**
  * リストの中での位置を、リストの拡大縮小（Modal の開くアニメーションなど）を割り戻して求める。
@@ -154,7 +160,10 @@ type TabRect = { x: number; y: number; width: number; height: number };
  * en: Position within the list, undoing any scaling of the list (e.g. a Modal scaling in).
  * offsetLeft / offsetWidth are rounded to integers and drift by 1px, so they are not used
  */
-function rectWithin(element: HTMLElement, list: HTMLElement): TabRect | null {
+function rectWithin(
+  element: HTMLElement,
+  list: HTMLElement
+): Omit<TabRect, "moving"> | null {
   const listRect = list.getBoundingClientRect();
   if (list.offsetWidth === 0 || listRect.width === 0) return null;
   const scale = listRect.width / list.offsetWidth;
@@ -170,6 +179,7 @@ function rectWithin(element: HTMLElement, list: HTMLElement): TabRect | null {
 function useActiveTabRect(listRef: React.RefObject<HTMLDivElement | null>) {
   const [rect, setRect] = React.useState<TabRect | null>(null);
   const [ready, setReady] = React.useState(false);
+  const lastActiveRef = React.useRef<HTMLElement | null>(null);
 
   React.useLayoutEffect(() => {
     const list = listRef.current;
@@ -188,17 +198,32 @@ function useActiveTabRect(listRef: React.RefObject<HTMLDivElement | null>) {
       const active = triggers.find(
         trigger => trigger.dataset.state === "active"
       );
-      const next = active ? rectWithin(active, list) : null;
-      setRect(prev =>
-        prev &&
-        next &&
-        prev.x === next.x &&
-        prev.y === next.y &&
-        prev.width === next.width &&
-        prev.height === next.height
+      const measured = active ? rectWithin(active, list) : null;
+      // 選択が別のタブへ移ったら動かし始める。最初の位置合わせ（フォントの読み込みを含む）では動かさない。
+      // 移動中にタブの大きさが変わっても（選択中は太字になる）途中で止まらないよう、次に選択が変わるまで保つ
+      // en: Start animating once the selection moves to another tab; never for the first placement
+      // (including font loading). Keep it until the next selection change so a size change mid-move
+      // (the active label turns bold) does not cut the animation
+      const changed =
+        lastActiveRef.current !== null &&
+        active !== undefined &&
+        lastActiveRef.current !== active;
+      if (active) lastActiveRef.current = active;
+      setRect(prev => {
+        if (!measured) return null;
+        const next = {
+          ...measured,
+          moving: changed || (prev?.moving ?? false),
+        };
+        return prev &&
+          prev.x === next.x &&
+          prev.y === next.y &&
+          prev.width === next.width &&
+          prev.height === next.height &&
+          prev.moving === next.moving
           ? prev
-          : next
-      );
+          : next;
+      });
     }
 
     measure();
@@ -307,7 +332,7 @@ function TabsList({
         <span
           aria-hidden="true"
           data-slot="tabs-indicator"
-          data-ready={ready ? "" : undefined}
+          data-ready={ready && rect?.moving ? "" : undefined}
           hidden={!rect}
           className={tabsIndicatorVariants({ variant: effectiveVariant })}
           style={indicatorStyle}
