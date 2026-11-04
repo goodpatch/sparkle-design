@@ -118,7 +118,7 @@ export function Link({
 
   const linkContent = (
     <>
-      <span className="transition-colors text-text-primary-enabled group-hover:text-text-primary-hover underline decoration-current underline-offset-2">
+      <span className="text-text-primary-enabled group-hover:text-text-primary-hover underline decoration-current underline-offset-2">
         {children}
       </span>
       {isExternalLink && (
@@ -141,7 +141,7 @@ export function Link({
               children as React.ReactElement<Record<string, unknown>>,
               {},
               <>
-                <span className="transition-colors text-text-primary-enabled group-hover:text-text-primary-hover underline decoration-current underline-offset-2">
+                <span className="text-text-primary-enabled group-hover:text-text-primary-hover underline decoration-current underline-offset-2">
                   {
                     (
                       children as React.ReactElement<{

@@ -12,7 +12,7 @@ import { useInputContainerFocus } from "@/hooks/useInputContainerFocus";
 
 // 入力フィールドのスタイル定義
 const inputVariants = cva(
-  "flex gap-0 items-center w-full rounded-action border bg-surface-base-0 transition-colors p-1",
+  "flex gap-0 items-center w-full rounded-action border bg-surface-base-0 p-1",
   {
     variants: {
       size: {

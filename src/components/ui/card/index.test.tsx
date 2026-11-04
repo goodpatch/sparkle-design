@@ -40,7 +40,6 @@ const CLICKABLE_CARD_BASE_CLASSES = [
   "py-4",
   "cursor-pointer",
   "hover:bg-surface-neutral-middle-enabled",
-  "transition-colors",
 ] as const;
 
 const CLICKABLE_CARD_INTERACTION_CLASSES = [
