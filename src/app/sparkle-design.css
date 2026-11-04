@@ -118,8 +118,8 @@
 
   /* タイポグラフィ変数 */
   /* フォントファミリー */
-  --font-family-pro: 'BIZ UDPGothic', sans-serif;
-  --font-family-mono: 'BIZ UDGothic', monospace;
+  --font-family-pro: 'Inter', sans-serif;
+  --font-family-mono: 'Reddit Mono', monospace;
   --font-family-icon: 'Material Symbols Rounded';
 
   /* フォントサイズ */
@@ -857,30 +857,16 @@
   --icon-13-fill-1-letter-spacing: var(--letter-spacing-normal);
   --icon-13-fill-1-line-height: var(--line-height-leading-none);
 
-  /* 角丸 - デフォルト値は設定可能 */
-  /* NOTE: ここに書かれた var(--radius-*) は「置換前のデフォルト値」で、
-     実際の値は sparkle-design-cli の processTemplate が radius.csv の
-     選択プロファイル行で上書きする（`round` のみ置換対象外）。
-     そのため radius.csv の列名とここの変数名は必ず同時に変更すること
-     （CSV だけ変えると置換が効かず、旧名の変数が残る）。
-     en: These defaults are overwritten at generate time by the CLI using
-     the selected radius.csv profile row (`round` is excluded). Rename the
-     CSV column and the variable here together, or the substitution misses. */
+  /* 角丸（radius.csv の選択プロファイル行から生成） */
   --radius-divide: var(--radius-none);
-  --radius-minimum: var(--radius-xs);
-  --radius-notice: var(--radius-sm);
-  --radius-action: var(--radius-md);
-  --radius-container: var(--radius-lg);
-  --radius-modal: var(--radius-xl);
+  --radius-minimum: var(--radius-sm);
+  --radius-notice: var(--radius-md);
+  --radius-action: var(--radius-lg);
+  --radius-container: var(--radius-xl);
+  --radius-modal: var(--radius-2xl);
   --radius-round: var(--radius-full);
 
-  /* @deprecated --radius-halfModal は beta 期間の後方互換エイリアス。
-     `halfModal` は Figma で `container` にリネームされた。beta 終了時に削除する。
-     radius.csv に列を持たない（＝プロファイルの値を流し込まない）意図的な
-     エイリアスであることを、scripts/validate-tokens.mjs がこの @deprecated
-     コメントの変数名から読み取る。
-     en: Intentional back-compat alias with no radius.csv column. The validator
-     recognises it by the variable name in this @deprecated comment. */
+  /* @deprecated --radius-halfModal は beta 期間の後方互換エイリアス（`halfModal` → `container`）。beta 終了時に削除する。 */
   --radius-halfModal: var(--radius-container);
 
   /* シャドウ */
@@ -1163,7 +1149,7 @@
   --color-text-warning: var(--color-text-warning);
   --color-text-inverse: var(--color-text-inverse);
 
-  /* 角丸 - デフォルト値は設定可能 */
+  /* 角丸（radius.csv の列から生成） */
   --radius-divide: var(--radius-divide);
   --radius-minimum: var(--radius-minimum);
   --radius-notice: var(--radius-notice);

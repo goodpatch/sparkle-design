@@ -90,7 +90,7 @@ npx --yes sparkle-design-cli setup --assistant claude
 
 ### 生成されるファイル
 
-- `sparkle.config.json` -- デザインテーマ設定（初期値: blue / BIZ UDPGothic / BIZ UDGothic / md）
+- `sparkle.config.json` -- デザインテーマ設定（初期値: blue / Inter / Reddit Mono / lg）
 - `postcss.config.mjs` -- PostCSS 設定（`@tailwindcss/postcss` プラグインを有効化）
 - `src/app/globals.css` / `src/globals.css` / `src/index.css` -- Tailwind エントリ CSS（プロジェクト構成から自動判定。`@import "tailwindcss";` 不在時は canonical な import を自動 prepend）
 - `src/app/sparkle-design.css` -- デザイントークン（プリミティブ `:root` + セマンティック `:root` + `@theme inline`）
