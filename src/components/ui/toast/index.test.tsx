@@ -151,6 +151,64 @@ describe("Toast", () => {
     });
   });
 
+  describe("モーション", () => {
+    it("トーストはモーショントークンで、画面の上端の外から入る", async () => {
+      // GIVEN: Toaster
+      // en: GIVEN a Toaster
+      testContainer.render(<Toaster />);
+
+      // WHEN: トーストを出す
+      // en: WHEN a toast is shown
+      toast({ description: "モーションのテスト" });
+      await AsyncHelpers.waitFor(() =>
+        Boolean(document.querySelector("[data-sonner-toast]"))
+      );
+      const toastElement = document.querySelector(
+        "[data-sonner-toast]"
+      ) as HTMLElement;
+
+      // THEN: 初期位置と退場位置は要素の高さの 140% 上で、時間はトークンで決まる
+      // en: THEN it starts and exits 140% of its height above, timed by the motion tokens
+      [
+        "data-[mounted=false]:[--y:translateY(-140%)]!",
+        "data-[removed=true]:data-[front=true]:[--y:translateY(-140%)]!",
+        "motion-reduce:data-[mounted=false]:[--y:translateY(0)]!",
+      ].forEach(cls => expect(toastElement.className).toContain(cls));
+      expect(toastElement.className).toContain(
+        "transform_var(--motion-move-duration)_var(--motion-move-ease)"
+      );
+      expect(toastElement.className).toContain(
+        "opacity_var(--motion-toast-fade-duration)"
+      );
+      expect(toastElement.className).toContain(
+        "transform_var(--motion-exit-duration)_var(--motion-exit-ease)"
+      );
+    });
+
+    it("toastOptions.className を渡しても、モーションのクラスは残る", async () => {
+      // GIVEN: 独自のクラスを渡した Toaster
+      // en: GIVEN a Toaster with a custom class
+      testContainer.render(<Toaster toastOptions={{ className: "custom" }} />);
+
+      // WHEN: トーストを出す
+      // en: WHEN a toast is shown
+      toast({ description: "クラスのテスト" });
+      await AsyncHelpers.waitFor(() =>
+        Boolean(document.querySelector("[data-sonner-toast]"))
+      );
+      const toastElement = document.querySelector(
+        "[data-sonner-toast]"
+      ) as HTMLElement;
+
+      // THEN: 両方のクラスが付く
+      // en: THEN both classes are applied
+      expect(toastElement.className).toContain("custom");
+      expect(toastElement.className).toContain(
+        "data-[mounted=false]:[--y:translateY(-140%)]!"
+      );
+    });
+  });
+
   describe("User Interaction", () => {
     it("閉じるボタンをクリックできる", () => {
       // Given: Toastをレンダリングする
