@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { TestContainer, EventHelpers } from "@/test/helpers";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./index";
@@ -282,6 +283,9 @@ describe("Tabs", () => {
         trigger: root.querySelector(
           '[data-slot="tabs-trigger"]'
         ) as HTMLElement,
+        indicator: root.querySelector(
+          '[data-slot="tabs-indicator"]'
+        ) as HTMLElement,
       };
     };
 
@@ -289,7 +293,7 @@ describe("Tabs", () => {
       [
         "solid",
         [
-          "data-[state=active]:bg-surface-primary-high-enabled",
+          "data-[state=active]:bg-transparent",
           "data-[state=active]:text-text-inverse",
           "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-primary-high-hover",
           "focus-visible:data-[state=active]:bg-surface-primary-high-active",
@@ -299,12 +303,13 @@ describe("Tabs", () => {
           "focus-visible:data-[state=inactive]:bg-surface-neutral-low-active",
           "disabled:data-[state=inactive]:text-text-neutral-disabled",
         ],
+        ["bg-surface-primary-high-enabled", "rounded-t-action"],
       ],
       [
         "line",
         [
           "data-[state=active]:text-text-primary-enabled",
-          "data-[state=active]:after:bg-border-primary-extra-high",
+          "data-[state=active]:after:bg-transparent",
           "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-primary-low-hover",
           "enabled:not-focus-visible:hover:data-[state=active]:text-text-primary-hover",
           "focus-visible:data-[state=active]:bg-surface-primary-low-active",
@@ -315,26 +320,41 @@ describe("Tabs", () => {
           "enabled:not-focus-visible:hover:data-[state=inactive]:bg-surface-neutral-low-hover",
           "disabled:data-[state=inactive]:text-text-neutral-disabled",
         ],
+        ["bg-border-primary-extra-high", "h-0.5"],
       ],
       [
         "ghost",
         [
           "data-[state=active]:text-text-neutral-high",
-          "data-[state=active]:bg-surface-base-0",
-          "data-[state=active]:border-border-neutral-middle",
+          "data-[state=active]:bg-transparent",
+          "disabled:data-[state=active]:bg-surface-base-0",
+          "disabled:data-[state=active]:border-border-neutral-middle",
           "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-neutral-low-hover",
           "focus-visible:data-[state=active]:bg-surface-neutral-low-active",
           "disabled:data-[state=active]:text-text-neutral-disabled",
           "enabled:not-focus-visible:hover:data-[state=inactive]:bg-surface-neutral-low-hover",
           "disabled:data-[state=inactive]:text-text-neutral-disabled",
         ],
+        [
+          "bg-surface-base-0",
+          "border-border-neutral-middle",
+          "rounded-t-action",
+        ],
       ],
-    ] as const)("applies %s trigger tokens", (variant, expected) => {
-      const { trigger } = renderTabs(variant);
-      expected.forEach(cls =>
-        expect(trigger.className.split(/\s+/)).toContain(cls)
-      );
-    });
+    ] as const)(
+      "applies %s trigger tokens",
+      (variant, expectedTrigger, expectedIndicator) => {
+        const { trigger, indicator } = renderTabs(variant);
+        expectedTrigger.forEach(cls =>
+          expect(trigger.className.split(/\s+/)).toContain(cls)
+        );
+        // 選択中の見た目（塗り・下線・枠）は、次のタブへ移動するインジケーターが持つ
+        // en: The active look (fill / underline / outline) lives on the indicator that moves between tabs
+        expectedIndicator.forEach(cls =>
+          expect(indicator.className.split(/\s+/)).toContain(cls)
+        );
+      }
+    );
 
     it.each([
       ["solid", "border-b-border-neutral-low"],
@@ -364,5 +384,92 @@ describe("Tabs", () => {
         );
       });
     });
+  });
+});
+
+describe("Tabs のモーション", () => {
+  let testContainer: TestContainer;
+
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
+  it("インジケーターは状態変化のスプリングで移動し、最初の位置合わせでは動かない", () => {
+    // GIVEN: タブ
+    // en: GIVEN tabs
+    testContainer.render(
+      <Tabs defaultValue="a">
+        <TabsList>
+          <TabsTrigger value="a">A</TabsTrigger>
+          <TabsTrigger value="b">B</TabsTrigger>
+        </TabsList>
+      </Tabs>
+    );
+    const indicator = document.querySelector(
+      '[data-slot="tabs-indicator"]'
+    ) as HTMLElement;
+
+    // THEN: 移動は位置合わせが済んでから（data-ready）だけ、settle のトークンで動く
+    // en: THEN it only animates once placed (data-ready), with the settle tokens
+    [
+      "data-[ready]:transition-[translate,width,height]",
+      "data-[ready]:duration-(--motion-settle-duration)",
+      "data-[ready]:ease-(--motion-settle-ease)",
+      "data-[ready]:delay-(--motion-latency)",
+    ].forEach(cls => expect(indicator.className).toContain(cls));
+    expect(indicator).toHaveAttribute("aria-hidden", "true");
+  });
+
+  it("選択中のタブが変わると、インジケーターがそのタブの位置へ移る", async () => {
+    // GIVEN: 2 つのタブ（jsdom は配置しないので位置を与える）
+    // en: GIVEN two tabs (jsdom does no layout, so stub the positions)
+    const lefts: Record<string, number> = { a: 0, b: 80 };
+    const spies = [
+      vi
+        .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+        .mockImplementation(function (this: HTMLElement) {
+          const isList = this.dataset.slot === "tabs-list";
+          const left = lefts[this.dataset.value ?? ""] ?? 0;
+          const width = isList ? 200 : this.dataset.value ? 72 : 0;
+          return DOMRect.fromRect({ x: left, y: 0, width, height: 40 });
+        }),
+      vi
+        .spyOn(HTMLElement.prototype, "offsetWidth", "get")
+        .mockImplementation(function (this: HTMLElement) {
+          return this.dataset.slot === "tabs-list" ? 200 : 0;
+        }),
+    ];
+    testContainer.render(
+      <Tabs defaultValue="a">
+        <TabsList>
+          <TabsTrigger value="a" data-value="a">
+            A
+          </TabsTrigger>
+          <TabsTrigger value="b" data-value="b">
+            B
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
+    );
+    const indicator = document.querySelector(
+      '[data-slot="tabs-indicator"]'
+    ) as HTMLElement;
+    expect(indicator.style.translate).toBe("0px 0px");
+    expect(indicator.style.width).toBe("72px");
+
+    // WHEN: 2 つ目のタブを選ぶ
+    // en: WHEN the second tab is selected
+    const second = screen.getByRole("tab", { name: "B" });
+    fireEvent.mouseDown(second, { button: 0 });
+
+    // THEN: インジケーターが 2 つ目のタブの位置へ移る
+    // en: THEN the indicator moves to the second tab
+    await waitFor(() => expect(indicator.style.translate).toBe("80px 0px"));
+    spies.forEach(spy => spy.mockRestore());
   });
 });
