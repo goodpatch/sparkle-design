@@ -101,7 +101,7 @@ user-invocable: true
 
 > ⚠️ `full` は `sparkle-variables/radius.csv` に **入力キーとして存在しない**（`round` 列の semantic 出力にのみ現れる）。`radius: "full"` や上記以外の値は `generate` 実行時にエラーで停止する（型検証あり）。丸みを最大化したい場合は `3xl` を使う。
 
-#### font-pro / font-mono（11 種、用途制限あり）
+#### font-pro / font-mono（12 種、用途制限あり）
 
 | フォント名 | pro 可 | mono 可 | 傾向 |
 |---|---|---|---|
@@ -112,6 +112,7 @@ user-invocable: true
 | `Inter` | ✅ | ✅ | 英字モダン・中立 |
 | `Roboto` | ✅ | ❌ | 英字 Google 標準 |
 | `Roboto Mono` | ❌ | ✅ | 英字 mono |
+| `Reddit Mono` | ❌ | ✅ | 英字 mono・既定 |
 | `Lato` | ✅ | ✅ | 英字やわらかめ |
 | `Open Sans` | ✅ | ✅ | 英字ニュートラル |
 | `Montserrat` | ✅ | ✅ | 英字モダン・やや強め |
