@@ -62,6 +62,21 @@ export interface ToastProps extends Omit<ReactToastProps, "id"> {
  * </>
  * ```
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - 画面のコードから `sonner` を直接 import しないでください。`Toaster` と `toast` はこの Toast のモジュール（npm パッケージなら `sparkle-design/toast`）から import します。
+ *   en: Do not import `sonner` directly in your screens. Import `Toaster` and `toast` from this Toast module (`sparkle-design/toast` when using the npm package).
+ *
+ * ```tsx
+ * // ✅ Correct
+ * import { Toaster, toast } from "sparkle-design/toast";
+ * toast({ description: "保存しました" });
+ *
+ * // ❌ Wrong - sonner を直接使わない
+ * import { Toaster, toast } from "sonner";
+ * toast("保存しました");
+ * ```
+ *
  * @param {ToastProps} props
  */
 export function Toast({
