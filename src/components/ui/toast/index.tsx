@@ -62,6 +62,21 @@ export interface ToastProps extends Omit<ReactToastProps, "id"> {
  * </>
  * ```
  *
+ * **アンチパターン / Anti-patterns**
+ *
+ * - `sonner` を直接 import したり、利用側の依存に足したりしないでください。`Toaster` と `toast` は `sparkle-design/toast` から import します（sonner は sparkle-design の依存に含まれています）。
+ *   en: Do not import `sonner` directly or add it to your dependencies. Import `Toaster` and `toast` from `sparkle-design/toast` (sonner is already a dependency of sparkle-design).
+ *
+ * ```tsx
+ * // ✅ Correct
+ * import { Toaster, toast } from "sparkle-design/toast";
+ * toast({ description: "保存しました" });
+ *
+ * // ❌ Wrong - sonner を直接使わない
+ * import { Toaster, toast } from "sonner";
+ * toast("保存しました");
+ * ```
+ *
  * @param {ToastProps} props
  */
 export function Toast({
