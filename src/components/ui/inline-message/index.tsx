@@ -11,7 +11,12 @@ import { cn } from "@/lib/utils";
 
 // ステータスごとのスタイル定義
 const inlineMessageVariants = cva(
-  "relative w-[448px] max-w-full rounded-notice border p-3 flex gap-2 items-start",
+  [
+    "relative w-[448px] max-w-full rounded-notice border p-3 flex gap-2 items-start",
+    // 上から出る。閉じるときは data-closing で退場を再生してから onClose を呼ぶ
+    // en: Drops in from above. On close, data-closing plays the exit before onClose is called
+    "animate-motion-pop-in [--motion-pop-from-y:-1] data-[closing]:animate-motion-pop-out data-[closing]:pointer-events-none",
+  ].join(" "),
   {
     variants: {
       status: {
@@ -139,6 +144,45 @@ function InlineMessage({
     [titleId, descId, registerTitle, registerDesc]
   );
 
+  // 閉じるボタンを押したら、退場のアニメーションを再生し終えてから onClose を呼ぶ
+  // en: When the close button is pressed, call onClose after the exit animation finishes
+  const [closing, setClosing] = React.useState(false);
+  const elementRef = React.useRef<HTMLDivElement | null>(null);
+  const onCloseRef = React.useRef(onClose);
+  onCloseRef.current = onClose;
+
+  const setRefs = React.useCallback(
+    (node: HTMLDivElement | null) => {
+      elementRef.current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref) ref.current = node;
+    },
+    [ref]
+  );
+
+  const finishClose = React.useCallback(() => {
+    // 利用側が外さなかったときは、元の表示に戻す
+    // en: If the consumer keeps the message mounted, it returns to its normal state
+    setClosing(false);
+    onCloseRef.current?.();
+  }, []);
+
+  React.useLayoutEffect(() => {
+    if (!closing) return;
+    const element = elementRef.current;
+    const animationName = element
+      ? getComputedStyle(element).animationName
+      : "";
+    // アニメーションが無い（className で上書きされた、テスト環境など）ときは待たずに閉じる
+    // en: Close right away when there is no animation (overridden className, test environments, etc.)
+    if (!animationName || animationName === "none") finishClose();
+  }, [closing, finishClose]);
+
+  const handleAnimationEnd = (event: React.AnimationEvent<HTMLDivElement>) => {
+    props.onAnimationEnd?.(event);
+    if (closing && event.target === event.currentTarget) finishClose();
+  };
+
   // ステータスに対応するアイコン情報の取得
   const statusIcon = status ? statusIcons[status] : statusIcons.info;
 
@@ -150,12 +194,14 @@ function InlineMessage({
   return (
     <InlineMessageContext.Provider value={contextValue}>
       <div
-        ref={ref}
         role="alert"
         aria-labelledby={hasTitle ? titleId : undefined}
         aria-describedby={hasDesc ? descId : undefined}
         className={cn(inlineMessageVariants({ status }), className)}
         {...props}
+        ref={setRefs}
+        data-closing={closing ? "" : undefined}
+        onAnimationEnd={handleAnimationEnd}
       >
         {/* ステータスアイコン */}
         <span
@@ -180,7 +226,7 @@ function InlineMessage({
             size="sm"
             variant="ghost"
             theme="neutral"
-            onClick={onClose}
+            onClick={() => setClosing(true)}
             aria-label="閉じる"
             className="shrink-0"
           />
