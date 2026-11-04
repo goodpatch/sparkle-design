@@ -980,6 +980,29 @@ sparkle-design 2.0 から Icon は既定色（`text-object-neutral-high`）を�
 
 `FormErrorMessage` などの Form の部品は react-hook-form の `Form` / `FormField` の内側でだけ動く（コンテキストが無いと実行時エラーになる）。react-hook-form を使わないフォームでは、エラー文に id を付けて入力欄の `aria-describedby` から指し、入力欄に `aria-invalid` を付ける。
 
+### Toast は sonner ではなく sparkle-design/toast から使う
+
+```tsx
+// ✅ Correct
+import { Toaster, toast } from "sparkle-design/toast";
+
+<Toaster />
+<Button onClick={() => toast({ description: "保存しました" })}>保存</Button>
+
+// ❌ Wrong — sonner を直接使うと Sparkle の Toast の見た目（閉じるボタンなど）が外れる
+import { Toaster, toast } from "sonner";
+
+<Toaster />
+<Button onClick={() => toast("保存しました")}>保存</Button>
+```
+
+`sparkle-design/toast` は `Toaster` と `toast()` を出していて、sonner は sparkle-design の
+dependencies に入っている。**利用側で sonner を import する必要も、依存に足す必要もない。**
+「sonner が依存に無いので Toast が使えない」と判断して InlineMessage などで代用しないこと。
+
+Sparkle の `toast` はオブジェクト（`title` / `description` / `isCloseTrigger` / `duration` など）を受け取る。
+sonner の `toast("…")` や `toast.success(…)` の書き方は使えないので、成功・失敗は文面で伝える。
+
 ### 旧セマンティックカラーではなく用途別トークンを使う
 
 新体系は「用途 × 意味 × 強度 × **状態**」で、状態がトークン名に内包される。
@@ -1040,6 +1063,44 @@ Sparkle のプリミティブは Tailwind の同名変数をそのまま参照�
 検査対象は `.js` / `.jsx` / `.ts` / `.tsx` のみで、**`.css` の `@apply` は見ていない**
 （`legacy-color-token` は `.css` も見るので、そちらとは対象範囲が違う）。CSS 側に
 Tailwind 既定パレットの色が残っていないかは手で確認すること。
+
+### 色はユーティリティの用途に合ったものを使う
+
+```tsx
+// ✅ Correct — 進捗バーの塗りは面の色
+<div className="h-2 rounded-round bg-surface-base-200">
+  <div className="h-2 rounded-round bg-surface-primary-high-enabled" />
+</div>
+
+// ❌ Wrong — 枠線用の色を面に流用する
+<div className="h-2 rounded-round bg-surface-base-200">
+  <div className="h-2 rounded-round bg-border-primary-high" />
+</div>
+```
+
+セマンティックカラーは「用途 × 意味 × 強度 × 状態」で名前が付いていて、用途（`surface` / `text` /
+`border` / `object`）がそのまま使い道を表す。Tailwind の theme color として登録されているので
+**別の用途の名前もどのユーティリティからでも書けてしまう**が、用途が違う色は強度の段や状態の有無が
+揃っておらず、テーマを変えたときに意図しない色になる。
+
+| ユーティリティ | 使う色の用途 | 警告する例 |
+|---|---|---|
+| `bg-*` | `surface-*`（図形の塗りなら `object-*`） | `bg-border-*` / `bg-text-*` / `bg-divider-*` |
+| `text-*` / `placeholder-*` | `text-*`（アイコンなら `object-*`） | `text-surface-*` / `text-border-*` |
+| `border-*` / `divide-*` / `outline-*` / `ring-*` | `border-*`（Checkbox のような操作部品の外枠は `object-*`） | `border-surface-*` / `border-text-*` |
+| `ring-offset-*` | `surface-*`（隙間に見える背景の色） | `ring-offset-text-*` |
+| `fill-*` / `stroke-*` | `object-*`（Tooltip の矢印のように面の一部なら `surface-*`） | `fill-border-*` / `stroke-text-*` |
+
+1〜2px の線を背景で描くとき（`h-px` / `w-0.5` / `h-[2px]` が同じ className にある）は、
+`bg-border-*` を使ってよい（Divider や Stepper の連結線と同じ書き方）。太さを別の文字列に
+書いていると線と判定できないので、その場合は `sparkle-disable-next-line semantic-color-usage-mismatch` で外す。
+枠線系からの `divider-*` は旧トークンとして `legacy-color-token` が扱う。
+
+強度・状態の語は用途ごとに体系が違う（`border-primary-high` に対応する面は
+`surface-primary-high-enabled`）。接頭辞だけ付け替えず、Figma で該当する色を確認する。
+
+検査するのはユーティリティクラス（`.css` の `@apply` を含む）だけで、`bg-[var(--color-border-primary-high)]`
+のような arbitrary value や、CSS の `background-color: var(--color-border-*)` は見ていない。
 
 ### 旧セマンティックカラーの CSS 変数を直接参照しない
 
