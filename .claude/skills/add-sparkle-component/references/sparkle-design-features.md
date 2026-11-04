@@ -999,6 +999,7 @@ import { Toaster, toast } from "sonner";
 `sparkle-design/toast` は `Toaster` と `toast()` を出していて、sonner は sparkle-design の
 dependencies に入っている。**利用側で sonner を import する必要も、依存に足す必要もない。**
 「sonner が依存に無いので Toast が使えない」と判断して InlineMessage などで代用しないこと。
+shadcn registry で Toast を入れた場合は、コピーされた `components/ui/toast` から import する（その実装が sonner を使うので、その場合は sonner の依存が要る）。
 
 Sparkle の `toast` はオブジェクト（`title` / `description` / `isCloseTrigger` / `duration` など）を受け取る。
 sonner の `toast("…")` や `toast.success(…)` の書き方は使えないので、成功・失敗は文面で伝える。
