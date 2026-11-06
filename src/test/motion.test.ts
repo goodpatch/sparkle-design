@@ -52,3 +52,22 @@ describe("hover transitions", () => {
     }
   );
 });
+
+/**
+ * 重さを持たないコンポーネントは、モーショントークンを参照しない
+ * en: Components without a motion weight never reference the motion tokens.
+ *
+ * 設計ガイドライン 2.3。一定速度で回り続ける表示（Spinner）、繰り返しの読み込み表示（Skeleton）、
+ * 直接操作（Slider）は、motion-weight を変えても動きが変わらないようにする。
+ * en: Motion guidelines 2.3. A constantly spinning indicator (Spinner), a repeating loading
+ * placeholder (Skeleton) and direct manipulation (Slider) must not change with motion-weight.
+ */
+describe("components without a motion weight", () => {
+  const UNWEIGHTED = ["spinner", "skeleton", "slider"];
+
+  it.each(UNWEIGHTED)("%s does not reference the motion tokens", name => {
+    const component = componentSources.find(c => c.name === name);
+    expect(component, `${name} が見つかりません`).toBeDefined();
+    expect(component?.source).not.toMatch(/--motion-|animate-motion-/);
+  });
+});
