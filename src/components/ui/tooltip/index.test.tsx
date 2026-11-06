@@ -45,9 +45,11 @@ describe("Tooltip", () => {
     await userEvent.hover(trigger);
 
     const tooltipContents = await screen.findAllByText("Tooltip Content");
-    const visibleTooltip = tooltipContents.find(
-      content => content.getAttribute("data-state") === "delayed-open"
-    );
+    // 文字は tooltip-text に包まれているので、本体（tooltip-content）までさかのぼる
+    // en: The text is wrapped in tooltip-text, so walk up to the content element
+    const visibleTooltip = tooltipContents
+      .map(text => text.closest('[data-slot="tooltip-content"]'))
+      .find(content => content?.getAttribute("data-state") === "delayed-open");
     expect(visibleTooltip).toBeInTheDocument();
   });
 
@@ -66,9 +68,11 @@ describe("Tooltip", () => {
 
     // Then: TooltipContentが表示されることを確認する
     const tooltipContents = await screen.findAllByText("Tooltip Content");
-    const visibleTooltip = tooltipContents.find(
-      content => content.getAttribute("data-state") === "delayed-open"
-    );
+    // 文字は tooltip-text に包まれているので、本体（tooltip-content）までさかのぼる
+    // en: The text is wrapped in tooltip-text, so walk up to the content element
+    const visibleTooltip = tooltipContents
+      .map(text => text.closest('[data-slot="tooltip-content"]'))
+      .find(content => content?.getAttribute("data-state") === "delayed-open");
     expect(visibleTooltip).toBeVisible();
   });
 
@@ -87,9 +91,11 @@ describe("Tooltip", () => {
 
     // Then: TooltipContentのdata-side属性がデフォルト値"top"であることを確認する
     const tooltipContents = await screen.findAllByText("Tooltip Content");
-    const visibleTooltip = tooltipContents.find(
-      content => content.getAttribute("data-state") === "delayed-open"
-    );
+    // 文字は tooltip-text に包まれているので、本体（tooltip-content）までさかのぼる
+    // en: The text is wrapped in tooltip-text, so walk up to the content element
+    const visibleTooltip = tooltipContents
+      .map(text => text.closest('[data-slot="tooltip-content"]'))
+      .find(content => content?.getAttribute("data-state") === "delayed-open");
     expect(visibleTooltip).toHaveAttribute("data-side", "top");
   });
 
@@ -108,9 +114,11 @@ describe("Tooltip", () => {
 
     // Then: TooltipContentのdata-side属性が"right"であることを確認する
     const tooltipContents = await screen.findAllByText("Tooltip Content");
-    const visibleTooltip = tooltipContents.find(
-      content => content.getAttribute("data-state") === "delayed-open"
-    );
+    // 文字は tooltip-text に包まれているので、本体（tooltip-content）までさかのぼる
+    // en: The text is wrapped in tooltip-text, so walk up to the content element
+    const visibleTooltip = tooltipContents
+      .map(text => text.closest('[data-slot="tooltip-content"]'))
+      .find(content => content?.getAttribute("data-state") === "delayed-open");
     expect(visibleTooltip).toHaveAttribute("data-side", "right");
   });
 
@@ -138,5 +146,42 @@ describe("Tooltip", () => {
     ["bg-surface-inverse", "fill-surface-inverse"].forEach(cls =>
       expect(arrowClass).toContain(cls)
     );
+  });
+
+  it("animates with the Small motion tokens from the anchor side", async () => {
+    // Given: 上に出る Tooltip
+    testContainer.render(
+      <Tooltip>
+        <TooltipTrigger>Motion</TooltipTrigger>
+        <TooltipContent side="top">Motion Content</TooltipContent>
+      </Tooltip>
+    );
+
+    // When: ホバーして開く
+    await userEvent.hover(screen.getByText("Motion"));
+    await screen.findAllByText("Motion Content");
+    const content = document.querySelector(
+      '[data-slot="tooltip-content"]'
+    ) as HTMLElement;
+
+    // Then: 箱は Small のトークンで、アンカーの側（下）から出る
+    // en: The box uses the Small motion tokens and rises from the anchor side
+    [
+      "animate-motion-pop-in-small",
+      "data-[state=closed]:animate-motion-pop-out-small",
+      "data-[side=top]:[--motion-pop-from-y:1]",
+      "origin-(--radix-tooltip-content-transform-origin)",
+    ].forEach(cls => expect(content.className).toContain(cls));
+    expect(content.className).not.toMatch(
+      /\b(animate-in|animate-out|duration-\d+)\b/
+    );
+
+    // Then: 文字は箱より遅れてフェードインする
+    // en: The text fades in after the box
+    const text = content.querySelector(
+      '[data-slot="tooltip-text"]'
+    ) as HTMLElement;
+    expect(text).toHaveTextContent("Motion Content");
+    expect(text.className).toContain("animate-motion-content-in-tooltip");
   });
 });
