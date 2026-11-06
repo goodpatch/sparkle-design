@@ -1,0 +1,2 @@
+# Vercel では src/app/page.tsx が / を Storybook に転送していた
+/ /storybook/index.html 302
