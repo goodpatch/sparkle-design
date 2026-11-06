@@ -30,7 +30,7 @@ function Overlay({ className, ref, ...props }: OverlayProps) {
       ref={ref}
       data-slot="overlay"
       className={cn(
-        "fixed inset-0 bg-surface-overlay data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0",
+        "fixed inset-0 bg-surface-overlay data-[state=open]:animate-motion-overlay-in data-[state=closed]:animate-motion-overlay-out",
         className
       )}
       {...props}
