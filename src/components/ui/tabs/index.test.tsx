@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import { renderToString } from "react-dom/server";
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { TestContainer, EventHelpers } from "@/test/helpers";
@@ -293,7 +294,8 @@ describe("Tabs", () => {
       [
         "solid",
         [
-          "data-[state=active]:bg-transparent",
+          "data-[state=active]:bg-surface-primary-high-enabled",
+          "group-data-[indicator-ready]/tabs-list:data-[state=active]:bg-transparent",
           "data-[state=active]:text-text-inverse",
           "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-primary-high-hover",
           "focus-visible:data-[state=active]:bg-surface-primary-high-active",
@@ -309,7 +311,8 @@ describe("Tabs", () => {
         "line",
         [
           "data-[state=active]:text-text-primary-enabled",
-          "data-[state=active]:after:bg-transparent",
+          "data-[state=active]:after:bg-border-primary-extra-high",
+          "group-data-[indicator-ready]/tabs-list:data-[state=active]:after:bg-transparent",
           "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-primary-low-hover",
           "enabled:not-focus-visible:hover:data-[state=active]:text-text-primary-hover",
           "focus-visible:data-[state=active]:bg-surface-primary-low-active",
@@ -326,7 +329,10 @@ describe("Tabs", () => {
         "ghost",
         [
           "data-[state=active]:text-text-neutral-high",
-          "data-[state=active]:bg-transparent",
+          "data-[state=active]:bg-surface-base-0",
+          "data-[state=active]:border-border-neutral-middle",
+          "group-data-[indicator-ready]/tabs-list:data-[state=active]:bg-transparent",
+          "group-data-[indicator-ready]/tabs-list:data-[state=active]:border-transparent",
           "disabled:data-[state=active]:bg-surface-base-0",
           "disabled:data-[state=active]:border-border-neutral-middle",
           "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-neutral-low-hover",
@@ -428,6 +434,40 @@ describe("Tabs のモーション", () => {
     expect(indicator).not.toHaveAttribute("data-ready");
   });
 
+  it("SSR では、インジケーターを測れるまでトリガーが選択中の見た目を持つ", () => {
+    // GIVEN: サーバーで描いたタブ（useLayoutEffect が動かないので、インジケーターは測られない）
+    // en: GIVEN tabs rendered on the server (no layout effect, so the indicator is never measured)
+    const container = document.createElement("div");
+    container.innerHTML = renderToString(
+      <Tabs defaultValue="a">
+        <TabsList>
+          <TabsTrigger value="a">A</TabsTrigger>
+          <TabsTrigger value="b">B</TabsTrigger>
+        </TabsList>
+      </Tabs>
+    );
+    const list = container.querySelector(
+      '[data-slot="tabs-list"]'
+    ) as HTMLElement;
+
+    // THEN: インジケーターは隠れていて、リストには準備完了の印が無い
+    // en: THEN the indicator is hidden and the list is not marked ready
+    expect(list.querySelector('[data-slot="tabs-indicator"]')).toHaveAttribute(
+      "hidden"
+    );
+    expect(list).not.toHaveAttribute("data-indicator-ready");
+    // THEN: 選択中の塗りを透明にするのは、準備完了の印が付いたときだけ
+    // en: THEN the active fill only turns transparent once the list is marked ready
+    expect(list.className).toContain("group/tabs-list");
+    const classes = (
+      list.querySelector('[data-state="active"]') as HTMLElement
+    ).className.split(/\s+/);
+    expect(classes).toContain(
+      "data-[state=active]:bg-surface-primary-high-enabled"
+    );
+    expect(classes).not.toContain("data-[state=active]:bg-transparent");
+  });
+
   it("選択中のタブが変わると、インジケーターがそのタブの位置へ移る", async () => {
     // GIVEN: 2 つのタブ（jsdom は配置しないので位置を与える）
     // en: GIVEN two tabs (jsdom does no layout, so stub the positions)
@@ -464,6 +504,9 @@ describe("Tabs のモーション", () => {
     ) as HTMLElement;
     expect(indicator.style.translate).toBe("0px 0px");
     expect(indicator.style.width).toBe("72px");
+    // THEN: 測れたので、リストに準備完了の印が付き、塗りはインジケーターに引き継がれる
+    // en: THEN, once measured, the list is marked ready and the fill moves to the indicator
+    expect(indicator.parentElement).toHaveAttribute("data-indicator-ready");
 
     // WHEN: 2 つ目のタブを選ぶ
     // en: WHEN the second tab is selected

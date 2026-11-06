@@ -30,8 +30,10 @@ const tabsTriggerVariants = cva(
       variant: {
         solid: [
           "rounded-t-action",
-          // active（塗りは tabs-indicator が持つ）
-          "data-[state=active]:bg-transparent",
+          // active。インジケーターを測れたら、塗りは tabs-indicator に任せる（SSR では測れるまでトリガーが持つ）
+          // en: active. Once the indicator is measured it carries the fill (under SSR the trigger keeps it until then)
+          "data-[state=active]:bg-surface-primary-high-enabled",
+          "group-data-[indicator-ready]/tabs-list:data-[state=active]:bg-transparent",
           "data-[state=active]:text-text-inverse",
           "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-primary-high-hover",
           "focus-visible:outline-none focus-visible:data-[state=active]:bg-surface-primary-high-active",
@@ -49,8 +51,11 @@ const tabsTriggerVariants = cva(
           "after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-2px] after:h-0.5 after:rounded after:pointer-events-none after:z-10",
           // active
           "data-[state=active]:text-text-primary-enabled",
-          // 下線は tabs-indicator が持つ
-          "data-[state=active]:after:bg-transparent",
+          // インジケーターを測れたら、下線は tabs-indicator に任せる
+          // en: Once the indicator is measured it carries the underline
+          "data-[state=active]:after:bg-border-primary-extra-high",
+          "data-[state=active]:after:h-0.5",
+          "group-data-[indicator-ready]/tabs-list:data-[state=active]:after:bg-transparent",
           "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-primary-low-hover",
           "enabled:not-focus-visible:hover:data-[state=active]:text-text-primary-hover",
           "focus-visible:outline-none focus-visible:data-[state=active]:bg-surface-primary-low-active",
@@ -70,8 +75,12 @@ const tabsTriggerVariants = cva(
           "rounded-t-action border-x border-t border-b-0 border-transparent text-text-neutral-middle",
           // active
           "data-[state=active]:text-text-neutral-high",
-          // 背景と枠は tabs-indicator が持つ
-          "data-[state=active]:bg-transparent",
+          // インジケーターを測れたら、背景と枠は tabs-indicator に任せる
+          // en: Once the indicator is measured it carries the background and outline
+          "data-[state=active]:bg-surface-base-0",
+          "data-[state=active]:border-border-neutral-middle",
+          "group-data-[indicator-ready]/tabs-list:data-[state=active]:bg-transparent",
+          "group-data-[indicator-ready]/tabs-list:data-[state=active]:border-transparent",
           "enabled:not-focus-visible:hover:data-[state=active]:bg-surface-neutral-low-hover",
           "data-[state=active]:rounded-t-action",
           "focus-visible:outline-none focus-visible:data-[state=active]:bg-surface-neutral-low-active",
@@ -326,7 +335,12 @@ function TabsList({
       <TabsPrimitive.List
         ref={setRefs}
         data-slot="tabs-list"
-        className={cn(tabsListVariants({ variant, scrollable }), className)}
+        data-indicator-ready={rect ? "" : undefined}
+        className={cn(
+          "group/tabs-list",
+          tabsListVariants({ variant, scrollable }),
+          className
+        )}
         {...props}
       >
         <span
