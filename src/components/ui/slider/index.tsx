@@ -41,7 +41,7 @@ const sliderThumbVariants = cva(
     "relative block rounded-full border border-object-neutral-low bg-surface-base-0 shadow-base cursor-pointer",
     // 半透明の状態色は白地に重ねる（つまみの下のトラックを透かさない）
     // en: Layer translucent state colors over the white fill so the track does not show through
-    "ring-offset-background transition-colors hover:border-object-neutral-middle hover:bg-linear-to-r hover:from-surface-neutral-low-hover hover:to-surface-neutral-low-hover",
+    "ring-offset-background hover:border-object-neutral-middle hover:bg-linear-to-r hover:from-surface-neutral-low-hover hover:to-surface-neutral-low-hover",
     "focus:outline-hidden focus:border-object-info focus:bg-linear-to-r focus:from-surface-primary-low-active focus:to-surface-primary-low-active",
     "focus:ring-2 focus:ring-border-ring focus:ring-offset-2",
     "h-4 w-4",

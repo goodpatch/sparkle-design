@@ -15,7 +15,7 @@ import { Spinner } from "@/components/ui/spinner";
 const iconButtonVariants = cva(
   [
     "inline-flex items-center justify-center whitespace-nowrap rounded-action",
-    "ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2",
+    "ring-offset-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2",
     "relative cursor-pointer",
   ].join(" "),
   {

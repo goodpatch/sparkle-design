@@ -36,7 +36,7 @@ const labelVariants = cva("cursor-pointer", {
 const radioItemVariants = cva(
   // 表示寸法を維持しつつ、疑似要素で横24pxの操作領域を確保。en: Keep visuals, expand hit width to 24px.
   [
-    "relative before:absolute before:inset-y-0 before:left-1/2 before:w-6 before:-translate-x-1/2 before:content-[''] rounded-full transition-colors flex items-center justify-center cursor-pointer",
+    "relative before:absolute before:inset-y-0 before:left-1/2 before:w-6 before:-translate-x-1/2 before:content-[''] rounded-full flex items-center justify-center cursor-pointer",
     "focus:outline-none",
   ].join(" "),
   {
@@ -60,7 +60,7 @@ const radioItemVariants = cva(
 
 const radioIndicatorVariants = cva(
   [
-    "flex items-center justify-center rounded-full border border-2 bg-surface-base-0 transition-colors",
+    "flex items-center justify-center rounded-full border border-2 bg-surface-base-0",
     "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-border-ring [.group:focus-visible_&]:ring-offset-2",
   ].join(" "),
   {
@@ -110,7 +110,7 @@ const radioIndicatorVariants = cva(
 );
 
 const radioIndicatorDotVariants = cva(
-  "rounded-full transition-colors flex items-center justify-center shrink-0",
+  "rounded-full flex items-center justify-center shrink-0",
   {
     variants: {
       size: {
