@@ -9,6 +9,19 @@
 # en: Build Storybook + registry and deploy them as Workers static assets.
 set -euo pipefail
 
+case "${1:-}" in
+  "") DRY_RUN=0 ;;
+  --dry-run) DRY_RUN=1 ;;
+  *)
+    echo "使い方: $0 [--dry-run]" >&2
+    exit 2
+    ;;
+esac
+if [ "$#" -gt 1 ]; then
+  echo "使い方: $0 [--dry-run]" >&2
+  exit 2
+fi
+
 cd "$(dirname "$0")/.."
 WRANGLER="npx --yes wrangler@4.158.0"
 OUT=.cloudflare-assets
@@ -17,6 +30,8 @@ OUT=.cloudflare-assets
 pnpm build:css
 node scripts/build-sparkle-design-theme.mjs
 node scripts/merge-registry.mjs
+# shadcn build は public/r を空にしないので、消したコンポーネントが残らないよう先に消す
+rm -rf public/r
 pnpm build:registry
 mkdir -p public/r
 cp registry.json public/r/registry.json
@@ -34,7 +49,7 @@ if [ ! -f "$OUT/storybook/index.html" ] || [ ! -f "$OUT/r/registry.json" ]; then
   exit 1
 fi
 
-if [ "${1:-}" = "--dry-run" ]; then
+if [ "$DRY_RUN" = 1 ]; then
   $WRANGLER deploy --config cloudflare/wrangler.jsonc --dry-run
 else
   $WRANGLER deploy --config cloudflare/wrangler.jsonc
