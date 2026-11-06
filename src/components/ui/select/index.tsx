@@ -9,6 +9,7 @@ import { Select as SelectPrimitive } from "radix-ui";
 import { Icon } from "@/components/ui/icon";
 import { cva, VariantProps } from "class-variance-authority";
 
+import { useControllableState } from "@/lib/use-controllable-state";
 import { cn } from "@/lib/utils";
 
 const selectTriggerVariants = cva(
@@ -70,11 +71,29 @@ const selectIconVariants = cva("", {
   },
 });
 
+/**
+ * 選んだ項目が点滅してから閉じるまでの時間。--motion-blink-duration と同じ値で、重さに依存しない
+ * en: Time the picked item blinks before the list closes. Same as --motion-blink-duration; independent of the motion weight
+ */
+const SELECT_BLINK_MS = 160;
+
+const SelectMotionContext = React.createContext<{
+  blinkingValue: string | null;
+  closing: boolean;
+  contentRef: React.RefObject<HTMLDivElement | null>;
+  markSelecting: (value: string) => void;
+  onContentAnimationEnd: (event: React.AnimationEvent<HTMLDivElement>) => void;
+} | null>(null);
+
 const selectContentVariants = cva(
   [
     "bg-surface-base-0 text-text-neutral-high",
-    "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
-    "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+    // トリガーの側から出る（下に開くときは上から下へ）
+    // en: Pops in from the trigger side (top-down when opening below)
+    // 閉じるときは Select が data-closing を付けて退場を再生し、終わってから外す
+    // en: On close, Select sets data-closing to play the exit, then unmounts when it ends
+    "data-[state=open]:animate-motion-pop-in data-[closing]:data-[state=open]:animate-motion-pop-out data-[closing]:pointer-events-none",
+    "data-[side=bottom]:[--motion-pop-from-y:-1] data-[side=top]:[--motion-pop-from-y:1] data-[side=left]:[--motion-pop-from-x:1] data-[side=right]:[--motion-pop-from-x:-1]",
     "relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-action border shadow-float",
   ].join(" "),
   {
@@ -156,9 +175,133 @@ const selectViewportVariants = cva("p-1", {
  * @param {React.ComponentProps<typeof SelectPrimitive.Root>} props
  */
 function Select({
+  open: openProp,
+  defaultOpen = false,
+  onOpenChange,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
-  return <SelectPrimitive.Root data-slot="select" {...props} />;
+  const [open, setOpen] = useControllableState({
+    prop: openProp,
+    defaultProp: defaultOpen,
+    onChange: onOpenChange,
+  });
+  // リストを DOM に残しておくための「見た目の open」。閉じたあとも点滅と退場が終わるまで true のまま Radix に渡す
+  // en: The "visual open" that keeps the list in the DOM. Stays true after closing until the blink and exit finish
+  const [renderOpen, setRenderOpen] = React.useState(open);
+  const [blinkingValue, setBlinkingValue] = React.useState<string | null>(null);
+  const [closing, setClosing] = React.useState(false);
+  const contentRef = React.useRef<HTMLDivElement | null>(null);
+  // 項目の操作で選ばれた値。Radix は同じイベントの中で onValueChange → onOpenChange(false) の順に呼ぶ
+  // en: Value picked from an item. Radix calls onValueChange then onOpenChange(false) within the same event
+  const selectingRef = React.useRef<string | null>(null);
+  // 閉じたきっかけが項目の選択だったときの値。閉じる演出で点滅させる
+  // en: Value picked when the close came from a selection; blinked by the close sequence
+  const closedBySelectRef = React.useRef<string | null>(null);
+  const blinkTimerRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
+  const prevOpenRef = React.useRef(open);
+
+  React.useEffect(() => () => clearTimeout(blinkTimerRef.current), []);
+
+  const finishClose = React.useCallback(() => {
+    setClosing(false);
+    setRenderOpen(false);
+  }, []);
+
+  // open が変わったら見た目を追いかける。制御側で open を false にしたときも、ここで退場を再生する
+  // en: Follow open with the visuals. Also plays the exit when a controlled open turns false
+  React.useLayoutEffect(() => {
+    if (prevOpenRef.current === open) return;
+    prevOpenRef.current = open;
+    const selected = closedBySelectRef.current;
+    closedBySelectRef.current = null;
+    clearTimeout(blinkTimerRef.current);
+    blinkTimerRef.current = undefined;
+    setBlinkingValue(null);
+    if (open) {
+      setClosing(false);
+      setRenderOpen(true);
+      return;
+    }
+    if (!contentRef.current) {
+      setClosing(false);
+      setRenderOpen(false);
+      return;
+    }
+    if (selected === null) {
+      setClosing(true);
+      return;
+    }
+    setBlinkingValue(selected);
+    blinkTimerRef.current = setTimeout(() => {
+      blinkTimerRef.current = undefined;
+      setBlinkingValue(null);
+      setClosing(true);
+    }, SELECT_BLINK_MS);
+  }, [open]);
+
+  // Radix の Select は閉じるとすぐリストを外すので、退場のアニメーションを再生し終えてから外す
+  // en: Radix Select unmounts the list as soon as it closes, so keep it until the exit animation ends
+  React.useLayoutEffect(() => {
+    if (!closing) return;
+    const content = contentRef.current;
+    const animationName = content
+      ? getComputedStyle(content).animationName
+      : "";
+    // アニメーションが無い（className で上書きされた、テスト環境など）ときは待たずに外す
+    // en: Unmount right away when there is no animation (overridden className, test environments, etc.)
+    if (!animationName || animationName === "none") finishClose();
+  }, [closing, finishClose]);
+
+  // onOpenChange は Radix から呼ばれた時点で呼ぶ。点滅と退場は見た目だけで再生する
+  // en: Call onOpenChange as soon as Radix does; the blink and exit are visual only
+  const handleOpenChange = (next: boolean) => {
+    const selecting = selectingRef.current;
+    selectingRef.current = null;
+    if (next === open) return;
+    if (!next) closedBySelectRef.current = selecting;
+    setOpen(next);
+  };
+
+  const markSelecting = React.useCallback((value: string) => {
+    selectingRef.current = value;
+    // 選択にならなかった操作（タッチの pointerup など）を、次に閉じるときの点滅と取り違えないよう、
+    // 同じイベントの処理が終わったら消す
+    // en: Clear after the current event so a non-selecting gesture is not mistaken for a selection later
+    queueMicrotask(() => {
+      if (selectingRef.current === value) selectingRef.current = null;
+    });
+  }, []);
+
+  const handleContentAnimationEnd = React.useCallback(
+    (event: React.AnimationEvent<HTMLDivElement>) => {
+      if (closing && event.target === event.currentTarget) finishClose();
+    },
+    [closing, finishClose]
+  );
+
+  const motionContext = React.useMemo(
+    () => ({
+      blinkingValue,
+      closing,
+      contentRef,
+      markSelecting,
+      onContentAnimationEnd: handleContentAnimationEnd,
+    }),
+    [blinkingValue, closing, markSelecting, handleContentAnimationEnd]
+  );
+
+  return (
+    <SelectMotionContext.Provider value={motionContext}>
+      <SelectPrimitive.Root
+        data-slot="select"
+        open={renderOpen}
+        onOpenChange={handleOpenChange}
+        {...props}
+      />
+    </SelectMotionContext.Provider>
+  );
 }
 
 function SelectGroup({
@@ -220,6 +363,7 @@ function SelectTrigger({
           isInvalid,
           isDisabled: disabled,
         }),
+        "group/select-trigger",
         className
       )}
       disabled={disabled}
@@ -231,7 +375,10 @@ function SelectTrigger({
           icon="arrow_drop_down"
           className={cn(
             selectIconVariants({ size, isDisabled: disabled }),
-            "shrink-0"
+            "shrink-0",
+            // 開閉に合わせて 180° 回す（状態変化のスプリング）
+            // en: Rotates 180° with the open state (state-change spring)
+            "transition-transform duration-(--motion-settle-duration) ease-(--motion-settle-ease) delay-(--motion-latency) group-data-[state=open]/select-trigger:rotate-180"
           )}
         />
       </SelectPrimitive.Icon>
@@ -257,14 +404,32 @@ function SelectContent({
   className,
   children,
   position = "popper",
+  ref,
+  onAnimationEnd,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Content>) {
+  const motion = React.useContext(SelectMotionContext);
+  const setRefs = React.useCallback(
+    (node: HTMLDivElement | null) => {
+      if (motion) motion.contentRef.current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref) ref.current = node;
+    },
+    [motion, ref]
+  );
+
   return (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
         data-slot="select-content"
+        data-closing={motion?.closing ? "" : undefined}
         className={cn(selectContentVariants({ position }), className)}
         position={position}
+        ref={setRefs}
+        onAnimationEnd={event => {
+          onAnimationEnd?.(event);
+          motion?.onContentAnimationEnd(event);
+        }}
         {...props}
       >
         <SelectScrollUpButton />
@@ -332,17 +497,49 @@ function SelectItem({
   className,
   children,
   textClassName,
+  value,
+  disabled,
+  onClick,
+  onPointerUp,
+  onKeyDown,
   ...props
 }: SelectItemProps) {
+  const blink = React.useContext(SelectMotionContext);
+  // Radix が選択として扱う操作（クリック・pointerup・Enter / Space）の前に、選ぼうとしている値を伝える
+  // en: Report the value before Radix handles a selecting gesture (click, pointerup, Enter / Space)
+  const markSelecting = () => {
+    if (!disabled) blink?.markSelecting(value);
+  };
+
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
+      data-blinking={blink?.blinkingValue === value ? "" : undefined}
+      value={value}
+      disabled={disabled}
+      onClick={event => {
+        onClick?.(event);
+        if (!event.defaultPrevented) markSelecting();
+      }}
+      onPointerUp={event => {
+        onPointerUp?.(event);
+        if (!event.defaultPrevented) markSelecting();
+      }}
+      onKeyDown={event => {
+        onKeyDown?.(event);
+        if (
+          !event.defaultPrevented &&
+          (event.key === "Enter" || event.key === " ")
+        )
+          markSelecting();
+      }}
       className={cn(
         [
           "relative flex w-full cursor-pointer select-none items-center rounded-notice",
           "py-1.5 pl-8 pr-2 text-sm",
           "character-1-regular-pro text-text-neutral-middle",
           "outline-none focus:bg-neutral-100 data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
+          "data-[blinking]:animate-motion-blink",
         ].join(" "),
         className
       )}
