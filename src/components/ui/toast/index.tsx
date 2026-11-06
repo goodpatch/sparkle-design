@@ -161,9 +161,11 @@ const TOAST_MOTION_CLASSNAME = [
   // 新しいトーストが来たときの、後ろのトーストのずれは状態変化のスプリング
   // en: Toasts behind shift with the state-change spring when a new one arrives
   "data-[front=false]:[transition:transform_var(--motion-settle-duration)_var(--motion-settle-ease)_var(--motion-latency),opacity_var(--motion-toast-fade-duration)_var(--motion-fade-ease)_var(--motion-latency),height_var(--motion-settle-duration)_var(--motion-settle-ease)_var(--motion-latency)]!",
-  // 退場は exit。sonner は閉じてから 200ms で要素を外す
-  // en: Exit uses the exit tokens. sonner unmounts 200ms after closing
-  "data-[removed=true]:data-[swiping=false]:[transition:transform_var(--motion-exit-duration)_var(--motion-exit-ease),opacity_var(--motion-exit-duration)_var(--motion-exit-ease)]!",
+  // 退場は exit。sonner は閉じてから 200ms で要素を外す（変えられない）ので、途中で切れないよう 200ms までに抑える
+  // （super-heavy の 240ms は 200ms になる）
+  // en: Exit uses the exit tokens. sonner unmounts 200ms after closing (not configurable), so cap it at 200ms
+  // to avoid a cut-off exit (super-heavy's 240ms becomes 200ms)
+  "data-[removed=true]:data-[swiping=false]:[transition:transform_min(var(--motion-exit-duration),200ms)_var(--motion-exit-ease),opacity_min(var(--motion-exit-duration),200ms)_var(--motion-exit-ease)]!",
   // スワイプ中は指に追従させる
   // en: Follow the pointer while swiping
   "data-[mounted=true]:data-[swiping=true]:[transition:none]!",

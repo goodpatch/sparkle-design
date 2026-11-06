@@ -180,8 +180,10 @@ describe("Toast", () => {
       expect(toastElement.className).toContain(
         "opacity_var(--motion-toast-fade-duration)"
       );
+      // sonner が 200ms で要素を外すので、退場は 200ms までに抑える
+      // en: sonner unmounts after 200ms, so the exit is capped at 200ms
       expect(toastElement.className).toContain(
-        "transform_var(--motion-exit-duration)_var(--motion-exit-ease)"
+        "transform_min(var(--motion-exit-duration),200ms)_var(--motion-exit-ease)"
       );
     });
 
