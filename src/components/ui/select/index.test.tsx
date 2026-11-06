@@ -127,25 +127,43 @@ describe("Select", () => {
   it.todo("should support multi-select mode");
 
   describe("モーション", () => {
+    const options = (
+      <>
+        <SelectTrigger>
+          <SelectValue placeholder="選択してください" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="option1">Option 1</SelectItem>
+          <SelectItem value="option2">Option 2</SelectItem>
+        </SelectContent>
+      </>
+    );
     const renderOpenSelect = (
       props: React.ComponentProps<typeof Select> = {}
     ) =>
       testContainer.render(
-        <Select open {...props}>
-          <SelectTrigger>
-            <SelectValue placeholder="選択してください" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="option1">Option 1</SelectItem>
-            <SelectItem value="option2">Option 2</SelectItem>
-          </SelectContent>
+        <Select defaultOpen {...props}>
+          {options}
         </Select>
       );
-
-    afterEach(() => {
-      vi.useRealTimers();
-      vi.restoreAllMocks();
-    });
+    const getContent = () =>
+      document.querySelector('[data-slot="select-content"]') as HTMLElement;
+    // jsdom は CSS を適用しないので、閉じるときだけ退場のアニメーションがかかるように差し替える
+    // en: jsdom applies no CSS, so stub an exit animation on the closing list
+    const originalGetComputedStyle = window.getComputedStyle;
+    const stubExitAnimation = () => {
+      const original = originalGetComputedStyle;
+      vi.spyOn(window, "getComputedStyle").mockImplementation(element => {
+        const style = original(element);
+        if (
+          (element as HTMLElement).dataset?.slot === "select-content" &&
+          (element as HTMLElement).hasAttribute("data-closing")
+        ) {
+          return { ...style, animationName: "motion-fade-out, motion-pop-out" };
+        }
+        return style;
+      });
+    };
 
     it("リストはトリガーの側から出て、矢印は開閉に合わせて回る", () => {
       // GIVEN: 開いたセレクト
@@ -185,7 +203,7 @@ describe("Select", () => {
       ].forEach(cls => expect(arrow.className).toContain(cls));
     });
 
-    it("選んだ項目が点滅してから、値を反映して閉じる", () => {
+    it("項目を選ぶと値はすぐ反映し、見た目だけ点滅してから閉じる", () => {
       // GIVEN: 開いたセレクト
       // en: GIVEN an open select
       vi.useFakeTimers();
@@ -200,12 +218,13 @@ describe("Select", () => {
       // en: WHEN the second item is picked with Enter
       fireEvent.keyDown(item, { key: "Enter" });
 
-      // THEN: その項目が点滅し、まだ値は反映されず閉じない
-      // en: THEN that item blinks and the value is neither applied nor the list closed yet
+      // THEN: コールバックはその時点で呼ばれ、リストは点滅のあいだ残る
+      // en: THEN the callbacks fire right away and the list stays while the item blinks
+      expect(onValueChange).toHaveBeenCalledWith("option2");
+      expect(onOpenChange).toHaveBeenCalledWith(false);
       expect(item).toHaveAttribute("data-blinking");
       expect(item.className).toContain("data-[blinking]:animate-motion-blink");
-      expect(onValueChange).not.toHaveBeenCalled();
-      expect(onOpenChange).not.toHaveBeenCalled();
+      expect(getContent()).not.toHaveAttribute("data-closing");
 
       // WHEN: 点滅の時間（160ms）が過ぎる
       // en: WHEN the blink duration (160ms) has passed
@@ -213,68 +232,73 @@ describe("Select", () => {
         vi.advanceTimersByTime(160);
       });
 
-      // THEN: 値を反映して閉じる
-      // en: THEN the value is applied and the list closes
-      expect(onValueChange).toHaveBeenCalledWith("option2");
-      expect(onOpenChange).toHaveBeenCalledWith(false);
-      expect(item).not.toHaveAttribute("data-blinking");
+      // THEN: リストを外す（jsdom では退場のアニメーションが無いので待たない）
+      // en: THEN the list unmounts (no exit animation in jsdom, so no wait)
+      expect(getContent()).toBeNull();
+      expect(onValueChange).toHaveBeenCalledTimes(1);
+      expect(onOpenChange).toHaveBeenCalledTimes(1);
     });
 
-    it("Esc で閉じるときは点滅せず、すぐ閉じる", () => {
+    it("Esc で閉じるときは点滅せず、onOpenChange をすぐ呼ぶ", () => {
       // GIVEN: 開いたセレクト
       // en: GIVEN an open select
       const onOpenChange = vi.fn();
       renderOpenSelect({ onOpenChange });
-      const content = document.querySelector(
-        '[data-slot="select-content"]'
-      ) as HTMLElement;
 
       // WHEN: Esc を押す
       // en: WHEN Escape is pressed
-      fireEvent.keyDown(content, { key: "Escape" });
+      fireEvent.keyDown(getContent(), { key: "Escape" });
 
-      // THEN: 点滅を待たずに閉じる
-      // en: THEN it closes without waiting for a blink
+      // THEN: 点滅せずに閉じる
+      // en: THEN it closes without a blink
       expect(onOpenChange).toHaveBeenCalledWith(false);
       expect(document.querySelector("[data-blinking]")).toBeNull();
+      expect(getContent()).toBeNull();
     });
 
-    it("退場のアニメーションがあるときは、再生し終えてから閉じる", () => {
-      // GIVEN: リストに退場のアニメーションがかかる環境（jsdom は CSS を適用しないので差し替える）
-      // en: GIVEN the list has an exit animation (jsdom applies no CSS, so stub it)
-      const original = window.getComputedStyle;
-      vi.spyOn(window, "getComputedStyle").mockImplementation(element => {
-        const style = original(element);
-        if (
-          (element as HTMLElement).dataset?.slot === "select-content" &&
-          (element as HTMLElement).hasAttribute("data-closing")
-        ) {
-          return { ...style, animationName: "motion-fade-out, motion-pop-out" };
-        }
-        return style;
-      });
+    it("退場のアニメーションがあるときは、onOpenChange はすぐ呼び、再生し終えてからリストを外す", () => {
+      // GIVEN: リストに退場のアニメーションがかかる、開いたセレクト
+      // en: GIVEN an open select whose list has an exit animation
+      stubExitAnimation();
       const onOpenChange = vi.fn();
       renderOpenSelect({ onOpenChange });
-      const content = document.querySelector(
-        '[data-slot="select-content"]'
-      ) as HTMLElement;
+      const content = getContent();
 
       // WHEN: Esc を押す
       // en: WHEN Escape is pressed
       fireEvent.keyDown(content, { key: "Escape" });
 
-      // THEN: 退場を再生している間は閉じない
-      // en: THEN it stays open while the exit plays
+      // THEN: onOpenChange はすぐ呼ばれ、退場を再生している間はリストが残る
+      // en: THEN onOpenChange fires right away and the list stays while the exit plays
+      expect(onOpenChange).toHaveBeenCalledWith(false);
       expect(content).toHaveAttribute("data-closing");
-      expect(onOpenChange).not.toHaveBeenCalled();
+      expect(getContent()).toBe(content);
 
       // WHEN: 退場のアニメーションが終わる
       // en: WHEN the exit animation ends
       fireEvent.animationEnd(content);
 
-      // THEN: 閉じる
-      // en: THEN it closes
-      expect(onOpenChange).toHaveBeenCalledWith(false);
+      // THEN: リストを外す
+      // en: THEN the list unmounts
+      expect(getContent()).toBeNull();
+    });
+
+    it("制御側で open を false にしたときも、退場を再生してからリストを外す", () => {
+      // GIVEN: open を制御している、開いたセレクト
+      // en: GIVEN an open select whose open state is controlled
+      stubExitAnimation();
+      testContainer.render(<Select open>{options}</Select>);
+      const content = getContent();
+
+      // WHEN: 利用側が open を false にする
+      // en: WHEN the consumer sets open to false
+      testContainer.render(<Select open={false}>{options}</Select>);
+
+      // THEN: 退場を再生している間はリストが残り、終わると外れる
+      // en: THEN the list stays while the exit plays and unmounts when it ends
+      expect(content).toHaveAttribute("data-closing");
+      fireEvent.animationEnd(content);
+      expect(getContent()).toBeNull();
     });
   });
 });

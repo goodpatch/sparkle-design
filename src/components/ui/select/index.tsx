@@ -9,6 +9,7 @@ import { Select as SelectPrimitive } from "radix-ui";
 import { Icon } from "@/components/ui/icon";
 import { cva, VariantProps } from "class-variance-authority";
 
+import { useControllableState } from "@/lib/use-controllable-state";
 import { cn } from "@/lib/utils";
 
 const selectTriggerVariants = cva(
@@ -89,8 +90,8 @@ const selectContentVariants = cva(
     "bg-surface-base-0 text-text-neutral-high",
     // トリガーの側から出る（下に開くときは上から下へ）
     // en: Pops in from the trigger side (top-down when opening below)
-    // 閉じるときは Select が data-closing を付けて退場を再生し、終わってから閉じる
-    // en: On close, Select sets data-closing to play the exit, then closes when it ends
+    // 閉じるときは Select が data-closing を付けて退場を再生し、終わってから外す
+    // en: On close, Select sets data-closing to play the exit, then unmounts when it ends
     "data-[state=open]:animate-motion-pop-in data-[closing]:data-[state=open]:animate-motion-pop-out data-[closing]:pointer-events-none",
     "data-[side=bottom]:[--motion-pop-from-y:-1] data-[side=top]:[--motion-pop-from-y:1] data-[side=left]:[--motion-pop-from-x:1] data-[side=right]:[--motion-pop-from-x:-1]",
     "relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-action border shadow-float",
@@ -177,107 +178,90 @@ function Select({
   open: openProp,
   defaultOpen = false,
   onOpenChange,
-  value: valueProp,
-  defaultValue,
-  onValueChange,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
-  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen);
-  const [uncontrolledValue, setUncontrolledValue] =
-    React.useState(defaultValue);
+  const [open, setOpen] = useControllableState({
+    prop: openProp,
+    defaultProp: defaultOpen,
+    onChange: onOpenChange,
+  });
+  // リストを DOM に残しておくための「見た目の open」。閉じたあとも点滅と退場が終わるまで true のまま Radix に渡す
+  // en: The "visual open" that keeps the list in the DOM. Stays true after closing until the blink and exit finish
+  const [renderOpen, setRenderOpen] = React.useState(open);
   const [blinkingValue, setBlinkingValue] = React.useState<string | null>(null);
   const [closing, setClosing] = React.useState(false);
   const contentRef = React.useRef<HTMLDivElement | null>(null);
   // 項目の操作で選ばれた値。Radix は同じイベントの中で onValueChange → onOpenChange(false) の順に呼ぶ
   // en: Value picked from an item. Radix calls onValueChange then onOpenChange(false) within the same event
   const selectingRef = React.useRef<string | null>(null);
-  const pendingValueRef = React.useRef<string | null>(null);
+  // 閉じたきっかけが項目の選択だったときの値。閉じる演出で点滅させる
+  // en: Value picked when the close came from a selection; blinked by the close sequence
+  const closedBySelectRef = React.useRef<string | null>(null);
   const blinkTimerRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined
   );
-  // タイマーやアニメーションの終わりから呼ぶので、最新の props を参照する
-  // en: Called from timers and animation events, so read the latest props
-  const latest = React.useRef({
-    openProp,
-    onOpenChange,
-    valueProp,
-    onValueChange,
-  });
-  latest.current = { openProp, onOpenChange, valueProp, onValueChange };
+  const prevOpenRef = React.useRef(open);
 
   React.useEffect(() => () => clearTimeout(blinkTimerRef.current), []);
 
-  const setOpen = React.useCallback((next: boolean) => {
-    if (latest.current.openProp === undefined) setUncontrolledOpen(next);
-    latest.current.onOpenChange?.(next);
-  }, []);
-
-  const setValue = (next: string) => {
-    if (latest.current.valueProp === undefined) setUncontrolledValue(next);
-    latest.current.onValueChange?.(next);
-  };
-
-  // Radix の Select は閉じるとすぐリストを外すので、退場のアニメーションを再生し終えてから閉じる
-  // en: Radix Select unmounts the list as soon as it closes, so play the exit animation before closing
   const finishClose = React.useCallback(() => {
     setClosing(false);
-    setOpen(false);
-  }, [setOpen]);
+    setRenderOpen(false);
+  }, []);
 
+  // open が変わったら見た目を追いかける。制御側で open を false にしたときも、ここで退場を再生する
+  // en: Follow open with the visuals. Also plays the exit when a controlled open turns false
+  React.useLayoutEffect(() => {
+    if (prevOpenRef.current === open) return;
+    prevOpenRef.current = open;
+    const selected = closedBySelectRef.current;
+    closedBySelectRef.current = null;
+    clearTimeout(blinkTimerRef.current);
+    blinkTimerRef.current = undefined;
+    setBlinkingValue(null);
+    if (open) {
+      setClosing(false);
+      setRenderOpen(true);
+      return;
+    }
+    if (!contentRef.current) {
+      setClosing(false);
+      setRenderOpen(false);
+      return;
+    }
+    if (selected === null) {
+      setClosing(true);
+      return;
+    }
+    setBlinkingValue(selected);
+    blinkTimerRef.current = setTimeout(() => {
+      blinkTimerRef.current = undefined;
+      setBlinkingValue(null);
+      setClosing(true);
+    }, SELECT_BLINK_MS);
+  }, [open]);
+
+  // Radix の Select は閉じるとすぐリストを外すので、退場のアニメーションを再生し終えてから外す
+  // en: Radix Select unmounts the list as soon as it closes, so keep it until the exit animation ends
   React.useLayoutEffect(() => {
     if (!closing) return;
     const content = contentRef.current;
     const animationName = content
       ? getComputedStyle(content).animationName
       : "";
-    // アニメーションが無い（className で上書きされた、テスト環境など）ときは待たずに閉じる
-    // en: Close right away when there is no animation (overridden className, test environments, etc.)
+    // アニメーションが無い（className で上書きされた、テスト環境など）ときは待たずに外す
+    // en: Unmount right away when there is no animation (overridden className, test environments, etc.)
     if (!animationName || animationName === "none") finishClose();
   }, [closing, finishClose]);
 
-  const beginClose = () => {
-    if (!contentRef.current) {
-      setOpen(false);
-      return;
-    }
-    setClosing(true);
-  };
-
-  const handleValueChange = (next: string) => {
-    // 項目を選んだときは、点滅が終わるまで値を反映しない
-    // en: When an item is picked, hold the value until the blink finishes
-    if (selectingRef.current !== null) {
-      pendingValueRef.current = next;
-      return;
-    }
-    setValue(next);
-  };
-
+  // onOpenChange は Radix から呼ばれた時点で呼ぶ。点滅と退場は見た目だけで再生する
+  // en: Call onOpenChange as soon as Radix does; the blink and exit are visual only
   const handleOpenChange = (next: boolean) => {
     const selecting = selectingRef.current;
     selectingRef.current = null;
-    if (next) {
-      clearTimeout(blinkTimerRef.current);
-      blinkTimerRef.current = undefined;
-      setBlinkingValue(null);
-      setClosing(false);
-      setOpen(true);
-      return;
-    }
-    if (closing || blinkTimerRef.current !== undefined) return;
-    if (selecting !== null) {
-      setBlinkingValue(selecting);
-      blinkTimerRef.current = setTimeout(() => {
-        blinkTimerRef.current = undefined;
-        setBlinkingValue(null);
-        const pending = pendingValueRef.current;
-        pendingValueRef.current = null;
-        if (pending !== null) setValue(pending);
-        beginClose();
-      }, SELECT_BLINK_MS);
-      return;
-    }
-    beginClose();
+    if (next === open) return;
+    if (!next) closedBySelectRef.current = selecting;
+    setOpen(next);
   };
 
   const markSelecting = React.useCallback((value: string) => {
@@ -312,10 +296,8 @@ function Select({
     <SelectMotionContext.Provider value={motionContext}>
       <SelectPrimitive.Root
         data-slot="select"
-        open={openProp ?? uncontrolledOpen}
+        open={renderOpen}
         onOpenChange={handleOpenChange}
-        value={valueProp ?? uncontrolledValue ?? ""}
-        onValueChange={handleValueChange}
         {...props}
       />
     </SelectMotionContext.Provider>
