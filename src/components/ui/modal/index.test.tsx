@@ -59,3 +59,45 @@ describe("Modal のサイズ", () => {
     expect(content).toHaveClass(expectedClass);
   });
 });
+
+describe("Modal のモーション", () => {
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
+  it("モーショントークンで開閉し、中身はパネルより遅れて出る", () => {
+    // GIVEN: 開いたモーダル
+    // en: GIVEN an open modal
+    testContainer.render(
+      <Modal open>
+        <ModalContent>
+          <ModalTitle>タイトル</ModalTitle>
+        </ModalContent>
+      </Modal>
+    );
+
+    // WHEN: モーダルの本体を取得する
+    // en: WHEN the modal content is queried
+    const content = screen.getByRole("dialog");
+
+    // THEN: パネルは下から出て、中身はパネルより遅れてフェードインする
+    // en: THEN the panel rises from below and its children fade in after it
+    [
+      "data-[state=open]:animate-motion-pop-in",
+      "data-[state=closed]:animate-motion-pop-out",
+      "[--motion-pop-from-y:1]",
+      "*:animate-motion-content-in",
+    ].forEach(cls => expect(content).toHaveClass(cls));
+
+    // THEN: 時間を直書きせず、モーショントークンだけで動かす
+    // en: THEN timing comes only from the motion tokens, never hard-coded
+    expect(content.className).not.toMatch(
+      /\b(animate-in|animate-out|duration-\d+)\b/
+    );
+  });
+});

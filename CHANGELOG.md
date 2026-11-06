@@ -8,6 +8,7 @@
 ### Changed
 
 - Dialog と Overlay のアニメーションを、モーショントークン（`--motion-*`）で動かすようにしました。`sparkle.config.json` の `motion-weight` で選んだ重さに合わせて動きます。Dialog のパネルは下から出て、中身はパネルより少し遅れてフェードインします。Overlay は閉じるとき、パネルより少し遅れて消えます。sparkle-design-cli の `motion-weight` 対応版で生成した CSS が必要です
+- Modal のアニメーションも、Dialog と同じくモーショントークンで動かすようにしました。パネルは下から出て、中身（Header・Body・Footer）はパネルより少し遅れてフェードインします
 
 ## [2.0.0-beta.5] - 2026-10-29
 
