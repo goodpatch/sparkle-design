@@ -3,8 +3,10 @@
  */
 
 import React from "react";
+import { renderToString } from "react-dom/server";
+import { hydrateRoot } from "react-dom/client";
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { fireEvent, screen } from "@testing-library/react";
+import { act, fireEvent, screen } from "@testing-library/react";
 import { TestContainer } from "@/test/helpers";
 import {
   InlineMessage,
@@ -73,75 +75,65 @@ describe("InlineMessage のモーション", () => {
 
   afterEach(() => {
     testContainer.cleanup();
-    vi.restoreAllMocks();
   });
 
-  const renderClosable = (onClose: () => void) =>
-    testContainer.render(
-      <InlineMessage status="info" onClose={onClose}>
-        <InlineMessageTitle>タイトル</InlineMessageTitle>
-      </InlineMessage>
+  const message = (onClose?: () => void) => (
+    <InlineMessage status="info" onClose={onClose}>
+      <InlineMessageTitle>タイトル</InlineMessageTitle>
+    </InlineMessage>
+  );
+
+  it("後から表示されたものは、上から出る", () => {
+    // GIVEN: クライアントで表示したインラインメッセージ
+    // en: GIVEN an inline message shown on the client
+    testContainer.render(message());
+    const root = screen.getByRole("alert");
+
+    // THEN: 出現はモーショントークンで、上から出る
+    // en: THEN it enters with the motion tokens, dropping in from above
+    expect(root).toHaveAttribute("data-appear");
+    ["data-[appear]:animate-motion-pop-in", "[--motion-pop-from-y:-1]"].forEach(
+      cls => expect(root.className).toContain(cls)
     );
-
-  it("上から出て、閉じるときは退場のアニメーションで消える", () => {
-    // GIVEN: インラインメッセージ
-    // en: GIVEN an inline message
-    renderClosable(() => {});
-    const root = screen.getByRole("alert");
-
-    // THEN: 出現・退場はモーショントークンで、上から出る
-    // en: THEN it enters and exits with the motion tokens, dropping in from above
-    [
-      "animate-motion-pop-in",
-      "[--motion-pop-from-y:-1]",
-      "data-[closing]:animate-motion-pop-out",
-    ].forEach(cls => expect(root.className).toContain(cls));
   });
 
-  it("退場のアニメーションがあるときは、再生し終えてから onClose を呼ぶ", () => {
-    // GIVEN: 退場のアニメーションがかかる環境（jsdom は CSS を適用しないので差し替える）
-    // en: GIVEN the message has an exit animation (jsdom applies no CSS, so stub it)
-    const original = window.getComputedStyle;
-    vi.spyOn(window, "getComputedStyle").mockImplementation(element => {
-      const style = original(element);
-      return (element as HTMLElement).hasAttribute("data-closing")
-        ? { ...style, animationName: "motion-fade-out, motion-pop-out" }
-        : style;
-    });
+  it("ページを開いた時点で（SSR で）描かれていたものは、hydration のあとも動かない", async () => {
+    // GIVEN: サーバーで描いた HTML
+    // en: GIVEN server-rendered HTML
+    const html = renderToString(message());
+    const container = document.createElement("div");
+    container.innerHTML = html;
+    document.body.appendChild(container);
+    const root = container.querySelector('[role="alert"]') as HTMLElement;
+    expect(root).not.toHaveAttribute("data-appear");
+
+    // WHEN: クライアントで hydration する
+    // en: WHEN it is hydrated on the client
+    const errors = vi.spyOn(console, "error").mockImplementation(() => {});
+    const hydrated = await act(async () => hydrateRoot(container, message()));
+
+    // THEN: 出現は再生せず、hydration の不一致も起きない
+    // en: THEN the entrance does not play and there is no hydration mismatch
+    expect(root).not.toHaveAttribute("data-appear");
+    expect(errors).not.toHaveBeenCalled();
+
+    act(() => hydrated.unmount());
+    container.remove();
+    errors.mockRestore();
+  });
+
+  it("閉じるボタンを押すと、その時点で onClose を呼ぶ", () => {
+    // GIVEN: 閉じるボタンのあるインラインメッセージ
+    // en: GIVEN an inline message with a close button
     const onClose = vi.fn();
-    renderClosable(onClose);
-    const root = screen.getByRole("alert");
+    testContainer.render(message(onClose));
 
     // WHEN: 閉じるボタンを押す
     // en: WHEN the close button is pressed
     fireEvent.click(screen.getByRole("button", { name: "閉じる" }));
 
-    // THEN: 退場を再生している間は onClose を呼ばない
-    // en: THEN onClose is not called while the exit plays
-    expect(root).toHaveAttribute("data-closing");
-    expect(onClose).not.toHaveBeenCalled();
-
-    // WHEN: 退場のアニメーションが終わる
-    // en: WHEN the exit animation ends
-    fireEvent.animationEnd(root);
-
-    // THEN: onClose を呼ぶ
-    // en: THEN onClose is called
-    expect(onClose).toHaveBeenCalledTimes(1);
-  });
-
-  it("アニメーションが無いときは、すぐ onClose を呼ぶ", () => {
-    // GIVEN: アニメーションの無い環境（jsdom）
-    // en: GIVEN no animation (jsdom)
-    const onClose = vi.fn();
-    renderClosable(onClose);
-
-    // WHEN: 閉じるボタンを押す
-    // en: WHEN the close button is pressed
-    fireEvent.click(screen.getByRole("button", { name: "閉じる" }));
-
-    // THEN: 待たずに onClose を呼ぶ
-    // en: THEN onClose is called without waiting
+    // THEN: アニメーションを待たずに onClose を呼ぶ
+    // en: THEN onClose is called without waiting for an animation
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 });

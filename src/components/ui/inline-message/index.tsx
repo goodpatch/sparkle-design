@@ -13,9 +13,9 @@ import { cn } from "@/lib/utils";
 const inlineMessageVariants = cva(
   [
     "relative w-[448px] max-w-full rounded-notice border p-3 flex gap-2 items-start",
-    // 上から出る。閉じるときは data-closing で退場を再生してから onClose を呼ぶ
-    // en: Drops in from above. On close, data-closing plays the exit before onClose is called
-    "animate-motion-pop-in [--motion-pop-from-y:-1] data-[closing]:animate-motion-pop-out data-[closing]:pointer-events-none",
+    // 後から表示されたときだけ上から出る（data-appear）。閉じるときはすぐ消える
+    // en: Drops in from above only when shown later (data-appear). It disappears right away on close
+    "data-[appear]:animate-motion-pop-in [--motion-pop-from-y:-1]",
   ].join(" "),
   {
     variants: {
@@ -87,6 +87,20 @@ export interface InlineMessageProps
   children?: React.ReactNode;
 }
 
+const subscribeNothing = () => () => {};
+
+/**
+ * サーバーで描いた HTML を hydration しているあいだ（とサーバー上）だけ true を返す
+ * en: Returns true only on the server and while hydrating server-rendered HTML
+ */
+function useIsHydrating() {
+  return React.useSyncExternalStore(
+    subscribeNothing,
+    () => false,
+    () => true
+  );
+}
+
 /**
  * **概要 / Overview**
  *
@@ -144,44 +158,12 @@ function InlineMessage({
     [titleId, descId, registerTitle, registerDesc]
   );
 
-  // 閉じるボタンを押したら、退場のアニメーションを再生し終えてから onClose を呼ぶ
-  // en: When the close button is pressed, call onClose after the exit animation finishes
-  const [closing, setClosing] = React.useState(false);
-  const elementRef = React.useRef<HTMLDivElement | null>(null);
-  const onCloseRef = React.useRef(onClose);
-  onCloseRef.current = onClose;
-
-  const setRefs = React.useCallback(
-    (node: HTMLDivElement | null) => {
-      elementRef.current = node;
-      if (typeof ref === "function") ref(node);
-      else if (ref) ref.current = node;
-    },
-    [ref]
-  );
-
-  const finishClose = React.useCallback(() => {
-    // 利用側が外さなかったときは、元の表示に戻す
-    // en: If the consumer keeps the message mounted, it returns to its normal state
-    setClosing(false);
-    onCloseRef.current?.();
-  }, []);
-
-  React.useLayoutEffect(() => {
-    if (!closing) return;
-    const element = elementRef.current;
-    const animationName = element
-      ? getComputedStyle(element).animationName
-      : "";
-    // アニメーションが無い（className で上書きされた、テスト環境など）ときは待たずに閉じる
-    // en: Close right away when there is no animation (overridden className, test environments, etc.)
-    if (!animationName || animationName === "none") finishClose();
-  }, [closing, finishClose]);
-
-  const handleAnimationEnd = (event: React.AnimationEvent<HTMLDivElement>) => {
-    props.onAnimationEnd?.(event);
-    if (closing && event.target === event.currentTarget) finishClose();
-  };
+  // ページを開いた時点で（SSR で）描かれていたものは動かさず、後から表示されたものだけ出現を再生する。
+  // 最初に決めた値を保つので、hydration が終わっても途中から動き出さない
+  // en: Messages already on the page (server-rendered) stay still; only ones shown later play the entrance.
+  // The first value is kept, so nothing starts moving once hydration ends
+  const isHydrating = useIsHydrating();
+  const [appear] = React.useState(!isHydrating);
 
   // ステータスに対応するアイコン情報の取得
   const statusIcon = status ? statusIcons[status] : statusIcons.info;
@@ -194,14 +176,13 @@ function InlineMessage({
   return (
     <InlineMessageContext.Provider value={contextValue}>
       <div
+        ref={ref}
         role="alert"
         aria-labelledby={hasTitle ? titleId : undefined}
         aria-describedby={hasDesc ? descId : undefined}
+        data-appear={appear ? "" : undefined}
         className={cn(inlineMessageVariants({ status }), className)}
         {...props}
-        ref={setRefs}
-        data-closing={closing ? "" : undefined}
-        onAnimationEnd={handleAnimationEnd}
       >
         {/* ステータスアイコン */}
         <span
@@ -226,7 +207,7 @@ function InlineMessage({
             size="sm"
             variant="ghost"
             theme="neutral"
-            onClick={() => setClosing(true)}
+            onClick={onClose}
             aria-label="閉じる"
             className="shrink-0"
           />
