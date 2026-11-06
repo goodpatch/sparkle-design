@@ -11,7 +11,12 @@ import { cn } from "@/lib/utils";
 
 // ステータスごとのスタイル定義
 const inlineMessageVariants = cva(
-  "relative w-[448px] max-w-full rounded-notice border p-3 flex gap-2 items-start",
+  [
+    "relative w-[448px] max-w-full rounded-notice border p-3 flex gap-2 items-start",
+    // 後から表示されたときだけ上から出る（data-appear）。閉じるときはすぐ消える
+    // en: Drops in from above only when shown later (data-appear). It disappears right away on close
+    "data-[appear]:animate-motion-pop-in [--motion-pop-from-y:-1]",
+  ].join(" "),
   {
     variants: {
       status: {
@@ -82,6 +87,20 @@ export interface InlineMessageProps
   children?: React.ReactNode;
 }
 
+const subscribeNothing = () => () => {};
+
+/**
+ * サーバーで描いた HTML を hydration しているあいだ（とサーバー上）だけ true を返す
+ * en: Returns true only on the server and while hydrating server-rendered HTML
+ */
+function useIsHydrating() {
+  return React.useSyncExternalStore(
+    subscribeNothing,
+    () => false,
+    () => true
+  );
+}
+
 /**
  * **概要 / Overview**
  *
@@ -139,6 +158,13 @@ function InlineMessage({
     [titleId, descId, registerTitle, registerDesc]
   );
 
+  // ページを開いた時点で（SSR で）描かれていたものは動かさず、後から表示されたものだけ出現を再生する。
+  // 最初に決めた値を保つので、hydration が終わっても途中から動き出さない
+  // en: Messages already on the page (server-rendered) stay still; only ones shown later play the entrance.
+  // The first value is kept, so nothing starts moving once hydration ends
+  const isHydrating = useIsHydrating();
+  const [appear] = React.useState(!isHydrating);
+
   // ステータスに対応するアイコン情報の取得
   const statusIcon = status ? statusIcons[status] : statusIcons.info;
 
@@ -154,6 +180,7 @@ function InlineMessage({
         role="alert"
         aria-labelledby={hasTitle ? titleId : undefined}
         aria-describedby={hasDesc ? descId : undefined}
+        data-appear={appear ? "" : undefined}
         className={cn(inlineMessageVariants({ status }), className)}
         {...props}
       >
