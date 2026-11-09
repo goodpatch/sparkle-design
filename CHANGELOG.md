@@ -5,6 +5,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- `Input` のフォーカスリングを Figma の書き方に揃えました。`ring-offset-2` で白く塗っていた隙間を透明にし、要素の外側 4px に線 2px（`border/ring`）・角丸 `border-radius/lg` で描きます。角丸は要素の角丸に追従しません。`Input` を使う `InputPassword` も同じ見た目になります
+
 ## [2.0.0-beta.5] - 2026-10-29
 
 ### Fixed
