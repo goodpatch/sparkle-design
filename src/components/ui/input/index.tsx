@@ -12,7 +12,7 @@ import { useInputContainerFocus } from "@/hooks/useInputContainerFocus";
 
 // 入力フィールドのスタイル定義
 const inputVariants = cva(
-  "flex gap-0 items-center w-full rounded-action border bg-surface-base-0 transition-colors p-1",
+  "relative flex gap-0 items-center w-full rounded-action border bg-surface-base-0 transition-colors p-1",
   {
     variants: {
       size: {
@@ -28,8 +28,12 @@ const inputVariants = cva(
         true: "cursor-not-allowed",
         false: "",
       },
+      // フォーカスリングは要素の外側 4px に、隙間を透明のまま描く（角丸 lg。Figma isFocused）
+      // ::before の基準は padding box なので、1px の border 分を足して -5px にする
+      // en: The focus ring sits 4px outside with a transparent gap (radius lg, Figma isFocused)
+      // en: ::before is positioned from the padding box, so add the 1px border (-5px)
       isFocused: {
-        true: "ring-2 ring-border-ring ring-offset-2 outline-hidden",
+        true: "outline-hidden before:pointer-events-none before:absolute before:inset-[-5px] before:rounded-[var(--radius-lg)] before:border-2 before:border-border-ring before:content-['']",
         false: "",
       },
     },

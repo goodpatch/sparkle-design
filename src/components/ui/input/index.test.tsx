@@ -147,6 +147,23 @@ describe("Input", () => {
       expect(input.disabled).toBe(true);
     });
 
+    it("フォーカス中は外側 4px・角丸 lg のリングを ::before で描き、ring-offset の白い隙間は使わない", () => {
+      // Given: Input を描画
+      testContainer.render(<Input />);
+      const input = testContainer.queryInput();
+
+      // When: フォーカスを当てる
+      EventHelpers.focus(input);
+
+      // Then: コンテナに外側 4px のリングが当たる
+      const container = input.parentElement!;
+      expect(container.className).toContain("before:inset-[-5px]");
+      expect(container.className).toContain(
+        "before:rounded-[var(--radius-lg)]"
+      );
+      expect(container.className).not.toMatch(/ring-offset/);
+    });
+
     it("calls onFocus when input receives focus", () => {
       // Given: onFocusコールバック付きのInput
       const handleFocus = vi.fn();
