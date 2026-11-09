@@ -157,7 +157,7 @@ describe("Input", () => {
 
       // Then: コンテナに外側 4px のリングが当たる
       const container = input.parentElement!;
-      expect(container.className).toContain("before:inset-[-4px]");
+      expect(container.className).toContain("before:inset-[-5px]");
       expect(container.className).toContain(
         "before:rounded-[var(--radius-lg)]"
       );

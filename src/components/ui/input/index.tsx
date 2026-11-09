@@ -29,9 +29,11 @@ const inputVariants = cva(
         false: "",
       },
       // フォーカスリングは要素の外側 4px に、隙間を透明のまま描く（角丸 lg。Figma isFocused）
+      // ::before の基準は padding box なので、1px の border 分を足して -5px にする
       // en: The focus ring sits 4px outside with a transparent gap (radius lg, Figma isFocused)
+      // en: ::before is positioned from the padding box, so add the 1px border (-5px)
       isFocused: {
-        true: "outline-hidden before:pointer-events-none before:absolute before:inset-[-4px] before:rounded-[var(--radius-lg)] before:border-2 before:border-border-ring before:content-['']",
+        true: "outline-hidden before:pointer-events-none before:absolute before:inset-[-5px] before:rounded-[var(--radius-lg)] before:border-2 before:border-border-ring before:content-['']",
         false: "",
       },
     },
