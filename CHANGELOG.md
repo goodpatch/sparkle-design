@@ -5,9 +5,17 @@
 
 ## [Unreleased]
 
+## [2.0.0-beta.6] - 2026-11-09
+
 ### Changed
 
-- `Input` のフォーカスリングを Figma の書き方に揃えました。`ring-offset-2` で白く塗っていた隙間を透明にし、要素の外側 4px に線 2px（`border/ring`）・角丸 `border-radius/lg` で描きます。角丸は要素の角丸に追従しません。`Input` を使う `InputPassword` も同じ見た目になります
+- `Input` のフォーカスリングを Figma の書き方に揃えました。`ring-offset-2` で白く塗っていた隙間を透明にし、要素の外側 4px に線 2px（`border/ring`）・角丸 `border-radius/lg` で描きます。角丸は要素の角丸に追従しません。`Input` を使う `InputPassword` も同じ見た目になります (#397)
+- このリポジトリの既定テーマ（Storybook と setup スキルの初期値）を Figma の新デザインシステムに合わせ、Inter / Reddit Mono / 角丸 lg にしました。パッケージには含まれないため、利用者のテーマは変わりません (#390)
+- `Toast` の JSDoc に、sonner を直接使わず Sparkle の `Toast` を使う旨を追記しました (#391)
+
+### Fixed
+
+- `Checkbox` のチェック記号の色を、面のトークン（`text-surface-base-0`）から図形のトークン（`text-object-inverse`）に変えました。どちらも白なので見た目は変わりません。sparkle-design-cli の `semantic-color-usage-mismatch` に検出されていたものです (#379)
 
 ## [2.0.0-beta.5] - 2026-10-29
 
