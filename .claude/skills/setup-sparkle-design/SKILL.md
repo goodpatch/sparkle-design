@@ -221,7 +221,7 @@ npx --yes sparkle-design-cli check src --strict
 npx --yes sparkle-design-cli check src --format json
 ```
 
-検出ルールの一覧は CLI の help で確認する（件数やルール名をここに書き写さない）。`lint:sparkle` があるプロジェクトでは、個別ルールを毎回列挙するより先にコマンドを回す。
+検出ルールの一覧は `npx --yes sparkle-design-cli@beta rules` で確認する（`rules` は 2.5.0 以降のコマンド。それより前の CLI では `check --help`）。件数やルール名をここに書き写さない。`lint:sparkle` があるプロジェクトでは、個別ルールを毎回列挙するより先にコマンドを回す。
 
 ---
 

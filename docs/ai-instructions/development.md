@@ -62,7 +62,7 @@ const handleKeyDown = (event: React.KeyboardEvent) => {
 
 ### State Management Patterns
 - **Controlled components**: Support both controlled and uncontrolled modes
-- **Forward refs**: Use `React.forwardRef` for proper ref forwarding
+- **Refs**: Accept `ref` as a regular prop (React 19 ref-as-prop). Do not add new `React.forwardRef` wrappers (1.x on the `v1` branch still uses `forwardRef` for React 18)
 - **Default values**: Provide sensible defaults for all props
 
 ## Styling Guidelines

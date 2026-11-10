@@ -72,7 +72,7 @@ export interface ButtonProps {
  *
  * @param {ButtonProps} props
  */
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(...);
+function Button({ ref, ...props }: ButtonProps) { ... }
 ```
 
 ### 3. JSDoc に書かないこと
