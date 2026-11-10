@@ -15,4 +15,4 @@
 
 ## 複数テーマ運用したい場合
 
-役割・テナントごとに複数の固定配色バリアントを 1 デプロイで切り替えたい場合は、単一の `sparkle.config.json` では対応できない。sparkle-design-cli の README「複数のテーマ配色を 1 デプロイでサポートしたい場合」を参照。画面（ビルド）ごとにバリアントが固定されるなら「ケース A: config を分割して複数回 `generate`」、単一バンドル内で `data-*` 属性の付け外しだけでランタイムに切り替えたいなら「ケース B: `generate --scope`」（sparkle-design-cli `2.4.0` 以降）を使う。
+役割・テナントごとに複数の固定配色バリアントを 1 デプロイで切り替えたい場合は、単一の `sparkle.config.json` では対応できない。sparkle-design-cli の npm パッケージに同梱されている [docs/theming.md](https://unpkg.com/sparkle-design-cli@beta/docs/theming.md)（「複数のテーマ配色を 1 デプロイでサポートしたい場合」。`2.5.0` より前は [README](https://www.npmjs.com/package/sparkle-design-cli) の同名の節）を参照。画面（ビルド）ごとにバリアントが固定されるなら「ケース A: config を分割して複数回 `generate`」、単一バンドル内で `data-*` 属性の付け外しだけでランタイムに切り替えたいなら「ケース B: `generate --scope`」（sparkle-design-cli `2.4.0` 以降）を使う。
