@@ -172,9 +172,9 @@ jobs:
 
       - name: Install npm with staged publishing
         # `npm stage` は npm 11.20.0 以降、trusted publishing は 11.5.1 以降。
-        # Node 22.14.0 同梱の npm 10 には無いので入れ替える
+        # Node 22 同梱の npm 10 には無いので入れ替える
         # en: `npm stage` needs npm >= 11.20.0 and trusted publishing >= 11.5.1;
-        # Node 22.14.0 ships npm 10
+        # Node 22 ships npm 10
         run: npm install -g npm@11.21.0 && npm --version
 
       - name: npm stage publish
