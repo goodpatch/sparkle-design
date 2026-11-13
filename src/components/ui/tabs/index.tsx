@@ -117,6 +117,10 @@ const tabsListVariants = cva(["relative inline-flex items-center"], {
       true: [
         "w-full max-w-full justify-start gap-2 overflow-x-auto overflow-y-visible p-1",
         "whitespace-nowrap overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        // スクロールバーを隠す代わりに、隠れたタブがある側の端をフェードさせて続きがあることを示す
+        // en: With the scrollbar hidden, fade the edge that has more tabs beyond it to show there is more
+        "[--tabs-fade-start:0px] [--tabs-fade-end:0px] data-[fade-start]:[--tabs-fade-start:2rem] data-[fade-end]:[--tabs-fade-end:2rem]",
+        "[mask-image:linear-gradient(to_right,transparent,black_var(--tabs-fade-start),black_calc(100%-var(--tabs-fade-end)),transparent)]",
       ].join(" "),
       false: "w-fit justify-center gap-2 overflow-visible",
     },
@@ -143,8 +147,13 @@ const tabsIndicatorVariants = cva(
   {
     variants: {
       variant: {
-        solid: "rounded-t-action bg-surface-primary-high-enabled",
-        line: "z-10 h-0.5 rounded bg-border-primary-extra-high",
+        // 強制カラーモードでは背景色が消されるので、残る border で選択中の印を描く。
+        // line はリストの下線（2px）と重なるので、4px にして太さで見分けられるようにする
+        // en: Forced-colors mode drops backgrounds, so draw the selection mark with a border, which survives.
+        // The line variant overlaps the list's 2px baseline, so make it 4px to stand out by thickness
+        solid:
+          "rounded-t-action bg-surface-primary-high-enabled forced-colors:border-b-[3px]",
+        line: "z-10 h-0.5 rounded bg-border-primary-extra-high forced-colors:h-1 forced-colors:border-b-4",
         ghost:
           "rounded-t-action border-x border-t border-border-neutral-middle bg-surface-base-0",
       },
@@ -185,10 +194,82 @@ function rectWithin(
   };
 }
 
+/**
+ * スクロールできるリストで、選んだタブが見える位置までリストだけをスクロールする（ページは動かさない）
+ * en: In a scrolling list, scroll only the list (never the page) until the selected tab is visible
+ */
+function revealInList(list: HTMLElement, tab: { x: number; width: number }) {
+  const max = list.scrollWidth - list.clientWidth;
+  if (max <= 0) return;
+  // 端のフェード（2rem）に掛からないよう、その分だけ余白を取る
+  // en: Leave room for the edge fade (2rem) so the tab does not sit under it
+  const rootFontSize =
+    parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+  const margin = rootFontSize * 2;
+  const start = list.scrollLeft;
+  const end = start + list.clientWidth;
+  let left: number | null = null;
+  if (tab.x - margin < start) left = tab.x - margin;
+  else if (tab.x + tab.width + margin > end)
+    left = tab.x + tab.width + margin - list.clientWidth;
+  if (left === null) return;
+  left = Math.min(Math.max(left, 0), max);
+  if (Math.abs(left - start) < 1) return;
+  const reduce =
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (typeof list.scrollTo === "function") {
+    list.scrollTo({ left, behavior: reduce ? "auto" : "smooth" });
+  } else {
+    list.scrollLeft = left;
+  }
+}
+
+/**
+ * スクロールできるリストの、隠れたタブがある側（start / end）を返す
+ * en: Which sides (start / end) of a scrolling list have tabs hidden beyond them
+ */
+function useScrollEdges(
+  listRef: React.RefObject<HTMLDivElement | null>,
+  enabled: boolean
+) {
+  const [edges, setEdges] = React.useState({ start: false, end: false });
+
+  React.useLayoutEffect(() => {
+    const list = listRef.current;
+    if (!list || !enabled) {
+      setEdges({ start: false, end: false });
+      return;
+    }
+    const update = () => {
+      const start = list.scrollLeft > 1;
+      const end = list.scrollLeft + list.clientWidth < list.scrollWidth - 1;
+      setEdges(prev =>
+        prev.start === start && prev.end === end ? prev : { start, end }
+      );
+    };
+    update();
+    list.addEventListener("scroll", update, { passive: true });
+    const resizeObserver =
+      typeof ResizeObserver === "undefined" ? null : new ResizeObserver(update);
+    resizeObserver?.observe(list);
+    return () => {
+      list.removeEventListener("scroll", update);
+      resizeObserver?.disconnect();
+    };
+  }, [listRef, enabled]);
+
+  return edges;
+}
+
 function useActiveTabRect(listRef: React.RefObject<HTMLDivElement | null>) {
   const [rect, setRect] = React.useState<TabRect | null>(null);
   const [ready, setReady] = React.useState(false);
   const lastActiveRef = React.useRef<HTMLElement | null>(null);
+  const revealedRef = React.useRef<{
+    tab: HTMLElement | undefined;
+    width: number;
+  } | null>(null);
 
   React.useLayoutEffect(() => {
     const list = listRef.current;
@@ -218,6 +299,19 @@ function useActiveTabRect(listRef: React.RefObject<HTMLDivElement | null>) {
         active !== undefined &&
         lastActiveRef.current !== active;
       if (active) lastActiveRef.current = active;
+      // 選んだタブは太字になって幅が変わるので、幅が変わったときも見える位置を取り直す
+      // en: The selected tab turns bold and widens, so re-reveal when its width changes too
+      const revealed = revealedRef.current;
+      if (
+        measured &&
+        (changed ||
+          (revealed !== null &&
+            revealed.tab === active &&
+            revealed.width !== measured.width))
+      ) {
+        revealInList(list, measured);
+        revealedRef.current = { tab: active, width: measured.width };
+      }
       setRect(prev => {
         if (!measured) return null;
         const next = {
@@ -305,6 +399,7 @@ function TabsList({
 }: React.ComponentProps<typeof TabsPrimitive.List> & TabsListVariants) {
   const listRef = React.useRef<HTMLDivElement | null>(null);
   const { rect, ready } = useActiveTabRect(listRef);
+  const edges = useScrollEdges(listRef, scrollable === true);
   const effectiveVariant: TabsVariantType = variant ?? "solid";
   const setRefs = React.useCallback(
     (node: HTMLDivElement | null) => {
@@ -336,6 +431,8 @@ function TabsList({
         ref={setRefs}
         data-slot="tabs-list"
         data-indicator-ready={rect ? "" : undefined}
+        data-fade-start={edges.start ? "" : undefined}
+        data-fade-end={edges.end ? "" : undefined}
         className={cn(
           "group/tabs-list",
           tabsListVariants({ variant, scrollable }),
