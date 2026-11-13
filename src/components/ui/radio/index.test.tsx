@@ -770,14 +770,27 @@ describe("Radio（強制カラーモード）", () => {
     expect(inner.className.split(/\s+/)).toContain("forced-colors:bg-[Canvas]");
   });
 
-  it("無効なときは選択中の点を GrayText で塗る", () => {
+  it.each([
+    ["RadioItem 側で無効にしたとき", { item: true, group: false }],
+    ["Radio（グループ）側で無効にしたとき", { item: false, group: true }],
+  ])("%s、選択中の点を GrayText で塗る", (_, { item, group }) => {
     // Given: 選択中かつ無効な RadioItem
-    // When: 選択の点を取得する
-    const { dot } = renderChecked({ disabled: true });
+    testContainer.render(
+      <Radio defaultValue="option1" disabled={group}>
+        <RadioItem value="option1" id="radio1" label="選択中" disabled={item} />
+      </Radio>
+    );
 
-    // Then: Highlight ではなく GrayText で塗る
-    const classes = dot.className.split(/\s+/);
-    expect(classes).toContain("forced-colors:bg-[GrayText]!");
-    expect(classes).not.toContain("forced-colors:bg-[Highlight]!");
+    // When: 選択の点と、それを包む RadioItem を取得する
+    const dot = testContainer.querySelector(
+      '[data-slot="radio-group-indicator"]'
+    ) as HTMLElement;
+    const itemEl = dot.closest(".group") as HTMLElement;
+
+    // Then: RadioItem に data-disabled が付き、点はそれを見て GrayText に切り替わる
+    expect(itemEl).toHaveAttribute("data-disabled");
+    expect(dot.className.split(/\s+/)).toContain(
+      "forced-colors:[.group[data-disabled]_&]:bg-[GrayText]!"
+    );
   });
 });

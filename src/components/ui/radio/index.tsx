@@ -114,7 +114,10 @@ const radioIndicatorDotVariants = cva(
     "rounded-full transition-colors flex items-center justify-center shrink-0",
     // 強制カラーモードでは背景色が消され、選択中かどうかが見えなくなる。点だけ色の上書きを止め、システムカラーで塗る
     // en: Forced-colors mode drops background colors, hiding the selection. Opt the dot out and paint it with system colors
-    "forced-colors:forced-color-adjust-none",
+    "forced-colors:forced-color-adjust-none forced-colors:bg-[Highlight]!",
+    // 無効は RadioItem 自身の disabled だけでなく Radio 側の disabled でも起きるので、Radix が付ける data-disabled を見る
+    // en: Disabled can come from the Radio group as well as the item, so key off the data-disabled Radix sets
+    "forced-colors:[.group[data-disabled]_&]:bg-[GrayText]!",
   ].join(" "),
   {
     variants: {
@@ -128,8 +131,8 @@ const radioIndicatorDotVariants = cva(
         false: "[.group[data-state=checked]_&]:bg-object-primary-enabled",
       },
       isDisabled: {
-        true: "forced-colors:bg-[GrayText]!",
-        false: "forced-colors:bg-[Highlight]!",
+        true: "",
+        false: "",
       },
     },
     compoundVariants: [
