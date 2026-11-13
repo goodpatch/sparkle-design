@@ -119,8 +119,10 @@ const tabsListVariants = cva(["relative inline-flex items-center"], {
         "whitespace-nowrap overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
         // スクロールバーを隠す代わりに、隠れたタブがある側の端をフェードさせて続きがあることを示す
         // en: With the scrollbar hidden, fade the edge that has more tabs beyond it to show there is more
-        "[--tabs-fade-start:0px] [--tabs-fade-end:0px] data-[fade-start]:[--tabs-fade-start:2rem] data-[fade-end]:[--tabs-fade-end:2rem]",
-        "[mask-image:linear-gradient(to_right,transparent,black_var(--tabs-fade-start),black_calc(100%-var(--tabs-fade-end)),transparent)]",
+        // 左右は物理方向（RTL でも左は左）。グラデーションが to_right なので、論理方向にはしない
+        // en: Left / right are physical (left stays left in RTL), matching the to_right gradient
+        "[--tabs-fade-left:0px] [--tabs-fade-right:0px] data-[fade-left]:[--tabs-fade-left:2rem] data-[fade-right]:[--tabs-fade-right:2rem]",
+        "[mask-image:linear-gradient(to_right,transparent,black_var(--tabs-fade-left),black_calc(100%-var(--tabs-fade-right)),transparent)]",
       ].join(" "),
       false: "w-fit justify-center gap-2 overflow-visible",
     },
@@ -198,64 +200,94 @@ function rectWithin(
  * スクロールできるリストで、選んだタブが見える位置までリストだけをスクロールする（ページは動かさない）
  * en: In a scrolling list, scroll only the list (never the page) until the selected tab is visible
  */
-function revealInList(list: HTMLElement, tab: { x: number; width: number }) {
+function revealInList(
+  list: HTMLElement,
+  tab: { x: number; width: number },
+  instant = false
+) {
   const max = list.scrollWidth - list.clientWidth;
   if (max <= 0) return;
+  // RTL では scrollLeft が 0（右端）から負の向きに増える。見えている範囲での位置で考え、最後に向きに合わせて丸める
+  // en: In RTL, scrollLeft runs from 0 (right edge) into negatives. Work in visible-area coordinates
+  // and clamp to the direction's range at the end
+  const rtl = getComputedStyle(list).direction === "rtl";
   // 端のフェード（2rem）に掛からないよう、その分だけ余白を取る
   // en: Leave room for the edge fade (2rem) so the tab does not sit under it
   const rootFontSize =
     parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
   const margin = rootFontSize * 2;
   const start = list.scrollLeft;
-  const end = start + list.clientWidth;
-  let left: number | null = null;
-  if (tab.x - margin < start) left = tab.x - margin;
-  else if (tab.x + tab.width + margin > end)
-    left = tab.x + tab.width + margin - list.clientWidth;
-  if (left === null) return;
-  left = Math.min(Math.max(left, 0), max);
+  // tab.x は scrollLeft を足した位置なので、引くと見えている範囲の中での位置になる
+  // en: tab.x includes scrollLeft, so subtracting it gives the position within the visible area
+  const visible = tab.x - start;
+  let delta = 0;
+  if (visible - margin < 0) delta = visible - margin;
+  else if (visible + tab.width + margin > list.clientWidth)
+    delta = visible + tab.width + margin - list.clientWidth;
+  if (delta === 0) return;
+  const left = rtl
+    ? Math.min(Math.max(start + delta, -max), 0)
+    : Math.min(Math.max(start + delta, 0), max);
   if (Math.abs(left - start) < 1) return;
   const reduce =
     typeof window.matchMedia === "function" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (typeof list.scrollTo === "function") {
-    list.scrollTo({ left, behavior: reduce ? "auto" : "smooth" });
+    list.scrollTo({ left, behavior: reduce || instant ? "auto" : "smooth" });
   } else {
     list.scrollLeft = left;
   }
 }
 
 /**
- * スクロールできるリストの、隠れたタブがある側（start / end）を返す
- * en: Which sides (start / end) of a scrolling list have tabs hidden beyond them
+ * スクロールできるリストの、隠れたタブがある側（物理方向の left / right）を返す
+ * en: Which physical sides (left / right) of a scrolling list have tabs hidden beyond them
  */
 function useScrollEdges(
   listRef: React.RefObject<HTMLDivElement | null>,
   enabled: boolean
 ) {
-  const [edges, setEdges] = React.useState({ start: false, end: false });
+  const [edges, setEdges] = React.useState({ left: false, right: false });
 
   React.useLayoutEffect(() => {
     const list = listRef.current;
     if (!list || !enabled) {
-      setEdges({ start: false, end: false });
+      setEdges({ left: false, right: false });
       return;
     }
-    const update = () => {
-      const start = list.scrollLeft > 1;
-      const end = list.scrollLeft + list.clientWidth < list.scrollWidth - 1;
-      setEdges(prev =>
-        prev.start === start && prev.end === end ? prev : { start, end }
+    const resizeObserver =
+      typeof ResizeObserver === "undefined"
+        ? null
+        : new ResizeObserver(() => update());
+    function update() {
+      if (!list) return;
+      // リストの大きさが変わらなくても、タブの追加やフォントの読み込みで中身の幅は変わるので、タブも監視する
+      // en: Content width changes without the list resizing (tabs added, fonts loading), so watch the tabs too
+      Array.from(list.children).forEach(child =>
+        resizeObserver?.observe(child)
       );
-    };
+      const max = list.scrollWidth - list.clientWidth;
+      // RTL では scrollLeft が 0（右端）から負の向きに増える
+      // en: In RTL, scrollLeft runs from 0 (right edge) into negatives
+      const fromLeft =
+        getComputedStyle(list).direction === "rtl"
+          ? max + list.scrollLeft
+          : list.scrollLeft;
+      const left = fromLeft > 1;
+      const right = fromLeft < max - 1;
+      setEdges(prev =>
+        prev.left === left && prev.right === right ? prev : { left, right }
+      );
+    }
     update();
     list.addEventListener("scroll", update, { passive: true });
-    const resizeObserver =
-      typeof ResizeObserver === "undefined" ? null : new ResizeObserver(update);
     resizeObserver?.observe(list);
+    const mutationObserver = new MutationObserver(update);
+    mutationObserver.observe(list, { childList: true, subtree: true });
     return () => {
       list.removeEventListener("scroll", update);
       resizeObserver?.disconnect();
+      mutationObserver.disconnect();
     };
   }, [listRef, enabled]);
 
@@ -267,7 +299,7 @@ function useActiveTabRect(listRef: React.RefObject<HTMLDivElement | null>) {
   const [ready, setReady] = React.useState(false);
   const lastActiveRef = React.useRef<HTMLElement | null>(null);
   const revealedRef = React.useRef<{
-    tab: HTMLElement | undefined;
+    tab: HTMLElement;
     width: number;
   } | null>(null);
 
@@ -299,17 +331,20 @@ function useActiveTabRect(listRef: React.RefObject<HTMLDivElement | null>) {
         active !== undefined &&
         lastActiveRef.current !== active;
       if (active) lastActiveRef.current = active;
-      // 選んだタブは太字になって幅が変わるので、幅が変わったときも見える位置を取り直す
-      // en: The selected tab turns bold and widens, so re-reveal when its width changes too
+      // 選んだタブを見える位置へ。最初の表示（初期値がはみ出している場合）も含め、まだ見せていないタブなら動かす。
+      // 選んだタブは太字になって幅が変わるので、幅が変わったときも取り直す。最初の表示では一瞬で動かす
+      // en: Bring the selected tab into view whenever it has not been revealed yet, including the first
+      // render (an initial value beyond the edge). It turns bold and widens, so re-reveal on width changes
+      // too. The first reveal jumps instantly
       const revealed = revealedRef.current;
       if (
         measured &&
-        (changed ||
-          (revealed !== null &&
-            revealed.tab === active &&
-            revealed.width !== measured.width))
+        active &&
+        (revealed === null ||
+          revealed.tab !== active ||
+          revealed.width !== measured.width)
       ) {
-        revealInList(list, measured);
+        revealInList(list, measured, revealed === null);
         revealedRef.current = { tab: active, width: measured.width };
       }
       setRect(prev => {
@@ -431,8 +466,8 @@ function TabsList({
         ref={setRefs}
         data-slot="tabs-list"
         data-indicator-ready={rect ? "" : undefined}
-        data-fade-start={edges.start ? "" : undefined}
-        data-fade-end={edges.end ? "" : undefined}
+        data-fade-left={edges.left ? "" : undefined}
+        data-fade-right={edges.right ? "" : undefined}
         className={cn(
           "group/tabs-list",
           tabsListVariants({ variant, scrollable }),
