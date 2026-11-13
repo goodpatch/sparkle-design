@@ -4,7 +4,7 @@
 
 import React from "react";
 import { renderToString } from "react-dom/server";
-import { fireEvent, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { TestContainer, EventHelpers } from "@/test/helpers";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./index";
@@ -520,5 +520,291 @@ describe("Tabs のモーション", () => {
     // en: THEN it animates because the selection moved (data-ready)
     await waitFor(() => expect(indicator).toHaveAttribute("data-ready"));
     spies.forEach(spy => spy.mockRestore());
+  });
+});
+
+describe("Tabs のアクセシビリティ（Modern Web Guidance の監査から）", () => {
+  let testContainer: TestContainer;
+  let spies: { mockRestore: () => void }[] = [];
+
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    spies.forEach(spy => spy.mockRestore());
+    spies = [];
+    testContainer.cleanup();
+  });
+
+  /**
+   * jsdom は配置しないので、幅 100px のリストに幅 72px のタブが 80px 間隔で並ぶ状態を与える
+   * en: jsdom does no layout, so stub a 100px list holding 72px tabs every 80px
+   */
+  const stubScrollableLayout = (
+    lefts: Record<string, number> = { a: 0, b: 80, c: 160 }
+  ) => {
+    const isList = (el: HTMLElement) => el.dataset.slot === "tabs-list";
+    spies = [
+      vi
+        .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+        .mockImplementation(function (this: HTMLElement) {
+          const left = lefts[this.dataset.value ?? ""] ?? 0;
+          const width = isList(this) ? 100 : this.dataset.value ? 72 : 0;
+          const scroll = this.closest<HTMLElement>('[data-slot="tabs-list"]');
+          const offset = isList(this) ? 0 : (scroll?.scrollLeft ?? 0);
+          return DOMRect.fromRect({
+            x: left - offset,
+            y: 0,
+            width,
+            height: 40,
+          });
+        }),
+      vi
+        .spyOn(HTMLElement.prototype, "offsetWidth", "get")
+        .mockImplementation(function (this: HTMLElement) {
+          return isList(this) ? 100 : 0;
+        }),
+      vi
+        .spyOn(HTMLElement.prototype, "clientWidth", "get")
+        .mockImplementation(function (this: HTMLElement) {
+          return isList(this) ? 100 : 0;
+        }),
+      vi
+        .spyOn(HTMLElement.prototype, "scrollWidth", "get")
+        .mockImplementation(function (this: HTMLElement) {
+          return isList(this) ? 232 : 0;
+        }),
+    ];
+  };
+
+  const renderScrollable = ({
+    defaultValue = "a",
+    dir,
+  }: { defaultValue?: string; dir?: "rtl" } = {}) =>
+    testContainer.render(
+      <Tabs defaultValue={defaultValue}>
+        <TabsList scrollable>
+          <TabsTrigger value="a" data-value="a">
+            A
+          </TabsTrigger>
+          <TabsTrigger value="b" data-value="b">
+            B
+          </TabsTrigger>
+          <TabsTrigger value="c" data-value="c">
+            C
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
+    );
+
+  it.each([
+    ["solid", "forced-colors:border-b-[3px]"],
+    ["line", "forced-colors:border-b-4"],
+  ] as const)(
+    "強制カラーモードでは、%s のインジケーターを枠線で描き、背景色が消されても選択中のタブが分かる",
+    (variant, cls) => {
+      // GIVEN: タブ
+      testContainer.render(
+        <Tabs defaultValue="a">
+          <TabsList variant={variant}>
+            <TabsTrigger value="a">A</TabsTrigger>
+          </TabsList>
+        </Tabs>
+      );
+
+      // WHEN: インジケーターを取得する
+      const indicator = document.querySelector(
+        '[data-slot="tabs-indicator"]'
+      ) as HTMLElement;
+
+      // THEN: 強制カラーモードでも残る border で印を描く
+      expect(indicator.className.split(/\s+/)).toContain(cls);
+    }
+  );
+
+  it("スクロールできるリストでは、見えていないタブを選ぶとそのタブが見える位置までリストだけをスクロールする", async () => {
+    // GIVEN: 3 つ目のタブがはみ出しているリスト
+    stubScrollableLayout();
+    renderScrollable();
+    const list = document.querySelector(
+      '[data-slot="tabs-list"]'
+    ) as HTMLElement;
+    const scrollTo = vi.fn();
+    list.scrollTo = scrollTo as unknown as typeof list.scrollTo;
+
+    // WHEN: 3 つ目のタブを選ぶ
+    fireEvent.mouseDown(screen.getByRole("tab", { name: "C" }), { button: 0 });
+
+    // THEN: 端までスクロールする（160 + 72 + 32 - 100 = 164 は、最大の 232 - 100 = 132 で止まる）
+    await waitFor(() =>
+      expect(scrollTo).toHaveBeenCalledWith(
+        expect.objectContaining({ left: 132 })
+      )
+    );
+  });
+
+  it("選んだタブは、端のフェード（2rem）に掛からない位置まで見せる", async () => {
+    // GIVEN: 2 つ目のタブが右端からはみ出しているリスト
+    stubScrollableLayout();
+    renderScrollable();
+    const list = document.querySelector(
+      '[data-slot="tabs-list"]'
+    ) as HTMLElement;
+    const scrollTo = vi.fn();
+    list.scrollTo = scrollTo as unknown as typeof list.scrollTo;
+
+    // WHEN: 2 つ目のタブを選ぶ
+    fireEvent.mouseDown(screen.getByRole("tab", { name: "B" }), { button: 0 });
+
+    // THEN: タブの右端から 32px 先までが見える位置へスクロールする（80 + 72 + 32 - 100 = 84）
+    await waitFor(() =>
+      expect(scrollTo).toHaveBeenCalledWith(
+        expect.objectContaining({ left: 84 })
+      )
+    );
+  });
+
+  it("スクロールできるリストでは、隠れたタブがある側の端をフェードさせる", async () => {
+    // GIVEN: 右側にタブが隠れているリスト
+    stubScrollableLayout();
+    renderScrollable();
+    const list = document.querySelector(
+      '[data-slot="tabs-list"]'
+    ) as HTMLElement;
+
+    // THEN: 右端だけフェードする
+    expect(list).toHaveAttribute("data-fade-right");
+    expect(list).not.toHaveAttribute("data-fade-left");
+    expect(list.className).toContain("[mask-image:");
+
+    // WHEN: 右端までスクロールする
+    list.scrollLeft = 132;
+    fireEvent.scroll(list);
+
+    // THEN: 左端だけフェードする
+    await waitFor(() => expect(list).toHaveAttribute("data-fade-left"));
+    expect(list).not.toHaveAttribute("data-fade-right");
+  });
+
+  it("最初の選択がはみ出しているときも、そのタブが見える位置まで一瞬でスクロールする", async () => {
+    // GIVEN: 3 つ目のタブがはみ出しているリスト
+    stubScrollableLayout();
+    // jsdom の要素には scrollTo が無いので、表示前に差し込んでおく
+    const scrollTo = vi.fn();
+    HTMLElement.prototype.scrollTo =
+      scrollTo as unknown as HTMLElement["scrollTo"];
+    spies.push({
+      mockRestore: () => {
+        delete (HTMLElement.prototype as Partial<HTMLElement>).scrollTo;
+      },
+    });
+
+    // WHEN: 3 つ目のタブを選んだ状態で表示する
+    renderScrollable({ defaultValue: "c" });
+
+    // THEN: アニメーションせずに端までスクロールする
+    await waitFor(() =>
+      expect(scrollTo).toHaveBeenCalledWith({ left: 132, behavior: "auto" })
+    );
+  });
+
+  it("RTL では scrollLeft が負の向きに進むので、その向きでスクロールする", async () => {
+    // GIVEN: 右から並ぶリスト（scrollLeft 0 が右端）で、3 つ目のタブが左へはみ出している
+    stubScrollableLayout({ a: 28, b: -52, c: -132 });
+    // jsdom は direction を計算しないので、リストだけ rtl を返す
+    const getComputedStyle = window.getComputedStyle.bind(window);
+    spies.push(
+      vi
+        .spyOn(window, "getComputedStyle")
+        .mockImplementation((element, pseudo) => {
+          const style = getComputedStyle(element, pseudo);
+          return (element as HTMLElement).dataset?.slot === "tabs-list"
+            ? new Proxy(style, {
+                get: (target, key) =>
+                  key === "direction"
+                    ? "rtl"
+                    : Reflect.get(target, key, target),
+              })
+            : style;
+        })
+    );
+    renderScrollable();
+    const list = document.querySelector(
+      '[data-slot="tabs-list"]'
+    ) as HTMLElement;
+    const scrollTo = vi.fn();
+    list.scrollTo = scrollTo as unknown as typeof list.scrollTo;
+
+    // THEN: 左側にタブが隠れているので、左端がフェードする
+    expect(list).toHaveAttribute("data-fade-left");
+
+    // WHEN: 3 つ目のタブを選ぶ
+    fireEvent.mouseDown(screen.getByRole("tab", { name: "C" }), { button: 0 });
+
+    // THEN: 負の向きの端（-132）までスクロールする
+    await waitFor(() =>
+      expect(scrollTo).toHaveBeenCalledWith(
+        expect.objectContaining({ left: -132 })
+      )
+    );
+  });
+
+  it("リストの大きさが変わらなくても、タブが増えてはみ出したらフェードを付け直す", async () => {
+    // GIVEN: はみ出していないリスト
+    stubScrollableLayout();
+    let scrollWidth = 100;
+    spies.push(
+      vi
+        .spyOn(HTMLElement.prototype, "scrollWidth", "get")
+        .mockImplementation(function (this: HTMLElement) {
+          return this.dataset.slot === "tabs-list" ? scrollWidth : 0;
+        })
+    );
+    const { rerender, unmount } = render(
+      <Tabs defaultValue="a">
+        <TabsList scrollable>
+          <TabsTrigger value="a">A</TabsTrigger>
+        </TabsList>
+      </Tabs>
+    );
+    const list = document.querySelector(
+      '[data-slot="tabs-list"]'
+    ) as HTMLElement;
+    expect(list).not.toHaveAttribute("data-fade-right");
+
+    // WHEN: タブが増えて中身がはみ出す
+    scrollWidth = 232;
+    rerender(
+      <Tabs defaultValue="a">
+        <TabsList scrollable>
+          <TabsTrigger value="a">A</TabsTrigger>
+          <TabsTrigger value="b">B</TabsTrigger>
+        </TabsList>
+      </Tabs>
+    );
+
+    // THEN: 右端がフェードする
+    await waitFor(() => expect(list).toHaveAttribute("data-fade-right"));
+    unmount();
+  });
+
+  it("スクロールしないリストにはフェードを付けない", () => {
+    // GIVEN: scrollable ではないリスト
+    testContainer.render(
+      <Tabs defaultValue="a">
+        <TabsList>
+          <TabsTrigger value="a">A</TabsTrigger>
+        </TabsList>
+      </Tabs>
+    );
+
+    // THEN: マスクもフェードの印も無い
+    const list = document.querySelector(
+      '[data-slot="tabs-list"]'
+    ) as HTMLElement;
+    expect(list.className).not.toContain("[mask-image:");
+    expect(list).not.toHaveAttribute("data-fade-right");
   });
 });
