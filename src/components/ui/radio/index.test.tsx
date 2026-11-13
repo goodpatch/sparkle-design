@@ -733,3 +733,51 @@ describe("Radio", () => {
     });
   });
 });
+
+describe("Radio（強制カラーモード）", () => {
+  let testContainer: TestContainer;
+
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
+  const renderChecked = (props: { disabled?: boolean } = {}) => {
+    testContainer.render(
+      <Radio defaultValue="option1">
+        <RadioItem value="option1" id="radio1" label="選択中" {...props} />
+      </Radio>
+    );
+    const dot = testContainer.querySelector(
+      '[data-slot="radio-group-indicator"]'
+    ) as HTMLElement;
+    return { dot, inner: dot.firstElementChild as HTMLElement };
+  };
+
+  it("選択中の点をシステムカラー Highlight で塗り、背景色が消されても選択が見える", () => {
+    // Given: 選択中の RadioItem
+    // When: 選択の点を取得する
+    const { dot, inner } = renderChecked();
+
+    // Then: 強制カラーモードでは色の上書きを止め、点を Highlight・内側を Canvas で描く
+    const classes = dot.className.split(/\s+/);
+    expect(classes).toContain("forced-colors:forced-color-adjust-none");
+    expect(classes).toContain("forced-colors:bg-[Highlight]!");
+    expect(inner.className.split(/\s+/)).toContain("forced-colors:bg-[Canvas]");
+  });
+
+  it("無効なときは選択中の点を GrayText で塗る", () => {
+    // Given: 選択中かつ無効な RadioItem
+    // When: 選択の点を取得する
+    const { dot } = renderChecked({ disabled: true });
+
+    // Then: Highlight ではなく GrayText で塗る
+    const classes = dot.className.split(/\s+/);
+    expect(classes).toContain("forced-colors:bg-[GrayText]!");
+    expect(classes).not.toContain("forced-colors:bg-[Highlight]!");
+  });
+});
