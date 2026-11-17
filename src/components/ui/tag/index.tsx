@@ -12,7 +12,9 @@ const tagVariants = cva(
   {
     variants: {
       variant: {
-        solid: "",
+        // 強制カラーモードでは背景色が消え、solid が ghost と見分けられなくなるので、このモードだけ 1px の枠を描く
+        // en: Forced-colors mode drops the background, making solid look like ghost, so draw a 1px border only in that mode
+        solid: "forced-colors:border",
         outline: "border",
         subtle: "",
       },
