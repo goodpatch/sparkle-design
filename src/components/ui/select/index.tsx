@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 const selectTriggerVariants = cva(
   [
     "flex items-center justify-between w-full rounded-action border bg-surface-base-0 text-text-neutral-high transition-colors",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2",
+    "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2",
     "overflow-hidden whitespace-nowrap",
   ].join(" "),
   {
@@ -539,6 +539,12 @@ function SelectItem({
           "py-1.5 pl-8 pr-2 text-sm",
           "character-1-regular-pro text-text-neutral-middle",
           "outline-none focus:bg-neutral-100 data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
+          // 強制カラーモードでは背景色が消え、キーボードで今どの項目にいるかが見えなくなる。
+          // ネイティブの選択肢と同じく Highlight / HighlightText で示す
+          // en: Forced-colors mode drops the background, hiding which item has keyboard focus.
+          // Show it with Highlight / HighlightText like native options
+          "forced-colors:focus:forced-color-adjust-none forced-colors:focus:bg-[Highlight] forced-colors:focus:text-[HighlightText]",
+          "forced-colors:data-[disabled]:text-[GrayText]",
           "data-[blinking]:animate-motion-blink",
         ].join(" "),
         className
