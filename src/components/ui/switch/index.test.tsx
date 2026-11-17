@@ -513,8 +513,8 @@ describe("Switch（強制カラーモード）", () => {
     );
     expect(thumbClasses).toEqual(
       expect.arrayContaining([
-        "forced-colors:data-[state=unchecked]:bg-[GrayText]!",
-        "forced-colors:data-[state=checked]:bg-[Canvas]!",
+        "forced-colors:data-[disabled]:data-[state=unchecked]:bg-[GrayText]!",
+        "forced-colors:data-[disabled]:data-[state=checked]:bg-[Canvas]!",
       ])
     );
   });

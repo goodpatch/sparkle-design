@@ -77,7 +77,9 @@ const thumbVariants = cva(
       disabled: {
         true: [
           "data-[state=unchecked]:bg-surface-neutral-low-disabled data-[state=checked]:bg-surface-primary-low-disabled",
-          "forced-colors:data-[state=unchecked]:bg-[GrayText]! forced-colors:data-[state=checked]:bg-[Canvas]!",
+          // data-disabled を重ねて詳細度を上げ、有効時の色（同じ data-state の指定）より確実に優先させる
+          // en: Stack data-disabled to raise specificity so these always beat the enabled colors
+          "forced-colors:data-[disabled]:data-[state=unchecked]:bg-[GrayText]! forced-colors:data-[disabled]:data-[state=checked]:bg-[Canvas]!",
         ].join(" "),
         false: "",
       },
