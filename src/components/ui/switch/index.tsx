@@ -30,6 +30,14 @@ const switchVariants = cva(
     "after:transition-[background-color] after:duration-(--motion-color-duration-small) after:ease-(--motion-color-ease) after:delay-(--motion-color-delay)",
     "data-[state=unchecked]:after:bg-surface-neutral-high-hover data-[state=checked]:after:bg-surface-primary-high-hover",
     "disabled:cursor-not-allowed disabled:after:hidden disabled:data-[state=unchecked]:bg-surface-neutral-high-disabled disabled:data-[state=checked]:bg-surface-primary-high-disabled",
+    // 強制カラーモードでは背景色が消され、つまみもオンの塗りも見えなくなる。トラックごと色の上書きを止め、
+    // システムカラーで塗る（オンは Highlight の塗り、オフは枠だけ）。つまみは forced-color-adjust を継承する
+    // en: Forced-colors mode drops background colors, hiding both the thumb and the "on" fill. Opt the track
+    // out and paint it with system colors (on = Highlight fill, off = outline only). The thumb inherits this
+    "forced-colors:forced-color-adjust-none forced-colors:after:hidden",
+    "forced-colors:border-[CanvasText] forced-colors:data-[state=unchecked]:bg-[Canvas]!",
+    "forced-colors:data-[state=checked]:border-[Highlight] forced-colors:data-[state=checked]:bg-[Highlight]!",
+    "forced-colors:disabled:border-[GrayText] forced-colors:disabled:data-[state=checked]:bg-[GrayText]!",
   ].join(" "),
   {
     variants: {
@@ -55,6 +63,9 @@ const thumbVariants = cva(
     // つまみの移動は状態変化のスプリング（Small）
     // en: The thumb moves with the state-change spring (Small)
     "transition-[translate] duration-(--motion-settle-duration-small) ease-(--motion-settle-ease) delay-(--motion-latency)",
+    // 強制カラーモード: オフは CanvasText、オンは Highlight の上に HighlightText、無効は GrayText / Canvas
+    // en: Forced colors: off = CanvasText, on = HighlightText over Highlight, disabled = GrayText / Canvas
+    "forced-colors:shadow-none forced-colors:bg-[CanvasText]! forced-colors:data-[state=checked]:bg-[HighlightText]!",
   ].join(" "),
   {
     variants: {
@@ -64,7 +75,10 @@ const thumbVariants = cva(
         lg: "h-7 w-7 data-[state=checked]:translate-x-7 data-[state=unchecked]:translate-x-0",
       },
       disabled: {
-        true: "data-[state=unchecked]:bg-surface-neutral-low-disabled data-[state=checked]:bg-surface-primary-low-disabled",
+        true: [
+          "data-[state=unchecked]:bg-surface-neutral-low-disabled data-[state=checked]:bg-surface-primary-low-disabled",
+          "forced-colors:data-[state=unchecked]:bg-[GrayText]! forced-colors:data-[state=checked]:bg-[Canvas]!",
+        ].join(" "),
         false: "",
       },
     },

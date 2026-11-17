@@ -302,3 +302,45 @@ describe("Select", () => {
     });
   });
 });
+
+describe("SelectItem（強制カラーモード）", () => {
+  let testContainer: TestContainer;
+
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
+  it("フォーカス中の項目を Highlight / HighlightText で示し、背景色が消されても位置が見える", () => {
+    // Given: 開いたセレクト
+    testContainer.render(
+      <Select open>
+        <SelectTrigger>
+          <SelectValue placeholder="選択してください" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="option1">Option 1</SelectItem>
+        </SelectContent>
+      </Select>
+    );
+
+    // When: 項目を取得する
+    const item = document.querySelector(
+      '[data-slot="select-item"]'
+    ) as HTMLElement;
+
+    // Then: 強制カラーモードではネイティブの選択肢と同じシステムカラーで描く
+    expect(item.className.split(/\s+/)).toEqual(
+      expect.arrayContaining([
+        "forced-colors:focus:forced-color-adjust-none",
+        "forced-colors:focus:bg-[Highlight]",
+        "forced-colors:focus:text-[HighlightText]",
+        "forced-colors:data-[disabled]:text-[GrayText]",
+      ])
+    );
+  });
+});
