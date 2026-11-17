@@ -344,3 +344,35 @@ describe("SelectItem（強制カラーモード）", () => {
     );
   });
 });
+
+describe("SelectTrigger（強制カラーモード）", () => {
+  let testContainer: TestContainer;
+
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
+  it("フォーカス時は outline-hidden にして、ring が消される強制カラーモードでも outline でフォーカスを示す", () => {
+    // Given / When: トリガーを描画する
+    testContainer.render(
+      <Select>
+        <SelectTrigger>
+          <SelectValue placeholder="選択してください" />
+        </SelectTrigger>
+      </Select>
+    );
+    const trigger = testContainer.querySelector(
+      '[data-slot="select-trigger"]'
+    ) as HTMLElement;
+
+    // Then: outline-none ではなく outline-hidden を使う
+    const classes = trigger.className.split(/\s+/);
+    expect(classes).toContain("focus-visible:outline-hidden");
+    expect(classes).not.toContain("focus-visible:outline-none");
+  });
+});

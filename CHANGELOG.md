@@ -17,6 +17,7 @@
 
 - Windows のハイコントラストなど強制カラーモード（`forced-colors: active`）で、Switch のつまみが見えず、オン・オフがわからなくなっていたのを直しました。トラックとつまみを背景色で描いていたため、地の色に置き換えられていました。このモードではシステムカラーで描きます（オフは枠と CanvasText のつまみ、オンは Highlight の塗りと HighlightText のつまみ、無効は GrayText）。通常の表示は変わりません
 - 強制カラーモードで、Select のリストのうちキーボードで移動中の項目がわからなくなっていたのを直しました。ネイティブの選択肢と同じく Highlight / HighlightText で示します。通常の表示は変わりません
+- 強制カラーモードで、Select のトリガーにキーボードでフォーカスしても見えなかったのを直しました（フォーカスリングは box-shadow で、このモードでは消されます）。フォーカス時の `outline-none` を `outline-hidden` にして、このモードでは outline を出します
 - Tooltip の拡大の支点がアンカー側にならず、中央から拡大していた不具合を直しました。`origin-[--radix-…]` は Tailwind v4 では有効な CSS にならないため、`origin-(--radix-tooltip-content-transform-origin)` に書き換えました
 
 ## [2.0.0-beta.5] - 2026-10-29
