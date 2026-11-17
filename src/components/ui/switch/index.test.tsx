@@ -483,6 +483,7 @@ describe("Switch（強制カラーモード）", () => {
         "forced-colors:border-[CanvasText]",
         "forced-colors:data-[state=unchecked]:bg-[Canvas]!",
         "forced-colors:data-[state=checked]:bg-[Highlight]!",
+        "forced-colors:focus-visible:ring-[CanvasText]",
       ])
     );
   });

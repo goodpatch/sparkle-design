@@ -35,6 +35,9 @@ const switchVariants = cva(
     // en: Forced-colors mode drops background colors, hiding both the thumb and the "on" fill. Opt the track
     // out and paint it with system colors (on = Highlight fill, off = outline only). The thumb inherits this
     "forced-colors:forced-color-adjust-none forced-colors:after:hidden",
+    // 色の上書きを止めるとフォーカスリング（ring）も独自の青のままになるので、利用者の配色に合わせて CanvasText で描く
+    // en: Opting out also keeps the focus ring in the custom blue, so draw it with CanvasText to follow the user's palette
+    "forced-colors:focus-visible:ring-[CanvasText] forced-colors:focus-visible:ring-offset-[Canvas]",
     "forced-colors:border-[CanvasText] forced-colors:data-[state=unchecked]:bg-[Canvas]!",
     "forced-colors:data-[state=checked]:border-[Highlight] forced-colors:data-[state=checked]:bg-[Highlight]!",
     "forced-colors:disabled:border-[GrayText] forced-colors:disabled:data-[state=checked]:bg-[GrayText]!",
