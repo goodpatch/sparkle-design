@@ -38,6 +38,11 @@ const checkboxItemVariants = cva(
 const checkboxRootVariants = cva(
   [
     "rounded-minimum border-2 transition-colors",
+    // チェック中・中間状態は枠を消して背景色で塗るが、強制カラーモードでは背景色も消えて箱がなくなる。
+    // このモードでは枠を残す（border-width は border-2 のまま）
+    // en: Checked / indeterminate drop the border and fill with a background, but forced-colors mode
+    // removes the background too, losing the box. Keep the border in that mode (width stays border-2)
+    "forced-colors:border-solid!",
     "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-border-ring [.group:focus-visible_&]:ring-offset-2",
   ].join(" "),
   {
@@ -263,7 +268,17 @@ function Checkbox({
         >
           <CheckboxPrimitive.Indicator
             data-slot="checkbox-indicator"
-            className="flex items-center justify-center text-object-inverse"
+            className={cn(
+              "flex items-center justify-center text-object-inverse",
+              // 強制カラーモードでは、アイコンの文字の裏に地の色の板（backplate）が敷かれて箱の枠を隠す。
+              // アイコンだけ色の上書きを止め、CanvasText（無効は GrayText）で描く
+              // en: Forced-colors mode puts a Canvas backplate behind the icon glyph, hiding the box border.
+              // Opt the icon out and paint it with CanvasText (GrayText when disabled)
+              "forced-colors:forced-color-adjust-none",
+              isCheckboxDisabled
+                ? "forced-colors:text-[GrayText]"
+                : "forced-colors:text-[CanvasText]"
+            )}
           >
             <Icon
               className="text-current"
