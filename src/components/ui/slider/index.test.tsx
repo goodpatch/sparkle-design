@@ -783,3 +783,63 @@ describe("Slider Figma token mapping", () => {
     );
   });
 });
+
+describe("Slider（強制カラーモード）", () => {
+  let testContainer: TestContainer;
+
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
+  const parts = () => ({
+    track: testContainer.querySelector(
+      '[data-slot="slider-track"]'
+    ) as HTMLElement,
+    range: testContainer.querySelector(
+      '[data-slot="slider-range"]'
+    ) as HTMLElement,
+  });
+
+  it("トラックに強制カラーモードだけのアウトラインを付け、トラックの形が見える", () => {
+    // Given: 既定のスライダー
+    testContainer.render(<Slider defaultValue={[40]} />);
+
+    // When: トラックを取得する
+    const { track } = parts();
+
+    // Then: 寸法を変えないアウトラインで外形を出す
+    const classes = track.className.split(/\s+/);
+    expect(classes).toContain("forced-colors:outline-1");
+  });
+
+  it("塗りの範囲をシステムカラー Highlight で塗る", () => {
+    // Given: 既定のスライダー
+    testContainer.render(<Slider defaultValue={[40]} />);
+
+    // When: 塗りの範囲を取得する
+    const { range } = parts();
+
+    // Then: 色の上書きを止めて Highlight で塗る
+    const classes = range.className.split(/\s+/);
+    expect(classes).toContain("forced-colors:forced-color-adjust-none");
+    expect(classes).toContain("forced-colors:bg-[Highlight]");
+  });
+
+  it("無効なときは塗りの範囲を GrayText で塗る", () => {
+    // Given: 無効なスライダー
+    testContainer.render(<Slider defaultValue={[40]} isDisabled />);
+
+    // When: 塗りの範囲を取得する
+    const { range } = parts();
+
+    // Then: Highlight ではなく GrayText で塗る
+    const classes = range.className.split(/\s+/);
+    expect(classes).toContain("forced-colors:bg-[GrayText]");
+    expect(classes).not.toContain("forced-colors:bg-[Highlight]");
+  });
+});

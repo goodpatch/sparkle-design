@@ -73,7 +73,6 @@ describe("Badge", () => {
       expect(badge.className).toContain("text-center");
       expect(badge.className).toContain("justify-center");
       expect(badge.className).toContain("rounded-full");
-      expect(badge.className).toContain("transition-colors");
     });
   });
 

@@ -9,6 +9,27 @@
 
 - Dialog と Overlay のアニメーションを、モーショントークン（`--motion-*`）で動かすようにしました。`sparkle.config.json` の `motion-weight` で選んだ重さに合わせて動きます。Dialog のパネルは下から出て、中身はパネルより少し遅れてフェードインします。Overlay は閉じるとき、パネルより少し遅れて消えます。sparkle-design-cli の `motion-weight` 対応版で生成した CSS が必要です
 - Modal のアニメーションも、Dialog と同じくモーショントークンで動かすようにしました。パネルは下から出て、中身（Header・Body・Footer）はパネルより少し遅れてフェードインします
+- ホバーやフォーカスで色が変わるときのトランジション（`transition-colors`）をなくし、色がすぐ切り替わるようにしました。対象は Badge・Button・Card・Checkbox・IconButton・Input・Link・Radio・Select（トリガー）・Slider・Tabs です。Checkbox と Radio の選択時の色も、同じくすぐ切り替わります。状態の変化に伴う色（Switch のトラックなど）は、各コンポーネントのモーション対応で `--motion-color-*` に置き換えます
+
+### Fixed
+
+- Windows のハイコントラストなど強制カラーモード（`forced-colors: active`）で、`Radio` の選択中の点と `Slider` の塗りの範囲・トラックが見えなくなっていたのを直しました。背景色で描いていたため、ブラウザに地の色へ置き換えられていました。点と塗りはシステムカラー（`Highlight`、無効時は `GrayText`）で塗り、トラックには寸法を変えないアウトラインを付けます。通常の表示は変わりません
+- 強制カラーモードで、`Button` にキーボードでフォーカスしても見えなかったのを直しました。フォーカスリングは box-shadow で、このモードでは消されます。フォーカス時だけ `outline-hidden` にして、このモードでは outline を出します
+- 強制カラーモードで、solid の `Button` / `IconButton` / `Tag` が ghost / subtle と見分けられなくなっていたのを直しました。このモードだけ 1px の枠を描きます
+- 強制カラーモードで、チェック中・中間状態の `Checkbox` の箱が消えていたのを直しました。枠を消して背景色で塗っていたためです。このモードでは枠を残し、アイコンの文字の裏に敷かれる地の色の板で枠が隠れないよう、アイコンは CanvasText（無効は GrayText）で描きます
+- 強制カラーモードで、`Skeleton` が見えなくなっていたのを直しました。GrayText で塗ります
+
+## [2.0.0-beta.6] - 2026-11-09
+
+### Changed
+
+- `Input` のフォーカスリングを Figma の書き方に揃えました。`ring-offset-2` で白く塗っていた隙間を透明にし、要素の外側 4px に線 2px（`border/ring`）・角丸 `border-radius/lg` で描きます。角丸は要素の角丸に追従しません。`Input` を使う `InputPassword` も同じ見た目になります (#397)
+- このリポジトリの既定テーマ（Storybook と setup スキルの初期値）を Figma の新デザインシステムに合わせ、Inter / Reddit Mono / 角丸 lg にしました。パッケージには含まれないため、利用者のテーマは変わりません (#390)
+- `Toast` の JSDoc に、sonner を直接使わず Sparkle の `Toast` を使う旨を追記しました (#391)
+
+### Fixed
+
+- `Checkbox` のチェック記号の色を、面のトークン（`text-surface-base-0`）から図形のトークン（`text-object-inverse`）に変えました。どちらも白なので見た目は変わりません。sparkle-design-cli の `semantic-color-usage-mismatch` に検出されていたものです (#379)
 
 ## [2.0.0-beta.5] - 2026-10-29
 

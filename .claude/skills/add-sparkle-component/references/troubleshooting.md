@@ -374,8 +374,8 @@ If you're still experiencing problems after trying these solutions:
 
 1. **Check the project documentation:**
 
-   - [AGENTS.md](../../../AGENTS.md) - Project guidelines
-   - [src/components/AGENTS.md](../../../src/components/AGENTS.md) - Component guidelines
+   - `AGENTS.md` / `CLAUDE.md` at the project root, if present - Project guidelines
+   - `src/components/AGENTS.md`, if present - Component guidelines
 
 2. **Verify your setup:**
 

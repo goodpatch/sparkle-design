@@ -84,3 +84,7 @@ node-compile-cache/
 !.claude/skills/change-sparkle-config/
 !.claude/skills/release-sparkle-design/
 !.claude/skills/setup-sparkle-design/
+
+# Cloudflare の静的アセット（scripts/deploy-cloudflare.sh）
+.cloudflare-assets
+.wrangler
