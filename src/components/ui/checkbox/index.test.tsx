@@ -601,3 +601,32 @@ describe("Checkbox", () => {
     });
   });
 });
+
+describe("Checkbox（強制カラーモード）", () => {
+  let container: TestContainer;
+
+  beforeEach(() => {
+    container = new TestContainer();
+    container.setup();
+  });
+
+  afterEach(() => {
+    container.cleanup();
+  });
+
+  it("アイコンの色の上書きを止め、文字の裏の板で箱の枠が隠れないようにする", () => {
+    // Given / When: Checkbox を描画する
+    container.render(<Checkbox checked="indeterminate" />);
+    const element = container.querySelector(
+      '[data-slot="checkbox-indicator"]'
+    ) as HTMLElement;
+
+    // Then: 強制カラーモードだけで効くクラスを持つ
+    expect(element.className.split(/\s+/)).toEqual(
+      expect.arrayContaining([
+        "forced-colors:forced-color-adjust-none",
+        "forced-colors:text-[CanvasText]",
+      ])
+    );
+  });
+});

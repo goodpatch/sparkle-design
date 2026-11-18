@@ -25,23 +25,32 @@ const sliderRootVariants = cva(
   }
 );
 
-const sliderRangeVariants = cva("absolute h-full bg-object-info", {
-  variants: {
-    isDisabled: {
-      true: "bg-surface-base-200",
+const sliderRangeVariants = cva(
+  [
+    "absolute h-full bg-object-info",
+    // 強制カラーモードでは背景色が消され、塗りの範囲が見えなくなる。色の上書きを止め、システムカラーで塗る
+    // en: Forced-colors mode drops background colors, hiding the filled range. Opt out and paint it with system colors
+    "forced-colors:forced-color-adjust-none",
+  ].join(" "),
+  {
+    variants: {
+      isDisabled: {
+        true: "bg-surface-base-200 forced-colors:bg-[GrayText]",
+        false: "forced-colors:bg-[Highlight]",
+      },
     },
-  },
-  defaultVariants: {
-    isDisabled: false,
-  },
-});
+    defaultVariants: {
+      isDisabled: false,
+    },
+  }
+);
 
 const sliderThumbVariants = cva(
   [
     "relative block rounded-full border border-object-neutral-low bg-surface-base-0 shadow-base cursor-pointer",
     // 半透明の状態色は白地に重ねる（つまみの下のトラックを透かさない）
     // en: Layer translucent state colors over the white fill so the track does not show through
-    "ring-offset-background transition-colors hover:border-object-neutral-middle hover:bg-linear-to-r hover:from-surface-neutral-low-hover hover:to-surface-neutral-low-hover",
+    "ring-offset-background hover:border-object-neutral-middle hover:bg-linear-to-r hover:from-surface-neutral-low-hover hover:to-surface-neutral-low-hover",
     "focus:outline-hidden focus:border-object-info focus:bg-linear-to-r focus:from-surface-primary-low-active focus:to-surface-primary-low-active",
     "focus:ring-2 focus:ring-border-ring focus:ring-offset-2",
     "h-4 w-4",
@@ -292,6 +301,9 @@ function Slider({
           data-slot="slider-track"
           className={cn(
             "relative w-full grow overflow-hidden rounded-minimum h-1",
+            // 強制カラーモードでは背景色が消えるので、寸法を変えないアウトラインでトラックの外形を残す
+            // en: Forced-colors mode drops the background, so keep the track outline with an outline that takes no space
+            "forced-colors:outline-1",
             isDisabledState
               ? "bg-surface-base-100 cursor-not-allowed"
               : "bg-surface-base-200 cursor-pointer"
