@@ -357,9 +357,9 @@ describe("Switch", () => {
       const track = testContainer.querySelector('[data-slot="switch"]');
       [
         "data-[state=unchecked]:bg-surface-neutral-high-enabled",
-        "data-[state=unchecked]:hover:bg-surface-neutral-high-hover",
+        "data-[state=unchecked]:after:bg-surface-neutral-high-hover",
         "data-[state=checked]:bg-surface-primary-high-enabled",
-        "data-[state=checked]:hover:bg-surface-primary-high-hover",
+        "data-[state=checked]:after:bg-surface-primary-high-hover",
         "disabled:data-[state=unchecked]:bg-surface-neutral-high-disabled",
         "disabled:data-[state=checked]:bg-surface-primary-high-disabled",
       ].forEach(cls => expect(track.className).toContain(cls));
@@ -387,5 +387,136 @@ describe("Switch", () => {
         expect(thumb.className).toContain(cls)
       );
     });
+  });
+
+  describe("モーション", () => {
+    let testContainer: TestContainer;
+    beforeEach(() => {
+      testContainer = new TestContainer();
+      testContainer.setup();
+    });
+    afterEach(() => {
+      testContainer.cleanup();
+    });
+
+    it("つまみとトラックの色は、Small のトークンで同じタイミングで動く", () => {
+      // GIVEN: Switch
+      // en: GIVEN a switch
+      testContainer.render(<Switch />);
+      const track = testContainer.querySelector('[data-slot="switch"]');
+      const thumb = testContainer.querySelector('[data-slot="switch-thumb"]');
+
+      // THEN: つまみは状態変化のスプリングで移動する
+      // en: THEN the thumb moves with the state-change spring
+      [
+        "transition-[translate]",
+        "duration-(--motion-settle-duration-small)",
+        "ease-(--motion-settle-ease)",
+        "delay-(--motion-latency)",
+      ].forEach(cls => expect(thumb.className).toContain(cls));
+
+      // THEN: トラックの色はつまみと同じ遅れで変わる
+      // en: THEN the track color changes with the same delay as the thumb
+      [
+        "transition-[background-color]",
+        "duration-(--motion-color-duration-small)",
+        "ease-(--motion-color-ease)",
+        "delay-(--motion-color-delay)",
+      ].forEach(cls => expect(track.className).toContain(cls));
+    });
+
+    it("ホバーの色は ::after の層で即時に切り替え、トラック自体は hover で色を変えない", () => {
+      // GIVEN: Switch
+      // en: GIVEN a switch
+      testContainer.render(<Switch />);
+      const track = testContainer.querySelector('[data-slot="switch"]');
+      const classes: string[] = track.className.split(/\s+/);
+
+      // THEN: ホバーは ::after の表示（opacity）を切り替えるだけで、opacity は動かさない
+      // en: THEN hover only toggles the ::after layer's opacity, which is not transitioned
+      expect(classes).toContain("hover:after:opacity-100");
+      expect(classes.some(c => /^after:transition-.*opacity/.test(c))).toBe(
+        false
+      );
+      // THEN: トラックの背景色に hover の指定が無い（あるとトランジションで動いてしまう）
+      // en: THEN the track background has no hover variant (it would be transitioned)
+      expect(classes.some(c => /(^|:)hover:bg-/.test(c))).toBe(false);
+      expect(track.className).not.toMatch(/\btransition-(colors|all)\b/);
+    });
+  });
+});
+
+describe("Switch（強制カラーモード）", () => {
+  let testContainer: TestContainer;
+
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
+  const renderSwitch = (props: { disabled?: boolean } = {}) => {
+    testContainer.render(<Switch {...props} />);
+    const track = testContainer.querySelector(
+      '[data-slot="switch"]'
+    ) as HTMLElement;
+    const thumb = testContainer.querySelector(
+      '[data-slot="switch-thumb"]'
+    ) as HTMLElement;
+    return {
+      trackClasses: track.className.split(/\s+/),
+      thumbClasses: thumb.className.split(/\s+/),
+    };
+  };
+
+  it("トラックの色の上書きを止め、オンを Highlight の塗り・オフを枠だけで描く", () => {
+    // Given / When: 有効なスイッチ
+    const { trackClasses } = renderSwitch();
+
+    // Then: 背景色が消されてもオン・オフが見分けられる
+    expect(trackClasses).toEqual(
+      expect.arrayContaining([
+        "forced-colors:forced-color-adjust-none",
+        "forced-colors:border-[CanvasText]",
+        "forced-colors:data-[state=unchecked]:bg-[Canvas]!",
+        "forced-colors:data-[state=checked]:bg-[Highlight]!",
+        "forced-colors:focus-visible:ring-[CanvasText]",
+      ])
+    );
+  });
+
+  it("つまみをシステムカラーで塗り、オフは CanvasText・オンは HighlightText にする", () => {
+    // Given / When: 有効なスイッチ
+    const { thumbClasses } = renderSwitch();
+
+    // Then: 背景色が消されてもつまみの位置が見える
+    expect(thumbClasses).toEqual(
+      expect.arrayContaining([
+        "forced-colors:bg-[CanvasText]!",
+        "forced-colors:data-[state=checked]:bg-[HighlightText]!",
+      ])
+    );
+  });
+
+  it("無効のときはトラックの枠とつまみを GrayText にする", () => {
+    // Given / When: 無効なスイッチ
+    const { trackClasses, thumbClasses } = renderSwitch({ disabled: true });
+
+    // Then: 無効であることが強制カラーでも伝わる
+    expect(trackClasses).toEqual(
+      expect.arrayContaining([
+        "forced-colors:disabled:border-[GrayText]",
+        "forced-colors:disabled:data-[state=checked]:bg-[GrayText]!",
+      ])
+    );
+    expect(thumbClasses).toEqual(
+      expect.arrayContaining([
+        "forced-colors:data-[disabled]:data-[state=unchecked]:bg-[GrayText]!",
+        "forced-colors:data-[disabled]:data-[state=checked]:bg-[Canvas]!",
+      ])
+    );
   });
 });

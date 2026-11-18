@@ -81,8 +81,9 @@ describe("Overlay", () => {
       const overlay = testContainer.querySelector('[data-slot="overlay"]');
 
       // Then: オープン時のアニメーションクラスが含まれる
-      expect(overlay.className).toContain("data-[state=open]:animate-in");
-      expect(overlay.className).toContain("data-[state=open]:fade-in-0");
+      expect(overlay.className).toContain(
+        "data-[state=open]:animate-motion-overlay-in"
+      );
     });
 
     it("includes animation classes for closed state", () => {
@@ -93,8 +94,9 @@ describe("Overlay", () => {
       const overlay = testContainer.querySelector('[data-slot="overlay"]');
 
       // Then: クローズ時のアニメーションクラスが含まれる
-      expect(overlay.className).toContain("data-[state=closed]:animate-out");
-      expect(overlay.className).toContain("data-[state=closed]:fade-out-0");
+      expect(overlay.className).toContain(
+        "data-[state=closed]:animate-motion-overlay-out"
+      );
     });
   });
 
@@ -466,10 +468,17 @@ describe("Overlay", () => {
       const className = overlay.className;
 
       // Then: 全てのアニメーションクラスが含まれる
-      expect(className).toContain("data-[state=open]:animate-in");
-      expect(className).toContain("data-[state=closed]:animate-out");
-      expect(className).toContain("data-[state=open]:fade-in-0");
-      expect(className).toContain("data-[state=closed]:fade-out-0");
+      expect(className).toContain(
+        "data-[state=open]:animate-motion-overlay-in"
+      );
+      expect(className).toContain(
+        "data-[state=closed]:animate-motion-overlay-out"
+      );
+      // 時間を直書きせず、モーショントークンだけで動かす
+      // en: Timing comes only from the motion tokens, never hard-coded
+      expect(className).not.toMatch(
+        /\b(animate-in|animate-out|duration-\d+)\b/
+      );
     });
   });
 });

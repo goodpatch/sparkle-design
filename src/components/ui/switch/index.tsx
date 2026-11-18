@@ -16,11 +16,31 @@ const switchVariants = cva(
     // トラックの外形を残すため透明な 1px 枠を持たせる（padding と合わせて padding/2 相当）
     // en: Figma binds no border, but keep a transparent 1px border so the track outline
     // survives forced-colors mode (together with p-px this equals padding/2)
-    "relative peer inline-flex shrink-0 cursor-pointer items-center rounded-full border border-transparent transition-colors",
+    "relative peer inline-flex shrink-0 cursor-pointer items-center rounded-full border border-transparent",
     "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-    "data-[state=unchecked]:bg-surface-neutral-high-enabled data-[state=unchecked]:hover:bg-surface-neutral-high-hover",
-    "data-[state=checked]:bg-surface-primary-high-enabled data-[state=checked]:hover:bg-surface-primary-high-hover",
-    "disabled:cursor-not-allowed disabled:data-[state=unchecked]:bg-surface-neutral-high-disabled disabled:data-[state=checked]:bg-surface-primary-high-disabled",
+    // オン・オフの色の変化は状態の変化なので、つまみと同じタイミングで動かす（Small）
+    // en: The on/off color change is a state change, so it moves together with the thumb (Small)
+    "transition-[background-color] duration-(--motion-color-duration-small) ease-(--motion-color-ease) delay-(--motion-color-delay)",
+    "data-[state=unchecked]:bg-surface-neutral-high-enabled data-[state=checked]:bg-surface-primary-high-enabled",
+    // ホバーの色は ::after の層に分け、層の表示は即時に切り替える。クリックはホバー中に起きるので、
+    // 層の色はオン・オフに合わせてトラックと同じく動かす
+    // en: The hover color lives on an ::after layer whose visibility switches instantly. Clicks
+    // happen while hovered, so the layer's color follows on/off with the same transition as the track
+    "after:absolute after:-inset-px after:rounded-full after:opacity-0 hover:after:opacity-100",
+    "after:transition-[background-color] after:duration-(--motion-color-duration-small) after:ease-(--motion-color-ease) after:delay-(--motion-color-delay)",
+    "data-[state=unchecked]:after:bg-surface-neutral-high-hover data-[state=checked]:after:bg-surface-primary-high-hover",
+    "disabled:cursor-not-allowed disabled:after:hidden disabled:data-[state=unchecked]:bg-surface-neutral-high-disabled disabled:data-[state=checked]:bg-surface-primary-high-disabled",
+    // 強制カラーモードでは背景色が消され、つまみもオンの塗りも見えなくなる。トラックごと色の上書きを止め、
+    // システムカラーで塗る（オンは Highlight の塗り、オフは枠だけ）。つまみは forced-color-adjust を継承する
+    // en: Forced-colors mode drops background colors, hiding both the thumb and the "on" fill. Opt the track
+    // out and paint it with system colors (on = Highlight fill, off = outline only). The thumb inherits this
+    "forced-colors:forced-color-adjust-none forced-colors:after:hidden",
+    // 色の上書きを止めるとフォーカスリング（ring）も独自の青のままになるので、利用者の配色に合わせて CanvasText で描く
+    // en: Opting out also keeps the focus ring in the custom blue, so draw it with CanvasText to follow the user's palette
+    "forced-colors:focus-visible:ring-[CanvasText] forced-colors:focus-visible:ring-offset-[Canvas]",
+    "forced-colors:border-[CanvasText] forced-colors:data-[state=unchecked]:bg-[Canvas]!",
+    "forced-colors:data-[state=checked]:border-[Highlight] forced-colors:data-[state=checked]:bg-[Highlight]!",
+    "forced-colors:disabled:border-[GrayText] forced-colors:disabled:data-[state=checked]:bg-[GrayText]!",
   ].join(" "),
   {
     variants: {
@@ -39,7 +59,17 @@ const switchVariants = cva(
 );
 
 const thumbVariants = cva(
-  "pointer-events-none block rounded-full bg-surface-base-0 shadow-raise ring-0 transition-transform",
+  [
+    // ホバーの層（::after）より手前に出す
+    // en: Keep the thumb above the hover layer (::after)
+    "pointer-events-none relative z-[1] block rounded-full bg-surface-base-0 shadow-raise ring-0",
+    // つまみの移動は状態変化のスプリング（Small）
+    // en: The thumb moves with the state-change spring (Small)
+    "transition-[translate] duration-(--motion-settle-duration-small) ease-(--motion-settle-ease) delay-(--motion-latency)",
+    // 強制カラーモード: オフは CanvasText、オンは Highlight の上に HighlightText、無効は GrayText / Canvas
+    // en: Forced colors: off = CanvasText, on = HighlightText over Highlight, disabled = GrayText / Canvas
+    "forced-colors:shadow-none forced-colors:bg-[CanvasText]! forced-colors:data-[state=checked]:bg-[HighlightText]!",
+  ].join(" "),
   {
     variants: {
       size: {
@@ -48,7 +78,12 @@ const thumbVariants = cva(
         lg: "h-7 w-7 data-[state=checked]:translate-x-7 data-[state=unchecked]:translate-x-0",
       },
       disabled: {
-        true: "data-[state=unchecked]:bg-surface-neutral-low-disabled data-[state=checked]:bg-surface-primary-low-disabled",
+        true: [
+          "data-[state=unchecked]:bg-surface-neutral-low-disabled data-[state=checked]:bg-surface-primary-low-disabled",
+          // data-disabled を重ねて詳細度を上げ、有効時の色（同じ data-state の指定）より確実に優先させる
+          // en: Stack data-disabled to raise specificity so these always beat the enabled colors
+          "forced-colors:data-[disabled]:data-[state=unchecked]:bg-[GrayText]! forced-colors:data-[disabled]:data-[state=checked]:bg-[Canvas]!",
+        ].join(" "),
         false: "",
       },
     },

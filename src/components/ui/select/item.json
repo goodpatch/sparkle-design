@@ -8,6 +8,10 @@
     {
       "path": "src/components/ui/select/index.tsx",
       "type": "registry:component"
+    },
+    {
+      "path": "src/lib/use-controllable-state.ts",
+      "type": "registry:lib"
     }
   ],
   "dependencies": ["radix-ui"],

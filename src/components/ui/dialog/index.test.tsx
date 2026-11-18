@@ -165,4 +165,29 @@ describe("Dialog", () => {
       "shadow-popout",
     ].forEach(cls => expect(content.className).toContain(cls));
   });
+
+  it("animates DialogContent with the motion tokens", async () => {
+    // Given: 開いた Dialog
+    setupDialog();
+    fireEvent.click(screen.getByRole("button", { name: "open" }));
+    await screen.findByText("タイトル");
+    const content = document.querySelector(
+      '[data-slot="dialog-content"]'
+    ) as HTMLElement;
+
+    // Then: パネルは下から出て、中身はパネルより遅れてフェードインする
+    // en: The panel rises from below and its children fade in after it
+    [
+      "data-[state=open]:animate-motion-pop-in",
+      "data-[state=closed]:animate-motion-pop-out",
+      "[--motion-pop-from-y:1]",
+      "*:animate-motion-content-in",
+    ].forEach(cls => expect(content.className).toContain(cls));
+
+    // Then: 時間を直書きせず、モーショントークンだけで動かす
+    // en: Timing comes only from the motion tokens, never hard-coded
+    expect(content.className).not.toMatch(
+      /\b(animate-in|animate-out|duration-\d+)\b/
+    );
+  });
 });
