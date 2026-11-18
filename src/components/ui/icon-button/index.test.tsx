@@ -1181,3 +1181,27 @@ describe("IconButton", () => {
     });
   });
 });
+
+describe("IconButton（強制カラーモード）", () => {
+  let container: TestContainer;
+
+  beforeEach(() => {
+    container = new TestContainer();
+    container.setup();
+  });
+
+  afterEach(() => {
+    container.cleanup();
+  });
+
+  it("solid は強制カラーモードで枠を描き、ghost と見分けられる", () => {
+    // Given / When: IconButton を描画する
+    container.render(<IconButton icon="plus" />);
+    const element = container.querySelector("button") as HTMLElement;
+
+    // Then: 強制カラーモードだけで効くクラスを持つ
+    expect(element.className.split(/\s+/)).toEqual(
+      expect.arrayContaining(["forced-colors:border"])
+    );
+  });
+});

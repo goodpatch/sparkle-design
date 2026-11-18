@@ -36,7 +36,7 @@ const labelVariants = cva("cursor-pointer", {
 const radioItemVariants = cva(
   // 表示寸法を維持しつつ、疑似要素で横24pxの操作領域を確保。en: Keep visuals, expand hit width to 24px.
   [
-    "relative before:absolute before:inset-y-0 before:left-1/2 before:w-6 before:-translate-x-1/2 before:content-[''] rounded-full transition-colors flex items-center justify-center cursor-pointer",
+    "relative before:absolute before:inset-y-0 before:left-1/2 before:w-6 before:-translate-x-1/2 before:content-[''] rounded-full flex items-center justify-center cursor-pointer",
     "focus:outline-none",
   ].join(" "),
   {
@@ -60,7 +60,7 @@ const radioItemVariants = cva(
 
 const radioIndicatorVariants = cva(
   [
-    "flex items-center justify-center rounded-full border border-2 bg-surface-base-0 transition-colors",
+    "flex items-center justify-center rounded-full border border-2 bg-surface-base-0",
     "[.group:focus_&]:outline-hidden [.group:focus-visible_&]:ring-2 [.group:focus-visible_&]:ring-border-ring [.group:focus-visible_&]:ring-offset-2",
   ].join(" "),
   {
@@ -110,7 +110,15 @@ const radioIndicatorVariants = cva(
 );
 
 const radioIndicatorDotVariants = cva(
-  "rounded-full transition-colors flex items-center justify-center shrink-0",
+  [
+    "rounded-full flex items-center justify-center shrink-0",
+    // 強制カラーモードでは背景色が消され、選択中かどうかが見えなくなる。点だけ色の上書きを止め、システムカラーで塗る
+    // en: Forced-colors mode drops background colors, hiding the selection. Opt the dot out and paint it with system colors
+    "forced-colors:forced-color-adjust-none forced-colors:bg-[Highlight]!",
+    // 無効は RadioItem 自身の disabled だけでなく Radio 側の disabled でも起きるので、Radix が付ける data-disabled を見る
+    // en: Disabled can come from the Radio group as well as the item, so key off the data-disabled Radix sets
+    "forced-colors:[.group[data-disabled]_&]:bg-[GrayText]!",
+  ].join(" "),
   {
     variants: {
       size: {
@@ -159,18 +167,23 @@ const radioIndicatorDotVariants = cva(
   }
 );
 
-const radioIndicatorDotInnerVariants = cva("rounded-full bg-surface-base-0", {
-  variants: {
-    size: {
-      sm: "h-2 w-2",
-      md: "h-[9px] w-[9px]",
-      lg: "h-2.5 w-2.5",
+const radioIndicatorDotInnerVariants = cva(
+  // 親の点が色の上書きを止めているので、内側は地の色（Canvas）を明示する
+  // en: The dot opts out of forced colors, so set the inner circle to the page color (Canvas) explicitly
+  "rounded-full bg-surface-base-0 forced-colors:bg-[Canvas]",
+  {
+    variants: {
+      size: {
+        sm: "h-2 w-2",
+        md: "h-[9px] w-[9px]",
+        lg: "h-2.5 w-2.5",
+      },
     },
-  },
-  defaultVariants: {
-    size: "md",
-  },
-});
+    defaultVariants: {
+      size: "md",
+    },
+  }
+);
 
 type RadioPrimitiveProps = React.ComponentProps<typeof RadioPrimitive.Root>;
 export interface RadioProps extends RadioPrimitiveProps {

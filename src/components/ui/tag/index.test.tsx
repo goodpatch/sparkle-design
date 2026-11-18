@@ -211,3 +211,33 @@ describe("Tag", () => {
     });
   });
 });
+
+describe("Tag（強制カラーモード）", () => {
+  let container: TestContainer;
+
+  beforeEach(() => {
+    container = new TestContainer();
+    container.setup();
+  });
+
+  afterEach(() => {
+    container.cleanup();
+  });
+
+  it("solid は強制カラーモードで枠を描き、subtle と見分けられる", () => {
+    // Given / When: Tag を描画する
+    container.render(
+      <Tag data-testid="fc-tag" variant="solid">
+        完了
+      </Tag>
+    );
+    const element = container.querySelector(
+      '[data-testid="fc-tag"]'
+    ) as HTMLElement;
+
+    // Then: 強制カラーモードだけで効くクラスを持つ
+    expect(element.className.split(/\s+/)).toEqual(
+      expect.arrayContaining(["forced-colors:border"])
+    );
+  });
+});
