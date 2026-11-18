@@ -100,7 +100,7 @@ function ClickableCard({
       ref={ref}
       className={cn(
         "rounded-action border border-border-neutral-middle bg-surface-base-0 shadow-flat text-text-neutral-middle py-4 cursor-pointer hover:bg-surface-neutral-middle-enabled",
-        "transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2",
+        "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2",
         "active:bg-surface-neutral-middle-enabled active:shadow-raise active:border-border-primary-extra-high",
         "disabled:cursor-not-allowed disabled:bg-surface-base-0 disabled:border-border-neutral-low disabled:text-text-neutral-disabled disabled:shadow-flat",
         className
