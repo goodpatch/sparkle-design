@@ -27,6 +27,9 @@ function Skeleton({
     <div
       className={cn(
         "animate-pulse rounded-notice bg-surface-base-200",
+        // 強制カラーモードでは背景色が消えて読み込み中の形がなくなるので、GrayText で塗る
+        // en: Forced-colors mode drops the background and the placeholder shape, so paint it with GrayText
+        "forced-colors:forced-color-adjust-none forced-colors:bg-[GrayText]",
         className
       )}
       {...props}
