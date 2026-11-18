@@ -1,0 +1,11 @@
+# Cloudflare Workers の静的アセットに付けるヘッダー（Vercel の静的配信と揃える）
+# en: Headers for Workers static assets, matching what Vercel served.
+
+/storybook/*
+  X-Robots-Tag: noindex, nofollow, noai, noimageai
+  # sparkle-design-internal の Storybook Composition が index.json を別のオリジンから読む
+  Access-Control-Allow-Origin: *
+
+/r/*
+  X-Robots-Tag: noindex, nofollow, noai, noimageai
+  Access-Control-Allow-Origin: *
