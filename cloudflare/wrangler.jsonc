@@ -1,0 +1,14 @@
+{
+  // Storybook と shadcn レジストリ（public/storybook・public/r）を Cloudflare Workers の静的アセットで配信する。
+  // 組み立てとデプロイは scripts/deploy-cloudflare.sh。Vercel から移す途中（goodpatch/sparkle-design-internal#402）
+  // en: Serve Storybook and the shadcn registry as Workers static assets. See scripts/deploy-cloudflare.sh.
+  "name": "sparkle-design-storybook",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": {
+    "directory": "../.cloudflare-assets",
+    "not_found_handling": "none",
+    "html_handling": "none"
+  }
+}

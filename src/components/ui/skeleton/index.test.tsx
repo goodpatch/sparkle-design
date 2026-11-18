@@ -249,3 +249,34 @@ describe("Skeleton", () => {
     });
   });
 });
+
+describe("Skeleton（強制カラーモード）", () => {
+  let container: TestContainer;
+
+  beforeEach(() => {
+    container = new TestContainer();
+    container.setup();
+  });
+
+  afterEach(() => {
+    container.cleanup();
+  });
+
+  it("強制カラーモードでは GrayText で塗り、読み込み中の形が消えない", () => {
+    // Given / When: Skeleton を描画する
+    container.render(
+      <Skeleton data-testid="fc-skeleton" className="h-4 w-40" />
+    );
+    const element = container.querySelector(
+      '[data-testid="fc-skeleton"]'
+    ) as HTMLElement;
+
+    // Then: 強制カラーモードだけで効くクラスを持つ
+    expect(element.className.split(/\s+/)).toEqual(
+      expect.arrayContaining([
+        "forced-colors:forced-color-adjust-none",
+        "forced-colors:bg-[GrayText]",
+      ])
+    );
+  });
+});
