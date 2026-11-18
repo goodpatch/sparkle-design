@@ -16,21 +16,15 @@
 - InlineMessage を、後から表示されたときに上から出るようにしました（モーショントークン）。ページを開いた時点で（SSR で）描かれていたものは動きません。閉じるときの退場のアニメーションは無く、`onClose` は閉じるボタンを押した時点で呼ばれます
 - Toast の出現・退場と、複数あるときの重なりのずれを、sonner 標準のアニメーションからモーショントークンに置き換えました。トーストは画面の上端の外（要素の高さの 140%）から入り、退場でそこへ戻ります。sonner は閉じてから 200ms で要素を外すため、退場の時間は 200ms までに抑えます（super-heavy の 240ms は 200ms になります）。`Toaster` は sonner の `Toaster` をそのまま再エクスポートするのをやめ、モーションのクラスを `toastOptions.className` に加える薄いラッパーにしました（props は同じです）
 - `TabsList` の `scrollable` で、隠れたタブがある側の端をフェード（2rem）させるようにしました。スクロールバーを隠しているので、続きがあることを示すためです。見えていないタブを選ぶと、端のフェードに掛からない位置までリストだけをスクロールします（ページは動きません。`prefers-reduced-motion: reduce` では一瞬で動きます）。リストには `data-fade-left` / `data-fade-right` が付きます（RTL でも物理方向の左右）。最初の選択がはみ出しているときも、表示した時点でそのタブが見える位置まで動かします
-
-### Fixed
-
-- Windows のハイコントラストなど強制カラーモード（`forced-colors: active`）で、Tabs の選択中のインジケーター（solid の塗り・line の下線）が見えなくなっていたのを直しました。背景色で描いていたため、地の色に置き換えられていました。このモードでは border で印を描きます（solid は下に 3px、line はリストの下線と見分けられるよう 4px）。通常の表示は変わりません
+- ホバーやフォーカスで色が変わるときのトランジション（`transition-colors`）をなくし、色がすぐ切り替わるようにしました。対象は Badge・Button・Card・Checkbox・IconButton・Input・Link・Radio・Select（トリガー）・Slider・Tabs です。Checkbox と Radio の選択時の色も、同じくすぐ切り替わります。状態の変化に伴う色（Switch のトラックなど）は、各コンポーネントのモーション対応で `--motion-color-*` に置き換えます
 
 ### Fixed
 
 - Windows のハイコントラストなど強制カラーモード（`forced-colors: active`）で、Switch のつまみが見えず、オン・オフがわからなくなっていたのを直しました。トラックとつまみを背景色で描いていたため、地の色に置き換えられていました。このモードではシステムカラーで描きます（オフは枠と CanvasText のつまみ、オンは Highlight の塗りと HighlightText のつまみ、無効は GrayText）。通常の表示は変わりません
 - 強制カラーモードで、Select のリストのうちキーボードで移動中の項目がわからなくなっていたのを直しました。ネイティブの選択肢と同じく Highlight / HighlightText で示します。通常の表示は変わりません
 - 強制カラーモードで、Select のトリガーにキーボードでフォーカスしても見えなかったのを直しました（フォーカスリングは box-shadow で、このモードでは消されます）。フォーカス時の `outline-none` を `outline-hidden` にして、このモードでは outline を出します
+- Windows のハイコントラストなど強制カラーモード（`forced-colors: active`）で、Tabs の選択中のインジケーター（solid の塗り・line の下線）が見えなくなっていたのを直しました。背景色で描いていたため、地の色に置き換えられていました。このモードでは border で印を描きます（solid は下に 3px、line はリストの下線と見分けられるよう 4px）。通常の表示は変わりません
 - Tooltip の拡大の支点がアンカー側にならず、中央から拡大していた不具合を直しました。`origin-[--radix-…]` は Tailwind v4 では有効な CSS にならないため、`origin-(--radix-tooltip-content-transform-origin)` に書き換えました
-- ホバーやフォーカスで色が変わるときのトランジション（`transition-colors`）をなくし、色がすぐ切り替わるようにしました。対象は Badge・Button・Card・Checkbox・IconButton・Input・Link・Radio・Select（トリガー）・Slider・Tabs です。Checkbox と Radio の選択時の色も、同じくすぐ切り替わります。状態の変化に伴う色（Switch のトラックなど）は、各コンポーネントのモーション対応で `--motion-color-*` に置き換えます
-
-### Fixed
-
 - Windows のハイコントラストなど強制カラーモード（`forced-colors: active`）で、`Radio` の選択中の点と `Slider` の塗りの範囲・トラックが見えなくなっていたのを直しました。背景色で描いていたため、ブラウザに地の色へ置き換えられていました。点と塗りはシステムカラー（`Highlight`、無効時は `GrayText`）で塗り、トラックには寸法を変えないアウトラインを付けます。通常の表示は変わりません
 - 強制カラーモードで、`Button` にキーボードでフォーカスしても見えなかったのを直しました。フォーカスリングは box-shadow で、このモードでは消されます。フォーカス時だけ `outline-hidden` にして、このモードでは outline を出します
 - 強制カラーモードで、solid の `Button` / `IconButton` / `Tag` が ghost / subtle と見分けられなくなっていたのを直しました。このモードだけ 1px の枠を描きます
