@@ -17,7 +17,11 @@ const buttonVariants = cva(
     // `relative` is required because we absolutely-position the loading spinner at the center.
     "relative inline-flex items-center justify-center gap-0.5 whitespace-nowrap rounded-action",
     "cursor-pointer disabled:cursor-not-allowed aria-disabled:cursor-not-allowed",
-    "shrink-0 outline-none",
+    // フォーカス時の outline-hidden は、通常は outline を出さず、強制カラーモードでだけ outline を残す
+    // （ring は box-shadow なのでこのモードでは消える）
+    // en: On focus, outline-hidden hides the outline normally but keeps it in forced-colors mode
+    // (the ring is a box-shadow, which that mode removes)
+    "shrink-0 outline-none focus-visible:outline-hidden",
     "focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2",
   ].join(" "),
   {
@@ -25,7 +29,9 @@ const buttonVariants = cva(
       variant: {
         // solid の 1px 枠線は Figma の刷新で削除された（shadow も base = 影なし）
         // en: The 1px border on solid was removed in the Figma refresh (shadow is base = none).
-        solid: "shadow-base",
+        // 強制カラーモードでは背景色が消え、solid が ghost と見分けられなくなるので、このモードだけ 1px の枠を描く
+        // en: Forced-colors mode drops the background, making solid look like ghost, so draw a 1px border only in that mode
+        solid: "shadow-base forced-colors:border",
         outline: "border shadow-base",
         ghost: "",
       },

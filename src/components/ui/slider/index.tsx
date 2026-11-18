@@ -25,16 +25,25 @@ const sliderRootVariants = cva(
   }
 );
 
-const sliderRangeVariants = cva("absolute h-full bg-object-info", {
-  variants: {
-    isDisabled: {
-      true: "bg-surface-base-200",
+const sliderRangeVariants = cva(
+  [
+    "absolute h-full bg-object-info",
+    // 強制カラーモードでは背景色が消され、塗りの範囲が見えなくなる。色の上書きを止め、システムカラーで塗る
+    // en: Forced-colors mode drops background colors, hiding the filled range. Opt out and paint it with system colors
+    "forced-colors:forced-color-adjust-none",
+  ].join(" "),
+  {
+    variants: {
+      isDisabled: {
+        true: "bg-surface-base-200 forced-colors:bg-[GrayText]",
+        false: "forced-colors:bg-[Highlight]",
+      },
     },
-  },
-  defaultVariants: {
-    isDisabled: false,
-  },
-});
+    defaultVariants: {
+      isDisabled: false,
+    },
+  }
+);
 
 const sliderThumbVariants = cva(
   [
@@ -292,6 +301,9 @@ function Slider({
           data-slot="slider-track"
           className={cn(
             "relative w-full grow overflow-hidden rounded-minimum h-1",
+            // 強制カラーモードでは背景色が消えるので、寸法を変えないアウトラインでトラックの外形を残す
+            // en: Forced-colors mode drops the background, so keep the track outline with an outline that takes no space
+            "forced-colors:outline-1",
             isDisabledState
               ? "bg-surface-base-100 cursor-not-allowed"
               : "bg-surface-base-200 cursor-pointer"
