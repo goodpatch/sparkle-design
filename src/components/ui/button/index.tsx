@@ -15,7 +15,7 @@ import { Spinner } from "@/components/ui/spinner";
 const buttonVariants = cva(
   [
     // `relative` is required because we absolutely-position the loading spinner at the center.
-    "relative inline-flex items-center justify-center gap-0.5 whitespace-nowrap rounded-action transition-colors",
+    "relative inline-flex items-center justify-center gap-0.5 whitespace-nowrap rounded-action",
     "cursor-pointer disabled:cursor-not-allowed aria-disabled:cursor-not-allowed",
     // フォーカス時の outline-hidden は、通常は outline を出さず、強制カラーモードでだけ outline を残す
     // （ring は box-shadow なのでこのモードでは消える）

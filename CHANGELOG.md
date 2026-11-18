@@ -5,6 +5,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- ホバーやフォーカスで色が変わるときのトランジション（`transition-colors`）をなくし、色がすぐ切り替わるようにしました。対象は Badge・Button・Card・Checkbox・IconButton・Input・Link・Radio・Select（トリガー）・Slider・Tabs です。Checkbox と Radio の選択時の色も、同じくすぐ切り替わります。状態の変化に伴う色（Switch のトラックなど）は、各コンポーネントのモーション対応で `--motion-color-*` に置き換えます
+
 ### Fixed
 
 - Windows のハイコントラストなど強制カラーモード（`forced-colors: active`）で、`Radio` の選択中の点と `Slider` の塗りの範囲・トラックが見えなくなっていたのを直しました。背景色で描いていたため、ブラウザに地の色へ置き換えられていました。点と塗りはシステムカラー（`Highlight`、無効時は `GrayText`）で塗り、トラックには寸法を変えないアウトラインを付けます。通常の表示は変わりません

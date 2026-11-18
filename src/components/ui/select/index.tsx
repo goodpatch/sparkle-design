@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 
 const selectTriggerVariants = cva(
   [
-    "flex items-center justify-between w-full rounded-action border bg-surface-base-0 text-text-neutral-high transition-colors",
+    "flex items-center justify-between w-full rounded-action border bg-surface-base-0 text-text-neutral-high",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-ring focus-visible:ring-offset-2",
     "overflow-hidden whitespace-nowrap",
   ].join(" "),
