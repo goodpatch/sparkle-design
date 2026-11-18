@@ -302,3 +302,77 @@ describe("Select", () => {
     });
   });
 });
+
+describe("SelectItem（強制カラーモード）", () => {
+  let testContainer: TestContainer;
+
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
+  it("フォーカス中の項目を Highlight / HighlightText で示し、背景色が消されても位置が見える", () => {
+    // Given: 開いたセレクト
+    testContainer.render(
+      <Select open>
+        <SelectTrigger>
+          <SelectValue placeholder="選択してください" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="option1">Option 1</SelectItem>
+        </SelectContent>
+      </Select>
+    );
+
+    // When: 項目を取得する
+    const item = document.querySelector(
+      '[data-slot="select-item"]'
+    ) as HTMLElement;
+
+    // Then: 強制カラーモードではネイティブの選択肢と同じシステムカラーで描く
+    expect(item.className.split(/\s+/)).toEqual(
+      expect.arrayContaining([
+        "forced-colors:focus:forced-color-adjust-none",
+        "forced-colors:focus:bg-[Highlight]",
+        "forced-colors:focus:text-[HighlightText]",
+        "forced-colors:data-[disabled]:text-[GrayText]",
+      ])
+    );
+  });
+});
+
+describe("SelectTrigger（強制カラーモード）", () => {
+  let testContainer: TestContainer;
+
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
+  it("フォーカス時は outline-hidden にして、ring が消される強制カラーモードでも outline でフォーカスを示す", () => {
+    // Given / When: トリガーを描画する
+    testContainer.render(
+      <Select>
+        <SelectTrigger>
+          <SelectValue placeholder="選択してください" />
+        </SelectTrigger>
+      </Select>
+    );
+    const trigger = testContainer.querySelector(
+      '[data-slot="select-trigger"]'
+    ) as HTMLElement;
+
+    // Then: outline-none ではなく outline-hidden を使う
+    const classes = trigger.className.split(/\s+/);
+    expect(classes).toContain("focus-visible:outline-hidden");
+    expect(classes).not.toContain("focus-visible:outline-none");
+  });
+});

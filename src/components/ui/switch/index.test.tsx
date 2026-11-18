@@ -445,3 +445,78 @@ describe("Switch", () => {
     });
   });
 });
+
+describe("Switch（強制カラーモード）", () => {
+  let testContainer: TestContainer;
+
+  beforeEach(() => {
+    testContainer = new TestContainer();
+    testContainer.setup();
+  });
+
+  afterEach(() => {
+    testContainer.cleanup();
+  });
+
+  const renderSwitch = (props: { disabled?: boolean } = {}) => {
+    testContainer.render(<Switch {...props} />);
+    const track = testContainer.querySelector(
+      '[data-slot="switch"]'
+    ) as HTMLElement;
+    const thumb = testContainer.querySelector(
+      '[data-slot="switch-thumb"]'
+    ) as HTMLElement;
+    return {
+      trackClasses: track.className.split(/\s+/),
+      thumbClasses: thumb.className.split(/\s+/),
+    };
+  };
+
+  it("トラックの色の上書きを止め、オンを Highlight の塗り・オフを枠だけで描く", () => {
+    // Given / When: 有効なスイッチ
+    const { trackClasses } = renderSwitch();
+
+    // Then: 背景色が消されてもオン・オフが見分けられる
+    expect(trackClasses).toEqual(
+      expect.arrayContaining([
+        "forced-colors:forced-color-adjust-none",
+        "forced-colors:border-[CanvasText]",
+        "forced-colors:data-[state=unchecked]:bg-[Canvas]!",
+        "forced-colors:data-[state=checked]:bg-[Highlight]!",
+        "forced-colors:focus-visible:ring-[CanvasText]",
+      ])
+    );
+  });
+
+  it("つまみをシステムカラーで塗り、オフは CanvasText・オンは HighlightText にする", () => {
+    // Given / When: 有効なスイッチ
+    const { thumbClasses } = renderSwitch();
+
+    // Then: 背景色が消されてもつまみの位置が見える
+    expect(thumbClasses).toEqual(
+      expect.arrayContaining([
+        "forced-colors:bg-[CanvasText]!",
+        "forced-colors:data-[state=checked]:bg-[HighlightText]!",
+      ])
+    );
+  });
+
+  it("無効のときはトラックの枠とつまみを GrayText にする", () => {
+    // Given / When: 無効なスイッチ
+    const { trackClasses, thumbClasses } = renderSwitch({ disabled: true });
+
+    // Then: 無効であることが強制カラーでも伝わる
+    expect(trackClasses).toEqual(
+      expect.arrayContaining([
+        "forced-colors:disabled:border-[GrayText]",
+        "forced-colors:disabled:data-[state=checked]:bg-[GrayText]!",
+      ])
+    );
+    expect(thumbClasses).toEqual(
+      expect.arrayContaining([
+        "forced-colors:data-[disabled]:data-[state=unchecked]:bg-[GrayText]!",
+        "forced-colors:data-[disabled]:data-[state=checked]:bg-[Canvas]!",
+      ])
+    );
+  });
+});

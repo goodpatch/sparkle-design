@@ -15,10 +15,39 @@
 - Tabs の選択中の見た目（solid の塗り・line の下線・ghost の背景と枠）を、タブとは別のインジケーター（`data-slot="tabs-indicator"`）で表すようにしました。選択が変わると、インジケーターが状態変化のスプリング（`--motion-settle-*`）で次のタブへ移動します。トリガーのホバー・フォーカス・無効時の色は、これまでどおりトリガー自身が持ち、すぐ切り替わります。インジケーターは位置を測ってから表示するので、測れるまで（SSR で JS が動くまでなど）は、これまでどおりトリガーが選択中の見た目を持ちます
 - InlineMessage を、後から表示されたときに上から出るようにしました（モーショントークン）。ページを開いた時点で（SSR で）描かれていたものは動きません。閉じるときの退場のアニメーションは無く、`onClose` は閉じるボタンを押した時点で呼ばれます
 - Toast の出現・退場と、複数あるときの重なりのずれを、sonner 標準のアニメーションからモーショントークンに置き換えました。トーストは画面の上端の外（要素の高さの 140%）から入り、退場でそこへ戻ります。sonner は閉じてから 200ms で要素を外すため、退場の時間は 200ms までに抑えます（super-heavy の 240ms は 200ms になります）。`Toaster` は sonner の `Toaster` をそのまま再エクスポートするのをやめ、モーションのクラスを `toastOptions.className` に加える薄いラッパーにしました（props は同じです）
+- `TabsList` の `scrollable` で、隠れたタブがある側の端をフェード（2rem）させるようにしました。スクロールバーを隠しているので、続きがあることを示すためです。見えていないタブを選ぶと、端のフェードに掛からない位置までリストだけをスクロールします（ページは動きません。`prefers-reduced-motion: reduce` では一瞬で動きます）。リストには `data-fade-left` / `data-fade-right` が付きます（RTL でも物理方向の左右）。最初の選択がはみ出しているときも、表示した時点でそのタブが見える位置まで動かします
 
 ### Fixed
 
+- Windows のハイコントラストなど強制カラーモード（`forced-colors: active`）で、Tabs の選択中のインジケーター（solid の塗り・line の下線）が見えなくなっていたのを直しました。背景色で描いていたため、地の色に置き換えられていました。このモードでは border で印を描きます（solid は下に 3px、line はリストの下線と見分けられるよう 4px）。通常の表示は変わりません
+
+### Fixed
+
+- Windows のハイコントラストなど強制カラーモード（`forced-colors: active`）で、Switch のつまみが見えず、オン・オフがわからなくなっていたのを直しました。トラックとつまみを背景色で描いていたため、地の色に置き換えられていました。このモードではシステムカラーで描きます（オフは枠と CanvasText のつまみ、オンは Highlight の塗りと HighlightText のつまみ、無効は GrayText）。通常の表示は変わりません
+- 強制カラーモードで、Select のリストのうちキーボードで移動中の項目がわからなくなっていたのを直しました。ネイティブの選択肢と同じく Highlight / HighlightText で示します。通常の表示は変わりません
+- 強制カラーモードで、Select のトリガーにキーボードでフォーカスしても見えなかったのを直しました（フォーカスリングは box-shadow で、このモードでは消されます）。フォーカス時の `outline-none` を `outline-hidden` にして、このモードでは outline を出します
 - Tooltip の拡大の支点がアンカー側にならず、中央から拡大していた不具合を直しました。`origin-[--radix-…]` は Tailwind v4 では有効な CSS にならないため、`origin-(--radix-tooltip-content-transform-origin)` に書き換えました
+- ホバーやフォーカスで色が変わるときのトランジション（`transition-colors`）をなくし、色がすぐ切り替わるようにしました。対象は Badge・Button・Card・Checkbox・IconButton・Input・Link・Radio・Select（トリガー）・Slider・Tabs です。Checkbox と Radio の選択時の色も、同じくすぐ切り替わります。状態の変化に伴う色（Switch のトラックなど）は、各コンポーネントのモーション対応で `--motion-color-*` に置き換えます
+
+### Fixed
+
+- Windows のハイコントラストなど強制カラーモード（`forced-colors: active`）で、`Radio` の選択中の点と `Slider` の塗りの範囲・トラックが見えなくなっていたのを直しました。背景色で描いていたため、ブラウザに地の色へ置き換えられていました。点と塗りはシステムカラー（`Highlight`、無効時は `GrayText`）で塗り、トラックには寸法を変えないアウトラインを付けます。通常の表示は変わりません
+- 強制カラーモードで、`Button` にキーボードでフォーカスしても見えなかったのを直しました。フォーカスリングは box-shadow で、このモードでは消されます。フォーカス時だけ `outline-hidden` にして、このモードでは outline を出します
+- 強制カラーモードで、solid の `Button` / `IconButton` / `Tag` が ghost / subtle と見分けられなくなっていたのを直しました。このモードだけ 1px の枠を描きます
+- 強制カラーモードで、チェック中・中間状態の `Checkbox` の箱が消えていたのを直しました。枠を消して背景色で塗っていたためです。このモードでは枠を残し、アイコンの文字の裏に敷かれる地の色の板で枠が隠れないよう、アイコンは CanvasText（無効は GrayText）で描きます
+- 強制カラーモードで、`Skeleton` が見えなくなっていたのを直しました。GrayText で塗ります
+
+## [2.0.0-beta.6] - 2026-11-09
+
+### Changed
+
+- `Input` のフォーカスリングを Figma の書き方に揃えました。`ring-offset-2` で白く塗っていた隙間を透明にし、要素の外側 4px に線 2px（`border/ring`）・角丸 `border-radius/lg` で描きます。角丸は要素の角丸に追従しません。`Input` を使う `InputPassword` も同じ見た目になります (#397)
+- このリポジトリの既定テーマ（Storybook と setup スキルの初期値）を Figma の新デザインシステムに合わせ、Inter / Reddit Mono / 角丸 lg にしました。パッケージには含まれないため、利用者のテーマは変わりません (#390)
+- `Toast` の JSDoc に、sonner を直接使わず Sparkle の `Toast` を使う旨を追記しました (#391)
+
+### Fixed
+
+- `Checkbox` のチェック記号の色を、面のトークン（`text-surface-base-0`）から図形のトークン（`text-object-inverse`）に変えました。どちらも白なので見た目は変わりません。sparkle-design-cli の `semantic-color-usage-mismatch` に検出されていたものです (#379)
 
 ## [2.0.0-beta.5] - 2026-10-29
 

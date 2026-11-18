@@ -1143,3 +1143,31 @@ describe("Button", () => {
     });
   });
 });
+
+describe("Button（強制カラーモード）", () => {
+  let container: TestContainer;
+
+  beforeEach(() => {
+    container = new TestContainer();
+    container.setup();
+  });
+
+  afterEach(() => {
+    container.cleanup();
+  });
+
+  it("solid は枠を描き、フォーカスは outline で示す（背景色と ring が消されても見える）", () => {
+    // Given / When: Button を描画する
+    container.render(<Button>保存</Button>);
+    const element = container.querySelector("button") as HTMLElement;
+
+    // Then: 強制カラーモードだけで効くクラスを持つ
+    expect(element.className.split(/\s+/)).toEqual(
+      expect.arrayContaining([
+        "forced-colors:border",
+        "outline-none",
+        "focus-visible:outline-hidden",
+      ])
+    );
+  });
+});

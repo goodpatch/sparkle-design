@@ -111,7 +111,7 @@ Components use CVA for type-safe variant composition.
 
 ```tsx
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md font-medium transition-colors", // rounded-md = --radius-md（6px）
+  "inline-flex items-center justify-center rounded-md font-medium", // rounded-md = --radius-md（6px）。ホバーの色は transition で動かさない
   {
     variants: {
       variant: {
