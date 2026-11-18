@@ -24,7 +24,7 @@ React コンポーネントには以下のルールに従ってコメントを�
 各プロパティには **日本語のあとに `en:` を付けた英語を続ける** 形式で記述します。
 
 ```tsx
-export interface ButtonProps {
+export interface ButtonProps extends React.ComponentProps<"button"> {
   /**
    * ボタンを無効化するかどうか
    * en: Disables the button when set to true
@@ -68,7 +68,7 @@ export interface ButtonProps {
  *
  * @param {ButtonProps} props
  */
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(...);
+function Button({ ref, ...props }: ButtonProps) { ... }
 ```
 
 ### 3. JSDoc に書かないこと
