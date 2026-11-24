@@ -64,7 +64,7 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.2.0",
     "tw-animate-css": "^1.2.5",
-    "zod": "^4.1.11"
+    "zod": "^4.6.6"
   },
   "peerDependencies": {
     "react": "^19",
@@ -93,7 +93,7 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-storybook": "^10.3.5",
-    "next": "15.5.28",
+    "next": "15.5.29",
     "playwright": "^1.51.1",
     "postcss": "^8.5.26",
     "prettier": "^3.6.2",
@@ -122,17 +122,17 @@
       "minimatch@>=10.0.0 <10.2.3": "^10.2.3",
       "minimatch@<3.1.3": "^3.1.3",
       "ajv@<6.14.0": "^6.14.0",
-      "qs@<6.15.2": "^6.15.2",
+      "qs@<6.16.1": "^6.16.1",
       "@modelcontextprotocol/sdk": "^1.26.0",
       "@isaacs/brace-expansion": "^5.0.1",
       "diff@>=5.0.0 <5.2.2": "^5.2.2",
-      "body-parser@>=2.2.0 <2.3.0": "^2.3.0",
+      "body-parser@>=2.0.0 <2.4.0": "^2.4.0",
       "glob@>=10.2.0 <10.5.0": "^10.5.0",
       "glob@>=11.0.0 <11.1.0": "^11.1.0",
       "js-yaml@>=4.0.0 <4.2.0": "^4.2.0",
       "playwright": "^1.59.1",
       "form-data": "^4.0.6",
-      "hono": "^4.12.25",
+      "hono": "^4.13.16",
       "yaml@>=2.0.0 <2.8.3": "^2.8.3",
       "@eslint/plugin-kit": "^0.3.4",
       "brace-expansion@<1.1.16": "^1.1.16",
@@ -142,7 +142,9 @@
       "ws@>=8.0.0 <8.21.0": "^8.21.0",
       "proxy-addr@<2.0.8": "^2.0.8",
       "image-size@<2.0.3": "^2.0.3",
-      "@hono/node-server@<1.19.15": "^1.19.15"
+      "@hono/node-server": "^2.1.6",
+      "fast-uri@<3.1.9": "^3.1.9",
+      "zod@>=4.0.0 <4.6.6": "^4.6.6"
     }
   },
   "main": "./dist/index.js",
